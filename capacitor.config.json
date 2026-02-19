@@ -1,0 +1,1 @@
+{"appId": "com.example.app","appName": "MyApp","webDir": "www","bundledWebRuntime": false,"android": {"userPermissions": ["INTERNET","ACCESS_NETWORK_STATE"],"backgroundColor": "#FFFFFF"}}
