@@ -1,33 +1,47 @@
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>CRIA DO TATAME</title>
-    <link rel="stylesheet" href="style.css">
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+<meta name="theme-color" content="#0b0f14" />
+<title>CRIA DO TATAME</title>
+<link rel="manifest" href="./manifest.webmanifest" />
+<link rel="stylesheet" href="./style.css" />
+<script src="https://cdn.jsdelivr.net/npm/phaser@3.80.1/dist/phaser.min.js"></script>
 </head>
 <body>
-    <header>
-        <h1>Welcome to CRIA DO TATAME</h1>
-    </header>
-    <main>
-        <section>
-            <h2>About the Game</h2>
-            <p>CRIA DO TATAME is an exciting game where you can create your own characters and battle in an immersive arena. Join the fun!</p>
-        </section>
-        <section>
-            <h2>How to Play</h2>
-            <ul>
-                <li>Choose your character.</li>
-                <li>Enter the arena.</li>
-                <li>Battle against other players.</li>
-            </ul>
-        </section>
-    </main>
-    <footer>
-        <p>&copy; 2026 CRIA DO TATAME. All rights reserved.</p>
-    </footer>
-    <script src="script.js"></script>
+<header class="topbar">
+<div class="brand">
+<div class="brand-text">
+<div class="title">CRIA DO TATAME</div>
+<div class="subtitle">BJJ RPG • Oficial + Submundo</div>
+</div>
+</div>
+</header>
+<main class="wrap">
+<div id="gameWrap">
+<div id="game"></div>
+</div>
+</main>
+<div id="touch" class="touch">
+<div class="touch-grid">
+<div class="dpad">
+<button class="tbtn" data-k="UP">▲</button>
+<div class="dpad-mid">
+<button class="tbtn" data-k="LEFT">◀</button>
+<button class="tbtn" data-k="DOWN">▼</button>
+<button class="tbtn" data-k="RIGHT">▶</button>
+</div>
+</div>
+<div class="actions">
+<button class="tbtn big" data-k="ONE">1</button>
+<button class="tbtn big" data-k="TWO">2</button>
+<button class="tbtn big" data-k="THREE">3</button>
+<button class="tbtn big" data-k="FOUR">4</button>
+<button class="tbtn wide" data-k="SPACE">TREINAR</button>
+</div>
+</div>
+</div>
+<script src="./game.js"></script>
 </body>
 </html>
