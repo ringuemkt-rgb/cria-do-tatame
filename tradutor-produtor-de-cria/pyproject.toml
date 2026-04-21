@@ -1,0 +1,14 @@
+[project]
+name = "tradutor-produtor-de-cria"
+version = "0.1.0"
+description = "Sistema de tradução e produção de e-books BOXE DE CRIA"
+requires-python = ">=3.11"
+dependencies = [
+  "pydantic>=2.7.0",
+  "pyyaml>=6.0.1",
+  "rich>=13.7.1"
+]
+
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"

@@ -1,0 +1,13 @@
+archetypes:
+  hero:
+    name: "O Herói"
+    niches: ["fitness", "emagrecimento", "musculação", "artes marciais"]
+    cta_style: "Desafie-se agora! Você é capaz!"
+  sage:
+    name: "O Sábio"
+    niches: ["educação", "mentoria", "finanças"]
+    cta_style: "Aprenda com quem entende. Comece agora."
+  magician:
+    name: "O Mago"
+    niches: ["desenvolvimento pessoal", "espiritualidade"]
+    cta_style: "Ative sua transformação hoje."

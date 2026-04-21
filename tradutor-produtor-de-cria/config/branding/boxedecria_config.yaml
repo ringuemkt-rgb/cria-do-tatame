@@ -1,0 +1,18 @@
+brand:
+  name: "BOXE DE CRIA"
+  editora: "Editora Leitura de Cria"
+  instagram: "@boxedecria_"
+  tagline: "Transformando conhecimento em resultados"
+
+visual_identity:
+  colors:
+    primary: "#1E3A8A"
+    secondary: "#F59E0B"
+    accent: "#10B981"
+    cta: "#DC2626"
+
+footer:
+  text: |
+    Traduzido e produzido pela Editora Leitura de Cria.
+    do BOXE DE CRIA.
+    Estude nossa página no Instagram @boxedecria_
