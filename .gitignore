@@ -1,0 +1,22 @@
+# Dependências
+node_modules/
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+
+# Next.js
+.next/
+out/
+
+# Ambiente
+.env
+.env.*
+!.env.example
+
+# Logs
+*.log
+
+# SO
+.DS_Store

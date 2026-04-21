@@ -1,33 +1,67 @@
-# Build Instructions for APK
+# 🥋 Visão de Cria
 
-To build the APK for this project, follow the steps below:
+Plataforma de análise de combate em tempo real com foco em Boxe, MMA e Jiu-Jitsu (Gi/No-Gi), com backend em FastAPI, processamento assíncrono com Celery e frontend em Next.js.
 
-1. **Clone the Repository**  
-   Run the following command to clone the repository:
-   ```bash
-   git clone https://github.com/ringuemkt-rgb/cria-do-tatame.git
-   cd cria-do-tatame
-   ```
+> **Status atual:** Etapa 1 concluída (estrutura monorepo, Docker Compose, serviços base, healthchecks e configuração inicial).
 
-2. **Install Dependencies**  
-   Use Gradle to install all necessary dependencies:
-   ```bash
-   ./gradlew build
-   ```
+## Estrutura do projeto
 
-3. **Build the APK**  
-   Now you can build the APK by running:
-   ```bash
-   ./gradlew assembleDebug
-   ```
-   The APK will be located in the `app/build/outputs/apk/debug/` directory.
+```text
+.
+├── backend/                # API FastAPI + worker Celery
+├── frontend/               # Dashboard e overlay OBS (Next.js 14)
+├── docs/pt-br/             # Documentação técnica em português
+├── docker-compose.yml      # Orquestração local
+└── .env.example            # Variáveis de ambiente padrão
+```
 
----
+## Serviços da Etapa 1
 
-# Using GitHub Actions
+- **postgres** (TimescaleDB): persistência transacional e séries temporais.
+- **redis**: cache e broker do Celery.
+- **minio**: armazenamento de artefatos e mídias.
+- **backend**: API FastAPI com rotas iniciais.
+- **worker**: execução assíncrona com Celery.
+- **frontend**: interface Next.js com rota `/overlay/live`.
 
-This repository integrates GitHub Actions to automate workflows. Here's how to use it:
+## Como rodar localmente
 
-1. **Continuous Integration**: Whenever a push is made to the main branch, GitHub Actions will automatically trigger the CI workflow to run tests and build the project.
+1. Copie as variáveis:
 
-2. **Configuration**: You can find the configuration files under the `.github/workflows/` directory. Modify these YAML files to customize the workflow as per your requirements.
+```bash
+cp .env.example .env
+```
+
+2. Suba a stack:
+
+```bash
+docker compose up --build
+```
+
+3. Endereços importantes:
+
+- API: `http://localhost:8000`
+- Health API: `http://localhost:8000/api/v1/health`
+- Override de modalidade: `POST http://localhost:8000/api/v1/modality/override`
+- Frontend: `http://localhost:3000`
+- Overlay OBS: `http://localhost:3000/overlay/live`
+- MinIO Console: `http://localhost:9001`
+
+## Validação rápida do pipeline da Etapa 1
+
+Com os serviços rodando:
+
+```bash
+curl http://localhost:8000/api/v1/health
+curl -X POST http://localhost:8000/api/v1/modality/override \
+  -H "Content-Type: application/json" \
+  -d '{"modality":"bjj_gi"}'
+```
+
+As respostas devem indicar status saudável e confirmação de modalidade manual.
+
+## Próximos passos (Etapa 2)
+
+- Implementar `video_ingest.py` com `yt-dlp` + FFmpeg.
+- Implementar `modality_detector.py` para decisão automática inicial.
+- Conectar fallback de modalidade ao frontend com modal de confirmação.
