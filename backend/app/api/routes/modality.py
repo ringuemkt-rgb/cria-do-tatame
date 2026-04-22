@@ -2,7 +2,7 @@
 
 from fastapi import APIRouter
 
-from app.schemas.modality import ModalityOverrideRequest, ModalityOverrideResponse
+from app.schemas.modality import ModalityOverrideRequest, ModalityOverrideResponse, utcnow
 
 router = APIRouter(prefix="/modality", tags=["modality"])
 
@@ -12,6 +12,8 @@ async def override_modality(payload: ModalityOverrideRequest) -> ModalityOverrid
     """Registra uma modalidade manualmente quando a confiança automática for baixa."""
 
     return ModalityOverrideResponse(
-        mensagem="Modalidade manual aplicada com sucesso.",
+        mensagem=f"Modalidade manual aplicada com sucesso. Motivo: {payload.motivo}",
         modalidade_aplicada=payload.modality,
+        origem="operador_humano",
+        timestamp_utc=utcnow(),
     )

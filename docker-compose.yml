@@ -25,7 +25,7 @@ services:
   redis:
     image: redis:7.2.5-alpine
     container_name: visao_redis
-    command: ["redis-server", "--appendonly", "yes"]
+    command: ["redis-server", "--appendonly", "yes", "--save", "60", "1"]
     ports:
       - "6379:6379"
     volumes:
@@ -62,7 +62,7 @@ services:
       dockerfile: Dockerfile
     container_name: visao_backend
     env_file:
-      - .env.example
+      - .env
     environment:
       APP_ENV: docker
       DATABASE_URL: postgresql+asyncpg://${POSTGRES_USER:-visaouser}:${POSTGRES_PASSWORD:-visaopass}@postgres:5432/${POSTGRES_DB:-visaodecria}
@@ -71,10 +71,9 @@ services:
       CELERY_RESULT_BACKEND: redis://redis:6379/2
       MINIO_ENDPOINT: minio:9000
       MINIO_SECURE: "false"
+      CORS_ORIGINS: http://localhost:3000
     ports:
       - "8000:8000"
-    volumes:
-      - ./backend:/app
     depends_on:
       postgres:
         condition: service_healthy
@@ -83,7 +82,7 @@ services:
       minio:
         condition: service_healthy
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:8000/api/v1/health"]
+      test: ["CMD", "curl", "-f", "http://localhost:8000/api/v1/health/live"]
       interval: 15s
       timeout: 5s
       retries: 8
@@ -95,21 +94,19 @@ services:
       dockerfile: Dockerfile
     container_name: visao_worker
     env_file:
-      - .env.example
+      - .env
     environment:
       APP_ENV: docker
       DATABASE_URL: postgresql+asyncpg://${POSTGRES_USER:-visaouser}:${POSTGRES_PASSWORD:-visaopass}@postgres:5432/${POSTGRES_DB:-visaodecria}
       REDIS_URL: redis://redis:6379/0
       CELERY_BROKER_URL: redis://redis:6379/1
       CELERY_RESULT_BACKEND: redis://redis:6379/2
-    command: celery -A app.worker.celery_app worker -l info
-    volumes:
-      - ./backend:/app
+    command: celery -A app.worker.celery_app worker --loglevel=INFO --without-gossip --without-mingle
     depends_on:
       redis:
         condition: service_healthy
       backend:
-        condition: service_started
+        condition: service_healthy
     restart: unless-stopped
 
   frontend:
@@ -118,17 +115,13 @@ services:
       dockerfile: Dockerfile
     container_name: visao_frontend
     env_file:
-      - .env.example
+      - .env
     environment:
-      NEXT_PUBLIC_API_URL: http://localhost:8000
-      NEXT_PUBLIC_WS_URL: ws://localhost:8000/ws/live
+      NEXT_PUBLIC_API_URL: ${NEXT_PUBLIC_API_URL:-http://localhost:8000}
+      NEXT_PUBLIC_WS_URL: ${NEXT_PUBLIC_WS_URL:-ws://localhost:8000/ws/live}
       PORT: 3000
     ports:
       - "3000:3000"
-    volumes:
-      - ./frontend:/app
-      - /app/node_modules
-      - /app/.next
     depends_on:
       backend:
         condition: service_healthy

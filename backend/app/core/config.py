@@ -1,8 +1,8 @@
-"""Configurações centrais da aplicação (etapa 1)."""
+"""Configurações centrais da aplicação."""
 
 from functools import lru_cache
 
-from pydantic import Field
+from pydantic import Field, computed_field
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
@@ -14,6 +14,9 @@ class Settings(BaseSettings):
     app_name: str = "Visão de Cria"
     app_env: str = Field(default="development", alias="APP_ENV")
     app_port: int = 8000
+    app_version: str = "0.2.0"
+
+    cors_origins: str = Field(default="http://localhost:3000", alias="CORS_ORIGINS")
 
     database_url: str = Field(
         default="postgresql+asyncpg://visaouser:visaopass@localhost:5432/visaodecria",
@@ -27,6 +30,13 @@ class Settings(BaseSettings):
     minio_access_key: str = Field(default="minioadmin", alias="MINIO_ROOT_USER")
     minio_secret_key: str = Field(default="minioadmin123", alias="MINIO_ROOT_PASSWORD")
     minio_secure: bool = Field(default=False, alias="MINIO_SECURE")
+
+    @computed_field
+    @property
+    def cors_allow_list(self) -> list[str]:
+        """Converte lista de CORS separada por vírgula para vetor."""
+
+        return [item.strip() for item in self.cors_origins.split(",") if item.strip()]
 
 
 @lru_cache

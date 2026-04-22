@@ -1,31 +1,33 @@
-# Etapa 1 — Estrutura, Docker e Configurações
+# Etapa 1 — Revisão Profissional (Infra + Base de Produto)
 
 ## Objetivo
-Estabelecer a base de execução do **Visão de Cria** com serviços obrigatórios, healthchecks e inicialização de API/frontend para evolução incremental.
+Consolidar uma base realmente utilizável para evolução das próximas etapas, com confiabilidade operacional e UX inicial de nível profissional.
 
-## Entregáveis implementados
+## Entregáveis desta revisão
 
-1. **Monorepo inicial** com diretórios `backend`, `frontend` e `docs/pt-br`.
-2. **Docker Compose** com PostgreSQL/TimescaleDB, Redis, MinIO, API, worker e frontend.
-3. **Backend FastAPI** com:
-   - logging estruturado JSON;
-   - endpoint de saúde `GET /api/v1/health`;
-   - endpoint de fallback `POST /api/v1/modality/override`.
-4. **Worker Celery** configurado com Redis.
-5. **Frontend Next.js 14** com rota inicial e rota de overlay em `/overlay/live`.
-6. **Arquivo `.env.example`** com variáveis padrão para todos os serviços.
+1. **Infra Docker** com serviços obrigatórios e healthchecks consistentes.
+2. **API FastAPI** com:
+   - `/api/v1/health/live` (liveness);
+   - `/api/v1/health/ready` (readiness com checks de PostgreSQL, Redis e MinIO);
+   - fallback manual em `/api/v1/modality/override` com rastreabilidade (`origem` e `timestamp_utc`).
+3. **Frontend Next.js** com:
+   - dashboard inicial visualmente mais profissional;
+   - overlay com fundo transparente para OBS;
+   - ESLint configurado de forma não interativa.
+4. **Configuração por ambiente** via `.env` e `.env.example`.
 
 ## Comandos de validação
 
 ```bash
-docker compose config
-docker compose up --build -d
-curl http://localhost:8000/api/v1/health
-curl -X POST http://localhost:8000/api/v1/modality/override -H "Content-Type: application/json" -d '{"modality":"mma"}'
+cp .env.example .env
+python -m compileall backend/app
+cd frontend && npm install && npm run lint && npm run build
+curl http://localhost:8000/api/v1/health/live
+curl http://localhost:8000/api/v1/health/ready
 ```
 
-## Observações de arquitetura
+## Observações
 
-- A persistência temporal será expandida na Etapa 5 (schema TimescaleDB).
-- O endpoint de override já está pronto para integração com modal de baixa confiança na Etapa 2.
-- O frontend usa pt-BR como idioma principal (`lang="pt-BR"`).
+- `health/ready` foi desenhado para uso em orquestração (K8s, ECS, Nomad).
+- O endpoint de fallback já atende ao cenário de baixa confiança da detecção automática.
+- O overlay está pronto para acoplamento com WebSocket na Etapa 5.

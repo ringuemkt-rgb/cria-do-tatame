@@ -13,13 +13,16 @@ settings = get_settings()
 
 app = FastAPI(
     title=settings.app_name,
-    version="0.1.0",
+    version=settings.app_version,
     description="API inicial do projeto Visão de Cria",
+    docs_url="/api/docs",
+    redoc_url="/api/redoc",
+    openapi_url="/api/openapi.json",
 )
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=settings.cors_allow_list,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -33,4 +36,4 @@ app.include_router(modality_router, prefix="/api/v1")
 async def root() -> dict[str, str]:
     """Rota raiz informativa."""
 
-    return {"mensagem": "Visão de Cria API online"}
+    return {"mensagem": "Visão de Cria API online", "docs": "/api/docs"}

@@ -1,8 +1,16 @@
 # 🥋 Visão de Cria
 
-Plataforma de análise de combate em tempo real com foco em Boxe, MMA e Jiu-Jitsu (Gi/No-Gi), com backend em FastAPI, processamento assíncrono com Celery e frontend em Next.js.
+Plataforma de análise de combate em tempo real (Boxe, MMA, BJJ Gi e No-Gi) com arquitetura modular para produção.
 
-> **Status atual:** Etapa 1 concluída (estrutura monorepo, Docker Compose, serviços base, healthchecks e configuração inicial).
+> **Status atual:** Etapa 1 revisada, endurecida e profissionalizada (infra + API + frontend + qualidade).
+
+## ✅ O que foi melhorado nesta revisão
+
+- Stack Docker organizada com healthchecks reais e dependências encadeadas.
+- Backend com **liveness/readiness** (`/health/live` e `/health/ready`) validando PostgreSQL, Redis e MinIO.
+- CORS configurável por ambiente (`CORS_ORIGINS`).
+- Frontend com layout mais profissional, overlay transparente para OBS e lint não interativo.
+- Documentação em pt-BR com fluxo de validação local.
 
 ## Estrutura do projeto
 
@@ -12,56 +20,37 @@ Plataforma de análise de combate em tempo real com foco em Boxe, MMA e Jiu-Jits
 ├── frontend/               # Dashboard e overlay OBS (Next.js 14)
 ├── docs/pt-br/             # Documentação técnica em português
 ├── docker-compose.yml      # Orquestração local
-└── .env.example            # Variáveis de ambiente padrão
+└── .env.example            # Variáveis padrão (copiar para .env)
 ```
-
-## Serviços da Etapa 1
-
-- **postgres** (TimescaleDB): persistência transacional e séries temporais.
-- **redis**: cache e broker do Celery.
-- **minio**: armazenamento de artefatos e mídias.
-- **backend**: API FastAPI com rotas iniciais.
-- **worker**: execução assíncrona com Celery.
-- **frontend**: interface Next.js com rota `/overlay/live`.
 
 ## Como rodar localmente
 
-1. Copie as variáveis:
-
 ```bash
 cp .env.example .env
-```
-
-2. Suba a stack:
-
-```bash
 docker compose up --build
 ```
 
-3. Endereços importantes:
+## Endpoints principais
 
-- API: `http://localhost:8000`
-- Health API: `http://localhost:8000/api/v1/health`
-- Override de modalidade: `POST http://localhost:8000/api/v1/modality/override`
-- Frontend: `http://localhost:3000`
+- `GET /api/v1/health/live` → processo da API ativo
+- `GET /api/v1/health/ready` → dependências prontas
+- `POST /api/v1/modality/override` → fallback manual de modalidade
+
+## Frontend
+
+- Página inicial: `http://localhost:3000`
 - Overlay OBS: `http://localhost:3000/overlay/live`
-- MinIO Console: `http://localhost:9001`
 
-## Validação rápida do pipeline da Etapa 1
-
-Com os serviços rodando:
+## Validação rápida
 
 ```bash
-curl http://localhost:8000/api/v1/health
+curl http://localhost:8000/api/v1/health/live
+curl http://localhost:8000/api/v1/health/ready
 curl -X POST http://localhost:8000/api/v1/modality/override \
   -H "Content-Type: application/json" \
-  -d '{"modality":"bjj_gi"}'
+  -d '{"modality":"bjj_gi","motivo":"teste local"}'
 ```
 
-As respostas devem indicar status saudável e confirmação de modalidade manual.
+## Próxima etapa sugerida
 
-## Próximos passos (Etapa 2)
-
-- Implementar `video_ingest.py` com `yt-dlp` + FFmpeg.
-- Implementar `modality_detector.py` para decisão automática inicial.
-- Conectar fallback de modalidade ao frontend com modal de confirmação.
+Etapa 2: ingestão de vídeo com `yt-dlp` + FFmpeg e detector automático de modalidade.
