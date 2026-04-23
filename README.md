@@ -1,56 +1,64 @@
 # 🥋 Visão de Cria
 
-Plataforma de análise de combate em tempo real (Boxe, MMA, BJJ Gi e No-Gi) com arquitetura modular para produção.
+Plataforma de análise de combate em tempo real (Boxe, MMA, BJJ Gi e No-Gi), otimizada para baixa latência e uso em produção com overlay para OBS.
 
-> **Status atual:** Etapa 1 revisada, endurecida e profissionalizada (infra + API + frontend + qualidade).
+## O que foi otimizado nesta revisão completa
 
-## ✅ O que foi melhorado nesta revisão
+- ✅ API com `liveness` e `readiness` cacheado para reduzir custo por requisição.
+- ✅ Motor de análise técnica modular (detecção de modalidade, regras BJJ, pontuação e insights).
+- ✅ Endpoint de simulação para validar pipeline técnico sem depender de vídeo real.
+- ✅ Testes unitários cobrindo regras, pontuação e geração de insight.
+- ✅ Frontend com dashboard/overlay prontos para operação inicial.
 
-- Stack Docker organizada com healthchecks reais e dependências encadeadas.
-- Backend com **liveness/readiness** (`/health/live` e `/health/ready`) validando PostgreSQL, Redis e MinIO.
-- CORS configurável por ambiente (`CORS_ORIGINS`).
-- Frontend com layout mais profissional, overlay transparente para OBS e lint não interativo.
-- Documentação em pt-BR com fluxo de validação local.
+## Arquitetura base
 
-## Estrutura do projeto
+- **Backend:** FastAPI + Celery + Redis + PostgreSQL/TimescaleDB + MinIO
+- **Análise:** módulos dedicados em `backend/app/analysis/`
+- **Frontend:** Next.js 14 + Tailwind
+- **Infra local:** Docker Compose
 
-```text
-.
-├── backend/                # API FastAPI + worker Celery
-├── frontend/               # Dashboard e overlay OBS (Next.js 14)
-├── docs/pt-br/             # Documentação técnica em português
-├── docker-compose.yml      # Orquestração local
-└── .env.example            # Variáveis padrão (copiar para .env)
-```
+## Endpoints principais
 
-## Como rodar localmente
+- `GET /api/v1/health/live`
+- `GET /api/v1/health/ready`
+- `POST /api/v1/modality/override`
+- `POST /api/v1/analysis/simulate`
+
+## Rodando localmente
 
 ```bash
 cp .env.example .env
 docker compose up --build
 ```
 
-## Endpoints principais
-
-- `GET /api/v1/health/live` → processo da API ativo
-- `GET /api/v1/health/ready` → dependências prontas
-- `POST /api/v1/modality/override` → fallback manual de modalidade
-
-## Frontend
-
-- Página inicial: `http://localhost:3000`
-- Overlay OBS: `http://localhost:3000/overlay/live`
-
-## Validação rápida
+## Testes rápidos
 
 ```bash
-curl http://localhost:8000/api/v1/health/live
-curl http://localhost:8000/api/v1/health/ready
-curl -X POST http://localhost:8000/api/v1/modality/override \
-  -H "Content-Type: application/json" \
-  -d '{"modality":"bjj_gi","motivo":"teste local"}'
+python -m compileall backend/app
+PYTHONPATH=backend pytest -q backend/tests
+cd frontend && npm run lint && npm run build
 ```
 
-## Próxima etapa sugerida
+## Simulação da análise técnica (exemplo)
 
-Etapa 2: ingestão de vídeo com `yt-dlp` + FFmpeg e detector automático de modalidade.
+```bash
+curl -X POST http://localhost:8000/api/v1/analysis/simulate \
+  -H "Content-Type: application/json" \
+  -d '{
+    "modalidade": "bjj_gi",
+    "eventos": [
+      {"atleta":"azul","acao":"guard_pass","duracao_ms":3500,"confianca":0.93},
+      {"atleta":"branco","acao":"stalling","duracao_ms":900,"confianca":0.71}
+    ]
+  }'
+```
+
+## Inspirações técnicas (adaptação para nosso contexto)
+
+A organização do pipeline foi estruturada com referências de boas práticas de ecossistemas abertos como:
+- arquitetura de inferência modular (separação detecção/classificação/regras);
+- contracts tipados para eventos;
+- readiness para orquestração;
+- processamento incremental para stream.
+
+Tudo foi adaptado para o contexto do **Visão de Cria**, priorizando pt-BR, regras de luta e integração com OBS.
