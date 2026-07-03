@@ -1,0 +1,88 @@
+{
+  "techniques": [
+    {
+      "id": "clinch",
+      "name": "Puxada para o Clinch",
+      "type": "entry",
+      "from": ["standup"],
+      "to": "clinch",
+      "cost": 12,
+      "focus": 0,
+      "power": 14,
+      "grip": 16,
+      "base": 8,
+      "control": 0,
+      "belt": "Branca"
+    },
+    {
+      "id": "baiana",
+      "name": "Baiana de Pressão",
+      "type": "transition",
+      "from": ["standup", "clinch"],
+      "to": "guard_top",
+      "cost": 20,
+      "focus": 4,
+      "power": 24,
+      "grip": 12,
+      "base": 26,
+      "control": 0,
+      "belt": "Branca"
+    },
+    {
+      "id": "passagem",
+      "name": "Passagem Pesada",
+      "type": "pass",
+      "from": ["guard_top"],
+      "to": "side_control",
+      "cost": 24,
+      "focus": 5,
+      "power": 28,
+      "grip": 10,
+      "base": 18,
+      "control": 0,
+      "belt": "Branca"
+    },
+    {
+      "id": "montada",
+      "name": "Montada Silverback",
+      "type": "control",
+      "from": ["side_control"],
+      "to": "mount",
+      "cost": 18,
+      "focus": 5,
+      "power": 26,
+      "grip": 18,
+      "base": 12,
+      "control": 15,
+      "belt": "Branca"
+    },
+    {
+      "id": "controle_final",
+      "name": "Controle Final",
+      "type": "finish",
+      "from": ["mount", "side_control"],
+      "to": "lock",
+      "cost": 30,
+      "focus": 10,
+      "power": 34,
+      "grip": 24,
+      "base": 12,
+      "control": 45,
+      "belt": "Azul"
+    },
+    {
+      "id": "respirar",
+      "name": "Respirar e Firmar Base",
+      "type": "recover",
+      "from": ["standup", "clinch", "guard_top", "side_control", "mount", "lock"],
+      "to": null,
+      "cost": -28,
+      "focus": -8,
+      "power": 8,
+      "grip": 0,
+      "base": 0,
+      "control": 0,
+      "belt": "Branca"
+    }
+  ]
+}
