@@ -1,6 +1,6 @@
 # 🦍🥋 CRIA DO TATAME
 
-**Cria do Tatame** é um protótipo jogável web/mobile de RPG tático de Jiu-Jitsu Brasileiro, com foco em carreira, progressão semanal, combate posicional, reputação, Cria Live e conteúdo data-driven.
+**Cria do Tatame** é um protótipo jogável web/mobile de RPG tático de Jiu-Jitsu Brasileiro, com foco em carreira, progressão semanal, partida posicional, reputação, Cria Live e conteúdo data-driven.
 
 > Regra de ouro: a IA alimenta o mundo; o jogo roda sozinho. O gameplay é determinístico, leve e funcional offline.
 
@@ -11,14 +11,13 @@ Branch de resgate: `rescue/sprint-0-complete`
 Entregas implementadas:
 
 - PWA funcional com `index.html`, `style.css`, `game.js`, `manifest.webmanifest` e `sw.js`.
-- Combate mínimo jogável com posição, stamina, grip integrity, base integrity, foco, moral e finalização.
+- Loop jogável com hub, treino, partida posicional, reputação e Cria Live.
 - Progressão semanal com treino, descanso, energia, dinheiro, hype, honra e sombra.
-- Cria Live com posts e fallback offline.
 - Dados separados em JSON: personagens, técnicas, missões, arenas, facções, patrocinadores e posts.
 - Save/load via `localStorage`.
-- Estrutura preparada para Capacitor Android.
-- Módulo `ai_lore_guardian/` para geração assistida de conteúdo por IA fora do APK.
-- Stub Godot `src/autoloads/AILoreClient.gd` para futura migração Godot 4.2+.
+- Service worker simples.
+- Workflow de CI para validação JSON.
+- Documento inicial de Lore Guardian em `docs/AI_LORE_GUARDIAN.md`.
 
 ## 🧠 Arquitetura correta de IA
 
@@ -53,7 +52,7 @@ Abra:
 http://localhost:8000
 ```
 
-Também funciona com qualquer servidor estático simples:
+Também funciona com servidor estático simples:
 
 ```bash
 python -m http.server 8000
@@ -61,22 +60,17 @@ python -m http.server 8000
 
 ## 📱 Android / Capacitor
 
-Primeira configuração:
+A branch já possui `capacitor.config.json` mínimo, mas o pacote Android ainda deve ser gerado em etapa própria com Capacitor ou Android Studio.
+
+Sprint 1 recomendado:
 
 ```bash
-npm install
-npm run android:init
-npm run android:add
-npm run android:sync
+npm install @capacitor/core @capacitor/cli @capacitor/android
+npx cap init "CRIA DO TATAME" "com.criadotatame.app" --web-dir .
+npx cap add android
+npx cap sync android
+npx cap open android
 ```
-
-Abrir no Android Studio:
-
-```bash
-npm run android:open
-```
-
-Depois gere o APK pelo Android Studio ou pelo Gradle dentro da pasta `android/`.
 
 ## 📁 Estrutura
 
@@ -97,55 +91,38 @@ cria-do-tatame/
 │   ├── factions.json
 │   ├── sponsors.json
 │   └── cria_live_posts.json
-├── ai_lore_guardian/
-│   ├── README.md
-│   ├── lore_guardian_server.py
-│   ├── validate_output.py
-│   ├── export_to_godot.py
-│   ├── prompts/
-│   │   └── system_lore_guardian.md
-│   └── schemas/
-│       └── mission_schema.json
-├── src/
-│   └── autoloads/
-│       └── AILoreClient.gd
+├── docs/
+│   └── AI_LORE_GUARDIAN.md
 └── .github/workflows/ci.yml
 ```
 
 ## 🎮 Controles
 
-- **Treinar**: aumenta técnica, foco e progressão.
+- **Treinar**: aumenta XP e prepara graduação.
 - **Descansar**: recupera energia.
-- **Missão**: inicia combate ou evento de mundo.
-- **Cria Live**: publica posts e altera reputação.
-- **Combate**: escolha técnicas conforme posição, recursos e risco.
+- **Partida**: inicia teste posicional.
+- **Cria Live**: publica repercussões e altera reputação.
+- **Salvar**: persiste progresso no navegador.
 
 ## 🥋 Loop principal
 
 ```txt
-Treinar → Recuperar → Missão/Combate → Reputação → Semana avança → Conteúdo desbloqueia
+Treinar → Recuperar → Partida → Reputação → Semana avança → Conteúdo desbloqueia
 ```
 
 ## 🧪 Definition of Done do Sprint 0
 
 - [x] App abre no navegador.
 - [x] Interface preta/dourada mobile-first.
-- [x] Combate mínimo funcional.
-- [x] Recursos de luta visíveis.
+- [x] Loop jogável básico.
+- [x] Recursos de partida visíveis.
 - [x] Save/load persistente.
 - [x] Dados em JSON.
 - [x] Cria Live com fallback.
-- [x] Estrutura de IA separada do jogo.
-- [x] Configuração Capacitor corrigida.
 - [x] README realista.
 
-## ⚠️ Próxima etapa
+## ⚠️ Observações
 
-Sprint 1 deve migrar o protótipo para uma arquitetura mais forte:
-
-1. separar `game.js` em módulos reais;
-2. implementar cenas completas;
-3. criar animações/sprites;
-4. adicionar áudio;
-5. expandir IA de adversários;
-6. decidir rota final: Phaser/Capacitor ou Godot 4.2+ oficial.
+- O arquivo legado `apk` ainda existe na branch base e não é usado pelo app.
+- O build Android definitivo deve ser tratado no Sprint 1.
+- A migração oficial para Godot 4.2+ continua sendo a rota recomendada para o jogo completo.
