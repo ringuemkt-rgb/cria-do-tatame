@@ -1,0 +1,63 @@
+{
+  "characters": [
+    {
+      "id": "ruan_macacao",
+      "name": "Ruan Silva",
+      "nickname": "Macacão",
+      "belt": "Branca",
+      "origin": "Ituberá, Baixo Sul da Bahia",
+      "symbol": "Gorila Silverback",
+      "archetype": "pressao pesada, grip de ferro e top game dominante",
+      "special": "Silverback Grip",
+      "stats": {
+        "hp": 120,
+        "stamina": 105,
+        "technique": 55,
+        "pressure": 90,
+        "gas": 70,
+        "focus": 60,
+        "moral": 50,
+        "grip_strength": 95,
+        "speed": 45
+      }
+    },
+    {
+      "id": "davi_relampago",
+      "name": "Davi Relâmpago",
+      "nickname": "Relâmpago",
+      "belt": "Azul",
+      "origin": "Circuito local",
+      "archetype": "guarda aberta, mobilidade e mudança de ângulo",
+      "stats": {
+        "hp": 92,
+        "stamina": 120,
+        "technique": 58,
+        "pressure": 42,
+        "gas": 80,
+        "focus": 65,
+        "moral": 45,
+        "grip_strength": 42,
+        "speed": 88
+      }
+    },
+    {
+      "id": "cassio_molho",
+      "name": "Cássio Molho",
+      "nickname": "Molho",
+      "belt": "Roxa",
+      "origin": "circuito paralelo",
+      "archetype": "estratégia fria, iscas e controle emocional",
+      "stats": {
+        "hp": 110,
+        "stamina": 100,
+        "technique": 70,
+        "pressure": 62,
+        "gas": 72,
+        "focus": 74,
+        "moral": 25,
+        "grip_strength": 68,
+        "speed": 61
+      }
+    }
+  ]
+}
