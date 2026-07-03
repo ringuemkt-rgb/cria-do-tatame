@@ -1,1 +1,11 @@
-{ "name": "cria-do-tatame", "version": "1.0.0", "description": "BJJ RPG Mobile Game", "main": "index.js", "scripts": { "start": "python -m http.server 8000", "build": "npm run capacitor:sync", "capacitor:init": "npx cap init 'CRIA DO TATAME' 'com.criadotatame.app'", "capacitor:add:android": "npx cap add android", "capacitor:sync": "npx cap sync" }, "dependencies": { "@capacitor/core": "^6.0.0", "@capacitor/android": "^6.0.0", "@capacitor/cli": "^6.0.0" } }
+{
+  "name": "cria-do-tatame",
+  "version": "0.1.0",
+  "description": "Cria do Tatame Sprint 0 PWA prototype",
+  "main": "game.js",
+  "scripts": {
+    "start": "python -m http.server 8000",
+    "check:json": "python -m json.tool data/characters.json > /dev/null && python -m json.tool data/techniques.json > /dev/null && python -m json.tool data/missions.json > /dev/null && python -m json.tool data/arenas.json > /dev/null"
+  },
+  "dependencies": {}
+}
