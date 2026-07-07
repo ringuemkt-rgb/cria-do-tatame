@@ -23,6 +23,8 @@ func save_game(slot_id := 1):
 		data["hub_activity_state"] = HubActivityManager.to_dict()
 	if has_node("/root/CriaLiveInteractionManager"):
 		data["cria_live_interaction_state"] = CriaLiveInteractionManager.to_dict()
+	if has_node("/root/GameFlowManager"):
+		data["game_flow_state"] = GameFlowManager.to_dict()
 	var path = SAVE_PREFIX + str(slot_id) + SAVE_SUFFIX
 	var file = FileAccess.open(path, FileAccess.WRITE)
 	if file == null:
@@ -60,6 +62,8 @@ func load_game(slot_id := 1):
 		HubActivityManager.load_from_dict(parsed["hub_activity_state"])
 	if parsed.has("cria_live_interaction_state") and has_node("/root/CriaLiveInteractionManager"):
 		CriaLiveInteractionManager.load_from_dict(parsed["cria_live_interaction_state"])
+	if parsed.has("game_flow_state") and has_node("/root/GameFlowManager"):
+		GameFlowManager.load_from_dict(parsed["game_flow_state"])
 	SignalBus.save_loaded.emit(slot_id)
 	return true
 
