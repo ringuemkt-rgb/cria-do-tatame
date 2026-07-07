@@ -6,7 +6,14 @@
 .DS_Store
 __pycache__/
 *.pyc
+.env
+.env.*
+!.env.example
 ai_lore_guardian/.env
+tools/ai_asset_pipeline/.env
+tools/ai_asset_pipeline/generated_queue/
+tools/ai_asset_pipeline/generated_outputs/
+assets/generated_metadata/local_run_*.json
 export/builds/*.apk
 export/builds/*.exe
 export/builds/*.zip
