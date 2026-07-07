@@ -1,0 +1,100 @@
+{
+  "version": "0.1.0",
+  "language": "pt-BR",
+  "mission_arc": "Ruan e Tinker — Quem fica quando tudo desaba",
+  "missions": [
+    {
+      "id": "ato1_fica_no_chao_ou_levanta",
+      "act": 1,
+      "title": "Fica no Chao ou Levanta",
+      "location": "manguezal_profundo",
+      "required_scene": "cena_ruan_derrota_mangue",
+      "objective": "Voltar ao Terreiro depois da primeira derrota para Davi.",
+      "gameplay_steps": [
+        {"type": "dialogue", "id": "tinker_primeira_derrota"},
+        {"type": "walk_to", "target": "terreiro_da_luta"},
+        {"type": "tutorial", "id": "respirar_e_levantar"},
+        {"type": "unlock_technique", "id": "grip_de_ferro"}
+      ],
+      "choices": [
+        {"id": "voltar_silencioso", "label": "Voltar em silencio", "effects": {"confianca": 6, "honra": 3}},
+        {"id": "prometer_vinganca", "label": "Prometer vinganca", "effects": {"hype": 2, "sombra": 2, "confianca": -2}},
+        {"id": "pedir_ajuda", "label": "Pedir ajuda a Tinker", "effects": {"confianca": 10, "legado": 2}}
+      ],
+      "rewards": {"xp": 100, "techniques": ["grip_de_ferro"], "tinker_bond": 8}
+    },
+    {
+      "id": "ato2_o_primeiro_video",
+      "act": 2,
+      "title": "O Primeiro Video",
+      "location": "terreiro_da_luta",
+      "objective": "Decidir como Tinker publica a primeira grande vitoria de Ruan.",
+      "gameplay_steps": [
+        {"type": "combat", "opponent": "davi_relampago", "arena": "terreiro_da_luta", "win_required": true},
+        {"type": "dialogue", "id": "tinker_primeiro_video"},
+        {"type": "cria_live_post_choice", "choices": ["humilde", "provocativo", "agressivo"]}
+      ],
+      "choices": [
+        {"id": "post_humilde", "label": "Postar com respeito", "effects": {"honra": 6, "legado": 4, "confianca": 8}},
+        {"id": "post_provocativo", "label": "Postar provocando", "effects": {"hype": 8, "confianca": -3}},
+        {"id": "post_agressivo", "label": "Postar humilhando", "effects": {"hype": 12, "sombra": 6, "confianca": -10, "ferida": 8}}
+      ],
+      "rewards": {"xp": 150, "money": 200}
+    },
+    {
+      "id": "ato3_comunicado_ou_silencio",
+      "act": 3,
+      "title": "Comunicado ou Silencio",
+      "location": "cria_live_ui",
+      "objective": "Responder a uma crise publica sem destruir o vinculo com Tinker.",
+      "gameplay_steps": [
+        {"type": "story_event", "id": "video_vazado"},
+        {"type": "dialogue", "id": "tinker_crise_publica"},
+        {"type": "choice", "id": "resposta_publica"}
+      ],
+      "choices": [
+        {"id": "assumir_erro_publico", "label": "Assumir o erro sem desculpa", "effects": {"honra": 10, "legado": 5, "confianca": 12, "ferida": -10}},
+        {"id": "culpar_midia", "label": "Culpar a midia", "effects": {"hype": 5, "sombra": 8, "confianca": -12, "ferida": 12}},
+        {"id": "sumir", "label": "Ficar em silencio", "effects": {"sombra": 6, "hype": -4, "confianca": -6}},
+        {"id": "usar_tinker_como_escudo", "label": "Mandar Tinker responder por voce", "effects": {"confianca": -25, "ferida": 30, "limite": -1}}
+      ],
+      "failure_state": "Tinker entra em RACHADURA se confianca cair abaixo de 40."
+    },
+    {
+      "id": "ato4_contrato_de_sangue_frio",
+      "act": 4,
+      "title": "Contrato de Sangue Frio",
+      "location": "ferro_velho_da_lapa",
+      "objective": "Decidir se Ruan aceita a proposta de Cassio ou protege o Terreiro.",
+      "gameplay_steps": [
+        {"type": "injury_event", "severity": "grave_narrativa"},
+        {"type": "dialogue", "id": "cassio_contrato_final"},
+        {"type": "dialogue", "id": "tinker_limite_final"},
+        {"type": "choice", "id": "contrato_cassio"}
+      ],
+      "choices": [
+        {"id": "recusar_contrato_cassio", "label": "Recusar e reconstruir devagar", "effects": {"honra": 12, "legado": 10, "confianca": 15, "money": -100}},
+        {"id": "assinar_contrato_cassio", "label": "Assinar e aceitar o atalho", "effects": {"hype": 20, "sombra": 25, "money": 2000, "confianca": -35, "ferida": 45, "limite": -2}},
+        {"id": "negociar_sem_tinker", "label": "Negociar escondido", "effects": {"hype": 10, "sombra": 12, "confianca": -20, "ferida": 25, "limite": -1}}
+      ],
+      "branching": {
+        "recusar_contrato_cassio": "Tinker permanece.",
+        "assinar_contrato_cassio": "Tinker vai embora.",
+        "negociar_sem_tinker": "Tinker entra em retorno dificil."
+      }
+    },
+    {
+      "id": "ato5_quem_ficou",
+      "act": 5,
+      "title": "Quem Ficou",
+      "location": "budokan_das_aguas",
+      "objective": "Chegar a faixa preta e descobrir quem ainda esta ao lado de Ruan.",
+      "gameplay_steps": [
+        {"type": "ceremony", "id": "faixa_preta"},
+        {"type": "final_evaluation", "uses": ["honra", "hype", "sombra", "legado", "tinker_bond"]},
+        {"type": "final_cutscene", "id": "final_por_reputacao"}
+      ],
+      "endings": ["heroi_duas_aguas", "estrela_vazia", "rei_dos_atalhos", "traidor_silencioso", "raiz_eterna"]
+    }
+  ]
+}
