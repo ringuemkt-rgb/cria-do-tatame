@@ -1,0 +1,49 @@
+{
+  "version": "0.1.0",
+  "language": "pt-BR",
+  "style": "HD Pixel Art 2.5D Regional Premium",
+  "global_palette": {
+    "black": "#0A0A0A",
+    "charcoal": "#1A1A1A",
+    "burned_gold": "#B8860B",
+    "dirty_white": "#F2F2F2",
+    "river_blue": "#1E3A5F",
+    "crisis_red": "#8B1E1E",
+    "mangrove_green": "#2E4A38"
+  },
+  "rules": [
+    "Mobile-first: leitura em 1 segundo.",
+    "Silhueta vem antes de detalhe.",
+    "Rosto emocional sem copiar pessoa real.",
+    "Sem logos reais, marcas reais ou atletas reais.",
+    "Adulto pelo peso moral, nao por exagero grafico."
+  ],
+  "character_visual_prompts": {
+    "ruan_macacao": {
+      "core": "Ruan Macacao Silva, jovem atleta brasileiro de jiu-jitsu do Baixo Sul da Bahia, corpo compacto e pesado, postura de pressao, olhar tenso e introspectivo, gi gasto com patches ficcionais do Terreiro da Luta, simbolo Gorila Silverback, HD pixel art 2.5D, luz cinematografica, sem marca real.",
+      "actions": ["idle", "walk", "stance", "grip_attempt", "grip_success", "clinch", "takedown", "guard", "pass", "mount", "technical_setup", "technical_lock", "technical_finish", "win", "lose"]
+    },
+    "tinker_bell": {
+      "core": "Joaquim Tinker Bell Silva, jovem brasileiro do Baixo Sul, amigo e testemunha de Ruan, corpo leve, celular na mao, mochila pequena, olhar esperto e preocupado, roupa simples com detalhes urbanos, energia de quem observa tudo, HD pixel art 2.5D, silhueta fina e rapida, sem caricatura.",
+      "actions": ["idle", "record_phone", "warn", "argue", "walk_away", "return", "support", "cria_live_post", "ceremony_present", "ceremony_absent"]
+    },
+    "mestre_dende": {
+      "core": "Mestre Milson Dende, mentor de jiu-jitsu, mais velho, gi vivido, postura economica, presenca moral firme, olhar que pesa mais que fala, HD pixel art 2.5D, luz quente de fim de tarde no Terreiro da Luta."
+    },
+    "davi_relampago": {
+      "core": "Davi Relampago, rival tecnico, atleta enxuto, postura reta, gi limpo, olhar frio e respeitoso, velocidade e precisao, HD pixel art 2.5D, silhueta estreita e dinamica."
+    },
+    "cassio_molho": {
+      "core": "Cassio Molho, figura urbana premium e predatoria, no-gi escuro, joias discretas, sorriso calculado, proposta tentadora, HD pixel art 2.5D, luz neon fria, sem marca real."
+    }
+  },
+  "arena_visual_layers": {
+    "terreiro_da_luta": ["bg_far_mangue", "bg_mid_madeira", "play_area_tatame", "foreground_pilares", "particles_poeira_luz"],
+    "arena_do_dique": ["bg_far_ginasio", "bg_mid_telao", "play_area_tatame_oficial", "foreground_gradil", "particles_flash_cameras"],
+    "ferro_velho_da_lapa": ["bg_far_neon_chuva", "bg_mid_metal", "play_area_concreto", "foreground_correntes", "particles_chuva_faiscas"],
+    "manguezal_profundo": ["bg_far_mangue_noite", "bg_mid_arvores", "play_area_lama", "foreground_raizes", "particles_umidade"],
+    "praia_de_pratigi": ["bg_far_mar", "bg_mid_barracas", "play_area_areia", "foreground_celulares", "particles_spray_mar"],
+    "colonia_nishimura": ["bg_far_colonia", "bg_mid_portao", "play_area_tatame_silencioso", "foreground_lanternas", "particles_poeira_luz"],
+    "budokan_das_aguas": ["bg_far_agua", "bg_mid_arcos", "play_area_tatame_elite", "foreground_reflexos", "particles_neblina"]
+  }
+}
