@@ -1,0 +1,22 @@
+{
+  "version": "0.1.0",
+  "language": "pt-BR",
+  "training_loop": "Treino e minigame de ritmo com gestao de energia, fadiga e maestria tecnica.",
+  "physical_training": {
+    "corrida_mangue": {"name": "Corrida no Mangue", "target_stat": "gas", "energy_cost": 25, "risk_fatigue": 0.12, "input_pattern": "ritmo_constante", "reward": {"gas_xp": 12, "raiz": 2}},
+    "pular_corda": {"name": "Pular Corda", "target_stat": "gas", "energy_cost": 18, "risk_fatigue": 0.08, "input_pattern": "timing", "reward": {"gas_xp": 8, "focus_xp": 3}},
+    "puxar_pneu": {"name": "Puxar Pneu", "target_stat": "pressure", "energy_cost": 30, "risk_fatigue": 0.18, "input_pattern": "forca_cadenciada", "reward": {"pressure_xp": 12, "grip_xp": 5}},
+    "alongamento_guarda": {"name": "Alongamento de Guarda", "target_stat": "guard", "energy_cost": 15, "risk_fatigue": 0.04, "input_pattern": "precisao_lenta", "reward": {"guard_xp": 10, "injury_recovery": 1}}
+  },
+  "technical_training": {
+    "rolagem_tecnica": {"name": "Rolagem Tecnica", "energy_cost": 25, "hp_damage": 0, "goal": "executar_tecnica_3_vezes", "mastery_xp": 20},
+    "sparring_controlado": {"name": "Sparring Controlado", "energy_cost": 35, "hp_damage": 5, "goal": "vencer_sem_perder_moral", "mastery_xp": 28},
+    "drill_repeticao": {"name": "Drill de Repeticao", "energy_cost": 18, "hp_damage": 0, "goal": "acertar_timing", "mastery_xp": 12}
+  },
+  "mentors": {
+    "mestre_dende": {"teaches": ["grip_de_ferro", "sprawl", "saida_montada", "saida_cem_quilos", "raspagem_tesoura"], "axis": "honra_legado"},
+    "davi_relampago": {"teaches": ["corte_joelho", "arm_drag", "torreando"], "axis": "tecnica_foco"},
+    "leoa_quilombola": {"teaches": ["raspagem_borboleta", "base_baixa"], "axis": "raiz_resiliencia"}
+  },
+  "technique_mastery": {"levels": 5, "level_5_unlocks_variation": true, "example": {"baiana": "baiana_com_giro"}}
+}
