@@ -5,6 +5,11 @@ config_version=5
 config/name="Cria do Tatame - Pressao"
 run/main_scene="res://scenes/main_menu/MainMenu.tscn"
 
+[autoload]
+SignalBus="*res://src/core/SignalBus.gd"
+DataRegistry="*res://src/core/DataRegistry.gd"
+SaveManager="*res://src/core/SaveManager.gd"
+
 [display]
 window/size/viewport_width=1280
 window/size/viewport_height=720
