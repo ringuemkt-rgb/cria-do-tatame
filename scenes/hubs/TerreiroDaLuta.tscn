@@ -18,12 +18,36 @@ text = "TERREIRO DA LUTA"
 
 [node name="Status" type="Label" parent="Panel"]
 layout_mode = 2
-text = "Semana 1"
+text = "Semana 1 - Segunda • R$ 0 • Energia 100"
 
-[node name="StartCombat" type="Button" parent="Panel"]
+[node name="Message" type="Label" parent="Panel"]
 layout_mode = 2
-text = "Iniciar treino contra Davi"
+text = "Ser forte e ser gentil."
 
-[node name="AdvanceWeek" type="Button" parent="Panel"]
+[node name="TrainBtn" type="Button" parent="Panel"]
 layout_mode = 2
-text = "Avancar dia"
+text = "TREINAR"
+
+[node name="FightDaviBtn" type="Button" parent="Panel"]
+layout_mode = 2
+text = "LUTAR CONTRA DAVI RELAMPAGO"
+
+[node name="RestBtn" type="Button" parent="Panel"]
+layout_mode = 2
+text = "DESCANSAR"
+
+[node name="SaveBtn" type="Button" parent="Panel"]
+layout_mode = 2
+text = "SALVAR JOGO"
+
+[node name="AdvanceDayBtn" type="Button" parent="Panel"]
+layout_mode = 2
+text = "AVANCAR DIA"
+
+[node name="CriaLiveBtn" type="Button" parent="Panel"]
+layout_mode = 2
+text = "ABRIR CRIA LIVE"
+
+[node name="MainMenuBtn" type="Button" parent="Panel"]
+layout_mode = 2
+text = "MENU PRINCIPAL"
