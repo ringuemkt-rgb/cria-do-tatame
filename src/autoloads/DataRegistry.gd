@@ -10,6 +10,14 @@ var economy := {}
 var progression := {}
 var cria_live_posts := {}
 var settings := {}
+var sponsors := {}
+var reputation_events := {}
+var tinker_bond := {}
+var finais_adultos := {}
+var story_missions := {}
+var story_scenes := {}
+var arena_story_gameplay := {}
+var story_visual_manifest := {}
 var validation_report := {}
 
 const DATA_FILES := {
@@ -22,7 +30,15 @@ const DATA_FILES := {
 	"economy": "res://data/economy.json",
 	"progression": "res://data/progression.json",
 	"cria_live_posts": "res://data/cria_live_posts.json",
-	"settings": "res://data/settings.json"
+	"settings": "res://data/settings.json",
+	"sponsors": "res://data/sponsors.json",
+	"reputation_events": "res://data/reputation_events.json",
+	"tinker_bond": "res://data/tinker_bond.json",
+	"finais_adultos": "res://data/finais_adultos.json",
+	"story_missions": "res://data/missions/story_missions_v01.json",
+	"story_scenes": "res://data/story/story_scenes_v01.json",
+	"arena_story_gameplay": "res://data/arenas/arena_story_gameplay_v01.json",
+	"story_visual_manifest": "res://data/visual/story_visual_manifest_v01.json"
 }
 
 func _ready():
@@ -39,6 +55,14 @@ func load_all():
 	progression = _load_raw("progression")
 	cria_live_posts = _load_raw("cria_live_posts")
 	settings = _load_raw("settings")
+	sponsors = _load_keyed("sponsors")
+	reputation_events = _load_keyed("reputation_events")
+	tinker_bond = _load_raw("tinker_bond")
+	finais_adultos = _load_raw("finais_adultos")
+	story_missions = _load_raw("story_missions")
+	story_scenes = _load_raw("story_scenes")
+	arena_story_gameplay = _load_raw("arena_story_gameplay")
+	story_visual_manifest = _load_raw("story_visual_manifest")
 	validation_report = validate_core_data()
 	SignalBus.data_validation_finished.emit(validation_report)
 	SignalBus.data_loaded.emit()
@@ -73,6 +97,10 @@ func validate_core_data():
 		errors.append("arenas.json sem terreiro_da_luta")
 	if techniques.is_empty():
 		errors.append("techniques.json vazio")
+	if tinker_bond.is_empty():
+		errors.append("tinker_bond.json nao carregado")
+	if finais_adultos.is_empty():
+		errors.append("finais_adultos.json nao carregado")
 	return {"ok": errors.is_empty(), "errors": errors, "characters": characters.size(), "arenas": arenas.size(), "techniques": techniques.size()}
 
 func get_character(id):
@@ -83,3 +111,15 @@ func get_arena(id):
 
 func get_technique(id):
 	return techniques.get(id, {})
+
+func get_story_mission(id):
+	for mission in story_missions.get("missions", []):
+		if str(mission.get("id", "")) == str(id):
+			return mission
+	return {}
+
+func get_story_scene(id):
+	for scene in story_scenes.get("scenes", []):
+		if str(scene.get("id", "")) == str(id):
+			return scene
+	return {}
