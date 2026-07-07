@@ -123,6 +123,12 @@ func validate_core_data():
 	var errors := []
 	if not characters.has("ruan_macacao"):
 		errors.append("characters.json sem ruan_macacao")
+	else:
+		var ruan: Dictionary = characters.get("ruan_macacao", {})
+		if ruan.get("canon", false) != true:
+			errors.append("ruan_macacao precisa ter canon=true")
+		if str(ruan.get("name", "")).find("Caio") >= 0 or str(ruan.get("name", "")).find("Ravel") >= 0:
+			errors.append("ruan_macacao contem nome legado proibido")
 	if not arenas.has("terreiro_da_luta"):
 		errors.append("arenas.json sem terreiro_da_luta")
 	if techniques.is_empty():
