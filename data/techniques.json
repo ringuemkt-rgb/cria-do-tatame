@@ -1,0 +1,13 @@
+{
+  "version": "0.1.0",
+  "techniques": [
+    {"id": "grip_de_ferro", "name": "Grip de Ferro", "category": "grip", "entry_state": "DISTANCE", "exit_state": "GRIP", "cost": {"gas": 4, "focus": 1}, "effects": {"self_control_bonus": 5, "opponent_grip_reduction": 8}},
+    {"id": "head_pressure", "name": "Head Pressure", "category": "pressure", "entry_state": "CLINCH", "exit_state": "CLINCH", "cost": {"gas": 5}, "effects": {"opponent_focus_reduction": 6, "self_control_bonus": 4}},
+    {"id": "knee_cut", "name": "Knee Cut", "category": "pass", "entry_state": "GROUND", "exit_state": "TRANSITION", "cost": {"gas": 8, "focus": 3}, "effects": {"self_control_bonus": 10, "opponent_gas_reduction": 4}},
+    {"id": "crossface", "name": "Crossface", "category": "control", "entry_state": "GROUND", "exit_state": "GROUND", "cost": {"gas": 5}, "effects": {"self_control_bonus": 8, "opponent_scramble_reduction": 10}},
+    {"id": "quebra_de_base", "name": "Quebra de Base", "category": "off_balance", "entry_state": "GRIP", "exit_state": "CLINCH", "cost": {"gas": 6, "focus": 2}, "effects": {"opponent_control_reduction": 7, "opponent_focus_reduction": 3}},
+    {"id": "montada_pesada", "name": "Montada Pesada", "category": "dominant_position", "entry_state": "GROUND", "exit_state": "GROUND", "cost": {"gas": 10, "focus": 3}, "effects": {"self_control_bonus": 15, "opponent_gas_reduction": 8, "opponent_moral_reduction": 4}},
+    {"id": "encerramento_tecnico", "name": "Encerramento Técnico", "category": "match_end", "entry_state": "CONTROL", "exit_state": "RESET", "cost": {"gas": 14, "focus": 8}, "requirements": {"self_control_min": 65, "focus_min": 45}, "effects": {"success_chance": 0.35}},
+    {"id": "silverback_grip", "name": "Silverback Grip", "category": "ultimate", "entry_state": "GRIP", "exit_state": "CLINCH", "cost": {"gas": 16, "focus": 6, "moral": 2}, "requirements": {"character_id": "ruan_macacao"}, "effects": {"opponent_grip_reduction_percent": 0.15, "self_control_bonus": 18, "pressure_bonus": 0.2}}
+  ]
+}
