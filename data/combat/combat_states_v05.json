@@ -1,0 +1,17 @@
+{
+  "version": "0.5.0",
+  "states": [
+    {"id":"distancia_media","label":"Distancia Media","buttons":["Pegada","Defesa","Finta","Clinch","Queda"]},
+    {"id":"disputa_pegada","label":"Disputa de Pegada","buttons":["Dominar","Quebrar","Arm Drag","Base","Entrar"]},
+    {"id":"clinch_neutro","label":"Clinch Neutro","buttons":["Pressao","Pummel","Whizzer","Angulo","Queda"]},
+    {"id":"clinch_dominante","label":"Clinch Dominante","buttons":["Pressao","Body Lock","Trocar","Queda","Puxar"]},
+    {"id":"entrada_queda","label":"Entrada de Queda","buttons":["Drive","Ajustar","Trocar","Defender","Reset"]},
+    {"id":"guarda_fechada","label":"Guarda Fechada","buttons":["Posturar","Abrir","Pressao","Defender","Passar"]},
+    {"id":"guarda_aberta","label":"Guarda Aberta","buttons":["Torrear","Cortar","Pressao","Defender","Passar"]},
+    {"id":"meia_guarda","label":"Meia-Guarda","buttons":["Crossface","Underhook","Pressao","Voltar","Passar"]},
+    {"id":"cem_quilos","label":"Cem Quilos","buttons":["Pressao","Crossface","Quadril","Norte-Sul","Montar"]},
+    {"id":"montada","label":"Montada","buttons":["Base","Pressao","Isolar","Defender","Avancar"]},
+    {"id":"costas","label":"Costas","buttons":["Ganchos","Cinto","Ajustar","Defender","Encerrar"]},
+    {"id":"reset","label":"Reset","buttons":["Levantar","Respirar","Base","Foco","Voltar"]}
+  ]
+}
