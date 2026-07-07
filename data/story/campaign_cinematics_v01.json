@@ -1,0 +1,102 @@
+{
+  "version": "0.1.0",
+  "language": "pt-BR",
+  "rules": [
+    "cenas adultas por peso moral, nao por choque gratuito",
+    "sem marcas reais",
+    "sem Caio Ravel como ativo novo",
+    "legendas e falas sempre em portugues brasileiro"
+  ],
+  "cutscenes": [
+    {
+      "id": "intro_terreiro",
+      "act": 1,
+      "trigger": "new_game",
+      "location": "terreiro_da_luta",
+      "characters": ["ruan_macacao", "mestre_dende", "tinker_bell"],
+      "camera": "plano aberto do Terreiro ao por do sol, corte para os pes de Ruan pisando no tatame",
+      "beats": [
+        {"speaker": "mestre_dende", "line": "Voce entrou aqui com forca. Ainda falta direcao."},
+        {"speaker": "ruan_macacao", "line": "Eu vim aprender a vencer."},
+        {"speaker": "mestre_dende", "line": "Entao primeiro aprende a cair."},
+        {"speaker": "tinker_bell", "line": "Mano, aqui o chao fala baixo. Mas fala a verdade."}
+      ],
+      "next": "primeiro_treino_basico"
+    },
+    {
+      "id": "primeira_derrota_mangue",
+      "act": 1,
+      "trigger": "lost_to_davi_first_time",
+      "location": "mangue_itubera",
+      "characters": ["ruan_macacao", "tinker_bell"],
+      "camera": "Ruan sentado no mangue, kimono sujo, Tinker ao lado com celular abaixado",
+      "beats": [
+        {"speaker": "ruan_macacao", "line": "Nao sou bom o bastante."},
+        {"speaker": "tinker_bell", "line": "Ninguem nasce bom, mano. Ou voce fica no chao, ou levanta diferente."},
+        {"speaker": "ruan_macacao", "line": "E se eu nao conseguir?"},
+        {"speaker": "tinker_bell", "line": "Eu fico aqui ate voce lembrar quem e."}
+      ],
+      "choice_event": "fica_no_chao_ou_levanta"
+    },
+    {
+      "id": "cassio_primeira_tentacao",
+      "act": 2,
+      "trigger": "hype_30_or_after_davi_win",
+      "location": "zambiapunga_backstage",
+      "characters": ["ruan_macacao", "cassio_molho", "tinker_bell"],
+      "camera": "luz quente de festa, som alto ao fundo, Cássio sorri enquanto Tinker observa frio",
+      "beats": [
+        {"speaker": "cassio_molho", "line": "Honra nao paga conta. Hype paga."},
+        {"speaker": "tinker_bell", "line": "Cuidado, Macacao. Atalho tambem vira coleira."},
+        {"speaker": "ruan_macacao", "line": "Eu so preciso respirar um pouco."},
+        {"speaker": "cassio_molho", "line": "Entao deixa eu comprar esse ar pra voce."}
+      ],
+      "choice_event": "aceitar_ou_recusar_primeiro_atalho"
+    },
+    {
+      "id": "tinker_video_vazado",
+      "act": 3,
+      "trigger": "public_image_crisis",
+      "location": "quarto_ruan_noite",
+      "characters": ["ruan_macacao", "tinker_bell"],
+      "camera": "celular iluminando os rostos, comentarios subindo na tela, silencio pesado",
+      "beats": [
+        {"speaker": "tinker_bell", "line": "Voce precisa falar."},
+        {"speaker": "ruan_macacao", "line": "Pra internet me perdoar?"},
+        {"speaker": "tinker_bell", "line": "Nao. Pra voce parar de mentir pra si mesmo."},
+        {"speaker": "ruan_macacao", "line": "Eu estou carregando todo mundo nas costas."},
+        {"speaker": "tinker_bell", "line": "Nao. Voce esta usando todo mundo como desculpa."}
+      ],
+      "choice_event": "assumir_erro_ou_culpar_midia"
+    },
+    {
+      "id": "contrato_sangue_frio",
+      "act": 4,
+      "trigger": "lesao_grave_e_divida_alta",
+      "location": "evento_privado_ficcional",
+      "characters": ["ruan_macacao", "cassio_molho", "tinker_bell"],
+      "camera": "mesa de contrato, mao de Ruan tremendo, Tinker na porta pronto para sair",
+      "beats": [
+        {"speaker": "cassio_molho", "line": "Assina e a dor vira investimento."},
+        {"speaker": "tinker_bell", "line": "Voce leu o dinheiro. Nao leu o preco."},
+        {"speaker": "ruan_macacao", "line": "Eu estou cansado de ser pobre com honra."},
+        {"speaker": "tinker_bell", "line": "E eu estou cansado de ver homem bom usando dor como desculpa pra virar covarde."}
+      ],
+      "choice_event": "contrato_final_cassio"
+    },
+    {
+      "id": "faixa_preta_julgamento",
+      "act": 5,
+      "trigger": "black_belt_ceremony",
+      "location": "terreiro_da_luta",
+      "characters": ["ruan_macacao", "mestre_dende", "tinker_bell"],
+      "camera": "tatame vazio, faixa preta na mao de Dende, cadeira de Tinker aparece ou fica vazia conforme escolhas",
+      "beats": [
+        {"speaker": "mestre_dende", "line": "Faixa preta nao cobre buraco de carater."},
+        {"speaker": "ruan_macacao", "line": "Entao o que ela cobre?"},
+        {"speaker": "mestre_dende", "line": "Nada. Ela revela."}
+      ],
+      "choice_event": "calcular_final"
+    }
+  ]
+}
