@@ -1,0 +1,38 @@
+{
+  "version": "0.1.0",
+  "missions": [
+    {
+      "id": "act1_primeiro_treino",
+      "title": "Primeiro Treino no Terreiro",
+      "act": 1,
+      "region": "terreiro_da_luta",
+      "type": "tutorial",
+      "summary": "Ruan aprende que força sem base não sustenta ninguém.",
+      "requirements": [],
+      "rewards": {"xp": 50, "honra": 1, "focus": 1},
+      "next": ["act1_primeiro_sparring"]
+    },
+    {
+      "id": "act1_primeiro_sparring",
+      "title": "Primeiro Sparring",
+      "act": 1,
+      "region": "terreiro_da_luta",
+      "type": "combat",
+      "opponent_id": "davi_relampago",
+      "arena_id": "terreiro_da_luta",
+      "summary": "Davi mostra que velocidade e timing podem vencer força bruta.",
+      "requirements": ["act1_primeiro_treino"],
+      "rewards": {"xp": 80, "honra": 1, "technique": 1}
+    },
+    {
+      "id": "act2_arena_do_dique",
+      "title": "Chamada para Arena do Dique",
+      "act": 2,
+      "region": "arena_do_dique",
+      "type": "official_match",
+      "summary": "Ruan entra em circuito oficial e sente o peso das regras e da torcida.",
+      "requirements": ["act1_primeiro_sparring"],
+      "rewards": {"xp": 120, "hype": 2, "legacy": 1}
+    }
+  ]
+}
