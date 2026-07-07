@@ -1,0 +1,39 @@
+{
+  "version": "0.1.0",
+  "language": "pt-BR",
+  "purpose": "Manifesto de modelos para pipeline open source de producao de assets do Cria do Tatame.",
+  "rules": [
+    "Usar apenas modelos com licenca verificada antes da producao final.",
+    "Gerar assets ficcionais e originais; nao copiar atletas, marcas, academias ou obras existentes.",
+    "Manter o canon: Ruan Macacao Silva, Gorila Silverback, Baixo Sul da Bahia e HD Pixel Art 2.5D Regional Premium.",
+    "Todo asset gerado deve passar por QA de silhueta, leitura mobile, consistencia e ausencia de marca real."
+  ],
+  "image_models": {
+    "pixel_art_main": [
+      {"id": "nerijs/pixel-art-xl", "role": "personagens e assets HD pixel art", "output": "imagem_base"},
+      {"id": "pixelparty/pixel-party-xl", "role": "cenarios e fundos pixel art", "output": "arena_layers"},
+      {"id": "artificialguybr/PixelArtRedmond", "role": "LoRA de consistencia visual pixel art", "output": "style_lora"},
+      {"id": "Onodofthenorth/SD_PixelArt_SpriteSheet_Generator", "role": "spritesheets de personagens", "output": "spritesheet"}
+    ],
+    "pose_control": [
+      {"id": "xinsir/controlnet-openpose-sdxl-1.0", "role": "controle de pose e silhueta", "output": "pose_locked_sprite"}
+    ],
+    "animation": [
+      {"id": "Loacky/Animator2D-v1.0.0-alpha", "role": "animacao 2D experimental", "output": "frame_sequence"}
+    ]
+  },
+  "video_models": [
+    {"id": "Wan-AI/Wan2.2-T2V-A14B", "role": "cutscene text-to-video"},
+    {"id": "Wan-AI/Wan2.2-I2V-A14B", "role": "cutscene image-to-video"},
+    {"id": "LTX-Video", "role": "transicoes curtas"},
+    {"id": "CogVideoX-5B", "role": "vinhetas curtas"},
+    {"id": "HunyuanVideo", "role": "cinematicas principais"}
+  ],
+  "audio_models": [
+    {"id": "facebook/musicgen-large", "role": "musica de arena e temas"},
+    {"id": "stabilityai/stable-audio-open-1.0", "role": "SFX e ambiencias"},
+    {"id": "AudioLDM", "role": "SFX alternativos e crowd"}
+  ],
+  "consistency_methods": ["seed_fixa", "reference_sheet", "IP_Adapter", "LoRA_personagem", "ControlNet_pose", "QA_humano"],
+  "export_targets": ["Godot 4.2+", "PNG transparente", "OGG", "WAV", "MP4", "JSON manifest"]
+}
