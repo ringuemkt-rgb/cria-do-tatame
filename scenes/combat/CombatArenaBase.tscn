@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3]
+[gd_scene load_steps=3 format=3]
 
 [ext_resource type="Script" path="res://scenes/combat/CombatArenaBase.gd" id="1_combat"]
+[ext_resource type="PackedScene" path="res://scenes/ui/CombatHUD.tscn" id="2_hud"]
 
 [node name="CombatArenaBase" type="Control"]
 layout_mode = 3
@@ -9,11 +10,18 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 script = ExtResource("1_combat")
 
+[node name="CombatHUD" parent="." instance=ExtResource("2_hud")]
+
 [node name="Panel" type="VBoxContainer" parent="."]
 layout_mode = 2
+anchor_left = 0.04
+anchor_top = 0.68
+anchor_right = 0.96
+anchor_bottom = 0.98
 
 [node name="Title" type="Label" parent="Panel"]
 layout_mode = 2
+horizontal_alignment = 1
 text = "RUAN MACACAO vs DAVI RELAMPAGO"
 
 [node name="State" type="Label" parent="Panel"]
@@ -26,27 +34,38 @@ text = "Recursos"
 
 [node name="Message" type="Label" parent="Panel"]
 layout_mode = 2
+autowrap_mode = 3
 text = "Ganhe a pegada, quebre a base e estabilize."
+
+[node name="AIHint" type="Label" parent="Panel"]
+layout_mode = 2
+autowrap_mode = 3
+text = "Davi esta lendo seu ritmo. Varie as entradas."
 
 [node name="Buttons" type="HBoxContainer" parent="Panel"]
 layout_mode = 2
 
 [node name="Action1" type="Button" parent="Panel/Buttons"]
+custom_minimum_size = Vector2(160, 58)
 layout_mode = 2
 text = "Grip de Ferro"
 
 [node name="Action2" type="Button" parent="Panel/Buttons"]
+custom_minimum_size = Vector2(160, 58)
 layout_mode = 2
 text = "Baiana"
 
 [node name="Action3" type="Button" parent="Panel/Buttons"]
+custom_minimum_size = Vector2(160, 58)
 layout_mode = 2
 text = "Corte de Joelho"
 
 [node name="Action4" type="Button" parent="Panel/Buttons"]
+custom_minimum_size = Vector2(160, 58)
 layout_mode = 2
 text = "Sprawl"
 
 [node name="Action5" type="Button" parent="Panel/Buttons"]
+custom_minimum_size = Vector2(160, 58)
 layout_mode = 2
 text = "Encerrar"
