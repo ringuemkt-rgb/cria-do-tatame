@@ -1,0 +1,65 @@
+{
+  "version": "0.1.0",
+  "arenas": [
+    {
+      "id": "terreiro_da_luta",
+      "name": "Terreiro da Luta",
+      "region": "Ituberá - Baixo Sul da Bahia",
+      "type": "hub_arena",
+      "visual_identity": "madeira, rio, mangue, pôr do sol, tatame azul e dourado, treino raiz",
+      "music_theme": "berimbau_leve_percussao_baixo_sul",
+      "modifiers": {"pressure_bonus": 0.05, "focus_bonus": 0.05, "honor_bonus": 2, "hype_bonus": 0},
+      "asset_requirements": ["bg_far_river", "wooden_roof", "tatame_blue_gold", "foreground_posts", "warm_lights"]
+    },
+    {
+      "id": "arena_do_dique",
+      "name": "Arena do Dique",
+      "region": "Salvador - Bahia",
+      "type": "official_circuit",
+      "visual_identity": "ginásio oficial, arquibancada, telões, tatame azul e dourado, placas Salvador",
+      "music_theme": "arena_oficial_bass_percussion",
+      "modifiers": {"rule_pressure": 0.1, "focus_penalty_on_error": 0.05, "hype_bonus": 3},
+      "asset_requirements": ["crowd", "score_tables", "main_screen", "side_banners", "official_mats"]
+    },
+    {
+      "id": "ferro_velho_da_lapa",
+      "name": "Ferro Velho da Lapa",
+      "region": "Interior da Bahia",
+      "type": "hard_arena",
+      "visual_identity": "metal, sombra, faísca, chão pesado, iluminação baixa",
+      "modifiers": {"risk_bonus": 0.15, "moral_pressure": 2}
+    },
+    {
+      "id": "manguezal_profundo",
+      "name": "Manguezal Profundo",
+      "region": "Baixo Sul da Bahia",
+      "type": "root_arena",
+      "visual_identity": "lama, água, raízes, barcos, vegetação fechada",
+      "modifiers": {"traction_penalty": 0.15, "sweep_bonus": 0.1, "speed_penalty": 0.05}
+    },
+    {
+      "id": "praia_de_pratigi",
+      "name": "Praia de Pratigi",
+      "region": "Ituberá - Bahia",
+      "type": "hype_arena",
+      "visual_identity": "areia, sol, crowd regional, barracas e mar",
+      "modifiers": {"hype_bonus": 4, "speed_penalty": 0.08}
+    },
+    {
+      "id": "colonia_nishimura",
+      "name": "Colônia Nishimura",
+      "region": "Baixo Sul da Bahia",
+      "type": "discipline_arena",
+      "visual_identity": "templo, silêncio, água, madeira, símbolo ancestral",
+      "modifiers": {"focus_bonus": 0.12, "error_cost_bonus": 0.05}
+    },
+    {
+      "id": "budokan_das_aguas",
+      "name": "Budokan das Águas",
+      "region": "Bahia",
+      "type": "precision_arena",
+      "visual_identity": "azul profundo, silêncio, tatame limpo, geometria rígida",
+      "modifiers": {"precision_bonus": 0.1, "mistake_penalty": 0.1}
+    }
+  ]
+}
