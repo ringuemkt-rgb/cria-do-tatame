@@ -14,6 +14,7 @@ CombatManager="*res://src/autoloads/CombatManager.gd"
 CareerLoop="*res://src/autoloads/CareerLoop.gd"
 ReputationMatrix="*res://src/autoloads/ReputationMatrix.gd"
 CriaLiveManager="*res://src/autoloads/CriaLiveManager.gd"
+AudioManager="*res://src/autoloads/AudioManager.gd"
 
 [display]
 window/size/viewport_width=1280
