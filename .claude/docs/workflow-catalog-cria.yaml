@@ -1,0 +1,60 @@
+version: 1
+project: Cria do Tatame
+engine: Godot 4.2+
+language: pt-BR
+
+phases:
+  - id: descoberta
+    objetivo: Escolher tecnica, arena, personagem ou sistema e validar canon.
+    entregaveis:
+      - briefing.md
+      - riscos.md
+
+  - id: design
+    objetivo: Transformar a ideia em fluxo jogavel.
+    entregaveis:
+      - ficha_gameplay.md
+      - estados_combate.json
+      - botoes_contextuais.json
+
+  - id: pesquisa_tecnica
+    objetivo: Estudar referencias permitidas e extrair fases do movimento.
+    entregaveis:
+      - pesquisa.md
+      - ficha_biomecanica.md
+      - keyframes.json
+
+  - id: arte_movimento
+    objetivo: Criar material visual 2D pixel art de alta qualidade.
+    entregaveis:
+      - prompt_sprite.txt
+      - sprite_sheet.png
+      - qa_visual.md
+
+  - id: implementacao
+    objetivo: Implementar no Godot com dados e scripts modulares.
+    entregaveis:
+      - tecnica_godot.json
+      - eventos_animacao.json
+      - gdscript_notes.md
+
+  - id: qa
+    objetivo: Validar gameplay, visual, performance, mobile e legalidade.
+    entregaveis:
+      - qa_report.md
+      - bugs.md
+      - balance_notes.md
+
+  - id: producao
+    objetivo: Registrar versao, atualizar Codex e planejar proximo lote.
+    entregaveis:
+      - changelog.md
+      - codex_update.md
+      - next_batch.md
+
+quality_gates:
+  canon: Ruan Macacao, Baixo Sul, PT-BR e jiu-jitsu brasileiro.
+  gameplay: Toda tecnica altera estado, recurso, pontuacao ou posicao.
+  arte: Silhueta clara, pegada visivel, quadril e base coerentes.
+  tecnico: Codigo modular, data-driven e testavel.
+  legal: Sem copia de atleta, frame, aula, marca ou logo real.
