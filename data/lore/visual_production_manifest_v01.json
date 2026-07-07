@@ -1,0 +1,45 @@
+{
+  "version": "0.1.0",
+  "language": "pt-BR",
+  "style_name": "HD Pixel Art 2.5D Regional Premium",
+  "global_palette": {
+    "preto": "#0A0A0A",
+    "grafite": "#1A1A1A",
+    "dourado": "#B8860B",
+    "branco_sujo": "#F2F2F2",
+    "vermelho": "#D92323",
+    "azul_profundo": "#1E3A5F"
+  },
+  "sprite_rules": [
+    "silhueta clara em celular",
+    "poses de jiu-jitsu esportivas e legiveis",
+    "contorno forte",
+    "pouca informacao miuda em sprite pequeno",
+    "patches ficcionais",
+    "sem logotipos reais"
+  ],
+  "ui_rules": [
+    "botoes grandes",
+    "contraste alto",
+    "safe area mobile",
+    "bordas douradas discretas",
+    "tipografia limpa e legivel"
+  ],
+  "scene_prompts": {
+    "terreiro_da_luta": "hub de treino em madeira, mangue ao fundo, luz de fim de tarde, comunidade, atmosfera de disciplina e verdade",
+    "arena_do_dique": "arena oficial com tatame azul e dourado, arquibancada, luz forte, clima de torneio",
+    "zambiapunga": "festival noturno, tambores, mascaras, luz quente, barracas e crowd cultural",
+    "ferro_velho_da_lapa": "ferro velho chuvoso, metal enferrujado, neon discreto, arena improvisada e tensao",
+    "camamu_manguezal": "mangue profundo, agua escura, lama, vegetacao, silencio e memoria"
+  },
+  "character_prompt_anchors": {
+    "ruan_macacao": "jovem lutador baiano de jiu-jitsu, fisico compacto, kimono branco, patch Gorila Silverback, expressao determinada",
+    "mestre_dende": "mentor maduro, postura calma, olhar severo, roupa simples de treino, presenca de mestre comunitario",
+    "tinker_bell": "jovem parceiro com celular, energia de bastidor, expressao leal e preocupada",
+    "davi_relampago": "rival tecnico e veloz, fisico seco, postura leve, olhar frio",
+    "cassio_molho": "figura carismatica de palco, roupa chamativa, sorriso confiante, cores quentes",
+    "kenzo_kuroi": "rival silencioso, postura ritualistica, cores frias, precisao e misterio",
+    "leoa_quilombola": "lutadora firme, raiz e resistencia, postura baixa e dignidade",
+    "oni_da_lapa": "rival pesado de arena dura, silhueta forte, luz dura e ambiente de ferro velho"
+  }
+}
