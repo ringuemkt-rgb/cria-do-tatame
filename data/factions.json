@@ -1,10 +1,67 @@
 {
-  "version": "0.1.0",
+  "version": "0.2.0",
+  "language": "pt-BR",
+  "design_note": "Faccoes 100% ficcionais. Crime e corrupcao aparecem como consequencia narrativa, nao como tutorial operacional nem glorificacao.",
   "factions": [
-    {"id": "terreiro", "name": "Terreiro da Luta", "axis": "honra", "description": "Família de treino, disciplina e base moral."},
-    {"id": "circuito_oficial", "name": "Circuito Oficial", "axis": "legado", "description": "Torneios, regras, ranking e visibilidade legítima."},
-    {"id": "cria_live", "name": "Cria Live", "axis": "hype", "description": "Feed social, torcida, polêmica e fama rápida."},
-    {"id": "atalhos", "name": "Atalhos", "axis": "sombra", "description": "Caminhos fáceis que cobram preço moral."},
-    {"id": "raiz", "name": "Raiz do Baixo Sul", "axis": "raiz", "description": "Comunidade, ancestralidade, mangue, família e território."}
+    {
+      "id": "terreiro",
+      "name": "Terreiro da Luta",
+      "axis": "honra",
+      "description": "Familia de treino, disciplina e base moral."
+    },
+    {
+      "id": "circuito_oficial",
+      "name": "Circuito Oficial",
+      "axis": "legado",
+      "description": "Torneios, regras, ranking e visibilidade legitima."
+    },
+    {
+      "id": "cria_live",
+      "name": "Cria Live",
+      "axis": "hype",
+      "description": "Feed social, torcida, polemica e fama rapida."
+    },
+    {
+      "id": "atalhos",
+      "name": "Atalhos",
+      "axis": "sombra",
+      "description": "Caminhos faceis que cobram preco moral."
+    },
+    {
+      "id": "raiz",
+      "name": "Raiz do Baixo Sul",
+      "axis": "raiz",
+      "description": "Comunidade, mangue, familia e territorio."
+    },
+    {
+      "id": "os_aleluia",
+      "name": "Os Aleluia",
+      "axis": "honra_sombra",
+      "tagline": "Fe, Disciplina e Honra",
+      "colors": ["azul", "dourado", "branco"],
+      "symbol": "pomba_ficcional_com_ramo_e_cruz_abstrata",
+      "territories": ["arena_do_dique", "budokan_das_aguas", "igreja_central_ficcional"],
+      "description": "Circuito oficial, tradicao religiosa, controle de torneios e corrupcao de aparencia limpa."
+    },
+    {
+      "id": "la_ele_mil_vezes",
+      "name": "La Ele Mil Vezes",
+      "axis": "sombra_foco",
+      "tagline": "O Olho Tudo Ve, O Tatame Tudo Sabe",
+      "colors": ["roxo", "vermelho", "dourado"],
+      "symbol": "olho_ficcional_e_mao_abstrata",
+      "territories": ["colonia_nishimura", "ferro_velho_da_lapa", "beco_do_engenho"],
+      "description": "Informacao, espionagem de luta, apostas narrativas e poder oculto."
+    },
+    {
+      "id": "nos_tem_um_molho",
+      "name": "Nos Tem Um Molho",
+      "axis": "hype_sombra",
+      "tagline": "Quem Prova, Nao Esquece",
+      "colors": ["laranja", "amarelo", "vermelho"],
+      "symbol": "pimenta_molho_pilao",
+      "territories": ["zambiapunga", "praia_de_pratigi", "evento_privado_ficcional"],
+      "description": "Fama, cultura popular, eventos, viralizacao e tentacao do dinheiro facil."
+    }
   ]
 }
