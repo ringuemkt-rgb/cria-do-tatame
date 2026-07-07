@@ -1,0 +1,70 @@
+{
+  "version": "0.1.0",
+  "language": "pt-BR",
+  "dialogues": {
+    "tinker_confronto_video_vazado": {
+      "id": "tinker_confronto_video_vazado",
+      "ato": 3,
+      "personagem": "tinker_bell",
+      "ouvinte": "ruan_macacao",
+      "contexto": "apos_video_vazado",
+      "falas": [
+        "Voce precisa falar.",
+        "Pra que? Pra internet me perdoar?",
+        "Nao. Pra voce parar de mentir pra si mesmo.",
+        "Voce virou assessor agora?",
+        "Nao. Eu virei o cara que limpa o sangue da tua imagem enquanto voce finge que nao se cortou.",
+        "Cuidado como fala comigo.",
+        "E isso que mudou. Antes voce me escutava. Agora voce mede quem pode te contrariar.",
+        "Eu to carregando todo mundo nas costas.",
+        "Nao. Voce ta usando todo mundo como desculpa."
+      ],
+      "efeito": "tinker_bond_rachadura"
+    },
+    "tinker_limite_final": {
+      "id": "tinker_limite_final",
+      "ato": 4,
+      "personagem": "tinker_bell",
+      "ouvinte": "ruan_macacao",
+      "contexto": "apos_proposta_cassio",
+      "falas": [
+        "Voce leu a clausula?",
+        "Eu li o suficiente.",
+        "Nao. Voce leu o dinheiro. Nao leu o preco.",
+        "Eu to cansado de ser pobre com honra.",
+        "E eu to cansado de ver homem bom usando dor como desculpa pra virar covarde.",
+        "Repete.",
+        "Covarde. Porque lutar machucado e coragem. Vender todo mundo que te levantou e covardia.",
+        "Voce nao sabe o que e carregar isso.",
+        "Eu sei o que e carregar voce quando voce esquece quem e.",
+        "Entao carrega mais essa.",
+        "Nao. Essa nao.",
+        "Se voce assinar, eu vou embora. Nao por raiva. Por respeito ao Ruan que eu conheci."
+      ],
+      "efeito": "tinker_bond_ruptura_ou_retorno"
+    },
+    "tinker_cerimonia_faixa_preta_presente": {
+      "id": "tinker_cerimonia_faixa_preta_presente",
+      "ato": 5,
+      "personagem": "tinker_bell",
+      "ouvinte": "ruan_macacao",
+      "contexto": "cerimonia_faixa_preta",
+      "condicao": "tinker_presente",
+      "falas": [
+        "Eu pensei que voce ia embora pra sempre.",
+        "Eu tambem pensei.",
+        "Por que voltou?",
+        "Porque dessa vez voce nao pediu plateia. Pediu perdao."
+      ]
+    },
+    "tinker_cerimonia_faixa_preta_ausente": {
+      "id": "tinker_cerimonia_faixa_preta_ausente",
+      "ato": 5,
+      "personagem": "tinker_bell",
+      "ouvinte": "ruan_macacao",
+      "contexto": "cerimonia_faixa_preta",
+      "condicao": "tinker_ausente",
+      "falas": ["Tinker nao esta presente. Ruan olha para o lugar onde ele deveria estar. Nada."]
+    }
+  }
+}
