@@ -1,0 +1,56 @@
+{
+  "version": "0.1.0",
+  "language": "pt-BR",
+  "rules": "Aparencia conta historia. Gear altera atributos, reputacao e acesso social sem usar marcas reais.",
+  "slots": ["gi", "rashguard", "shorts", "faixa", "cabelo", "barba", "tatuagem"],
+  "items": {
+    "gi_trancado_perola_basico": {
+      "slot": "gi",
+      "name": "Gi Trancado Perola",
+      "cost": 180,
+      "rarity": "basico",
+      "modifiers": {"gas_drain": -0.04, "grip_integrity": -5, "honra": 1},
+      "access": ["oficial", "treino"],
+      "visual_tags": ["branco_sujo", "simples", "inicio_da_jornada"]
+    },
+    "gi_trancado_ouro_medio": {
+      "slot": "gi",
+      "name": "Gi Trancado Ouro",
+      "cost": 420,
+      "rarity": "medio",
+      "modifiers": {"grip_integrity": 8, "pressure": 4, "gas_drain": 0.02},
+      "access": ["oficial", "treino", "elite"],
+      "visual_tags": ["dourado_discreto", "competidor"]
+    },
+    "gi_pesado_pressao": {
+      "slot": "gi",
+      "name": "Gi Pesado de Pressao",
+      "cost": 680,
+      "rarity": "avancado",
+      "modifiers": {"grip_integrity": 16, "pressure": 10, "gas_drain": 0.08, "speed": -4},
+      "access": ["oficial", "elite"],
+      "visual_tags": ["preto", "grosso", "top_game"]
+    },
+    "rashguard_compressao_raiz": {
+      "slot": "rashguard",
+      "name": "Rashguard Compressao Raiz",
+      "cost": 220,
+      "modifiers": {"gas_recovery": 0.05, "raiz": 2},
+      "access": ["praia", "treino", "evento"],
+      "visual_tags": ["mangue", "azul_rio"]
+    },
+    "short_patrocinado_hype": {
+      "slot": "shorts",
+      "name": "Short Patrocinado Ficcional",
+      "cost": 0,
+      "requires": {"hype_min": 50},
+      "modifiers": {"hype": 5, "honra": -2},
+      "access": ["evento", "praia", "cria_live"],
+      "visual_tags": ["logos_ficcionais", "alto_contraste"]
+    },
+    "cabelo_dread_raiz": {"slot": "cabelo", "name": "Dread Raiz", "cost": 90, "modifiers": {"raiz": 4, "legado": 2}, "visual_tags": ["identidade", "comunidade"]},
+    "cabelo_social_oficial": {"slot": "cabelo", "name": "Social Oficial", "cost": 70, "modifiers": {"honra": 3, "hype": -1}, "visual_tags": ["limpo", "oficial"]},
+    "tatuagem_ancestral_mangue": {"slot": "tatuagem", "name": "Tatuagem Ancestral do Mangue", "cost": 450, "modifiers": {"raiz": 8, "legado": 5}, "restrictions": []},
+    "tatuagem_rosto_hype": {"slot": "tatuagem", "name": "Tatuagem de Rosto Hype", "cost": 800, "modifiers": {"hype": 15, "sombra": 10, "honra": -10}, "restrictions": ["bloqueia_arena_do_dique_oficial"]}
+  }
+}
