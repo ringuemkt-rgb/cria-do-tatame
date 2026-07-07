@@ -1,0 +1,20 @@
+{
+  "version": "0.1.0",
+  "language": "pt-BR",
+  "cabelos": {
+    "black_power_curto": {"nome": "Black Power Curto", "custo": 0, "requisito": "nenhum", "efeito_reputacao": {"raiz": 5, "honra": 0}},
+    "dread_medio": {"nome": "Dread Medio", "custo": 50, "requisito": "nivel_5", "efeito_reputacao": {"raiz": 10, "hype": 5}},
+    "raspado": {"nome": "Raspado", "custo": 20, "requisito": "nenhum", "efeito_reputacao": {"honra": 5, "sombra": 0}},
+    "social": {"nome": "Corte Social", "custo": 30, "requisito": "nenhum", "efeito_reputacao": {"honra": 10, "hype": -5}}
+  },
+  "tatuagens": {
+    "tribal_braco": {"nome": "Tribal no Braco", "custo": 200, "local": "braco_esquerdo", "efeito_reputacao": {"raiz": 15, "legado": 5}, "bloqueia_faccao": ["os_aleluia"]},
+    "gorila_costas": {"nome": "Gorila Silverback nas Costas", "custo": 500, "local": "costas", "efeito_reputacao": {"legado": 20, "hype": 10}, "requer_faixa": "roxa"},
+    "caveira_pescoco": {"nome": "Caveira no Pescoco", "custo": 300, "local": "pescoco", "efeito_reputacao": {"sombra": 25, "hype": 15}, "bloqueia_torneio_oficial": true}
+  },
+  "kimonos": {
+    "transcado_perola_branco": {"nome": "Trancado Perola Branco", "tipo": "gi", "custo": 300, "atributos": {"grip_integrity_bonus": 0, "gas_drain_multiplier": 0.95, "pressao_bonus": 0}, "cor": "branco", "durabilidade": 100},
+    "transcado_ouro_preto": {"nome": "Trancado Ouro Preto", "tipo": "gi", "custo": 800, "atributos": {"grip_integrity_bonus": 10, "gas_drain_multiplier": 1.05, "pressao_bonus": 5}, "cor": "preto", "requer_faixa": "azul", "durabilidade": 150},
+    "jiu_jiu_azul": {"nome": "Jiu/Jiu Azul Pesado", "tipo": "gi", "custo": 1200, "atributos": {"grip_integrity_bonus": 20, "gas_drain_multiplier": 1.1, "pressao_bonus": 10}, "cor": "azul", "requer_faixa": "roxa", "durabilidade": 200}
+  }
+}
