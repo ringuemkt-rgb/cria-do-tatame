@@ -74,3 +74,15 @@ func delete_save(slot_id := 1) -> void:
 	var path = SAVE_PREFIX + str(slot_id) + SAVE_SUFFIX
 	if FileAccess.file_exists(path):
 		DirAccess.remove_absolute(path)
+
+func salvar_jogo() -> bool:
+	return save_game(1)
+
+func carregar_jogo() -> bool:
+	return load_game(1)
+
+func tem_save() -> bool:
+	return has_save(1)
+
+func deletar_save() -> void:
+	delete_save(1)
