@@ -1,0 +1,73 @@
+{
+  "version": "0.1.0",
+  "language": "pt-BR",
+  "global_rules": {
+    "memory_window": 3,
+    "difficulty_scale": ["facil", "normal", "dificil", "pesadelo"],
+    "safe_combat_language": true,
+    "loop": "observar_estado -> escolher_intencao -> escolher_tecnica -> aplicar_custo -> resolver -> registrar_memoria"
+  },
+  "profiles": {
+    "davi_relampago": {
+      "display_name": "Davi Relampago",
+      "archetype": "punish_repetition",
+      "personality": "frio, tecnico, respeitoso",
+      "preferred_states": ["PLAYER_STANDING_NEUTRAL", "PLAYER_BOTTOM_CLINCH", "PLAYER_TOP_GUARD"],
+      "preferred_actions": ["sprawl", "arm_drag", "torreando", "corte_joelho"],
+      "anti_patterns": [
+        {"if_player_repeats_family": "pegada", "response": "sprawl", "weight": 1.2},
+        {"if_player_repeats_family": "pressao", "response": "arm_drag", "weight": 1.1},
+        {"if_player_low_gas": true, "response": "pressao_cabeca", "weight": 1.0}
+      ],
+      "tuning": {"aggression": 0.45, "patience": 0.85, "risk": 0.35, "counter_bias": 0.9}
+    },
+    "cassio_molho": {
+      "display_name": "Cassio Molho",
+      "archetype": "pressure_short",
+      "personality": "carismatico, predatorio, provocador",
+      "preferred_states": ["PLAYER_TOP_CLINCH", "PLAYER_TOP_SIDE", "PLAYER_TOP_MOUNT"],
+      "preferred_actions": ["pressao_cabeca", "quebra_base", "montada_pesada", "encerramento_tecnico"],
+      "anti_patterns": [
+        {"if_player_low_moral": true, "response": "pressao_cabeca", "weight": 1.4},
+        {"if_player_low_gas": true, "response": "montada_pesada", "weight": 1.2}
+      ],
+      "tuning": {"aggression": 0.85, "patience": 0.35, "risk": 0.75, "counter_bias": 0.35}
+    },
+    "kenzo_kuroi": {
+      "display_name": "Kenzo Kuroi",
+      "archetype": "cold_precision",
+      "personality": "silencioso, ritualistico, calculista",
+      "preferred_states": ["PLAYER_STANDING_NEUTRAL", "PLAYER_TOP_CLINCH", "PLAYER_BACK_ATTACK"],
+      "preferred_actions": ["grip_de_ferro", "arm_drag", "mata_leao", "encerramento_tecnico"],
+      "anti_patterns": [
+        {"if_player_misses_high_risk": true, "response": "arm_drag", "weight": 1.5},
+        {"if_player_repeats_family": "raspagem", "response": "torreando", "weight": 1.3}
+      ],
+      "tuning": {"aggression": 0.55, "patience": 0.95, "risk": 0.25, "counter_bias": 1.0}
+    },
+    "leoa_quilombola": {
+      "display_name": "Leoa Quilombola",
+      "archetype": "root_resilience",
+      "personality": "silenciosa, firme, ancestral",
+      "preferred_states": ["PLAYER_BOTTOM_GUARD", "PLAYER_BOTTOM_SIDE", "PLAYER_TOP_GUARD"],
+      "preferred_actions": ["raspagem_tesoura", "raspagem_borboleta", "saida_cem_quilos", "cem_quilos"],
+      "anti_patterns": [
+        {"if_player_overextends": true, "response": "raspagem_borboleta", "weight": 1.4},
+        {"if_player_low_focus": true, "response": "raspagem_tesoura", "weight": 1.1}
+      ],
+      "tuning": {"aggression": 0.50, "patience": 0.90, "risk": 0.40, "counter_bias": 0.65}
+    },
+    "oni_da_lapa": {
+      "display_name": "Oni da Lapa",
+      "archetype": "chaotic_pressure",
+      "personality": "caotico, intimidador, irregular",
+      "preferred_states": ["PLAYER_STANDING_NEUTRAL", "PLAYER_TOP_CLINCH", "PLAYER_TOP_MOUNT"],
+      "preferred_actions": ["baiana", "quebra_base", "montada_pesada", "pressao_cabeca"],
+      "anti_patterns": [
+        {"if_random_burst": true, "response": "baiana", "weight": 1.0},
+        {"if_player_low_gas": true, "response": "quebra_base", "weight": 1.2}
+      ],
+      "tuning": {"aggression": 0.95, "patience": 0.15, "risk": 0.95, "counter_bias": 0.20}
+    }
+  }
+}
