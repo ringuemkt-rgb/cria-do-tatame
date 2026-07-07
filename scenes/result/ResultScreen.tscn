@@ -1,0 +1,25 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scenes/result/ResultScreen.gd" id="1_result"]
+
+[node name="ResultScreen" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource("1_result")
+
+[node name="Panel" type="VBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="Title" type="Label" parent="Panel"]
+layout_mode = 2
+text = "RESULTADO DO TREINO"
+
+[node name="Result" type="Label" parent="Panel"]
+layout_mode = 2
+text = "Resultado"
+
+[node name="BackToHub" type="Button" parent="Panel"]
+layout_mode = 2
+text = "Voltar ao Terreiro"
