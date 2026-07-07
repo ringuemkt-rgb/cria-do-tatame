@@ -27,7 +27,7 @@ var techniques_learned := []
 var active_sponsors := []
 var story_flags := {}
 var last_combat_result := {}
-var reputation := {"honra": 50.0, "hype": 30.0, "sombra": 0.0, "legado": 20.0, "dupla_face": 0.0, "moral": 50.0}
+var reputation := {"honra": 50.0, "hype": 30.0, "sombra": 0.0, "legado": 20.0, "dupla_face": 0.0, "moral": 50.0, "raiz": 20.0}
 
 func _sync_aliases() -> void:
 	current_week = week
@@ -58,7 +58,9 @@ func reset_new_game():
 	active_sponsors = []
 	story_flags = {}
 	last_combat_result = {}
-	reputation = {"honra": 50.0, "hype": 30.0, "sombra": 0.0, "legado": 20.0, "dupla_face": 0.0, "moral": 50.0}
+	reputation = {"honra": 50.0, "hype": 30.0, "sombra": 0.0, "legado": 20.0, "dupla_face": 0.0, "moral": 50.0, "raiz": 20.0}
+	if has_node("/root/TinkerBondManager"):
+		TinkerBondManager.reset()
 	_sync_aliases()
 
 func advance_day():
@@ -76,7 +78,7 @@ func advance_day():
 func modify_reputation(axis, delta: float) -> void:
 	var key := str(axis)
 	if not reputation.has(key):
-		return
+		reputation[key] = 0.0
 	reputation[key] = clamp(float(reputation[key]) + delta, 0.0, 100.0)
 	SignalBus.reputation_changed.emit(key, delta, reputation[key])
 
@@ -88,21 +90,24 @@ func determine_final():
 	var hype = get_reputation("hype")
 	var sombra = get_reputation("sombra")
 	var legado = get_reputation("legado")
-	if honra >= 70.0 and legado >= 70.0 and sombra < 30.0:
-		return "heroi_duas_aguas"
-	if hype >= 70.0 and honra < 50.0:
-		return "estrela_vazia"
-	if sombra >= 70.0 and honra < 40.0:
-		return "rei_atalhos"
-	if hype >= 60.0 and sombra >= 60.0 and honra < 50.0:
-		return "traidor_silencioso"
-	if honra >= 70.0 and legado >= 70.0:
+	var moral = get_reputation("moral")
+	var raiz = get_reputation("raiz")
+	var tinker_state = TinkerBondManager.get_state() if has_node("/root/TinkerBondManager") else "IRMANDADE"
+	if honra >= 70.0 and legado >= 70.0 and raiz >= 70.0 and tinker_state == "LEGADO":
 		return "raiz_eterna"
+	if sombra >= 70.0 and moral < 40.0 and tinker_state == "RUPTURA":
+		return "rei_dos_atalhos"
+	if hype >= 60.0 and sombra >= 60.0 and tinker_state == "RETORNO_DIFICIL":
+		return "traidor_silencioso"
+	if hype >= 70.0 and honra < 50.0 and tinker_state in ["AFASTAMENTO", "RUPTURA"]:
+		return "estrela_vazia"
+	if honra >= 70.0 and legado >= 70.0 and sombra < 30.0 and tinker_state in ["IRMANDADE", "LEGADO", "ALERTA"]:
+		return "heroi_duas_aguas"
 	return "heroi_duas_aguas"
 
 func to_dict():
 	_sync_aliases()
-	return {"week": week, "current_week": current_week, "day_index": day_index, "current_day": current_day, "act": act, "current_act": current_act, "belt": belt, "current_belt": current_belt, "money": money, "energy": energy, "strain_level": strain_level, "injury_level": injury_level, "player_id": player_id, "campaign_id": campaign_id, "current_hub": current_hub, "skill_points": skill_points, "fights_won": fights_won, "fights_lost": fights_lost, "technical_finishes": technical_finishes, "submissions_landed": submissions_landed, "unlocked_skills": unlocked_skills, "completed_missions": completed_missions, "techniques_learned": techniques_learned, "active_sponsors": active_sponsors, "story_flags": story_flags, "last_combat_result": last_combat_result, "reputation": reputation}
+	return {"week": week, "current_week": current_week, "day_index": day_index, "current_day": current_day, "act": act, "current_act": current_act, "belt": belt, "current_belt": current_belt, "money": money, "energy": energy, "strain_level": strain_level, "injury_level": injury_level, "player_id": player_id, "campaign_id": campaign_id, "current_hub": current_hub, "skill_points": skill_points, "fights_won": fights_won, "fights_lost": fights_lost, "technical_finishes": technical_finishes, "submissions_landed": submissions_landed, "unlocked_skills": unlocked_skills, "completed_missions": completed_missions, "techniques_learned": techniques_learned, "active_sponsors": active_sponsors, "story_flags": story_flags, "last_combat_result": last_combat_result, "reputation": reputation, "final_preview": determine_final()}
 
 func load_from_dict(data):
 	week = data.get("week", data.get("current_week", 1))
@@ -129,4 +134,6 @@ func load_from_dict(data):
 	story_flags = data.get("story_flags", {})
 	last_combat_result = data.get("last_combat_result", {})
 	reputation = data.get("reputation", reputation)
+	if not reputation.has("raiz"):
+		reputation["raiz"] = 20.0
 	_sync_aliases()
