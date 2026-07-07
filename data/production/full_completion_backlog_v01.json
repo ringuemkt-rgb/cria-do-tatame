@@ -1,0 +1,57 @@
+{
+  "version": "0.1.0",
+  "language": "pt-BR",
+  "definition_of_done": "Jogo abre no Godot, roda vertical slice, gera APK debug, salva/carrega, tem arte/audio minimo, combate contra Davi, hub Terreiro, Cria Live e finais calculados por reputacao.",
+  "milestones": [
+    {
+      "id": "vs_02_ruan_vs_davi",
+      "name": "Vertical Slice 0.2 - Ruan vs Davi",
+      "priority": 1,
+      "tasks": [
+        "corrigir autoloads e parse errors",
+        "gerar sprites placeholder Ruan e Davi",
+        "ligar RivalAIManager no CombatManager",
+        "usar Terreiro em 5 camadas",
+        "resultado de luta altera reputacao e Cria Live",
+        "save/load apos resultado"
+      ]
+    },
+    {
+      "id": "hub_terreiro_jogavel",
+      "name": "Hub Terreiro Jogavel",
+      "priority": 1,
+      "tasks": ["NPC Dende", "NPC Tinker", "botao Treinar", "botao Missao", "botao Mapa", "atividade Dar Aula", "tutorial base"]
+    },
+    {
+      "id": "story_act_1",
+      "name": "Ato 1 Completo",
+      "priority": 1,
+      "tasks": ["intro_terreiro", "primeira_derrota_mangue", "fica_no_chao_ou_levanta", "primeiro_post_cria_live", "cerimonia_faixa_azul"]
+    },
+    {
+      "id": "ai_assets_minimo",
+      "name": "Pacote Visual Minimo",
+      "priority": 1,
+      "tasks": ["Ruan 5 acoes", "Davi 3 acoes", "Dende idle/teaching", "Tinker phone/talking", "Terreiro 5 layers", "UI HUD minimo", "SFX grip/queda/click"]
+    },
+    {
+      "id": "alpha_3_rivals",
+      "name": "Alpha - 3 Rivais",
+      "priority": 2,
+      "tasks": ["Davi completo", "Cassio completo", "Kenzo completo", "3 arenas", "15 tecnicas", "balanceamento inicial"]
+    },
+    {
+      "id": "beta_mobile",
+      "name": "Beta Android",
+      "priority": 3,
+      "tasks": ["HUD touch final", "safe area", "vibracao", "export_presets", "APK debug", "teste celular"]
+    }
+  ],
+  "qa_gates": [
+    "python tools/validate_complete_game.py",
+    "python tools/generate_all_assets.py --dry-run --limit 5",
+    "python tools/integrate_assets_godot.py",
+    "abrir projeto no Godot 4.2+",
+    "rodar MainMenu -> Terreiro -> Combate -> Resultado -> Save"
+  ]
+}
