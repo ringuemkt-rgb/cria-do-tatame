@@ -1,0 +1,69 @@
+{
+  "version": "0.1.1",
+  "language": "pt-BR",
+  "tinker_bond": {
+    "confianca": 70,
+    "presenca": 100,
+    "limite": 3,
+    "ferida": 0,
+    "cumplicidade": 0,
+    "estado": "IRMANDADE",
+    "historico": []
+  },
+  "estados": {
+    "IRMANDADE": {
+      "min_confianca": 80,
+      "max_ferida": 10,
+      "descricao": "Tinker esta junto e acredita em Ruan.",
+      "efeitos": ["desbloqueia_missoes_tinker", "bonus_moral_10"]
+    },
+    "ALERTA": {
+      "min_confianca": 60,
+      "max_ferida": 30,
+      "descricao": "Tinker continua, mas observa.",
+      "efeitos": ["dialogos_confronto", "sem_bonus_moral"]
+    },
+    "RACHADURA": {
+      "min_confianca": 40,
+      "max_ferida": 60,
+      "descricao": "Tinker ajuda, mas confronta.",
+      "efeitos": ["dialogos_tensos", "penalidade_moral_5"]
+    },
+    "AFASTAMENTO": {
+      "min_confianca": 20,
+      "max_ferida": 80,
+      "descricao": "Tinker sai do circulo intimo.",
+      "efeitos": ["tinker_nao_aparece_cenas", "penalidade_moral_15"]
+    },
+    "RUPTURA": {
+      "min_confianca": 0,
+      "max_ferida": 100,
+      "descricao": "Tinker vai embora.",
+      "efeitos": ["tinker_nao_aparece", "penalidade_moral_25", "bloqueia_final_raiz"]
+    },
+    "RETORNO_DIFICIL": {
+      "min_confianca": 50,
+      "max_ferida": 70,
+      "descricao": "Tinker volta, mas nao como antes.",
+      "efeitos": ["dialogos_frios", "bonus_moral_5"]
+    },
+    "LEGADO": {
+      "min_confianca": 90,
+      "max_ferida": 10,
+      "descricao": "Tinker e Ruan viram parceiros de missao.",
+      "efeitos": ["final_raiz_desbloqueado", "bonus_legado_20"]
+    }
+  },
+  "eventos_alteracao": [
+    {"id": "assumir_erro_publico", "ato": 3, "efeitos": {"confianca": 15, "honra": 10, "ferida": -10}, "descricao": "Ruan assume erro publicamente."},
+    {"id": "culpar_midia", "ato": 3, "efeitos": {"confianca": -20, "hype": 10, "ferida": 10}, "descricao": "Ruan culpa a midia."},
+    {"id": "aceitar_luta_suja", "ato": 2, "efeitos": {"confianca": -10, "sombra": 15, "limite": -1}, "descricao": "Ruan aceita luta clandestina."},
+    {"id": "proteger_terreiro", "ato": 4, "efeitos": {"confianca": 20, "legado": 15, "raiz": 10}, "descricao": "Ruan protege o Terreiro."},
+    {"id": "usar_tinker_escudo", "ato": 4, "efeitos": {"confianca": -30, "ferida": 20, "limite": -1}, "descricao": "Ruan usa Tinker como escudo publico."},
+    {"id": "pedir_perdao_sem_desculpa", "ato": 5, "efeitos": {"confianca": 25, "presenca": 40, "ferida": -20}, "descricao": "Ruan pede perdao sem desculpa."},
+    {"id": "mentir_para_tinker", "ato": 3, "efeitos": {"confianca": -40, "ferida": 25, "limite": -1}, "descricao": "Ruan mente para Tinker."},
+    {"id": "recusar_contrato_cassio", "ato": 4, "efeitos": {"confianca": 15, "honra": 15, "legado": 10, "raiz": 8}, "descricao": "Ruan recusa o contrato final de Cassio."},
+    {"id": "assinar_contrato_cassio", "ato": 4, "efeitos": {"confianca": -35, "presenca": -80, "ferida": 50, "limite": -2, "hype": 20, "sombra": 30, "money": 5000}, "descricao": "Ruan assina o contrato e aceita o atalho."},
+    {"id": "negociar_sem_tinker", "ato": 4, "efeitos": {"confianca": -20, "ferida": 25, "limite": -1, "hype": 10, "sombra": 15, "money": 2000}, "descricao": "Ruan tenta negociar escondido."}
+  ]
+}
