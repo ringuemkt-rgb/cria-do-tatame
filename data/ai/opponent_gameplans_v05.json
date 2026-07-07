@@ -1,0 +1,35 @@
+{
+  "version": "0.5.0",
+  "opponents": {
+    "davi_relampago": {
+      "display_name": "Davi Relampago",
+      "style": "velocidade e saidas rapidas",
+      "state_actions": {
+        "distancia_media": [
+          {"technique_id":"pegada_lapela_manga","action":"disputar pegada","weight":1.0},
+          {"technique_id":"sprawl","action":"preparar defesa","weight":0.8}
+        ],
+        "disputa_pegada": [
+          {"technique_id":"sprawl","action":"ler entrada","weight":1.1},
+          {"technique_id":"puxada_guarda_fechada","action":"puxar guarda","weight":0.7}
+        ],
+        "guarda_aberta": [
+          {"technique_id":"torreando","action":"passar rapido","weight":1.0},
+          {"technique_id":"knee_cut","action":"cortar joelho","weight":0.8}
+        ]
+      }
+    },
+    "cassio_molho": {
+      "display_name": "Cassio Molho",
+      "style": "guarda movel e contra-tempo",
+      "state_actions": {
+        "guarda_fechada": [
+          {"technique_id":"raspagem_tesoura","action":"raspar","weight":1.2}
+        ],
+        "guarda_aberta": [
+          {"technique_id":"puxada_guarda_fechada","action":"recompor guarda","weight":0.9}
+        ]
+      }
+    }
+  }
+}
