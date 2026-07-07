@@ -1,34 +1,113 @@
 {
-  "version": "0.1.0",
+  "version": "0.1.1-ptbr",
+  "language": "pt-BR",
   "dialogues": [
     {
-      "id": "dende_intro",
+      "id": "dende_boas_vindas",
       "speaker": "mestre_dende",
+      "personagem": "mestre_dende",
+      "listener": "ruan_macacao",
+      "ouvinte": "ruan_macacao",
       "context": "act1_intro",
+      "falas": [
+        "Voce entrou aqui com forca. Ainda falta direcao.",
+        "Entao vai ouvir o chao. O chao nao mente.",
+        "Um gorila de verdade nao precisa gritar para controlar o territorio."
+      ],
       "lines": [
-        "Força todo mundo tem em algum dia. Direção é coisa rara.",
-        "Aqui no Terreiro, primeiro você aprende a cair sem virar menor.",
-        "Ser forte é ser gentil. O resto é barulho."
+        "Voce entrou aqui com forca. Ainda falta direcao.",
+        "Entao vai ouvir o chao. O chao nao mente.",
+        "Um gorila de verdade nao precisa gritar para controlar o territorio."
       ]
     },
     {
-      "id": "davi_first_challenge",
+      "id": "davi_desafio",
       "speaker": "davi_relampago",
+      "personagem": "davi_relampago",
+      "listener": "ruan_macacao",
+      "ouvinte": "ruan_macacao",
       "context": "act1_sparring",
+      "falas": [
+        "Ouvi falar do Macacao. Vamos ver se aguenta o ritmo.",
+        "Repeticao nao vence leitura. Tenta de novo.",
+        "Voce e forte. Mas forca sem tecnica quebra."
+      ],
       "lines": [
-        "Macacão, peso não é técnica.",
-        "Se você gruda sem pensar, eu saio antes de você respirar.",
-        "Vamos ver se tua pressão tem base."
+        "Ouvi falar do Macacao. Vamos ver se aguenta o ritmo.",
+        "Repeticao nao vence leitura. Tenta de novo.",
+        "Voce e forte. Mas forca sem tecnica quebra."
       ]
     },
     {
-      "id": "ruan_first_reflection",
-      "speaker": "ruan_macacao",
-      "context": "act1_after_sparring",
+      "id": "cassio_tentacao",
+      "speaker": "cassio_molho",
+      "personagem": "cassio_molho",
+      "listener": "ruan_macacao",
+      "ouvinte": "ruan_macacao",
+      "context": "shadow_choice",
+      "falas": [
+        "Ruan, para de bater cabeca. Tenho caminho mais curto.",
+        "Honra nao paga conta. Hype paga.",
+        "Voce esta vencendo demais para quem esta perdendo a si mesmo."
+      ],
       "lines": [
-        "Eu achei que era só pesar em cima.",
-        "O chão respondeu primeiro que eu.",
-        "Então tá. Vou aprender a escutar."
+        "Ruan, para de bater cabeca. Tenho caminho mais curto.",
+        "Honra nao paga conta. Hype paga.",
+        "Voce esta vencendo demais para quem esta perdendo a si mesmo."
+      ]
+    },
+    {
+      "id": "tinker_alerta",
+      "speaker": "tinker_bell",
+      "personagem": "tinker_bell",
+      "listener": "ruan_macacao",
+      "ouvinte": "ruan_macacao",
+      "context": "cria_live_warning",
+      "falas": [
+        "Mano, o Cria Live ta pegando fogo com teu nome.",
+        "Cuidado com o que posta. Sombra observa tudo.",
+        "Davi ta estudando teu jogo. Cuidado com repeticao."
+      ],
+      "lines": [
+        "Mano, o Cria Live ta pegando fogo com teu nome.",
+        "Cuidado com o que posta. Sombra observa tudo.",
+        "Davi ta estudando teu jogo. Cuidado com repeticao."
+      ]
+    },
+    {
+      "id": "dende_cerimonia_azul",
+      "speaker": "mestre_dende",
+      "personagem": "mestre_dende",
+      "listener": "ruan_macacao",
+      "ouvinte": "ruan_macacao",
+      "context": "belt_blue_ceremony",
+      "falas": [
+        "Voce comecou a ouvir o chao. Agora vai aprender a responder.",
+        "Faixa azul nao e premio. E responsabilidade.",
+        "Ser forte e ser gentil. Lembra disso."
+      ],
+      "lines": [
+        "Voce comecou a ouvir o chao. Agora vai aprender a responder.",
+        "Faixa azul nao e premio. E responsabilidade.",
+        "Ser forte e ser gentil. Lembra disso."
+      ]
+    },
+    {
+      "id": "davi_pos_derrota",
+      "speaker": "davi_relampago",
+      "personagem": "davi_relampago",
+      "listener": "ruan_macacao",
+      "ouvinte": "ruan_macacao",
+      "context": "after_davi_defeat",
+      "falas": [
+        "Hoje foi sua. Mas vou voltar melhor.",
+        "Voce me forcou a evoluir. Obrigado.",
+        "Ate a proxima, Macacao."
+      ],
+      "lines": [
+        "Hoje foi sua. Mas vou voltar melhor.",
+        "Voce me forcou a evoluir. Obrigado.",
+        "Ate a proxima, Macacao."
       ]
     }
   ]
