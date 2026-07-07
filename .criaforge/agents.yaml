@@ -1,0 +1,23 @@
+version: 0.6.0
+agents:
+  creative_director:
+    owns: [canon, tone, identity, world]
+  technical_director:
+    owns: [godot, architecture, data, performance]
+  producer:
+    owns: [roadmap, milestones, backlog, risk]
+  bjj_gameplay_lead:
+    owns: [combat_flow, techniques, scoring, balance]
+  motion_lab_lead:
+    owns: [video_research, pose, keyframes, biomechanics]
+  pixel_art_lead:
+    owns: [sprites, atlas, qa_visual, animation_readability]
+  ai_lead:
+    owns: [opponent_gameplans, memory, adaptive_behavior]
+  qa_lead:
+    owns: [tests, validation, reports, acceptance]
+
+handoff:
+  technique_request: [bjj_gameplay_lead, motion_lab_lead, pixel_art_lead, technical_director, qa_lead]
+  arena_request: [creative_director, pixel_art_lead, technical_director, qa_lead]
+  career_request: [creative_director, producer, technical_director, ai_lead]
