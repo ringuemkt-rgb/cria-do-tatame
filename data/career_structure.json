@@ -1,0 +1,81 @@
+{
+  "version": "0.2.0",
+  "title": "Cria do Tatame - Pressao",
+  "protagonist": "ruan_macacao",
+  "career_goal": "Da força bruta ao legado: tornar-se referencia do Baixo Sul sem perder a honra.",
+  "acts": [
+    {
+      "id": "act_0_opening",
+      "name": "Abertura - O Chamado do Chao",
+      "main_hub": "terreiro_da_luta",
+      "theme": "forca sem direcao vira queda",
+      "required_systems": ["movement", "basic_hud", "grip_intro", "save_intro"],
+      "boss": "davi_relampago_intro"
+    },
+    {
+      "id": "act_1_o_chao",
+      "name": "Ato 1 - O Chao",
+      "main_hub": "terreiro_da_luta",
+      "theme": "base, humildade, pegada e defesa",
+      "unlocks": ["pancada_grande", "treino_de_queda", "cria_live_basic"],
+      "boss": "davi_relampago"
+    },
+    {
+      "id": "act_2_o_circuito",
+      "name": "Ato 2 - O Circuito",
+      "main_hub": "arena_do_dique",
+      "theme": "regras oficiais, pontuacao e disciplina publica",
+      "unlocks": ["salvador", "arena_do_dique", "sponsors_basic", "pontuacao_oficial"],
+      "boss": "caua_ribeiro"
+    },
+    {
+      "id": "act_3_o_nome",
+      "name": "Ato 3 - O Nome",
+      "main_hub": "mapa_baixo_sul",
+      "theme": "hype, cria live, escolhas e atalhos",
+      "unlocks": ["ponte_do_saci", "zambiapunga", "cria_live_crises", "factions"],
+      "boss": "cassio_molho"
+    },
+    {
+      "id": "act_4_a_queda",
+      "name": "Ato 4 - A Queda",
+      "main_hub": "terreiro_da_luta",
+      "theme": "fadiga, crise, reconstrucao e controle do ego",
+      "unlocks": ["ferro_velho_da_lapa", "injury_risk", "advanced_training"],
+      "boss": "jacare_do_mangue"
+    },
+    {
+      "id": "act_5_o_legado",
+      "name": "Ato 5 - O Legado",
+      "main_hub": "arena_final_regional",
+      "theme": "escolher que tipo de forca ficara na memoria",
+      "unlocks": ["regional_final_tournament", "final_choices"],
+      "boss": "kenzo_kuroi"
+    }
+  ],
+  "endings": [
+    {"id": "honra", "name": "Final da Honra", "requirements": {"honra_min": 80, "sombra_max": 35}},
+    {"id": "hype", "name": "Final do Hype", "requirements": {"hype_min": 85, "honra_min": 40}},
+    {"id": "sombra", "name": "Final da Sombra", "requirements": {"sombra_min": 80}},
+    {"id": "dupla_face", "name": "Final Dupla Face", "requirements": {"hype_min": 60, "sombra_min": 60, "honra_min": 50}},
+    {"id": "raiz_eterna", "name": "Final Raiz Eterna", "requirements": {"honra_min": 85, "legado_min": 85, "moral_min": 75}}
+  ],
+  "weekly_loop": {
+    "monday": ["treino_base", "dialogo_dende"],
+    "tuesday": ["drilling_tecnico", "missao_comunidade"],
+    "wednesday": ["sparring", "cria_live_post"],
+    "thursday": ["scouting_rival", "sponsor_task"],
+    "friday": ["cutscene_pre_luta", "recuperacao"],
+    "saturday": ["luta_evento"],
+    "sunday": ["consequencias", "recuperacao", "map_update"]
+  },
+  "addiction_hooks_ethic": [
+    "feedback imediato apos cada tecnica",
+    "recompensa clara apos cada luta",
+    "novas tecnicas desbloqueadas por dominio, nao so por grind",
+    "Cria Live reage a cada escolha importante",
+    "sponsors oferecem bonus com tradeoffs morais",
+    "mapa mostra proximo objetivo sempre visivel",
+    "finais dependem da reputacao acumulada"
+  ]
+}
