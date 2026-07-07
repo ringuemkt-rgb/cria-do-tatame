@@ -11,6 +11,18 @@ func save_game(slot_id := 1):
 		data["tinker_bond"] = TinkerBondManager.to_dict()
 	if has_node("/root/MissionManager"):
 		data["mission_state"] = MissionManager.to_dict()
+	if has_node("/root/FactionManager"):
+		data["faction_state"] = FactionManager.to_dict()
+	if has_node("/root/WorldMapManager"):
+		data["world_map_state"] = WorldMapManager.to_dict()
+	if has_node("/root/GearManager"):
+		data["gear_state"] = GearManager.to_dict()
+	if has_node("/root/TrainingManager"):
+		data["training_state"] = TrainingManager.to_dict()
+	if has_node("/root/HubActivityManager"):
+		data["hub_activity_state"] = HubActivityManager.to_dict()
+	if has_node("/root/CriaLiveInteractionManager"):
+		data["cria_live_interaction_state"] = CriaLiveInteractionManager.to_dict()
 	var path = SAVE_PREFIX + str(slot_id) + SAVE_SUFFIX
 	var file = FileAccess.open(path, FileAccess.WRITE)
 	if file == null:
@@ -36,6 +48,18 @@ func load_game(slot_id := 1):
 		TinkerBondManager.load_from_dict(parsed["tinker_bond"])
 	if parsed.has("mission_state") and has_node("/root/MissionManager"):
 		MissionManager.load_from_dict(parsed["mission_state"])
+	if parsed.has("faction_state") and has_node("/root/FactionManager"):
+		FactionManager.load_from_dict(parsed["faction_state"])
+	if parsed.has("world_map_state") and has_node("/root/WorldMapManager"):
+		WorldMapManager.load_from_dict(parsed["world_map_state"])
+	if parsed.has("gear_state") and has_node("/root/GearManager"):
+		GearManager.load_from_dict(parsed["gear_state"])
+	if parsed.has("training_state") and has_node("/root/TrainingManager"):
+		TrainingManager.load_from_dict(parsed["training_state"])
+	if parsed.has("hub_activity_state") and has_node("/root/HubActivityManager"):
+		HubActivityManager.load_from_dict(parsed["hub_activity_state"])
+	if parsed.has("cria_live_interaction_state") and has_node("/root/CriaLiveInteractionManager"):
+		CriaLiveInteractionManager.load_from_dict(parsed["cria_live_interaction_state"])
 	SignalBus.save_loaded.emit(slot_id)
 	return true
 
