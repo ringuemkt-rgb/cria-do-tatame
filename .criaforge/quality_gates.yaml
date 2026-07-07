@@ -1,0 +1,12 @@
+version: 0.6.0
+gates:
+  canon:
+    checks: [protagonist_is_ruan_macacao, ptbr_language, baixo_sul_identity]
+  bjj:
+    checks: [visible_grip, coherent_base, coherent_hip_line, state_transition_defined]
+  art:
+    checks: [silhouette_readable_mobile, transparent_background, frame_manifest_exists]
+  godot:
+    checks: [json_valid, required_fields, data_driven_scripts]
+  qa:
+    checks: [validation_report_created, playtest_notes_created]
