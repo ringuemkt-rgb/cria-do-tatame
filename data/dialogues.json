@@ -1,0 +1,35 @@
+{
+  "version": "0.1.0",
+  "dialogues": [
+    {
+      "id": "dende_intro",
+      "speaker": "mestre_dende",
+      "context": "act1_intro",
+      "lines": [
+        "Força todo mundo tem em algum dia. Direção é coisa rara.",
+        "Aqui no Terreiro, primeiro você aprende a cair sem virar menor.",
+        "Ser forte é ser gentil. O resto é barulho."
+      ]
+    },
+    {
+      "id": "davi_first_challenge",
+      "speaker": "davi_relampago",
+      "context": "act1_sparring",
+      "lines": [
+        "Macacão, peso não é técnica.",
+        "Se você gruda sem pensar, eu saio antes de você respirar.",
+        "Vamos ver se tua pressão tem base."
+      ]
+    },
+    {
+      "id": "ruan_first_reflection",
+      "speaker": "ruan_macacao",
+      "context": "act1_after_sparring",
+      "lines": [
+        "Eu achei que era só pesar em cima.",
+        "O chão respondeu primeiro que eu.",
+        "Então tá. Vou aprender a escutar."
+      ]
+    }
+  ]
+}
