@@ -1,0 +1,67 @@
+{
+  "version": "0.1.0",
+  "language": "pt-BR",
+  "player": {
+    "id": "ruan_macacao",
+    "nome": "Ruan Silva",
+    "apelido": "Macacao",
+    "idade": 19,
+    "faixa_atual": "branca",
+    "nivel": 1,
+    "xp": 0,
+    "xp_proximo_nivel": 1000
+  },
+  "atributos": {
+    "forca": 50,
+    "resistencia": 50,
+    "velocidade": 45,
+    "tecnica": 55,
+    "foco_mental": 60,
+    "carisma": 40
+  },
+  "recursos_combate": {
+    "hp_max": 100,
+    "gas_max": 70,
+    "guarda_max": 100,
+    "foco_max": 60,
+    "moral_max": 50
+  },
+  "estado_fisico": {
+    "energia": 100,
+    "fadiga": 0,
+    "lesao": "nenhuma",
+    "peso_atual": 75.5,
+    "peso_categoria": "medio"
+  },
+  "financeiro": {
+    "dinheiro": 0,
+    "dividas": 0,
+    "gasto_semanal": 150
+  },
+  "customizacao": {
+    "cabelo": "black_power_curto",
+    "barba": "por_fazer",
+    "tatuagens": [],
+    "kimono_atual": "transcado_perola_branco",
+    "rashguard_atual": "nenhuma",
+    "faixa": "branca",
+    "patches": ["terreiro_da_luta"]
+  },
+  "habilidades_desbloqueadas": [],
+  "tecnicas_aprendidas": ["grip_de_ferro", "sprawl"],
+  "maestria_tecnicas": {
+    "grip_de_ferro": 1,
+    "sprawl": 1
+  },
+  "reputacao_faccoes": {
+    "os_aleluia": 0,
+    "la_ele_mil_vezes": 0,
+    "nos_tem_um_molho": 0
+  },
+  "inventario": {
+    "kimonos": ["transcado_perola_branco"],
+    "rashguards": [],
+    "shorts": ["curto_treino_preto"],
+    "itens": ["celular_cria_live"]
+  }
+}
