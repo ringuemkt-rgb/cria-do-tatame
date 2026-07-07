@@ -19,6 +19,11 @@ TinkerBondManager="*res://src/autoloads/TinkerBondManager.gd"
 MissionManager="*res://src/autoloads/MissionManager.gd"
 StorySceneDirector="*res://src/autoloads/StorySceneDirector.gd"
 FactionManager="*res://src/autoloads/FactionManager.gd"
+WorldMapManager="*res://src/autoloads/WorldMapManager.gd"
+GearManager="*res://src/autoloads/GearManager.gd"
+TrainingManager="*res://src/autoloads/TrainingManager.gd"
+HubActivityManager="*res://src/autoloads/HubActivityManager.gd"
+CriaLiveInteractionManager="*res://src/autoloads/CriaLiveInteractionManager.gd"
 
 [display]
 window/size/viewport_width=1280
