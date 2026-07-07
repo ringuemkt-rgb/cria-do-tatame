@@ -1,0 +1,42 @@
+{
+  "project": "Cria do Tatame Pressao",
+  "style_name": "HD Painted Pixel Art 2.5D",
+  "version": "1.0.0",
+  "palette": {
+    "black_absolute": "#0A0A0A",
+    "black_matte": "#1A1A1A",
+    "gold_burned": "#B8860B",
+    "gold_honor": "#F2C230",
+    "dirty_white": "#F2F2F2",
+    "red_conflict": "#D92323",
+    "blue_river": "#1E3A5F",
+    "green_mangrove": "#2D5016",
+    "purple_shadow": "#4B0082"
+  },
+  "ui_rules": {
+    "mobile_first": true,
+    "safe_area_percent": 7,
+    "minimum_critical_text_size_720p": 18,
+    "button_style": "large matte black buttons with burned gold border and dirty white label",
+    "hud_style": "dark premium fight HUD with bars for vida, gas, foco, grip, controle and moral"
+  },
+  "sprite_rules": {
+    "format": "png_transparent",
+    "filter": "nearest_pixel_or_disabled_filter",
+    "pivot": "feet_or_hips_consistent_per_action",
+    "recommended_frame_sizes": [256, 384, 512],
+    "naming": "snake_case",
+    "silhouette_priority": "very_high"
+  },
+  "arena_layer_rules": {
+    "required_layers": ["bg_far", "bg_mid", "play_area", "foreground", "light_overlay", "particles_optional"],
+    "combat_floor_rule": "tatame boundaries must remain readable"
+  },
+  "visual_pillars": [
+    "Baixo Sul da Bahia",
+    "Brazilian Jiu-Jitsu positional system",
+    "Silverback Gorilla pressure identity",
+    "Black and gold premium fight brand",
+    "Mobile readability before decoration"
+  ]
+}
