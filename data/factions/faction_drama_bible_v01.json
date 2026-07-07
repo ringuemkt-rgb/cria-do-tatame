@@ -1,0 +1,73 @@
+{
+  "version": "0.1.0",
+  "language": "pt-BR",
+  "safety_design": "Faccoes ficcionais. O objetivo e drama social, escolhas morais e consequencias; nao ha instrucao operacional sobre ilegalidade.",
+  "factions": {
+    "os_aleluia": {
+      "name": "Os Aleluia",
+      "motto": "Fe, Disciplina e Honra",
+      "axis": ["honra", "sombra", "legado"],
+      "leader": "davi_profeta_santos",
+      "territories": ["arena_do_dique", "budokan_das_aguas", "igreja_central_ficcional"],
+      "colors": ["azul_dourado", "branco"],
+      "symbol": "pomba_ficcional_com_ramo_e_cruz_abstrata",
+      "origin": "Nasceu como academia comunitaria ligada a um templo ficcional. O projeto salvou jovens pelo tatame, mas virou estrutura de controle de imagem, contratos e prestigio.",
+      "current_state": "A fachada e ordem; o custo e silencio. O jogador percebe que nem toda aparencia limpa produz escolha limpa.",
+      "moral_question": "Quando a boa aparencia esconde erro, isso ainda e honra?",
+      "gameplay_identity": {"style": "defesa solida, regra, pressao psicologica e pontuacao", "bonuses": {"focus": 0.05, "official_access": 1}, "risks": {"sombra": 4, "tinker_trust": -4}},
+      "characters": [
+        {"id": "davi_profeta_santos", "role": "lider", "age": 42, "quote": "O tatame e nosso altar. Cada luta, uma oracao. Cada vitoria, gloria.", "gameplay": "chefe tecnico frio, controla ritmo e regra"},
+        {"id": "irmao_gabriel_muralha", "role": "protetor", "age": 38, "quote": "Quem toca no Profeta, toca na familia.", "gameplay": "base defensiva, dificil de passar"},
+        {"id": "pastora_ana_anja", "role": "contratos", "age": 35, "quote": "Nem todo papel limpo carrega escolha limpa.", "gameplay": "missoes de contrato e dilema de imagem"},
+        {"id": "pedro_discipulo", "role": "recruta", "age": 19, "quote": "Eu quero vencer sem virar alguem que eu odeio.", "gameplay": "espelho jovem de Ruan"},
+        {"id": "capitao_beto_juiz", "role": "arbitragem", "age": 45, "quote": "Regra e regra. Mas toda regra tem sombra.", "gameplay": "NPC que altera clima de torneio"}
+      ],
+      "arenas": ["arena_do_dique", "budokan_das_aguas", "igreja_central_ficcional"],
+      "key_missions": ["aleluia_dizimo_do_campeao", "aleluia_resultado_arranjado"]
+    },
+    "la_ele_mil_vezes": {
+      "name": "La Ele Mil Vezes",
+      "motto": "O Olho Tudo Ve, O Tatame Tudo Sabe",
+      "axis": ["sombra", "foco", "dupla_face"],
+      "leader": "kenzo_oraculo_kuroi",
+      "territories": ["colonia_nishimura", "ferro_velho_da_lapa", "beco_do_engenho"],
+      "colors": ["roxo", "vermelho", "dourado"],
+      "symbol": "olho_ficcional_e_mao_abstrata",
+      "origin": "Nasceu como dojo de precisao e silencio. Depois virou rede de leitura de bastidores, observacao de rivais e vantagem psicologica.",
+      "current_state": "A faccao vende leitura, previsao e vantagem. Nao vence pela forca; vence por saber antes.",
+      "moral_question": "Se voce vence porque sabia demais, ainda venceu por merito?",
+      "gameplay_identity": {"style": "leitura fria, punicao de erro, informacao privilegiada e controle de risco", "bonuses": {"focus": 0.12, "reading": 0.10}, "risks": {"honra": -6, "sombra": 8, "tinker_trust": -8}},
+      "characters": [
+        {"id": "kenzo_oraculo_kuroi", "role": "lider", "age": 36, "quote": "Enquanto eles lutam, nos calculamos.", "gameplay": "chefe de precisao, pune erro"},
+        {"id": "mestre_yuki_fantasma", "role": "memoria", "age": 70, "quote": "O tatame nao mente. Quem mente e o homem.", "gameplay": "visoes e conselhos morais"},
+        {"id": "marina_silencio_costa", "role": "observadora", "age": 29, "quote": "Quem fala demais perde. Quem escuta vence.", "gameplay": "missoes de leitura e informacao"},
+        {"id": "akira_linha_tanaka", "role": "discipulo", "age": 24, "quote": "Arte ou negocio? E se os dois cobrarem alma?", "gameplay": "rival tecnico em conflito"},
+        {"id": "hiro_estrategista_nakamura", "role": "calculo", "age": 31, "quote": "Nao existe sorte. Existe padrao.", "gameplay": "dilemas de previsao e escolha"}
+      ],
+      "arenas": ["colonia_nishimura", "ferro_velho_da_lapa", "beco_do_engenho"],
+      "key_missions": ["laele_olho_que_tudo_ve", "laele_previsao_garantida"]
+    },
+    "nos_tem_um_molho": {
+      "name": "Nos Tem Um Molho",
+      "motto": "Quem Prova, Nao Esquece",
+      "axis": ["hype", "sombra", "raiz"],
+      "leader": "cassio_molho_oliveira",
+      "territories": ["zambiapunga", "praia_de_pratigi", "evento_privado_ficcional"],
+      "colors": ["laranja", "amarelo", "vermelho"],
+      "symbol": "pimenta_molho_pilao",
+      "origin": "Nasceu como coletivo cultural legitimo. Cresceu com festas, jiu-jitsu, musica e comunidade; depois virou maquina de viralizacao e dependencia de imagem.",
+      "current_state": "Transforma cultura em palco, palco em produto e produto em controle emocional.",
+      "moral_question": "Quando a cultura vira vitrine, quem ainda esta sendo servido?",
+      "gameplay_identity": {"style": "pressao curta, viralizacao, crowd barulhento e ritmo caotico", "bonuses": {"hype": 8, "crowd_pressure": 0.12}, "risks": {"sombra": 10, "honra": -8, "tinker_trust": -10}},
+      "characters": [
+        {"id": "cassio_molho_oliveira", "role": "lider", "age": 35, "quote": "Honra nao paga conta. Hype paga.", "gameplay": "pressao agressiva e manipulacao publica"},
+        {"id": "dj_veneno", "role": "evento", "age": 28, "quote": "Na batida do tambor, todo mundo esquece quem pagou a festa.", "gameplay": "missoes de evento e crowd"},
+        {"id": "bia_pimenta_souza", "role": "recrutadora", "age": 26, "quote": "Seguidor tambem derruba faixa.", "gameplay": "rival viral e agressiva"},
+        {"id": "lucas_tempero_mendes", "role": "imagem", "age": 30, "quote": "A verdade perde quando a edicao e melhor.", "gameplay": "missoes de Cria Live"},
+        {"id": "carol_hype_lima", "role": "fa_obsessiva", "age": 22, "quote": "Eu vou ser maior que voce, mesmo que precise quebrar tua imagem.", "gameplay": "rival emocional e imprevisivel"}
+      ],
+      "arenas": ["zambiapunga", "praia_de_pratigi", "evento_privado_ficcional"],
+      "key_missions": ["molho_festa_que_lava", "molho_pratigi_silencio"]
+    }
+  }
+}
