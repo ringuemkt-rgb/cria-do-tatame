@@ -1,0 +1,6 @@
+[gd_scene format=3]
+
+[node name="Combat" type="Node2D"]
+
+[node name="Info" type="Label" parent="."]
+text = "Combat Placeholder"
