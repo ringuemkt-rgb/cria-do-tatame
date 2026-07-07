@@ -1,0 +1,17 @@
+{
+  "version": "0.1.0",
+  "language": "pt-BR",
+  "activities": {
+    "dar_aula_criancas": {"name": "Dar Aula no Terreiro", "hub": "itubera", "energy_cost": 20, "time_hours": 3, "money": 60, "effects": {"legado": 8, "moral": 5, "honra": 3}},
+    "seguranca_evento": {"name": "Seguranca de Evento", "hub": "zambiapunga", "energy_cost": 30, "time_hours": 5, "money": 150, "risk": {"strain": 0.15, "sombra": 4}, "effects": {"hype": 3}},
+    "entrega_marmita": {"name": "Entregas de Marmita", "hub": "itubera", "energy_cost": 25, "time_hours": 4, "money": 100, "effects": {"moral": 2}},
+    "fisioterapia_recuperacao": {"name": "Fisio e Recuperacao", "hub": "itubera", "money": -120, "time_hours": 2, "effects": {"strain_level": -1, "energy": 20}},
+    "entrevista_jornalista": {"name": "Entrevista com Jornalista", "hub": "salvador", "energy_cost": 5, "time_hours": 1, "choice_required": true, "effects": {"hype": 4}},
+    "foto_com_fa": {"name": "Foto com Fa", "hub": "any", "energy_cost": 0, "time_hours": 1, "effects": {"hype": 2, "moral": 1}}
+  },
+  "dynamic_events": [
+    {"id": "npc_desafio_rua", "label": "Um NPC desafia Ruan no hub", "conditions": {"hype_min": 40}, "choices": ["aceitar_treino", "recusar_respeito", "provocar"]},
+    {"id": "jornalista_pergunta", "label": "Jornalista pergunta sobre os atalhos", "conditions": {"sombra_min": 30}, "choices": ["assumir", "desviar", "culpar_midia"]},
+    {"id": "morador_pede_ajuda", "label": "Morador pede ajuda comunitaria", "conditions": {"raiz_min": 20}, "choices": ["ajudar", "ignorar", "postar_ajuda"]}
+  ]
+}
