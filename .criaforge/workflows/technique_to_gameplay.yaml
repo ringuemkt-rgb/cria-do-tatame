@@ -1,0 +1,25 @@
+version: 0.6.0
+workflow: technique_to_gameplay
+steps:
+  - id: brief
+    output: technique_brief.md
+  - id: canon_check
+    output: canon_notes.md
+  - id: bjj_analysis
+    output: biomecanica.md
+  - id: gameplay_card
+    output: gameplay_card.json
+  - id: sprite_request
+    output: sprite_request.json
+  - id: atlas_manifest
+    output: manifest_stub.json
+  - id: godot_data
+    output: technique_catalog_patch.json
+  - id: qa_report
+    output: qa_report.md
+acceptance:
+  - technique_has_state_from
+  - technique_has_state_to_success
+  - technique_has_defense_response
+  - sprite_request_has_actions
+  - qa_report_exists
