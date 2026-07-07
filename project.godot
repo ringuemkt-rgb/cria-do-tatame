@@ -24,6 +24,8 @@ GearManager="*res://src/autoloads/GearManager.gd"
 TrainingManager="*res://src/autoloads/TrainingManager.gd"
 HubActivityManager="*res://src/autoloads/HubActivityManager.gd"
 CriaLiveInteractionManager="*res://src/autoloads/CriaLiveInteractionManager.gd"
+GameFlowManager="*res://src/autoloads/GameFlowManager.gd"
+CutsceneRuntime="*res://src/autoloads/CutsceneRuntime.gd"
 
 [display]
 window/size/viewport_width=1280
