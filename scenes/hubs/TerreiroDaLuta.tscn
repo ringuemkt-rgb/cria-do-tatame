@@ -1,0 +1,29 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scenes/hubs/TerreiroDaLuta.gd" id="1_hub"]
+
+[node name="TerreiroDaLuta" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource("1_hub")
+
+[node name="Panel" type="VBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="Title" type="Label" parent="Panel"]
+layout_mode = 2
+text = "TERREIRO DA LUTA"
+
+[node name="Status" type="Label" parent="Panel"]
+layout_mode = 2
+text = "Semana 1"
+
+[node name="StartCombat" type="Button" parent="Panel"]
+layout_mode = 2
+text = "Iniciar treino contra Davi"
+
+[node name="AdvanceWeek" type="Button" parent="Panel"]
+layout_mode = 2
+text = "Avancar dia"
