@@ -1,0 +1,26 @@
+[gd_scene format=3]
+
+[node name="MainMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="Title" type="Label" parent="."]
+layout_mode = 2
+text = "CRIA DO TATAME - PRESSÃO"
+
+[node name="MenuButtons" type="VBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="NewGame" type="Button" parent="MenuButtons"]
+layout_mode = 2
+text = "Novo Jogo"
+
+[node name="Continue" type="Button" parent="MenuButtons"]
+layout_mode = 2
+text = "Continuar"
+
+[node name="Options" type="Button" parent="MenuButtons"]
+layout_mode = 2
+text = "Opções"
