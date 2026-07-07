@@ -1,0 +1,33 @@
+{
+  "version": "0.1.0",
+  "language": "pt-BR",
+  "philosophy": "Baixo risco cria posição. Alto risco decide luta, mas cobra gás e foco.",
+  "technique_risk_profiles": {
+    "baixo": {"gas_multiplier": 0.9, "success_bonus": 0.05, "reward_multiplier": 0.75},
+    "medio": {"gas_multiplier": 1.0, "success_bonus": 0.0, "reward_multiplier": 1.0},
+    "alto": {"gas_multiplier": 1.2, "success_bonus": -0.08, "reward_multiplier": 1.35},
+    "extremo": {"gas_multiplier": 1.5, "success_bonus": -0.15, "reward_multiplier": 1.75}
+  },
+  "progression_curve": {
+    "branca_para_azul": {"weeks": 8, "wins": 5, "honra": 40},
+    "azul_para_roxa": {"weeks": 12, "wins": 10, "honra": 55},
+    "roxa_para_marrom": {"weeks": 16, "wins": 15, "honra": 65},
+    "marrom_para_preta": {"weeks": 16, "wins": 20, "honra": 75, "legado": 70}
+  },
+  "economy": {
+    "official_win": 200,
+    "underground_win": 500,
+    "sponsor_monthly_min": 150,
+    "sponsor_monthly_max": 600,
+    "technical_training_energy": 20,
+    "sparring_energy": 35,
+    "rest_energy_gain": 40
+  },
+  "ai_difficulty": {
+    "davi_relampago": "dificil",
+    "cassio_molho": "medio",
+    "kenzo_kuroi": "muito_dificil",
+    "leoa_quilombola": "medio_dificil",
+    "oni_da_lapa": "caotico"
+  }
+}
