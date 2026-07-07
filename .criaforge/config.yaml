@@ -1,0 +1,21 @@
+version: 0.6.0
+project: Cria do Tatame
+engine: Godot 4.2+
+language: pt-BR
+style: HD Pixel Art 2.5D Regional Premium
+main_character: Ruan Macacao Silva
+hub: Terreiro da Luta
+
+paths:
+  techniques: data/techniques/technique_catalog_v05.json
+  combat_states: data/combat/combat_states_v05.json
+  opponent_gameplans: data/ai/opponent_gameplans_v05.json
+  production_manifest: data/production/cria_forge_manifest_v06.json
+  reports: reports/cria_forge
+
+rules:
+  no_third_party_copy: true
+  use_ptbr_names: true
+  mobile_first: true
+  data_driven: true
+  godot_runtime: true
