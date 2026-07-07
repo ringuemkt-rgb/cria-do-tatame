@@ -1,0 +1,15 @@
+{
+  "id": "technique_id",
+  "name_ptbr": "Nome da Tecnica",
+  "family": "queda",
+  "state_from": "disputa_pegada",
+  "state_to_success": "guarda_aberta",
+  "state_to_defended": "clinch_neutro",
+  "base_chance": 0.55,
+  "gas_cost": 8,
+  "focus_cost": 3,
+  "defense_window": 0.25,
+  "defense_response": "defesa",
+  "score_event": "",
+  "sprite_prompt_key": "technique_id"
+}
