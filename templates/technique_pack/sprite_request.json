@@ -1,0 +1,8 @@
+{
+  "character_id": "ruan_macacao",
+  "technique_id": "technique_id",
+  "name_ptbr": "Nome da Tecnica",
+  "style": "HD Pixel Art 2.5D Regional Premium",
+  "actions": ["leitura", "entrada", "contato", "controle", "transicao"],
+  "requirements": ["silhueta clara", "pegada visivel", "base coerente", "fundo transparente"]
+}
