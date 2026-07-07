@@ -18,6 +18,14 @@ var story_missions := {}
 var story_scenes := {}
 var arena_story_gameplay := {}
 var story_visual_manifest := {}
+var faction_drama_bible := {}
+var faction_missions := {}
+var faction_scenes := {}
+var hubs_dense := {}
+var gear_catalog := {}
+var training_minigames := {}
+var cria_live_interactive := {}
+var hub_activities := {}
 var validation_report := {}
 
 const DATA_FILES := {
@@ -38,7 +46,15 @@ const DATA_FILES := {
 	"story_missions": "res://data/missions/story_missions_v01.json",
 	"story_scenes": "res://data/story/story_scenes_v01.json",
 	"arena_story_gameplay": "res://data/arenas/arena_story_gameplay_v01.json",
-	"story_visual_manifest": "res://data/visual/story_visual_manifest_v01.json"
+	"story_visual_manifest": "res://data/visual/story_visual_manifest_v01.json",
+	"faction_drama_bible": "res://data/factions/faction_drama_bible_v01.json",
+	"faction_missions": "res://data/missions/faction_missions_v01.json",
+	"faction_scenes": "res://data/story/faction_scenes_v01.json",
+	"hubs_dense": "res://data/world/hubs_dense_v01.json",
+	"gear_catalog": "res://data/gear/gear_catalog_v01.json",
+	"training_minigames": "res://data/training/training_minigames_v01.json",
+	"cria_live_interactive": "res://data/cria_live/cria_live_interactive_v01.json",
+	"hub_activities": "res://data/missions/hub_activities_v01.json"
 }
 
 func _ready():
@@ -63,6 +79,14 @@ func load_all():
 	story_scenes = _load_raw("story_scenes")
 	arena_story_gameplay = _load_raw("arena_story_gameplay")
 	story_visual_manifest = _load_raw("story_visual_manifest")
+	faction_drama_bible = _load_raw("faction_drama_bible")
+	faction_missions = _load_raw("faction_missions")
+	faction_scenes = _load_raw("faction_scenes")
+	hubs_dense = _load_raw("hubs_dense")
+	gear_catalog = _load_raw("gear_catalog")
+	training_minigames = _load_raw("training_minigames")
+	cria_live_interactive = _load_raw("cria_live_interactive")
+	hub_activities = _load_raw("hub_activities")
 	validation_report = validate_core_data()
 	SignalBus.data_validation_finished.emit(validation_report)
 	SignalBus.data_loaded.emit()
@@ -101,7 +125,9 @@ func validate_core_data():
 		errors.append("tinker_bond.json nao carregado")
 	if finais_adultos.is_empty():
 		errors.append("finais_adultos.json nao carregado")
-	return {"ok": errors.is_empty(), "errors": errors, "characters": characters.size(), "arenas": arenas.size(), "techniques": techniques.size()}
+	if hubs_dense.is_empty():
+		errors.append("hubs_dense_v01.json nao carregado")
+	return {"ok": errors.is_empty(), "errors": errors, "characters": characters.size(), "arenas": arenas.size(), "techniques": techniques.size(), "factions": factions.size()}
 
 func get_character(id):
 	return characters.get(id, {})
@@ -118,8 +144,17 @@ func get_story_mission(id):
 			return mission
 	return {}
 
+func get_faction_mission(id):
+	for mission in faction_missions.get("missions", []):
+		if str(mission.get("id", "")) == str(id):
+			return mission
+	return {}
+
 func get_story_scene(id):
 	for scene in story_scenes.get("scenes", []):
+		if str(scene.get("id", "")) == str(id):
+			return scene
+	for scene in faction_scenes.get("scenes", []):
 		if str(scene.get("id", "")) == str(id):
 			return scene
 	return {}
