@@ -35,6 +35,7 @@ func _ready() -> void:
 	SignalBus.combat_finished.connect(_on_combat_finished)
 	SignalBus.technique_resolved.connect(_on_technique_resolved)
 	_connect_buttons()
+	_ensure_ai_hint()
 	_update_state_label("DISTANCE")
 	AudioManager.play_music_cue("terreiro")
 
@@ -53,6 +54,13 @@ func _build_placeholder_fighters() -> void:
 	davi_placeholder.scale.x = -1
 	add_child(davi_placeholder)
 
+func _ensure_ai_hint() -> void:
+	if has_node("Panel") and not has_node("Panel/AIHint"):
+		var label := Label.new()
+		label.name = "AIHint"
+		label.text = "Davi está lendo seu ritmo. Varie as entradas."
+		get_node("Panel").add_child(label)
+
 func _connect_buttons() -> void:
 	for i in range(actions.size()):
 		var path = "Panel/Buttons/Action%s" % [i + 1]
@@ -67,10 +75,19 @@ func _on_action_pressed(action_id: String) -> void:
 		ruan_placeholder.play_action(action_id)
 	var result = CombatManager.apply_player_action(action_id)
 	davi_ai.record_player_action(action_id)
-	var success := bool(result.get("result", result).get("success", false))
+	var success := _extract_success(result)
 	AudioManager.play_sfx(action_id)
 	gamefeel.apply_for_technique(action_id, success)
-	_update_ai_hint(result)
+	_update_ai_hint(result if result is Dictionary else {})
+
+func _extract_success(result) -> bool:
+	if result is Dictionary:
+		if result.has("success"):
+			return bool(result.get("success", false))
+		var nested = result.get("result", {})
+		if nested is Dictionary:
+			return bool(nested.get("success", false))
+	return false
 
 func _update_ai_hint(result: Dictionary) -> void:
 	if not has_node("Panel/AIHint"):
@@ -93,7 +110,10 @@ func _on_technique_resolved(result) -> void:
 	if has_node("Panel/Message"):
 		var nome = DataRegistry.get_technique(str(result.get("technique_id", ""))).get("nome", result.get("technique_id", ""))
 		$Panel/Message.text = "%s: %s" % [nome, "sucesso" if result.get("success", false) else "defendido"]
-	SignalBus.technique_executed.emit(StringName(result.get("actor_id", "ruan_macacao")), StringName(result.get("technique_id", "unknown")))
+	if SignalBus.has_signal("technique_executed"):
+		SignalBus.technique_executed.emit(StringName(result.get("actor_id", "ruan_macacao")), StringName(result.get("technique_id", "unknown")))
+	if SignalBus.has_signal("tecnica_executada"):
+		SignalBus.tecnica_executada.emit(StringName(result.get("actor_id", "ruan_macacao")), StringName(result.get("technique_id", "unknown")), bool(result.get("success", false)))
 
 func _update_state_label(value) -> void:
 	if has_node("Panel/State"):
