@@ -1,0 +1,31 @@
+{
+  "id": "missao_04_contrato_sangue_frio",
+  "ato": 4,
+  "titulo": "Contrato de Sangue Frio",
+  "descricao": "Cassio oferece contrato final. Tinker confronta Ruan e estabelece o limite da amizade.",
+  "objetivo": "decidir_contrato",
+  "gatilho": "lesao_grave",
+  "cena": "cena_tinker_limite_final",
+  "escolhas": [
+    {
+      "id": "recusar",
+      "texto": "Recusar contrato",
+      "tinker_event": "recusar_contrato_cassio",
+      "consequencia": "Tinker permanece. Dinheiro fica dificil. Ruan reconstrui devagar."
+    },
+    {
+      "id": "assinar",
+      "texto": "Assinar contrato",
+      "tinker_event": "assinar_contrato_cassio",
+      "consequencia": "Tinker vai embora. Hype sobe. Sombra sobe muito. Dende se distancia."
+    },
+    {
+      "id": "negociar",
+      "texto": "Negociar termos escondido",
+      "tinker_event": "negociar_sem_tinker",
+      "consequencia": "Tinker entra em retorno dificil. Meio-termo instavel."
+    }
+  ],
+  "recompensa": {"xp": 300},
+  "risco": "alto"
+}
