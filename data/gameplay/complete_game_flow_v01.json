@@ -1,0 +1,81 @@
+{
+  "version": "0.1.0",
+  "language": "pt-BR",
+  "title": "Cria do Tatame - Fluxo Completo Jogavel",
+  "core_loop": [
+    "acordar_no_hub",
+    "checar_cria_live",
+    "escolher_atividade_do_dia",
+    "treinar_ou_fazer_bico_ou_missao",
+    "gerenciar_energia_dinheiro_reputacao",
+    "lutar_quando_houver_evento",
+    "postar_ou_responder_no_cria_live",
+    "salvar_e_avancar_dia"
+  ],
+  "vertical_slice_02": {
+    "goal": "Ruan vs Davi no Terreiro com hub, treino, combate, resultado, Cria Live e save.",
+    "required_scenes": ["MainMenu", "TerreiroDaLuta", "WorldMapScreen", "TrainingScreen", "CombatArenaBase", "ResultScreen", "CriaLiveUI"],
+    "required_systems": ["DataRegistry", "WorldState", "SaveManager", "CombatManager", "RivalAIManager", "GameFlowManager", "CriaLiveManager", "TinkerBondManager"],
+    "win_condition": "Jogador completa a primeira luta contra Davi, recebe resultado, publica no Cria Live e retorna ao hub com save persistente."
+  },
+  "acts": [
+    {
+      "id": "ato_1_o_chao",
+      "belt_range": "branca_para_azul",
+      "theme": "humildade, base, primeira derrota",
+      "main_hub": "itubera",
+      "main_rival": "davi_relampago",
+      "must_have_missions": ["fica_no_chao_ou_levanta", "primeira_aula_com_dende", "primeira_luta_davi", "primeiro_post_cria_live"],
+      "unlock_at_end": ["arena_do_dique", "faixa_azul_progress"]
+    },
+    {
+      "id": "ato_2_o_molde",
+      "belt_range": "azul_para_roxa",
+      "theme": "tecnica, circuito, primeira tentacao",
+      "main_hub": "salvador",
+      "main_rival": "davi_relampago",
+      "must_have_missions": ["torneio_dique", "cassio_primeira_oferta", "tinker_primeiro_limite"],
+      "unlock_at_end": ["zambiapunga", "skill_tree_hype"]
+    },
+    {
+      "id": "ato_3_o_nome",
+      "belt_range": "roxa_para_marrom",
+      "theme": "fama, patrocinio, crise publica",
+      "main_hub": "zambiapunga",
+      "main_rival": "cassio_molho",
+      "must_have_missions": ["festa_que_lava_imagem", "comunicado_ou_silencio", "tinker_confronta_ruan"],
+      "unlock_at_end": ["faction_pressure", "cria_live_crisis_system"]
+    },
+    {
+      "id": "ato_4_a_queda",
+      "belt_range": "marrom_para_preta",
+      "theme": "lesao, dinheiro, lealdade quebravel",
+      "main_hub": "camamu_manguezal",
+      "main_rival": "kenzo_kuroi",
+      "must_have_missions": ["lesao_grave", "olho_que_tudo_ve", "contrato_de_sangue_frio"],
+      "unlock_at_end": ["final_conditions", "retorno_ou_ruptura_tinker"]
+    },
+    {
+      "id": "ato_5_o_legado",
+      "belt_range": "preta",
+      "theme": "julgamento, legado, quem ficou",
+      "main_hub": "terreiro_da_luta",
+      "main_rival": "cassio_molho",
+      "must_have_missions": ["cerimonia_faixa_preta", "ultima_luta", "final_do_caminho"],
+      "unlock_at_end": ["final_heroi_duas_aguas", "final_estrela_vazia", "final_rei_atalhos", "final_raiz_eterna"]
+    }
+  ],
+  "daily_slots": {
+    "manha": ["descanso", "corrida", "fisioterapia", "cria_live"],
+    "tarde": ["treino_tecnico", "missao", "loja", "npc"],
+    "noite": ["luta", "evento", "bico", "cutscene"]
+  },
+  "completion_definition": [
+    "um save carrega e volta ao hub correto",
+    "cada ato tem ao menos tres missoes jogaveis",
+    "cada rival principal possui IA unica",
+    "cada hub tem NPC, atividade, loja ou treino",
+    "cada luta tem resultado, reputacao e Cria Live",
+    "cada final nasce de reputacao, vinculo Tinker e escolhas"
+  ]
+}
