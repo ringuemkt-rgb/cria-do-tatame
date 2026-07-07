@@ -1,0 +1,48 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scenes/combat/CombatArenaBase.gd" id="1_combat"]
+
+[node name="CombatArenaBase" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource("1_combat")
+
+[node name="Panel" type="VBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="Title" type="Label" parent="Panel"]
+layout_mode = 2
+text = "RUAN MACACAO vs DAVI RELAMPAGO"
+
+[node name="State" type="Label" parent="Panel"]
+layout_mode = 2
+text = "Estado: DISTANCE"
+
+[node name="Resources" type="Label" parent="Panel"]
+layout_mode = 2
+text = "Recursos"
+
+[node name="Buttons" type="HBoxContainer" parent="Panel"]
+layout_mode = 2
+
+[node name="Action1" type="Button" parent="Panel/Buttons"]
+layout_mode = 2
+text = "Pegada"
+
+[node name="Action2" type="Button" parent="Panel/Buttons"]
+layout_mode = 2
+text = "Pressao"
+
+[node name="Action3" type="Button" parent="Panel/Buttons"]
+layout_mode = 2
+text = "Transicao"
+
+[node name="Action4" type="Button" parent="Panel/Buttons"]
+layout_mode = 2
+text = "Defesa"
+
+[node name="Action5" type="Button" parent="Panel/Buttons"]
+layout_mode = 2
+text = "Tecnico"
