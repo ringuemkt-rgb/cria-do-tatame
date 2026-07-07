@@ -1,0 +1,55 @@
+{
+  "version": "0.1.0",
+  "language": "pt-BR",
+  "arenas": {
+    "terreiro_da_luta": {
+      "role": "hub moral e treino",
+      "story_function": "Onde Ruan aprende limite, onde Tinker testemunha, onde Dende julga carater.",
+      "gameplay_modifiers": {"pressure_bonus": 0.05, "focus_bonus": 0.05, "honra_on_clean_win": 2},
+      "mission_links": ["ato1_fica_no_chao_ou_levanta", "ato2_o_primeiro_video"],
+      "visual_mood": "madeira, mangue, por do sol, tatame azul e dourado"
+    },
+    "arena_do_dique": {
+      "role": "circuito oficial",
+      "story_function": "Ruan aprende que regra e plateia tambem pressionam.",
+      "gameplay_modifiers": {"rule_pressure": 0.10, "hype_on_win": 3},
+      "mission_links": ["ato2_o_molde"],
+      "visual_mood": "ginasio, telao, crowd formal, luz branca"
+    },
+    "ferro_velho_da_lapa": {
+      "role": "arena de risco e tentacao",
+      "story_function": "Cassio oferece dinheiro, sombra e atalhos.",
+      "gameplay_modifiers": {"risk_bonus": 0.15, "traction_penalty": -0.10, "sombra_on_win": 2},
+      "mission_links": ["ato4_contrato_de_sangue_frio"],
+      "visual_mood": "metal, chuva, neon, grave sujo"
+    },
+    "manguezal_profundo": {
+      "role": "raiz e vergonha",
+      "story_function": "Lugar onde Ruan cai para dentro de si e Tinker segura a lanterna.",
+      "gameplay_modifiers": {"traction_penalty": -0.15, "sweep_bonus": 0.10, "gas_penalty": -0.10},
+      "mission_links": ["ato1_fica_no_chao_ou_levanta"],
+      "visual_mood": "lama, silencio, agua escura, ancestralidade"
+    },
+    "praia_de_pratigi": {
+      "role": "hype e imagem",
+      "story_function": "Onde o Cria Live cresce e o publico vira tentacao.",
+      "gameplay_modifiers": {"explosion_penalty": -0.10, "hype_on_win": 4, "moral_bonus": 1},
+      "mission_links": ["ato3_comunicado_ou_silencio"],
+      "visual_mood": "areia, mar, celulares, crowd leve"
+    },
+    "colonia_nishimura": {
+      "role": "disciplina fria",
+      "story_function": "Lugar de silencio, precisao e custo do erro.",
+      "gameplay_modifiers": {"focus_bonus": 0.12, "error_cost_bonus": 0.15, "legado_on_win": 2},
+      "mission_links": ["ato4_a_queda"],
+      "visual_mood": "portao, lanternas, agua parada, passos secos"
+    },
+    "budokan_das_aguas": {
+      "role": "julgamento final",
+      "story_function": "A faixa preta nao premia: revela quem sobrou.",
+      "gameplay_modifiers": {"precision_bonus": 0.10, "mistake_penalty": 0.10, "reading_bonus": 0.08},
+      "mission_links": ["ato5_quem_ficou"],
+      "visual_mood": "agua correndo, silencio tenso, elite tecnica"
+    }
+  }
+}
