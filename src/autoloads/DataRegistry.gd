@@ -28,6 +28,10 @@ var customization_options := {}
 var training_minigames := {}
 var cria_live_interactive := {}
 var hub_activities := {}
+var complete_game_flow := {}
+var campaign_cinematics := {}
+var rival_ai_profiles := {}
+var full_completion_backlog := {}
 var validation_report := {}
 
 const DATA_FILES := {
@@ -58,7 +62,11 @@ const DATA_FILES := {
 	"customization_options": "res://data/customization/customization_options.json",
 	"training_minigames": "res://data/training/training_minigames_v01.json",
 	"cria_live_interactive": "res://data/cria_live/cria_live_interactive_v01.json",
-	"hub_activities": "res://data/missions/hub_activities_v01.json"
+	"hub_activities": "res://data/missions/hub_activities_v01.json",
+	"complete_game_flow": "res://data/gameplay/complete_game_flow_v01.json",
+	"campaign_cinematics": "res://data/story/campaign_cinematics_v01.json",
+	"rival_ai_profiles": "res://data/ai/rival_ai_profiles_v01.json",
+	"full_completion_backlog": "res://data/production/full_completion_backlog_v01.json"
 }
 
 func _ready():
@@ -93,6 +101,10 @@ func load_all():
 	training_minigames = _load_raw("training_minigames")
 	cria_live_interactive = _load_raw("cria_live_interactive")
 	hub_activities = _load_raw("hub_activities")
+	complete_game_flow = _load_raw("complete_game_flow")
+	campaign_cinematics = _load_raw("campaign_cinematics")
+	rival_ai_profiles = _load_raw("rival_ai_profiles")
+	full_completion_backlog = _load_raw("full_completion_backlog")
 	validation_report = validate_core_data()
 	SignalBus.data_validation_finished.emit(validation_report)
 	SignalBus.data_loaded.emit()
@@ -141,6 +153,12 @@ func validate_core_data():
 		errors.append("hubs_dense_v01.json nao carregado")
 	if player_progression.is_empty():
 		errors.append("player_progression.json nao carregado")
+	if complete_game_flow.is_empty():
+		errors.append("complete_game_flow_v01.json nao carregado")
+	if campaign_cinematics.is_empty():
+		errors.append("campaign_cinematics_v01.json nao carregado")
+	if rival_ai_profiles.is_empty():
+		errors.append("rival_ai_profiles_v01.json nao carregado")
 	return {"ok": errors.is_empty(), "errors": errors, "characters": characters.size(), "arenas": arenas.size(), "techniques": techniques.size(), "factions": factions.size()}
 
 func get_character(id):
@@ -169,6 +187,12 @@ func get_story_scene(id):
 		if str(scene.get("id", "")) == str(id):
 			return scene
 	for scene in faction_scenes.get("scenes", []):
+		if str(scene.get("id", "")) == str(id):
+			return scene
+	return {}
+
+func get_campaign_cutscene(id):
+	for scene in campaign_cinematics.get("cutscenes", []):
 		if str(scene.get("id", "")) == str(id):
 			return scene
 	return {}
