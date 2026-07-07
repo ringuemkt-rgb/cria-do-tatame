@@ -1,0 +1,29 @@
+{
+  "id": "missao_01_fica_no_chao",
+  "ato": 1,
+  "titulo": "Fica no Chao ou Levanta",
+  "descricao": "Apos derrota para Davi, Ruan quer desistir. Tinker encontra ele quebrado e oferece presenca, nao solucao magica.",
+  "objetivo": "voltar_ao_terreiro",
+  "gatilho": "derrota_para_davi",
+  "cena": "cena_ruan_derrota_mangue",
+  "escolhas": [
+    {
+      "id": "voltar",
+      "texto": "Voltar ao Terreiro",
+      "efeitos": {
+        "tinker_event": "pedir_ajuda",
+        "tecnica_desbloqueada": "grip_de_ferro",
+        "dialogo_desbloqueado": "dende_boas_vindas"
+      }
+    },
+    {
+      "id": "desistir",
+      "texto": "Desistir",
+      "efeitos": {
+        "tinker_bond": {"confianca": -20, "ferida": 10},
+        "game_over": true
+      }
+    }
+  ],
+  "recompensa": {"xp": 100, "tecnicas": ["grip_de_ferro"], "honra": 3}
+}
