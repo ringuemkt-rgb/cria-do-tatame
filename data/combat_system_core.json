@@ -1,0 +1,57 @@
+{
+  "version": "0.2.0",
+  "engine_name": "Cria Positional Grappling Engine",
+  "design_rule": "Nao aperte para bater. Construa posicao para dominar. Finalize com respeito.",
+  "states": [
+    {"id": "DISTANCIA_LONGA", "order": 1, "goal": "ler alcance e aproximar sem se expor"},
+    {"id": "DISTANCIA_MEDIA", "order": 2, "goal": "entrar com pegada, finta ou queda"},
+    {"id": "GRIP_FIGHT", "order": 3, "goal": "vencer a disputa de pegada"},
+    {"id": "CLINCH_NEUTRO", "order": 4, "goal": "controlar postura e base"},
+    {"id": "CLINCH_DOMINANTE", "order": 5, "goal": "abrir queda ou costas"},
+    {"id": "QUEDA_ENTRADA", "order": 6, "goal": "comprometer entrada com timing"},
+    {"id": "QUEDA_DISPUTA", "order": 7, "goal": "resolver queda, defesa ou contra-ataque"},
+    {"id": "GUARDA_FECHADA", "order": 8, "goal": "postura, passagem ou ataque por baixo"},
+    {"id": "GUARDA_ABERTA", "order": 9, "goal": "passar, raspar ou recuperar distancia"},
+    {"id": "MEIA_GUARDA", "order": 10, "goal": "pressionar e passar ou defender raspagem"},
+    {"id": "SIDE_CONTROL", "order": 11, "goal": "estabilizar controle lateral"},
+    {"id": "MONTADA", "order": 12, "goal": "dominar e abrir finalizacao"},
+    {"id": "COSTAS", "order": 13, "goal": "ganchos, seatbelt e finalizacao"},
+    {"id": "FINALIZACAO_SETUP", "order": 14, "goal": "criar abertura de finalizacao"},
+    {"id": "FINALIZACAO_LOCK", "order": 15, "goal": "manter controle tecnico"},
+    {"id": "TAP_OR_ESCAPE", "order": 16, "goal": "tap, escape ou intervencao do arbitro"},
+    {"id": "RESET", "order": 17, "goal": "recomecar com seguranca"}
+  ],
+  "resources": {
+    "hp": "resistencia geral",
+    "gas": "energia para entrada, defesa e scramble",
+    "focus": "timing e leitura",
+    "moral": "resistencia mental e reacao ao publico",
+    "control": "dominio posicional",
+    "grip": "qualidade da pegada",
+    "guard": "protecao no chao",
+    "advantages": "quase pontuacao",
+    "penalties": "erros oficiais ou antijogo"
+  },
+  "scoring": {
+    "takedown_clean": 2,
+    "sweep": 2,
+    "guard_pass": 3,
+    "mount": 4,
+    "back_control_hooks": 4,
+    "technical_advantage": 1,
+    "submission": "instant_win_by_tap_or_referee"
+  },
+  "mobile_buttons_by_state": {
+    "DISTANCIA_MEDIA": ["PEGADA", "DEFESA", "FINTA", "CLINCH", "QUEDA"],
+    "CLINCH_NEUTRO": ["PRESSAO", "QUEBRAR_PEGADA", "TROCAR_BASE", "DEFESA", "QUEDA"],
+    "SIDE_CONTROL": ["PRESSAO", "CROSSFACE", "ISOLAR", "JOELHO_BASE", "MONTAR"],
+    "COSTAS": ["GANCHOS", "SEATBELT", "ARRASTAR", "DEFENDER_REVERSAO", "FINALIZAR"],
+    "FINALIZACAO_LOCK": ["AJUSTAR", "MANTER_CONTROLE", "RESPIRAR", "DEFENDER_ESCAPE", "FORCAR_TAP"]
+  },
+  "safety_morality": {
+    "tap_is_respect": true,
+    "referee_protects": true,
+    "no_explicit_injury_reward": true,
+    "clean_win_reputation_bonus": true
+  }
+}
