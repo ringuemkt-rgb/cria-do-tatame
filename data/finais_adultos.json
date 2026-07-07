@@ -1,0 +1,52 @@
+{
+  "version": "0.1.0",
+  "language": "pt-BR",
+  "finals": {
+    "final_1_heroi_duas_aguas": {
+      "id": "final_1_heroi_duas_aguas",
+      "nome": "Heroi das Duas Aguas",
+      "short_id": "heroi_duas_aguas",
+      "condicoes": {"honra_min": 70, "legado_min": 70, "sombra_max": 30, "tinker_estado": "IRMANDADE"},
+      "descricao": "Ruan abre projeto social no Terreiro. Nao vira santo. Vira responsavel.",
+      "tinker_presente": true,
+      "dialogo": ["Agora vem a parte dificil.", "Ganhar?", "Ensinar sem virar dono da verdade."]
+    },
+    "final_2_estrela_vazia": {
+      "id": "final_2_estrela_vazia",
+      "nome": "Estrela Vazia",
+      "short_id": "estrela_vazia",
+      "condicoes": {"hype_min": 70, "honra_max": 50, "tinker_estado": "AFASTAMENTO"},
+      "descricao": "Ruan tem dinheiro, seguidores e contratos. Mas ninguem intimo confia nele.",
+      "tinker_presente": false,
+      "mensagem_tinker": "Eu vi sua vitoria. Todo mundo viu. Mas eu ainda estou procurando meu irmao naquela tela."
+    },
+    "final_3_rei_atalhos": {
+      "id": "final_3_rei_atalhos",
+      "nome": "Rei dos Atalhos",
+      "short_id": "rei_dos_atalhos",
+      "condicoes": {"sombra_min": 70, "moral_max": 40, "tinker_estado": "RUPTURA"},
+      "descricao": "Ruan vence por fora e perde por dentro. Cercado de segurancas, contratos e medo.",
+      "tinker_presente": false,
+      "ultima_notificacao": "Macacao vence de novo. Mas ninguem sabe quem ele e agora."
+    },
+    "final_4_traidor_silencioso": {
+      "id": "final_4_traidor_silencioso",
+      "nome": "Traidor Silencioso",
+      "short_id": "traidor_silencioso",
+      "condicoes": {"hype_min": 60, "sombra_min": 60, "tinker_estado": "RETORNO_DIFICIL"},
+      "descricao": "Tinker volta, mas nao como irmao pleno. Existe frieza.",
+      "tinker_presente": true,
+      "dialogo": ["Voce confia em mim?", "Hoje? Nao. Mas eu estou vendo se amanha eu consigo."]
+    },
+    "final_5_raiz_eterna": {
+      "id": "final_5_raiz_eterna",
+      "nome": "Raiz Eterna",
+      "short_id": "raiz_eterna",
+      "condicoes": {"honra_min": 70, "legado_min": 70, "raiz_min": 70, "tinker_estado": "LEGADO"},
+      "descricao": "Ruan nao vira celebridade. Vira parte de uma continuidade.",
+      "tinker_presente": true,
+      "dialogo": ["A gente conseguiu.", "Nao. A gente comecou.", "Comecou o que?", "As proximas crias."]
+    }
+  },
+  "final_phrase": "A luta acaba quando alguem bate. A vida comeca quando nao tem mais ninguem olhando."
+}
