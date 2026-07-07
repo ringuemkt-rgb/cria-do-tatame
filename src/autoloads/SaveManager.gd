@@ -7,6 +7,10 @@ const SAVE_PATH := "user://savegame.json"
 func save_game(slot_id := 1):
 	var data = WorldState.to_dict()
 	data["saved_at"] = Time.get_datetime_string_from_system()
+	if has_node("/root/TinkerBondManager"):
+		data["tinker_bond"] = TinkerBondManager.to_dict()
+	if has_node("/root/MissionManager"):
+		data["mission_state"] = MissionManager.to_dict()
 	var path = SAVE_PREFIX + str(slot_id) + SAVE_SUFFIX
 	var file = FileAccess.open(path, FileAccess.WRITE)
 	if file == null:
@@ -28,6 +32,10 @@ func load_game(slot_id := 1):
 		push_error("[SaveManager] Save invalido.")
 		return false
 	WorldState.load_from_dict(parsed)
+	if parsed.has("tinker_bond") and has_node("/root/TinkerBondManager"):
+		TinkerBondManager.load_from_dict(parsed["tinker_bond"])
+	if parsed.has("mission_state") and has_node("/root/MissionManager"):
+		MissionManager.load_from_dict(parsed["mission_state"])
 	SignalBus.save_loaded.emit(slot_id)
 	return true
 
