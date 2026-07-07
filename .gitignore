@@ -1,0 +1,14 @@
+.import/
+.export/
+.godot/
+*.tmp
+*.log
+.DS_Store
+__pycache__/
+*.pyc
+ai_lore_guardian/.env
+export/builds/*.apk
+export/builds/*.exe
+export/builds/*.zip
+*.translation
+.android/
