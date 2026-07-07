@@ -1,0 +1,86 @@
+{
+  "version": "0.1.0",
+  "language": "pt-BR",
+  "visual_style": "HD Pixel Art 2.5D Regional Premium, adulto, cinematografico, sem copiar marcas ou pessoas reais",
+  "scenes": [
+    {
+      "id": "cena_ruan_derrota_mangue",
+      "act": 1,
+      "title": "Apos a Primeira Derrota",
+      "location": "manguezal_profundo",
+      "mood": "vergonha, lama, silencio, respiracao pesada",
+      "camera": "plano medio baixo, chuva fina, Ruan sentado perto da agua, Tinker em pe segurando celular desligado",
+      "beats": [
+        {"type": "visual", "text": "Ruan lava o rosto na agua escura do mangue. A mao treme, nao de medo, mas de humilhacao."},
+        {"speaker": "tinker_bell", "line": "Voce ta com raiva dele ou de voce?"},
+        {"speaker": "ruan_macacao", "line": "Ele me fez parecer crianca."},
+        {"speaker": "tinker_bell", "line": "Nao. Ele te mostrou a verdade. Doi porque era verdade."},
+        {"speaker": "tinker_bell", "line": "Eu fico aqui. Mas levantar e contigo."}
+      ],
+      "gameplay_unlocks": ["grip_de_ferro", "tutorial_respirar"],
+      "visual_prompt_key": "ato1_mangue_primeira_derrota"
+    },
+    {
+      "id": "cena_primeiro_video",
+      "act": 2,
+      "title": "O Primeiro Video",
+      "location": "terreiro_da_luta",
+      "mood": "euforia contida, orgulho, perigo do hype nascendo",
+      "camera": "handheld de celular, UI do Cria Live sobreposta, luz dourada do fim de tarde",
+      "beats": [
+        {"speaker": "tinker_bell", "line": "Mano, voce viu isso? Davi Relampago no chao. O Terreiro inteiro viu."},
+        {"speaker": "ruan_macacao", "line": "Eu achei que vencer ia calar tudo. Mas so aumentou o barulho."},
+        {"speaker": "tinker_bell", "line": "Entao deixa eu postar direito. Respeito primeiro. Hype depois."}
+      ],
+      "choice_link": "post_humilde/post_provocativo/post_agressivo",
+      "visual_prompt_key": "ato2_terreiro_primeiro_video"
+    },
+    {
+      "id": "cena_crise_publica",
+      "act": 3,
+      "title": "Comunicado ou Silencio",
+      "location": "cria_live_ui",
+      "mood": "notificacoes, vergonha publica, tensao de amizade",
+      "camera": "split screen: Ruan no escuro, Tinker com celular iluminando o rosto, comentarios subindo na tela",
+      "beats": [
+        {"speaker": "tinker_bell", "line": "Voce precisa falar."},
+        {"speaker": "ruan_macacao", "line": "Pra que? Pra internet me perdoar?"},
+        {"speaker": "tinker_bell", "line": "Nao. Pra voce parar de mentir pra si mesmo."},
+        {"speaker": "tinker_bell", "line": "Voce nao ta ficando forte. Voce ta ficando sozinho."}
+      ],
+      "choice_link": "assumir_erro_publico/culpar_midia/sumir/usar_tinker_como_escudo",
+      "visual_prompt_key": "ato3_crise_publica_split_screen"
+    },
+    {
+      "id": "cena_tinker_limite_final",
+      "act": 4,
+      "title": "O Limite Final",
+      "location": "ferro_velho_da_lapa",
+      "mood": "noite, metal molhado, contrato, cansaco, limite emocional",
+      "camera": "plano fechado em maos: contrato, caneta, celular de Tinker tremendo, reflexo neon na agua",
+      "beats": [
+        {"speaker": "tinker_bell", "line": "Voce leu o dinheiro. Nao leu o preco."},
+        {"speaker": "ruan_macacao", "line": "Eu to cansado de ser pobre com honra."},
+        {"speaker": "tinker_bell", "line": "E eu to cansado de ver homem bom usando dor como desculpa pra virar covarde."},
+        {"speaker": "tinker_bell", "line": "Se voce assinar, eu vou embora. Nao por raiva. Por respeito ao Ruan que eu conheci."}
+      ],
+      "choice_link": "recusar_contrato_cassio/assinar_contrato_cassio/negociar_sem_tinker",
+      "visual_prompt_key": "ato4_lapa_contrato_limite"
+    },
+    {
+      "id": "cena_faixa_preta_quem_ficou",
+      "act": 5,
+      "title": "Quem Ficou",
+      "location": "budokan_das_aguas",
+      "mood": "silencio, julgamento, agua correndo, faixa preta como sentenca",
+      "camera": "plano longo do tatame vazio, depois close na faixa preta, depois cadeira onde Tinker pode estar ou nao",
+      "beats": [
+        {"speaker": "mestre_dende", "line": "Faixa preta nao cobre buraco de carater. Ela revela."},
+        {"speaker": "ruan_macacao", "line": "Eu sei."},
+        {"speaker": "mestre_dende", "line": "Entao olha ao redor. Quem ficou?"}
+      ],
+      "ending_gate": true,
+      "visual_prompt_key": "ato5_budokan_quem_ficou"
+    }
+  ]
+}
