@@ -1,19 +1,26 @@
 extends Node
 
 var week := 1
+var current_week := 1
 var day_index := 0
 var days := ["segunda", "terca", "quarta", "quinta", "sexta", "sabado", "domingo"]
+var current_day := "segunda"
 var act := 1
+var current_act := 1
 var belt := "branca"
+var current_belt := "branca"
 var money := 0
 var energy := 100.0
 var strain_level := 0
+var injury_level := 0
 var player_id := "ruan_macacao"
+var campaign_id := "ruan_macacao"
 var current_hub := "terreiro_da_luta"
 var skill_points := 0
 var fights_won := 0
 var fights_lost := 0
 var technical_finishes := 0
+var submissions_landed := 0
 var unlocked_skills := []
 var completed_missions := []
 var techniques_learned := []
@@ -21,6 +28,14 @@ var active_sponsors := []
 var story_flags := {}
 var last_combat_result := {}
 var reputation := {"honra": 50.0, "hype": 30.0, "sombra": 0.0, "legado": 20.0, "dupla_face": 0.0, "moral": 50.0}
+
+func _sync_aliases() -> void:
+	current_week = week
+	current_day = days[day_index]
+	current_act = act
+	current_belt = belt
+	injury_level = strain_level
+	campaign_id = player_id
 
 func reset_new_game():
 	week = 1
@@ -36,6 +51,7 @@ func reset_new_game():
 	fights_won = 0
 	fights_lost = 0
 	technical_finishes = 0
+	submissions_landed = 0
 	unlocked_skills = []
 	completed_missions = []
 	techniques_learned = []
@@ -43,6 +59,7 @@ func reset_new_game():
 	story_flags = {}
 	last_combat_result = {}
 	reputation = {"honra": 50.0, "hype": 30.0, "sombra": 0.0, "legado": 20.0, "dupla_face": 0.0, "moral": 50.0}
+	_sync_aliases()
 
 func advance_day():
 	day_index += 1
@@ -53,6 +70,7 @@ func advance_day():
 	energy = min(100.0, energy + 15.0)
 	if strain_level > 0:
 		strain_level -= 1
+	_sync_aliases()
 	SignalBus.day_advanced.emit(days[day_index], week)
 
 func modify_reputation(axis, delta: float) -> void:
@@ -65,23 +83,45 @@ func modify_reputation(axis, delta: float) -> void:
 func get_reputation(axis) -> float:
 	return float(reputation.get(str(axis), 0.0))
 
+func determine_final():
+	var honra = get_reputation("honra")
+	var hype = get_reputation("hype")
+	var sombra = get_reputation("sombra")
+	var legado = get_reputation("legado")
+	if honra >= 70.0 and legado >= 70.0 and sombra < 30.0:
+		return "heroi_duas_aguas"
+	if hype >= 70.0 and honra < 50.0:
+		return "estrela_vazia"
+	if sombra >= 70.0 and honra < 40.0:
+		return "rei_atalhos"
+	if hype >= 60.0 and sombra >= 60.0 and honra < 50.0:
+		return "traidor_silencioso"
+	if honra >= 70.0 and legado >= 70.0:
+		return "raiz_eterna"
+	return "heroi_duas_aguas"
+
 func to_dict():
-	return {"week": week, "day_index": day_index, "act": act, "belt": belt, "money": money, "energy": energy, "strain_level": strain_level, "player_id": player_id, "current_hub": current_hub, "skill_points": skill_points, "fights_won": fights_won, "fights_lost": fights_lost, "technical_finishes": technical_finishes, "unlocked_skills": unlocked_skills, "completed_missions": completed_missions, "techniques_learned": techniques_learned, "active_sponsors": active_sponsors, "story_flags": story_flags, "last_combat_result": last_combat_result, "reputation": reputation}
+	_sync_aliases()
+	return {"week": week, "current_week": current_week, "day_index": day_index, "current_day": current_day, "act": act, "current_act": current_act, "belt": belt, "current_belt": current_belt, "money": money, "energy": energy, "strain_level": strain_level, "injury_level": injury_level, "player_id": player_id, "campaign_id": campaign_id, "current_hub": current_hub, "skill_points": skill_points, "fights_won": fights_won, "fights_lost": fights_lost, "technical_finishes": technical_finishes, "submissions_landed": submissions_landed, "unlocked_skills": unlocked_skills, "completed_missions": completed_missions, "techniques_learned": techniques_learned, "active_sponsors": active_sponsors, "story_flags": story_flags, "last_combat_result": last_combat_result, "reputation": reputation}
 
 func load_from_dict(data):
-	week = data.get("week", 1)
-	day_index = data.get("day_index", 0)
-	act = data.get("act", 1)
-	belt = data.get("belt", "branca")
+	week = data.get("week", data.get("current_week", 1))
+	current_day = data.get("current_day", "segunda")
+	day_index = data.get("day_index", days.find(current_day))
+	if day_index < 0:
+		day_index = 0
+	act = data.get("act", data.get("current_act", 1))
+	belt = data.get("belt", data.get("current_belt", "branca"))
 	money = data.get("money", 0)
 	energy = data.get("energy", 100.0)
-	strain_level = data.get("strain_level", 0)
-	player_id = data.get("player_id", "ruan_macacao")
+	strain_level = data.get("strain_level", data.get("injury_level", 0))
+	player_id = data.get("player_id", data.get("campaign_id", "ruan_macacao"))
 	current_hub = data.get("current_hub", "terreiro_da_luta")
 	skill_points = data.get("skill_points", 0)
 	fights_won = data.get("fights_won", 0)
 	fights_lost = data.get("fights_lost", 0)
-	technical_finishes = data.get("technical_finishes", 0)
+	technical_finishes = data.get("technical_finishes", data.get("submissions_landed", 0))
+	submissions_landed = data.get("submissions_landed", technical_finishes)
 	unlocked_skills = data.get("unlocked_skills", [])
 	completed_missions = data.get("completed_missions", [])
 	techniques_learned = data.get("techniques_learned", [])
@@ -89,3 +129,4 @@ func load_from_dict(data):
 	story_flags = data.get("story_flags", {})
 	last_combat_result = data.get("last_combat_result", {})
 	reputation = data.get("reputation", reputation)
+	_sync_aliases()
