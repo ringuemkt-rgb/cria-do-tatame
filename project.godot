@@ -18,6 +18,7 @@ AudioManager="*res://src/autoloads/AudioManager.gd"
 TinkerBondManager="*res://src/autoloads/TinkerBondManager.gd"
 MissionManager="*res://src/autoloads/MissionManager.gd"
 StorySceneDirector="*res://src/autoloads/StorySceneDirector.gd"
+FactionManager="*res://src/autoloads/FactionManager.gd"
 
 [display]
 window/size/viewport_width=1280
