@@ -1,0 +1,125 @@
+{
+  "version": "0.1.0",
+  "language": "pt-BR",
+  "design_note": "Missoes cinematograficas ficcionais. O foco e dilema moral, nao procedimento criminal.",
+  "missions": [
+    {
+      "id": "aleluia_dizimo_do_campeao",
+      "faction": "os_aleluia",
+      "title": "O Dizimo do Campeao",
+      "act": 3,
+      "location": "igreja_central_ficcional",
+      "tone": "luz bonita, pressao social, sorriso firme, vergonha publica",
+      "objective": "Decidir se Ruan aceita uma cobranca moralmente ambigua depois de vencer no circuito oficial.",
+      "beats": [
+        {"speaker": "davi_profeta_santos", "line": "Hoje celebramos uma vitoria. Mas toda gloria vem com responsabilidade."},
+        {"speaker": "ruan_macacao", "line": "Responsabilidade ou cobranca?"},
+        {"speaker": "irmao_gabriel_muralha", "line": "O Profeta abriu as portas. Porta aberta tambem cobra respeito."},
+        {"speaker": "davi_profeta_santos", "line": "Nao e cobranca, Ruan. E gratidao. Voce entende, ne?"}
+      ],
+      "choices": [
+        {"id": "pagar", "label": "Pagar em silencio", "effects": {"money": -1000, "honra": -2, "sombra": 5, "os_aleluia": 10, "tinker_event": "mentir_para_tinker"}},
+        {"id": "recusar", "label": "Recusar com respeito", "effects": {"honra": 8, "os_aleluia": -8, "tinker_event": "proteger_terreiro"}},
+        {"id": "negociar", "label": "Negociar sem se comprometer", "effects": {"money": -500, "sombra": 2, "os_aleluia": 2}}
+      ]
+    },
+    {
+      "id": "aleluia_resultado_arranjado",
+      "faction": "os_aleluia",
+      "title": "Resultado Arranjado",
+      "act": 3,
+      "location": "arena_do_dique_bastidores",
+      "tone": "corredor estreito, luz fria, regra virando pressao",
+      "objective": "Escolher entre prestigio facil e luta limpa.",
+      "beats": [
+        {"speaker": "capitao_beto_juiz", "line": "A luta de sabado ja tem clima definido."},
+        {"speaker": "ruan_macacao", "line": "Clima ou resultado?"},
+        {"speaker": "davi_profeta_santos", "line": "Pense menos em orgulho e mais em obra."},
+        {"speaker": "ruan_macacao", "line": "Quando a obra pede mentira, alguma coisa morreu no altar."}
+      ],
+      "choices": [
+        {"id": "aceitar", "label": "Aceitar o acordo", "effects": {"money": 25000, "sombra": 20, "honra": -20, "tinker_event": "mentir_para_tinker"}},
+        {"id": "recusar", "label": "Recusar", "effects": {"honra": 12, "os_aleluia": -15}},
+        {"id": "expor", "label": "Expor a verdade", "effects": {"honra": 18, "legado": 12, "sombra": -8, "os_aleluia": -25, "tinker_event": "assumir_erro_publico"}}
+      ]
+    },
+    {
+      "id": "laele_olho_que_tudo_ve",
+      "faction": "la_ele_mil_vezes",
+      "title": "O Olho que Tudo Ve",
+      "act": 4,
+      "location": "colonia_nishimura",
+      "tone": "madrugada, silencio, tatame impecavel, informacao como faca fria",
+      "objective": "Decidir se Ruan aceita vantagem de leitura sobre rivais.",
+      "beats": [
+        {"speaker": "kenzo_oraculo_kuroi", "line": "Enquanto voce treina, alguem observa. A pergunta e: voce quer ser observado ou observador?"},
+        {"speaker": "marina_silencio_costa", "line": "Seu lado esquerdo fecha tarde."},
+        {"speaker": "ruan_macacao", "line": "Como voces sabem disso?"},
+        {"speaker": "kenzo_oraculo_kuroi", "line": "Porque todo padrao deixa rastro."}
+      ],
+      "choices": [
+        {"id": "unir_se", "label": "Aceitar a leitura de Kenzo", "effects": {"focus": 5, "sombra": 12, "honra": -8, "tinker_event": "mentir_para_tinker"}},
+        {"id": "recusar", "label": "Recusar", "effects": {"honra": 10, "la_ele_mil_vezes": -10}},
+        {"id": "negociar", "label": "Ouvir sem prometer lealdade", "effects": {"focus": 2, "sombra": 4, "la_ele_mil_vezes": 2}}
+      ]
+    },
+    {
+      "id": "laele_previsao_garantida",
+      "faction": "la_ele_mil_vezes",
+      "title": "Previsao Garantida",
+      "act": 4,
+      "location": "ferro_velho_da_lapa",
+      "tone": "numeros, luz ruim, promessa de certeza, custo de consciencia",
+      "objective": "Escolher se Ruan luta confiando no proprio preparo ou em previsao de bastidor.",
+      "beats": [
+        {"speaker": "hiro_estrategista_nakamura", "line": "Nao existe sorte. Existe padrao. E eu calculei o seu."},
+        {"speaker": "ruan_macacao", "line": "Se eu ja sei demais, a luta deixa de ser luta."},
+        {"speaker": "hiro_estrategista_nakamura", "line": "Ou vira eficiencia."}
+      ],
+      "choices": [
+        {"id": "usar_previsao", "label": "Usar a previsao", "effects": {"focus": 6, "sombra": 10, "honra": -6}},
+        {"id": "lutar_limpo", "label": "Lutar sem vantagem de bastidor", "effects": {"honra": 10, "legado": 4}},
+        {"id": "recusar_tudo", "label": "Sair da arena", "effects": {"honra": 8, "la_ele_mil_vezes": -12, "tinker_event": "proteger_terreiro"}}
+      ]
+    },
+    {
+      "id": "molho_festa_que_lava",
+      "faction": "nos_tem_um_molho",
+      "title": "A Festa que Lava a Imagem",
+      "act": 3,
+      "location": "zambiapunga",
+      "tone": "cor, tambor, alegria de fachada, camera por todos os lados",
+      "objective": "Decidir se Ruan vira atracao de uma festa que distorce a cultura do Baixo Sul.",
+      "beats": [
+        {"speaker": "cassio_molho_oliveira", "line": "Isso aqui e poder, mano. Olha essa multidao."},
+        {"speaker": "ruan_macacao", "line": "Eu vejo cultura. E vejo gente usando ela."},
+        {"speaker": "dj_veneno", "line": "Na batida do tambor, todo mundo esquece pergunta dificil."},
+        {"speaker": "cassio_molho_oliveira", "line": "Honra nao viraliza sozinha. Eu posso te colocar no mundo."}
+      ],
+      "choices": [
+        {"id": "aceitar_palco", "label": "Subir no palco", "effects": {"hype": 18, "sombra": 10, "honra": -8, "tinker_event": "usar_tinker_escudo"}},
+        {"id": "falar_da_raiz", "label": "Usar o palco para defender a raiz", "effects": {"raiz": 15, "legado": 8, "nos_tem_um_molho": -8, "tinker_event": "proteger_terreiro"}},
+        {"id": "sair", "label": "Sair da festa", "effects": {"honra": 6, "hype": -4, "nos_tem_um_molho": -10}}
+      ]
+    },
+    {
+      "id": "molho_pratigi_silencio",
+      "faction": "nos_tem_um_molho",
+      "title": "Silencio em Pratigi",
+      "act": 4,
+      "location": "praia_de_pratigi",
+      "tone": "mar bonito, medo baixo, turistas filmando, comunidade acuada",
+      "objective": "Ruan descobre que a imagem bonita da praia esconde pressao contra moradores.",
+      "beats": [
+        {"speaker": "bia_pimenta_souza", "line": "Todo mundo quer paz, Ruan. Mas paz tambem tem dono."},
+        {"speaker": "ruan_macacao", "line": "A praia nao e de quem grita mais alto."},
+        {"speaker": "lucas_tempero_mendes", "line": "Com o corte certo, voce vira heroi. Com o corte errado, vira problema."}
+      ],
+      "choices": [
+        {"id": "denunciar_no_cria_live", "label": "Expor no Cria Live", "effects": {"honra": 12, "raiz": 12, "hype": 4, "nos_tem_um_molho": -20}},
+        {"id": "ficar_calado", "label": "Ficar calado", "effects": {"sombra": 10, "confianca": -10, "tinker_event": "mentir_para_tinker"}},
+        {"id": "negociar_paz", "label": "Tentar mediar", "effects": {"legado": 6, "raiz": 5, "sombra": 4}}
+      ]
+    }
+  ]
+}
