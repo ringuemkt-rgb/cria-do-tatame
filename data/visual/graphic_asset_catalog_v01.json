@@ -1,0 +1,73 @@
+{
+  "version": "0.1.0",
+  "language": "pt-BR",
+  "style": "HD Pixel Art 2.5D Regional Premium",
+  "purpose": "Catalogo mestre de todo material grafico do jogo Cria do Tatame.",
+  "global_rules": [
+    "sem marcas reais",
+    "sem textos longos dentro das imagens",
+    "texto final deve ser renderizado no Godot",
+    "silhueta clara para celular",
+    "paleta preto grafite, dourado queimado e branco sujo",
+    "protagonista sempre Ruan Macacao Silva"
+  ],
+  "characters": [
+    {"id": "ruan_macacao", "set": ["portrait", "idle", "stance", "grip", "clinch", "takedown", "top_guard", "side_control", "mount", "back_control", "technical_finish", "win", "loss"]},
+    {"id": "mestre_dende", "set": ["portrait", "idle", "teaching", "arms_crossed", "dialogue"]},
+    {"id": "tinker_bell", "set": ["portrait", "phone", "filming", "concerned", "celebrating", "leaving"]},
+    {"id": "davi_relampago", "set": ["portrait", "idle", "sprawl", "counter", "scramble", "loss", "respect"]},
+    {"id": "cassio_molho", "set": ["portrait", "stage", "offer", "provocation", "contract"]},
+    {"id": "kenzo_kuroi", "set": ["portrait", "idle", "reading", "punish_error", "silent_bow"]},
+    {"id": "leoa_quilombola", "set": ["portrait", "base", "sweep", "root_pressure"]},
+    {"id": "oni_da_lapa", "set": ["portrait", "idle", "burst", "pressure", "underground_win"]}
+  ],
+  "techniques": [
+    {"id": "grip_de_ferro", "category": "pegada", "assets": ["card_art", "icon", "thumbnail", "spritesheet_4f"]},
+    {"id": "baiana", "category": "queda", "assets": ["card_art", "icon", "thumbnail", "spritesheet_6f"]},
+    {"id": "guarda_fechada", "category": "posicao", "assets": ["card_art", "icon", "thumbnail", "spritesheet_4f"]},
+    {"id": "raspagem_tesoura", "category": "raspagem", "assets": ["card_art", "icon", "thumbnail", "spritesheet_6f"]},
+    {"id": "knee_cut", "category": "passagem", "assets": ["card_art", "icon", "thumbnail", "spritesheet_6f"]},
+    {"id": "cem_quilos", "category": "pressao", "assets": ["card_art", "icon", "thumbnail", "spritesheet_4f"]},
+    {"id": "montada", "category": "posicao", "assets": ["card_art", "icon", "thumbnail", "spritesheet_4f"]},
+    {"id": "kimura", "category": "encerramento_tecnico", "assets": ["card_art", "icon", "thumbnail", "spritesheet_6f"]},
+    {"id": "triangulo", "category": "encerramento_tecnico", "assets": ["card_art", "icon", "thumbnail", "spritesheet_6f"]},
+    {"id": "mata_leao", "category": "encerramento_tecnico", "assets": ["card_art", "icon", "thumbnail", "spritesheet_6f"]}
+  ],
+  "arenas": [
+    {"id": "terreiro_da_luta", "layers": ["bg_far", "bg_mid", "play_area", "foreground", "particles"], "mood": "disciplina, madeira, mangue e verdade"},
+    {"id": "arena_do_dique", "layers": ["bg_far", "bg_mid", "play_area", "foreground", "particles"], "mood": "circuito oficial, luz forte e pressao competitiva"},
+    {"id": "zambiapunga", "layers": ["bg_far", "bg_mid", "play_area", "foreground", "particles"], "mood": "festa, tambor, palco e hype"},
+    {"id": "ferro_velho_da_lapa", "layers": ["bg_far", "bg_mid", "play_area", "foreground", "particles"], "mood": "chuva, metal, sombra e risco"},
+    {"id": "camamu_manguezal", "layers": ["bg_far", "bg_mid", "play_area", "foreground", "particles"], "mood": "agua, lama, raiz e memoria"}
+  ],
+  "ui": [
+    "main_menu_background",
+    "hud_combat_bars",
+    "action_buttons_mobile",
+    "technique_menu_cards",
+    "cria_live_feed",
+    "world_map_baixo_sul",
+    "result_screen",
+    "save_slot_cards",
+    "dialogue_box",
+    "faction_panel"
+  ],
+  "marketing": [
+    "key_art_16x9",
+    "cover_vertical_4x5",
+    "store_banner_1920x1080",
+    "app_icon_1024",
+    "poster_character_ruan",
+    "move_list_infographic",
+    "social_carousel_techniques",
+    "trailer_storyboard_frames"
+  ],
+  "output_paths": {
+    "characters": "assets/graphics/characters/",
+    "techniques": "assets/graphics/techniques/",
+    "arenas": "assets/graphics/arenas/",
+    "ui": "assets/graphics/ui/",
+    "marketing": "assets/graphics/marketing/",
+    "queue": "tools/ai_asset_pipeline/generated_queue/graphic_asset_queue_v01.jsonl"
+  }
+}
