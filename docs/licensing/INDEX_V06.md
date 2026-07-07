@@ -1,0 +1,3 @@
+# Licensing Docs v0.6
+
+- EXTERNAL_REFERENCE_LICENSE_NOTES_V06.md
