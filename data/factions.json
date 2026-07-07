@@ -1,0 +1,10 @@
+{
+  "version": "0.1.0",
+  "factions": [
+    {"id": "terreiro", "name": "Terreiro da Luta", "axis": "honra", "description": "Família de treino, disciplina e base moral."},
+    {"id": "circuito_oficial", "name": "Circuito Oficial", "axis": "legado", "description": "Torneios, regras, ranking e visibilidade legítima."},
+    {"id": "cria_live", "name": "Cria Live", "axis": "hype", "description": "Feed social, torcida, polêmica e fama rápida."},
+    {"id": "atalhos", "name": "Atalhos", "axis": "sombra", "description": "Caminhos fáceis que cobram preço moral."},
+    {"id": "raiz", "name": "Raiz do Baixo Sul", "axis": "raiz", "description": "Comunidade, ancestralidade, mangue, família e território."}
+  ]
+}
