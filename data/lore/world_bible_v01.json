@@ -1,0 +1,19 @@
+{
+  "version": "0.1.0",
+  "language": "pt-BR",
+  "region": "Baixo Sul da Bahia",
+  "core_places": {
+    "itubera": {"function": "cidade base de Ruan", "mood": "origem, familia, disciplina e comunidade"},
+    "terreiro_da_luta": {"function": "hub moral e tecnico", "mood": "madeira, mangue, treino, silencio e verdade"},
+    "arena_do_dique": {"function": "circuito oficial", "mood": "luz forte, plateia, regra e pressao de torneio"},
+    "zambiapunga": {"function": "hub cultural e social", "mood": "festa, tambor, imagem publica e escolhas"},
+    "ferro_velho_da_lapa": {"function": "arena dura", "mood": "metal, chuva, risco e pressao psicologica"},
+    "camamu_manguezal": {"function": "natureza e introspeccao", "mood": "agua, lama, raiz e memoria"}
+  },
+  "factions": {
+    "os_aleluia": {"theme": "honra aparente, regra e prestigio", "main_question": "aparencia limpa tambem pode esconder erro?"},
+    "la_ele_mil_vezes": {"theme": "informacao, leitura e calculo", "main_question": "vencer sabendo demais ainda e merito?"},
+    "nos_tem_um_molho": {"theme": "hype, cultura e palco", "main_question": "quando cultura vira vitrine, quem ainda e servido?"}
+  },
+  "visual_rules": ["HD Pixel Art 2.5D", "paleta escura com dourado queimado", "ambientes em camadas", "UI grande para mobile", "sem marcas reais"]
+}
