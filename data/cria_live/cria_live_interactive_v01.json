@@ -1,0 +1,33 @@
+{
+  "version": "0.1.0",
+  "language": "pt-BR",
+  "system": "Cria Live interativo",
+  "post_media": {
+    "foto_vitoria": {"label": "Foto da vitoria", "effects": {"hype": 4}},
+    "video_tecnica": {"label": "Video da tecnica", "effects": {"legado": 3, "honra": 2}},
+    "foto_trofeu": {"label": "Foto com trofeu", "effects": {"hype": 5, "honra": -1}},
+    "treino_humilde": {"label": "Treino humilde", "effects": {"honra": 4, "legado": 4, "hype": 1}}
+  },
+  "caption_tones": {
+    "humilde": {"text": "Gloria a Deus. Foco no processo.", "effects": {"honra": 5, "legado": 4, "hype": 1}},
+    "provocativo": {"text": "Alguem mais quer tentar? O Macacao ta on.", "effects": {"hype": 8, "honra": -3}},
+    "agressivo": {"text": "Vou passar por cima de quem entrar na frente.", "effects": {"sombra": 8, "hype": 8, "honra": -8}},
+    "raiz": {"text": "De cria pra cria. O terreiro continua.", "effects": {"raiz": 6, "legado": 5, "honra": 3}}
+  },
+  "comment_responses": {
+    "respeito": {"label": "Responder com respeito", "effects": {"honra": 4, "moral": 2}},
+    "deboche": {"label": "Responder com deboche", "effects": {"hype": 4, "honra": -3}},
+    "provocar": {"label": "Responder provocando", "effects": {"sombra": 3, "hype": 3, "moral": -1}},
+    "ignorar": {"label": "Ignorar", "effects": {"moral": 3, "hype": -2}}
+  },
+  "crisis_rules": [
+    {"id": "hype_toxico", "condition": {"hype_min": 80, "honra_max": 40}, "prompt": "Rivais estao fazendo lives zoando Ruan.", "options": ["ignorar", "respeito", "deboche"]},
+    {"id": "sombra_publica", "condition": {"sombra_min": 65}, "prompt": "Comentarios perguntam se Ruan virou produto dos atalhos.", "options": ["assumir_erro_publico", "culpar_midia", "sumir"]},
+    {"id": "tinker_exposto", "condition": {"ferida_min": 40}, "prompt": "Tinker aparece em comentario cobrando verdade.", "options": ["pedir_perdao_sem_desculpa", "usar_tinker_escudo", "ignorar"]}
+  ],
+  "opponent_psychology": {
+    "humilhado": {"next_fight_moral": -10, "aggression": 0.15, "mistake_chance": 0.08},
+    "respeitado": {"next_fight_moral": 5, "aggression": -0.05, "respect": 0.10},
+    "provocado": {"next_fight_moral": -5, "aggression": 0.20, "mistake_chance": 0.10}
+  }
+}
