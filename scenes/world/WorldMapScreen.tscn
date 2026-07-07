@@ -1,0 +1,45 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scenes/world/WorldMapScreen.gd" id="1_map"]
+
+[node name="WorldMapScreen" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource("1_map")
+
+[node name="Panel" type="VBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="Title" type="Label" parent="Panel"]
+layout_mode = 2
+text = "MAPA DO BAIXO SUL"
+
+[node name="Status" type="Label" parent="Panel"]
+layout_mode = 2
+text = "Hub atual"
+
+[node name="Message" type="Label" parent="Panel"]
+layout_mode = 2
+text = "Escolha um destino"
+
+[node name="Itubera" type="Button" parent="Panel"]
+layout_mode = 2
+text = "ITUBERA"
+
+[node name="Salvador" type="Button" parent="Panel"]
+layout_mode = 2
+text = "SALVADOR"
+
+[node name="Zambiapunga" type="Button" parent="Panel"]
+layout_mode = 2
+text = "ZAMBIAPUNGA"
+
+[node name="Camamu" type="Button" parent="Panel"]
+layout_mode = 2
+text = "CAMAMU E MANGUEZAL"
+
+[node name="Back" type="Button" parent="Panel"]
+layout_mode = 2
+text = "VOLTAR"
