@@ -29,6 +29,23 @@ var story_flags := {}
 var last_combat_result := {}
 var reputation := {"honra": 50.0, "hype": 30.0, "sombra": 0.0, "legado": 20.0, "dupla_face": 0.0, "moral": 50.0, "raiz": 20.0}
 
+var id_campanha := "ruan_macacao"
+var ato_atual := 1
+var faixa_atual := "branca"
+var semana_atual := 1
+var dia_atual := "segunda"
+var dinheiro := 0
+var energia := 100.0
+var nivel_lesao := 0
+var habilidades_desbloqueadas := []
+var pontos_habilidade := 0
+var tecnicas_aprendidas := []
+var lutas_vencidas := 0
+var lutas_perdidas := 0
+var finalizacoes_conectadas := 0
+var sponsors_ativos := []
+var flags_historia := {}
+
 func _sync_aliases() -> void:
 	current_week = week
 	current_day = days[day_index]
@@ -36,6 +53,43 @@ func _sync_aliases() -> void:
 	current_belt = belt
 	injury_level = strain_level
 	campaign_id = player_id
+	id_campanha = player_id
+	ato_atual = act
+	faixa_atual = belt
+	semana_atual = week
+	dia_atual = current_day
+	dinheiro = money
+	energia = energy
+	nivel_lesao = strain_level
+	habilidades_desbloqueadas = unlocked_skills
+	pontos_habilidade = skill_points
+	tecnicas_aprendidas = techniques_learned
+	lutas_vencidas = fights_won
+	lutas_perdidas = fights_lost
+	finalizacoes_conectadas = technical_finishes
+	sponsors_ativos = active_sponsors
+	flags_historia = story_flags
+
+func _apply_ptbr_aliases() -> void:
+	player_id = id_campanha
+	act = ato_atual
+	belt = faixa_atual
+	week = semana_atual
+	day_index = days.find(dia_atual)
+	if day_index < 0:
+		day_index = 0
+	money = dinheiro
+	energy = energia
+	strain_level = nivel_lesao
+	unlocked_skills = habilidades_desbloqueadas
+	skill_points = pontos_habilidade
+	techniques_learned = tecnicas_aprendidas
+	fights_won = lutas_vencidas
+	fights_lost = lutas_perdidas
+	technical_finishes = finalizacoes_conectadas
+	active_sponsors = sponsors_ativos
+	story_flags = flags_historia
+	_sync_aliases()
 
 func reset_new_game():
 	week = 1
@@ -54,7 +108,7 @@ func reset_new_game():
 	submissions_landed = 0
 	unlocked_skills = []
 	completed_missions = []
-	techniques_learned = []
+	techniques_learned = []	
 	active_sponsors = []
 	story_flags = {}
 	last_combat_result = {}
@@ -74,6 +128,12 @@ func advance_day():
 		strain_level -= 1
 	_sync_aliases()
 	SignalBus.day_advanced.emit(days[day_index], week)
+	if SignalBus.has_signal("dia_avancou"):
+		SignalBus.dia_avancou.emit(StringName(days[day_index]), week)
+
+func avancar_dia() -> void:
+	_apply_ptbr_aliases()
+	advance_day()
 
 func modify_reputation(axis, delta: float) -> void:
 	var key := str(axis)
@@ -81,9 +141,17 @@ func modify_reputation(axis, delta: float) -> void:
 		reputation[key] = 0.0
 	reputation[key] = clamp(float(reputation[key]) + delta, 0.0, 100.0)
 	SignalBus.reputation_changed.emit(key, delta, reputation[key])
+	if SignalBus.has_signal("reputacao_mudou"):
+		SignalBus.reputacao_mudou.emit(StringName(key), delta, float(reputation[key]))
+
+func modificar_reputacao(eixo, delta: float) -> void:
+	modify_reputation(eixo, delta)
 
 func get_reputation(axis) -> float:
 	return float(reputation.get(str(axis), 0.0))
+
+func obter_reputacao(eixo) -> float:
+	return get_reputation(eixo)
 
 func determine_final():
 	var honra = get_reputation("honra")
@@ -104,6 +172,9 @@ func determine_final():
 	if honra >= 70.0 and legado >= 70.0 and sombra < 30.0 and tinker_state in ["IRMANDADE", "LEGADO", "ALERTA"]:
 		return "heroi_duas_aguas"
 	return "heroi_duas_aguas"
+
+func determinar_final():
+	return determine_final()
 
 func to_dict():
 	_sync_aliases()
