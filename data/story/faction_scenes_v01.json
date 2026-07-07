@@ -1,0 +1,62 @@
+{
+  "version": "0.1.0",
+  "language": "pt-BR",
+  "scenes": [
+    {
+      "id": "scene_aleluia_dizimo_do_campeao",
+      "mission_id": "aleluia_dizimo_do_campeao",
+      "faction": "os_aleluia",
+      "location": "igreja_central_ficcional",
+      "camera": "plano aberto com luz dourada; close em Ruan quando a pressao social fecha o quadro",
+      "beats": [
+        {"type": "visual", "text": "O templo parece bonito demais para ser inocente. Todo mundo sorri; ninguem pergunta."},
+        {"speaker": "davi_profeta_santos", "line": "Toda gloria vem com responsabilidade."},
+        {"speaker": "ruan_macacao", "line": "Responsabilidade ou cobranca?"},
+        {"speaker": "tinker_bell", "line": "Mano, cuidado. Quando muita gente sorri ao mesmo tempo, alguem ta pagando a conta."}
+      ],
+      "visual_prompt_key": "faction_aleluia_igreja_pressao_social"
+    },
+    {
+      "id": "scene_aleluia_resultado_arranjado",
+      "mission_id": "aleluia_resultado_arranjado",
+      "faction": "os_aleluia",
+      "location": "arena_do_dique_bastidores",
+      "camera": "corredor estreito; uniforme de juiz; luz fria; Ruan no meio de duas sombras",
+      "beats": [
+        {"speaker": "capitao_beto_juiz", "line": "A luta de sabado ja tem clima definido."},
+        {"speaker": "ruan_macacao", "line": "Clima ou resultado?"},
+        {"speaker": "davi_profeta_santos", "line": "Pense menos em orgulho e mais em obra."},
+        {"speaker": "ruan_macacao", "line": "Quando a obra pede mentira, alguma coisa morreu no altar."}
+      ],
+      "visual_prompt_key": "faction_aleluia_bastidor_dique"
+    },
+    {
+      "id": "scene_laele_olho_que_tudo_ve",
+      "mission_id": "laele_olho_que_tudo_ve",
+      "faction": "la_ele_mil_vezes",
+      "location": "colonia_nishimura",
+      "camera": "dojo vazio de madrugada; Kenzo no centro; Marina nas sombras; lua entrando por fresta",
+      "beats": [
+        {"speaker": "kenzo_oraculo_kuroi", "line": "Enquanto voce treina, alguem observa."},
+        {"speaker": "marina_silencio_costa", "line": "Seu lado esquerdo fecha tarde."},
+        {"speaker": "ruan_macacao", "line": "Como voces sabem disso?"},
+        {"speaker": "kenzo_oraculo_kuroi", "line": "Porque todo padrao deixa rastro."}
+      ],
+      "visual_prompt_key": "faction_laele_dojo_observacao"
+    },
+    {
+      "id": "scene_molho_festa_que_lava_imagem",
+      "mission_id": "molho_festa_que_lava",
+      "faction": "nos_tem_um_molho",
+      "location": "zambiapunga",
+      "camera": "camera tremida de celular; tambores; luz quente; alegria no fundo e tensao no rosto de Ruan",
+      "beats": [
+        {"speaker": "cassio_molho_oliveira", "line": "Isso aqui e poder, mano. Olha essa multidao."},
+        {"speaker": "ruan_macacao", "line": "Eu vejo cultura. E vejo gente usando ela."},
+        {"speaker": "dj_veneno", "line": "Na batida do tambor, todo mundo esquece pergunta dificil."},
+        {"speaker": "tinker_bell", "line": "Macacao, palco tambem vira coleira."}
+      ],
+      "visual_prompt_key": "faction_molho_zambiapunga_palco"
+    }
+  ]
+}
