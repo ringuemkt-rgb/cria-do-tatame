@@ -1,0 +1,20 @@
+{
+  "version": "0.5.0",
+  "athlete_id": "ruan_macacao",
+  "display_name": "Ruan Macacao Silva",
+  "belt": "branca",
+  "week": 1,
+  "attributes": {
+    "gas": 70,
+    "focus": 60,
+    "moral": 50,
+    "grip": 95,
+    "base": 70,
+    "takedown": 55,
+    "guard": 45,
+    "passing": 60,
+    "sweep": 40,
+    "top_control": 75
+  },
+  "unlocked_techniques": ["pegada_lapela_manga", "baiana", "sprawl", "guarda_fechada", "controle_cem_quilos"]
+}
