@@ -1,0 +1,58 @@
+{
+  "version": "0.1.0",
+  "language": "pt-BR",
+  "world_model": "Mundo semi-aberto com hubs densos e reativos. O mapa global escolhe destino; cada hub tem exploracao local, NPCs, lojas, treinos, missoes e eventos.",
+  "travel_rules": {
+    "fast_travel": true,
+    "costs_money": true,
+    "costs_time": true,
+    "methods": ["barco", "onibus", "moto", "a_pe_no_hub"],
+    "day_advance_threshold_hours": 8
+  },
+  "hubs": {
+    "itubera": {
+      "name": "Itubera",
+      "role": "raiz_moral",
+      "entry_scene": "res://scenes/hubs/TerreiroDaLuta.tscn",
+      "travel_cost": 0,
+      "travel_hours": 0,
+      "locations": ["terreiro_da_luta", "mercado", "doca", "barbearia_raiz", "pro_shop_simples", "quarto_ruan"],
+      "npc_pool": ["mestre_dende", "tinker_bell", "pedro_discipulo", "criancas_terreiro", "moradores"],
+      "activities": ["treino_tecnico", "dar_aula_criancas", "comprar_gi_basico", "descansar", "cria_live_humilde"],
+      "reactivity": {"honra_high": "moradores_cumprimentam", "sombra_high": "familias_evitan_ruan", "legado_high": "novas_criancas_no_terreiro"}
+    },
+    "salvador": {
+      "name": "Salvador",
+      "role": "oficial_underground",
+      "entry_scene": "res://scenes/hubs/SalvadorHub.tscn",
+      "travel_cost": 80,
+      "travel_hours": 6,
+      "locations": ["arena_do_dique", "ferro_velho_da_lapa", "academia_elite", "terminal", "bastidores_dique"],
+      "npc_pool": ["davi_relampago", "davi_profeta_santos", "capitao_beto_juiz", "irmao_gabriel_muralha", "oni_da_lapa"],
+      "activities": ["torneio_oficial", "luta_de_risco_narrativa", "treino_elite", "missao_faccao"],
+      "reactivity": {"hype_high": "jornalistas_abordam", "sombra_high": "convites_sombrios_aparecem", "honra_high": "entrada_oficial_facilitada"}
+    },
+    "zambiapunga": {
+      "name": "Zambiapunga",
+      "role": "cultural_hype",
+      "entry_scene": "res://scenes/hubs/ZambiapungaHub.tscn",
+      "travel_cost": 40,
+      "travel_hours": 2,
+      "locations": ["palco_cultural", "barracas", "backstage", "cria_live_point", "roda_de_tambores"],
+      "npc_pool": ["cassio_molho_oliveira", "dj_veneno", "bia_pimenta_souza", "lucas_tempero_mendes", "fans"],
+      "activities": ["evento_cultural", "post_cria_live", "missao_hype", "comprar_rashguard", "entrevista"],
+      "reactivity": {"hype_high": "crowd_pede_foto", "honra_low": "comentarios_toxicos", "raiz_high": "mestres_da_cultura_respeitam"}
+    },
+    "camamu_manguezal": {
+      "name": "Camamu e Manguezal",
+      "role": "ancestral_base",
+      "entry_scene": "res://scenes/hubs/ManguezalHub.tscn",
+      "travel_cost": 35,
+      "travel_hours": 2,
+      "locations": ["manguezal_profundo", "trilha_lama", "doca_camamu", "casa_leoa", "area_treino_base"],
+      "npc_pool": ["leoa_quilombola", "pescadores", "tinker_bell", "moradores_raiz"],
+      "activities": ["treino_base_lama", "corrida_mangue", "missao_raiz", "descanso_natureza"],
+      "reactivity": {"raiz_high": "atalhos_abrem", "sombra_high": "moradores_fecham_portas", "legado_high": "leoa_ensina_raspagem"}
+    }
+  }
+}
