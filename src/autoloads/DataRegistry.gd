@@ -23,6 +23,8 @@ var faction_missions := {}
 var faction_scenes := {}
 var hubs_dense := {}
 var gear_catalog := {}
+var player_progression := {}
+var customization_options := {}
 var training_minigames := {}
 var cria_live_interactive := {}
 var hub_activities := {}
@@ -52,6 +54,8 @@ const DATA_FILES := {
 	"faction_scenes": "res://data/story/faction_scenes_v01.json",
 	"hubs_dense": "res://data/world/hubs_dense_v01.json",
 	"gear_catalog": "res://data/gear/gear_catalog_v01.json",
+	"player_progression": "res://data/player/player_progression.json",
+	"customization_options": "res://data/customization/customization_options.json",
 	"training_minigames": "res://data/training/training_minigames_v01.json",
 	"cria_live_interactive": "res://data/cria_live/cria_live_interactive_v01.json",
 	"hub_activities": "res://data/missions/hub_activities_v01.json"
@@ -84,6 +88,8 @@ func load_all():
 	faction_scenes = _load_raw("faction_scenes")
 	hubs_dense = _load_raw("hubs_dense")
 	gear_catalog = _load_raw("gear_catalog")
+	player_progression = _load_raw("player_progression")
+	customization_options = _load_raw("customization_options")
 	training_minigames = _load_raw("training_minigames")
 	cria_live_interactive = _load_raw("cria_live_interactive")
 	hub_activities = _load_raw("hub_activities")
@@ -127,6 +133,8 @@ func validate_core_data():
 		errors.append("finais_adultos.json nao carregado")
 	if hubs_dense.is_empty():
 		errors.append("hubs_dense_v01.json nao carregado")
+	if player_progression.is_empty():
+		errors.append("player_progression.json nao carregado")
 	return {"ok": errors.is_empty(), "errors": errors, "characters": characters.size(), "arenas": arenas.size(), "techniques": techniques.size(), "factions": factions.size()}
 
 func get_character(id):
