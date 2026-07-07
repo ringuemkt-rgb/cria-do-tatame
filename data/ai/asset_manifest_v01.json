@@ -1,0 +1,43 @@
+{
+  "version": "0.1.0",
+  "language": "pt-BR",
+  "naming_convention": {
+    "sprites": "assets/sprites/{personagem}/{personagem}_{acao}_{direcao}_{variante}.png",
+    "arenas": "assets/backgrounds/{arena}/{arena}_{layer}.png",
+    "audio_music": "assets/audio/music/{contexto}_{variante}.ogg",
+    "audio_sfx": "assets/audio/sfx/{categoria}/{nome}.wav",
+    "cutscenes": "assets/videos/cutscenes/{id}.mp4",
+    "metadata": "assets/generated_metadata/{asset_id}.json"
+  },
+  "characters": {
+    "ruan_macacao": {
+      "priority": 1,
+      "style_anchor": "compacto, pressao pesada, gi branco inicial, patch Gorila Silverback ficcional",
+      "actions": ["idle", "walk", "stance", "grip", "clinch", "takedown", "guard", "pass", "mount", "submission_setup", "submission_lock", "submission_finish", "win", "lose"],
+      "directions": ["front", "back", "side_left", "side_right"],
+      "frames_per_action": 8
+    },
+    "davi_relampago": {"priority": 1, "style_anchor": "enxuto, tecnico, gi limpo, olhar frio", "actions": ["idle", "walk", "counter", "defense", "attack", "win", "lose"], "frames_per_action": 8},
+    "mestre_dende": {"priority": 1, "style_anchor": "mentor, gi vivido, presenca moral", "actions": ["idle", "teaching", "ceremony", "corner"], "frames_per_action": 8},
+    "tinker_bell": {"priority": 1, "style_anchor": "amigo testemunha, celular, olhar atento", "actions": ["idle", "phone", "recording", "talking", "confront", "walk_away", "return"], "frames_per_action": 8},
+    "cassio_molho": {"priority": 2, "style_anchor": "carismatico, urbano premium, sorriso calculado", "actions": ["idle", "talking", "fighting", "winning"], "frames_per_action": 8},
+    "kenzo_kuroi": {"priority": 2, "style_anchor": "frio, preciso, ritualistico", "actions": ["idle", "meditating", "fighting", "precise"], "frames_per_action": 8},
+    "leoa_quilombola": {"priority": 2, "style_anchor": "base baixa, forca silenciosa, raiz", "actions": ["idle", "base", "sweep", "strong"], "frames_per_action": 8},
+    "oni_da_lapa": {"priority": 2, "style_anchor": "caotico, grande, intimidacao", "actions": ["idle", "chaotic", "intimidating", "fighting"], "frames_per_action": 8}
+  },
+  "arenas": {
+    "terreiro_da_luta": {"priority": 1, "layers": ["bg_far", "bg_mid", "play_area", "foreground", "particles"], "mood": "madeira, mangue, por do sol, tatame azul/dourado"},
+    "arena_do_dique": {"priority": 1, "layers": ["bg_far", "bg_mid", "play_area", "crowd", "scoreboard"], "mood": "ginasio oficial ficcional, crowd formal"},
+    "ferro_velho_da_lapa": {"priority": 2, "layers": ["bg_far", "bg_mid", "play_area", "debris", "neon"], "mood": "metal, chuva, luz baixa"},
+    "manguezal_profundo": {"priority": 2, "layers": ["bg_far", "bg_mid", "play_area_mud", "water", "nature"], "mood": "lama, agua, silencio"},
+    "praia_de_pratigi": {"priority": 2, "layers": ["bg_far", "bg_mid", "play_area_sand", "crowd", "ocean"], "mood": "mar, areia, crowd filmando"},
+    "colonia_nishimura": {"priority": 2, "layers": ["bg_far", "bg_mid", "play_area", "silence", "dojo"], "mood": "dojo silencioso ficcional"},
+    "budokan_das_aguas": {"priority": 3, "layers": ["bg_far", "bg_mid", "play_area", "water_feature", "elite"], "mood": "agua, julgamento, elite tecnica"},
+    "zambiapunga": {"priority": 2, "layers": ["bg_far", "bg_mid", "ringue", "crowd", "festa"], "mood": "cultura, tambor, cor, tensao social"}
+  },
+  "audio": {
+    "music_tracks": ["terreiro_da_luta", "arena_do_dique", "ferro_velho_da_lapa", "manguezal_profundo", "praia_de_pratigi", "colonia_nishimura", "budokan_das_aguas", "zambiapunga", "menu", "vitoria", "derrota", "crise"],
+    "sfx": ["grip_tecido", "queda_tatame", "respiracao", "crowd_aplauso", "crowd_silencio", "ui_click", "notificacao_cria_live", "save_game", "cerimonia_faixa"]
+  },
+  "cutscenes": ["intro_terreiro", "primeira_derrota", "cerimonia_faixa_azul", "crise_publica", "contrato_cassio", "faixa_preta_julgamento", "final_heroi_duas_aguas", "final_estrela_vazia", "final_rei_atalhos", "final_raiz_eterna"]
+}
