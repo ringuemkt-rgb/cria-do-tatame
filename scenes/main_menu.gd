@@ -1,6 +1,6 @@
 extends Control
 
-const HUB_SCENE := "res://scenes/hubs/terreiro_da_luta.tscn"
+const HUB_SCENE := "res://scenes/hubs/TerreiroDaLuta.tscn"
 
 func _ready() -> void:
 	_build_ui()
