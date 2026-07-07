@@ -1,0 +1,9 @@
+{
+  "version": "0.1.0",
+  "posts": [
+    {"id": "clean_win", "author": "cria_live", "tone": "honra", "template": "Ruan venceu sem falar muito. O tatame falou por ele."},
+    {"id": "hype_win", "author": "cria_live", "tone": "hype", "template": "Macacão virou assunto. Todo mundo quer ver a próxima luta."},
+    {"id": "lesson_loss", "author": "mestre_dende", "tone": "aprendizado", "template": "Perder com atenção ensina mais que vencer sem entender."},
+    {"id": "davi_comment", "author": "davi_relampago", "tone": "rivalidade", "template": "Pressão é forte, mas timing ainda manda no jogo."}
+  ]
+}
