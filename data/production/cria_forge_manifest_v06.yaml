@@ -1,0 +1,25 @@
+version: 0.6.0
+name: Cria Game Forge
+project: Cria do Tatame
+engine: Godot 4.2+
+language: pt-BR
+purpose: Sistema autoral para transformar tecnica e gameplay em feature jogavel.
+layers:
+  - Studio OS
+  - Runtime Core
+  - Motion Lab
+  - Asset Factory
+  - QA Harness
+outputs:
+  - briefing
+  - biomecanica
+  - gameplay_card
+  - sprite_request
+  - atlas_manifest
+  - godot_json
+  - qa_report
+integrations:
+  godot: src/tools/CriaForgeBridge.gd
+  python_cli: tools/cria_forge/cria_forge.py
+  quality_gates: .criaforge/quality_gates.yaml
+  workflow: .criaforge/workflows/technique_to_gameplay.yaml
