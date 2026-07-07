@@ -18,31 +18,35 @@ text = "RUAN MACACAO vs DAVI RELAMPAGO"
 
 [node name="State" type="Label" parent="Panel"]
 layout_mode = 2
-text = "Estado: DISTANCE"
+text = "Estado: EM PE - NEUTRO"
 
 [node name="Resources" type="Label" parent="Panel"]
 layout_mode = 2
 text = "Recursos"
+
+[node name="Message" type="Label" parent="Panel"]
+layout_mode = 2
+text = "Ganhe a pegada, quebre a base e estabilize."
 
 [node name="Buttons" type="HBoxContainer" parent="Panel"]
 layout_mode = 2
 
 [node name="Action1" type="Button" parent="Panel/Buttons"]
 layout_mode = 2
-text = "Pegada"
+text = "Grip de Ferro"
 
 [node name="Action2" type="Button" parent="Panel/Buttons"]
 layout_mode = 2
-text = "Pressao"
+text = "Baiana"
 
 [node name="Action3" type="Button" parent="Panel/Buttons"]
 layout_mode = 2
-text = "Transicao"
+text = "Corte de Joelho"
 
 [node name="Action4" type="Button" parent="Panel/Buttons"]
 layout_mode = 2
-text = "Defesa"
+text = "Sprawl"
 
 [node name="Action5" type="Button" parent="Panel/Buttons"]
 layout_mode = 2
-text = "Tecnico"
+text = "Encerrar"
