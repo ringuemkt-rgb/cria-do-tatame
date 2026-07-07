@@ -32,6 +32,9 @@ var complete_game_flow := {}
 var campaign_cinematics := {}
 var rival_ai_profiles := {}
 var full_completion_backlog := {}
+var character_bible := {}
+var world_bible := {}
+var visual_production_manifest := {}
 var validation_report := {}
 
 const DATA_FILES := {
@@ -66,7 +69,10 @@ const DATA_FILES := {
 	"complete_game_flow": "res://data/gameplay/complete_game_flow_v01.json",
 	"campaign_cinematics": "res://data/story/campaign_cinematics_v01.json",
 	"rival_ai_profiles": "res://data/ai/rival_ai_profiles_v01.json",
-	"full_completion_backlog": "res://data/production/full_completion_backlog_v01.json"
+	"full_completion_backlog": "res://data/production/full_completion_backlog_v01.json",
+	"character_bible": "res://data/lore/character_bible_v01.json",
+	"world_bible": "res://data/lore/world_bible_v01.json",
+	"visual_production_manifest": "res://data/lore/visual_production_manifest_v01.json"
 }
 
 func _ready():
@@ -105,6 +111,9 @@ func load_all():
 	campaign_cinematics = _load_raw("campaign_cinematics")
 	rival_ai_profiles = _load_raw("rival_ai_profiles")
 	full_completion_backlog = _load_raw("full_completion_backlog")
+	character_bible = _load_raw("character_bible")
+	world_bible = _load_raw("world_bible")
+	visual_production_manifest = _load_raw("visual_production_manifest")
 	validation_report = validate_core_data()
 	SignalBus.data_validation_finished.emit(validation_report)
 	SignalBus.data_loaded.emit()
@@ -159,16 +168,25 @@ func validate_core_data():
 		errors.append("campaign_cinematics_v01.json nao carregado")
 	if rival_ai_profiles.is_empty():
 		errors.append("rival_ai_profiles_v01.json nao carregado")
+	if character_bible.is_empty():
+		errors.append("character_bible_v01.json nao carregado")
+	if world_bible.is_empty():
+		errors.append("world_bible_v01.json nao carregado")
+	if visual_production_manifest.is_empty():
+		errors.append("visual_production_manifest_v01.json nao carregado")
 	return {"ok": errors.is_empty(), "errors": errors, "characters": characters.size(), "arenas": arenas.size(), "techniques": techniques.size(), "factions": factions.size()}
 
 func get_character(id):
-	return characters.get(id, {})
+	return characters.get(str(id), {})
 
 func get_arena(id):
-	return arenas.get(id, {})
+	return arenas.get(str(id), {})
 
 func get_technique(id):
-	return techniques.get(id, {})
+	return techniques.get(str(id), {})
+
+func get_lore_character(id):
+	return character_bible.get("characters", {}).get(str(id), {})
 
 func get_story_mission(id):
 	for mission in story_missions.get("missions", []):
