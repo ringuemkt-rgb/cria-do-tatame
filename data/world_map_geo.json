@@ -1,0 +1,204 @@
+{
+  "version": "0.2.0",
+  "coordinate_system": "WGS84",
+  "note": "Geo anchors for faithful map layout. Validate final art against IBGE municipal mesh/QGIS before final production.",
+  "regions": [
+    {
+      "id": "baixo_sul_bahia",
+      "name": "Baixo Sul da Bahia / Costa do Dendê",
+      "role": "main_world_region",
+      "description": "Território principal de carreira, hubs, arenas, mangue, litoral, rios e comunidade."
+    },
+    {
+      "id": "salvador_state_circuit",
+      "name": "Salvador - Circuito Estadual",
+      "role": "official_circuit_region",
+      "description": "Polo estadual de torneios oficiais, mídia, sponsors e Arena do Dique."
+    }
+  ],
+  "nodes": [
+    {
+      "id": "itubera",
+      "name": "Ituberá",
+      "type": "hub_principal",
+      "canon_role": "coração moral do jogo; base de Ruan Macacão",
+      "lat": -13.731944,
+      "lon": -39.148889,
+      "display_priority": 1,
+      "unlocks": ["terreiro_da_luta", "pancada_grande", "praia_de_pratigi"],
+      "tags": ["baixo_sul", "hub", "mangue", "origem", "capital_das_aguas"]
+    },
+    {
+      "id": "terreiro_da_luta",
+      "name": "Terreiro da Luta",
+      "type": "dojo_hub",
+      "parent_node": "itubera",
+      "canon_role": "hub principal, treino, moral, Mestre Dendê",
+      "lat": -13.731944,
+      "lon": -39.148889,
+      "geo_accuracy": "fictional_point_inside_itubera",
+      "tags": ["treino", "familia", "honra", "dojo"]
+    },
+    {
+      "id": "pancada_grande",
+      "name": "Cachoeira Pancada Grande",
+      "type": "arena_natural",
+      "parent_node": "itubera",
+      "canon_role": "arena natural de base, tração e controle de centro",
+      "lat": -13.731944,
+      "lon": -39.148889,
+      "geo_accuracy": "approx_anchor; located in Ituberá region",
+      "tags": ["cachoeira", "natureza", "risco", "base"]
+    },
+    {
+      "id": "praia_de_pratigi",
+      "name": "Praia de Pratigi",
+      "type": "arena_litoral",
+      "parent_node": "itubera",
+      "canon_role": "arena de areia, comunidade, hype e pôr do sol",
+      "lat": -13.731944,
+      "lon": -39.148889,
+      "geo_accuracy": "approx_anchor; validate beach point before final map",
+      "tags": ["praia", "areia", "hype", "litoral"]
+    },
+    {
+      "id": "valenca",
+      "name": "Valença",
+      "type": "cidade_comercial",
+      "canon_role": "porta comercial do Baixo Sul, missões urbanas e Ponte do Saci",
+      "lat": -13.37,
+      "lon": -39.07,
+      "geo_accuracy": "municipal_anchor_approx",
+      "unlocks": ["ponte_do_saci"],
+      "tags": ["comercio", "ponte", "rotas", "baixo_sul"]
+    },
+    {
+      "id": "ponte_do_saci",
+      "name": "Ponte do Saci",
+      "type": "arena_clandestina",
+      "parent_node": "valenca",
+      "canon_role": "arena estreita, chuva, vento, risco alto e tensão moral",
+      "lat": -13.37,
+      "lon": -39.07,
+      "geo_accuracy": "fictional_point_inside_valenca",
+      "tags": ["ponte", "risco", "chuva", "clandestina"]
+    },
+    {
+      "id": "nilo_pecanha",
+      "name": "Nilo Peçanha",
+      "type": "cidade_cultural",
+      "canon_role": "Zambiapunga, cultura e resistência",
+      "lat": -13.598889,
+      "lon": -39.106944,
+      "display_priority": 3,
+      "unlocks": ["zambiapunga"],
+      "tags": ["zambiapunga", "cultura", "ritual", "baixo_sul"]
+    },
+    {
+      "id": "zambiapunga",
+      "name": "Zambiapunga",
+      "type": "arena_evento_cultural",
+      "parent_node": "nilo_pecanha",
+      "canon_role": "arena ritual/cultural com tambores, multidão e timing alterado",
+      "lat": -13.598889,
+      "lon": -39.106944,
+      "geo_accuracy": "fictional_event_anchor_inside_nilo_pecanha",
+      "tags": ["ritmo", "fogo", "multidao", "moral"]
+    },
+    {
+      "id": "taperoa",
+      "name": "Taperoá",
+      "type": "rota_regional",
+      "canon_role": "ligação norte do Baixo Sul e rotas de viagem",
+      "lat": -13.538056,
+      "lon": -39.098611,
+      "tags": ["rota", "baixo_sul", "ligacao"]
+    },
+    {
+      "id": "cairu",
+      "name": "Cairu",
+      "type": "ilhas_e_travessias",
+      "canon_role": "travessias marítimas, ilhas e expansão futura",
+      "lat": -13.486944,
+      "lon": -39.043889,
+      "tags": ["ilhas", "maritimo", "boipeba", "morro_de_sao_paulo"]
+    },
+    {
+      "id": "camamu",
+      "name": "Camamu",
+      "type": "porto_baia",
+      "canon_role": "Baía de Camamu, porto e rotas marítimas",
+      "lat": -13.57,
+      "lon": -39.07,
+      "tags": ["baia", "porto", "maritimo", "baixo_sul"]
+    },
+    {
+      "id": "itacare",
+      "name": "Itacaré",
+      "type": "litoral_cultural",
+      "canon_role": "arco litoral, surf, turismo, cultura e eventos de praia",
+      "lat": -14.277778,
+      "lon": -38.996944,
+      "tags": ["litoral", "surf", "cultura", "praia"]
+    },
+    {
+      "id": "salvador",
+      "name": "Salvador",
+      "type": "capital_circuito_oficial",
+      "canon_role": "polo estadual fora do Baixo Sul; torneios oficiais e mídia",
+      "lat": -12.974722,
+      "lon": -38.476667,
+      "unlocks": ["arena_do_dique", "mirante_da_gamboa", "ferro_velho_da_lapa"],
+      "tags": ["capital", "oficial", "sponsors", "midia"]
+    },
+    {
+      "id": "arena_do_dique",
+      "name": "Arena do Dique",
+      "type": "arena_oficial",
+      "parent_node": "salvador",
+      "canon_role": "circuito oficial, pontuação, árbitro, crowd pressure e sponsors",
+      "lat": -12.974722,
+      "lon": -38.476667,
+      "geo_accuracy": "fictional_official_arena_inside_salvador",
+      "tags": ["oficial", "regras", "ranking", "sponsor"]
+    },
+    {
+      "id": "mirante_da_gamboa",
+      "name": "Mirante da Gamboa",
+      "type": "arena_hibrida",
+      "parent_node": "salvador",
+      "canon_role": "laje, vento, cidade, crowd local e risco social",
+      "lat": -12.974722,
+      "lon": -38.476667,
+      "geo_accuracy": "fictional_point_inside_salvador",
+      "tags": ["laje", "hibrida", "vento", "hype"]
+    },
+    {
+      "id": "ferro_velho_da_lapa",
+      "name": "Ferro Velho da Lapa",
+      "type": "arena_clandestina",
+      "parent_node": "salvador",
+      "canon_role": "arena urbana sombria, pressão, metal, lama e sombra",
+      "lat": -12.974722,
+      "lon": -38.476667,
+      "geo_accuracy": "fictional_urban_bahia_anchor",
+      "tags": ["clandestina", "sombra", "risco", "urbano"]
+    }
+  ],
+  "routes": [
+    {"from": "itubera", "to": "terreiro_da_luta", "type": "local", "status": "unlocked"},
+    {"from": "itubera", "to": "pancada_grande", "type": "costeira", "status": "unlock_act1"},
+    {"from": "itubera", "to": "praia_de_pratigi", "type": "costeira", "status": "unlock_act2"},
+    {"from": "itubera", "to": "nilo_pecanha", "type": "oficial", "status": "unlock_act2"},
+    {"from": "nilo_pecanha", "to": "zambiapunga", "type": "hibrida", "status": "unlock_act3"},
+    {"from": "itubera", "to": "valenca", "type": "oficial", "status": "unlock_act2"},
+    {"from": "valenca", "to": "ponte_do_saci", "type": "clandestina", "status": "unlock_act3"},
+    {"from": "itubera", "to": "camamu", "type": "maritima", "status": "unlock_act2"},
+    {"from": "camamu", "to": "cairu", "type": "maritima", "status": "expansion"},
+    {"from": "camamu", "to": "itacare", "type": "costeira", "status": "unlock_act4"},
+    {"from": "itubera", "to": "salvador", "type": "oficial", "status": "unlock_act2"},
+    {"from": "salvador", "to": "arena_do_dique", "type": "oficial", "status": "unlock_act2"},
+    {"from": "salvador", "to": "mirante_da_gamboa", "type": "hibrida", "status": "unlock_act3"},
+    {"from": "salvador", "to": "ferro_velho_da_lapa", "type": "clandestina", "status": "unlock_act4"}
+  ]
+}
