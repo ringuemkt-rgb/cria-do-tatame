@@ -1,0 +1,25 @@
+{
+  "version": "0.1.0",
+  "purpose": "Sprites placeholder para Vertical Slice Fase 1",
+  "characters": {
+    "ruan_macacao": {
+      "display_name": "Ruan Macacao Silva",
+      "actions": ["idle", "andar", "grip_de_ferro", "clinch", "baiana", "corte_joelho", "cem_quilos", "montada_pesada", "sprawl", "encerramento_tecnico"],
+      "style": "HD Pixel Art 2.5D Regional Premium",
+      "status": "placeholder_procedural"
+    },
+    "davi_relampago": {
+      "display_name": "Davi Relampago",
+      "actions": ["idle", "andar", "sprawl", "quebra_base", "saida_cem_quilos", "contra_ataque"],
+      "style": "HD Pixel Art 2.5D Regional Premium",
+      "status": "placeholder_procedural"
+    }
+  },
+  "replacement_pipeline": [
+    "sprite-sheet-creator",
+    "ControlNet OpenPose",
+    "Pixelorama",
+    "manifest.json",
+    "Godot import"
+  ]
+}
