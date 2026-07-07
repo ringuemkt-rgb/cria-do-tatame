@@ -1,0 +1,47 @@
+{
+  "version": "0.1.0",
+  "language": "pt-BR",
+  "system": "Vinculo com Tinker",
+  "premise": "Tinker e a testemunha da jornada de Ruan. Ele ama como irmao, mas nao vira cumplice do atalho.",
+  "axes": {
+    "confianca": {"start": 70, "min": 0, "max": 100, "description": "Tinker acredita que Ruan ainda fala a verdade."},
+    "presenca": {"start": 100, "min": 0, "max": 100, "description": "Tinker aparece, ajuda, filma, orienta e protege."},
+    "limite": {"start": 3, "min": 0, "max": 3, "description": "Quantas escolhas graves Tinker ainda tolera antes de romper."},
+    "ferida": {"start": 0, "min": 0, "max": 100, "description": "Quanto da amizade ja foi quebrada."},
+    "cumplicidade": {"start": 0, "min": 0, "max": 100, "description": "Quanto Tinker foi puxado para encobrir escolhas ruins."}
+  },
+  "states": [
+    {"id": "IRMANDADE", "label": "Irmandade", "condition": "confianca>=65 && ferida<20 && limite>=2"},
+    {"id": "ALERTA", "label": "Alerta", "condition": "confianca>=50 && ferida<35"},
+    {"id": "RACHADURA", "label": "Rachadura", "condition": "confianca>=35 && ferida>=35"},
+    {"id": "AFASTAMENTO", "label": "Afastamento", "condition": "confianca<35 || presenca<50"},
+    {"id": "RUPTURA", "label": "Ruptura", "condition": "limite<=0 || ferida>=80"},
+    {"id": "RETORNO_DIFICIL", "label": "Retorno Dificil", "condition": "ferida>=50 && confianca>=45 && limite>=1"},
+    {"id": "LEGADO", "label": "Legado", "condition": "confianca>=80 && ferida<20 && legado>=70 && honra>=70"}
+  ],
+  "choice_effects": {
+    "assumir_erro_publico": {"confianca": 10, "ferida": -10, "honra": 8, "legado": 4},
+    "culpar_midia": {"confianca": -12, "ferida": 12, "hype": 5, "sombra": 4},
+    "aceitar_luta_suja": {"confianca": -18, "limite": -1, "ferida": 18, "sombra": 12, "money": 500},
+    "proteger_terreiro": {"confianca": 8, "legado": 10, "honra": 5},
+    "usar_tinker_como_escudo": {"confianca": -25, "ferida": 30, "cumplicidade": 20, "limite": -1},
+    "pedir_perdao_sem_desculpa": {"confianca": 18, "ferida": -20, "honra": 8},
+    "mentir_para_tinker": {"confianca": -20, "ferida": 20, "limite": -1},
+    "recusar_contrato_cassio": {"confianca": 15, "honra": 10, "legado": 8, "money": -100},
+    "assinar_contrato_cassio": {"confianca": -35, "presenca": -60, "ferida": 45, "limite": -2, "hype": 20, "sombra": 25, "money": 2000}
+  },
+  "canonical_lines": {
+    "tinker": [
+      "Eu nao sou tua sombra, Ruan. Eu sou teu irmao. E irmao tambem diz nao.",
+      "Voce nao ta ficando forte. Voce ta ficando sozinho.",
+      "Eu seguro a lanterna, mas nao entro no buraco por voce.",
+      "Se eu ficar agora, eu viro cumplice. E eu te amo demais pra fazer isso."
+    ],
+    "ruan": [
+      "Eu achei que vencer ia calar tudo. Mas so aumentou o barulho.",
+      "Voce era o unico que falava comigo como se eu ainda fosse eu.",
+      "Eu nao tenho medo de perder luta. Tenho medo de descobrir que voce tinha razao.",
+      "Se o Terreiro continuar depois de mim, entao talvez eu nao tenha perdido tudo."
+    ]
+  }
+}
