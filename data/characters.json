@@ -1,0 +1,102 @@
+{
+  "version": "0.1.0",
+  "characters": [
+    {
+      "id": "ruan_macacao",
+      "name": "Ruan \"Macacão\" Silva",
+      "role": "protagonist",
+      "age_start": 19,
+      "age_end": 28,
+      "origin": "Ituberá, Baixo Sul da Bahia",
+      "symbol": "Gorila Silverback",
+      "style": "pressao_pesada_top_game",
+      "belt_start": "white",
+      "belt_end": "black",
+      "stats": {
+        "health": 100,
+        "gas": 70,
+        "focus": 60,
+        "grip": 95,
+        "control": 75,
+        "moral": 50,
+        "speed": 45,
+        "technique": 55,
+        "pressure": 90,
+        "defense": 60
+      },
+      "special": {
+        "id": "silverback_grip",
+        "name": "Silverback Grip",
+        "effect": "Pegadas dominantes drenam 15% extra de Grip Integrity do adversário e aumentam controle posicional."
+      },
+      "weaknesses": ["velocidade_baixa", "guardas_elasticas", "ataques_em_angulo"],
+      "canon": true
+    },
+    {
+      "id": "davi_relampago",
+      "name": "Davi Relâmpago",
+      "role": "initial_rival",
+      "origin": "Circuito regional",
+      "style": "speed_scramble_counter",
+      "stats": {
+        "health": 90,
+        "gas": 85,
+        "focus": 55,
+        "grip": 55,
+        "control": 45,
+        "moral": 45,
+        "speed": 90,
+        "technique": 60,
+        "pressure": 40,
+        "defense": 65
+      },
+      "weaknesses": ["pressao_pesada", "controle_superior"],
+      "canon": true
+    },
+    {
+      "id": "mestre_dende",
+      "name": "Mestre Milson Dendê",
+      "role": "mentor",
+      "style": "base_disciplina_paciencia",
+      "narrative_function": "Ensina direção moral para a força de Ruan.",
+      "canon": true
+    },
+    {
+      "id": "tinker_bell",
+      "name": "Joaquim \"Tinker Bell\"",
+      "role": "tactical_support",
+      "style": "leitura_timing_transicao",
+      "narrative_function": "Suporte tático, Cria Live e missões.",
+      "canon": true
+    },
+    {
+      "id": "cassio_molho",
+      "name": "Cássio Molho",
+      "role": "moral_temptation",
+      "style": "hype_atalhos_crise",
+      "narrative_function": "Oferece visibilidade rápida e testa a honra de Ruan.",
+      "canon": true
+    },
+    {
+      "id": "kenzo_kuroi",
+      "name": "Kenzo Kuroi",
+      "role": "discipline_shadow",
+      "style": "precisao_foco_frio",
+      "canon": true
+    },
+    {
+      "id": "leoa_quilombola",
+      "name": "Leoa Quilombola",
+      "role": "ancestral_strength",
+      "style": "raiz_resistencia_pressao",
+      "canon": true
+    },
+    {
+      "id": "oni_da_lapa",
+      "name": "Oni da Lapa",
+      "role": "arena_rival",
+      "style": "intimidacao_pressao_psicologica",
+      "canon": true
+    }
+  ]
+}
