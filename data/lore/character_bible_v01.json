@@ -1,0 +1,74 @@
+{
+  "version": "0.1.0",
+  "language": "pt-BR",
+  "purpose": "Fonte canonica de personagens para roteiro, gameplay e arte.",
+  "characters": {
+    "ruan_macacao": {
+      "display_name": "Ruan Macacao Silva",
+      "role": "protagonista",
+      "age_arc": "19 a 28 anos",
+      "origin": "Itubera, Baixo Sul da Bahia",
+      "symbol": "Gorila Silverback",
+      "core_theme": "forca que aprende responsabilidade",
+      "combat_style": "pressao pesada, grip de ferro e top game dominante",
+      "special": "Silverback Grip",
+      "moral_question": "Ruan consegue ficar forte sem ficar sozinho?",
+      "visual_tags": ["kimono branco", "fisico compacto", "silhueta forte", "patch Gorila Silverback"]
+    },
+    "mestre_dende": {
+      "display_name": "Mestre Milson Dende",
+      "role": "mentor",
+      "theme": "base, disciplina e paciencia",
+      "function": "dar direcao moral a forca de Ruan",
+      "visual_tags": ["postura calma", "olhar severo", "mestre comunitario"]
+    },
+    "tinker_bell": {
+      "display_name": "Joaquim Tinker Bell",
+      "role": "testemunha e suporte tatico",
+      "theme": "irmao que guarda a verdade da jornada",
+      "function": "Cria Live, timing, bastidor e limite moral",
+      "visual_tags": ["celular", "camera", "energia jovem", "olhar atento"]
+    },
+    "davi_relampago": {
+      "display_name": "Davi Relampago",
+      "role": "rival inicial",
+      "theme": "velocidade que pune repeticao",
+      "combat_style": "scramble, sprawl e contra-ataque",
+      "visual_tags": ["fisico seco", "postura leve", "expressao fria"]
+    },
+    "cassio_molho": {
+      "display_name": "Cassio Molho",
+      "role": "tentacao de hype",
+      "theme": "atalho, palco e imagem publica",
+      "combat_style": "pressao curta e provocacao",
+      "visual_tags": ["roupa chamativa", "sorriso confiante", "cores quentes"]
+    },
+    "kenzo_kuroi": {
+      "display_name": "Kenzo Kuroi",
+      "role": "sombra da disciplina",
+      "theme": "precisao fria e leitura de padroes",
+      "combat_style": "timing calculado e punicao de erro",
+      "visual_tags": ["postura ritualistica", "cores frias", "silencio"]
+    },
+    "leoa_quilombola": {
+      "display_name": "Leoa Quilombola",
+      "role": "forca ancestral",
+      "theme": "raiz, resistencia e dignidade",
+      "combat_style": "base baixa, raspagem e resistencia",
+      "visual_tags": ["presenca firme", "dignidade", "raiz"]
+    },
+    "oni_da_lapa": {
+      "display_name": "Oni da Lapa",
+      "role": "rival underground",
+      "theme": "caos, pressao e ambiente hostil",
+      "combat_style": "explosao irregular e pressao psicologica",
+      "visual_tags": ["silhueta pesada", "ferro velho", "luz dura"]
+    }
+  },
+  "id_rules": {
+    "cassio_molho": "ID base de Cassio.",
+    "kenzo_kuroi": "ID base de Kenzo.",
+    "davi_relampago": "Rival inicial de Ruan.",
+    "davi_profeta_santos": "Lider dos Aleluia; personagem separado de Davi Relampago."
+  }
+}
