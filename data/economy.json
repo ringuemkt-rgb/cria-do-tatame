@@ -1,0 +1,16 @@
+{
+  "version": "0.1.0",
+  "currency": "BRL",
+  "starting_money": 0,
+  "training_costs": {
+    "basic": 0,
+    "technical": 10,
+    "physical": 10,
+    "recovery": 15
+  },
+  "fight_rewards": {
+    "local_sparring": 0,
+    "official_match": 50,
+    "regional_event": 120
+  }
+}
