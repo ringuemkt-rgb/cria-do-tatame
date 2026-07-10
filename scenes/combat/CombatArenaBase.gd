@@ -1,17 +1,17 @@
 extends Control
 
-const RESULT_SCENE := "res://scenes/result/ResultScreen.tscn"
-const FighterPlaceholderScript := preload("res://src/characters/FighterPlaceholder.gd")
-const GameFeelManagerScript := preload("res://src/gamefeel/GameFeelManager.gd")
-const DaviAIControllerScript := preload("res://src/combat/DaviAIController.gd")
+const RESULT_SCENE: String = "res://scenes/result/ResultScreen.tscn"
+const FighterPlaceholderScript = preload("res://src/characters/FighterPlaceholder.gd")
+const GameFeelManagerScript = preload("res://src/gamefeel/GameFeelManager.gd")
+const DaviAIControllerScript = preload("res://src/combat/DaviAIController.gd")
 
-var gamefeel
-var davi_ai
-var ruan_placeholder
-var davi_placeholder
+var gamefeel: Node
+var davi_ai: Node
+var ruan_placeholder: Node
+var davi_placeholder: Node
 var action_buttons: Array[Button] = []
 
-var estados_ptbr := {
+var estados_ptbr: Dictionary = {
 	"DISTANCE": "EM PE - NEUTRO",
 	"GRIP": "DISPUTA DE PEGADA",
 	"CLINCH": "CLINCH",
@@ -84,7 +84,7 @@ func _ensure_ai_hint() -> void:
 func _connect_buttons() -> void:
 	action_buttons.clear()
 	for i in range(5):
-		var path := "Panel/Buttons/Action%s" % [i + 1]
+		var path: String = "Panel/Buttons/Action%s" % [i + 1]
 		if not has_node(path):
 			continue
 		var button: Button = get_node(path)
@@ -92,24 +92,24 @@ func _connect_buttons() -> void:
 		button.pressed.connect(_on_action_button_pressed.bind(button))
 
 func _refresh_action_buttons() -> void:
-	var available := CombatManager.get_available_techniques()
+	var available: Array = CombatManager.get_available_techniques()
 	for index in range(action_buttons.size()):
-		var button := action_buttons[index]
+		var button: Button = action_buttons[index]
 		if index < available.size():
 			var technique: Dictionary = available[index]
-			var technique_id := str(technique.get("id", ""))
-			var label := str(technique.get("nome", technique.get("name", technique_id)))
+			var technique_id: String = str(technique.get("id", ""))
+			var label_text: String = str(technique.get("nome", technique.get("name", technique_id)))
 			var cost: Dictionary = technique.get("cost", technique.get("custo", {}))
-			var gas_cost := int(cost.get("gas", technique.get("gas_cost", 0)))
-			var focus_cost := int(cost.get("focus", cost.get("foco", technique.get("focus_cost", 0))))
-			var affordable := bool(technique.get("affordable", true))
-			button.text = label
+			var gas_cost: int = int(cost.get("gas", technique.get("gas_cost", 0)))
+			var focus_cost: int = int(cost.get("focus", cost.get("foco", technique.get("focus_cost", 0))))
+			var affordable: bool = bool(technique.get("affordable", true))
+			button.text = label_text
 			button.set_meta("action_id", technique_id)
 			button.set_meta("affordable", affordable)
 			button.disabled = not affordable
 			button.tooltip_text = "Gas %d • Foco %d" % [gas_cost, focus_cost]
 		else:
-			var is_reset := index == 0 and available.is_empty()
+			var is_reset: bool = index == 0 and available.is_empty()
 			button.text = "REINICIAR POSICAO" if is_reset else "—"
 			button.set_meta("action_id", "reset_position" if is_reset else "")
 			button.set_meta("affordable", is_reset)
@@ -119,18 +119,18 @@ func _refresh_action_buttons() -> void:
 func _on_action_button_pressed(button: Button) -> void:
 	if not CombatManager.is_running:
 		return
-	var action_id := str(button.get_meta("action_id", ""))
+	var action_id: String = str(button.get_meta("action_id", ""))
 	if action_id == "" or not bool(button.get_meta("affordable", true)):
 		return
 	AudioManager.play_sfx("botao")
 	_set_actions_enabled(false)
 	if ruan_placeholder != null:
-		ruan_placeholder.play_action(action_id)
+		ruan_placeholder.call("play_action", action_id)
 	var result: Dictionary = CombatManager.apply_player_action(action_id)
-	davi_ai.record_player_action(action_id)
-	var success := bool(result.get("success", false))
+	davi_ai.call("record_player_action", action_id)
+	var success: bool = bool(result.get("success", false))
 	AudioManager.play_sfx(action_id)
-	gamefeel.apply_for_technique(action_id, success)
+	gamefeel.call("apply_for_technique", action_id, success)
 	_update_ai_hint(result)
 	if CombatManager.is_running:
 		_refresh_action_buttons()
@@ -139,8 +139,8 @@ func _on_action_button_pressed(button: Button) -> void:
 func _set_actions_enabled(enabled: bool) -> void:
 	for button in action_buttons:
 		if enabled:
-			var action_id := str(button.get_meta("action_id", ""))
-			var affordable := bool(button.get_meta("affordable", true))
+			var action_id: String = str(button.get_meta("action_id", ""))
+			var affordable: bool = bool(button.get_meta("affordable", true))
 			button.disabled = action_id == "" or not affordable
 		else:
 			button.disabled = true
@@ -148,15 +148,15 @@ func _set_actions_enabled(enabled: bool) -> void:
 func _update_ai_hint(result: Dictionary) -> void:
 	if not has_node("Panel/AIHint"):
 		return
-	var phase_name := str(result.get("phase", "DISTANCE"))
+	var phase_name: String = str(result.get("phase", "DISTANCE"))
 	var player_resources: Dictionary = CombatManager.fighters.get("ruan_macacao", {})
-	var response := davi_ai.choose_response(phase_name, player_resources)
-	$Panel/AIHint.text = "%s Proxima leitura: %s" % [davi_ai.pressure_message(), response]
+	var response: String = str(davi_ai.call("choose_response", phase_name, player_resources))
+	$Panel/AIHint.text = "%s Proxima leitura: %s" % [str(davi_ai.call("pressure_message")), response]
 	if davi_placeholder != null:
-		davi_placeholder.play_action(response)
+		davi_placeholder.call("play_action", response)
 
 func _on_resources_changed(fighter_id, resources) -> void:
-	if str(fighter_id) != CombatManager.player_id:
+	if str(fighter_id) != CombatManager.player_id or typeof(resources) != TYPE_DICTIONARY:
 		return
 	if has_node("Panel/Resources"):
 		$Panel/Resources.text = "Gas %d • Foco %d • Grip %d • Controle %d" % [
@@ -175,11 +175,11 @@ func _on_technique_resolved(result) -> void:
 	if typeof(result) != TYPE_DICTIONARY:
 		return
 	if has_node("Panel/Message"):
-		var technique_id := str(result.get("technique_id", result.get("action_id", "")))
+		var technique_id: String = str(result.get("technique_id", result.get("action_id", "")))
 		var technique: Dictionary = DataRegistry.get_technique(technique_id)
-		var name := str(technique.get("nome", technique.get("name", technique_id)))
-		var message := str(result.get("message", "sucesso" if result.get("success", false) else "defendido"))
-		$Panel/Message.text = "%s: %s" % [name, _humanize_message(message)]
+		var name_text: String = str(technique.get("nome", technique.get("name", technique_id)))
+		var message: String = str(result.get("message", "sucesso" if result.get("success", false) else "defendido"))
+		$Panel/Message.text = "%s: %s" % [name_text, _humanize_message(message)]
 	if SignalBus.has_signal("technique_executed"):
 		SignalBus.technique_executed.emit(StringName(result.get("actor_id", "ruan_macacao")), StringName(result.get("technique_id", "unknown")))
 	if SignalBus.has_signal("tecnica_executada"):
@@ -194,12 +194,14 @@ func _humanize_message(message: String) -> String:
 
 func _update_state_label(value) -> void:
 	if has_node("Panel/State"):
-		$Panel/State.text = "Estado: " + estados_ptbr.get(str(value), str(value).replace("_", " "))
+		$Panel/State.text = "Estado: " + str(estados_ptbr.get(str(value), str(value).replace("_", " ")))
 
 func _on_combat_finished(result) -> void:
+	if typeof(result) != TYPE_DICTIONARY:
+		return
 	WorldState.last_combat_result = result
 	SaveManager.save_game(1)
 	AudioManager.play_music_cue("vitoria" if result.get("winner", "") == "ruan_macacao" else "derrota")
-	var error := get_tree().change_scene_to_file(RESULT_SCENE)
+	var error: Error = get_tree().change_scene_to_file(RESULT_SCENE)
 	if error != OK:
 		push_error("[CombatArenaBase] Falha ao abrir resultado: %s" % error_string(error))
