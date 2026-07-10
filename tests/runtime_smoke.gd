@@ -33,6 +33,8 @@ func _assert(condition: bool, message: String) -> void:
 func _run() -> void:
 	await process_frame
 	_resolve_autoloads()
+	if audio_manager != null:
+		audio_manager.set("enabled", false)
 	_test_autoloads()
 	_test_data_registry()
 	await _test_scene_loading()
@@ -145,12 +147,10 @@ func _test_combat_domain() -> void:
 	_assert(not simulation.has("error"), "CombatSimulationEngine retornou erro")
 	var resolver: Node = engine.get("technique_resolver")
 	var normalized: Dictionary = resolver.call("_efeitos", technique, true)
-	var player_stats: Dictionary = engine.get("player_stats")
-	var opponent_stats: Dictionary = engine.get("opponent_stats")
 	var applied: Dictionary = resolver.call(
 		"aplicar_resultado",
-		player_stats,
-		opponent_stats,
+		{"gas": 70, "focus": 60, "guard": 100, "control": 55, "moral": 60},
+		{"gas": 70, "focus": 50, "guard": 50, "grip_integrity": 100, "control": 50},
 		{"success": true, "cost": {"gas": 0, "focus": 0, "moral": 0}, "effects": normalized}
 	)
 	var defender: Dictionary = applied.get("defender", {})
