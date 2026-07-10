@@ -7,7 +7,10 @@ func _ready() -> void:
 	rng.randomize()
 
 func resolver_tecnica(technique_id: String, actor: Dictionary, defender: Dictionary, state_machine: Node, context: Dictionary = {}) -> Dictionary:
-	var technique: Dictionary = DataRegistry.get_technique(technique_id)
+	var registry: Node = get_node_or_null("/root/DataRegistry")
+	if registry == null or not registry.has_method("get_technique"):
+		return _erro(technique_id, "data_registry_indisponivel")
+	var technique: Dictionary = registry.call("get_technique", technique_id)
 	if technique.is_empty():
 		return _erro(technique_id, "tecnica_nao_encontrada")
 	return resolve_technique(technique, actor, defender, _contexto_com_estado(state_machine, context))
