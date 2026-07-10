@@ -56,11 +56,20 @@ jobs:
           chmod +x godot
           ./godot --version
 
+      - name: Prepare runtime log directory
+        run: mkdir -p reports/runtime_audit
+
       - name: Import and parse project
-        run: ./godot --headless --editor --path . --quit
+        shell: bash
+        run: |
+          set -o pipefail
+          ./godot --headless --editor --path . --quit 2>&1 | tee reports/runtime_audit/godot_import.log
 
       - name: Run runtime smoke suite
-        run: ./godot --headless --path . --script res://tests/runtime_smoke.gd
+        shell: bash
+        run: |
+          set -o pipefail
+          ./godot --headless --path . --script res://tests/runtime_smoke.gd 2>&1 | tee reports/runtime_audit/godot_smoke.log
 
       - name: Upload Godot logs
         if: always()
@@ -68,6 +77,6 @@ jobs:
         with:
           name: cria-godot-runtime-logs
           path: |
-            .godot/
-            reports/runtime_audit/
-          if-no-files-found: ignore
+            reports/runtime_audit/godot_import.log
+            reports/runtime_audit/godot_smoke.log
+          if-no-files-found: warn
