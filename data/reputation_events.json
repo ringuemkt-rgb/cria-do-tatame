@@ -1,0 +1,38 @@
+{
+  "version": "0.8.0",
+  "reputation_events": [
+    {
+      "id": "vitoria_tecnica_respeitosa",
+      "name": "Vitoria tecnica respeitosa",
+      "trigger": "combat_win_technical",
+      "effects": {
+        "honra": 5,
+        "hype": 3,
+        "legado": 1
+      },
+      "description": "Ruan vence por controle tecnico e preserva o respeito pelo adversario."
+    },
+    {
+      "id": "derrota_com_postura",
+      "name": "Derrota com postura",
+      "trigger": "combat_loss_respectful",
+      "effects": {
+        "honra": 1,
+        "hype": -2,
+        "moral": 1
+      },
+      "description": "A derrota reduz o hype, mas a postura protege a honra."
+    },
+    {
+      "id": "treino_comunitario",
+      "name": "Treino comunitario",
+      "trigger": "community_training",
+      "effects": {
+        "raiz": 3,
+        "legado": 2,
+        "hype": 1
+      },
+      "description": "Ensinar e servir fortalece a raiz e o legado."
+    }
+  ]
+}
