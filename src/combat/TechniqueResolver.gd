@@ -13,7 +13,6 @@ func resolver_tecnica(technique_id: String, actor: Dictionary, defender: Diction
 	return resolve_technique(technique, actor, defender, _contexto_com_estado(state_machine, context))
 
 func resolve_technique(technique: Dictionary, actor: Dictionary, defender: Dictionary, context: Dictionary = {}) -> Dictionary:
-	rng.randomize()
 	var technique_id := str(technique.get("id", "unknown"))
 	var current_state := str(context.get("state", context.get("estado", "PLAYER_STANDING_NEUTRAL")))
 	var entry_state := str(technique.get("entry_state", technique.get("estado_entrada", "")))
@@ -26,7 +25,7 @@ func resolve_technique(technique: Dictionary, actor: Dictionary, defender: Dicti
 	var effects := _efeitos(technique, success)
 	return {
 		"technique_id": technique_id,
-		"nome": technique.get("nome", technique_id),
+		"nome": technique.get("nome", technique.get("name", technique_id)),
 		"success": success,
 		"state_allowed": state_allowed,
 		"can_pay": can_pay,
@@ -50,17 +49,15 @@ func aplicar_resultado(actor: Dictionary, defender: Dictionary, result: Dictiona
 	_actor_delta(actor_out, "focus", -float(cost.get("focus", 0)))
 	_actor_delta(actor_out, "moral", -float(cost.get("moral", 0)))
 	if result.get("success", false):
-		for key in result.get("effects", {}).keys():
-			var value := float(result["effects"][key])
-			match key:
-				"self_control_meter", "self_control_bonus", "control_gain": _actor_delta(actor_out, "control", value)
-				"self_guarda", "self_guard_bonus": _actor_delta(actor_out, "guard", value)
-				"opponent_grip_integrity", "opponent_grip_reduction", "grip_damage": _actor_delta(defender_out, "grip_integrity", value)
-				"opponent_gas", "opponent_gas_reduction": _actor_delta(defender_out, "gas", value)
-				"opponent_foco", "opponent_focus_reduction": _actor_delta(defender_out, "focus", value)
-				"opponent_guarda", "opponent_guard_reduction": _actor_delta(defender_out, "guard", value)
-				"opponent_hp", "opponent_hp_reduction": _actor_delta(defender_out, "health", value)
-				"opponent_control_meter", "opponent_control_reduction": _actor_delta(defender_out, "control", value)
+		var effects: Dictionary = result.get("effects", {})
+		_actor_delta(actor_out, "control", float(effects.get("actor_control", 0)))
+		_actor_delta(actor_out, "guard", float(effects.get("actor_guard", 0)))
+		_actor_delta(defender_out, "grip_integrity", float(effects.get("defender_grip_integrity", 0)))
+		_actor_delta(defender_out, "gas", float(effects.get("defender_gas", 0)))
+		_actor_delta(defender_out, "focus", float(effects.get("defender_focus", 0)))
+		_actor_delta(defender_out, "guard", float(effects.get("defender_guard", 0)))
+		_actor_delta(defender_out, "health", float(effects.get("defender_health", 0)))
+		_actor_delta(defender_out, "control", float(effects.get("defender_control", 0)))
 	return {"actor": actor_out, "defender": defender_out}
 
 func _contexto_com_estado(state_machine: CombatStateMachine, context: Dictionary) -> Dictionary:
@@ -72,23 +69,56 @@ func _contexto_com_estado(state_machine: CombatStateMachine, context: Dictionary
 func _custo(technique: Dictionary) -> Dictionary:
 	var cost: Dictionary = technique.get("cost", technique.get("custo", {}))
 	return {
-		"gas": float(cost.get("gas", technique.get("gas_cost", 0))),
-		"focus": float(cost.get("focus", cost.get("foco", technique.get("focus_cost", 0)))),
-		"moral": float(cost.get("moral", technique.get("moral_cost", 0)))
+		"gas": max(0.0, float(cost.get("gas", technique.get("gas_cost", 0)))),
+		"focus": max(0.0, float(cost.get("focus", cost.get("foco", technique.get("focus_cost", 0))))),
+		"moral": max(0.0, float(cost.get("moral", technique.get("moral_cost", 0))))
 	}
 
 func _efeitos(technique: Dictionary, success: bool) -> Dictionary:
+	var normalized := {
+		"actor_control": 0.0,
+		"actor_guard": 0.0,
+		"defender_grip_integrity": 0.0,
+		"defender_gas": 0.0,
+		"defender_focus": 0.0,
+		"defender_guard": 0.0,
+		"defender_health": 0.0,
+		"defender_control": 0.0
+	}
 	if not success:
-		return {}
-	var effects: Dictionary = technique.get("effects", technique.get("efeitos", {})).duplicate(true)
-	if technique.has("grip_damage"):
-		effects["grip_damage"] = -abs(float(technique.get("grip_damage", 0)))
-	if technique.has("control_gain"):
-		effects["control_gain"] = float(technique.get("control_gain", 0))
-	return effects
+		return normalized
+	var raw: Dictionary = technique.get("effects", technique.get("efeitos", {}))
+	for key in raw.keys():
+		var value := float(raw[key])
+		match str(key):
+			"self_control_meter", "self_control_bonus", "control_gain":
+				normalized["actor_control"] += abs(value)
+			"self_guarda", "self_guard_bonus":
+				normalized["actor_guard"] += abs(value)
+			"opponent_grip_integrity", "opponent_grip_reduction", "grip_damage":
+				normalized["defender_grip_integrity"] -= abs(value)
+			"opponent_gas", "opponent_gas_reduction":
+				normalized["defender_gas"] -= abs(value)
+			"opponent_foco", "opponent_focus_reduction":
+				normalized["defender_focus"] -= abs(value)
+			"opponent_guarda", "opponent_guard_reduction":
+				normalized["defender_guard"] -= abs(value)
+			"opponent_hp", "opponent_hp_reduction":
+				normalized["defender_health"] -= abs(value)
+			"opponent_control_meter", "opponent_control_reduction":
+				normalized["defender_control"] -= abs(value)
+	if normalized["defender_grip_integrity"] == 0.0 and technique.has("grip_damage"):
+		normalized["defender_grip_integrity"] = -abs(float(technique.get("grip_damage", 0)))
+	if normalized["actor_control"] == 0.0 and technique.has("control_gain"):
+		normalized["actor_control"] = abs(float(technique.get("control_gain", 0)))
+	return normalized
 
 func _pode_pagar(actor: Dictionary, cost: Dictionary) -> bool:
-	return float(actor.get("gas", 0)) >= float(cost.get("gas", 0)) and float(actor.get("focus", 0)) >= float(cost.get("focus", 0)) and float(actor.get("moral", 100)) >= float(cost.get("moral", 0))
+	return (
+		float(actor.get("gas", 0)) >= float(cost.get("gas", 0))
+		and float(actor.get("focus", 0)) >= float(cost.get("focus", 0))
+		and float(actor.get("moral", 100)) >= float(cost.get("moral", 0))
+	)
 
 func _calcular_chance(technique: Dictionary, actor: Dictionary, defender: Dictionary, state_allowed: bool, can_pay: bool) -> float:
 	var score := float(technique.get("base_chance", technique.get("chance_sucesso", 0.55)))
@@ -114,8 +144,16 @@ func _mensagem(technique: Dictionary, success: bool, state_allowed: bool, can_pa
 	if not can_pay:
 		return "recurso_insuficiente"
 	if success:
-		return str(technique.get("success_text", "%s encaixou." % technique.get("nome", "Tecnica")))
-	return str(technique.get("defended_text", "%s foi defendida." % technique.get("nome", "Tecnica")))
+		return str(technique.get("success_text", "%s encaixou." % technique.get("nome", technique.get("name", "Tecnica"))))
+	return str(technique.get("defended_text", "%s foi defendida." % technique.get("nome", technique.get("name", "Tecnica"))))
 
 func _erro(technique_id: String, reason: String) -> Dictionary:
-	return {"technique_id": technique_id, "success": false, "error": reason, "message": reason, "state_to": "PLAYER_STANDING_NEUTRAL", "cost": {}, "effects": {}}
+	return {
+		"technique_id": technique_id,
+		"success": false,
+		"error": reason,
+		"message": reason,
+		"state_to": "PLAYER_STANDING_NEUTRAL",
+		"cost": {},
+		"effects": {}
+	}
