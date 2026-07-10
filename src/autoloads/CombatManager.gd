@@ -2,29 +2,31 @@ extends Node
 
 enum CombatPhase { DISTANCE, GRIP, CLINCH, TAKEDOWN, GROUND, TRANSITION, TECHNICAL, RESET }
 
-const DEFAULT_PLAYER_ID := "ruan_macacao"
-const DEFAULT_OPPONENT_ID := "davi_relampago"
+const DEFAULT_PLAYER_ID: String = "ruan_macacao"
+const DEFAULT_OPPONENT_ID: String = "davi_relampago"
+const CombatStateMachineScript = preload("res://src/combat/CombatStateMachine.gd")
+const TechniqueResolverScript = preload("res://src/combat/TechniqueResolver.gd")
 
-var phase := CombatPhase.DISTANCE
-var arena_id := ""
-var player_id := DEFAULT_PLAYER_ID
-var opponent_id := DEFAULT_OPPONENT_ID
+var phase: int = CombatPhase.DISTANCE
+var arena_id: String = ""
+var player_id: String = DEFAULT_PLAYER_ID
+var opponent_id: String = DEFAULT_OPPONENT_ID
 var fighters: Dictionary = {}
-var is_running := false
+var is_running: bool = false
 var last_result: Dictionary = {}
-var state_machine: CombatStateMachine
-var technique_resolver: TechniqueResolver
+var state_machine: Node
+var technique_resolver: Node
 
 func _ready() -> void:
 	_ensure_runtime_components()
 
 func _ensure_runtime_components() -> void:
 	if state_machine == null:
-		state_machine = CombatStateMachine.new()
+		state_machine = CombatStateMachineScript.new()
 		state_machine.name = "CombatStateMachineRuntime"
 		add_child(state_machine)
 	if technique_resolver == null:
-		technique_resolver = TechniqueResolver.new()
+		technique_resolver = TechniqueResolverScript.new()
 		technique_resolver.name = "TechniqueResolverRuntime"
 		add_child(technique_resolver)
 
@@ -40,7 +42,7 @@ func start_combat(new_arena_id: String, new_player_id: String, new_opponent_id: 
 		player_id: _create_runtime_stats(player_id),
 		opponent_id: _create_runtime_stats(opponent_id)
 	}
-	state_machine.reiniciar_em_pe()
+	state_machine.call("reiniciar_em_pe")
 	SignalBus.combat_started.emit(arena_id, player_id, opponent_id)
 	if SignalBus.has_signal("combate_iniciado"):
 		SignalBus.combate_iniciado.emit(StringName(opponent_id))
@@ -74,47 +76,50 @@ func _create_runtime_stats(character_id: String) -> Dictionary:
 func get_current_state_name() -> String:
 	if state_machine == null:
 		return "PLAYER_STANDING_NEUTRAL"
-	return state_machine.get_current_state_name()
+	return str(state_machine.call("get_current_state_name"))
 
 func get_available_techniques(actor_id: String = "") -> Array:
-	var resolved_actor := actor_id if actor_id != "" else player_id
+	var resolved_actor: String = actor_id if actor_id != "" else player_id
 	var actor: Dictionary = fighters.get(resolved_actor, {})
-	var current_state := get_current_state_name()
+	var current_state: String = get_current_state_name()
 	var available: Array = []
 	for technique_value in DataRegistry.techniques.values():
 		if typeof(technique_value) != TYPE_DICTIONARY:
 			continue
 		var technique: Dictionary = technique_value
-		var entry_state := str(technique.get("entry_state", technique.get("estado_entrada", "")))
+		var entry_state: String = str(technique.get("entry_state", technique.get("estado_entrada", "")))
 		if entry_state != "" and entry_state != current_state:
 			continue
-		var owner := str(technique.get("dono", technique.get("owner", "qualquer")))
-		if owner not in ["", "qualquer", resolved_actor]:
+		var owner: String = str(technique.get("dono", technique.get("owner", "qualquer")))
+		if owner != "" and owner != "qualquer" and owner != resolved_actor:
 			continue
 		var cost: Dictionary = technique.get("cost", technique.get("custo", {}))
-		var gas_cost := float(cost.get("gas", technique.get("gas_cost", 0)))
-		var focus_cost := float(cost.get("focus", cost.get("foco", technique.get("focus_cost", 0))))
-		var moral_cost := float(cost.get("moral", technique.get("moral_cost", 0)))
-		var item := technique.duplicate(true)
+		var gas_cost: float = float(cost.get("gas", technique.get("gas_cost", 0)))
+		var focus_cost: float = float(cost.get("focus", cost.get("foco", technique.get("focus_cost", 0))))
+		var moral_cost: float = float(cost.get("moral", technique.get("moral_cost", 0)))
+		var item: Dictionary = technique.duplicate(true)
 		item["affordable"] = (
 			float(actor.get("gas", 0)) >= gas_cost
 			and float(actor.get("focus", 0)) >= focus_cost
 			and float(actor.get("moral", 0)) >= moral_cost
 		)
 		available.append(item)
-	available.sort_custom(func(a: Dictionary, b: Dictionary) -> bool:
-		return str(a.get("nome", a.get("name", a.get("id", "")))) < str(b.get("nome", b.get("name", b.get("id", ""))))
-	)
+	available.sort_custom(_sort_techniques_by_name)
 	return available
+
+func _sort_techniques_by_name(a: Dictionary, b: Dictionary) -> bool:
+	var name_a: String = str(a.get("nome", a.get("name", a.get("id", ""))))
+	var name_b: String = str(b.get("nome", b.get("name", b.get("id", ""))))
+	return name_a < name_b
 
 func apply_player_action(action_id: String) -> Dictionary:
 	if not is_running:
 		return {"success": false, "error": "combat_not_running", "action_id": action_id}
 	if action_id == "reset_position":
-		state_machine.reiniciar_em_pe()
+		state_machine.call("reiniciar_em_pe")
 		_change_phase(CombatPhase.RESET)
-		_adjust(player_id, "gas", -3)
-		var reset_result := {
+		_adjust(player_id, "gas", -3.0)
+		var reset_result: Dictionary = {
 			"action_id": action_id,
 			"technique_id": action_id,
 			"actor_id": player_id,
@@ -145,20 +150,21 @@ func execute_technique(actor_id: String, defender_id: String, technique: Diction
 	SignalBus.technique_started.emit(technique.get("id", "unknown"), actor_id)
 	var actor: Dictionary = fighters.get(actor_id, {})
 	var defender: Dictionary = fighters.get(defender_id, {})
-	var resolver_result := technique_resolver.resolve_technique(
+	var resolver_result: Dictionary = technique_resolver.call(
+		"resolve_technique",
 		technique,
 		actor,
 		defender,
 		{"state": get_current_state_name()}
 	)
-	var applied := technique_resolver.aplicar_resultado(actor, defender, resolver_result)
+	var applied: Dictionary = technique_resolver.call("aplicar_resultado", actor, defender, resolver_result)
 	fighters[actor_id] = applied.get("actor", actor)
 	fighters[defender_id] = applied.get("defender", defender)
 	if bool(resolver_result.get("success", false)):
 		_apply_state_transition(str(resolver_result.get("state_to", get_current_state_name())))
 		_change_phase(_phase_from_string(str(technique.get("phase_to", "TRANSITION"))))
 	else:
-		_adjust(defender_id, "focus", 2)
+		_adjust(defender_id, "focus", 2.0)
 	last_result = resolver_result.duplicate(true)
 	last_result["actor_id"] = actor_id
 	last_result["defender_id"] = defender_id
@@ -171,12 +177,14 @@ func execute_technique(actor_id: String, defender_id: String, technique: Diction
 	return last_result
 
 func _apply_state_transition(state_name: String) -> void:
-	var target_state := state_machine.estado_por_nome(state_name)
-	if target_state == state_machine.current_state:
+	var target_state: int = int(state_machine.call("estado_por_nome", state_name))
+	var current_state: int = int(state_machine.get("current_state"))
+	if target_state == current_state:
 		return
-	if not state_machine.transition_to(target_state):
+	var transitioned: bool = bool(state_machine.call("transition_to", target_state))
+	if not transitioned:
 		push_warning("[CombatManager] Transicao nao catalogada: %s -> %s" % [get_current_state_name(), state_name])
-		state_machine.forcar_estado(target_state)
+		state_machine.call("forcar_estado", target_state)
 
 func _check_end(technique: Dictionary = {}, result: Dictionary = {}) -> void:
 	if not is_running:
@@ -197,21 +205,21 @@ func _check_end(technique: Dictionary = {}, result: Dictionary = {}) -> void:
 func _adjust(id: String, key: String, delta: float) -> void:
 	if not fighters.has(id):
 		return
-	fighters[id][key] = clamp(float(fighters[id].get(key, 0.0)) + delta, 0.0, 100.0)
+	fighters[id][key] = clampf(float(fighters[id].get(key, 0.0)) + delta, 0.0, 100.0)
 	if key == "grip_integrity" and float(fighters[id][key]) <= 0.0:
 		SignalBus.grip_integrity_broken.emit(StringName(id))
 
 func _change_phase(new_phase: int) -> void:
-	var old_name := str(CombatPhase.keys()[phase])
-	phase = clampi(new_phase, 0, CombatPhase.size() - 1)
-	var new_name := str(CombatPhase.keys()[phase])
+	var old_name: String = str(CombatPhase.keys()[phase])
+	phase = clampi(new_phase, 0, CombatPhase.keys().size() - 1)
+	var new_name: String = str(CombatPhase.keys()[phase])
 	SignalBus.combat_state_changed.emit(old_name, new_name)
 	if SignalBus.has_signal("estado_combate_mudou"):
 		SignalBus.estado_combate_mudou.emit(StringName(new_name), StringName(old_name))
 
 func _phase_from_string(value: String) -> int:
-	var upper := value.to_upper()
-	var keys := CombatPhase.keys()
+	var upper: String = value.to_upper()
+	var keys: Array = CombatPhase.keys()
 	for i in range(keys.size()):
 		if str(keys[i]) == upper:
 			return i
@@ -226,7 +234,7 @@ func finish_combat(result: Dictionary) -> void:
 	last_result["fighters"] = fighters.duplicate(true)
 	last_result["final_state"] = get_current_state_name()
 	_apply_post_combat_effects(last_result)
-	state_machine.reset()
+	state_machine.call("reset")
 	SignalBus.combat_finished.emit(last_result)
 	SignalBus.combat_ended.emit(last_result)
 	if SignalBus.has_signal("combate_finalizado"):
@@ -251,8 +259,11 @@ func _apply_post_combat_effects(result: Dictionary) -> void:
 	WorldState._sync_aliases()
 
 func _emit_resources() -> void:
-	for id in fighters.keys():
-		SignalBus.resources_changed.emit(id, fighters[id].duplicate(true))
-		for key in fighters[id].keys():
+	for fighter_value in fighters.keys():
+		var fighter_id: String = str(fighter_value)
+		var resources: Dictionary = fighters[fighter_id]
+		SignalBus.resources_changed.emit(fighter_id, resources.duplicate(true))
+		for resource_value in resources.keys():
+			var resource_name: String = str(resource_value)
 			if SignalBus.has_signal("recurso_mudou"):
-				SignalBus.recurso_mudou.emit(StringName(id), StringName(key), float(fighters[id][key]), 100.0)
+				SignalBus.recurso_mudou.emit(StringName(fighter_id), StringName(resource_name), float(resources[resource_name]), 100.0)
