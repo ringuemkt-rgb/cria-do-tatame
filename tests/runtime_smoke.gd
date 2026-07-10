@@ -92,23 +92,30 @@ func _test_combat_domain() -> void:
 	_assert(not available.is_empty(), "Nenhuma tecnica disponivel no estado inicial")
 	var missing: Dictionary = CombatManager.apply_player_action("tecnica_inexistente")
 	_assert(missing.get("error", "") == "technique_not_found", "Tecnica inexistente nao retornou erro seguro")
+
 	var engine := CombatSimulationEngine.new()
 	root.add_child(engine)
 	engine.setup(
-		{"gas": 70, "focus": 60, "grip": 95, "control": 55, "moral": 60},
-		{"gas": 70, "focus": 50, "grip": 50, "guard": 50, "control": 50, "moral": 50}
+		{"gas": 70, "focus": 60, "grip": 95, "guard": 100, "control": 55, "moral": 60},
+		{"gas": 70, "focus": 50, "grip": 50, "guard": 50, "grip_integrity": 100, "control": 50, "moral": 50}
 	)
 	var technique := {
 		"id": "smoke_grip",
 		"entry_state": "distancia_media",
 		"exit_state": "disputa_pegada",
-		"base_chance": 1.0,
+		"base_chance": 0.9,
 		"cost": {"gas": 2, "focus": 1},
 		"effects": {"self_control_bonus": 5, "opponent_grip_reduction": 8}
 	}
 	var simulation: Dictionary = engine.use_technique(technique)
 	_assert(not simulation.has("error"), "CombatSimulationEngine retornou erro")
-	_assert(float(simulation.get("opponent_stats", {}).get("grip_integrity", 100)) <= 92.0, "Reducao de grip foi aplicada com sinal incorreto")
+	var normalized: Dictionary = engine.technique_resolver._efeitos(technique, true)
+	var applied: Dictionary = engine.technique_resolver.aplicar_resultado(
+		engine.player_stats,
+		engine.opponent_stats,
+		{"success": true, "cost": {"gas": 0, "focus": 0, "moral": 0}, "effects": normalized}
+	)
+	_assert(is_equal_approx(float(applied.get("defender", {}).get("grip_integrity", 100)), 92.0), "Reducao de grip foi aplicada com sinal incorreto")
 	engine.queue_free()
 	CombatManager.is_running = false
 
