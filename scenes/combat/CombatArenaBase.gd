@@ -89,8 +89,7 @@ func _connect_buttons() -> void:
 			continue
 		var button: Button = get_node(path)
 		action_buttons.append(button)
-		if not button.pressed.is_connected(_on_action_button_pressed.bind(button)):
-			button.pressed.connect(_on_action_button_pressed.bind(button))
+		button.pressed.connect(_on_action_button_pressed.bind(button))
 
 func _refresh_action_buttons() -> void:
 	var available := CombatManager.get_available_techniques()
@@ -103,21 +102,25 @@ func _refresh_action_buttons() -> void:
 			var cost: Dictionary = technique.get("cost", technique.get("custo", {}))
 			var gas_cost := int(cost.get("gas", technique.get("gas_cost", 0)))
 			var focus_cost := int(cost.get("focus", cost.get("foco", technique.get("focus_cost", 0))))
+			var affordable := bool(technique.get("affordable", true))
 			button.text = label
 			button.set_meta("action_id", technique_id)
-			button.disabled = not bool(technique.get("affordable", true))
+			button.set_meta("affordable", affordable)
+			button.disabled = not affordable
 			button.tooltip_text = "Gas %d • Foco %d" % [gas_cost, focus_cost]
 		else:
-			button.text = "REINICIAR POSICAO" if index == 0 and available.is_empty() else "—"
-			button.set_meta("action_id", "reset_position" if index == 0 and available.is_empty() else "")
-			button.disabled = not (index == 0 and available.is_empty())
+			var is_reset := index == 0 and available.is_empty()
+			button.text = "REINICIAR POSICAO" if is_reset else "—"
+			button.set_meta("action_id", "reset_position" if is_reset else "")
+			button.set_meta("affordable", is_reset)
+			button.disabled = not is_reset
 			button.tooltip_text = ""
 
 func _on_action_button_pressed(button: Button) -> void:
 	if not CombatManager.is_running:
 		return
 	var action_id := str(button.get_meta("action_id", ""))
-	if action_id == "":
+	if action_id == "" or not bool(button.get_meta("affordable", true)):
 		return
 	AudioManager.play_sfx("botao")
 	_set_actions_enabled(false)
@@ -137,7 +140,8 @@ func _set_actions_enabled(enabled: bool) -> void:
 	for button in action_buttons:
 		if enabled:
 			var action_id := str(button.get_meta("action_id", ""))
-			button.disabled = action_id == ""
+			var affordable := bool(button.get_meta("affordable", true))
+			button.disabled = action_id == "" or not affordable
 		else:
 			button.disabled = true
 
@@ -196,4 +200,6 @@ func _on_combat_finished(result) -> void:
 	WorldState.last_combat_result = result
 	SaveManager.save_game(1)
 	AudioManager.play_music_cue("vitoria" if result.get("winner", "") == "ruan_macacao" else "derrota")
-	get_tree().change_scene_to_file(RESULT_SCENE)
+	var error := get_tree().change_scene_to_file(RESULT_SCENE)
+	if error != OK:
+		push_error("[CombatArenaBase] Falha ao abrir resultado: %s" % error_string(error))
