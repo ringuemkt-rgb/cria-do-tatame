@@ -40,6 +40,7 @@ func _run() -> void:
 	await _test_scene_loading()
 	_test_save_roundtrip()
 	_test_combat_domain()
+	_test_campaign_progression()
 	_finish()
 
 func _resolve_autoloads() -> void:
@@ -156,7 +157,24 @@ func _test_combat_domain() -> void:
 	var defender: Dictionary = applied.get("defender", {})
 	_assert(is_equal_approx(float(defender.get("grip_integrity", 100)), 92.0), "Reducao de grip foi aplicada com sinal incorreto")
 	engine.queue_free()
-	combat_manager.set("is_running", false)
+
+func _test_campaign_progression() -> void:
+	if combat_manager == null or world_state == null or career_loop == null:
+		return
+	var money_before: int = int(world_state.get("money"))
+	var wins_before: int = int(world_state.get("fights_won"))
+	combat_manager.call("finish_combat", {"winner": "ruan_macacao", "method": "controle_posicional", "technical": true})
+	_assert(not bool(combat_manager.get("is_running")), "Combate continuou ativo apos finish_combat")
+	_assert(int(world_state.get("money")) == money_before + 200, "Recompensa de combate nao foi aplicada")
+	_assert(int(world_state.get("fights_won")) == wins_before + 1, "Vitoria nao foi registrada no WorldState")
+	var last_combat_result: Dictionary = world_state.get("last_combat_result")
+	_assert(str(last_combat_result.get("winner", "")) == "ruan_macacao", "Resultado final nao foi persistido no WorldState")
+	var day_before: int = int(world_state.get("day_index"))
+	var week_before: int = int(world_state.get("week"))
+	career_loop.call("advance_day")
+	var day_after: int = int(world_state.get("day_index"))
+	var week_after: int = int(world_state.get("week"))
+	_assert(day_after != day_before or week_after != week_before, "CareerLoop nao avancou o calendario")
 
 func _finish() -> void:
 	print("[RuntimeSmoke] checks=%d failures=%d" % [checks, failures.size()])
