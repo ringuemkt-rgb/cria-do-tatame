@@ -1,0 +1,50 @@
+name: Repository Quality
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: repository-quality-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Validate JSON syntax with Python
+        run: python tools/validate_json.py
+
+      - name: Validate JSON syntax with Node
+        run: node tools/node/validate_json.mjs
+
+      - name: Validate game-data references
+        run: node tools/node/validate_game_data.mjs
+
+      - name: Validate complete repository
+        run: python tools/validate_complete_game.py
+
+      - name: Generate asset manifest
+        run: node tools/node/generate_asset_manifest.mjs
+
+      - name: Ensure generated manifest is valid JSON
+        run: python -m json.tool production/generated/ASSET_MANIFEST.json > /dev/null
