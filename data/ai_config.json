@@ -1,0 +1,113 @@
+{
+  "davi_relampago": {
+    "base_difficulty": 1.0,
+    "personality": "punishes_repetition",
+    "description": "Davi Relâmpago: Detecção fria, punição de padrões, grip de ferro",
+    "memory_size": 10,
+    "decision_delay_ms": 300
+  },
+  "punishment_strategies": {
+    "repeat_same_2x": "sprawl",
+    "repeat_same_3x": "counter_attack",
+    "aggressive_chain": "knee_reap",
+    "defensive_stalling": "pressure_pass"
+  },
+  "position_priorities": {
+    "NEUTRAL": [
+      "clinch_grip",
+      "takedown_setup"
+    ],
+    "PLAYER_GUARD": [
+      "pass_guard_left",
+      "pass_guard_right",
+      "knee_slice",
+      "toreando_pass"
+    ],
+    "TOP_CONTROL": [
+      "knee_on_belly",
+      "side_control_transition",
+      "mount_attempt"
+    ],
+    "SIDE_CONTROL": [
+      "transition_to_mount",
+      "armlock_setup",
+      "pressure_hold",
+      "knee_reap"
+    ],
+    "MOUNT": [
+      "chest_pressure",
+      "submission_hunt",
+      "arm_triangle_setup",
+      "collar_choke"
+    ],
+    "BACK_CONTROL": [
+      "rear_naked_choke",
+      "back_pressure",
+      "hook_placement"
+    ],
+    "PLAYER_TOP": [
+      "hip_escape",
+      "reversal_attempt",
+      "guard_recovery",
+      "underhook_setup"
+    ]
+  },
+  "difficulty_modifiers": {
+    "honra_threshold_low": 0.5,
+    "honra_threshold_mid": 1.0,
+    "honra_threshold_high": 1.5
+  },
+  "technique_effectiveness": {
+    "sprawl": {
+      "cost_stamina": 8,
+      "cost_grip": 5,
+      "effectiveness_vs_takedown": 0.85,
+      "counter_to": ["single_leg", "double_leg"]
+    },
+    "counter_attack": {
+      "cost_stamina": 10,
+      "cost_grip": 7,
+      "effectiveness_vs_technique": 0.75,
+      "stun_opponent_ms": 500
+    },
+    "knee_on_belly": {
+      "cost_stamina": 6,
+      "cost_grip": 4,
+      "opponent_discomfort": 12,
+      "position_value": 3
+    },
+    "pass_guard_left": {
+      "cost_stamina": 8,
+      "cost_grip": 6,
+      "success_rate": 0.65,
+      "leads_to": "side_control"
+    },
+    "pass_guard_right": {
+      "cost_stamina": 8,
+      "cost_grip": 6,
+      "success_rate": 0.65,
+      "leads_to": "side_control"
+    },
+    "transition_to_mount": {
+      "cost_stamina": 7,
+      "cost_grip": 5,
+      "success_rate": 0.7,
+      "leads_to": "mount"
+    },
+    "rear_naked_choke": {
+      "cost_stamina": 12,
+      "cost_grip": 10,
+      "submission_time": 8,
+      "is_submission": true
+    }
+  },
+  "ai_behavior_trees": {
+    "davi_core_loop": [
+      "check_player_repetition",
+      "if_found_punish",
+      "else_evaluate_position",
+      "else_select_by_difficulty",
+      "schedule_action"
+    ]
+  }
+}
