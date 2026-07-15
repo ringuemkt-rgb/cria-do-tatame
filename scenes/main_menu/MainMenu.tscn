@@ -1,6 +1,68 @@
-[gd_scene load_steps=2 format=3]
+[gd_scene load_steps=7 format=3]
 
 [ext_resource type="Script" path="res://scenes/main_menu/MainMenu.gd" id="1_mainmenu"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBox_card"]
+bg_color = Color(0.043, 0.055, 0.071, 0.96)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.722, 0.525, 0.043, 0.92)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+shadow_color = Color(0, 0, 0, 0.55)
+shadow_size = 12
+
+[sub_resource type="StyleBoxFlat" id="StyleBox_button_normal"]
+bg_color = Color(0.067, 0.082, 0.106, 0.98)
+border_width_left = 2
+border_width_top = 1
+border_width_right = 2
+border_width_bottom = 1
+border_color = Color(0.722, 0.525, 0.043, 0.72)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[sub_resource type="StyleBoxFlat" id="StyleBox_button_hover"]
+bg_color = Color(0.122, 0.102, 0.063, 1)
+border_width_left = 4
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.949, 0.761, 0.188, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[sub_resource type="StyleBoxFlat" id="StyleBox_button_pressed"]
+bg_color = Color(0.722, 0.525, 0.043, 1)
+border_width_left = 4
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.949, 0.761, 0.188, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[sub_resource type="StyleBoxFlat" id="StyleBox_button_disabled"]
+bg_color = Color(0.075, 0.082, 0.094, 0.72)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.357, 0.376, 0.408, 0.55)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
 
 [node name="MainMenu" type="Control"]
 layout_mode = 3
@@ -18,82 +80,246 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-color = Color(0.027, 0.031, 0.039, 1)
+color = Color(0.015, 0.02, 0.027, 1)
 mouse_filter = 2
 
-[node name="Content" type="VBoxContainer" parent="."]
-custom_minimum_size = Vector2(520, 0)
+[node name="RiverGlow" type="ColorRect" parent="."]
 layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -260.0
-offset_top = -250.0
-offset_right = 260.0
-offset_bottom = 250.0
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_constants/separation = 14
+color = Color(0.02, 0.085, 0.13, 0.34)
+mouse_filter = 2
 
-[node name="Title" type="Label" parent="Content"]
+[node name="GoldHorizon" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -170.0
+grow_horizontal = 2
+grow_vertical = 0
+color = Color(0.31, 0.208, 0.035, 0.22)
+mouse_filter = 2
+
+[node name="TopRule" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 4.0
+grow_horizontal = 2
+color = Color(0.949, 0.761, 0.188, 0.9)
+mouse_filter = 2
+
+[node name="BrandMark" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 72.0
+offset_top = -205.0
+offset_right = 500.0
+offset_bottom = 205.0
+grow_vertical = 2
+theme_override_constants/separation = 10
+
+[node name="Crown" type="Label" parent="BrandMark"]
 layout_mode = 2
-theme_override_colors/font_color = Color(1, 0.756, 0.027, 1)
-theme_override_font_sizes/font_size = 36
+theme_override_colors/font_color = Color(0.949, 0.761, 0.188, 1)
+theme_override_font_sizes/font_size = 30
+text = "♛  GORILA SILVERBACK"
+
+[node name="BrandTitle" type="Label" parent="BrandMark"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.91, 0.875, 0.816, 1)
+theme_override_font_sizes/font_size = 54
+text = "CRIA DO"
+
+[node name="BrandTitleGold" type="Label" parent="BrandMark"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.949, 0.761, 0.188, 1)
+theme_override_font_sizes/font_size = 68
+text = "TATAME"
+
+[node name="BrandRule" type="ColorRect" parent="BrandMark"]
+custom_minimum_size = Vector2(0, 4)
+layout_mode = 2
+color = Color(0.722, 0.525, 0.043, 1)
+
+[node name="BrandCopy" type="Label" parent="BrandMark"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.82, 0.82, 0.79, 1)
+theme_override_font_sizes/font_size = 18
+text = "BAIXO SUL DA BAHIA  •  JIU-JITSU POSICIONAL"
+autowrap_mode = 2
+
+[node name="BrandPillars" type="Label" parent="BrandMark"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.949, 0.761, 0.188, 0.92)
+theme_override_font_sizes/font_size = 16
+text = "POSIÇÃO > FORÇA   •   O MUNDO REAGE   •   ESCOLHAS IMPORTAM"
+autowrap_mode = 2
+
+[node name="ContentPanel" type="PanelContainer" parent="."]
+custom_minimum_size = Vector2(520, 0)
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -600.0
+offset_top = -290.0
+offset_right = -72.0
+offset_bottom = 290.0
+grow_horizontal = 0
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBox_card")
+
+[node name="Content" type="VBoxContainer" parent="ContentPanel"]
+custom_minimum_size = Vector2(480, 0)
+layout_mode = 2
+theme_override_constants/separation = 13
+
+[node name="Eyebrow" type="Label" parent="ContentPanel/Content"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.722, 0.525, 0.043, 1)
+theme_override_font_sizes/font_size = 16
+text = "ACTION RPG DE CARREIRA • GODOT 4.3+"
+horizontal_alignment = 1
+
+[node name="Title" type="Label" parent="ContentPanel/Content"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.949, 0.761, 0.188, 1)
+theme_override_font_sizes/font_size = 38
 text = "CRIA DO TATAME"
 horizontal_alignment = 1
 
-[node name="Subtitle" type="Label" parent="Content"]
+[node name="Subtitle" type="Label" parent="ContentPanel/Content"]
 layout_mode = 2
-text = "PRESSAO • ITUBERA • JIU-JITSU POSICIONAL"
+theme_override_colors/font_color = Color(0.91, 0.875, 0.816, 1)
+theme_override_font_sizes/font_size = 17
+text = "PRESSÃO • ITUBERÁ • JIU-JITSU POSICIONAL"
 horizontal_alignment = 1
 
-[node name="Quote" type="Label" parent="Content"]
+[node name="Quote" type="Label" parent="ContentPanel/Content"]
 layout_mode = 2
-text = "Ser forte e ser gentil."
+theme_override_colors/font_color = Color(0.8, 0.82, 0.84, 1)
+theme_override_font_sizes/font_size = 20
+text = "“Ser forte é ser gentil.”"
 horizontal_alignment = 1
 
-[node name="MenuButtons" type="VBoxContainer" parent="Content"]
+[node name="CanonBadge" type="PanelContainer" parent="ContentPanel/Content"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBox_button_normal")
+
+[node name="CanonText" type="Label" parent="ContentPanel/Content/CanonBadge"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.91, 0.875, 0.816, 1)
+theme_override_font_sizes/font_size = 16
+text = "RUAN “MACACÃO” SILVA  •  SILVERBACK GRIP"
+horizontal_alignment = 1
+
+[node name="MenuButtons" type="VBoxContainer" parent="ContentPanel/Content"]
 layout_mode = 2
 theme_override_constants/separation = 10
 
-[node name="NewGame" type="Button" parent="Content/MenuButtons"]
-custom_minimum_size = Vector2(0, 58)
+[node name="NewGame" type="Button" parent="ContentPanel/Content/MenuButtons"]
+custom_minimum_size = Vector2(0, 64)
 layout_mode = 2
+theme_override_colors/font_color = Color(0.91, 0.875, 0.816, 1)
+theme_override_colors/font_hover_color = Color(1, 0.93, 0.66, 1)
+theme_override_colors/font_pressed_color = Color(0.03, 0.035, 0.04, 1)
+theme_override_font_sizes/font_size = 20
+theme_override_styles/normal = SubResource("StyleBox_button_normal")
+theme_override_styles/hover = SubResource("StyleBox_button_hover")
+theme_override_styles/pressed = SubResource("StyleBox_button_pressed")
 text = "NOVO JOGO"
 
-[node name="Continue" type="Button" parent="Content/MenuButtons"]
-custom_minimum_size = Vector2(0, 58)
+[node name="Continue" type="Button" parent="ContentPanel/Content/MenuButtons"]
+custom_minimum_size = Vector2(0, 64)
 layout_mode = 2
+theme_override_colors/font_color = Color(0.91, 0.875, 0.816, 1)
+theme_override_colors/font_hover_color = Color(1, 0.93, 0.66, 1)
+theme_override_colors/font_pressed_color = Color(0.03, 0.035, 0.04, 1)
+theme_override_colors/font_disabled_color = Color(0.42, 0.44, 0.48, 1)
+theme_override_font_sizes/font_size = 20
+theme_override_styles/normal = SubResource("StyleBox_button_normal")
+theme_override_styles/hover = SubResource("StyleBox_button_hover")
+theme_override_styles/pressed = SubResource("StyleBox_button_pressed")
+theme_override_styles/disabled = SubResource("StyleBox_button_disabled")
 text = "CONTINUAR"
 
-[node name="Options" type="Button" parent="Content/MenuButtons"]
-custom_minimum_size = Vector2(0, 58)
+[node name="Options" type="Button" parent="ContentPanel/Content/MenuButtons"]
+custom_minimum_size = Vector2(0, 64)
 layout_mode = 2
-text = "OPCOES"
+theme_override_colors/font_color = Color(0.91, 0.875, 0.816, 1)
+theme_override_colors/font_hover_color = Color(1, 0.93, 0.66, 1)
+theme_override_colors/font_pressed_color = Color(0.03, 0.035, 0.04, 1)
+theme_override_font_sizes/font_size = 20
+theme_override_styles/normal = SubResource("StyleBox_button_normal")
+theme_override_styles/hover = SubResource("StyleBox_button_hover")
+theme_override_styles/pressed = SubResource("StyleBox_button_pressed")
+text = "OPÇÕES"
 
-[node name="OptionsPanel" type="VBoxContainer" parent="Content"]
+[node name="OptionsPanel" type="VBoxContainer" parent="ContentPanel/Content"]
 visible = false
 layout_mode = 2
 theme_override_constants/separation = 10
 
-[node name="OptionsTitle" type="Label" parent="Content/OptionsPanel"]
+[node name="OptionsTitle" type="Label" parent="ContentPanel/Content/OptionsPanel"]
 layout_mode = 2
-text = "OPCOES RAPIDAS"
+theme_override_colors/font_color = Color(0.949, 0.761, 0.188, 1)
+theme_override_font_sizes/font_size = 22
+text = "OPÇÕES RÁPIDAS"
 horizontal_alignment = 1
 
-[node name="AudioToggle" type="Button" parent="Content/OptionsPanel"]
-custom_minimum_size = Vector2(0, 54)
+[node name="AudioToggle" type="Button" parent="ContentPanel/Content/OptionsPanel"]
+custom_minimum_size = Vector2(0, 60)
 layout_mode = 2
-text = "AUDIO: LIGADO"
+theme_override_colors/font_color = Color(0.91, 0.875, 0.816, 1)
+theme_override_font_sizes/font_size = 18
+theme_override_styles/normal = SubResource("StyleBox_button_normal")
+theme_override_styles/hover = SubResource("StyleBox_button_hover")
+theme_override_styles/pressed = SubResource("StyleBox_button_pressed")
+text = "ÁUDIO: LIGADO"
 
-[node name="Version" type="Label" parent="Content/OptionsPanel"]
+[node name="Version" type="Label" parent="ContentPanel/Content/OptionsPanel"]
 layout_mode = 2
-text = "Vertical Slice Runtime v0.8"
+theme_override_colors/font_color = Color(0.62, 0.65, 0.7, 1)
+theme_override_font_sizes/font_size = 14
+text = "Visual Runtime V10 • Vertical Slice V0.8"
 horizontal_alignment = 1
 
-[node name="Back" type="Button" parent="Content/OptionsPanel"]
-custom_minimum_size = Vector2(0, 54)
+[node name="Back" type="Button" parent="ContentPanel/Content/OptionsPanel"]
+custom_minimum_size = Vector2(0, 60)
 layout_mode = 2
+theme_override_colors/font_color = Color(0.91, 0.875, 0.816, 1)
+theme_override_font_sizes/font_size = 18
+theme_override_styles/normal = SubResource("StyleBox_button_normal")
+theme_override_styles/hover = SubResource("StyleBox_button_hover")
+theme_override_styles/pressed = SubResource("StyleBox_button_pressed")
 text = "VOLTAR"
+
+[node name="BottomBar" type="HBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 40.0
+offset_top = -52.0
+offset_right = -40.0
+offset_bottom = -18.0
+grow_horizontal = 2
+grow_vertical = 0
+alignment = 1
+
+[node name="Footer" type="Label" parent="BottomBar"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.72, 0.65, 0.45, 1)
+theme_override_font_sizes/font_size = 14
+text = "DE CRIA PRA CRIA  •  LUTA  •  DISCIPLINA  •  EVOLUÇÃO"
