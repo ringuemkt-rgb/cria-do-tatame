@@ -20,6 +20,7 @@ var combat_manager: Node
 var career_loop: Node
 var game_flow_manager: Node
 var audio_manager: Node
+var cria_live_manager: Node
 
 func _initialize() -> void:
 	call_deferred("_run")
@@ -40,6 +41,7 @@ func _run() -> void:
 	await _test_scene_loading()
 	_test_save_roundtrip()
 	_test_combat_domain()
+	_test_cria_live_single_post_contract()
 	_test_campaign_progression()
 	_finish()
 
@@ -52,6 +54,7 @@ func _resolve_autoloads() -> void:
 	career_loop = root.get_node_or_null("CareerLoop")
 	game_flow_manager = root.get_node_or_null("GameFlowManager")
 	audio_manager = root.get_node_or_null("AudioManager")
+	cria_live_manager = root.get_node_or_null("CriaLiveManager")
 
 func _test_autoloads() -> void:
 	var nodes: Dictionary = {
@@ -62,7 +65,8 @@ func _test_autoloads() -> void:
 		"CombatManager": combat_manager,
 		"CareerLoop": career_loop,
 		"GameFlowManager": game_flow_manager,
-		"AudioManager": audio_manager
+		"AudioManager": audio_manager,
+		"CriaLiveManager": cria_live_manager
 	}
 	for singleton_value in nodes.keys():
 		var singleton_name: String = str(singleton_value)
@@ -111,6 +115,9 @@ func _test_save_roundtrip() -> void:
 	world_state.set("energy", 77.0)
 	world_state.call("_sync_aliases")
 	_assert(bool(save_manager.call("save_game", SLOT)), "SaveManager falhou ao salvar slot de teste")
+	var slot_path: String = str(save_manager.call("get_slot_path", SLOT))
+	_assert(not FileAccess.file_exists(slot_path + ".tmp"), "Save atomico deixou arquivo temporario")
+	_assert(not FileAccess.file_exists(slot_path + ".bak"), "Save atomico deixou backup residual")
 	world_state.set("money", 0)
 	world_state.set("energy", 1.0)
 	_assert(bool(save_manager.call("load_game", SLOT)), "SaveManager falhou ao carregar slot de teste")
@@ -158,9 +165,45 @@ func _test_combat_domain() -> void:
 	_assert(is_equal_approx(float(defender.get("grip_integrity", 100)), 92.0), "Reducao de grip foi aplicada com sinal incorreto")
 	engine.queue_free()
 
+	# Regressao P0: uma finalizacao bem-sucedida precisa encerrar antes do RESET.
+	var state_machine: Node = combat_manager.get("state_machine")
+	state_machine.call("forcar_estado", state_machine.call("estado_por_nome", "PLAYER_SUBMISSION_ATTACK"))
+	var fighters: Dictionary = combat_manager.get("fighters")
+	fighters["ruan_macacao"]["control"] = 100.0
+	fighters["davi_relampago"]["health"] = 60.0
+	combat_manager.set("fighters", fighters)
+	var finisher: Dictionary = data_registry.call("get_technique", "encerramento_tecnico").duplicate(true)
+	finisher["base_chance"] = 0.95
+	finisher["chance_sucesso"] = 0.95
+	var runtime_resolver: Node = combat_manager.get("technique_resolver")
+	var rng: RandomNumberGenerator = runtime_resolver.get("rng")
+	var deterministic_seed := 0
+	for seed_value in range(1000):
+		rng.seed = seed_value
+		if rng.randf() <= 0.95:
+			deterministic_seed = seed_value
+			break
+	rng.seed = deterministic_seed
+	combat_manager.call("execute_technique", "ruan_macacao", "davi_relampago", finisher)
+	_assert(not bool(combat_manager.get("is_running")), "Finalizacao tecnica nao encerrou o combate")
+	var final_result: Dictionary = world_state.get("last_combat_result")
+	_assert(str(final_result.get("winner", "")) == "ruan_macacao", "Finalizacao nao registrou Ruan como vencedor")
+	_assert(str(final_result.get("state_from", "")) == "PLAYER_SUBMISSION_ATTACK", "Finalizacao perdeu o estado de origem antes do encerramento")
+
+func _test_cria_live_single_post_contract() -> void:
+	if signal_bus == null or cria_live_manager == null:
+		return
+	var before: int = cria_live_manager.call("get_feed").size()
+	var result := {"winner": "ruan_macacao", "method": "smoke_duplicate_guard", "technical": true}
+	signal_bus.combat_finished.emit(result)
+	signal_bus.combat_ended.emit(result)
+	var after: int = cria_live_manager.call("get_feed").size()
+	_assert(after == before + 1, "Cria Live gerou mais de uma postagem para o mesmo combate")
+
 func _test_campaign_progression() -> void:
 	if combat_manager == null or world_state == null or career_loop == null:
 		return
+	combat_manager.call("start_combat", "terreiro_da_luta", "ruan_macacao", "davi_relampago")
 	var money_before: int = int(world_state.get("money"))
 	var wins_before: int = int(world_state.get("fights_won"))
 	combat_manager.call("finish_combat", {"winner": "ruan_macacao", "method": "controle_posicional", "technical": true})
