@@ -1,0 +1,56 @@
+{
+  "version": "1.0.0",
+  "weather_states": {
+    "sol_forte": {"label": "Sol forte", "visual": "luz_dura_calor_tremulando", "audio": "cigarras_vento_leve", "gameplay": {"travel_fatigue": 1.08, "visibility": 1.0, "outdoor_activity": 1.0}},
+    "nublado_quente": {"label": "Nublado e quente", "visual": "ceu_cinza_luz_difusa", "audio": "vento_umido", "gameplay": {"travel_fatigue": 1.0, "visibility": 0.96, "outdoor_activity": 1.0}},
+    "chuva_passageira": {"label": "Chuva passageira", "visual": "piso_molhado_reflexos", "audio": "chuva_telhas", "gameplay": {"travel_fatigue": 1.05, "visibility": 0.88, "outdoor_activity": 0.85}},
+    "temporal_tropical": {"label": "Temporal tropical", "visual": "ceu_escuro_raios_agua_forte", "audio": "trovao_chuva_forte", "gameplay": {"travel_fatigue": 1.25, "visibility": 0.62, "outdoor_activity": 0.35}},
+    "garoa_mangue": {"label": "Garoa do mangue", "visual": "gotas_finas_lama_escura", "audio": "garoa_aves_mangue", "gameplay": {"travel_fatigue": 1.12, "visibility": 0.82, "outdoor_activity": 0.72}},
+    "neblina_mangue": {"label": "Neblina do mangue", "visual": "nevoa_baixa_entre_raizes", "audio": "agua_lenta_insetos", "gameplay": {"travel_fatigue": 1.1, "visibility": 0.58, "outdoor_activity": 0.62}}
+  },
+  "hub_region_map": {
+    "terreiro_da_luta": "itubera_litoral", "itubera": "itubera_litoral", "mercado": "itubera_litoral", "doca": "itubera_litoral",
+    "salvador": "salvador_urbano", "arena_do_dique": "salvador_urbano", "ferro_velho_da_lapa": "salvador_urbano",
+    "zambiapunga": "zambiapunga_cultural", "palco_cultural": "zambiapunga_cultural",
+    "camamu_manguezal": "camamu_manguezal", "manguezal_profundo": "camamu_manguezal", "doca_camamu": "camamu_manguezal"
+  },
+  "regions": {
+    "itubera_litoral": {
+      "initial": "nublado_quente",
+      "transitions": {
+        "sol_forte": {"sol_forte": 0.42, "nublado_quente": 0.36, "chuva_passageira": 0.18, "temporal_tropical": 0.04},
+        "nublado_quente": {"sol_forte": 0.25, "nublado_quente": 0.42, "chuva_passageira": 0.26, "temporal_tropical": 0.07},
+        "chuva_passageira": {"sol_forte": 0.18, "nublado_quente": 0.45, "chuva_passageira": 0.27, "temporal_tropical": 0.1},
+        "temporal_tropical": {"nublado_quente": 0.52, "chuva_passageira": 0.35, "temporal_tropical": 0.13}
+      }
+    },
+    "salvador_urbano": {
+      "initial": "sol_forte",
+      "transitions": {
+        "sol_forte": {"sol_forte": 0.5, "nublado_quente": 0.32, "chuva_passageira": 0.16, "temporal_tropical": 0.02},
+        "nublado_quente": {"sol_forte": 0.32, "nublado_quente": 0.43, "chuva_passageira": 0.21, "temporal_tropical": 0.04},
+        "chuva_passageira": {"sol_forte": 0.22, "nublado_quente": 0.48, "chuva_passageira": 0.25, "temporal_tropical": 0.05},
+        "temporal_tropical": {"nublado_quente": 0.6, "chuva_passageira": 0.32, "temporal_tropical": 0.08}
+      }
+    },
+    "zambiapunga_cultural": {
+      "initial": "nublado_quente",
+      "transitions": {
+        "sol_forte": {"sol_forte": 0.4, "nublado_quente": 0.4, "chuva_passageira": 0.18, "temporal_tropical": 0.02},
+        "nublado_quente": {"sol_forte": 0.24, "nublado_quente": 0.48, "chuva_passageira": 0.24, "temporal_tropical": 0.04},
+        "chuva_passageira": {"sol_forte": 0.18, "nublado_quente": 0.5, "chuva_passageira": 0.27, "temporal_tropical": 0.05},
+        "temporal_tropical": {"nublado_quente": 0.62, "chuva_passageira": 0.3, "temporal_tropical": 0.08}
+      }
+    },
+    "camamu_manguezal": {
+      "initial": "garoa_mangue",
+      "transitions": {
+        "sol_forte": {"sol_forte": 0.25, "nublado_quente": 0.3, "garoa_mangue": 0.28, "neblina_mangue": 0.12, "temporal_tropical": 0.05},
+        "nublado_quente": {"sol_forte": 0.16, "nublado_quente": 0.3, "garoa_mangue": 0.32, "neblina_mangue": 0.15, "temporal_tropical": 0.07},
+        "garoa_mangue": {"nublado_quente": 0.26, "garoa_mangue": 0.36, "neblina_mangue": 0.24, "temporal_tropical": 0.14},
+        "neblina_mangue": {"nublado_quente": 0.2, "garoa_mangue": 0.42, "neblina_mangue": 0.28, "temporal_tropical": 0.1},
+        "temporal_tropical": {"nublado_quente": 0.3, "garoa_mangue": 0.38, "neblina_mangue": 0.2, "temporal_tropical": 0.12}
+      }
+    }
+  }
+}
