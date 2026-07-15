@@ -7,6 +7,23 @@ const DEFAULT_OPPONENT_ID: String = "davi_relampago"
 const CombatStateMachineScript = preload("res://src/combat/CombatStateMachine.gd")
 const TechniqueResolverScript = preload("res://src/combat/TechniqueResolver.gd")
 
+const STATE_MIRROR := {
+	"PLAYER_STANDING_NEUTRAL": "PLAYER_STANDING_NEUTRAL",
+	"PLAYER_TOP_CLINCH": "PLAYER_BOTTOM_CLINCH",
+	"PLAYER_BOTTOM_CLINCH": "PLAYER_TOP_CLINCH",
+	"PLAYER_TOP_GUARD": "PLAYER_BOTTOM_GUARD",
+	"PLAYER_BOTTOM_GUARD": "PLAYER_TOP_GUARD",
+	"PLAYER_TOP_SIDE": "PLAYER_BOTTOM_SIDE",
+	"PLAYER_BOTTOM_SIDE": "PLAYER_TOP_SIDE",
+	"PLAYER_TOP_MOUNT": "PLAYER_BOTTOM_MOUNT",
+	"PLAYER_BOTTOM_MOUNT": "PLAYER_TOP_MOUNT",
+	"PLAYER_BACK_ATTACK": "PLAYER_BACK_DEFENSE",
+	"PLAYER_BACK_DEFENSE": "PLAYER_BACK_ATTACK",
+	"PLAYER_SUBMISSION_ATTACK": "PLAYER_SUBMISSION_DEFENSE",
+	"PLAYER_SUBMISSION_DEFENSE": "PLAYER_SUBMISSION_ATTACK",
+	"RESET": "RESET"
+}
+
 var phase: int = CombatPhase.DISTANCE
 var arena_id: String = ""
 var player_id: String = DEFAULT_PLAYER_ID
@@ -78,17 +95,31 @@ func get_current_state_name() -> String:
 		return "PLAYER_STANDING_NEUTRAL"
 	return str(state_machine.call("get_current_state_name"))
 
+func get_actor_state_name(actor_id: String) -> String:
+	var player_perspective := get_current_state_name()
+	if actor_id == player_id:
+		return player_perspective
+	return _mirror_state(player_perspective)
+
+func _mirror_state(state_name: String) -> String:
+	return str(STATE_MIRROR.get(state_name, state_name))
+
+func _state_to_player_perspective(actor_id: String, actor_state_name: String) -> String:
+	if actor_id == player_id:
+		return actor_state_name
+	return _mirror_state(actor_state_name)
+
 func get_available_techniques(actor_id: String = "") -> Array:
 	var resolved_actor: String = actor_id if actor_id != "" else player_id
 	var actor: Dictionary = fighters.get(resolved_actor, {})
-	var current_state: String = get_current_state_name()
+	var actor_state: String = get_actor_state_name(resolved_actor)
 	var available: Array = []
 	for technique_value in DataRegistry.techniques.values():
 		if typeof(technique_value) != TYPE_DICTIONARY:
 			continue
 		var technique: Dictionary = technique_value
 		var entry_state: String = str(technique.get("entry_state", technique.get("estado_entrada", "")))
-		if entry_state != "" and entry_state != current_state:
+		if entry_state != "" and entry_state != actor_state:
 			continue
 		var owner: String = str(technique.get("dono", technique.get("owner", "qualquer")))
 		if owner != "" and owner != "qualquer" and owner != resolved_actor:
@@ -103,6 +134,7 @@ func get_available_techniques(actor_id: String = "") -> Array:
 			and float(actor.get("focus", 0)) >= focus_cost
 			and float(actor.get("moral", 0)) >= moral_cost
 		)
+		item["actor_state"] = actor_state
 		available.append(item)
 	available.sort_custom(_sort_techniques_by_name)
 	return available
@@ -134,21 +166,33 @@ func apply_player_action(action_id: String) -> Dictionary:
 		SignalBus.technique_resolved.emit(reset_result)
 		_emit_resources()
 		return reset_result
+	return apply_actor_action(player_id, action_id)
+
+func apply_opponent_action(action_id: String) -> Dictionary:
+	return apply_actor_action(opponent_id, action_id)
+
+func apply_actor_action(actor_id: String, action_id: String) -> Dictionary:
+	if not is_running:
+		return {"success": false, "error": "combat_not_running", "action_id": action_id}
+	var defender_id := opponent_id if actor_id == player_id else player_id
 	var technique: Dictionary = DataRegistry.get_technique(action_id)
 	if technique.is_empty():
 		return {
 			"success": false,
 			"error": "technique_not_found",
 			"action_id": action_id,
+			"actor_id": actor_id,
+			"defender_id": defender_id,
 			"message": "Tecnica nao encontrada no catalogo."
 		}
-	return execute_technique(player_id, opponent_id, technique)
+	return execute_technique(actor_id, defender_id, technique)
 
 func execute_technique(actor_id: String, defender_id: String, technique: Dictionary) -> Dictionary:
 	if not fighters.has(actor_id) or not fighters.has(defender_id):
 		return {"success": false, "error": "fighter_not_found", "technique_id": technique.get("id", "unknown")}
 	SignalBus.technique_started.emit(technique.get("id", "unknown"), actor_id)
-	var state_before: String = get_current_state_name()
+	var player_state_before: String = get_current_state_name()
+	var actor_state_before: String = get_actor_state_name(actor_id)
 	var actor: Dictionary = fighters.get(actor_id, {})
 	var defender: Dictionary = fighters.get(defender_id, {})
 	var resolver_result: Dictionary = technique_resolver.call(
@@ -156,7 +200,7 @@ func execute_technique(actor_id: String, defender_id: String, technique: Diction
 		technique,
 		actor,
 		defender,
-		{"state": state_before}
+		{"state": actor_state_before}
 	)
 	var applied: Dictionary = technique_resolver.call("aplicar_resultado", actor, defender, resolver_result)
 	fighters[actor_id] = applied.get("actor", actor)
@@ -165,11 +209,12 @@ func execute_technique(actor_id: String, defender_id: String, technique: Diction
 	last_result = resolver_result.duplicate(true)
 	last_result["actor_id"] = actor_id
 	last_result["defender_id"] = defender_id
-	last_result["state_from"] = state_before
+	last_result["state_from"] = player_state_before
+	last_result["actor_state_from"] = actor_state_before
 
-	if _resolve_finisher_before_transition(actor_id, defender_id, technique, last_result, state_before):
+	if _resolve_finisher_before_transition(actor_id, defender_id, technique, last_result, actor_state_before):
 		last_result["phase"] = CombatPhase.keys()[phase]
-		last_result["combat_state"] = state_before
+		last_result["combat_state"] = player_state_before
 		last_result["fighters"] = fighters
 		SignalBus.technique_resolved.emit(last_result)
 		_emit_resources()
@@ -179,13 +224,18 @@ func execute_technique(actor_id: String, defender_id: String, technique: Diction
 			"method": str(technique.get("id", "encerramento_tecnico")),
 			"technical": true,
 			"technique_id": str(technique.get("id", "encerramento_tecnico")),
-			"state_from": state_before
+			"state_from": player_state_before,
+			"actor_state_from": actor_state_before
 		}
 		finish_combat(finish_result)
 		return last_result
 
 	if bool(resolver_result.get("success", false)):
-		_apply_state_transition(str(resolver_result.get("state_to", get_current_state_name())))
+		var actor_state_to := str(resolver_result.get("state_to", actor_state_before))
+		var player_state_to := _state_to_player_perspective(actor_id, actor_state_to)
+		last_result["actor_state_to"] = actor_state_to
+		last_result["state_to"] = player_state_to
+		_apply_state_transition(player_state_to)
 		_change_phase(_phase_from_string(str(technique.get("phase_to", "TRANSITION"))))
 	else:
 		_adjust(defender_id, "focus", 2.0)
@@ -203,7 +253,7 @@ func _resolve_finisher_before_transition(
 	defender_id: String,
 	technique: Dictionary,
 	result: Dictionary,
-	state_before: String
+	actor_state_before: String
 ) -> bool:
 	if not is_running:
 		return false
@@ -211,7 +261,7 @@ func _resolve_finisher_before_transition(
 		return false
 	if not bool(technique.get("requer_finalizacao", false)):
 		return false
-	if state_before != "PLAYER_SUBMISSION_ATTACK":
+	if actor_state_before != "PLAYER_SUBMISSION_ATTACK":
 		return false
 	var actor: Dictionary = fighters.get(actor_id, {})
 	var defender: Dictionary = fighters.get(defender_id, {})

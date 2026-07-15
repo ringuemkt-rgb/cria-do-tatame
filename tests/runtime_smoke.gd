@@ -1,6 +1,7 @@
 extends SceneTree
 
 const CombatSimulationEngineScript = preload("res://src/combat/CombatManager.gd")
+const DaviAIControllerScript = preload("res://src/combat/DaviAIController.gd")
 
 const REQUIRED_SCENES := [
 	"res://scenes/main_menu/MainMenu.tscn",
@@ -41,6 +42,7 @@ func _run() -> void:
 	await _test_scene_loading()
 	_test_save_roundtrip()
 	_test_combat_domain()
+	_test_opponent_ai_turn()
 	_test_cria_live_single_post_contract()
 	_test_campaign_progression()
 	_finish()
@@ -175,20 +177,51 @@ func _test_combat_domain() -> void:
 	var finisher: Dictionary = data_registry.call("get_technique", "encerramento_tecnico").duplicate(true)
 	finisher["base_chance"] = 0.95
 	finisher["chance_sucesso"] = 0.95
-	var runtime_resolver: Node = combat_manager.get("technique_resolver")
-	var rng: RandomNumberGenerator = runtime_resolver.get("rng")
-	var deterministic_seed := 0
-	for seed_value in range(1000):
-		rng.seed = seed_value
-		if rng.randf() <= 0.95:
-			deterministic_seed = seed_value
-			break
-	rng.seed = deterministic_seed
+	_seed_runtime_resolver_for_success(0.95)
 	combat_manager.call("execute_technique", "ruan_macacao", "davi_relampago", finisher)
 	_assert(not bool(combat_manager.get("is_running")), "Finalizacao tecnica nao encerrou o combate")
 	var final_result: Dictionary = world_state.get("last_combat_result")
 	_assert(str(final_result.get("winner", "")) == "ruan_macacao", "Finalizacao nao registrou Ruan como vencedor")
 	_assert(str(final_result.get("state_from", "")) == "PLAYER_SUBMISSION_ATTACK", "Finalizacao perdeu o estado de origem antes do encerramento")
+
+func _test_opponent_ai_turn() -> void:
+	if combat_manager == null or data_registry == null:
+		return
+	combat_manager.call("start_combat", "terreiro_da_luta", "ruan_macacao", "davi_relampago")
+	_assert(str(combat_manager.call("get_actor_state_name", "davi_relampago")) == "PLAYER_STANDING_NEUTRAL", "Estado inicial do rival nao foi espelhado corretamente")
+	var available: Array = combat_manager.call("get_available_techniques", "davi_relampago")
+	_assert(not available.is_empty(), "Davi nao recebeu tecnicas disponiveis")
+
+	var ai: Node = DaviAIControllerScript.new()
+	root.add_child(ai)
+	ai.call("setup", "davi_relampago", "normal")
+	ai.call("record_player_action", "grip_de_ferro")
+	ai.call("record_player_action", "grip_de_ferro")
+	var chosen: Dictionary = ai.call("choose_technique", combat_manager)
+	_assert(not chosen.is_empty(), "IA de Davi nao escolheu tecnica")
+	_assert(bool(chosen.get("affordable", false)), "IA escolheu tecnica sem recursos")
+
+	_seed_runtime_resolver_for_success(0.95)
+	var result: Dictionary = combat_manager.call("apply_opponent_action", "grip_de_ferro")
+	_assert(str(result.get("actor_id", "")) == "davi_relampago", "Acao rival foi atribuida ao ator errado")
+	_assert(str(result.get("actor_state_from", "")) == "PLAYER_STANDING_NEUTRAL", "Resolver rival recebeu perspectiva posicional errada")
+	if bool(result.get("success", false)):
+		_assert(str(combat_manager.call("get_current_state_name")) == "PLAYER_BOTTOM_CLINCH", "Entrada de Davi nao virou clinch por baixo para Ruan")
+		_assert(str(result.get("actor_state_to", "")) == "PLAYER_TOP_CLINCH", "Estado de saida do rival nao foi preservado na perspectiva do ator")
+	ai.queue_free()
+	combat_manager.set("is_running", false)
+	combat_manager.get("state_machine").call("reset")
+
+func _seed_runtime_resolver_for_success(chance: float) -> void:
+	var runtime_resolver: Node = combat_manager.get("technique_resolver")
+	var rng: RandomNumberGenerator = runtime_resolver.get("rng")
+	var deterministic_seed := 0
+	for seed_value in range(1000):
+		rng.seed = seed_value
+		if rng.randf() <= chance:
+			deterministic_seed = seed_value
+			break
+	rng.seed = deterministic_seed
 
 func _test_cria_live_single_post_contract() -> void:
 	if signal_bus == null or cria_live_manager == null:
