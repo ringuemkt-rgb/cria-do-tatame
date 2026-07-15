@@ -1,0 +1,41 @@
+name: Apply Runtime Hotfixes
+
+on:
+  pull_request:
+    branches:
+      - main
+    paths:
+      - "tools/apply_runtime_hotfixes.py"
+      - ".github/workflows/apply-runtime-hotfixes.yml"
+      - "src/autoloads/FactionDirectorManager.gd"
+
+permissions:
+  contents: write
+  pull-requests: read
+
+jobs:
+  apply:
+    if: github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.ref }}
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Apply deterministic runtime fix
+        run: python tools/apply_runtime_hotfixes.py
+      - name: Commit generated fix
+        shell: bash
+        run: |
+          if git diff --quiet; then
+            echo "No changes required"
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add src/autoloads/FactionDirectorManager.gd
+          git commit -m "fix(factions): ordenar IDs textuais sem min/max numérico"
+          git push origin HEAD:${{ github.event.pull_request.head.ref }}
