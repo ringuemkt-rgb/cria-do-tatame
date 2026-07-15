@@ -1,0 +1,40 @@
+name: Apply Faction Strict Types
+
+on:
+  push:
+    branches:
+      - feature/faction-director-v2
+    paths:
+      - "tools/fix_faction_strict_types.py"
+
+permissions:
+  contents: write
+
+jobs:
+  apply:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: feature/faction-director-v2
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Apply deterministic replacements
+        run: python tools/fix_faction_strict_types.py
+      - name: Commit generated fixes
+        shell: bash
+        run: |
+          if git diff --quiet; then
+            echo "No changes required"
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add src/autoloads/WorldDirectorManager.gd \
+                  src/autoloads/FactionDirectorManager.gd \
+                  src/autoloads/RivalAIManager.gd \
+                  src/combat/DaviAIController.gd \
+                  tests/faction_director_smoke.gd
+          git commit -m "fix(factions): resolver tipagem estrita do Godot"
+          git push origin HEAD:feature/faction-director-v2
