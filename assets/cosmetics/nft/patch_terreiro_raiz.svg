@@ -1,9 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512">
-  <rect width="512" height="512" rx="48" fill="#0b0b0b"/>
-  <circle cx="256" cy="256" r="176" fill="#17120b" stroke="#d4af37" stroke-width="14"/>
-  <circle cx="256" cy="256" r="146" fill="none" stroke="#8b1d1d" stroke-width="8" stroke-dasharray="18 12"/>
-  <path d="M157 287c31-72 75-107 132-104 38 2 66 20 82 53-35-14-66-9-92 15 24 10 43 29 57 57-41-18-80-16-116 5-24 14-45 9-63-26z" fill="#d4af37"/>
-  <path d="M184 342h144" stroke="#f0e3b0" stroke-width="12" stroke-linecap="round"/>
-  <text x="256" y="132" fill="#f0e3b0" font-family="sans-serif" font-size="30" font-weight="700" text-anchor="middle">TERREIRO</text>
-  <text x="256" y="398" fill="#d4af37" font-family="sans-serif" font-size="28" font-weight="700" text-anchor="middle">RAIZ</text>
-</svg>
