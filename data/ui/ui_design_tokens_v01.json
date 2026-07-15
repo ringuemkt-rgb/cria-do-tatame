@@ -1,0 +1,98 @@
+{
+  "schema_version": 1,
+  "id": "cria_ui_tokens_v01",
+  "target_resolution": [1280, 720],
+  "safe_area_percent": {
+    "desktop": 5,
+    "android": 7
+  },
+  "grid_px": 8,
+  "pixel_grid_px": 16,
+  "colors": {
+    "black_ocean": "#080A0D",
+    "black_matte": "#11151B",
+    "charcoal_warm": "#201B14",
+    "gold_burned": "#B8860B",
+    "honor_yellow": "#F2C230",
+    "dirty_white": "#E8DFD0",
+    "river_blue": "#1E3A5F",
+    "mangrove_green": "#2D5016",
+    "conflict_red": "#D92323",
+    "shadow_purple": "#4B0082",
+    "control_cyan": "#09A8C8",
+    "success_green": "#55C95A",
+    "disabled_gray": "#5B6068"
+  },
+  "semantic_colors": {
+    "hp": "conflict_red",
+    "gas": "river_blue",
+    "focus": "honor_yellow",
+    "moral": "shadow_purple",
+    "control": "control_cyan",
+    "grip": "dirty_white",
+    "honra": "honor_yellow",
+    "hype": "shadow_purple",
+    "sombra": "conflict_red",
+    "raiz": "mangrove_green",
+    "dupla_face": "shadow_purple"
+  },
+  "spacing": {
+    "xs": 4,
+    "sm": 8,
+    "md": 12,
+    "lg": 16,
+    "xl": 24,
+    "xxl": 32
+  },
+  "corner_radius": {
+    "small": 2,
+    "medium": 4,
+    "large": 8
+  },
+  "borders": {
+    "thin": 1,
+    "normal": 2,
+    "emphasis": 3
+  },
+  "font_sizes": {
+    "caption": 14,
+    "body": 16,
+    "button": 18,
+    "section": 22,
+    "screen_title": 32,
+    "hero_title": 44,
+    "combat_timer": 38
+  },
+  "touch": {
+    "action_button_min_px": 80,
+    "technique_icon_min_px": 48,
+    "joystick_min_px": 120,
+    "interaction_radius_px": 56,
+    "hold_duration_seconds": 0.35
+  },
+  "animation": {
+    "ui_fast_seconds": 0.08,
+    "ui_normal_seconds": 0.16,
+    "ui_slow_seconds": 0.28,
+    "screen_transition_seconds": 0.35,
+    "hitstop_light_seconds": 0.03,
+    "hitstop_heavy_seconds": 0.07,
+    "perfect_defense_flash_seconds": 0.09
+  },
+  "screen_density": {
+    "max_primary_actions_visible": 5,
+    "max_resource_bars_combat": 7,
+    "max_active_missions_hub": 3,
+    "max_dashboard_columns_android": 1,
+    "max_dashboard_columns_desktop": 4
+  },
+  "runtime_rules": [
+    "no_text_baked_into_runtime_images",
+    "no_real_brands",
+    "no_console_button_glyphs_on_touch_layout",
+    "combat_center_must_remain_clear",
+    "all_critical_values_have_icon_and_text_or_colorblind_safe_pattern",
+    "android_layout_uses_tabs_for_cria_live_and_skill_tree",
+    "nearest_filter_for_pixel_assets"
+  ]
+}
