@@ -146,13 +146,21 @@ jobs:
         run: ./godot --headless --editor --path . --quit
       - name: Export Android Debug APK
         id: export_apk
-        continue-on-error: true
         shell: bash
+        env:
+          GODOT_ANDROID_KEYSTORE_DEBUG_PATH: /home/runner/.local/share/godot/keystores/debug.keystore
+          GODOT_ANDROID_KEYSTORE_DEBUG_USER: androiddebugkey
+          GODOT_ANDROID_KEYSTORE_DEBUG_PASSWORD: android
         run: |
           set -o pipefail
           ./godot --headless --path . \
             --export-debug "Android Debug" builds/android/CriaDoTatame-debug.apk \
             2>&1 | tee reports/full_game_audit/android_export.log
+          if grep -q "^ERROR:" reports/full_game_audit/android_export.log; then
+            echo "Godot reported an export error"
+            exit 1
+          fi
+          test -s builds/android/CriaDoTatame-debug.apk
       - name: Upload Android export diagnostics
         if: always()
         uses: actions/upload-artifact@v4
@@ -171,8 +179,6 @@ jobs:
         shell: bash
         run: |
           set -euxo pipefail
-          echo "export_outcome=${{ steps.export_apk.outcome }}"
-          test "${{ steps.export_apk.outcome }}" = "success"
           ls -lh builds/android/CriaDoTatame-debug.apk
           APK_SIZE="$(stat -c%s builds/android/CriaDoTatame-debug.apk)"
           echo "apk_size=$APK_SIZE"
