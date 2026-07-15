@@ -1,0 +1,73 @@
+{
+  "version": "0.1.0",
+  "language": "pt-BR",
+  "runtime_policy": {
+    "enabled_by_default": false,
+    "combat_llm_allowed": false,
+    "apk_requires_llm": false,
+    "fallback_required": true,
+    "network_default": false,
+    "max_response_chars": 420,
+    "max_history_messages": 6
+  },
+  "backends": {
+    "disabled": {
+      "type": "disabled",
+      "description": "Modo oficial do APK: respostas canonicas locais sem servidor."
+    },
+    "ollama_desktop": {
+      "type": "ollama_http",
+      "description": "Desenvolvimento no PC ou Android conectado a um servidor na rede local.",
+      "desktop_url": "http://127.0.0.1:11434",
+      "android_emulator_url": "http://10.0.2.2:11434",
+      "model": "qwen3:0.6b",
+      "timeout_seconds": 8.0,
+      "max_tokens": 96,
+      "temperature": 0.55,
+      "top_p": 0.85
+    },
+    "llama_cpp_server": {
+      "type": "openai_compatible",
+      "description": "Servidor local llama.cpp com endpoint de chat compatível.",
+      "base_url": "http://127.0.0.1:8080",
+      "chat_path": "/v1/chat/completions",
+      "model": "qwen3-local",
+      "timeout_seconds": 8.0,
+      "max_tokens": 96,
+      "temperature": 0.55,
+      "top_p": 0.85
+    }
+  },
+  "recommended_models": [
+    {
+      "hub_id": "Qwen/Qwen3-0.6B",
+      "role": "dialogo curto e classificacao de intencao",
+      "license": "Apache-2.0",
+      "tier": "baixo_consumo",
+      "production_note": "Preferir quantizacao GGUF Q4 quando executado fora do APK."
+    },
+    {
+      "hub_id": "Qwen/Qwen3-1.7B-GGUF",
+      "role": "dialogo com melhor coerencia em equipamentos mais fortes",
+      "license": "Apache-2.0",
+      "tier": "qualidade_equilibrada",
+      "production_note": "Uso opcional via servidor local ou plugin nativo futuro."
+    },
+    {
+      "hub_id": "HuggingFaceTB/SmolLM3-3B",
+      "role": "prototipacao multilíngue no desktop",
+      "license": "Apache-2.0",
+      "tier": "desktop_forte",
+      "production_note": "Nao e o modelo padrao do Android por custo de memoria e bateria."
+    }
+  ],
+  "prompt_rules": {
+    "max_sentences": 3,
+    "require_ptbr": true,
+    "require_canon": true,
+    "forbid_combat_instruction": true,
+    "forbid_new_major_lore": true,
+    "fallback_on_timeout": true,
+    "fallback_on_invalid_json": true
+  }
+}
