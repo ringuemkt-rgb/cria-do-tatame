@@ -2,13 +2,13 @@ extends Control
 
 const HUB_SCENE := "res://scenes/hubs/TerreiroDaLuta.tscn"
 
-@onready var menu_buttons: VBoxContainer = $Content/MenuButtons
-@onready var options_panel: VBoxContainer = $Content/OptionsPanel
-@onready var new_game_button: Button = $Content/MenuButtons/NewGame
-@onready var continue_button: Button = $Content/MenuButtons/Continue
-@onready var options_button: Button = $Content/MenuButtons/Options
-@onready var audio_toggle_button: Button = $Content/OptionsPanel/AudioToggle
-@onready var options_back_button: Button = $Content/OptionsPanel/Back
+@onready var menu_buttons: VBoxContainer = $ContentPanel/Content/MenuButtons
+@onready var options_panel: VBoxContainer = $ContentPanel/Content/OptionsPanel
+@onready var new_game_button: Button = $ContentPanel/Content/MenuButtons/NewGame
+@onready var continue_button: Button = $ContentPanel/Content/MenuButtons/Continue
+@onready var options_button: Button = $ContentPanel/Content/MenuButtons/Options
+@onready var audio_toggle_button: Button = $ContentPanel/Content/OptionsPanel/AudioToggle
+@onready var options_back_button: Button = $ContentPanel/Content/OptionsPanel/Back
 
 var _transitioning := false
 
@@ -41,7 +41,7 @@ func _on_continue_pressed() -> void:
 	_transitioning = true
 	if SaveManager.has_save(1):
 		if not SaveManager.load_game(1):
-			push_warning("[MainMenu] Save invalido. Iniciando novo jogo.")
+			push_warning("[MainMenu] Save inválido. Iniciando novo jogo.")
 			WorldState.reset_new_game()
 			GameFlowManager.start_new_run()
 	else:
@@ -70,4 +70,4 @@ func _on_audio_toggle_pressed() -> void:
 
 func _update_audio_label() -> void:
 	if audio_toggle_button != null:
-		audio_toggle_button.text = "AUDIO: %s" % ("LIGADO" if AudioManager.enabled else "DESLIGADO")
+		audio_toggle_button.text = "ÁUDIO: %s" % ("LIGADO" if AudioManager.enabled else "DESLIGADO")
