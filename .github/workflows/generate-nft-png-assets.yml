@@ -1,0 +1,51 @@
+name: Generate NFT PNG Assets
+
+on:
+  pull_request:
+    branches:
+      - main
+    paths:
+      - "tools/generate_nft_png_assets.py"
+      - ".github/workflows/generate-nft-png-assets.yml"
+
+permissions:
+  contents: write
+  pull-requests: read
+
+jobs:
+  generate:
+    if: github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.ref }}
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Generate deterministic PNG assets
+        run: python tools/generate_nft_png_assets.py
+      - name: Validate generated PNG signatures
+        shell: bash
+        run: |
+          for file in assets/cosmetics/nft/*.png; do
+            test -s "$file"
+            python - "$file" <<'PY'
+          import pathlib, sys
+          path = pathlib.Path(sys.argv[1])
+          assert path.read_bytes().startswith(b"\x89PNG\r\n\x1a\n"), path
+          PY
+          done
+      - name: Commit generated assets
+        shell: bash
+        run: |
+          if git diff --quiet && [ -z "$(git status --porcelain --untracked-files=all)" ]; then
+            echo "No changes required"
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add assets/cosmetics/nft/*.png data/nft/nft_catalog_v01.json
+          git commit -m "feat(nft): adicionar PNGs importáveis dos colecionáveis"
+          git push origin HEAD:${{ github.event.pull_request.head.ref }}
