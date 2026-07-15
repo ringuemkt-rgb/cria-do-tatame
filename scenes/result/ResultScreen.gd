@@ -4,6 +4,7 @@ const HUB_SCENE := "res://scenes/hubs/TerreiroDaLuta.tscn"
 const CRIA_LIVE_SCENE := "res://scenes/ui/CriaLiveUI.tscn"
 
 var _leaving := false
+var _progression_committed := false
 
 func _ready() -> void:
 	_connect_buttons()
@@ -22,7 +23,7 @@ func _connect_buttons() -> void:
 func _update_result() -> void:
 	var data: Dictionary = WorldState.last_combat_result
 	var winner := str(data.get("winner", ""))
-	var won := winner == "ruan_macacao"
+	var won := winner == WorldState.player_id
 	var title := "VITORIA" if won else "DERROTA"
 	var method := _humanize_method(str(data.get("method", "controle_posicional")))
 	if has_node("Panel/Result"):
@@ -48,15 +49,21 @@ func _humanize_method(method: String) -> String:
 		"cansaco": return "Cansaco"
 	return method.replace("_", " ").capitalize()
 
+func _commit_post_combat_progression() -> void:
+	if _progression_committed:
+		return
+	_progression_committed = true
+	CareerLoop.advance_day()
+	if not SaveManager.save_game(1):
+		push_warning("[ResultScreen] O dia avancou, mas o save pos-combate falhou.")
+
 func _on_cria_live_pressed() -> void:
 	if _leaving:
 		return
 	_leaving = true
-	var won := str(WorldState.last_combat_result.get("winner", "")) == "ruan_macacao"
-	var post_type := "vitoria_luta" if won else "derrota_respeitosa"
-	if has_node("/root/CriaLiveManager") and CriaLiveManager.has_method("publish_post"):
-		CriaLiveManager.publish_post(post_type, "humilde", "resultado_luta")
-	SaveManager.save_game(1)
+	# A postagem da luta e criada pelo CriaLiveManager ao receber combat_finished.
+	# Aqui apenas consolidamos o calendario e abrimos o feed.
+	_commit_post_combat_progression()
 	var error := get_tree().change_scene_to_file(CRIA_LIVE_SCENE)
 	if error != OK:
 		_leaving = false
@@ -66,8 +73,7 @@ func _on_back_pressed() -> void:
 	if _leaving:
 		return
 	_leaving = true
-	CareerLoop.advance_day()
-	SaveManager.save_game(1)
+	_commit_post_combat_progression()
 	var error := get_tree().change_scene_to_file(HUB_SCENE)
 	if error != OK:
 		_leaving = false

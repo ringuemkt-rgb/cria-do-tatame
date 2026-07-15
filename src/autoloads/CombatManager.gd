@@ -148,6 +148,7 @@ func execute_technique(actor_id: String, defender_id: String, technique: Diction
 	if not fighters.has(actor_id) or not fighters.has(defender_id):
 		return {"success": false, "error": "fighter_not_found", "technique_id": technique.get("id", "unknown")}
 	SignalBus.technique_started.emit(technique.get("id", "unknown"), actor_id)
+	var state_before: String = get_current_state_name()
 	var actor: Dictionary = fighters.get(actor_id, {})
 	var defender: Dictionary = fighters.get(defender_id, {})
 	var resolver_result: Dictionary = technique_resolver.call(
@@ -155,26 +156,66 @@ func execute_technique(actor_id: String, defender_id: String, technique: Diction
 		technique,
 		actor,
 		defender,
-		{"state": get_current_state_name()}
+		{"state": state_before}
 	)
 	var applied: Dictionary = technique_resolver.call("aplicar_resultado", actor, defender, resolver_result)
 	fighters[actor_id] = applied.get("actor", actor)
 	fighters[defender_id] = applied.get("defender", defender)
+
+	last_result = resolver_result.duplicate(true)
+	last_result["actor_id"] = actor_id
+	last_result["defender_id"] = defender_id
+	last_result["state_from"] = state_before
+
+	if _resolve_finisher_before_transition(actor_id, defender_id, technique, last_result, state_before):
+		last_result["phase"] = CombatPhase.keys()[phase]
+		last_result["combat_state"] = state_before
+		last_result["fighters"] = fighters
+		SignalBus.technique_resolved.emit(last_result)
+		_emit_resources()
+		var finish_result: Dictionary = {
+			"winner": actor_id,
+			"loser": defender_id,
+			"method": str(technique.get("id", "encerramento_tecnico")),
+			"technical": true,
+			"technique_id": str(technique.get("id", "encerramento_tecnico")),
+			"state_from": state_before
+		}
+		finish_combat(finish_result)
+		return last_result
+
 	if bool(resolver_result.get("success", false)):
 		_apply_state_transition(str(resolver_result.get("state_to", get_current_state_name())))
 		_change_phase(_phase_from_string(str(technique.get("phase_to", "TRANSITION"))))
 	else:
 		_adjust(defender_id, "focus", 2.0)
-	last_result = resolver_result.duplicate(true)
-	last_result["actor_id"] = actor_id
-	last_result["defender_id"] = defender_id
+
 	last_result["phase"] = CombatPhase.keys()[phase]
 	last_result["combat_state"] = get_current_state_name()
 	last_result["fighters"] = fighters
 	SignalBus.technique_resolved.emit(last_result)
 	_emit_resources()
-	_check_end(technique, last_result)
+	_check_end(actor_id, defender_id, technique, last_result)
 	return last_result
+
+func _resolve_finisher_before_transition(
+	actor_id: String,
+	defender_id: String,
+	technique: Dictionary,
+	result: Dictionary,
+	state_before: String
+) -> bool:
+	if not is_running:
+		return false
+	if not bool(result.get("success", false)):
+		return false
+	if not bool(technique.get("requer_finalizacao", false)):
+		return false
+	if state_before != "PLAYER_SUBMISSION_ATTACK":
+		return false
+	var actor: Dictionary = fighters.get(actor_id, {})
+	var defender: Dictionary = fighters.get(defender_id, {})
+	return float(actor.get("control", 0)) >= 55.0 or float(defender.get("health", 100)) <= 70.0
 
 func _apply_state_transition(state_name: String) -> void:
 	var target_state: int = int(state_machine.call("estado_por_nome", state_name))
@@ -186,21 +227,32 @@ func _apply_state_transition(state_name: String) -> void:
 		push_warning("[CombatManager] Transicao nao catalogada: %s -> %s" % [get_current_state_name(), state_name])
 		state_machine.call("forcar_estado", target_state)
 
-func _check_end(technique: Dictionary = {}, result: Dictionary = {}) -> void:
+func _check_end(actor_id: String, defender_id: String, technique: Dictionary = {}, result: Dictionary = {}) -> void:
 	if not is_running:
 		return
-	var player: Dictionary = fighters.get(player_id, {})
-	var opponent: Dictionary = fighters.get(opponent_id, {})
-	if bool(result.get("success", false)) and bool(technique.get("requer_finalizacao", false)) and get_current_state_name() == "PLAYER_SUBMISSION_ATTACK":
-		if float(player.get("control", 0)) >= 55.0 or float(opponent.get("health", 100)) <= 70.0:
-			finish_combat({"winner": player_id, "method": str(technique.get("id", "encerramento_tecnico")), "technical": true})
-			return
-	if float(opponent.get("health", 100)) <= 0.0:
-		finish_combat({"winner": player_id, "method": "encerramento_tecnico", "technical": true})
-	elif float(opponent.get("gas", 100)) <= 0.0 and float(player.get("control", 0)) >= 65.0:
-		finish_combat({"winner": player_id, "method": "controle_posicional", "technical": true})
-	elif float(player.get("gas", 100)) <= 0.0:
-		finish_combat({"winner": opponent_id, "method": "cansaco", "technical": false})
+	var actor: Dictionary = fighters.get(actor_id, {})
+	var defender: Dictionary = fighters.get(defender_id, {})
+	if float(defender.get("health", 100)) <= 0.0:
+		finish_combat({
+			"winner": actor_id,
+			"loser": defender_id,
+			"method": str(technique.get("id", "encerramento_tecnico")),
+			"technical": true
+		})
+	elif float(defender.get("gas", 100)) <= 0.0 and float(actor.get("control", 0)) >= 65.0:
+		finish_combat({
+			"winner": actor_id,
+			"loser": defender_id,
+			"method": "controle_posicional",
+			"technical": true
+		})
+	elif float(actor.get("gas", 100)) <= 0.0:
+		finish_combat({
+			"winner": defender_id,
+			"loser": actor_id,
+			"method": "cansaco",
+			"technical": false
+		})
 
 func _adjust(id: String, key: String, delta: float) -> void:
 	if not fighters.has(id):
