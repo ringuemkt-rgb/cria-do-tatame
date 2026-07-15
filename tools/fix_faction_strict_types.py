@@ -49,8 +49,8 @@ REPLACEMENTS: dict[str, list[tuple[str, str]]] = {
             'var first: String = a if a < b else b\n\tvar second: String = b if a < b else a\n\treturn "%s|%s" % [first, second]',
         ),
         (
-            'var level := max(1.0, martial_power / 10.0)',
-            'var level: float = maxf(1.0, martial_power / 10.0)',
+            '"level": max(1.0, martial_power / 10.0),',
+            '"level": maxf(1.0, martial_power / 10.0),',
         ),
     ],
     "src/autoloads/RivalAIManager.gd": [
