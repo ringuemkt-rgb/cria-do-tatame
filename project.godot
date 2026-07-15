@@ -8,6 +8,7 @@ run/main_scene="res://scenes/main_menu/MainMenu.tscn"
 [autoload]
 SignalBus="*res://src/autoloads/SignalBus.gd"
 DataRegistry="*res://src/autoloads/DataRegistry.gd"
+LocalAIManager="*res://src/autoloads/LocalAIManager.gd"
 WorldState="*res://src/autoloads/WorldState.gd"
 SaveManager="*res://src/autoloads/SaveManager.gd"
 CombatManager="*res://src/autoloads/CombatManager.gd"
