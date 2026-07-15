@@ -1,0 +1,204 @@
+extends SceneTree
+
+const REQUIRED_AUTOLOADS: Array[String] = [
+	"SignalBus", "DataRegistry", "LocalAIManager", "WorldState", "WorldDirectorManager",
+	"NFTManager", "SaveManager", "CombatManager", "CareerLoop", "ReputationMatrix",
+	"CriaLiveManager", "AudioManager", "TinkerBondManager", "MissionManager",
+	"StorySceneDirector", "FactionManager", "FactionDirectorManager", "FactionAIPlanBridge",
+	"WorldMapManager", "GearManager", "TrainingManager", "HubActivityManager",
+	"CriaLiveInteractionManager", "GameFlowManager", "CutsceneRuntime"
+]
+
+var failures: Array[String] = []
+var checks: int = 0
+var loaded_scene_count: int = 0
+
+func _initialize() -> void:
+	call_deferred("_run")
+
+func _assert(condition: bool, message: String) -> void:
+	checks += 1
+	if condition:
+		return
+	failures.append(message)
+	push_error("[FullGameSmoke] " + message)
+
+func _run() -> void:
+	await process_frame
+	_disable_audio()
+	_test_autoloads()
+	_test_data_registry()
+	_test_all_scenes_load()
+	_test_offline_policy()
+	_test_world_director()
+	_test_faction_director()
+	_test_cria_live()
+	_test_combat_catalog()
+	_test_save_roundtrip()
+	_finish()
+
+func _disable_audio() -> void:
+	var audio_manager: Node = root.get_node_or_null("AudioManager")
+	if audio_manager != null and "enabled" in audio_manager:
+		audio_manager.set("enabled", false)
+
+func _test_autoloads() -> void:
+	for singleton_name in REQUIRED_AUTOLOADS:
+		_assert(root.get_node_or_null(singleton_name) != null, "Autoload ausente: %s" % singleton_name)
+
+func _test_data_registry() -> void:
+	var registry: Node = root.get_node_or_null("DataRegistry")
+	if registry == null:
+		return
+	var report: Dictionary = registry.get("validation_report")
+	_assert(bool(report.get("ok", false)), "DataRegistry inválido: %s" % str(report.get("errors", [])))
+	_assert(not registry.get("characters").is_empty(), "Catálogo de personagens vazio")
+	_assert(not registry.get("techniques").is_empty(), "Catálogo de técnicas vazio")
+	_assert(not registry.get("arenas").is_empty(), "Catálogo de arenas vazio")
+	_assert(not registry.get("story_missions").is_empty(), "Missões narrativas não carregadas")
+	_assert(not registry.get("faction_drama_bible").is_empty(), "Bíblia de facções não carregada")
+	_assert(not registry.get("complete_game_flow").is_empty(), "Fluxo completo não carregado")
+
+func _collect_scene_paths(directory: String, output: Array[String]) -> void:
+	var dir: DirAccess = DirAccess.open(directory)
+	if dir == null:
+		_assert(false, "Diretório de cenas inacessível: %s" % directory)
+		return
+	dir.list_dir_begin()
+	var item: String = dir.get_next()
+	while item != "":
+		if item != "." and item != "..":
+			var full_path: String = directory.path_join(item)
+			if dir.current_is_dir():
+				_collect_scene_paths(full_path, output)
+			elif item.ends_with(".tscn"):
+				output.append(full_path)
+		item = dir.get_next()
+	dir.list_dir_end()
+
+func _test_all_scenes_load() -> void:
+	var scene_paths: Array[String] = []
+	_collect_scene_paths("res://scenes", scene_paths)
+	scene_paths.sort()
+	_assert(scene_paths.size() >= 5, "Poucas cenas encontradas: %s" % scene_paths.size())
+	for scene_path in scene_paths:
+		_assert(ResourceLoader.exists(scene_path), "Cena não existe para ResourceLoader: %s" % scene_path)
+		var resource: Resource = load(scene_path)
+		_assert(resource is PackedScene, "Recurso não é PackedScene: %s" % scene_path)
+		if not (resource is PackedScene):
+			continue
+		var instance: Node = (resource as PackedScene).instantiate()
+		_assert(instance != null, "Falha ao instanciar cena: %s" % scene_path)
+		if instance != null:
+			loaded_scene_count += 1
+			instance.free()
+	_assert(loaded_scene_count == scene_paths.size(), "Nem todas as cenas foram instanciadas: %s/%s" % [loaded_scene_count, scene_paths.size()])
+
+func _test_offline_policy() -> void:
+	var local_ai: Node = root.get_node_or_null("LocalAIManager")
+	if local_ai != null and local_ai.has_method("is_network_backend_enabled"):
+		_assert(not bool(local_ai.call("is_network_backend_enabled")), "IA local iniciou com rede ativa")
+	var world_director: Node = root.get_node_or_null("WorldDirectorManager")
+	if world_director != null and world_director.has_method("is_ai_proxy_enabled"):
+		_assert(not bool(world_director.call("is_ai_proxy_enabled")), "World Director iniciou com proxy remoto ativo")
+	var nft_manager: Node = root.get_node_or_null("NFTManager")
+	if nft_manager != null:
+		_assert(str(nft_manager.get("_backend_url")) == "", "NFTManager iniciou com backend remoto ativo")
+
+func _test_world_director() -> void:
+	var director: Node = root.get_node_or_null("WorldDirectorManager")
+	if director == null:
+		return
+	director.call("reset_world")
+	var before: Dictionary = director.call("get_snapshot")
+	_assert(not before.get("weather_by_region", {}).is_empty(), "Clima regional não inicializado")
+	for _index in range(8):
+		director.call("advance_time_block")
+	var after: Dictionary = director.call("get_snapshot")
+	_assert(int(after.get("tick", 0)) >= 8, "World Director não avançou oito ticks")
+	_assert(str(after.get("time_block", "")) != "", "Bloco de tempo vazio")
+	_assert(not after.get("npc_states", {}).is_empty(), "Rotinas de NPC não geradas")
+	_assert(not after.get("economy_modifiers", {}).is_empty(), "Economia regional não gerada")
+
+func _test_faction_director() -> void:
+	var director: Node = root.get_node_or_null("FactionDirectorManager")
+	if director == null:
+		return
+	director.call("reset_director")
+	var initial: Dictionary = director.call("get_snapshot")
+	_assert(initial.get("factions", {}).size() == 7, "Quantidade de facções inesperada")
+	_assert(initial.get("territories", {}).size() >= 15, "Territórios insuficientes")
+	for week_number in range(1, 6):
+		director.call("advance_faction_week", week_number)
+	var after: Dictionary = director.call("get_snapshot")
+	_assert(not after.get("active_operations", []).is_empty() or not after.get("operation_history", []).is_empty(), "Facções não iniciaram nem resolveram operações")
+	_assert(after.get("champions", {}).size() == 7, "Campeões das facções incompletos")
+	_assert(after.get("pressure", {}).size() == 5, "Eixos de Pressão Regional incompletos")
+
+func _test_cria_live() -> void:
+	var manager: Node = root.get_node_or_null("CriaLiveManager")
+	if manager == null:
+		return
+	if manager.has_method("reset_feed"):
+		manager.call("reset_feed")
+	var before: int = int(manager.call("get_feed").size()) if manager.has_method("get_feed") else 0
+	if manager.has_method("create_faction_post"):
+		manager.call("create_faction_post", "terreiro_da_luta", "smoke", "Auditoria do Terreiro concluída.", {"alcance": 1.0, "credibilidade": 1.0})
+	var after: int = int(manager.call("get_feed").size()) if manager.has_method("get_feed") else before
+	_assert(after >= before, "Cria Live perdeu posts durante a operação")
+
+func _test_combat_catalog() -> void:
+	var registry: Node = root.get_node_or_null("DataRegistry")
+	var combat: Node = root.get_node_or_null("CombatManager")
+	if registry == null or combat == null:
+		return
+	var start_result: Dictionary = combat.call("start_combat", "terreiro_da_luta", "ruan_macacao", "davi_relampago")
+	_assert(bool(start_result.get("ok", false)), "Combate principal não iniciou")
+	if not bool(start_result.get("ok", false)):
+		return
+	var available: Array = combat.call("get_available_techniques", "ruan_macacao")
+	_assert(not available.is_empty(), "Jogador iniciou combate sem técnicas disponíveis")
+	for item in available:
+		var technique_id: String = str(item.get("id", "")) if typeof(item) == TYPE_DICTIONARY else str(item)
+		_assert(not registry.call("get_technique", technique_id).is_empty(), "Técnica disponível não existe no registro: %s" % technique_id)
+	if bool(combat.get("is_running")):
+		combat.call("finish_combat", {"winner": "ruan_macacao", "opponent_id": "davi_relampago", "method": "audit_stop"})
+	_assert(not bool(combat.get("is_running")), "Combate não encerrou no cleanup")
+
+func _test_save_roundtrip() -> void:
+	var save_manager: Node = root.get_node_or_null("SaveManager")
+	var world_state: Node = root.get_node_or_null("WorldState")
+	var faction_director: Node = root.get_node_or_null("FactionDirectorManager")
+	if save_manager == null or world_state == null:
+		return
+	const SLOT: int = 8765
+	world_state.call("reset_new_game")
+	world_state.set("money", 777)
+	world_state.set("energy", 66.0)
+	if faction_director != null:
+		faction_director.call("reset_director")
+		faction_director.call("advance_faction_week", 2)
+	var faction_before: Dictionary = faction_director.call("get_snapshot") if faction_director != null else {}
+	_assert(bool(save_manager.call("save_game", SLOT)), "Falha ao salvar estado integral")
+	world_state.set("money", 0)
+	world_state.set("energy", 1.0)
+	if faction_director != null:
+		faction_director.call("reset_director")
+	_assert(bool(save_manager.call("load_game", SLOT)), "Falha ao carregar estado integral")
+	_assert(int(world_state.get("money")) == 777, "Save não restaurou dinheiro")
+	_assert(is_equal_approx(float(world_state.get("energy")), 66.0), "Save não restaurou energia")
+	if faction_director != null:
+		var faction_after: Dictionary = faction_director.call("get_snapshot")
+		_assert(int(faction_after.get("week", 0)) == int(faction_before.get("week", -1)), "Save não restaurou semana das facções")
+		_assert(faction_after.get("factions", {}).size() == faction_before.get("factions", {}).size(), "Save não restaurou facções")
+	save_manager.call("delete_save", SLOT)
+
+func _finish() -> void:
+	if failures.is_empty():
+		print("[FullGameSmoke] PASS — %s verificações; %s cenas carregadas." % [checks, loaded_scene_count])
+		quit(0)
+		return
+	print("[FullGameSmoke] FAIL — %s falhas em %s verificações." % [failures.size(), checks])
+	for failure in failures:
+		print(" - " + failure)
+	quit(1)
