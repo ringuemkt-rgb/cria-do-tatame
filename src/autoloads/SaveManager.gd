@@ -1,6 +1,6 @@
 extends Node
 
-const SAVE_VERSION := 2
+const SAVE_VERSION := 3
 const SAVE_PREFIX := "user://cria_save_"
 const SAVE_SUFFIX := ".json"
 const SAVE_PATH := "user://savegame.json"
@@ -27,6 +27,10 @@ func save_game(slot_id := 1) -> bool:
 		data["cria_live_interaction_state"] = CriaLiveInteractionManager.to_dict()
 	if has_node("/root/GameFlowManager"):
 		data["game_flow_state"] = GameFlowManager.to_dict()
+	if has_node("/root/WorldDirectorManager"):
+		data["world_director_state"] = WorldDirectorManager.to_dict()
+	if has_node("/root/NFTManager"):
+		data["nft_state"] = NFTManager.to_dict()
 	var path := get_slot_path(slot_id)
 	if not _write_atomic_json(path, data):
 		push_error("[SaveManager] Falha ao salvar slot %s de forma atomica." % slot_id)
@@ -43,26 +47,22 @@ func _write_atomic_json(final_path: String, data: Dictionary) -> bool:
 	file.store_string(JSON.stringify(data, "\t"))
 	file.flush()
 	file.close()
-
 	var dir := DirAccess.open("user://")
 	if dir == null:
 		DirAccess.remove_absolute(temp_path)
 		return false
-
 	var final_name := final_path.get_file()
 	var temp_name := temp_path.get_file()
 	var backup_name := backup_path.get_file()
 	if dir.file_exists(backup_name) and dir.remove(backup_name) != OK:
 		dir.remove(temp_name)
 		return false
-
 	var had_final := dir.file_exists(final_name)
 	if had_final:
 		var backup_error := dir.rename(final_name, backup_name)
 		if backup_error != OK:
 			dir.remove(temp_name)
 			return false
-
 	var promote_error := dir.rename(temp_name, final_name)
 	if promote_error != OK:
 		if had_final and dir.file_exists(backup_name):
@@ -70,7 +70,6 @@ func _write_atomic_json(final_path: String, data: Dictionary) -> bool:
 		if dir.file_exists(temp_name):
 			dir.remove(temp_name)
 		return false
-
 	if dir.file_exists(backup_name):
 		dir.remove(backup_name)
 	return true
@@ -83,7 +82,6 @@ func load_game(slot_id := 1) -> bool:
 		parsed = _read_json_dictionary(backup_path)
 		if parsed.is_empty():
 			return false
-		# Recupera automaticamente o save principal a partir do backup valido.
 		if not _write_atomic_json(path, parsed):
 			push_warning("[SaveManager] Backup carregado, mas nao foi possivel restaurar o arquivo principal.")
 	WorldState.load_from_dict(parsed)
@@ -105,6 +103,10 @@ func load_game(slot_id := 1) -> bool:
 		CriaLiveInteractionManager.load_from_dict(parsed["cria_live_interaction_state"])
 	if parsed.has("game_flow_state") and has_node("/root/GameFlowManager"):
 		GameFlowManager.load_from_dict(parsed["game_flow_state"])
+	if has_node("/root/WorldDirectorManager"):
+		WorldDirectorManager.load_from_dict(parsed.get("world_director_state", {}))
+	if has_node("/root/NFTManager"):
+		NFTManager.load_from_dict(parsed.get("nft_state", {}))
 	SignalBus.save_loaded.emit(slot_id)
 	return true
 

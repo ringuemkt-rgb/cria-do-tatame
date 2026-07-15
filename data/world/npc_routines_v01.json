@@ -1,0 +1,50 @@
+{
+  "version": "1.0.0",
+  "npcs": {
+    "mestre_dende": {
+      "schedule": {
+        "manha": {"hub": "terreiro_da_luta", "activity": "abrir_terreiro", "available": true},
+        "tarde": {"hub": "terreiro_da_luta", "activity": "treino_tecnico", "available": true},
+        "noite": {"hub": "terreiro_da_luta", "activity": "conselho_e_limpeza", "available": true},
+        "madrugada": {"hub": "terreiro_da_luta", "activity": "descanso", "available": false}
+      },
+      "weather_overrides": {"temporal_tropical": {"activity": "treino_interno_fundamentos"}}
+    },
+    "tinker_bell": {
+      "schedule": {
+        "manha": {"hub": "itubera", "activity": "coletar_informacoes", "available": false},
+        "tarde": {"hub": "terreiro_da_luta", "activity": "analisar_treino", "available": true},
+        "noite": {"hub": "doca", "activity": "vigiar_movimento", "available": true},
+        "madrugada": {"hub": "itubera", "activity": "organizar_dossie", "available": false}
+      },
+      "weather_overrides": {"temporal_tropical": {"hub": "terreiro_da_luta", "activity": "analise_de_video", "available": true}}
+    },
+    "davi_relampago": {
+      "schedule": {
+        "manha": {"hub": "salvador", "activity": "condicionamento", "available": false},
+        "tarde": {"hub": "arena_do_dique", "activity": "sparring", "available": true},
+        "noite": {"hub": "salvador", "activity": "reuniao_equipe", "available": false},
+        "madrugada": {"hub": "salvador", "activity": "descanso", "available": false}
+      },
+      "weather_overrides": {"temporal_tropical": {"hub": "academia_elite", "activity": "drill_velocidade"}}
+    },
+    "cassio_molho_oliveira": {
+      "schedule": {
+        "manha": {"hub": "zambiapunga", "activity": "negociar_eventos", "available": true},
+        "tarde": {"hub": "palco_cultural", "activity": "produzir_cria_live", "available": true},
+        "noite": {"hub": "backstage", "activity": "articular_convites", "available": true},
+        "madrugada": {"hub": "zambiapunga", "activity": "contabilidade_sombra", "available": false}
+      },
+      "weather_overrides": {"temporal_tropical": {"activity": "live_em_local_fechado"}}
+    },
+    "leoa_quilombola": {
+      "schedule": {
+        "manha": {"hub": "camamu_manguezal", "activity": "treino_base_lama", "available": true},
+        "tarde": {"hub": "casa_leoa", "activity": "orientar_comunidade", "available": true},
+        "noite": {"hub": "doca_camamu", "activity": "vigiar_mare", "available": false},
+        "madrugada": {"hub": "camamu_manguezal", "activity": "descanso", "available": false}
+      },
+      "weather_overrides": {"temporal_tropical": {"hub": "casa_leoa", "activity": "aula_historia_e_base", "available": true}}
+    }
+  }
+}

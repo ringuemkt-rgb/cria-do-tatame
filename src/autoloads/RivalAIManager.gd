@@ -22,13 +22,16 @@ func choose_action(rival_id: String, combat_state: String, context := {}) -> Str
 	var chosen := _context_response(profile, context)
 	var reason := "context"
 	if chosen == "":
+		chosen = _directive_response(rival_id, profile, combat_state, context)
+		reason = "world_director"
+	if chosen == "":
 		chosen = _state_response(profile, combat_state)
 		reason = "state"
 	if chosen == "":
 		var actions: Array = profile.get("preferred_actions", [])
 		chosen = str(actions.pick_random()) if not actions.is_empty() else "defense"
 		reason = "default"
-	rival_memory.append({"rival": rival_id, "id": chosen, "state": combat_state})
+	rival_memory.append({"rival": rival_id, "id": chosen, "state": combat_state, "reason": reason})
 	choice_selected.emit(rival_id, chosen, reason)
 	return chosen
 
@@ -48,6 +51,38 @@ func _context_response(profile: Dictionary, context: Dictionary) -> String:
 		if rule.get("if_random_burst", false) and randf() < 0.35:
 			return str(rule.get("response", ""))
 	return ""
+
+func _directive_response(rival_id: String, profile: Dictionary, combat_state: String, context: Dictionary) -> String:
+	if not has_node("/root/WorldDirectorManager"):
+		return ""
+	var directive: Dictionary = WorldDirectorManager.get_rival_directive(rival_id)
+	if directive.is_empty():
+		return ""
+	var actions: Array = profile.get("preferred_actions", [])
+	var preferred_action := str(directive.get("preferred_action", ""))
+	var round_seconds := float(context.get("round_seconds", 0.0))
+	var aggression := clamp(float(directive.get("aggression", 0.5)), 0.0, 1.0)
+	var risk := clamp(float(directive.get("risk_tolerance", 0.5)), 0.0, 1.0)
+	if preferred_action != "" and actions.has(preferred_action):
+		if round_seconds <= 20.0 or _player_is_predictable():
+			return preferred_action
+	if combat_state in profile.get("preferred_states", []) and not actions.is_empty():
+		var activation := clamp(0.15 + aggression * 0.35 + risk * 0.2, 0.0, 0.75)
+		if randf() <= activation:
+			var index := min(actions.size() - 1, int(floor(risk * actions.size())))
+			return str(actions[index])
+	return ""
+
+func _player_is_predictable() -> bool:
+	if player_memory.size() < memory_limit:
+		return false
+	var first_id := str(player_memory[0].get("id", ""))
+	if first_id == "":
+		return false
+	for item in player_memory:
+		if str(item.get("id", "")) != first_id:
+			return false
+	return true
 
 func _repeated_family(family: String) -> bool:
 	if player_memory.size() < memory_limit:

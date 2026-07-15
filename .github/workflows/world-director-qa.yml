@@ -1,0 +1,31 @@
+name: World Director QA
+
+on:
+  push:
+    paths:
+      - "data/world/**"
+      - "data/nft/**"
+      - "src/autoloads/WorldDirectorManager.gd"
+      - "src/autoloads/NFTManager.gd"
+      - "tools/world_director_server/**"
+      - "tests/test_world_director_data.py"
+  pull_request:
+    paths:
+      - "data/world/**"
+      - "data/nft/**"
+      - "src/autoloads/WorldDirectorManager.gd"
+      - "src/autoloads/NFTManager.gd"
+      - "tools/world_director_server/**"
+      - "tests/test_world_director_data.py"
+
+jobs:
+  validate-world-data:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install pytest
+      - run: pytest -q tests/test_world_director_data.py
+      - run: python -m py_compile tools/world_director_server/app.py

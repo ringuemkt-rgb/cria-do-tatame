@@ -1,0 +1,28 @@
+{
+  "version": "1.0.0",
+  "title": "Cria do Tatame — Colecionáveis do Mundo Vivo",
+  "policy": {
+    "optional": true,
+    "cosmetic_only": true,
+    "pay_to_win_forbidden": true,
+    "private_keys_in_client_forbidden": true,
+    "chain_is_source_of_truth": true,
+    "offline_cache_days": 7,
+    "game_runs_without_wallet": true
+  },
+  "collections": [
+    {
+      "id": "memorias_do_tatame",
+      "name": "Memórias do Tatame",
+      "description": "Colecionáveis cosméticos ligados à história, arenas e comunidade do Baixo Sul.",
+      "deployment_status": "not_deployed",
+      "supported_standards": ["ERC-721", "ERC-1155"]
+    }
+  ],
+  "items": [
+    {"id": "rashguard_gorila_prata", "collection_id": "memorias_do_tatame", "name": "Rashguard Gorila Prata", "rarity": "lendario", "cosmetic_only": true, "asset_path": "res://assets/cosmetics/nft/rashguard_gorila_prata.png", "standard": "ERC-1155", "token_id": "1001", "gameplay_effects": []},
+    {"id": "patch_terreiro_raiz", "collection_id": "memorias_do_tatame", "name": "Patch Terreiro Raiz", "rarity": "raro", "cosmetic_only": true, "asset_path": "res://assets/cosmetics/nft/patch_terreiro_raiz.png", "standard": "ERC-1155", "token_id": "1002", "gameplay_effects": []},
+    {"id": "mural_tinker_analista", "collection_id": "memorias_do_tatame", "name": "Mural Tinker Analista", "rarity": "epico", "cosmetic_only": true, "asset_path": "res://assets/cosmetics/nft/mural_tinker_analista.png", "standard": "ERC-721", "token_id": "2001", "gameplay_effects": []},
+    {"id": "poster_arena_dique", "collection_id": "memorias_do_tatame", "name": "Pôster Arena do Dique", "rarity": "incomum", "cosmetic_only": true, "asset_path": "res://assets/cosmetics/nft/poster_arena_dique.png", "standard": "ERC-1155", "token_id": "1003", "gameplay_effects": []}
+  ]
+}
