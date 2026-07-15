@@ -31,6 +31,8 @@ var hub_activities := {}
 var complete_game_flow := {}
 var campaign_cinematics := {}
 var rival_ai_profiles := {}
+var local_ai_config := {}
+var ai_dialogue_fallbacks := {}
 var full_completion_backlog := {}
 var character_bible := {}
 var world_bible := {}
@@ -69,6 +71,8 @@ const DATA_FILES := {
 	"complete_game_flow": "res://data/gameplay/complete_game_flow_v01.json",
 	"campaign_cinematics": "res://data/story/campaign_cinematics_v01.json",
 	"rival_ai_profiles": "res://data/ai/rival_ai_profiles_v01.json",
+	"local_ai_config": "res://data/ai/local_ai_config_v01.json",
+	"ai_dialogue_fallbacks": "res://data/dialogues/ai_fallbacks_v01.json",
 	"full_completion_backlog": "res://data/production/full_completion_backlog_v01.json",
 	"character_bible": "res://data/lore/character_bible_v01.json",
 	"world_bible": "res://data/lore/world_bible_v01.json",
@@ -110,6 +114,8 @@ func load_all():
 	complete_game_flow = _load_raw("complete_game_flow")
 	campaign_cinematics = _load_raw("campaign_cinematics")
 	rival_ai_profiles = _load_raw("rival_ai_profiles")
+	local_ai_config = _load_raw("local_ai_config")
+	ai_dialogue_fallbacks = _load_raw("ai_dialogue_fallbacks")
 	full_completion_backlog = _load_raw("full_completion_backlog")
 	character_bible = _load_raw("character_bible")
 	world_bible = _load_raw("world_bible")
@@ -136,6 +142,7 @@ func _load_json(path):
 	if file == null:
 		return {}
 	var result = JSON.parse_string(file.get_as_text())
+	file.close()
 	if typeof(result) != TYPE_DICTIONARY:
 		return {}
 	return result
@@ -168,6 +175,14 @@ func validate_core_data():
 		errors.append("campaign_cinematics_v01.json nao carregado")
 	if rival_ai_profiles.is_empty():
 		errors.append("rival_ai_profiles_v01.json nao carregado")
+	if local_ai_config.is_empty():
+		errors.append("local_ai_config_v01.json nao carregado")
+	if ai_dialogue_fallbacks.is_empty():
+		errors.append("ai_fallbacks_v01.json nao carregado")
+	if bool(local_ai_config.get("runtime_policy", {}).get("combat_llm_allowed", true)):
+		errors.append("politica local permite LLM no combate")
+	if not bool(local_ai_config.get("runtime_policy", {}).get("fallback_required", false)):
+		errors.append("politica local exige fallback offline")
 	if character_bible.is_empty():
 		errors.append("character_bible_v01.json nao carregado")
 	if world_bible.is_empty():
