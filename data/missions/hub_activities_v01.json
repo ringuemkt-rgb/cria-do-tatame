@@ -1,17 +1,38 @@
 {
-  "version": "0.1.0",
+  "version": "0.2.0",
   "language": "pt-BR",
   "activities": {
+    "treino_tecnico": {"name": "Treino Técnico no Terreiro", "hub": "itubera", "energy_cost": 20, "time_hours": 3, "money": 0, "effects": {"honra": 1, "moral": 2, "skill_points": 1}, "cria_live_context": "treino", "live_text": "Fundamentos repetidos até virarem instinto."},
     "dar_aula_criancas": {"name": "Dar Aula no Terreiro", "hub": "itubera", "energy_cost": 20, "time_hours": 3, "money": 60, "effects": {"legado": 8, "moral": 5, "honra": 3}},
-    "seguranca_evento": {"name": "Seguranca de Evento", "hub": "zambiapunga", "energy_cost": 30, "time_hours": 5, "money": 150, "risk": {"strain": 0.15, "sombra": 4}, "effects": {"hype": 3}},
+    "comprar_gi_basico": {"name": "Comprar Gi de Competição", "hub": "itubera", "energy_cost": 0, "time_hours": 1, "money": 0, "gear_id": "gi_trancado_ouro_medio", "effects": {}},
+    "descansar": {"name": "Descansar no Quarto de Ruan", "hub": "itubera", "energy_cost": 0, "time_hours": 4, "money": 0, "effects": {"energy": 40, "strain_level": -1, "moral": 1}},
+    "cria_live_humilde": {"name": "Publicação Humilde no Cria Live", "hub": "itubera", "energy_cost": 2, "time_hours": 1, "money": 0, "effects": {"hype": 1, "honra": 1}, "cria_live_context": "treino", "live_text": "Sem promessa vazia. Só treino, suor e constância."},
     "entrega_marmita": {"name": "Entregas de Marmita", "hub": "itubera", "energy_cost": 25, "time_hours": 4, "money": 100, "effects": {"moral": 2}},
-    "fisioterapia_recuperacao": {"name": "Fisio e Recuperacao", "hub": "itubera", "money": -120, "time_hours": 2, "effects": {"strain_level": -1, "energy": 20}},
-    "entrevista_jornalista": {"name": "Entrevista com Jornalista", "hub": "salvador", "energy_cost": 5, "time_hours": 1, "choice_required": true, "effects": {"hype": 4}},
-    "foto_com_fa": {"name": "Foto com Fa", "hub": "any", "energy_cost": 0, "time_hours": 1, "effects": {"hype": 2, "moral": 1}}
+    "fisioterapia_recuperacao": {"name": "Fisio e Recuperação", "hub": "itubera", "energy_cost": 0, "money": -120, "time_hours": 2, "effects": {"strain_level": -1, "energy": 20}},
+
+    "torneio_oficial": {"name": "Disputar Torneio Oficial", "hub": "salvador", "energy_cost": 35, "time_hours": 7, "money": -100, "effects": {"honra": 4, "hype": 5}, "risk": {"strain": 0.18}, "cria_live_context": "vitoria", "live_text": "Ruan entrou no circuito oficial. Agora cada erro tem plateia."},
+    "luta_de_risco_narrativa": {"name": "Aceitar Luta de Alto Risco", "hub": "salvador", "energy_cost": 40, "time_hours": 6, "money": 250, "effects": {"hype": 6, "sombra": 8}, "risk": {"strain": 0.35, "sombra": 3}, "story_flag": "aceitou_luta_risco_salvador", "cria_live_context": "crise", "live_text": "Uma luta sem garantias começou a circular nos bastidores."},
+    "treino_elite": {"name": "Treino em Academia de Elite", "hub": "salvador", "energy_cost": 25, "time_hours": 4, "money": -80, "effects": {"honra": 2, "hype": 2, "skill_points": 1}},
+    "missao_faccao": {"name": "Investigar Movimento de Facção", "hub": "salvador", "energy_cost": 15, "time_hours": 3, "money": 0, "effects": {"sombra": 2, "moral": -1}, "risk": {"strain": 0.08, "sombra": 2}, "story_flag": "investigou_faccao_salvador"},
+    "entrevista_jornalista": {"name": "Entrevista com Jornalista", "hub": "salvador", "energy_cost": 5, "time_hours": 1, "money": 0, "effects": {"hype": 4}, "cria_live_context": "sponsor", "live_text": "A imprensa quer uma frase. Cada palavra pode virar manchete."},
+
+    "evento_cultural": {"name": "Participar do Evento Cultural", "hub": "zambiapunga", "energy_cost": 15, "time_hours": 4, "money": 40, "effects": {"raiz": 5, "legado": 3, "hype": 2}, "cria_live_context": "treino", "live_text": "Luta, música e memória dividem o mesmo chão."},
+    "post_cria_live": {"name": "Produzir Conteúdo no Cria Live", "hub": "zambiapunga", "energy_cost": 8, "time_hours": 2, "money": 0, "effects": {"hype": 5, "moral": -1}, "cria_live_context": "crise", "live_text": "A publicação ganhou alcance antes que Ruan pudesse controlar a narrativa."},
+    "missao_hype": {"name": "Aceitar Missão de Hype", "hub": "zambiapunga", "energy_cost": 18, "time_hours": 3, "money": 120, "effects": {"hype": 7, "honra": -2, "sombra": 2}, "story_flag": "aceitou_missao_hype"},
+    "comprar_rashguard": {"name": "Comprar Rashguard Raiz", "hub": "zambiapunga", "energy_cost": 0, "time_hours": 1, "money": 0, "gear_id": "rashguard_compressao_raiz", "effects": {}},
+    "entrevista": {"name": "Dar Entrevista no Palco", "hub": "zambiapunga", "energy_cost": 5, "time_hours": 1, "money": 30, "effects": {"hype": 4, "raiz": 1}, "cria_live_context": "sponsor", "live_text": "Ruan falou diante da comunidade. A resposta virou assunto regional."},
+    "seguranca_evento": {"name": "Segurança de Evento", "hub": "zambiapunga", "energy_cost": 30, "time_hours": 5, "money": 150, "risk": {"strain": 0.15, "sombra": 4}, "effects": {"hype": 3}},
+
+    "treino_base_lama": {"name": "Treino de Base na Lama", "hub": "camamu_manguezal", "energy_cost": 30, "time_hours": 4, "money": 0, "effects": {"raiz": 5, "moral": 3, "skill_points": 1}, "risk": {"strain": 0.12}},
+    "corrida_mangue": {"name": "Corrida pelo Manguezal", "hub": "camamu_manguezal", "energy_cost": 25, "time_hours": 3, "money": 0, "effects": {"raiz": 3, "moral": 2}, "risk": {"strain": 0.1}},
+    "missao_raiz": {"name": "Ajudar a Casa da Leoa", "hub": "camamu_manguezal", "energy_cost": 18, "time_hours": 4, "money": 50, "effects": {"raiz": 7, "legado": 4, "honra": 2}, "story_flag": "ajudou_casa_leoa"},
+    "descanso_natureza": {"name": "Descanso junto ao Mangue", "hub": "camamu_manguezal", "energy_cost": 0, "time_hours": 5, "money": 0, "effects": {"energy": 50, "strain_level": -1, "moral": 3, "raiz": 1}},
+
+    "foto_com_fa": {"name": "Foto com Fã", "hub": "any", "energy_cost": 0, "time_hours": 1, "money": 0, "effects": {"hype": 2, "moral": 1}, "cria_live_context": "sponsor", "live_text": "Uma foto simples virou lembrança para quem acompanha a caminhada."}
   },
   "dynamic_events": [
-    {"id": "npc_desafio_rua", "label": "Um NPC desafia Ruan no hub", "conditions": {"hype_min": 40}, "choices": ["aceitar_treino", "recusar_respeito", "provocar"]},
-    {"id": "jornalista_pergunta", "label": "Jornalista pergunta sobre os atalhos", "conditions": {"sombra_min": 30}, "choices": ["assumir", "desviar", "culpar_midia"]},
-    {"id": "morador_pede_ajuda", "label": "Morador pede ajuda comunitaria", "conditions": {"raiz_min": 20}, "choices": ["ajudar", "ignorar", "postar_ajuda"]}
+    {"id": "npc_desafio_rua", "label": "Um NPC desafia Ruan para um treino público", "conditions": {"hype_min": 40}, "choices": ["aceitar_treino", "recusar_respeito", "provocar"]},
+    {"id": "jornalista_pergunta", "label": "Uma jornalista pergunta sobre os atalhos do circuito", "conditions": {"sombra_min": 30}, "choices": ["assumir", "desviar", "culpar_midia"]},
+    {"id": "morador_pede_ajuda", "label": "Um morador pede ajuda comunitária", "conditions": {"raiz_min": 20}, "choices": ["ajudar", "ignorar", "postar_ajuda"]}
   ]
 }
