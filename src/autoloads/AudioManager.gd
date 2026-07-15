@@ -1,14 +1,14 @@
 extends Node
 
-var enabled := true
-var sfx_bus := "Master"
-var music_bus := "Master"
+var enabled: bool = true
+var sfx_bus: String = "Master"
+var music_bus: String = "Master"
 
 func play_sfx(event_id: String) -> void:
 	if not enabled:
 		return
-	var pitch := _pitch_for(event_id)
-	var duration := _duration_for(event_id)
+	var pitch: float = _pitch_for(event_id)
+	var duration: float = _duration_for(event_id)
 	_play_tone(pitch, duration)
 
 func play_music_cue(cue_id: String) -> void:
@@ -47,18 +47,22 @@ func _duration_for(event_id: String) -> float:
 func _play_tone(freq: float, duration: float) -> void:
 	var player := AudioStreamPlayer.new()
 	var stream := AudioStreamGenerator.new()
-	stream.mix_rate = 22050
-	stream.buffer_length = max(duration, 0.05)
+	stream.mix_rate = 22050.0
+	stream.buffer_length = maxf(duration, 0.05)
 	player.stream = stream
 	player.bus = sfx_bus
 	add_child(player)
 	player.play()
 	var playback: AudioStreamGeneratorPlayback = player.get_stream_playback()
-	var frames := int(stream.mix_rate * duration)
+	if playback == null:
+		player.queue_free()
+		return
+	var frames: int = int(stream.mix_rate * duration)
 	for i in range(frames):
-		var t := float(i) / stream.mix_rate
-		var env := 1.0 - (float(i) / max(1.0, float(frames)))
-		var sample := sin(TAU * freq * t) * 0.12 * env
+		var t: float = float(i) / stream.mix_rate
+		var env: float = 1.0 - (float(i) / maxf(1.0, float(frames)))
+		var sample: float = sin(TAU * freq * t) * 0.12 * env
 		playback.push_frame(Vector2(sample, sample))
 	await get_tree().create_timer(duration + 0.05).timeout
-	player.queue_free()
+	if is_instance_valid(player):
+		player.queue_free()

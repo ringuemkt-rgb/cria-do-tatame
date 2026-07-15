@@ -1,0 +1,37 @@
+{
+  "version": "0.8.0",
+  "sponsors": [
+    {
+      "id": "apoio_terreiro",
+      "name": "Apoio do Terreiro",
+      "tier": "local",
+      "status": "available",
+      "requirements": {
+        "honra": 45,
+        "hype": 20
+      },
+      "weekly_reward": 100,
+      "reputation_effects": {
+        "raiz": 1,
+        "legado": 1
+      },
+      "description": "Apoio comunitario para material de treino e deslocamento."
+    },
+    {
+      "id": "mercado_baixo_sul",
+      "name": "Comercio do Baixo Sul",
+      "tier": "regional",
+      "status": "locked",
+      "requirements": {
+        "honra": 55,
+        "hype": 45
+      },
+      "weekly_reward": 250,
+      "reputation_effects": {
+        "hype": 2,
+        "raiz": 1
+      },
+      "description": "Parceria regional desbloqueada por consistencia e boa reputacao."
+    }
+  ]
+}

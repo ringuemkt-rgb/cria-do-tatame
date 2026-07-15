@@ -1,0 +1,82 @@
+name: Cria Runtime Audit
+
+on:
+  push:
+    branches:
+      - main
+      - 'upgrade/**'
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  static-audit:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Validate all JSON and technique catalog
+        run: python tools/cria_forge/cria_forge.py validate
+
+      - name: Validate complete game structure
+        run: python tools/validate_complete_game.py
+
+      - name: Validate runtime contracts
+        run: python tools/validate_runtime_contracts.py
+
+      - name: Upload static audit reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: cria-static-audit-reports
+          path: |
+            reports/runtime_audit/
+            reports/cria_forge/
+          if-no-files-found: ignore
+
+  godot-headless-smoke:
+    needs: static-audit
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Download Godot 4.2.2
+        run: |
+          curl -L --fail --retry 3 \
+            -o godot.zip \
+            https://github.com/godotengine/godot/releases/download/4.2.2-stable/Godot_v4.2.2-stable_linux.x86_64.zip
+          unzip -q godot.zip
+          mv Godot_v4.2.2-stable_linux.x86_64 godot
+          chmod +x godot
+          ./godot --version
+
+      - name: Prepare runtime log directory
+        run: mkdir -p reports/runtime_audit
+
+      - name: Import and parse project
+        shell: bash
+        run: |
+          set -o pipefail
+          ./godot --headless --editor --path . --quit 2>&1 | tee reports/runtime_audit/godot_import.log
+
+      - name: Run runtime smoke suite
+        shell: bash
+        run: |
+          set -o pipefail
+          ./godot --headless --path . --script res://tests/runtime_smoke.gd 2>&1 | tee reports/runtime_audit/godot_smoke.log
+
+      - name: Upload Godot logs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: cria-godot-runtime-logs
+          path: |
+            reports/runtime_audit/godot_import.log
+            reports/runtime_audit/godot_smoke.log
+          if-no-files-found: warn

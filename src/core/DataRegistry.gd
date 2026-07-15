@@ -1,5 +1,8 @@
 extends Node
-class_name DataRegistry
+class_name JsonDataRegistry
+
+# Registry instanciavel usado por ferramentas e testes isolados.
+# O singleton global DataRegistry permanece em src/autoloads/DataRegistry.gd.
 
 var cache: Dictionary = {}
 
@@ -7,16 +10,19 @@ func load_json(path: String, fallback: Dictionary = {}) -> Dictionary:
 	if cache.has(path):
 		return cache[path]
 	if not FileAccess.file_exists(path):
-		push_warning("DataRegistry missing file: " + path)
-		cache[path] = fallback
-		return fallback
+		push_warning("JsonDataRegistry missing file: " + path)
+		cache[path] = fallback.duplicate(true)
+		return cache[path]
 	var file := FileAccess.open(path, FileAccess.READ)
-	var text := file.get_as_text()
-	var parsed = JSON.parse_string(text)
+	if file == null:
+		push_warning("JsonDataRegistry failed to open: " + path)
+		cache[path] = fallback.duplicate(true)
+		return cache[path]
+	var parsed = JSON.parse_string(file.get_as_text())
 	if typeof(parsed) != TYPE_DICTIONARY:
-		push_warning("DataRegistry invalid JSON: " + path)
-		cache[path] = fallback
-		return fallback
+		push_warning("JsonDataRegistry invalid JSON: " + path)
+		cache[path] = fallback.duplicate(true)
+		return cache[path]
 	cache[path] = parsed
 	return parsed
 

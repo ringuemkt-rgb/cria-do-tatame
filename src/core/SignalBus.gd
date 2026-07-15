@@ -1,5 +1,9 @@
 extends Node
-class_name SignalBus
+class_name CoreSignalBus
+
+# Barramento instanciavel para sistemas isolados e testes.
+# O singleton global do jogo continua sendo /root/SignalBus,
+# registrado em project.godot a partir de src/autoloads/SignalBus.gd.
 
 signal career_state_changed(state: Dictionary)
 signal world_week_advanced(clock_state: Dictionary)
