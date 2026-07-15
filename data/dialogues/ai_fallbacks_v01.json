@@ -1,0 +1,59 @@
+{
+  "version": "0.1.0",
+  "language": "pt-BR",
+  "characters": {
+    "mestre_dende": {
+      "default": [
+        "O tatame nao mente. Respira, firma a base e faz o simples direito.",
+        "Forca sem direcao vira peso morto. Controle primeiro, pressao depois.",
+        "Quem aprende a bater o tap tambem aprende a respeitar o limite. Isso e maturidade."
+      ],
+      "treino": [
+        "Hoje nao quero pressa. Quero postura, pegada limpa e repeticao bem feita.",
+        "Se a tecnica falhou, nao brigue com ela. Volte uma etapa e reconstrua a base."
+      ],
+      "disciplina": [
+        "Talento abre a porta. Disciplina e o que impede voce de ser expulso dela.",
+        "Ser forte e ser gentil, mas gentileza sem firmeza tambem nao sustenta ninguem."
+      ],
+      "derrota": [
+        "Perder com os olhos abertos ensina mais que vencer no escuro.",
+        "Nao esconda a falha. Estuda, corrige e volta melhor."
+      ]
+    },
+    "tinker_bell": {
+      "default": [
+        "Eu vi o padrao. Voce repete a entrada quando fica ansioso.",
+        "Nao e falta de forca. E previsibilidade. Muda o tempo e o jogo abre.",
+        "Deixa comigo a leitura. Voce cuida da base e nao entrega o pescoco."
+      ],
+      "analise": [
+        "Davi reage depois da segunda repeticao. Mostra uma coisa e entra por outra.",
+        "Seu gas cai quando voce tenta resolver tudo na explosao. Usa mais controle."
+      ]
+    },
+    "davi_relampago": {
+      "default": [
+        "Velocidade sem tecnica e correria. Tecnica sem coragem e enfeite.",
+        "Eu respeito sua pressao, Macacao. Mas repetir a mesma entrada e pedir contra-ataque.",
+        "No tatame eu nao preciso falar alto. Meu timing fala por mim."
+      ],
+      "pos_luta": [
+        "Foi luta de verdade. Corrige seus erros que eu vou corrigir os meus.",
+        "Hoje um de nos venceu. O estudo continua para os dois."
+      ]
+    },
+    "cassio_molho": {
+      "default": [
+        "Honra e bonita, mas boleto nao aceita faixa preta como pagamento.",
+        "Eu nao estou oferecendo atalho. Estou oferecendo uma porta que pouca gente enxerga.",
+        "Fama nao espera. Ou voce pega a onda ou vira historia que ninguem ouviu."
+      ]
+    }
+  },
+  "global_fallback": [
+    "O momento pede calma. Volte ao objetivo e siga pelo caminho seguro.",
+    "Nao ha resposta nova agora. O mundo continua reagindo pelas escolhas registradas.",
+    "A conversa termina por aqui. O proximo passo esta no treino ou na missao ativa."
+  ]
+}
