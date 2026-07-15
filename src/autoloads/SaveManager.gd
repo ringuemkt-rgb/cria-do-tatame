@@ -1,11 +1,13 @@
 extends Node
 
+const SAVE_VERSION := 2
 const SAVE_PREFIX := "user://cria_save_"
 const SAVE_SUFFIX := ".json"
 const SAVE_PATH := "user://savegame.json"
 
-func save_game(slot_id := 1):
-	var data = WorldState.to_dict()
+func save_game(slot_id := 1) -> bool:
+	var data: Dictionary = WorldState.to_dict()
+	data["save_version"] = SAVE_VERSION
 	data["saved_at"] = Time.get_datetime_string_from_system()
 	if has_node("/root/TinkerBondManager"):
 		data["tinker_bond"] = TinkerBondManager.to_dict()
@@ -25,26 +27,65 @@ func save_game(slot_id := 1):
 		data["cria_live_interaction_state"] = CriaLiveInteractionManager.to_dict()
 	if has_node("/root/GameFlowManager"):
 		data["game_flow_state"] = GameFlowManager.to_dict()
-	var path = SAVE_PREFIX + str(slot_id) + SAVE_SUFFIX
-	var file = FileAccess.open(path, FileAccess.WRITE)
-	if file == null:
-		push_error("[SaveManager] Falha ao salvar.")
+	var path := get_slot_path(slot_id)
+	if not _write_atomic_json(path, data):
+		push_error("[SaveManager] Falha ao salvar slot %s de forma atomica." % slot_id)
 		return false
-	file.store_string(JSON.stringify(data, "\t"))
 	SignalBus.save_completed.emit(slot_id)
 	return true
 
-func load_game(slot_id := 1):
-	var path = SAVE_PREFIX + str(slot_id) + SAVE_SUFFIX
-	if not FileAccess.file_exists(path):
-		return false
-	var file = FileAccess.open(path, FileAccess.READ)
+func _write_atomic_json(final_path: String, data: Dictionary) -> bool:
+	var temp_path := final_path + ".tmp"
+	var backup_path := final_path + ".bak"
+	var file := FileAccess.open(temp_path, FileAccess.WRITE)
 	if file == null:
 		return false
-	var parsed = JSON.parse_string(file.get_as_text())
-	if typeof(parsed) != TYPE_DICTIONARY:
-		push_error("[SaveManager] Save invalido.")
+	file.store_string(JSON.stringify(data, "\t"))
+	file.flush()
+	file.close()
+
+	var dir := DirAccess.open("user://")
+	if dir == null:
+		DirAccess.remove_absolute(temp_path)
 		return false
+
+	var final_name := final_path.get_file()
+	var temp_name := temp_path.get_file()
+	var backup_name := backup_path.get_file()
+	if dir.file_exists(backup_name) and dir.remove(backup_name) != OK:
+		dir.remove(temp_name)
+		return false
+
+	var had_final := dir.file_exists(final_name)
+	if had_final:
+		var backup_error := dir.rename(final_name, backup_name)
+		if backup_error != OK:
+			dir.remove(temp_name)
+			return false
+
+	var promote_error := dir.rename(temp_name, final_name)
+	if promote_error != OK:
+		if had_final and dir.file_exists(backup_name):
+			dir.rename(backup_name, final_name)
+		if dir.file_exists(temp_name):
+			dir.remove(temp_name)
+		return false
+
+	if dir.file_exists(backup_name):
+		dir.remove(backup_name)
+	return true
+
+func load_game(slot_id := 1) -> bool:
+	var path := get_slot_path(slot_id)
+	var parsed := _read_json_dictionary(path)
+	if parsed.is_empty():
+		var backup_path := path + ".bak"
+		parsed = _read_json_dictionary(backup_path)
+		if parsed.is_empty():
+			return false
+		# Recupera automaticamente o save principal a partir do backup valido.
+		if not _write_atomic_json(path, parsed):
+			push_warning("[SaveManager] Backup carregado, mas nao foi possivel restaurar o arquivo principal.")
 	WorldState.load_from_dict(parsed)
 	if parsed.has("tinker_bond") and has_node("/root/TinkerBondManager"):
 		TinkerBondManager.load_from_dict(parsed["tinker_bond"])
@@ -67,13 +108,31 @@ func load_game(slot_id := 1):
 	SignalBus.save_loaded.emit(slot_id)
 	return true
 
-func has_save(slot_id := 1):
-	return FileAccess.file_exists(SAVE_PREFIX + str(slot_id) + SAVE_SUFFIX)
+func _read_json_dictionary(path: String) -> Dictionary:
+	if not FileAccess.file_exists(path):
+		return {}
+	var file := FileAccess.open(path, FileAccess.READ)
+	if file == null:
+		return {}
+	var raw := file.get_as_text()
+	file.close()
+	var parsed = JSON.parse_string(raw)
+	if typeof(parsed) != TYPE_DICTIONARY:
+		push_warning("[SaveManager] Save invalido em %s." % path)
+		return {}
+	return parsed
+
+func get_slot_path(slot_id := 1) -> String:
+	return SAVE_PREFIX + str(slot_id) + SAVE_SUFFIX
+
+func has_save(slot_id := 1) -> bool:
+	return FileAccess.file_exists(get_slot_path(slot_id))
 
 func delete_save(slot_id := 1) -> void:
-	var path = SAVE_PREFIX + str(slot_id) + SAVE_SUFFIX
-	if FileAccess.file_exists(path):
-		DirAccess.remove_absolute(path)
+	var path := get_slot_path(slot_id)
+	for candidate in [path, path + ".tmp", path + ".bak"]:
+		if FileAccess.file_exists(candidate):
+			DirAccess.remove_absolute(candidate)
 
 func salvar_jogo() -> bool:
 	return save_game(1)
