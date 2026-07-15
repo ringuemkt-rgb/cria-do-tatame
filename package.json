@@ -1,26 +1,21 @@
 {
   "name": "cria-do-tatame",
-  "version": "1.0.0",
+  "version": "0.9.0",
   "private": true,
-  "description": "Cria do Tatame — BJJ positional fighting RPG for Godot, Android, PC and Web.",
+  "description": "Cria do Tatame — BJJ positional fighting RPG for Godot, Android and Windows.",
   "type": "module",
   "scripts": {
-    "start": "python -m http.server 8000",
-    "build": "npm run capacitor:sync",
     "validate:python": "python tools/validate_json.py",
     "validate:node": "node tools/node/validate_json.mjs",
     "validate:data": "node tools/node/validate_game_data.mjs",
     "validate:repository": "python tools/validate_complete_game.py",
+    "validate:runtime": "python tools/validate_runtime_contracts.py",
+    "validate:release": "python tools/validate_release_readiness.py",
     "assets:manifest": "node tools/node/generate_asset_manifest.mjs",
-    "quality": "npm run validate:python && npm run validate:node && npm run validate:data && npm run validate:repository",
-    "capacitor:init": "npx cap init 'CRIA DO TATAME' 'com.criadotatame.app'",
-    "capacitor:add:android": "npx cap add android",
-    "capacitor:sync": "npx cap sync"
-  },
-  "dependencies": {
-    "@capacitor/core": "^6.0.0",
-    "@capacitor/android": "^6.0.0",
-    "@capacitor/cli": "^6.0.0"
+    "assets:queue": "python tools/ai_asset_pipeline/build_production_queue_v02.py",
+    "quality": "npm run validate:python && npm run validate:node && npm run validate:data && npm run validate:repository && npm run validate:runtime && npm run validate:release",
+    "build:android:windows": "powershell -ExecutionPolicy Bypass -File tools/build/build_android_debug.ps1",
+    "build:windows": "powershell -ExecutionPolicy Bypass -File tools/build/build_windows_debug.ps1"
   },
   "engines": {
     "node": ">=20",
