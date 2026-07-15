@@ -10,6 +10,7 @@ var davi_ai: Node
 var ruan_placeholder: Node
 var davi_placeholder: Node
 var action_buttons: Array[Button] = []
+var ai_turn_delay: float = 0.35
 
 var estados_ptbr: Dictionary = {
 	"DISTANCE": "EM PE - NEUTRO",
@@ -40,6 +41,7 @@ func _ready() -> void:
 	add_child(gamefeel)
 	davi_ai = DaviAIControllerScript.new()
 	add_child(davi_ai)
+	davi_ai.call("setup", "davi_relampago", "normal")
 	_build_placeholder_fighters()
 	_connect_buttons()
 	_connect_runtime_signals()
@@ -80,6 +82,10 @@ func _ensure_ai_hint() -> void:
 		label.name = "AIHint"
 		label.text = "Davi esta lendo seu ritmo. Varie as entradas."
 		get_node("Panel").add_child(label)
+
+func _set_ai_hint(text: String) -> void:
+	if has_node("Panel/AIHint"):
+		$Panel/AIHint.text = text
 
 func _connect_buttons() -> void:
 	action_buttons.clear()
@@ -131,10 +137,31 @@ func _on_action_button_pressed(button: Button) -> void:
 	var success: bool = bool(result.get("success", false))
 	AudioManager.play_sfx(action_id)
 	gamefeel.call("apply_for_technique", action_id, success)
-	_update_ai_hint(result)
+	if CombatManager.is_running:
+		await _run_davi_turn()
+	if not is_inside_tree():
+		return
 	if CombatManager.is_running:
 		_refresh_action_buttons()
 		_set_actions_enabled(true)
+
+func _run_davi_turn() -> void:
+	_set_ai_hint("%s Davi esta escolhendo a resposta..." % str(davi_ai.call("pressure_message")))
+	await get_tree().create_timer(ai_turn_delay).timeout
+	if not is_inside_tree() or not CombatManager.is_running:
+		return
+	var technique: Dictionary = davi_ai.call("choose_technique", CombatManager)
+	if technique.is_empty():
+		_set_ai_hint("Davi nao encontrou uma acao segura e preservou a base.")
+		return
+	var technique_id := str(technique.get("id", ""))
+	var technique_name := str(technique.get("nome", technique.get("name", technique_id)))
+	_set_ai_hint("%s Resposta escolhida: %s." % [str(davi_ai.call("pressure_message")), technique_name])
+	if davi_placeholder != null:
+		davi_placeholder.call("play_action", technique_id)
+	AudioManager.play_sfx(technique_id)
+	var result: Dictionary = CombatManager.apply_opponent_action(technique_id)
+	gamefeel.call("apply_for_technique", technique_id, bool(result.get("success", false)))
 
 func _set_actions_enabled(enabled: bool) -> void:
 	for button in action_buttons:
@@ -144,16 +171,6 @@ func _set_actions_enabled(enabled: bool) -> void:
 			button.disabled = action_id == "" or not affordable
 		else:
 			button.disabled = true
-
-func _update_ai_hint(result: Dictionary) -> void:
-	if not has_node("Panel/AIHint"):
-		return
-	var phase_name: String = str(result.get("phase", "DISTANCE"))
-	var player_resources: Dictionary = CombatManager.fighters.get("ruan_macacao", {})
-	var response: String = str(davi_ai.call("choose_response", phase_name, player_resources))
-	$Panel/AIHint.text = "%s Proxima leitura: %s" % [str(davi_ai.call("pressure_message")), response]
-	if davi_placeholder != null:
-		davi_placeholder.call("play_action", response)
 
 func _on_resources_changed(fighter_id, resources) -> void:
 	if str(fighter_id) != CombatManager.player_id or typeof(resources) != TYPE_DICTIONARY:
@@ -179,7 +196,9 @@ func _on_technique_resolved(result) -> void:
 		var technique: Dictionary = DataRegistry.get_technique(technique_id)
 		var name_text: String = str(technique.get("nome", technique.get("name", technique_id)))
 		var message: String = str(result.get("message", "sucesso" if result.get("success", false) else "defendido"))
-		$Panel/Message.text = "%s: %s" % [name_text, _humanize_message(message)]
+		var actor_id := str(result.get("actor_id", "ruan_macacao"))
+		var actor_name := "Ruan" if actor_id == CombatManager.player_id else "Davi"
+		$Panel/Message.text = "%s • %s: %s" % [actor_name, name_text, _humanize_message(message)]
 	if SignalBus.has_signal("technique_executed"):
 		SignalBus.technique_executed.emit(StringName(result.get("actor_id", "ruan_macacao")), StringName(result.get("technique_id", "unknown")))
 	if SignalBus.has_signal("tecnica_executada"):
