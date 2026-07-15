@@ -122,26 +122,8 @@ jobs:
           unzip -q templates.tpz -d templates_unpack
           cp -a templates_unpack/templates/. "$HOME/.local/share/godot/export_templates/4.2.2.stable/"
           test -s "$HOME/.local/share/godot/export_templates/4.2.2.stable/android_debug.apk"
-      - name: Prepare Android SDK and Godot debug signing
-        run: |
-          mkdir -p "$HOME/.android" \
-                   "$HOME/.local/share/godot/keystores" \
-                   builds/android reports/full_game_audit
-          GODOT_KEYSTORE="$HOME/.local/share/godot/keystores/debug.keystore"
-          if [ ! -f "$GODOT_KEYSTORE" ]; then
-            keytool -genkeypair -v \
-              -keystore "$GODOT_KEYSTORE" \
-              -storepass android -alias androiddebugkey -keypass android \
-              -dname "CN=Android Debug,O=Android,C=US" \
-              -keyalg RSA -keysize 2048 -validity 10000
-          fi
-          cp "$GODOT_KEYSTORE" "$HOME/.android/debug.keystore"
-          test -d "$ANDROID_HOME"
-          test -x "$JAVA_HOME/bin/java"
-          test -s "$GODOT_KEYSTORE"
-          echo "ANDROID_HOME=$ANDROID_HOME"
-          echo "JAVA_HOME=$JAVA_HOME"
-          echo "GODOT_KEYSTORE=$GODOT_KEYSTORE"
+      - name: Configure Godot Android editor settings
+        run: bash tools/build/configure_godot_android_ci.sh
       - name: Import before export
         run: timeout 180 ./godot --headless --editor --path . --import
       - name: Export Android Debug APK
@@ -153,7 +135,7 @@ jobs:
           GODOT_ANDROID_KEYSTORE_DEBUG_PASSWORD: android
         run: |
           set -o pipefail
-          ./godot --headless --path . \
+          ./godot --headless --verbose --path . \
             --export-debug "Android Debug" builds/android/CriaDoTatame-debug.apk \
             2>&1 | tee reports/full_game_audit/android_export.log
           if grep -q "^ERROR:" reports/full_game_audit/android_export.log; then
