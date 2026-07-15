@@ -161,26 +161,43 @@ jobs:
         shell: bash
         run: |
           set -euxo pipefail
-          ls -lh builds/android/CriaDoTatame-debug.apk
-          APK_SIZE="$(stat -c%s builds/android/CriaDoTatame-debug.apk)"
+          APK="builds/android/CriaDoTatame-debug.apk"
+          ls -lh "$APK"
+          APK_SIZE="$(stat -c%s "$APK")"
           echo "apk_size=$APK_SIZE"
           test "$APK_SIZE" -gt 1048576
-          unzip -t builds/android/CriaDoTatame-debug.apk
-          sha256sum builds/android/CriaDoTatame-debug.apk | tee builds/android/CriaDoTatame-debug.apk.sha256.txt
+          unzip -t "$APK"
+          unzip -l "$APK" | grep -q "lib/arm64-v8a/libgodot_android.so"
+          sha256sum "$APK" | tee builds/android/CriaDoTatame-debug.apk.sha256.txt
+
+          APKANALYZER="$(command -v apkanalyzer || true)"
+          if [ -z "$APKANALYZER" ]; then
+            APKANALYZER="$(find "$ANDROID_HOME" -type f -name apkanalyzer | head -n 1)"
+          fi
+          test -n "$APKANALYZER"
+          test -x "$APKANALYZER"
+          PACKAGE_ID="$("$APKANALYZER" manifest application-id "$APK")"
+          VERSION_NAME="$("$APKANALYZER" manifest version-name "$APK")"
+          MIN_SDK="$("$APKANALYZER" manifest min-sdk "$APK")"
+          TARGET_SDK="$("$APKANALYZER" manifest target-sdk "$APK")"
+          {
+            echo "package: name='$PACKAGE_ID'"
+            echo "versionName='$VERSION_NAME'"
+            echo "minSdkVersion='$MIN_SDK'"
+            echo "targetSdkVersion='$TARGET_SDK'"
+            echo "architecture='arm64-v8a'"
+          } | tee reports/full_game_audit/apk_badging.txt
+          test "$PACKAGE_ID" = "com.criadotatame.pressao"
+          test -n "$VERSION_NAME"
+          test "$MIN_SDK" -ge 21
+          test "$TARGET_SDK" -ge 34
+
           AAPT="$(find "$ANDROID_HOME/build-tools" -type f -name aapt | sort -V | tail -n 1)"
-          APKANALYZER="$(find "$ANDROID_HOME" -type f -name apkanalyzer | head -n 1)"
-          echo "aapt=$AAPT"
-          echo "apkanalyzer=$APKANALYZER"
           if [ -n "$AAPT" ] && [ -x "$AAPT" ]; then
-            "$AAPT" dump badging builds/android/CriaDoTatame-debug.apk | tee reports/full_game_audit/apk_badging.txt
-            grep -q "package: name='com.criadotatame.pressao'" reports/full_game_audit/apk_badging.txt
-          elif [ -n "$APKANALYZER" ] && [ -x "$APKANALYZER" ]; then
-            PACKAGE_ID="$("$APKANALYZER" manifest application-id builds/android/CriaDoTatame-debug.apk)"
-            echo "package: name='$PACKAGE_ID'" | tee reports/full_game_audit/apk_badging.txt
-            test "$PACKAGE_ID" = "com.criadotatame.pressao"
-          else
-            echo "Nenhum inspetor de manifesto Android foi encontrado" >&2
-            exit 1
+            set +e
+            "$AAPT" dump badging "$APK" > reports/full_game_audit/aapt_badging_diagnostic.txt 2>&1
+            echo "aapt_exit=$?" >> reports/full_game_audit/aapt_badging_diagnostic.txt
+            set -e
           fi
       - name: Upload post-build inspection
         if: always()
@@ -190,6 +207,7 @@ jobs:
           path: |
             builds/android/CriaDoTatame-debug.apk.sha256.txt
             reports/full_game_audit/apk_badging.txt
+            reports/full_game_audit/aapt_badging_diagnostic.txt
           if-no-files-found: warn
       - name: Upload validated APK
         uses: actions/upload-artifact@v4
