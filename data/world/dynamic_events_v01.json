@@ -1,0 +1,13 @@
+{
+  "version": "1.0.0",
+  "events": [
+    {"id": "chuva_aperta_terreiro", "title": "A chuva aperta no Terreiro", "priority": 60, "chance": 0.28, "duration_ticks": 1, "cooldown_ticks": 3, "tags": ["clima", "comunidade"], "conditions": {"hubs": ["terreiro_da_luta"], "weather": ["chuva_passageira", "temporal_tropical"]}, "effects": {"honra": 1.0, "energy": -4.0}},
+    {"id": "mare_alta_manguezal", "title": "Maré alta no manguezal", "priority": 75, "chance": 0.32, "duration_ticks": 2, "cooldown_ticks": 4, "tags": ["clima", "raiz"], "conditions": {"hubs": ["camamu_manguezal", "manguezal_profundo"], "weather": ["garoa_mangue", "neblina_mangue", "temporal_tropical"]}, "effects": {"raiz": 1.5, "energy": -5.0}},
+    {"id": "queda_energia_itubera", "title": "Queda de energia em Ituberá", "priority": 50, "chance": 0.12, "duration_ticks": 1, "cooldown_ticks": 5, "tags": ["infraestrutura", "cidade"], "conditions": {"hubs": ["itubera", "terreiro_da_luta"]}, "effects": {"hype": -0.5, "honra": 0.5}},
+    {"id": "roda_improvisada", "title": "Roda improvisada no Terreiro", "priority": 45, "chance": 0.18, "duration_ticks": 1, "cooldown_ticks": 4, "tags": ["treino", "comunidade"], "conditions": {"hubs": ["terreiro_da_luta"], "reputation_min": {"honra": 45}}, "effects": {"honra": 1.0, "legado": 1.0, "energy": -3.0}},
+    {"id": "convite_sombrio", "title": "Um convite chega pelos fundos", "priority": 80, "chance": 0.16, "duration_ticks": 2, "cooldown_ticks": 6, "tags": ["faccao", "sombra"], "conditions": {"hubs": ["salvador", "zambiapunga"], "reputation_min": {"hype": 35}, "reputation_max": {"honra": 70}}, "effects": {"sombra": 1.5, "nos_tem_um_molho_heat": 2.0}},
+    {"id": "mutirao_criancas", "title": "Mutirão para as crianças do bairro", "priority": 70, "chance": 0.2, "duration_ticks": 1, "cooldown_ticks": 5, "tags": ["comunidade", "legado"], "conditions": {"hubs": ["itubera", "terreiro_da_luta"], "reputation_min": {"honra": 50}}, "effects": {"honra": 2.0, "legado": 2.0, "money": -10}},
+    {"id": "festival_zambiapunga", "title": "Festival toma as ruas", "priority": 65, "chance": 0.14, "duration_ticks": 2, "cooldown_ticks": 7, "tags": ["cultura", "hype"], "conditions": {"hubs": ["zambiapunga"]}, "effects": {"hype": 2.0, "raiz": 1.0}},
+    {"id": "blitz_transporte", "title": "Blitz muda as rotas de viagem", "priority": 55, "chance": 0.1, "duration_ticks": 1, "cooldown_ticks": 6, "tags": ["viagem", "cidade"], "conditions": {"hubs": ["salvador", "itubera", "zambiapunga"]}, "effects": {"energy": -2.0}}
+  ]
+}
