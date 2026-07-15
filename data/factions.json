@@ -1,5 +1,5 @@
 {
-  "version": "0.2.0",
+  "version": "0.3.0",
   "language": "pt-BR",
   "design_note": "Faccoes 100% ficcionais. Crime e corrupcao aparecem como consequencia narrativa, nao como tutorial operacional nem glorificacao.",
   "factions": [
@@ -7,31 +7,36 @@
       "id": "terreiro",
       "name": "Terreiro da Luta",
       "axis": "honra",
-      "description": "Familia de treino, disciplina e base moral."
+      "description": "Familia de treino, disciplina, protecao comunitaria e base moral.",
+      "system_role": "legitimidade_comunitaria"
     },
     {
       "id": "circuito_oficial",
       "name": "Circuito Oficial",
       "axis": "legado",
-      "description": "Torneios, regras, ranking e visibilidade legitima."
+      "description": "Torneios, regras, ranking e visibilidade legitima.",
+      "system_role": "instituicao_neutra_disputada"
     },
     {
       "id": "cria_live",
       "name": "Cria Live",
       "axis": "hype",
-      "description": "Feed social, torcida, polemica e fama rapida."
+      "description": "Feed social, torcida, polemica, reputacao e fama rapida.",
+      "system_role": "arena_publica_disputada"
     },
     {
       "id": "atalhos",
       "name": "Atalhos",
       "axis": "sombra",
-      "description": "Caminhos faceis que cobram preco moral."
+      "description": "Caminhos faceis que cobram preco moral.",
+      "system_role": "tentacao_narrativa"
     },
     {
       "id": "raiz",
-      "name": "Raiz do Baixo Sul",
+      "name": "Casa da Leoa — Raiz do Baixo Sul",
       "axis": "raiz",
-      "description": "Comunidade, mangue, familia e territorio."
+      "description": "Comunidade, mangue, memoria ancestral, familia e defesa territorial.",
+      "system_role": "coesao_e_territorio"
     },
     {
       "id": "os_aleluia",
@@ -41,7 +46,8 @@
       "colors": ["azul", "dourado", "branco"],
       "symbol": "pomba_ficcional_com_ramo_e_cruz_abstrata",
       "territories": ["arena_do_dique", "budokan_das_aguas", "igreja_central_ficcional"],
-      "description": "Circuito oficial, tradicao religiosa, controle de torneios e corrupcao de aparencia limpa."
+      "description": "Circuito oficial, tradicao religiosa, controle de torneios e poder institucional de aparencia limpa.",
+      "system_role": "ordem_e_prestigio"
     },
     {
       "id": "la_ele_mil_vezes",
@@ -51,7 +57,8 @@
       "colors": ["roxo", "vermelho", "dourado"],
       "symbol": "olho_ficcional_e_mao_abstrata",
       "territories": ["colonia_nishimura", "ferro_velho_da_lapa", "beco_do_engenho"],
-      "description": "Informacao, espionagem de luta, apostas narrativas e poder oculto."
+      "description": "Informacao, observacao de luta, arquivos, rumores e poder oculto.",
+      "system_role": "inteligencia_e_previsao"
     },
     {
       "id": "nos_tem_um_molho",
@@ -61,7 +68,30 @@
       "colors": ["laranja", "amarelo", "vermelho"],
       "symbol": "pimenta_molho_pilao",
       "territories": ["zambiapunga", "praia_de_pratigi", "evento_privado_ficcional"],
-      "description": "Fama, cultura popular, eventos, viralizacao e tentacao do dinheiro facil."
+      "description": "Fama, cultura popular, eventos, viralizacao e dependencia de imagem.",
+      "system_role": "midia_e_caixa"
+    },
+    {
+      "id": "dragao_vermelho",
+      "name": "Triade Dragao Vermelho",
+      "axis": "sombra_inteligencia",
+      "tagline": "A rota vale mais que o ruido",
+      "colors": ["vermelho_escuro", "preto", "jade"],
+      "symbol": "dragao_ficcional_em_circulo_logistico",
+      "territories": ["entreposto_dragao", "evento_privado_ficcional"],
+      "description": "Rede ficcional de logistica, intercambios esportivos, intermediarios e influencia internacional.",
+      "system_role": "logistica_e_infiltracao"
+    },
+    {
+      "id": "fantasma",
+      "name": "Agencia Fantasma",
+      "axis": "honra_sombra",
+      "tagline": "Proteger sem aparecer",
+      "colors": ["grafite", "cinza", "azul_profundo"],
+      "symbol": "mascara_ficcional_fragmentada",
+      "territories": ["base_fantasma"],
+      "description": "Rede clandestina ficcional de contrainteligencia e protecao regional, marcada por segredo e paranoia.",
+      "system_role": "contrainteligencia_e_protecao"
     }
   ]
 }
