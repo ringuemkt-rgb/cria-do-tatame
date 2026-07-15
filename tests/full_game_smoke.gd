@@ -32,6 +32,7 @@ func _run() -> void:
 	_test_offline_policy()
 	_test_world_director()
 	_test_faction_director()
+	_test_hub_travel_and_activities()
 	_test_cria_live()
 	_test_combat_catalog()
 	_test_save_roundtrip()
@@ -39,7 +40,7 @@ func _run() -> void:
 
 func _disable_audio() -> void:
 	var audio_manager: Node = root.get_node_or_null("AudioManager")
-	if audio_manager != null and "enabled" in audio_manager:
+	if audio_manager != null:
 		audio_manager.set("enabled", false)
 
 func _test_autoloads() -> void:
@@ -58,6 +59,14 @@ func _test_data_registry() -> void:
 	_assert(not registry.get("story_missions").is_empty(), "Missões narrativas não carregadas")
 	_assert(not registry.get("faction_drama_bible").is_empty(), "Bíblia de facções não carregada")
 	_assert(not registry.get("complete_game_flow").is_empty(), "Fluxo completo não carregado")
+	var hubs: Dictionary = registry.get("hubs_dense").get("hubs", {})
+	_assert(hubs.size() == 4, "Mapa denso não carregou quatro hubs")
+	for hub_id_value in hubs.keys():
+		var hub: Dictionary = hubs[hub_id_value]
+		var scene_path: String = str(hub.get("entry_scene", ""))
+		_assert(ResourceLoader.exists(scene_path), "Hub sem cena de entrada: %s -> %s" % [hub_id_value, scene_path])
+		for activity_id_value in hub.get("activities", []):
+			_assert(not HubActivityManager.get_activity(str(activity_id_value)).is_empty(), "Hub referencia atividade inexistente: %s" % activity_id_value)
 
 func _collect_scene_paths(directory: String, output: Array[String]) -> void:
 	var dir: DirAccess = DirAccess.open(directory)
@@ -80,7 +89,7 @@ func _test_all_scenes_load() -> void:
 	var scene_paths: Array[String] = []
 	_collect_scene_paths("res://scenes", scene_paths)
 	scene_paths.sort()
-	_assert(scene_paths.size() >= 5, "Poucas cenas encontradas: %s" % scene_paths.size())
+	_assert(scene_paths.size() >= 8, "Poucas cenas encontradas: %s" % scene_paths.size())
 	for scene_path in scene_paths:
 		_assert(ResourceLoader.exists(scene_path), "Cena não existe para ResourceLoader: %s" % scene_path)
 		var resource: Resource = load(scene_path)
@@ -104,6 +113,9 @@ func _test_offline_policy() -> void:
 	var nft_manager: Node = root.get_node_or_null("NFTManager")
 	if nft_manager != null:
 		_assert(str(nft_manager.get("_backend_url")) == "", "NFTManager iniciou com backend remoto ativo")
+		for item_value in nft_manager.get("catalog").get("items", []):
+			var asset_path: String = str(item_value.get("asset_path", ""))
+			_assert(ResourceLoader.exists(asset_path), "Colecionável sem asset importável: %s" % asset_path)
 
 func _test_world_director() -> void:
 	var director: Node = root.get_node_or_null("WorldDirectorManager")
@@ -135,17 +147,35 @@ func _test_faction_director() -> void:
 	_assert(after.get("champions", {}).size() == 7, "Campeões das facções incompletos")
 	_assert(after.get("pressure", {}).size() == 5, "Eixos de Pressão Regional incompletos")
 
+func _test_hub_travel_and_activities() -> void:
+	WorldState.reset_new_game()
+	WorldState.money = 2000
+	WorldState.energy = 100.0
+	WorldMapManager.reset()
+	for hub_id in ["itubera", "salvador", "zambiapunga", "camamu_manguezal"]:
+		var travel: Dictionary = WorldMapManager.travel_to(hub_id)
+		_assert(bool(travel.get("ok", false)), "Falha ao viajar para %s: %s" % [hub_id, travel.get("message", "")])
+		if not bool(travel.get("ok", false)):
+			continue
+		var activities: Array = HubActivityManager.get_available_for_hub(hub_id)
+		_assert(not activities.is_empty(), "Hub sem atividades executáveis: %s" % hub_id)
+		var activity_id: String = str(activities[0].get("id", ""))
+		_assert(activity_id != "", "Atividade do hub sem ID: %s" % hub_id)
+		if activity_id != "":
+			WorldState.money = 2000
+			WorldState.energy = 100.0
+			var result: Dictionary = HubActivityManager.execute_activity(activity_id)
+			_assert(bool(result.get("ok", false)), "Atividade falhou em %s: %s" % [hub_id, result.get("message", "")])
+
 func _test_cria_live() -> void:
 	var manager: Node = root.get_node_or_null("CriaLiveManager")
 	if manager == null:
 		return
-	if manager.has_method("reset_feed"):
-		manager.call("reset_feed")
 	var before: int = int(manager.call("get_feed").size()) if manager.has_method("get_feed") else 0
 	if manager.has_method("create_faction_post"):
-		manager.call("create_faction_post", "terreiro_da_luta", "smoke", "Auditoria do Terreiro concluída.", {"alcance": 1.0, "credibilidade": 1.0})
+		manager.call("create_faction_post", "terreiro", "Auditoria do Terreiro concluída.", "smoke", {"reach": 1.0, "credibility": 1.0})
 	var after: int = int(manager.call("get_feed").size()) if manager.has_method("get_feed") else before
-	_assert(after >= before, "Cria Live perdeu posts durante a operação")
+	_assert(after == before + 1, "Cria Live não criou exatamente um post de facção")
 
 func _test_combat_catalog() -> void:
 	var registry: Node = root.get_node_or_null("DataRegistry")
