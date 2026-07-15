@@ -1,0 +1,59 @@
+name: Faction Director QA
+
+on:
+  push:
+    paths:
+      - "data/factions/**"
+      - "data/world/faction_territories_v02.json"
+      - "src/autoloads/FactionManager.gd"
+      - "src/autoloads/FactionDirectorManager.gd"
+      - "src/autoloads/FactionAIPlanBridge.gd"
+      - "src/autoloads/CriaLiveManager.gd"
+      - "src/autoloads/SaveManager.gd"
+      - "src/autoloads/SignalBus.gd"
+      - "tests/test_faction_director_data.py"
+      - "tests/faction_director_smoke.gd"
+      - "project.godot"
+  pull_request:
+    paths:
+      - "data/factions/**"
+      - "data/world/faction_territories_v02.json"
+      - "src/autoloads/FactionManager.gd"
+      - "src/autoloads/FactionDirectorManager.gd"
+      - "src/autoloads/FactionAIPlanBridge.gd"
+      - "src/autoloads/CriaLiveManager.gd"
+      - "src/autoloads/SaveManager.gd"
+      - "src/autoloads/SignalBus.gd"
+      - "tests/test_faction_director_data.py"
+      - "tests/faction_director_smoke.gd"
+      - "project.godot"
+
+jobs:
+  faction-data:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install pytest
+      - run: pytest -q tests/test_faction_director_data.py
+      - run: python tools/cria_forge/cria_forge.py validate
+
+  faction-godot-smoke:
+    needs: faction-data
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Download Godot 4.2.2
+        run: |
+          curl -L --fail --retry 3 \
+            -o godot.zip \
+            https://github.com/godotengine/godot/releases/download/4.2.2-stable/Godot_v4.2.2-stable_linux.x86_64.zip
+          unzip -q godot.zip
+          mv Godot_v4.2.2-stable_linux.x86_64 godot
+          chmod +x godot
+      - name: Import and parse
+        run: ./godot --headless --editor --path . --quit
+      - name: Run faction simulation smoke
+        run: ./godot --headless --path . --script res://tests/faction_director_smoke.gd
