@@ -16,7 +16,7 @@ concurrency:
 jobs:
   validate:
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 15
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -43,8 +43,40 @@ jobs:
       - name: Validate complete repository
         run: python tools/validate_complete_game.py
 
+      - name: Validate runtime contracts
+        run: python tools/validate_runtime_contracts.py
+
+      - name: Validate release readiness
+        run: python tools/validate_release_readiness.py
+
       - name: Generate asset manifest
         run: node tools/node/generate_asset_manifest.mjs
 
+      - name: Generate audiovisual production queue
+        run: python tools/ai_asset_pipeline/build_production_queue_v02.py
+
       - name: Ensure generated manifest is valid JSON
         run: python -m json.tool production/generated/ASSET_MANIFEST.json > /dev/null
+
+      - name: Validate generated JSONL queue
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          path = Path('tools/ai_asset_pipeline/generated_queue/production_queue_v02.jsonl')
+          rows = [json.loads(line) for line in path.read_text(encoding='utf-8').splitlines() if line.strip()]
+          assert len(rows) >= 100, f'fila audiovisual incompleta: {len(rows)} tarefas'
+          ids = [row['task_id'] for row in rows]
+          assert len(ids) == len(set(ids)), 'task_id duplicado na fila audiovisual'
+          print({'ok': True, 'tasks': len(rows)})
+          PY
+
+      - name: Upload generated production manifests
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: cria-production-manifests
+          path: |
+            production/generated/ASSET_MANIFEST.json
+            tools/ai_asset_pipeline/generated_queue/production_queue_v02.jsonl
+          if-no-files-found: warn
