@@ -15,6 +15,7 @@ var failures: Array[String] = []
 var checks: int = 0
 var signal_bus: Node
 var data_registry: Node
+var local_ai_manager: Node
 var world_state: Node
 var save_manager: Node
 var combat_manager: Node
@@ -22,6 +23,11 @@ var career_loop: Node
 var game_flow_manager: Node
 var audio_manager: Node
 var cria_live_manager: Node
+
+var _local_ai_expected_request_id: int = -1
+var _local_ai_received: bool = false
+var _local_ai_text: String = ""
+var _local_ai_source: String = ""
 
 func _initialize() -> void:
 	call_deferred("_run")
@@ -39,6 +45,7 @@ func _run() -> void:
 		audio_manager.set("enabled", false)
 	_test_autoloads()
 	_test_data_registry()
+	await _test_local_ai_fallback()
 	await _test_scene_loading()
 	_test_save_roundtrip()
 	_test_combat_domain()
@@ -50,6 +57,7 @@ func _run() -> void:
 func _resolve_autoloads() -> void:
 	signal_bus = root.get_node_or_null("SignalBus")
 	data_registry = root.get_node_or_null("DataRegistry")
+	local_ai_manager = root.get_node_or_null("LocalAIManager")
 	world_state = root.get_node_or_null("WorldState")
 	save_manager = root.get_node_or_null("SaveManager")
 	combat_manager = root.get_node_or_null("CombatManager")
@@ -62,6 +70,7 @@ func _test_autoloads() -> void:
 	var nodes: Dictionary = {
 		"SignalBus": signal_bus,
 		"DataRegistry": data_registry,
+		"LocalAIManager": local_ai_manager,
 		"WorldState": world_state,
 		"SaveManager": save_manager,
 		"CombatManager": combat_manager,
@@ -82,9 +91,46 @@ func _test_data_registry() -> void:
 	var ruan: Dictionary = data_registry.call("get_character", "ruan_macacao")
 	var arena: Dictionary = data_registry.call("get_arena", "terreiro_da_luta")
 	var techniques: Dictionary = data_registry.get("techniques")
+	var local_ai_config: Dictionary = data_registry.get("local_ai_config")
+	var dialogue_fallbacks: Dictionary = data_registry.get("ai_dialogue_fallbacks")
 	_assert(not ruan.is_empty(), "Ruan Macacao nao foi carregado")
 	_assert(not arena.is_empty(), "Terreiro da Luta nao foi carregado")
 	_assert(techniques.size() >= 10, "Catalogo principal possui menos de 10 tecnicas")
+	_assert(not local_ai_config.is_empty(), "Configuracao da IA local nao foi carregada")
+	_assert(not dialogue_fallbacks.is_empty(), "Dialogos offline de fallback nao foram carregados")
+	_assert(not bool(local_ai_config.get("runtime_policy", {}).get("combat_llm_allowed", true)), "LLM foi permitido no combate por engano")
+	_assert(bool(local_ai_config.get("runtime_policy", {}).get("fallback_required", false)), "Fallback offline nao esta marcado como obrigatorio")
+
+func _test_local_ai_fallback() -> void:
+	if local_ai_manager == null:
+		return
+	_assert(not bool(local_ai_manager.call("is_network_backend_enabled")), "IA local iniciou com rede habilitada")
+	var direct_fallback := str(local_ai_manager.call("get_fallback_dialogue", "mestre_dende", "treino", "smoke"))
+	_assert(direct_fallback.length() > 10, "Fallback direto de Mestre Dende esta vazio")
+	_local_ai_received = false
+	_local_ai_text = ""
+	_local_ai_source = ""
+	if not local_ai_manager.dialogue_ready.is_connected(_on_local_ai_test_ready):
+		local_ai_manager.dialogue_ready.connect(_on_local_ai_test_ready)
+	_local_ai_expected_request_id = int(local_ai_manager.call(
+		"request_dialogue",
+		"mestre_dende",
+		"Mestre, por que minha passagem falhou?",
+		{"category": "treino", "location": "terreiro_da_luta"}
+	))
+	await process_frame
+	_assert(_local_ai_received, "IA local desligada nao entregou fallback assíncrono")
+	_assert(_local_ai_text.length() > 10, "Fallback assíncrono retornou texto vazio")
+	_assert(_local_ai_source == "fallback_offline", "IA local desligada retornou fonte inesperada: %s" % _local_ai_source)
+	if local_ai_manager.dialogue_ready.is_connected(_on_local_ai_test_ready):
+		local_ai_manager.dialogue_ready.disconnect(_on_local_ai_test_ready)
+
+func _on_local_ai_test_ready(request_id: int, npc_id: String, text: String, source: String) -> void:
+	if request_id != _local_ai_expected_request_id or npc_id != "mestre_dende":
+		return
+	_local_ai_received = true
+	_local_ai_text = text
+	_local_ai_source = source
 
 func _test_scene_loading() -> void:
 	for scene_path in REQUIRED_SCENES:
