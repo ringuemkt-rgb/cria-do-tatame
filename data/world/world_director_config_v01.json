@@ -1,0 +1,154 @@
+{
+  "version": "1.0.0",
+  "world_seed": 26072026,
+  "time_blocks": [
+    "manha",
+    "tarde",
+    "noite",
+    "madrugada"
+  ],
+  "memory_limit": 16,
+  "max_new_events_per_tick": 1,
+  "runtime_policy": {
+    "offline_first": true,
+    "remote_ai_enabled_by_default": false,
+    "combat_llm_allowed": false,
+    "direct_frame_control_allowed": false,
+    "canonical_mutation_allowed": false,
+    "fallback_required": true,
+    "nft_required_for_gameplay": false
+  },
+  "remote_ai": {
+    "interval_ticks": 3,
+    "timeout_seconds": 8.0,
+    "proxy_required": true,
+    "api_keys_in_apk_forbidden": true
+  },
+  "faction_pressure": {
+    "os_aleluia": 0.15,
+    "la_ele_mil_vezes": 0.1,
+    "nos_tem_um_molho": 0.2
+  },
+  "economy": {
+    "base_multiplier_by_hub": {
+      "terreiro_da_luta": 0.9,
+      "itubera": 0.95,
+      "salvador": 1.2,
+      "zambiapunga": 1.05,
+      "camamu_manguezal": 0.85
+    },
+    "weather_multipliers": {
+      "sol_forte": 1.0,
+      "nublado_quente": 1.0,
+      "chuva_passageira": 1.04,
+      "temporal_tropical": 1.18,
+      "garoa_mangue": 1.02,
+      "neblina_mangue": 1.08
+    },
+    "event_multipliers": {
+      "queda_energia_itubera": 1.1,
+      "festival_zambiapunga": 0.92,
+      "mare_alta_manguezal": 1.08,
+      "blitz_transporte": 1.15
+    }
+  },
+  "rival_strategy_profiles": {
+    "davi_relampago": {
+      "strategies": [
+        {
+          "strategy_id": "tempo_quebrado",
+          "aggression": 0.62,
+          "risk_tolerance": 0.45,
+          "gas_budget": 0.82,
+          "preferred_action": "arm_drag"
+        },
+        {
+          "strategy_id": "contra_pressao",
+          "aggression": 0.48,
+          "risk_tolerance": 0.35,
+          "gas_budget": 0.9,
+          "preferred_action": "sprawl"
+        },
+        {
+          "strategy_id": "rajada_curta",
+          "aggression": 0.78,
+          "risk_tolerance": 0.66,
+          "gas_budget": 0.64,
+          "preferred_action": "torreando"
+        }
+      ]
+    },
+    "cassio_molho": {
+      "strategies": [
+        {
+          "strategy_id": "pressao_de_palco",
+          "aggression": 0.86,
+          "risk_tolerance": 0.68,
+          "gas_budget": 0.67,
+          "preferred_action": "pressao_cabeca"
+        },
+        {
+          "strategy_id": "quebra_de_moral",
+          "aggression": 0.74,
+          "risk_tolerance": 0.52,
+          "gas_budget": 0.76,
+          "preferred_action": "montada_pesada"
+        }
+      ]
+    },
+    "kenzo_kuroi": {
+      "strategies": [
+        {
+          "strategy_id": "precisao_fria",
+          "aggression": 0.52,
+          "risk_tolerance": 0.24,
+          "gas_budget": 0.93,
+          "preferred_action": "grip_de_ferro"
+        },
+        {
+          "strategy_id": "armadilha_silenciosa",
+          "aggression": 0.58,
+          "risk_tolerance": 0.32,
+          "gas_budget": 0.88,
+          "preferred_action": "arm_drag"
+        }
+      ]
+    },
+    "leoa_quilombola": {
+      "strategies": [
+        {
+          "strategy_id": "raiz_resiliente",
+          "aggression": 0.47,
+          "risk_tolerance": 0.31,
+          "gas_budget": 0.94,
+          "preferred_action": "raspagem_borboleta"
+        },
+        {
+          "strategy_id": "lama_e_base",
+          "aggression": 0.54,
+          "risk_tolerance": 0.38,
+          "gas_budget": 0.87,
+          "preferred_action": "raspagem_tesoura"
+        }
+      ]
+    },
+    "oni_da_lapa": {
+      "strategies": [
+        {
+          "strategy_id": "peso_sem_pressa",
+          "aggression": 0.72,
+          "risk_tolerance": 0.3,
+          "gas_budget": 0.88,
+          "preferred_action": "quebra_base"
+        },
+        {
+          "strategy_id": "caos_controlado",
+          "aggression": 0.92,
+          "risk_tolerance": 0.82,
+          "gas_budget": 0.63,
+          "preferred_action": "baiana"
+        }
+      ]
+    }
+  }
+}
