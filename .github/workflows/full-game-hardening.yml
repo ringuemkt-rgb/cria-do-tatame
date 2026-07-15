@@ -1,0 +1,221 @@
+name: Full Game Hardening
+
+on:
+  push:
+    branches:
+      - audit/full-game-hardening-2026-07
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  static-and-python:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install audit tools
+        run: python -m pip install --upgrade pip pytest ruff
+      - name: Full repository audit
+        run: python tools/audit_full_game.py
+      - name: Existing structural validators
+        run: |
+          python tools/cria_forge/cria_forge.py validate
+          python tools/validate_complete_game.py
+          python tools/validate_runtime_contracts.py
+      - name: Python compile check
+        run: python -m compileall -q tools tests
+      - name: Ruff critical errors
+        run: ruff check tools tests --select E9,F63,F7,F82
+      - name: Run all Python tests
+        run: pytest -q
+      - name: Upload static reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: full-game-static-audit
+          path: |
+            reports/full_game_audit/
+            reports/runtime_audit/
+            reports/cria_forge/
+          if-no-files-found: ignore
+
+  godot-runtime:
+    needs: static-and-python
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Download Godot 4.2.2
+        run: |
+          curl -L --fail --retry 3 \
+            -o godot.zip \
+            https://github.com/godotengine/godot/releases/download/4.2.2-stable/Godot_v4.2.2-stable_linux.x86_64.zip
+          unzip -q godot.zip
+          mv Godot_v4.2.2-stable_linux.x86_64 godot
+          chmod +x godot
+          ./godot --version
+      - name: Prepare logs
+        run: mkdir -p reports/full_game_audit
+      - name: Import and parse every project resource
+        shell: bash
+        run: |
+          set -o pipefail
+          timeout 180 ./godot --headless --editor --path . --import 2>&1 | tee reports/full_game_audit/godot_import.log
+      - name: Existing runtime smoke
+        shell: bash
+        run: |
+          set -o pipefail
+          ./godot --headless --path . --script res://tests/runtime_smoke.gd 2>&1 | tee reports/full_game_audit/runtime_smoke.log
+      - name: Faction runtime smoke
+        shell: bash
+        run: |
+          set -o pipefail
+          ./godot --headless --path . --script res://tests/faction_director_smoke.gd 2>&1 | tee reports/full_game_audit/faction_smoke.log
+      - name: Full game smoke
+        shell: bash
+        run: |
+          set -o pipefail
+          ./godot --headless --path . --script res://tests/full_game_smoke.gd 2>&1 | tee reports/full_game_audit/full_game_smoke.log
+      - name: Reject hidden Godot runtime errors
+        if: always()
+        shell: bash
+        run: |
+          if grep -RInE "SCRIPT ERROR|Parse Error|Invalid call|Failed loading resource|Cannot get class" reports/full_game_audit/*.log; then
+            echo "Godot emitted a hidden runtime/parse error"
+            exit 1
+          fi
+      - name: Upload Godot logs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: full-game-godot-logs
+          path: reports/full_game_audit/
+          if-no-files-found: warn
+
+  android-debug-export:
+    needs: godot-runtime
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "17"
+      - name: Download Godot and Android export templates
+        run: |
+          curl -L --fail --retry 3 \
+            -o godot.zip \
+            https://github.com/godotengine/godot/releases/download/4.2.2-stable/Godot_v4.2.2-stable_linux.x86_64.zip
+          unzip -q godot.zip
+          mv Godot_v4.2.2-stable_linux.x86_64 godot
+          chmod +x godot
+          curl -L --fail --retry 3 \
+            -o templates.tpz \
+            https://github.com/godotengine/godot/releases/download/4.2.2-stable/Godot_v4.2.2-stable_export_templates.tpz
+          mkdir -p "$HOME/.local/share/godot/export_templates/4.2.2.stable"
+          unzip -q templates.tpz -d templates_unpack
+          cp -a templates_unpack/templates/. "$HOME/.local/share/godot/export_templates/4.2.2.stable/"
+          test -s "$HOME/.local/share/godot/export_templates/4.2.2.stable/android_debug.apk"
+      - name: Configure Godot Android editor settings
+        run: bash tools/build/configure_godot_android_ci.sh
+      - name: Import before export
+        run: timeout 180 ./godot --headless --editor --path . --import
+      - name: Export Android Debug APK
+        id: export_apk
+        shell: bash
+        env:
+          GODOT_ANDROID_KEYSTORE_DEBUG_PATH: /home/runner/.local/share/godot/keystores/debug.keystore
+          GODOT_ANDROID_KEYSTORE_DEBUG_USER: androiddebugkey
+          GODOT_ANDROID_KEYSTORE_DEBUG_PASSWORD: android
+        run: |
+          set -o pipefail
+          ./godot --headless --verbose --path . \
+            --export-debug "Android Debug" builds/android/CriaDoTatame-debug.apk \
+            2>&1 | tee reports/full_game_audit/android_export.log
+          if grep -q "^ERROR:" reports/full_game_audit/android_export.log; then
+            echo "Godot reported an export error"
+            exit 1
+          fi
+          test -s builds/android/CriaDoTatame-debug.apk
+      - name: Upload Android export diagnostics
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: android-export-diagnostics
+          path: reports/full_game_audit/android_export.log
+          if-no-files-found: warn
+      - name: Upload APK candidate before inspection
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: CriaDoTatame-APK-Candidate
+          path: builds/android/CriaDoTatame-debug.apk
+          if-no-files-found: warn
+      - name: Validate APK structure and package
+        shell: bash
+        run: |
+          set -euxo pipefail
+          APK="builds/android/CriaDoTatame-debug.apk"
+          ls -lh "$APK"
+          APK_SIZE="$(stat -c%s "$APK")"
+          echo "apk_size=$APK_SIZE"
+          test "$APK_SIZE" -gt 1048576
+          unzip -t "$APK"
+          unzip -l "$APK" | grep -q "lib/arm64-v8a/libgodot_android.so"
+          sha256sum "$APK" | tee builds/android/CriaDoTatame-debug.apk.sha256.txt
+
+          APKANALYZER="$(command -v apkanalyzer || true)"
+          if [ -z "$APKANALYZER" ]; then
+            APKANALYZER="$(find "$ANDROID_HOME" -type f -name apkanalyzer | head -n 1)"
+          fi
+          test -n "$APKANALYZER"
+          test -x "$APKANALYZER"
+          PACKAGE_ID="$("$APKANALYZER" manifest application-id "$APK")"
+          VERSION_NAME="$("$APKANALYZER" manifest version-name "$APK")"
+          MIN_SDK="$("$APKANALYZER" manifest min-sdk "$APK")"
+          TARGET_SDK="$("$APKANALYZER" manifest target-sdk "$APK")"
+          {
+            echo "package: name='$PACKAGE_ID'"
+            echo "versionName='$VERSION_NAME'"
+            echo "minSdkVersion='$MIN_SDK'"
+            echo "targetSdkVersion='$TARGET_SDK'"
+            echo "architecture='arm64-v8a'"
+          } | tee reports/full_game_audit/apk_badging.txt
+          test "$PACKAGE_ID" = "com.criadotatame.pressao"
+          test -n "$VERSION_NAME"
+          test "$MIN_SDK" -ge 21
+          test "$TARGET_SDK" -ge 34
+
+          AAPT="$(find "$ANDROID_HOME/build-tools" -type f -name aapt | sort -V | tail -n 1)"
+          if [ -n "$AAPT" ] && [ -x "$AAPT" ]; then
+            set +e
+            "$AAPT" dump badging "$APK" > reports/full_game_audit/aapt_badging_diagnostic.txt 2>&1
+            echo "aapt_exit=$?" >> reports/full_game_audit/aapt_badging_diagnostic.txt
+            set -e
+          fi
+      - name: Upload post-build inspection
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: android-inspection-diagnostics
+          path: |
+            builds/android/CriaDoTatame-debug.apk.sha256.txt
+            reports/full_game_audit/apk_badging.txt
+            reports/full_game_audit/aapt_badging_diagnostic.txt
+          if-no-files-found: warn
+      - name: Upload validated APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: CriaDoTatame-Android-Debug
+          path: |
+            builds/android/CriaDoTatame-debug.apk
+            builds/android/CriaDoTatame-debug.apk.sha256.txt
+            reports/full_game_audit/android_export.log
+            reports/full_game_audit/apk_badging.txt
+          if-no-files-found: error

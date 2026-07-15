@@ -152,15 +152,17 @@ func _initialize_conflicts() -> void:
 		if typeof(rivalry_value) != TYPE_DICTIONARY:
 			continue
 		var rivalry: Dictionary = rivalry_value
-		var a := str(rivalry.get("a", ""))
-		var b := str(rivalry.get("b", ""))
+		var a: String = str(rivalry.get("a", ""))
+		var b: String = str(rivalry.get("b", ""))
 		if a == "" or b == "" or a == b:
 			continue
-		var key := _conflict_key(a, b)
+		var key: String = _conflict_key(a, b)
+		var first: String = a if a < b else b
+		var second: String = b if a < b else a
 		conflicts[key] = {
 			"id": key,
-			"a": min(a, b),
-			"b": max(a, b),
+			"a": first,
+			"b": second,
 			"stage": str(rivalry.get("stage", "desconfianca")),
 			"intensity": clamp(float(rivalry.get("intensity", 0.0)), 0.0, 100.0),
 			"history": []

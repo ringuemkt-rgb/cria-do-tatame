@@ -17,6 +17,14 @@ signal grip_integrity_broken(character_id)
 signal technical_phase_changed(phase)
 signal submission_phase_changed(phase)
 
+# Contratos de compatibilidade PT-BR usados por módulos e conteúdo legado.
+# Mantidos explicitamente para que listeners antigos não falhem em silêncio.
+signal combate_iniciado(opponent_id)
+signal combate_finalizado(result)
+signal estado_combate_mudou(new_state, old_state)
+signal recurso_mudou(fighter_id, resource_name, value, max_value)
+signal tecnica_executada(character_id, technique_id, success)
+
 signal week_advanced(week, day)
 signal week_completed(week_number)
 signal day_advanced(day_name, week_number)
@@ -28,11 +36,15 @@ signal sponsor_contract_signed(sponsor_id)
 signal sponsor_contract_broken(sponsor_id)
 signal crisis_triggered(crisis_id)
 
+signal dia_avancou(day_name, week_number)
+
 signal reputation_changed(axis, value, reason)
 signal reputation_delta(axis, delta)
 signal cria_live_post_created(post)
 signal cria_live_post_generated(post_data)
 signal cria_live_metrics_changed(faction_id, metrics)
+
+signal reputacao_mudou(axis, delta, new_value)
 
 signal faction_relation_changed(faction_id, delta, new_value, reason)
 signal faction_heat_changed(faction_id, delta, new_value, reason)
