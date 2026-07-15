@@ -43,7 +43,8 @@ func reset() -> void:
 	faction_flags = {}
 
 func _ensure_defaults() -> void:
-	for faction_id in ALL_FACTIONS:
+	for faction_id_value in ALL_FACTIONS:
+		var faction_id: String = str(faction_id_value)
 		if not relations.has(faction_id):
 			relations[faction_id] = float(DEFAULT_RELATIONS.get(faction_id, 0.0))
 		if not heat.has(faction_id):
@@ -51,14 +52,15 @@ func _ensure_defaults() -> void:
 
 func apply_choice_effects(effects: Dictionary) -> Dictionary:
 	_ensure_defaults()
-	for faction_id in ALL_FACTIONS:
+	for faction_id_value in ALL_FACTIONS:
+		var faction_id: String = str(faction_id_value)
 		if effects.has(faction_id):
 			apply_relation_delta(faction_id, float(effects[faction_id]), "choice_effect")
-		var heat_key := faction_id + "_heat"
+		var heat_key: String = faction_id + "_heat"
 		if effects.has(heat_key):
 			apply_heat_delta(faction_id, float(effects[heat_key]), "choice_effect")
 	for axis_value in ["honra", "hype", "sombra", "legado", "moral", "raiz"]:
-		var axis := str(axis_value)
+		var axis: String = str(axis_value)
 		if effects.has(axis):
 			WorldState.modify_reputation(axis, float(effects[axis]))
 	if effects.has("money"):
@@ -70,34 +72,34 @@ func apply_choice_effects(effects: Dictionary) -> Dictionary:
 func apply_mission_choice(choice: Dictionary) -> Dictionary:
 	return apply_choice_effects(choice.get("effects", {}))
 
-func apply_relation_delta(faction_id: String, delta: float, reason := "system") -> float:
+func apply_relation_delta(faction_id: String, delta: float, reason: String = "system") -> float:
 	_ensure_defaults()
 	if not relations.has(faction_id):
 		return 0.0
-	var old_value := float(relations[faction_id])
-	var new_value := clamp(old_value + delta, -100.0, 100.0)
+	var old_value: float = float(relations[faction_id])
+	var new_value: float = clampf(old_value + delta, -100.0, 100.0)
 	relations[faction_id] = new_value
 	if SignalBus.has_signal("faction_relation_changed"):
 		SignalBus.faction_relation_changed.emit(faction_id, delta, new_value, reason)
 	return new_value
 
-func apply_heat_delta(faction_id: String, delta: float, reason := "system") -> float:
+func apply_heat_delta(faction_id: String, delta: float, reason: String = "system") -> float:
 	_ensure_defaults()
 	if not heat.has(faction_id):
 		return 0.0
-	var old_value := float(heat[faction_id])
-	var new_value := clamp(old_value + delta, 0.0, 100.0)
+	var old_value: float = float(heat[faction_id])
+	var new_value: float = clampf(old_value + delta, 0.0, 100.0)
 	heat[faction_id] = new_value
 	if SignalBus.has_signal("faction_heat_changed"):
 		SignalBus.faction_heat_changed.emit(faction_id, delta, new_value, reason)
 	return new_value
 
-func set_flag(faction_id: String, flag_id: String, value = true) -> void:
+func set_flag(faction_id: String, flag_id: String, value: Variant = true) -> void:
 	var faction_data: Dictionary = faction_flags.get(faction_id, {})
 	faction_data[flag_id] = value
 	faction_flags[faction_id] = faction_data
 
-func get_flag(faction_id: String, flag_id: String, fallback = false):
+func get_flag(faction_id: String, flag_id: String, fallback: Variant = false) -> Variant:
 	return faction_flags.get(faction_id, {}).get(flag_id, fallback)
 
 func get_relation(faction_id: String) -> float:
@@ -109,7 +111,7 @@ func get_heat(faction_id: String) -> float:
 	return float(heat.get(faction_id, 0.0))
 
 func get_status_label(faction_id: String) -> String:
-	var value := get_relation(faction_id)
+	var value: float = get_relation(faction_id)
 	if value >= 70.0:
 		return "aliado_firme"
 	if value >= 50.0:
@@ -135,9 +137,11 @@ func load_from_dict(data: Dictionary) -> void:
 	heat = DEFAULT_HEAT.duplicate(true)
 	var saved_relations: Dictionary = data.get("relations", {})
 	var saved_heat: Dictionary = data.get("heat", {})
-	for faction_id in saved_relations.keys():
-		relations[str(faction_id)] = clamp(float(saved_relations[faction_id]), -100.0, 100.0)
-	for faction_id in saved_heat.keys():
-		heat[str(faction_id)] = clamp(float(saved_heat[faction_id]), 0.0, 100.0)
+	for faction_id_value in saved_relations.keys():
+		var faction_id: String = str(faction_id_value)
+		relations[faction_id] = clampf(float(saved_relations[faction_id_value]), -100.0, 100.0)
+	for faction_id_value in saved_heat.keys():
+		var faction_id: String = str(faction_id_value)
+		heat[faction_id] = clampf(float(saved_heat[faction_id_value]), 0.0, 100.0)
 	faction_flags = data.get("faction_flags", {}).duplicate(true)
 	_ensure_defaults()
