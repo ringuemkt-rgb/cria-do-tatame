@@ -1,22 +1,26 @@
 name: Apply Faction Strict Types
 
 on:
-  push:
+  pull_request:
     branches:
-      - feature/faction-director-v2
+      - main
     paths:
       - "tools/fix_faction_strict_types.py"
+      - ".github/workflows/faction-strict-type-fix.yml"
 
 permissions:
   contents: write
+  pull-requests: read
 
 jobs:
   apply:
+    if: github.event.pull_request.head.repo.full_name == github.repository
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
         with:
-          ref: feature/faction-director-v2
+          ref: ${{ github.event.pull_request.head.ref }}
+          fetch-depth: 0
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
@@ -37,4 +41,4 @@ jobs:
                   src/combat/DaviAIController.gd \
                   tests/faction_director_smoke.gd
           git commit -m "fix(factions): resolver tipagem estrita do Godot"
-          git push origin HEAD:feature/faction-director-v2
+          git push origin HEAD:${{ github.event.pull_request.head.ref }}
