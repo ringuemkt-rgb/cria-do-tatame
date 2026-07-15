@@ -71,11 +71,11 @@ VALID_TRANSITIONS = {
 
 SCENE_NODE_CONTRACTS = {
     "scenes/main_menu/MainMenu.tscn": [
-        "Content/MenuButtons/NewGame",
-        "Content/MenuButtons/Continue",
-        "Content/MenuButtons/Options",
-        "Content/OptionsPanel/AudioToggle",
-        "Content/OptionsPanel/Back",
+        "ContentPanel/Content/MenuButtons/NewGame",
+        "ContentPanel/Content/MenuButtons/Continue",
+        "ContentPanel/Content/MenuButtons/Options",
+        "ContentPanel/Content/OptionsPanel/AudioToggle",
+        "ContentPanel/Content/OptionsPanel/Back",
     ],
     "scenes/hubs/TerreiroDaLuta.tscn": [
         "Panel/Status",
