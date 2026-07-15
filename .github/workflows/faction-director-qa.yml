@@ -53,7 +53,22 @@ jobs:
           unzip -q godot.zip
           mv Godot_v4.2.2-stable_linux.x86_64 godot
           chmod +x godot
+      - name: Prepare logs
+        run: mkdir -p reports/faction_director
       - name: Import and parse
-        run: ./godot --headless --editor --path . --quit
+        shell: bash
+        run: |
+          set -o pipefail
+          ./godot --headless --editor --path . --quit 2>&1 | tee reports/faction_director/import.log
       - name: Run faction simulation smoke
-        run: ./godot --headless --path . --script res://tests/faction_director_smoke.gd
+        shell: bash
+        run: |
+          set -o pipefail
+          ./godot --headless --path . --script res://tests/faction_director_smoke.gd 2>&1 | tee reports/faction_director/smoke.log
+      - name: Upload faction logs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: faction-director-logs
+          path: reports/faction_director/
+          if-no-files-found: warn
