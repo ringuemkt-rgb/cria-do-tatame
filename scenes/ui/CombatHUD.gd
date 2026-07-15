@@ -114,8 +114,9 @@ func update_opponent_resources(resources: Dictionary) -> void:
 	_update_bar("TopBar/OpponentPanel/OpponentGas", resources.get("gas", 100), 100)
 
 func update_round_timer(seconds_remaining: int, round_index: int, round_total: int = 3) -> void:
-	var minutes := maxi(seconds_remaining, 0) / 60
-	var seconds := maxi(seconds_remaining, 0) % 60
+	var safe_seconds := maxi(seconds_remaining, 0)
+	var minutes := int(safe_seconds / 60)
+	var seconds := safe_seconds % 60
 	_set_label_text("TopBar/TimerLabel", "%02d:%02d" % [minutes, seconds])
 	_set_label_text("TopBar/OpponentPanel/RoundValue", "%d / %d" % [round_index, round_total])
 
@@ -131,14 +132,14 @@ func update_context_actions(actions: Array) -> void:
 			button.visible = false
 			button.disabled = true
 			continue
-		var action_data = actions[index]
+		var action_data: Dictionary = actions[index]
 		button.visible = true
 		button.disabled = not bool(action_data.get("enabled", true))
 		button.text = _format_action_label(action_data)
 		button.tooltip_text = str(action_data.get("description", ""))
 
 func show_message(msg: String, duration: float = 2.0) -> void:
-	var label := get_node_or_null("MessageLabel")
+	var label := get_node_or_null("MessageLabel") as Label
 	if label == null:
 		label = mensagem_label
 	if label == null:
