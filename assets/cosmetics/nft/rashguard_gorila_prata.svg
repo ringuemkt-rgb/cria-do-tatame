@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512">
+  <defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#101319"/><stop offset="1" stop-color="#4a515c"/></linearGradient></defs>
+  <rect width="512" height="512" rx="48" fill="#090b0f"/>
+  <path d="M150 92 84 166l56 74 30-28v208h172V212l30 28 56-74-66-74-70 42h-72z" fill="url(#g)" stroke="#d5d9df" stroke-width="10"/>
+  <circle cx="256" cy="205" r="62" fill="#171c23" stroke="#c7ccd3" stroke-width="8"/>
+  <path d="M218 191q38-52 76 0l-13 55h-50z" fill="#b8bec7"/><path d="M225 208h62M240 235h32" stroke="#101319" stroke-width="10" stroke-linecap="round"/>
+  <text x="256" y="338" fill="#e4e7eb" font-family="sans-serif" font-size="34" font-weight="700" text-anchor="middle">GORILA PRATA</text>
+  <text x="256" y="378" fill="#aeb5bf" font-family="sans-serif" font-size="20" text-anchor="middle">CRIA DO TATAME</text>
+</svg>
