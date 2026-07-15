@@ -289,7 +289,7 @@ func _update_economy() -> void:
 func _maybe_request_ai_plan(snapshot: Dictionary) -> void:
 	if not is_ai_proxy_enabled() or _ai_request_active:
 		return
-	var interval := max(1, int(config.get("remote_ai", {}).get("interval_ticks", 3)))
+	var interval: int = maxi(1, int(config.get("remote_ai", {}).get("interval_ticks", 3)))
 	if int(state.get("tick", 0)) - int(state.get("last_ai_plan_tick", -999)) < interval:
 		return
 	var payload := {"campaign_id": WorldState.campaign_id, "snapshot": snapshot, "constraints": {"combat_llm_allowed": false, "allow_new_major_canon": false, "max_event_nudges": 2, "language": "pt-BR"}}
@@ -431,7 +431,7 @@ func _weighted_pick(weights: Dictionary, rng: RandomNumberGenerator, fallback: S
 	return str(keys.back())
 
 func _trim_memory(memory: Array) -> void:
-	var limit := max(4, int(config.get("memory_limit", 16)))
+	var limit: int = maxi(4, int(config.get("memory_limit", 16)))
 	while memory.size() > limit:
 		memory.pop_front()
 

@@ -143,7 +143,7 @@ func pressure_message() -> String:
 	if last_action != "" and int(seen_player_actions.get(last_action, 0)) >= 3:
 		return "Davi leu a repeticao. Muda o ritmo."
 	for family_value in seen_player_families.keys():
-		var family := str(family_value)
+		var family: String = str(family_value)
 		if int(seen_player_families.get(family, 0)) >= 3:
 			return "Davi percebeu seu padrao de %s." % family.replace("_", " ")
 	return "Davi Relampago esta estudando seu jogo."
@@ -151,12 +151,12 @@ func pressure_message() -> String:
 func chosen_action_label() -> String:
 	if last_chosen_technique == "":
 		return "esperando"
-	var technique := DataRegistry.get_technique(last_chosen_technique)
+	var technique: Dictionary = DataRegistry.get_technique(last_chosen_technique)
 	return str(technique.get("nome", technique.get("name", last_chosen_technique)))
 
 # Compatibilidade com a interface antiga de dica. A decisao real usa choose_technique().
 func choose_response(combat_phase: String, player_resources: Dictionary) -> String:
-	var gas := float(player_resources.get("gas", 100))
+	var gas: float = float(player_resources.get("gas", 100))
 	if _player_is_repeating("baiana"):
 		return "sprawl"
 	if _player_is_repeating("grip_de_ferro"):

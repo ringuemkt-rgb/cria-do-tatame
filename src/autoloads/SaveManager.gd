@@ -1,6 +1,6 @@
 extends Node
 
-const SAVE_VERSION := 3
+const SAVE_VERSION := 4
 const SAVE_PREFIX := "user://cria_save_"
 const SAVE_SUFFIX := ".json"
 const SAVE_PATH := "user://savegame.json"
@@ -15,6 +15,10 @@ func save_game(slot_id := 1) -> bool:
 		data["mission_state"] = MissionManager.to_dict()
 	if has_node("/root/FactionManager"):
 		data["faction_state"] = FactionManager.to_dict()
+	if has_node("/root/FactionDirectorManager"):
+		data["faction_director_state"] = FactionDirectorManager.to_dict()
+	if has_node("/root/CriaLiveManager"):
+		data["cria_live_state"] = CriaLiveManager.to_dict()
 	if has_node("/root/WorldMapManager"):
 		data["world_map_state"] = WorldMapManager.to_dict()
 	if has_node("/root/GearManager"):
@@ -89,8 +93,12 @@ func load_game(slot_id := 1) -> bool:
 		TinkerBondManager.load_from_dict(parsed["tinker_bond"])
 	if parsed.has("mission_state") and has_node("/root/MissionManager"):
 		MissionManager.load_from_dict(parsed["mission_state"])
-	if parsed.has("faction_state") and has_node("/root/FactionManager"):
-		FactionManager.load_from_dict(parsed["faction_state"])
+	if has_node("/root/FactionManager"):
+		FactionManager.load_from_dict(parsed.get("faction_state", {}))
+	if has_node("/root/FactionDirectorManager"):
+		FactionDirectorManager.load_from_dict(parsed.get("faction_director_state", {}))
+	if has_node("/root/CriaLiveManager"):
+		CriaLiveManager.load_from_dict(parsed.get("cria_live_state", {}))
 	if parsed.has("world_map_state") and has_node("/root/WorldMapManager"):
 		WorldMapManager.load_from_dict(parsed["world_map_state"])
 	if parsed.has("gear_state") and has_node("/root/GearManager"):
