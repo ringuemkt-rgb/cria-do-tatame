@@ -33,6 +33,18 @@ signal reputation_delta(axis, delta)
 signal cria_live_post_created(post)
 signal cria_live_post_generated(post_data)
 
+signal world_tick_completed(snapshot)
+signal weather_changed(region_id, old_weather, new_weather)
+signal world_event_triggered(event_data)
+signal npc_routine_changed(npc_id, routine)
+signal rival_strategy_updated(rival_id, directive)
+signal world_economy_changed(multipliers)
+signal world_ai_plan_applied(plan)
+signal world_ai_plan_failed(reason)
+
+signal nft_entitlements_synced(entitlements, source)
+signal nft_entitlement_sync_failed(reason)
+
 signal save_requested(slot_id)
 signal save_completed(slot_id)
 signal save_loaded(slot_id)
