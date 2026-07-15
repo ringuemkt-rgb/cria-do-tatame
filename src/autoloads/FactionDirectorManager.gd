@@ -184,7 +184,7 @@ func _initialize_champions() -> void:
 		var martial_power := float(faction.get("power", {}).get("forca_marcial", 40.0))
 		champions[faction_id] = {
 			"fighter_id": fighter_id,
-			"level": max(1.0, martial_power / 10.0),
+			"level": maxf(1.0, martial_power / 10.0),
 			"adaptation": 0.0,
 			"morale": 70.0,
 			"injury_risk": 0.0,
@@ -380,7 +380,7 @@ func adjust_power(faction_id: String, dimension: String, delta: float, reason :=
 	var faction: Dictionary = state["factions"][faction_id]
 	var power: Dictionary = faction.get("power", {})
 	var old_value := float(power.get(dimension, 0.0))
-	var new_value := clamp(old_value + delta, 0.0, 100.0)
+	var new_value: float = clampf(old_value + delta, 0.0, 100.0)
 	power[dimension] = new_value
 	faction["power"] = power
 	if dimension == "coesao" and new_value < 35.0:
@@ -447,7 +447,7 @@ func _decay_regional_pressure() -> void:
 	var pressure: Dictionary = state.get("pressure", {})
 	for axis_value in _pressure_axes:
 		var axis := str(axis_value)
-		var decay := 0.8 if axis != "desconfianca_comunitaria" else 0.45
+		var decay: float = 0.8 if axis != "desconfianca_comunitaria" else 0.45
 		pressure[axis] = max(0.0, float(pressure.get(axis, 0.0)) - decay)
 	state["pressure"] = pressure
 	_recalculate_pressure_level()
@@ -460,8 +460,8 @@ func _recalculate_pressure_level() -> void:
 		var value := float(pressure.get(str(axis_value), 0.0))
 		peak = max(peak, value)
 		total += value
-	var average := total / max(1.0, float(_pressure_axes.size()))
-	var score := peak * 0.7 + average * 0.3
+	var average: float = total / maxf(1.0, float(_pressure_axes.size()))
+	var score: float = peak * 0.7 + average * 0.3
 	var level := 0
 	if score >= 80.0:
 		level = 5
@@ -487,14 +487,14 @@ func _adjust_conflict(a: String, b: String, delta: float, reason: String) -> voi
 	var conflicts: Dictionary = state.get("conflicts", {})
 	var conflict: Dictionary = conflicts.get(key, {
 		"id": key,
-		"a": min(a, b),
-		"b": max(a, b),
+		"a": a if a < b else b,
+		"b": b if a < b else a,
 		"stage": "desconfianca",
 		"intensity": 0.0,
 		"history": []
 	})
 	var old_stage := str(conflict.get("stage", "desconfianca"))
-	var intensity := clamp(float(conflict.get("intensity", 0.0)) + delta, 0.0, 100.0)
+	var intensity: float = clampf(float(conflict.get("intensity", 0.0)) + delta, 0.0, 100.0)
 	conflict["intensity"] = intensity
 	conflict["stage"] = _stage_for_intensity(intensity, old_stage, delta)
 	var history: Array = conflict.get("history", [])
@@ -660,7 +660,7 @@ func apply_external_pressure(pressure_by_faction: Dictionary) -> void:
 		var faction_id := str(faction_id_value)
 		if not state.get("factions", {}).has(faction_id):
 			continue
-		var delta := clamp(float(pressure_by_faction[faction_id_value]), -3.0, 3.0)
+		var delta: float = clampf(float(pressure_by_faction[faction_id_value]), -3.0, 3.0)
 		if has_node("/root/FactionManager"):
 			FactionManager.apply_heat_delta(faction_id, max(0.0, delta), "world_ai")
 		adjust_power(faction_id, "medo", delta * 0.5, "world_ai")
@@ -782,7 +782,9 @@ func _has_active_operation(faction_id: String) -> bool:
 	return false
 
 func _conflict_key(a: String, b: String) -> String:
-	return "%s|%s" % [min(a, b), max(a, b)]
+	var first: String = a if a < b else b
+	var second: String = b if a < b else a
+	return "%s|%s" % [first, second]
 
 func _rng_for(reason: String) -> RandomNumberGenerator:
 	var rng := RandomNumberGenerator.new()

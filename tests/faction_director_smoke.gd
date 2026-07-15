@@ -39,7 +39,7 @@ func _run() -> void:
 	_assert(not director.call("get_faction", "dragao_vermelho").is_empty(), "Dragao Vermelho ausente")
 	_assert(not director.call("get_faction", "fantasma").is_empty(), "Fantasma ausente")
 
-	var feed_before := cria_live.call("get_feed").size()
+	var feed_before: int = int(cria_live.call("get_feed").size())
 	director.call("advance_faction_week", 2)
 	var after_start: Dictionary = director.call("get_snapshot")
 	_assert(after_start.get("active_operations", []).size() >= 4, "Faccoes nao iniciaram operacoes autonomas")
