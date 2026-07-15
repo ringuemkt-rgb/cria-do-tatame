@@ -2,188 +2,201 @@
 
 Repositório oficial de produção do jogo **Cria do Tatame – Pressão**.
 
-**Gênero:** luta 2D + Action RPG de carreira + Jiu-Jitsu Brasileiro posicional  
-**Engine:** Godot 4.2+  
-**Plataformas-alvo:** Android APK, PC e Web  
-**Visual:** HD Pixel Art 2.5D premium, preto/dourado, Baixo Sul da Bahia  
-**Protagonista canônico:** Ruan “Macacão” Silva  
-**Símbolo:** Gorila Silverback  
-**Frase central:** Ser forte é ser gentil.  
-**Slogan:** De cria pra cria. Luta. Disciplina. Evolução.
-
----
-
-## 1. Objetivo do repositório
-
-Este repositório deve funcionar como **base profissional para Manus AI, Codex, Godot e equipe humana** construírem o jogo completo.
-
-A regra de ouro do projeto:
+- **Gênero:** luta 2D + Action RPG de carreira + Jiu-Jitsu Brasileiro posicional
+- **Engine:** Godot 4.3+; compatibilidade mínima atualmente auditada em Godot 4.2.2
+- **Plataformas-alvo:** Android ARM64 e Windows x86_64
+- **Visual:** HD Pixel Art 2.5D regional premium
+- **Protagonista canônico:** Ruan “Macacão” Silva
+- **Símbolo:** Gorila Silverback
+- **Frase central:** Ser forte é ser gentil.
+- **Slogan:** De cria pra cria. Luta. Disciplina. Evolução.
 
 > Primeiro precisa abrir, rodar, salvar, lutar, avançar a semana e exportar. Depois vem o brilho.
 
-O jogo não é beat’em up genérico. O núcleo é **Jiu-Jitsu como sistema**: base, pegada, pressão, queda, passagem, controle, montada, costas, finalização e consequência moral.
+O núcleo não é um beat’em up genérico. O Jiu-Jitsu é tratado como sistema: base, pegada, pressão, queda, passagem, controle, montada, costas, encerramento técnico e consequência moral.
 
----
+## Fonte única de verdade
 
-## 2. Estrutura principal
+`ringuemkt-rgb/cria-do-tatame` é o único repositório oficial. Protótipos devem existir em branches deste repositório. Godot é o único runtime do produto; ferramentas Node e Python existem apenas para validação, produção de conteúdo e automação.
 
-```txt
+## Estrutura principal
+
+```text
 .
 ├── project.godot
-├── README.md
-├── CHANGELOG.md
+├── export_presets.cfg
 ├── AGENTS.md
 ├── docs/
-│   ├── 00_MASTER_GDD.md
-│   ├── 01_TECHNICAL_ARCHITECTURE.md
-│   ├── 02_COMBAT_BIBLE.md
-│   ├── 03_CHARACTER_BIBLE.md
-│   ├── 04_ARENA_BIBLE.md
-│   ├── 05_ART_DIRECTION.md
-│   ├── 06_AI_LORE_GUARDIAN.md
-│   ├── 07_PRODUCTION_ROADMAP.md
-│   ├── 08_ASSET_PIPELINE.md
-│   └── 09_MANUS_MASTER_PROMPT.md
 ├── data/
-│   ├── characters.json
-│   ├── arenas.json
-│   ├── techniques.json
-│   ├── factions.json
-│   ├── missions.json
-│   ├── dialogues.json
-│   ├── economy.json
-│   ├── progression.json
-│   ├── cria_live_posts.json
-│   └── settings.json
 ├── src/
-│   ├── autoloads/
-│   ├── combat/
-│   ├── characters/
-│   ├── systems/
-│   └── ui/
 ├── scenes/
-│   ├── main_menu/
-│   ├── hubs/
-│   ├── combat/
-│   ├── skill_tree/
-│   ├── story/
-│   └── characters/
 ├── assets/
-│   ├── sprites/
-│   ├── audio/
-│   └── fonts/
 ├── tools/
+│   ├── ai_asset_pipeline/
+│   ├── build/
+│   └── node/
 ├── production/
+├── reports/
 ├── tests/
 └── ai_lore_guardian/
 ```
 
----
+## Abrir no Godot
 
-## 3. Como abrir no Godot
+1. Instale Godot 4.3+.
+2. Clone o repositório.
+3. Abra `project.godot`.
+4. Aguarde a importação.
+5. Rode a cena principal configurada.
 
-1. Instale **Godot 4.2+**.
-2. Clone o repositório:
-
-```bash
+```powershell
 git clone https://github.com/ringuemkt-rgb/cria-do-tatame.git
 cd cria-do-tatame
 ```
 
-3. Abra o arquivo `project.godot` no Godot.
-4. Rode a cena inicial configurada.
+## Qualidade e contratos
 
----
+Requer Node 20+ e Python 3.10+.
 
-## 4. Como validar dados
-
-```bash
-python tools/validate_json.py
-python tools/export_data_report.py
+```powershell
+npm run quality
 ```
 
-Todos os sistemas de conteúdo devem ser **data-driven**. Personagens, arenas, técnicas, missões, facções, diálogos e posts do Cria Live entram por JSON antes de virar lógica fixa.
+O comando valida:
 
----
+- sintaxe JSON;
+- referências entre dados;
+- estrutura obrigatória do jogo;
+- contratos de runtime;
+- prontidão de release;
+- canon do protagonista;
+- manifesto audiovisual;
+- presets e scripts de build.
 
-## 5. Como gerar APK Android
+A CI também executa import/parser e smoke tests Godot headless.
 
-O projeto é Godot-first. O fluxo correto é:
+## Fila audiovisual completa
 
-1. Instalar export templates do Godot.
-2. Configurar Android SDK/JDK.
-3. Configurar `export/export_presets.cfg`.
-4. Rodar export pelo Godot ou script:
+O inventário técnico está em:
 
-```bash
-bash tools/build/build_android.sh
+```text
+data/visual/production_manifest_v02.json
 ```
 
-O script é um ponto de partida. Ajuste o caminho do binário do Godot conforme a máquina.
+Para gerar uma fila JSONL individualizada de personagens, animações sincronizadas, arenas, UI e áudio:
 
----
+```powershell
+npm run assets:queue
+```
 
-## 6. MVP obrigatório
+Saída:
 
-- Main menu funcional.
+```text
+tools/ai_asset_pipeline/generated_queue/production_queue_v02.jsonl
+```
+
+Todo asset final exige preview, metadata, documentação de importação e QA. Concept art não entra diretamente na build.
+
+## Gerar APK Android no Windows
+
+Pré-requisitos:
+
+- Godot 4.3+ e export templates da mesma versão;
+- JDK 17 configurado no Godot;
+- Android SDK configurado;
+- `GODOT_BIN` opcionalmente apontando para o executável;
+- aparelho ARM64 e `adb` para instalação automática.
+
+Auditoria:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File .\tools\build\check_environment.ps1
+```
+
+Exportação debug:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File .\tools\build\build_android_debug.ps1
+```
+
+Exportar e instalar no aparelho conectado:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File .\tools\build\build_android_debug.ps1 -Install
+```
+
+Saída esperada:
+
+```text
+builds/android/CriaDoTatame-debug.apk
+reports/build/android_build_report.json
+builds/android/CriaDoTatame-debug.apk.sha256.txt
+```
+
+O projeto só pode declarar APK pronto quando o arquivo existir, possuir hash e tiver sido instalado e testado em aparelho físico.
+
+## Build Windows
+
+```powershell
+powershell -ExecutionPolicy Bypass -File .\tools\build\build_windows_debug.ps1
+```
+
+Saída esperada:
+
+```text
+builds/windows/CriaDoTatame.exe
+reports/build/windows_build_report.json
+```
+
+## Vertical slice obrigatória
+
+- Main Menu funcional.
 - Terreiro da Luta navegável.
 - Ruan jogável.
+- Mestre Dendê disponível no hub.
 - Davi Relâmpago como rival inicial.
-- Arena do Dique e Terreiro da Luta.
-- Combate com vida, gás, foco, grip e controle.
+- Arena do Dique funcional.
+- Combate com vida, gás, foco, guarda, grip e controle.
 - Ações contextuais mobile.
-- Técnicas iniciais data-driven.
+- Queda, passagem, montada e encerramento técnico.
+- Resultado, progressão, Cria Live e retorno ao hub.
 - Save/load.
-- Primeiro ato jogável.
-- Build Android debug documentado.
+- Uma semana de carreira.
+- APK debug documentado e testado.
 
----
+## Documentos prioritários
 
-## 7. Prioridade atual para Manus
+- `AGENTS.md` — regras para Codex, Manus e agentes.
+- `docs/qa/RUNTIME_AUDIT_V08.md` — auditoria do runtime.
+- `docs/production/APK_VISUAL_COMPLETION_PLAN_V09.md` — gates de APK e audiovisual.
+- `data/visual/production_manifest_v02.json` — inventário completo.
+- `docs/09_MANUS_MASTER_PROMPT.md` — orientação de execução delegada.
 
-Executar `docs/09_MANUS_MASTER_PROMPT.md`.
+## Canon obrigatório
 
-Manus deve trabalhar nesta ordem:
-
-1. Auditar estrutura atual.
-2. Garantir que `project.godot` abre.
-3. Validar JSON.
-4. Criar/ligar cenas mínimas.
-5. Implementar menu → hub → luta → resultado → save.
-6. Só depois polir arte, animação e áudio.
-
----
-
-## 8. Canon obrigatório
-
-O protagonista oficial é **Ruan “Macacão” Silva**. Qualquer documento antigo com Caio Ravel ou Ruan “Cria” deve ser tratado como legado, não como canon atual.
-
-Canon atual:
+O protagonista oficial é **Ruan “Macacão” Silva**. Referências antigas a Caio Ravel ou Ruan “Cria” são legado e não podem entrar em UI, dados finais ou campanha principal.
 
 - Origem: Ituberá, Baixo Sul da Bahia.
 - Idade: 19 anos no início, 28 no final.
 - Símbolo: Gorila Silverback.
-- Estilo: pressão pesada, grip de ferro, top game dominante.
+- Estilo: pressão pesada, grip de ferro e top game dominante.
 - Poder mecânico: Silverback Grip.
 - Frase eixo: Ser forte é ser gentil.
 
----
-
-## 9. Definition of Done da base
+## Definition of Done da base
 
 A base só é considerada pronta quando:
 
-- Abre no Godot sem erro fatal.
-- Main menu entra no hub.
-- Hub inicia combate.
-- Combate altera estados e recursos.
-- Resultado retorna ao hub.
-- Save/load funciona localmente.
-- JSON é validado.
-- APK debug possui caminho documentado.
+- abre no Godot sem erro fatal;
+- Main Menu entra no Terreiro;
+- Terreiro inicia combate;
+- combate respeita estados e recursos;
+- resultado retorna ao hub;
+- save/load funciona;
+- calendário avança;
+- JSON e contratos passam na CI;
+- APK debug é exportado e testado em aparelho.
 
----
+## Status
 
-## 10. Status
-
-Base profissional em montagem. Este repositório é o **oficial**. Repositórios antigos/teste devem ser descartados depois que este consolidar toda a estrutura.
+O runtime central e os smoke tests foram fortalecidos. A branch de produção v0.9 adiciona presets oficiais na raiz, scripts Windows de exportação, validação de release e manifesto audiovisual completo. Assets finais, controles touch em aparelho, performance Android e build release assinada permanecem gates obrigatórios antes de chamar o jogo de concluído.
