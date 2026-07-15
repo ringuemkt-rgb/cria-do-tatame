@@ -101,3 +101,5 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
+
+# Workflow registration trigger: the replacements above remain deterministic.
