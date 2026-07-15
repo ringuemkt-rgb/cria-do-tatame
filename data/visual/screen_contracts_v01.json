@@ -1,0 +1,84 @@
+{
+  "schema_version": 1,
+  "project": "cria_do_tatame_pressao",
+  "screens": [
+    {
+      "id": "main_menu",
+      "scene": "res://scenes/main_menu/MainMenu.tscn",
+      "layout": "brand_left_actions_right_or_centered",
+      "required_regions": ["brand", "canon_badge", "primary_actions", "version", "accessibility_hint"],
+      "primary_actions": ["new_game", "continue", "options"],
+      "visual_tags": ["gorila_silverback", "black_gold", "bahia_mangrove_silhouette"],
+      "android_rules": ["buttons_min_80px", "safe_area_7_percent", "single_column_actions"]
+    },
+    {
+      "id": "world_map",
+      "scene": "res://scenes/map/WorldMap.tscn",
+      "layout": "left_objective_center_map_right_location",
+      "required_regions": ["player_header", "objective_panel", "map_canvas", "location_detail", "legend", "bottom_actions"],
+      "required_data": ["locations", "routes", "travel_cost", "faction_control", "danger_level", "mission_state"],
+      "route_types": ["terrestrial", "maritime", "blocked", "secret"],
+      "node_status": ["locked", "available", "active", "completed", "boss"],
+      "android_rules": ["pan_zoom_gestures", "tap_node_to_open_sheet", "confirm_travel_modal"]
+    },
+    {
+      "id": "terreiro_hub",
+      "scene": "res://scenes/hubs/TerreiroDaLuta.tscn",
+      "layout": "playfield_with_edge_hud",
+      "required_regions": ["player_status", "active_missions", "minimap", "location_clock", "touch_actions", "interaction_markers"],
+      "world_interactions": ["train", "talk", "rest", "missions", "shop", "cria_live", "travel"],
+      "environment_states": ["morning", "afternoon", "night", "rain"],
+      "android_rules": ["touch_cluster_lower_right", "mission_list_collapsible", "center_playfield_clear"]
+    },
+    {
+      "id": "combat_hud_mobile",
+      "scene": "res://scenes/ui/CombatHUD.tscn",
+      "layout": "mirrored_top_context_bottom",
+      "required_regions": ["player_resources", "opponent_resources", "round_timer", "state_label", "control_panel", "grip_panel", "command_bar", "corner_message"],
+      "resources": ["hp", "gas", "guard", "focus", "moral", "control", "grip_integrity"],
+      "combat_contexts": ["standing", "clinch", "ground_top", "ground_bottom", "submission_attack", "submission_defense"],
+      "command_slots": 5,
+      "android_rules": ["buttons_min_80px", "contextual_labels", "no_gamepad_glyphs", "haptic_feedback_optional"]
+    },
+    {
+      "id": "cria_live",
+      "scene": "res://scenes/ui/CriaLive.tscn",
+      "desktop_layout": "feed_left_dashboard_center_factions_right",
+      "android_layout": "tabbed_single_column",
+      "tabs": ["feed", "contracts", "factions", "skills", "crises"],
+      "required_data": ["posts", "comments", "followers", "contracts", "crises", "faction_influence", "skill_points", "reputation"],
+      "reputation_axes": ["honra", "hype", "sombra", "dupla_face"],
+      "android_rules": ["one_tab_visible", "sticky_bottom_navigation", "cards_min_height_96px"]
+    },
+    {
+      "id": "skill_tree",
+      "scene": "res://scenes/ui/SkillTree.tscn",
+      "layout": "four_branch_graph",
+      "branches": [
+        {"id": "technique", "color": "river_blue"},
+        {"id": "pressure", "color": "conflict_red"},
+        {"id": "cold_blood", "color": "control_cyan"},
+        {"id": "legacy", "color": "gold_burned"}
+      ],
+      "required_node_fields": ["id", "icon", "cost", "belt_required", "dependencies", "effect", "state"],
+      "node_states": ["locked", "available", "unlocked", "equipped"],
+      "android_rules": ["one_branch_filter_available", "pinch_zoom_optional", "selected_skill_sheet_bottom"]
+    },
+    {
+      "id": "arena_reference_sheet",
+      "runtime": false,
+      "layout": "main_view_gameplay_details_mechanics_lighting_npcs",
+      "required_sections": ["hero_view", "gameplay_mockup", "detail_crops", "mechanics", "lighting_variants", "npc_groups", "palette", "audio_notes"],
+      "required_runtime_exports": ["layers", "props", "collision.json", "camera_bounds.json", "arena.tscn", "qa_report.md"]
+    }
+  ],
+  "global_rules": [
+    "Ruan Macacao Silva is the only protagonist name in final UI",
+    "concept sheets are not runtime textures",
+    "all screens use the same black gold frame language",
+    "critical gameplay text must remain editable and localized",
+    "mobile layouts are redesigned rather than scaled desktop dashboards",
+    "real brands and government logos are replaced by fictional equivalents",
+    "geography must be reviewed before release"
+  ]
+}
