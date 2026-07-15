@@ -66,7 +66,7 @@ jobs:
         shell: bash
         run: |
           set -o pipefail
-          ./godot --headless --editor --path . --quit 2>&1 | tee reports/full_game_audit/godot_import.log
+          timeout 180 ./godot --headless --editor --path . --import 2>&1 | tee reports/full_game_audit/godot_import.log
       - name: Existing runtime smoke
         shell: bash
         run: |
@@ -143,7 +143,7 @@ jobs:
           echo "JAVA_HOME=$JAVA_HOME"
           echo "GODOT_KEYSTORE=$GODOT_KEYSTORE"
       - name: Import before export
-        run: ./godot --headless --editor --path . --quit
+        run: timeout 180 ./godot --headless --editor --path . --import
       - name: Export Android Debug APK
         id: export_apk
         shell: bash
