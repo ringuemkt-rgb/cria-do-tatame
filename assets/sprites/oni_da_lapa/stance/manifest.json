@@ -1,0 +1,121 @@
+{
+  "version": "1.0.0",
+  "character_id": "oni_da_lapa",
+  "action_id": "stance",
+  "paired_character_id": "",
+  "image": "sprite_sheet.png",
+  "preview": "preview.gif",
+  "placeholder": true,
+  "license": "CC0-1.0 project-generated",
+  "interaction_origin": {
+    "x": 64,
+    "y": 96
+  },
+  "events": [],
+  "frame_layout": [
+    {
+      "index": 0,
+      "state": "stance",
+      "x": 0,
+      "y": 0,
+      "w": 128,
+      "h": 128,
+      "duration_ms": 100,
+      "pivot": {
+        "x": 64,
+        "y": 96
+      }
+    },
+    {
+      "index": 1,
+      "state": "stance",
+      "x": 128,
+      "y": 0,
+      "w": 128,
+      "h": 128,
+      "duration_ms": 100,
+      "pivot": {
+        "x": 64,
+        "y": 96
+      }
+    },
+    {
+      "index": 2,
+      "state": "stance",
+      "x": 256,
+      "y": 0,
+      "w": 128,
+      "h": 128,
+      "duration_ms": 100,
+      "pivot": {
+        "x": 64,
+        "y": 96
+      }
+    },
+    {
+      "index": 3,
+      "state": "stance",
+      "x": 384,
+      "y": 0,
+      "w": 128,
+      "h": 128,
+      "duration_ms": 100,
+      "pivot": {
+        "x": 64,
+        "y": 96
+      }
+    },
+    {
+      "index": 4,
+      "state": "stance",
+      "x": 512,
+      "y": 0,
+      "w": 128,
+      "h": 128,
+      "duration_ms": 100,
+      "pivot": {
+        "x": 64,
+        "y": 96
+      }
+    },
+    {
+      "index": 5,
+      "state": "stance",
+      "x": 640,
+      "y": 0,
+      "w": 128,
+      "h": 128,
+      "duration_ms": 100,
+      "pivot": {
+        "x": 64,
+        "y": 96
+      }
+    },
+    {
+      "index": 6,
+      "state": "stance",
+      "x": 768,
+      "y": 0,
+      "w": 128,
+      "h": 128,
+      "duration_ms": 100,
+      "pivot": {
+        "x": 64,
+        "y": 96
+      }
+    },
+    {
+      "index": 7,
+      "state": "stance",
+      "x": 896,
+      "y": 0,
+      "w": 128,
+      "h": 128,
+      "duration_ms": 100,
+      "pivot": {
+        "x": 64,
+        "y": 96
+      }
+    }
+  ]
+}

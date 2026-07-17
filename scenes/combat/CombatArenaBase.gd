@@ -4,6 +4,8 @@ const RESULT_SCENE: String = "res://scenes/result/ResultScreen.tscn"
 const FighterPlaceholderScript = preload("res://src/characters/FighterPlaceholder.gd")
 const GameFeelManagerScript = preload("res://src/gamefeel/GameFeelManager.gd")
 const DaviAIControllerScript = preload("res://src/combat/DaviAIController.gd")
+const VisualTheme = preload("res://src/ui/CriaVisualTheme.gd")
+const ArenaBackdropScript = preload("res://src/visual/ArenaBackdrop.gd")
 
 var gamefeel: Node
 var davi_ai: Node
@@ -37,6 +39,8 @@ var estados_ptbr: Dictionary = {
 }
 
 func _ready() -> void:
+	_build_arena_visuals()
+	_style_combat_panel()
 	gamefeel = GameFeelManagerScript.new()
 	add_child(gamefeel)
 	davi_ai = DaviAIControllerScript.new()
@@ -50,6 +54,37 @@ func _ready() -> void:
 	_update_state_label(CombatManager.get_current_state_name())
 	_refresh_action_buttons()
 	AudioManager.play_music_cue("terreiro")
+
+func _build_arena_visuals() -> void:
+	var backdrop := ArenaBackdropScript.new()
+	backdrop.name = "ArenaBackdrop"
+	backdrop.arena_id = "arena_do_dique"
+	backdrop.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	add_child(backdrop)
+	move_child(backdrop, 0)
+	var lower_panel := Panel.new()
+	lower_panel.name = "CombatPanelBackdrop"
+	lower_panel.anchor_left = 0.025
+	lower_panel.anchor_top = 0.665
+	lower_panel.anchor_right = 0.975
+	lower_panel.anchor_bottom = 0.985
+	lower_panel.add_theme_stylebox_override("panel", VisualTheme.panel_style(0.93, VisualTheme.GOLD, 2, 10))
+	lower_panel.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	add_child(lower_panel)
+	move_child(lower_panel, 1)
+	$Panel.z_index = 4
+
+func _style_combat_panel() -> void:
+	VisualTheme.style_heading($Panel/Title, 20, VisualTheme.HONOR)
+	$Panel/State.add_theme_color_override("font_color", VisualTheme.CYAN)
+	$Panel/State.add_theme_font_size_override("font_size", 16)
+	$Panel/Resources.add_theme_color_override("font_color", VisualTheme.OFF_WHITE)
+	$Panel/Message.add_theme_color_override("font_color", Color("f2c230"))
+	$Panel/Message.add_theme_font_size_override("font_size", 15)
+	$Panel/AIHint.add_theme_color_override("font_color", Color("a8b7c9"))
+	for i in range(5):
+		var button: Button = get_node("Panel/Buttons/Action%s" % [i + 1])
+		VisualTheme.apply_action_button(button, VisualTheme.GOLD if i != 4 else VisualTheme.CONFLICT)
 
 func _connect_runtime_signals() -> void:
 	if not SignalBus.resources_changed.is_connected(_on_resources_changed):
@@ -65,15 +100,15 @@ func _build_placeholder_fighters() -> void:
 	ruan_placeholder = FighterPlaceholderScript.new()
 	ruan_placeholder.fighter_id = "ruan_macacao"
 	ruan_placeholder.display_name = "Ruan Macacao"
-	ruan_placeholder.position = Vector2(420, 360)
+	ruan_placeholder.position = Vector2(430, 385)
 	add_child(ruan_placeholder)
 	davi_placeholder = FighterPlaceholderScript.new()
 	davi_placeholder.fighter_id = "davi_relampago"
 	davi_placeholder.display_name = "Davi Relampago"
 	davi_placeholder.primary_color = Color(0.22, 0.28, 0.34)
 	davi_placeholder.accent_color = Color(0.55, 0.75, 1.0)
-	davi_placeholder.position = Vector2(760, 360)
-	davi_placeholder.scale.x = -1
+	davi_placeholder.position = Vector2(850, 385)
+	davi_placeholder.scale = Vector2(-1, 1)
 	add_child(davi_placeholder)
 
 func _ensure_ai_hint() -> void:

@@ -75,6 +75,8 @@ O comando valida:
 
 A CI também executa import/parser e smoke tests Godot headless.
 
+O escopo final, os limites de autonomia, a cadeia audiovisual, as metas de conteúdo e os gates que impedem uma declaração prematura de conclusão estão definidos em [`docs/CRIA_DO_TATAME_SUPREME_BUILD_SPEC_V1.md`](docs/CRIA_DO_TATAME_SUPREME_BUILD_SPEC_V1.md). O equivalente validável por máquina está em [`data/production/supreme_build_contract_v01.json`](data/production/supreme_build_contract_v01.json).
+
 ## Fila audiovisual completa
 
 O inventário técnico está em:
@@ -167,6 +169,8 @@ reports/build/windows_build_report.json
 ## Documentos prioritários
 
 - `AGENTS.md` — regras para Codex, Manus e agentes.
+- `docs/CRIA_DO_TATAME_SUPREME_BUILD_SPEC_V1.md` — especificação definitiva de construção e Definition of Done.
+- `data/production/supreme_build_contract_v01.json` — metas e gates executáveis.
 - `docs/qa/RUNTIME_AUDIT_V08.md` — auditoria do runtime.
 - `docs/production/APK_VISUAL_COMPLETION_PLAN_V09.md` — gates de APK e audiovisual.
 - `data/visual/production_manifest_v02.json` — inventário completo.

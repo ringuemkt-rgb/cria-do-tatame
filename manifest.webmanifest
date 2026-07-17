@@ -1,21 +1,14 @@
 {
-  "name": "My PWA",
-  "short_name": "PWA",
-  "start_url": "/index.html",
+  "name": "Cria do Tatame - Pressão",
+  "short_name": "Cria Tatame",
+  "start_url": "./index.html",
+  "scope": "./",
   "display": "standalone",
-  "background_color": "#ffffff",
-  "theme_color": "#000000",
-  "description": "A Progressive Web App",
+  "orientation": "landscape",
+  "background_color": "#0a0a0a",
+  "theme_color": "#0a0a0a",
+  "description": "Sala oficial de produção e prévia visual de Cria do Tatame.",
   "icons": [
-    {
-      "src": "/images/icon-192x192.png",
-      "sizes": "192x192",
-      "type": "image/png"
-    },
-    {
-      "src": "/images/icon-512x512.png",
-      "sizes": "512x512",
-      "type": "image/png"
-    }
+    {"src":"./assets/cosmetics/nft/patch_terreiro_raiz.png","sizes":"512x512","type":"image/png","purpose":"any maskable"}
   ]
 }

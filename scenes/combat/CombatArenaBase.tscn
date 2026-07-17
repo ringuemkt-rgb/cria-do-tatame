@@ -18,6 +18,7 @@ anchor_left = 0.04
 anchor_top = 0.68
 anchor_right = 0.96
 anchor_bottom = 0.98
+theme_override_constants/separation = 6
 
 [node name="Title" type="Label" parent="Panel"]
 layout_mode = 2
@@ -44,28 +45,34 @@ text = "Davi esta lendo seu ritmo. Varie as entradas."
 
 [node name="Buttons" type="HBoxContainer" parent="Panel"]
 layout_mode = 2
+theme_override_constants/separation = 10
 
 [node name="Action1" type="Button" parent="Panel/Buttons"]
-custom_minimum_size = Vector2(160, 58)
+custom_minimum_size = Vector2(0, 64)
 layout_mode = 2
+size_flags_horizontal = 3
 text = "Grip de Ferro"
 
 [node name="Action2" type="Button" parent="Panel/Buttons"]
-custom_minimum_size = Vector2(160, 58)
+custom_minimum_size = Vector2(0, 64)
 layout_mode = 2
+size_flags_horizontal = 3
 text = "Baiana"
 
 [node name="Action3" type="Button" parent="Panel/Buttons"]
-custom_minimum_size = Vector2(160, 58)
+custom_minimum_size = Vector2(0, 64)
 layout_mode = 2
+size_flags_horizontal = 3
 text = "Corte de Joelho"
 
 [node name="Action4" type="Button" parent="Panel/Buttons"]
-custom_minimum_size = Vector2(160, 58)
+custom_minimum_size = Vector2(0, 64)
 layout_mode = 2
+size_flags_horizontal = 3
 text = "Sprawl"
 
 [node name="Action5" type="Button" parent="Panel/Buttons"]
-custom_minimum_size = Vector2(160, 58)
+custom_minimum_size = Vector2(0, 64)
 layout_mode = 2
+size_flags_horizontal = 3
 text = "Encerrar"

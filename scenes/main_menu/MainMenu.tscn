@@ -18,7 +18,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-color = Color(0.027, 0.031, 0.039, 1)
+color = Color(0.027, 0.031, 0.039, 0.72)
 mouse_filter = 2
 
 [node name="Content" type="VBoxContainer" parent="."]
@@ -46,12 +46,12 @@ horizontal_alignment = 1
 
 [node name="Subtitle" type="Label" parent="Content"]
 layout_mode = 2
-text = "PRESSAO • ITUBERA • JIU-JITSU POSICIONAL"
+text = "PRESSAO  •  ITUBERA  •  JIU-JITSU POSICIONAL"
 horizontal_alignment = 1
 
 [node name="Quote" type="Label" parent="Content"]
 layout_mode = 2
-text = "Ser forte e ser gentil."
+text = "SER FORTE E SER GENTIL."
 horizontal_alignment = 1
 
 [node name="MenuButtons" type="VBoxContainer" parent="Content"]
@@ -90,7 +90,7 @@ text = "AUDIO: LIGADO"
 
 [node name="Version" type="Label" parent="Content/OptionsPanel"]
 layout_mode = 2
-text = "Vertical Slice Runtime v0.8"
+text = "VERTICAL SLICE • RUNTIME v0.9"
 horizontal_alignment = 1
 
 [node name="Back" type="Button" parent="Content/OptionsPanel"]

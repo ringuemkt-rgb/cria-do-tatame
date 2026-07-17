@@ -1,6 +1,7 @@
 .import/
 .export/
 .godot/
+*.import
 *.tmp
 *.log
 .DS_Store
@@ -17,5 +18,10 @@ assets/generated_metadata/local_run_*.json
 export/builds/*.apk
 export/builds/*.exe
 export/builds/*.zip
+builds/android/*.apk
+builds/android/*.idsig
+builds/android/*.sha256.txt
+reports/build/
+reports/runtime_audit/
 *.translation
 .android/

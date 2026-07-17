@@ -40,6 +40,8 @@ Qualquer referência antiga a Caio Ravel ou Ruan “Cria” é legado e não dev
 6. Integrar carreira semanal, reputação, Cria Live, facções e patrocinadores.
 7. Só depois polir sprites, áudio, VFX e cutscenes.
 
+O escopo completo e os gates de produção vivem em `docs/CRIA_DO_TATAME_SUPREME_BUILD_SPEC_V1.md` e `data/production/supreme_build_contract_v01.json`. Um agente não pode reduzir essas metas nem declarar conclusão ignorando o contrato executável.
+
 ## Contratos de arquitetura
 
 - Gameplay crítico deve ser determinístico e executável offline.
@@ -68,3 +70,12 @@ Todo agente deve entregar:
 4. erros encontrados;
 5. riscos ou dívidas técnicas;
 6. próximo passo recomendado.
+
+## Protocolo de autonomia
+
+- Trabalhar em lotes verticais jogáveis e commits focados.
+- Executar `npm run quality` antes e depois de cada lote.
+- Usar GitHub, geração de imagem, Hugging Face e Sites apenas nas funções autorizadas pelo contrato supremo.
+- Fixar versão e auditar licença antes de incorporar ferramenta externa.
+- Parar diante de conflito de canon, licença incerta, biomecânica insegura, credencial ausente ou ação destrutiva.
+- Nunca confundir conceito gerado, placeholder, mockup ou fila de produção com asset final integrado.

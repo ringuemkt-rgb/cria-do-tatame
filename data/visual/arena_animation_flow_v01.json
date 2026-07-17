@@ -1,0 +1,52 @@
+{
+  "version": "1.0.0",
+  "runtime_policy": {
+    "target_fps": 60,
+    "sprite_clip_fps": {"idle": 8, "movement": 12, "combat": 16, "impact": 20},
+    "mobile_profiles": ["low", "medium", "high"],
+    "gameplay_rule_authority": "combat_state_machine"
+  },
+  "arenas": {
+    "terreiro_da_luta": {
+      "role": "safe_hub_training",
+      "parallax": [0.05, 0.12, 0.25, 0.55, 1.0],
+      "ambient_loops": ["river_glint", "leaf_sway", "dust_motes", "fan_rotation", "students_training"],
+      "lighting_states": ["day", "sunset", "night", "rain"],
+      "combat_hazards": []
+    },
+    "arena_do_dique": {
+      "role": "official_competition",
+      "parallax": [0.03, 0.10, 0.25, 0.70, 1.0],
+      "ambient_loops": ["crowd_idle", "camera_flash", "scoreboard_tick", "banner_sway"],
+      "lighting_states": ["pre_fight", "fight", "result"],
+      "combat_hazards": []
+    },
+    "manguezal_profundo": {
+      "role": "traction_and_base",
+      "ambient_loops": ["water_ripple", "mud_bubble", "insect_swarm", "mangrove_sway"],
+      "combat_hazards": ["traction_penalty", "sweep_bonus", "gas_penalty"]
+    },
+    "praia_de_pratigi": {
+      "role": "hype_and_image",
+      "ambient_loops": ["ocean_wave", "palm_sway", "crowd_phone", "sun_glint"],
+      "combat_hazards": ["explosion_penalty"]
+    },
+    "ferro_velho_da_lapa": {
+      "role": "risk_and_temptation",
+      "ambient_loops": ["rain", "neon_flicker", "steam", "metal_chain"],
+      "combat_hazards": ["traction_penalty", "risk_bonus"]
+    }
+  },
+  "fight_flow": [
+    "arena_intro",
+    "fighter_entry",
+    "referee_ready",
+    "distance_and_grip",
+    "clinch_or_takedown",
+    "ground_control",
+    "technical_finish_or_points",
+    "tap_escape_or_time",
+    "result",
+    "respect_reset"
+  ]
+}

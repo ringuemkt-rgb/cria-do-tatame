@@ -1,0 +1,193 @@
+{
+  "version": "1.0.0",
+  "format": "godot_absolute_rect_atlas",
+  "generated_placeholders": true,
+  "entries": [
+    {
+      "character_id": "ruan_macacao",
+      "action_id": "idle",
+      "manifest": "assets/sprites/ruan_macacao/idle/manifest.json",
+      "placeholder": true
+    },
+    {
+      "character_id": "ruan_macacao",
+      "action_id": "walk",
+      "manifest": "assets/sprites/ruan_macacao/walk/manifest.json",
+      "placeholder": true
+    },
+    {
+      "character_id": "ruan_macacao",
+      "action_id": "stance",
+      "manifest": "assets/sprites/ruan_macacao/stance/manifest.json",
+      "placeholder": true
+    },
+    {
+      "character_id": "ruan_macacao",
+      "action_id": "grip",
+      "manifest": "assets/sprites/ruan_macacao/grip/manifest.json",
+      "placeholder": true
+    },
+    {
+      "character_id": "davi_relampago",
+      "action_id": "idle",
+      "manifest": "assets/sprites/davi_relampago/idle/manifest.json",
+      "placeholder": true
+    },
+    {
+      "character_id": "davi_relampago",
+      "action_id": "walk",
+      "manifest": "assets/sprites/davi_relampago/walk/manifest.json",
+      "placeholder": true
+    },
+    {
+      "character_id": "davi_relampago",
+      "action_id": "defense",
+      "manifest": "assets/sprites/davi_relampago/defense/manifest.json",
+      "placeholder": true
+    },
+    {
+      "character_id": "mestre_dende",
+      "action_id": "idle",
+      "manifest": "assets/sprites/mestre_dende/idle/manifest.json",
+      "placeholder": true
+    },
+    {
+      "character_id": "mestre_dende",
+      "action_id": "teaching",
+      "manifest": "assets/sprites/mestre_dende/teaching/manifest.json",
+      "placeholder": true
+    },
+    {
+      "character_id": "tinker_bell",
+      "action_id": "idle",
+      "manifest": "assets/sprites/tinker_bell/idle/manifest.json",
+      "placeholder": true
+    },
+    {
+      "character_id": "tinker_bell",
+      "action_id": "recording",
+      "manifest": "assets/sprites/tinker_bell/recording/manifest.json",
+      "placeholder": true
+    },
+    {
+      "character_id": "cassio_molho",
+      "action_id": "idle",
+      "manifest": "assets/sprites/cassio_molho/idle/manifest.json",
+      "placeholder": true
+    },
+    {
+      "character_id": "cassio_molho",
+      "action_id": "walk",
+      "manifest": "assets/sprites/cassio_molho/walk/manifest.json",
+      "placeholder": true
+    },
+    {
+      "character_id": "cassio_molho",
+      "action_id": "stance",
+      "manifest": "assets/sprites/cassio_molho/stance/manifest.json",
+      "placeholder": true
+    },
+    {
+      "character_id": "cassio_molho",
+      "action_id": "provocation",
+      "manifest": "assets/sprites/cassio_molho/provocation/manifest.json",
+      "placeholder": true
+    },
+    {
+      "character_id": "kenzo_kuroi",
+      "action_id": "idle",
+      "manifest": "assets/sprites/kenzo_kuroi/idle/manifest.json",
+      "placeholder": true
+    },
+    {
+      "character_id": "kenzo_kuroi",
+      "action_id": "walk",
+      "manifest": "assets/sprites/kenzo_kuroi/walk/manifest.json",
+      "placeholder": true
+    },
+    {
+      "character_id": "kenzo_kuroi",
+      "action_id": "stance",
+      "manifest": "assets/sprites/kenzo_kuroi/stance/manifest.json",
+      "placeholder": true
+    },
+    {
+      "character_id": "kenzo_kuroi",
+      "action_id": "counter",
+      "manifest": "assets/sprites/kenzo_kuroi/counter/manifest.json",
+      "placeholder": true
+    },
+    {
+      "character_id": "leoa_quilombola",
+      "action_id": "idle",
+      "manifest": "assets/sprites/leoa_quilombola/idle/manifest.json",
+      "placeholder": true
+    },
+    {
+      "character_id": "leoa_quilombola",
+      "action_id": "walk",
+      "manifest": "assets/sprites/leoa_quilombola/walk/manifest.json",
+      "placeholder": true
+    },
+    {
+      "character_id": "leoa_quilombola",
+      "action_id": "base",
+      "manifest": "assets/sprites/leoa_quilombola/base/manifest.json",
+      "placeholder": true
+    },
+    {
+      "character_id": "leoa_quilombola",
+      "action_id": "sweep_setup",
+      "manifest": "assets/sprites/leoa_quilombola/sweep_setup/manifest.json",
+      "placeholder": true
+    },
+    {
+      "character_id": "oni_da_lapa",
+      "action_id": "idle",
+      "manifest": "assets/sprites/oni_da_lapa/idle/manifest.json",
+      "placeholder": true
+    },
+    {
+      "character_id": "oni_da_lapa",
+      "action_id": "walk",
+      "manifest": "assets/sprites/oni_da_lapa/walk/manifest.json",
+      "placeholder": true
+    },
+    {
+      "character_id": "oni_da_lapa",
+      "action_id": "stance",
+      "manifest": "assets/sprites/oni_da_lapa/stance/manifest.json",
+      "placeholder": true
+    },
+    {
+      "character_id": "oni_da_lapa",
+      "action_id": "pressure",
+      "manifest": "assets/sprites/oni_da_lapa/pressure/manifest.json",
+      "placeholder": true
+    },
+    {
+      "character_id": "ruan_macacao",
+      "action_id": "grip_fight",
+      "manifest": "assets/sprites/ruan_macacao/grip_fight/manifest.json",
+      "placeholder": true
+    },
+    {
+      "character_id": "ruan_macacao",
+      "action_id": "baiana_entry",
+      "manifest": "assets/sprites/ruan_macacao/baiana_entry/manifest.json",
+      "placeholder": true
+    },
+    {
+      "character_id": "ruan_macacao",
+      "action_id": "cem_quilos_control",
+      "manifest": "assets/sprites/ruan_macacao/cem_quilos_control/manifest.json",
+      "placeholder": true
+    },
+    {
+      "character_id": "ruan_macacao",
+      "action_id": "tap_reset",
+      "manifest": "assets/sprites/ruan_macacao/tap_reset/manifest.json",
+      "placeholder": true
+    }
+  ]
+}

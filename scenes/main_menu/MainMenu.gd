@@ -1,6 +1,8 @@
 extends Control
 
 const HUB_SCENE := "res://scenes/hubs/TerreiroDaLuta.tscn"
+const VisualTheme = preload("res://src/ui/CriaVisualTheme.gd")
+const ArenaBackdropScript = preload("res://src/visual/ArenaBackdrop.gd")
 
 @onready var menu_buttons: VBoxContainer = $Content/MenuButtons
 @onready var options_panel: VBoxContainer = $Content/OptionsPanel
@@ -13,6 +15,7 @@ const HUB_SCENE := "res://scenes/hubs/TerreiroDaLuta.tscn"
 var _transitioning := false
 
 func _ready() -> void:
+	_build_premium_shell()
 	continue_button.disabled = not SaveManager.has_save(1)
 	_connect_once(new_game_button, _on_new_game_pressed)
 	_connect_once(continue_button, _on_continue_pressed)
@@ -20,6 +23,37 @@ func _ready() -> void:
 	_connect_once(audio_toggle_button, _on_audio_toggle_pressed)
 	_connect_once(options_back_button, _on_options_back_pressed)
 	_update_audio_label()
+
+func _build_premium_shell() -> void:
+	var arena_backdrop := ArenaBackdropScript.new()
+	arena_backdrop.name = "AnimatedTerreiroBackdrop"
+	arena_backdrop.arena_id = "terreiro_da_luta"
+	arena_backdrop.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	add_child(arena_backdrop)
+	move_child(arena_backdrop, 0)
+	$Background.color = Color(0.02, 0.025, 0.03, 0.72)
+	var frame := Panel.new()
+	frame.name = "MenuFrame"
+	frame.anchor_left = 0.5
+	frame.anchor_top = 0.5
+	frame.anchor_right = 0.5
+	frame.anchor_bottom = 0.5
+	frame.offset_left = -310.0
+	frame.offset_top = -300.0
+	frame.offset_right = 310.0
+	frame.offset_bottom = 300.0
+	frame.add_theme_stylebox_override("panel", VisualTheme.panel_style(0.90, VisualTheme.GOLD, 2, 12))
+	add_child(frame)
+	move_child(frame, get_node("Content").get_index())
+	VisualTheme.style_heading($Content/Title, 42, VisualTheme.HONOR)
+	$Content/Subtitle.add_theme_color_override("font_color", VisualTheme.OFF_WHITE)
+	$Content/Subtitle.add_theme_font_size_override("font_size", 16)
+	$Content/Quote.add_theme_color_override("font_color", Color("d7c88e"))
+	$Content/Quote.add_theme_font_size_override("font_size", 18)
+	for button in [new_game_button, continue_button, options_button, audio_toggle_button, options_back_button]:
+		VisualTheme.apply_primary_button(button)
+	$Content/OptionsPanel/OptionsTitle.add_theme_color_override("font_color", VisualTheme.HONOR)
+	$Content/OptionsPanel/Version.add_theme_color_override("font_color", Color("9a9589"))
 
 func _connect_once(button: Button, callback: Callable) -> void:
 	if not button.pressed.is_connected(callback):

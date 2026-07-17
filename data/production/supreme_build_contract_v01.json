@@ -1,0 +1,215 @@
+{
+  "schema_version": "1.0.0",
+  "contract_id": "cria_do_tatame_supreme_build_v01",
+  "status": "production_contract",
+  "source_of_truth": "https://github.com/ringuemkt-rgb/cria-do-tatame",
+  "canon": {
+    "protagonist_id": "ruan_macacao",
+    "protagonist_name": "Ruan Macacao Silva",
+    "origin": "Itubera, Baixo Sul da Bahia",
+    "symbol": "gorila_silverback",
+    "core_phrase": "Ser forte e ser gentil",
+    "forbidden_legacy_ids": [
+      "caio_ravel",
+      "ruan_cria"
+    ]
+  },
+  "runtime": {
+    "engine": "Godot",
+    "minimum_version": "4.2.2",
+    "production_version": "4.3+",
+    "offline_gameplay_required": true,
+    "secondary_runtime_forbidden": true,
+    "target_platforms": [
+      "android_arm64",
+      "windows_x86_64",
+      "web"
+    ]
+  },
+  "content_targets": {
+    "characters": 18,
+    "arenas": 15,
+    "paired_bjj_techniques": 50,
+    "career_acts": 5,
+    "career_endings": 5,
+    "missions": 40,
+    "ui_screens": 18,
+    "sfx": 100,
+    "music_cues": 20,
+    "ambience_loops": 12
+  },
+  "mandatory_flow": [
+    "main_menu",
+    "terreiro",
+    "combat",
+    "result",
+    "save",
+    "career_week_advance",
+    "return_to_terreiro"
+  ],
+  "combat_contract": {
+    "domain": "Brazilian Jiu-Jitsu positional grappling",
+    "deterministic_core": true,
+    "generic_striking_core_forbidden": true,
+    "resources": [
+      "health",
+      "gas",
+      "focus",
+      "guard",
+      "grip",
+      "positional_control"
+    ],
+    "paired_animation_phases": [
+      "anticipation",
+      "entry",
+      "establish",
+      "stabilize",
+      "response",
+      "recovery"
+    ],
+    "submission_phases": [
+      "setup",
+      "lock",
+      "technical_pressure",
+      "tap_or_escape",
+      "referee_or_recovery"
+    ]
+  },
+  "asset_pack_contracts": {
+    "character": [
+      "model_sheet.png",
+      "palette.json",
+      "spritesheet.png",
+      "preview.gif",
+      "metadata.json",
+      "qa_report.md"
+    ],
+    "paired_technique": [
+      "attacker_spritesheet.png",
+      "defender_spritesheet.png",
+      "sync_markers.json",
+      "preview.gif",
+      "metadata.json",
+      "qa_report.md"
+    ],
+    "arena": [
+      "background_layers",
+      "collision_map.json",
+      "occlusion_map.png",
+      "lighting_profile.tres",
+      "ambience_profile.json",
+      "preview.png",
+      "qa_report.md"
+    ],
+    "audio": [
+      "source.wav",
+      "game.ogg",
+      "metadata.json",
+      "loudness_report.json",
+      "license.txt"
+    ]
+  },
+  "release_gates": [
+    "npm_run_quality",
+    "godot_headless_import",
+    "godot_parser_check",
+    "vertical_slice_smoke",
+    "save_load_roundtrip",
+    "android_arm64_export",
+    "android_physical_device_playtest",
+    "windows_export_smoke",
+    "asset_license_audit",
+    "audio_loudness_audit",
+    "accessibility_review",
+    "canon_review"
+  ],
+  "performance_budgets": {
+    "android_target_fps": 60,
+    "android_minimum_fps": 30,
+    "frame_time_ms_at_60fps": 16.67,
+    "combat_scene_memory_mb": 512,
+    "initial_download_mb": 500,
+    "sprite_atlas_max_px": 4096,
+    "simultaneous_voice_limit_mobile": 24
+  },
+  "production_phases": [
+    {
+      "id": "p0_truth_and_contracts",
+      "exit_gate": "all validators green and backlog reflects repository truth"
+    },
+    {
+      "id": "p1_vertical_slice_gold",
+      "exit_gate": "Ruan versus Davi complete on Arena do Dique with final-quality representative art and audio"
+    },
+    {
+      "id": "p2_core_roster_and_act_1",
+      "exit_gate": "six characters, six arenas, twenty techniques and Act 1 content-complete"
+    },
+    {
+      "id": "p3_full_campaign",
+      "exit_gate": "all target content implemented with no placeholder in shipping paths"
+    },
+    {
+      "id": "p4_platform_certification",
+      "exit_gate": "Android physical-device matrix and Windows release candidate approved"
+    },
+    {
+      "id": "p5_release_candidate",
+      "exit_gate": "all release gates pass and signed artifacts are reproducible"
+    }
+  ],
+  "tool_policy": {
+    "github": "source control, issues, reviews and CI only in the official repository",
+    "apixel_or_image_generation": "concept and source asset production followed by human art direction and deterministic export",
+    "hugging_face": "research and offline prototyping only; license and quality approval required before adoption",
+    "sites": "showcase and visual review only; never a second game runtime",
+    "runtime_network_ai": "forbidden for the critical gameplay loop"
+  },
+  "approved_research_catalog": [
+    {
+      "name": "Pixelorama",
+      "url": "https://github.com/Orama-Interactive/Pixelorama",
+      "license": "MIT",
+      "decision": "approved_tool",
+      "use": "sprite, tileset and animation authoring/export"
+    },
+    {
+      "name": "Material Maker",
+      "url": "https://github.com/RodZill4/material-maker",
+      "license": "MIT",
+      "decision": "approved_tool",
+      "use": "procedural texture source generation; exported assets must be baked"
+    },
+    {
+      "name": "GUT",
+      "url": "https://github.com/bitwes/Gut",
+      "license": "MIT",
+      "decision": "evaluate_pinned_version",
+      "use": "Godot unit tests; pin 9.3.x for Godot 4.2 compatibility"
+    },
+    {
+      "name": "Godot Dialogue Manager",
+      "url": "https://github.com/nathanhoad/godot_dialogue_manager",
+      "license": "MIT",
+      "decision": "evaluate_in_branch",
+      "use": "dialogue authoring only if a version compatible with the project is pinned"
+    },
+    {
+      "name": "Hugging Face sprite models",
+      "url": "https://huggingface.co/models?search=pixel%20art%20sprite%20sheet",
+      "license": "model_specific",
+      "decision": "research_only",
+      "use": "concept exploration; never auto-approve generated output"
+    }
+  ],
+  "completion_claim": {
+    "allowed_only_when_all_release_gates_pass": true,
+    "forbidden_claims_without_evidence": [
+      "jogo_completo",
+      "arte_final",
+      "audio_final",
+      "apk_pronto",
+      "release_ready"
+    ]
+  }
+}

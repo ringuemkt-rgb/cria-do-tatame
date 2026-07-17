@@ -1,0 +1,53 @@
+{
+  "version": "1.0.0",
+  "status": "generation_started",
+  "style": "HD Pixel Art 2.5D Regional Premium",
+  "rules": [
+    "sem marcas reais",
+    "sem texto gerado dentro de sprites",
+    "silhueta legivel em celular",
+    "grappling seguro com tap, escape ou arbitro",
+    "cada imagem conceitual deve ser redesenhada e validada antes da importacao"
+  ],
+  "jobs": [
+    {
+      "id": "apixel_cast_main_v01",
+      "kind": "character_production_sheet",
+      "characters": ["ruan_macacao", "davi_relampago", "mestre_dende", "tinker_bell"],
+      "target": "assets/source/apixel/characters/main_cast_v01.png",
+      "deliverables": ["turnaround_front", "turnaround_side", "turnaround_three_quarter", "action_poses"],
+      "quality": "4k",
+      "aspect_ratio": "16:9"
+    },
+    {
+      "id": "apixel_baiana_sequence_v01",
+      "kind": "paired_animation_keys",
+      "characters": ["ruan_macacao", "davi_relampago"],
+      "target": "assets/source/apixel/movements/baiana_sequence_v01.png",
+      "states": ["distancia_media", "disputa_pegada", "entrada_queda", "disputa_queda", "cem_quilos", "resultado_tecnico", "reset"],
+      "events": ["grip_connect", "weight_commit", "off_balance", "impact", "control_stable", "tap_window", "reset_ready"],
+      "quality": "4k",
+      "aspect_ratio": "16:9"
+    },
+    {
+      "id": "apixel_terreiro_layers_v01",
+      "kind": "arena_layer_sheet",
+      "arena": "terreiro_da_luta",
+      "target": "assets/source/apixel/arenas/terreiro_layers_v01.png",
+      "layers": ["sky", "mangrove_river", "stilt_houses_trees", "dojo_structure", "play_area", "props", "foreground", "particles"],
+      "lighting": ["day", "sunset", "night", "rain"],
+      "quality": "4k",
+      "aspect_ratio": "16:9"
+    },
+    {
+      "id": "apixel_arena_dique_hud_v01",
+      "kind": "combat_arena_and_ui_sheet",
+      "arena": "arena_do_dique",
+      "target": "assets/source/apixel/arenas/arena_dique_hud_v01.png",
+      "ui": ["fighter_panels", "health", "gas", "focus", "timer", "context_actions", "position", "grip_integrity", "advantage"],
+      "density_profiles": ["low", "medium", "high"],
+      "quality": "4k",
+      "aspect_ratio": "16:9"
+    }
+  ]
+}

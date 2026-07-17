@@ -1,47 +1,99 @@
 <!doctype html>
 <html lang="pt-BR">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
-<meta name="theme-color" content="#0b0f14" />
-<title>CRIA DO TATAME</title>
-<link rel="manifest" href="./manifest.webmanifest" />
-<link rel="stylesheet" href="./style.css" />
-<script src="https://cdn.jsdelivr.net/npm/phaser@3.80.1/dist/phaser.min.js"></script>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <meta name="theme-color" content="#0a0a0a" />
+  <meta name="description" content="Sala de produção e prévia visual oficial de Cria do Tatame - Pressão." />
+  <title>Cria do Tatame - Pressão</title>
+  <link rel="manifest" href="./manifest.webmanifest" />
+  <link rel="stylesheet" href="./style.css" />
 </head>
 <body>
-<header class="topbar">
-<div class="brand">
-<div class="brand-text">
-<div class="title">CRIA DO TATAME</div>
-<div class="subtitle">BJJ RPG • Oficial + Submundo</div>
-</div>
-</div>
-</header>
-<main class="wrap">
-<div id="gameWrap">
-<div id="game"></div>
-</div>
-</main>
-<div id="touch" class="touch">
-<div class="touch-grid">
-<div class="dpad">
-<button class="tbtn" data-k="UP">▲</button>
-<div class="dpad-mid">
-<button class="tbtn" data-k="LEFT">◀</button>
-<button class="tbtn" data-k="DOWN">▼</button>
-<button class="tbtn" data-k="RIGHT">▶</button>
-</div>
-</div>
-<div class="actions">
-<button class="tbtn big" data-k="ONE">1</button>
-<button class="tbtn big" data-k="TWO">2</button>
-<button class="tbtn big" data-k="THREE">3</button>
-<button class="tbtn big" data-k="FOUR">4</button>
-<button class="tbtn wide" data-k="SPACE">TREINAR</button>
-</div>
-</div>
-</div>
-<script src="./game.js"></script>
+  <div class="noise" aria-hidden="true"></div>
+  <header class="topbar">
+    <a class="brand" href="#combate" aria-label="Cria do Tatame, início">
+      <span class="crown">♛</span>
+      <span><strong>CRIA DO TATAME</strong><small>PRESSÃO • BAIXO SUL DA BAHIA</small></span>
+    </a>
+    <div class="build"><span></span> VERTICAL SLICE v0.9</div>
+  </header>
+
+  <main>
+    <section class="hero" id="combate">
+      <div class="hero-copy">
+        <p class="eyebrow">JIU-JITSU POSICIONAL • RPG DE CARREIRA</p>
+        <h1>Ganhe a pegada.<br><em>Domine a posição.</em></h1>
+        <p>Uma prévia de produção do combate entre Ruan “Macacão” Silva e Davi Relâmpago. A simulação final vive no Godot; esta tela existe para validar arte, HUD, fluxo e leitura mobile.</p>
+        <nav class="section-nav" aria-label="Seções da prévia">
+          <a href="#combate">Combate</a><a href="#elenco">Elenco</a><a href="#arenas">Arenas</a><a href="#pipeline">Produção</a>
+        </nav>
+      </div>
+
+      <div class="combat-shell" aria-label="Prévia interativa do HUD de combate">
+        <div class="combat-hud">
+          <div class="fighter-hud player">
+            <div class="hud-title"><strong>RUAN MACACÃO</strong><span>SILVERBACK</span></div>
+            <div class="meter hp"><i id="ruanHp"></i></div>
+            <div class="mini-meters"><div><b>GÁS</b><span><i id="ruanGas"></i></span></div><div><b>FOCO</b><span><i id="ruanFocus"></i></span></div></div>
+          </div>
+          <div class="round"><small>ROUND 1</small><strong id="timer">03:45</strong><span id="position">EM PÉ • NEUTRO</span></div>
+          <div class="fighter-hud opponent">
+            <div class="hud-title"><strong>DAVI RELÂMPAGO</strong><span>PRECISÃO</span></div>
+            <div class="meter hp"><i id="daviHp"></i></div>
+            <div class="mini-meters"><div><b>GÁS</b><span><i id="daviGas"></i></span></div><div><b>FOCO</b><span><i id="daviFocus"></i></span></div></div>
+          </div>
+        </div>
+
+        <div class="arena-stage" id="arenaStage">
+          <div class="spotlights"></div><div class="crowd"></div><div class="barrier"></div><div class="tatame"></div>
+          <img id="ruanSprite" class="fighter-sprite ruan" src="./assets/sprites/ruan_macacao/idle/preview.gif" alt="Rig técnico animado de Ruan Macacão" />
+          <img id="daviSprite" class="fighter-sprite davi" src="./assets/sprites/davi_relampago/idle/preview.gif" alt="Rig técnico animado de Davi Relâmpago" />
+          <div class="position-card"><span>CONTROLE</span><strong id="controlValue">12%</strong></div>
+          <div class="grip-card"><span>PEGADA</span><strong id="gripValue">100%</strong></div>
+        </div>
+
+        <div class="fight-message" id="fightMessage">Ganhe a pegada, quebre a base e estabilize por três segundos.</div>
+        <div class="actions" role="group" aria-label="Ações de prévia">
+          <button data-action="grip"><b>01</b><span>PEGADA</span><small>Estabelecer domínio</small></button>
+          <button data-action="baiana"><b>02</b><span>BAIANA</span><small>Queda em cadeia</small></button>
+          <button data-action="pressure"><b>03</b><span>PRESSÃO</span><small>Fixar cem quilos</small></button>
+          <button data-action="defense"><b>04</b><span>DEFESA</span><small>Preservar a base</small></button>
+          <button class="finish" data-action="finish"><b>05</b><span>FINALIZAR</span><small>Só com controle</small></button>
+        </div>
+        <p class="tech-note">RIG TÉCNICO ATUAL • A arte final HD Painted Pixel substituirá os placeholders sem alterar pivôs, eventos ou estados.</p>
+      </div>
+    </section>
+
+    <section class="section" id="elenco">
+      <div class="section-heading"><div><p class="eyebrow">O TATAME JULGA TODO MUNDO</p><h2>Elenco principal</h2></div><p>Oito silhuetas, oito filosofias de luta. Cada personagem recebe retrato, turnaround, expressões, locomoção, posições e técnicas pareadas.</p></div>
+      <div class="roster-grid" id="rosterGrid"></div>
+    </section>
+
+    <section class="section" id="arenas">
+      <div class="section-heading"><div><p class="eyebrow">MUNDO VIVO EM HUBS</p><h2>Arenas que mudam a luta</h2></div><p>Cenários em cinco camadas, clima, torcida e modificadores próprios. Beleza sem mecânica é papel de parede caro.</p></div>
+      <div class="arena-grid">
+        <article class="arena-card terreiro"><span>ITUBERÁ</span><h3>Terreiro da Luta</h3><p>Madeira, rio, mangue e disciplina. Recuperação, foco e honra.</p><b>HUB MORAL</b></article>
+        <article class="arena-card dique"><span>SALVADOR</span><h3>Arena do Dique</h3><p>Regra rígida, público oficial e erro caro sob os holofotes.</p><b>CIRCUITO OFICIAL</b></article>
+        <article class="arena-card lapa"><span>SUBMUNDO</span><h3>Ferro Velho da Lapa</h3><p>Metal, chuva, faísca e pressão psicológica. Risco alto.</p><b>ARENA CLANDESTINA</b></article>
+        <article class="arena-card mangue"><span>BAIXO SUL</span><h3>Manguezal Profundo</h3><p>Tração baixa, raiz fechada e raspagens fortalecidas.</p><b>BASE E ADAPTAÇÃO</b></article>
+      </div>
+    </section>
+
+    <section class="section production" id="pipeline">
+      <div class="section-heading"><div><p class="eyebrow">ARTE BONITA PRECISA VIRAR JOGO</p><h2>Pipeline verificável</h2></div><p>Cada entrega muda de estado somente com evidência: arquivo, manifesto, integração e teste.</p></div>
+      <ol class="pipeline">
+        <li class="done"><b>01</b><span><strong>Canon e direção</strong><small>Personagens, paleta, arenas e fluxo aprovados</small></span></li>
+        <li class="done"><b>02</b><span><strong>Contratos técnicos</strong><small>31 pacotes, pivôs, eventos e manifests validados</small></span></li>
+        <li class="active"><b>03</b><span><strong>Produção premium</strong><small>Apixel: turnarounds, key poses, arenas e HUD</small></span></li>
+        <li><b>04</b><span><strong>Limpeza e slicing</strong><small>Pixel cleanup, frames, atlases e contact sheets</small></span></li>
+        <li><b>05</b><span><strong>Integração Godot</strong><small>AnimationTree, estados relativos e VFX separados</small></span></li>
+        <li><b>06</b><span><strong>QA Android</strong><small>Contato, safe area, 60 FPS e teste em aparelho</small></span></li>
+      </ol>
+    </section>
+  </main>
+
+  <footer><span>CRIA DO TATAME • PRESSÃO</span><p>Ser forte é ser gentil.</p><small>Projeto oficial • Godot 4.2+ • Android, PC e Web</small></footer>
+  <script src="./game.js" type="module"></script>
 </body>
 </html>

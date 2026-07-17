@@ -57,7 +57,6 @@
       "victory",
       "defeat"
     ],
-    "fighter_striking_setup": ["jab", "cross", "hook_short", "upper_short", "feint", "slip_counter"],
     "fighter_clinch": [
       "clinch_entry",
       "pummeling_left",
@@ -86,21 +85,19 @@
     "story_npc": ["idle", "walk", "talk", "react_positive", "react_negative", "phone", "leave"]
   },
   "characters": [
-    {"id": "ruan_macacao", "role": "protagonist", "profiles": ["fighter_core", "fighter_striking_setup", "fighter_clinch", "fighter_ground"], "signature": ["silverback_grip", "baiana", "knee_cut", "cem_quilos", "mata_leao"]},
+    {"id": "ruan_macacao", "role": "protagonist", "profiles": ["fighter_core", "fighter_clinch", "fighter_ground"], "signature": ["silverback_grip", "baiana", "knee_cut", "cem_quilos", "mata_leao"]},
     {"id": "mestre_dende", "role": "mentor", "profiles": ["mentor"], "signature": ["base_raiz", "defesa_calma", "pressao_segura"]},
     {"id": "tinker_bell", "role": "ally", "profiles": ["story_npc"], "signature": []},
-    {"id": "davi_relampago", "role": "technical_rival", "profiles": ["fighter_core", "fighter_striking_setup", "fighter_clinch", "fighter_ground"], "signature": ["sprawl_relampago", "counter_single", "scramble_tecnico"]},
-    {"id": "cassio_molho", "role": "underground_promoter", "profiles": ["fighter_core", "fighter_striking_setup", "fighter_clinch", "story_npc"], "signature": ["dirty_clinch", "crowd_pressure"]},
+    {"id": "davi_relampago", "role": "technical_rival", "profiles": ["fighter_core", "fighter_clinch", "fighter_ground"], "signature": ["sprawl_relampago", "counter_single", "scramble_tecnico"]},
+    {"id": "cassio_molho", "role": "underground_promoter", "profiles": ["fighter_core", "fighter_clinch", "story_npc"], "signature": ["dirty_clinch", "crowd_pressure"]},
     {"id": "kenzo_kuroi", "role": "shadow_boss", "profiles": ["fighter_core", "fighter_clinch", "fighter_ground"], "signature": ["silent_counter", "leg_entanglement", "heel_hook_narrative"]},
     {"id": "leoa_quilombola", "role": "ally_rival", "profiles": ["fighter_core", "fighter_clinch", "fighter_ground"], "signature": ["base_de_ferro", "raspagem_quilombo", "triangulo_ancestral"]},
     {"id": "jacare_mangue", "role": "mangrove_boss", "profiles": ["fighter_core", "fighter_clinch", "fighter_ground"], "signature": ["arrasto_da_lama", "guilhotina_do_mangue", "montada_de_raiz"]},
-    {"id": "oni_da_lapa", "role": "underground_boss", "profiles": ["fighter_core", "fighter_striking_setup", "fighter_clinch", "fighter_ground"], "signature": ["carga_oni", "kimura_de_aco", "montada_sombria"]},
+    {"id": "oni_da_lapa", "role": "underground_boss", "profiles": ["fighter_core", "fighter_clinch", "fighter_ground"], "signature": ["carga_oni", "kimura_de_aco", "montada_sombria"]},
     {"id": "delegado_montenegro", "role": "institutional_pressure", "profiles": ["fighter_core", "fighter_clinch", "fighter_ground", "story_npc"], "signature": ["leitura_fria", "clinch_algemado", "wrist_lock_tatico"]},
     {"id": "mestre_guigo", "role": "advanced_coach", "profiles": ["fighter_core", "fighter_clinch", "fighter_ground", "mentor"], "signature": ["body_lock_drive", "leg_drag", "over_under_pass"]}
   ],
   "paired_techniques": [
-    {"id": "jab_setup", "entry": "long_range", "exit": "mid_range", "frames_target": 8},
-    {"id": "cross_to_clinch", "entry": "mid_range", "exit": "clinch", "frames_target": 12},
     {"id": "clinch_entry", "entry": "close_range", "exit": "clinch", "frames_target": 12},
     {"id": "pummeling", "entry": "clinch", "exit": "clinch", "frames_target": 16},
     {"id": "grip_break", "entry": "clinch", "exit": "close_range", "frames_target": 12},

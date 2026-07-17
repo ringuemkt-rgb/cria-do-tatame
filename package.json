@@ -11,10 +11,14 @@
     "validate:repository": "python tools/validate_complete_game.py",
     "validate:runtime": "python tools/validate_runtime_contracts.py",
     "validate:release": "python tools/validate_release_readiness.py",
+    "validate:supreme": "python tools/validate_supreme_build_contract.py",
     "assets:manifest": "node tools/node/generate_asset_manifest.mjs",
     "assets:queue": "python tools/ai_asset_pipeline/build_production_queue_v02.py",
-    "quality": "npm run validate:python && npm run validate:node && npm run validate:data && npm run validate:repository && npm run validate:runtime && npm run validate:release",
+    "animations:generate": "python tools/animation/generate_character_animation_pack.py",
+    "validate:animations": "python tools/animation/generate_character_animation_pack.py --validate-only",
+    "quality": "npm run validate:python && npm run validate:node && npm run validate:data && npm run validate:animations && npm run validate:repository && npm run validate:runtime && npm run validate:release && npm run validate:supreme",
     "build:android:windows": "powershell -ExecutionPolicy Bypass -File tools/build/build_android_debug.ps1",
+    "build:android:linux": "bash tools/build/build_android_debug.sh",
     "build:windows": "powershell -ExecutionPolicy Bypass -File tools/build/build_windows_debug.ps1"
   },
   "engines": {

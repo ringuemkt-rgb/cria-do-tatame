@@ -1,5 +1,7 @@
 extends CanvasLayer
 
+const VisualTheme = preload("res://src/ui/CriaVisualTheme.gd")
+
 var estados_ptbr := {
 	"PLAYER_STANDING_NEUTRAL": "EM PE - NEUTRO",
 	"PLAYER_TOP_CLINCH": "CLINCH - POR CIMA",
@@ -23,10 +25,41 @@ var mensagem_label: Label
 
 func _ready() -> void:
 	_build_fallback_ui_if_needed()
+	_style_premium_hud()
 	if not SignalBus.resources_changed.is_connected(_on_resources_changed):
 		SignalBus.resources_changed.connect(_on_resources_changed)
 	if not SignalBus.combat_state_changed.is_connected(_on_combat_state_changed):
 		SignalBus.combat_state_changed.connect(_on_combat_state_changed)
+
+func _style_premium_hud() -> void:
+	if not has_node("TopBar"):
+		return
+	if has_node("TopBar/TopFrame"):
+		$TopBar/TopFrame.add_theme_stylebox_override("panel", VisualTheme.panel_style(0.92, VisualTheme.GOLD, 2, 8))
+	if has_node("TopBar/StateLabel"):
+		VisualTheme.style_heading($TopBar/StateLabel, 18, VisualTheme.HONOR)
+	if has_node("TopBar/MatchLabel"):
+		VisualTheme.style_heading($TopBar/MatchLabel, 16, VisualTheme.OFF_WHITE)
+	if has_node("TopBar/PlayerName"):
+		VisualTheme.style_heading($TopBar/PlayerName, 17, VisualTheme.HONOR)
+	if has_node("TopBar/OpponentName"):
+		VisualTheme.style_heading($TopBar/OpponentName, 17, VisualTheme.OFF_WHITE)
+	for entry in [
+		["TopBar/PlayerPanel/PlayerHP", VisualTheme.CONFLICT],
+		["TopBar/PlayerPanel/PlayerGas", VisualTheme.CYAN],
+		["TopBar/PlayerPanel/PlayerGuarda", Color("4c8f5a")],
+		["TopBar/PlayerPanel/PlayerFoco", Color("8d54c7")],
+		["TopBar/PlayerPanel/PlayerMoral", VisualTheme.HONOR],
+		["TopBar/OpponentPanel/OpponentHP", VisualTheme.CONFLICT],
+		["TopBar/OpponentPanel/OpponentGas", VisualTheme.CYAN]
+	]:
+		if has_node(entry[0]):
+			VisualTheme.style_progress(get_node(entry[0]), entry[1])
+	if has_node("MessageFrame"):
+		$MessageFrame.add_theme_stylebox_override("panel", VisualTheme.panel_style(0.86, VisualTheme.RIVER, 1, 8))
+	if has_node("MessageLabel"):
+		$MessageLabel.add_theme_color_override("font_color", VisualTheme.OFF_WHITE)
+		$MessageLabel.add_theme_font_size_override("font_size", 15)
 
 func _build_fallback_ui_if_needed() -> void:
 	if has_node("TopBar"):
@@ -72,6 +105,8 @@ func update_state(state_name: String) -> void:
 		$TopBar/StateLabel.text = estados_ptbr.get(state_name, state_name)
 	elif estado_label != null:
 		estado_label.text = estados_ptbr.get(state_name, state_name)
+	if has_node("TopBar/PositionTag"):
+		$TopBar/PositionTag.text = "POSICAO RELATIVA • " + str(estados_ptbr.get(state_name, state_name))
 
 func update_player_resources(resources: Dictionary) -> void:
 	_update_bar("TopBar/PlayerPanel/PlayerHP", resources.get("health", resources.get("hp", 100)), 100)
