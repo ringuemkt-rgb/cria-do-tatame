@@ -6,6 +6,8 @@ const DEFAULT_PLAYER_ID: String = "ruan_macacao"
 const DEFAULT_OPPONENT_ID: String = "davi_relampago"
 const CombatStateMachineScript = preload("res://src/combat/CombatStateMachine.gd")
 const TechniqueResolverScript = preload("res://src/combat/TechniqueResolver.gd")
+const TechniqueClashResolverScript = preload("res://src/combat/TechniqueClashResolver.gd")
+const FrameDataSystemScript = preload("res://src/combat/FrameDataSystem.gd")
 
 const STATE_MIRROR := {
 	"PLAYER_STANDING_NEUTRAL": "PLAYER_STANDING_NEUTRAL",
@@ -33,6 +35,8 @@ var is_running: bool = false
 var last_result: Dictionary = {}
 var state_machine: Node
 var technique_resolver: Node
+var clash_resolver: Node
+var frame_data_system: Node
 
 func _ready() -> void:
 	_ensure_runtime_components()
@@ -46,6 +50,14 @@ func _ensure_runtime_components() -> void:
 		technique_resolver = TechniqueResolverScript.new()
 		technique_resolver.name = "TechniqueResolverRuntime"
 		add_child(technique_resolver)
+	if clash_resolver == null:
+		clash_resolver = TechniqueClashResolverScript.new()
+		clash_resolver.name = "TechniqueClashResolverRuntime"
+		add_child(clash_resolver)
+	if frame_data_system == null:
+		frame_data_system = FrameDataSystemScript.new()
+		frame_data_system.name = "FrameDataSystemRuntime"
+		add_child(frame_data_system)
 
 func start_combat(new_arena_id: String, new_player_id: String, new_opponent_id: String) -> Dictionary:
 	_ensure_runtime_components()
@@ -60,6 +72,8 @@ func start_combat(new_arena_id: String, new_player_id: String, new_opponent_id: 
 		opponent_id: _create_runtime_stats(opponent_id)
 	}
 	state_machine.call("reiniciar_em_pe")
+	if has_node("/root/DeckManager"):
+		DeckManager.start_combat_hand()
 	SignalBus.combat_started.emit(arena_id, player_id, opponent_id)
 	if SignalBus.has_signal("combate_iniciado"):
 		SignalBus.combate_iniciado.emit(StringName(opponent_id))
@@ -135,6 +149,11 @@ func get_available_techniques(actor_id: String = "") -> Array:
 			and float(actor.get("moral", 0)) >= moral_cost
 		)
 		item["actor_state"] = actor_state
+		if resolved_actor == player_id and has_node("/root/DeckManager"):
+			var card: Dictionary = DeckManager.get_attack_card(str(technique.get("id", "")), actor, actor_state)
+			item["deck_card_available"] = not card.is_empty()
+			item["deck_card_level"] = int(card.get("level", 0))
+			item["deck_card_id"] = str(card.get("id", ""))
 		available.append(item)
 	available.sort_custom(_sort_techniques_by_name)
 	return available
@@ -195,16 +214,20 @@ func execute_technique(actor_id: String, defender_id: String, technique: Diction
 	var actor_state_before: String = get_actor_state_name(actor_id)
 	var actor: Dictionary = fighters.get(actor_id, {})
 	var defender: Dictionary = fighters.get(defender_id, {})
+	var card_context := _build_card_context(actor_id, defender_id, technique, actor, defender, actor_state_before)
 	var resolver_result: Dictionary = technique_resolver.call(
 		"resolve_technique",
 		technique,
 		actor,
 		defender,
-		{"state": actor_state_before}
+		card_context
 	)
 	var applied: Dictionary = technique_resolver.call("aplicar_resultado", actor, defender, resolver_result)
 	fighters[actor_id] = applied.get("actor", actor)
 	fighters[defender_id] = applied.get("defender", defender)
+	_apply_card_activation_cost(actor_id, card_context.get("attack_card", {}))
+	if has_node("/root/DeckManager") and actor_id == player_id:
+		DeckManager.consume_used_card(str(card_context.get("attack_card", {}).get("id", "")), bool(resolver_result.get("success", false)))
 
 	last_result = resolver_result.duplicate(true)
 	last_result["actor_id"] = actor_id
@@ -247,6 +270,70 @@ func execute_technique(actor_id: String, defender_id: String, technique: Diction
 	_emit_resources()
 	_check_end(actor_id, defender_id, technique, last_result)
 	return last_result
+
+func _build_card_context(
+	actor_id: String,
+	defender_id: String,
+	technique: Dictionary,
+	actor: Dictionary,
+	defender: Dictionary,
+	actor_state: String
+) -> Dictionary:
+	var context: Dictionary = {"state": actor_state, "input_quality": 0.5, "defense_timing": 0.5}
+	if not has_node("/root/DeckManager"):
+		return context
+	var technique_id := str(technique.get("id", ""))
+	var family := str(technique.get("family", technique.get("familia", "geral")))
+	var attack_card: Dictionary = {}
+	if actor_id == player_id:
+		attack_card = DeckManager.get_attack_card(technique_id, actor, actor_state)
+		if not attack_card.is_empty() and not _can_pay_technique_and_card(actor, technique, attack_card):
+			attack_card = {}
+	else:
+		attack_card = _build_opponent_technique_card(technique, actor)
+	var defender_state := get_actor_state_name(defender_id)
+	var defense_card: Dictionary = {}
+	if defender_id == player_id:
+		defense_card = DeckManager.get_defense_card(family, defender, defender_state)
+	if defense_card.is_empty():
+		defense_card = clash_resolver.call("build_baseline_defense", technique, defender)
+	var clash: Dictionary = clash_resolver.call(
+		"resolve_clash", attack_card, defense_card, actor, defender, technique, context
+	)
+	var frame_data: Dictionary = frame_data_system.call("apply_level_clash", {}, clash, technique)
+	context["attack_card"] = attack_card
+	context["defense_card"] = defense_card
+	context["deck_clash"] = clash
+	context["chance_modifier"] = float(clash.get("chance_modifier", 0.0))
+	context["frame_data"] = frame_data
+	if bool(clash.get("enabled", false)):
+		SignalBus.technique_clash_resolved.emit(clash.duplicate(true))
+	return context
+
+func _build_opponent_technique_card(technique: Dictionary, actor: Dictionary) -> Dictionary:
+	var level := clampi(1 + int(float(actor.get("control", 50.0)) / 35.0), 1, 3)
+	return {
+		"id": "rival_card_%s" % str(technique.get("id", "technique")),
+		"name": technique.get("nome", technique.get("name", "Tecnica rival")),
+		"technique_id": technique.get("id", ""),
+		"level": level,
+		"base_power": 9.0,
+		"activation_cost": {}
+	}
+
+func _apply_card_activation_cost(actor_id: String, card: Dictionary) -> void:
+	if card.is_empty():
+		return
+	var cost: Dictionary = card.get("activation_cost", {})
+	_adjust(actor_id, "focus", -float(cost.get("focus", 0.0)))
+	_adjust(actor_id, "gas", -float(cost.get("gas", 0.0)))
+
+func _can_pay_technique_and_card(actor: Dictionary, technique: Dictionary, card: Dictionary) -> bool:
+	var technique_cost: Dictionary = technique.get("cost", technique.get("custo", {}))
+	var card_cost: Dictionary = card.get("activation_cost", {})
+	var gas_total := float(technique_cost.get("gas", 0.0)) + float(card_cost.get("gas", 0.0))
+	var focus_total := float(technique_cost.get("focus", technique_cost.get("foco", 0.0))) + float(card_cost.get("focus", 0.0))
+	return float(actor.get("gas", 0.0)) >= gas_total and float(actor.get("focus", 0.0)) >= focus_total
 
 func _resolve_finisher_before_transition(
 	actor_id: String,

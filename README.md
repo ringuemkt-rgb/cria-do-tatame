@@ -99,6 +99,10 @@ tools/ai_asset_pipeline/generated_queue/production_queue_v02.jsonl
 
 Todo asset final exige preview, metadata, documentação de importação e QA. Concept art não entra diretamente na build.
 
+## Deck de Combate — A Mente no Tatame
+
+O Terreiro inclui um construtor de 5 técnicas ativas e 3 fundamentos passivos. Em combate, uma mão determinística de 3 cartas especializa técnicas existentes sem pausar a luta nem ignorar posição, recursos, timing ou tap/escape. O design e a integração estão documentados em [`docs/gameplay/COMBAT_DECK_SYSTEM_V01.md`](docs/gameplay/COMBAT_DECK_SYSTEM_V01.md).
+
 ## Gerar APK Android no Windows
 
 Pré-requisitos:

@@ -35,6 +35,8 @@ func save_game(slot_id := 1) -> bool:
 		data["world_director_state"] = WorldDirectorManager.to_dict()
 	if has_node("/root/NFTManager"):
 		data["nft_state"] = NFTManager.to_dict()
+	if has_node("/root/DeckManager"):
+		data["combat_deck_state"] = DeckManager.to_dict()
 	var path := get_slot_path(slot_id)
 	if not _write_atomic_json(path, data):
 		push_error("[SaveManager] Falha ao salvar slot %s de forma atomica." % slot_id)
@@ -115,6 +117,8 @@ func load_game(slot_id := 1) -> bool:
 		WorldDirectorManager.load_from_dict(parsed.get("world_director_state", {}))
 	if has_node("/root/NFTManager"):
 		NFTManager.load_from_dict(parsed.get("nft_state", {}))
+	if has_node("/root/DeckManager"):
+		DeckManager.load_from_dict(parsed.get("combat_deck_state", {}))
 	SignalBus.save_loaded.emit(slot_id)
 	return true
 

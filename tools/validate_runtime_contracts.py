@@ -22,11 +22,14 @@ REQUIRED_SCENES = {
     "combat": "scenes/combat/CombatArenaBase.tscn",
     "result": "scenes/result/ResultScreen.tscn",
     "cria_live": "scenes/ui/CriaLiveUI.tscn",
+    "deck_builder": "scenes/ui/DeckBuilder.tscn",
+    "combat_deck_hud": "scenes/ui/CombatDeckHUD.tscn",
 }
 
 REQUIRED_AUTOLOADS = {
     "SignalBus": "src/autoloads/SignalBus.gd",
     "DataRegistry": "src/autoloads/DataRegistry.gd",
+    "DeckManager": "src/autoloads/DeckManager.gd",
     "WorldState": "src/autoloads/WorldState.gd",
     "SaveManager": "src/autoloads/SaveManager.gd",
     "CombatManager": "src/autoloads/CombatManager.gd",
@@ -82,6 +85,7 @@ SCENE_NODE_CONTRACTS = {
         "Panel/NextAction",
         "Panel/Message",
         "Panel/TrainBtn",
+        "Panel/DeckBtn",
         "Panel/FightDaviBtn",
         "Panel/SaveBtn",
     ],

@@ -24,6 +24,7 @@ func resolve_technique(technique: Dictionary, actor: Dictionary, defender: Dicti
 	var cost: Dictionary = _custo(technique)
 	var can_pay: bool = _pode_pagar(actor, cost)
 	var chance: float = _calcular_chance(technique, actor, defender, state_allowed, can_pay)
+	chance = clampf(chance + float(context.get("chance_modifier", 0.0)), 0.05, 0.95)
 	var success: bool = state_allowed and can_pay and rng.randf() <= chance
 	var effects: Dictionary = _efeitos(technique, success)
 	return {
@@ -41,6 +42,8 @@ func resolve_technique(technique: Dictionary, actor: Dictionary, defender: Dicti
 		"cost": cost,
 		"effects": effects,
 		"family": technique.get("family", technique.get("familia", "geral")),
+		"deck_clash": context.get("deck_clash", {}).duplicate(true),
+		"frame_data": context.get("frame_data", {}).duplicate(true),
 		"message": _mensagem(technique, success, state_allowed, can_pay)
 	}
 

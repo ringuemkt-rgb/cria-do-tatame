@@ -66,6 +66,11 @@ custom_minimum_size = Vector2(0, 54)
 layout_mode = 2
 text = "TREINAR"
 
+[node name="DeckBtn" type="Button" parent="Panel"]
+custom_minimum_size = Vector2(0, 54)
+layout_mode = 2
+text = "MONTAR GI DE COMBATE"
+
 [node name="FightDaviBtn" type="Button" parent="Panel"]
 custom_minimum_size = Vector2(0, 54)
 layout_mode = 2

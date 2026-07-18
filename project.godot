@@ -9,6 +9,7 @@ run/main_scene="res://scenes/main_menu/MainMenu.tscn"
 [autoload]
 SignalBus="*res://src/autoloads/SignalBus.gd"
 DataRegistry="*res://src/autoloads/DataRegistry.gd"
+DeckManager="*res://src/autoloads/DeckManager.gd"
 LocalAIManager="*res://src/autoloads/LocalAIManager.gd"
 WorldState="*res://src/autoloads/WorldState.gd"
 WorldDirectorManager="*res://src/autoloads/WorldDirectorManager.gd"

@@ -65,6 +65,7 @@ func _on_new_game_pressed() -> void:
 	_transitioning = true
 	WorldState.reset_new_game()
 	GameFlowManager.start_new_run()
+	DeckManager.configure_from_data(DataRegistry.combat_deck)
 	if not SaveManager.save_game(1):
 		push_warning("[MainMenu] Novo jogo iniciado, mas o save inicial falhou.")
 	_change_scene(HUB_SCENE)

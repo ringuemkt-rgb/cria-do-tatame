@@ -1,0 +1,73 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://criadotatame.local/schemas/combat-deck-v1.json",
+  "title": "Cria do Tatame Combat Deck",
+  "type": "object",
+  "required": ["schema_version", "owner_id", "belt", "limits", "cards", "equipped"],
+  "properties": {
+    "schema_version": {"const": "1.0.0"},
+    "owner_id": {"type": "string", "minLength": 1},
+    "belt": {"enum": ["branca", "azul", "roxa", "marrom", "preta"]},
+    "limits": {
+      "type": "object",
+      "required": ["active", "passive", "hand"],
+      "properties": {
+        "active": {"const": 5},
+        "passive": {"const": 3},
+        "hand": {"const": 3}
+      },
+      "additionalProperties": false
+    },
+    "cards": {
+      "type": "array",
+      "minItems": 10,
+      "items": {"$ref": "#/$defs/card"}
+    },
+    "equipped": {
+      "type": "object",
+      "required": ["active", "passive"],
+      "properties": {
+        "active": {"type": "array", "maxItems": 5, "items": {"type": "string"}},
+        "passive": {"type": "array", "maxItems": 3, "items": {"type": "string"}}
+      },
+      "additionalProperties": false
+    }
+  },
+  "$defs": {
+    "resourceCost": {
+      "type": "object",
+      "properties": {
+        "focus": {"type": "integer", "minimum": 0, "maximum": 20},
+        "gas": {"type": "integer", "minimum": 0, "maximum": 20}
+      },
+      "additionalProperties": false
+    },
+    "card": {
+      "type": "object",
+      "required": [
+        "id", "name", "kind", "category", "technique_id", "level",
+        "base_power", "activation_cost", "passive_effect", "clash_effect",
+        "xp", "xp_to_next", "unlocked"
+      ],
+      "properties": {
+        "id": {"type": "string", "pattern": "^[a-z0-9_]+$"},
+        "name": {"type": "string", "minLength": 2},
+        "kind": {"enum": ["active", "passive"]},
+        "category": {"enum": ["pegada", "queda", "passagem", "raspagem", "controle", "finalizacao", "defesa", "transicao"]},
+        "technique_id": {"type": "string", "pattern": "^[a-z0-9_]+$"},
+        "level": {"type": "integer", "minimum": 1, "maximum": 5},
+        "base_power": {"type": "number", "minimum": 0, "maximum": 30},
+        "activation_cost": {"$ref": "#/$defs/resourceCost"},
+        "passive_effect": {"type": "object"},
+        "clash_effect": {"type": "object"},
+        "response_to_families": {"type": "array", "items": {"type": "string"}},
+        "valid_states": {"type": "array", "items": {"type": "string"}},
+        "xp": {"type": "integer", "minimum": 0},
+        "xp_to_next": {"type": "integer", "minimum": 1},
+        "unlocked": {"type": "boolean"}
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}

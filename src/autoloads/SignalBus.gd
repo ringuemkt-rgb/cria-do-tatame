@@ -16,6 +16,11 @@ signal technique_resolved(result)
 signal grip_integrity_broken(character_id)
 signal technical_phase_changed(phase)
 signal submission_phase_changed(phase)
+signal combat_deck_hand_changed(hand, selected_card_id)
+signal combat_card_selected(card)
+signal technique_clash_resolved(result)
+signal card_xp_changed(card_id, xp, xp_to_next)
+signal deck_configuration_changed(deck_state)
 
 # Contratos de compatibilidade PT-BR usados por módulos e conteúdo legado.
 # Mantidos explicitamente para que listeners antigos não falhem em silêncio.

@@ -2,19 +2,23 @@ extends SceneTree
 
 const CombatSimulationEngineScript = preload("res://src/combat/CombatManager.gd")
 const DaviAIControllerScript = preload("res://src/combat/DaviAIController.gd")
+const TechniqueClashResolverScript = preload("res://src/combat/TechniqueClashResolver.gd")
 
 const REQUIRED_SCENES := [
 	"res://scenes/main_menu/MainMenu.tscn",
 	"res://scenes/hubs/TerreiroDaLuta.tscn",
 	"res://scenes/combat/CombatArenaBase.tscn",
 	"res://scenes/result/ResultScreen.tscn",
-	"res://scenes/ui/CriaLiveUI.tscn"
+	"res://scenes/ui/CriaLiveUI.tscn",
+	"res://scenes/ui/DeckBuilder.tscn",
+	"res://scenes/ui/CombatDeckHUD.tscn"
 ]
 
 var failures: Array[String] = []
 var checks: int = 0
 var signal_bus: Node
 var data_registry: Node
+var deck_manager: Node
 var local_ai_manager: Node
 var world_state: Node
 var save_manager: Node
@@ -45,6 +49,7 @@ func _run() -> void:
 		audio_manager.set("enabled", false)
 	_test_autoloads()
 	_test_data_registry()
+	_test_combat_deck()
 	await _test_local_ai_fallback()
 	await _test_scene_loading()
 	_test_save_roundtrip()
@@ -57,6 +62,7 @@ func _run() -> void:
 func _resolve_autoloads() -> void:
 	signal_bus = root.get_node_or_null("SignalBus")
 	data_registry = root.get_node_or_null("DataRegistry")
+	deck_manager = root.get_node_or_null("DeckManager")
 	local_ai_manager = root.get_node_or_null("LocalAIManager")
 	world_state = root.get_node_or_null("WorldState")
 	save_manager = root.get_node_or_null("SaveManager")
@@ -70,6 +76,7 @@ func _test_autoloads() -> void:
 	var nodes: Dictionary = {
 		"SignalBus": signal_bus,
 		"DataRegistry": data_registry,
+		"DeckManager": deck_manager,
 		"LocalAIManager": local_ai_manager,
 		"WorldState": world_state,
 		"SaveManager": save_manager,
@@ -95,6 +102,7 @@ func _test_data_registry() -> void:
 	var dialogue_fallbacks: Dictionary = data_registry.get("ai_dialogue_fallbacks")
 	var animation_catalog: Dictionary = data_registry.get("character_animation_catalog")
 	var arena_animation_flow: Dictionary = data_registry.get("arena_animation_flow")
+	var combat_deck: Dictionary = data_registry.get("combat_deck")
 	_assert(not ruan.is_empty(), "Ruan Macacao nao foi carregado")
 	_assert(not arena.is_empty(), "Terreiro da Luta nao foi carregado")
 	_assert(techniques.size() >= 10, "Catalogo principal possui menos de 10 tecnicas")
@@ -102,6 +110,7 @@ func _test_data_registry() -> void:
 	_assert(not dialogue_fallbacks.is_empty(), "Dialogos offline de fallback nao foram carregados")
 	_assert(animation_catalog.get("entries", []).size() >= 31, "Catalogo de animacoes nao foi carregado")
 	_assert(arena_animation_flow.get("fight_flow", []).size() >= 10, "Fluxo animado das arenas nao foi carregado")
+	_assert(combat_deck.get("cards", []).size() == 10, "Deck inicial nao possui 10 cartas")
 	var ruan_idle: Dictionary = data_registry.call("get_character_animation", "ruan_macacao", "idle")
 	_assert(not ruan_idle.is_empty(), "Animacao idle de Ruan nao foi registrada")
 	_assert(ResourceLoader.exists("res://" + str(ruan_idle.get("manifest", "")).get_base_dir().path_join("sprite_sheet.png")), "Atlas idle de Ruan nao existe")
@@ -110,6 +119,34 @@ func _test_data_registry() -> void:
 		_assert(not rival_idle.is_empty(), "Animacao idle ausente para %s" % character_id)
 	_assert(not bool(local_ai_config.get("runtime_policy", {}).get("combat_llm_allowed", true)), "LLM foi permitido no combate por engano")
 	_assert(bool(local_ai_config.get("runtime_policy", {}).get("fallback_required", false)), "Fallback offline nao esta marcado como obrigatorio")
+
+func _test_combat_deck() -> void:
+	if deck_manager == null or data_registry == null:
+		return
+	deck_manager.call("configure_from_data", data_registry.get("combat_deck"))
+	var hand: Array = deck_manager.call("get_hand")
+	_assert(hand.size() == 3, "Mao inicial do deck nao possui 3 cartas")
+	var techniques: Dictionary = data_registry.get("techniques")
+	for card_value in deck_manager.call("get_collection"):
+		var card: Dictionary = card_value
+		_assert(techniques.has(str(card.get("technique_id", ""))), "Carta referencia tecnica inexistente: %s" % str(card.get("id", "")))
+		_assert(int(card.get("level", 0)) <= 2 or not bool(card.get("unlocked", false)), "Faixa branca equipou carta acima de Nv.2")
+	var resolver: Node = TechniqueClashResolverScript.new()
+	root.add_child(resolver)
+	var clash: Dictionary = resolver.call(
+		"resolve_clash",
+		{"id": "attack", "level": 3, "base_power": 14},
+		{"id": "defense", "level": 1, "base_power": 8},
+		{"control": 70, "focus": 65, "grip": 70},
+		{"guard": 45, "focus": 40, "control": 40},
+		data_registry.call("get_technique", "chave_braco"),
+		{"state": "PLAYER_TOP_MOUNT", "input_quality": 0.8, "defense_timing": 0.4}
+	)
+	_assert(bool(clash.get("enabled", false)), "Clash de cartas nao foi ativado")
+	_assert(int(clash.get("level_gap", 0)) == 2, "Clash calculou diferenca de nivel incorreta")
+	_assert(not bool(clash.get("instant_finish", true)), "Clash permitiu finalizacao automatica insegura")
+	_assert(float(clash.get("chance_modifier", 1.0)) <= 0.35, "Clash excedeu teto de bonus")
+	resolver.queue_free()
 
 func _test_local_ai_fallback() -> void:
 	if local_ai_manager == null:
