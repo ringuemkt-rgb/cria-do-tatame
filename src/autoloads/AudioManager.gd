@@ -3,6 +3,10 @@ extends Node
 var enabled: bool = true
 var sfx_bus: String = "Master"
 var music_bus: String = "Master"
+var layer_volumes: Dictionary = {}
+
+func set_layer_volume(layer_id: String, volume: float) -> void:
+	layer_volumes[layer_id] = clampf(volume, 0.0, 1.0)
 
 func play_sfx(event_id: String) -> void:
 	if not enabled:
@@ -28,6 +32,9 @@ func play_music_cue(cue_id: String) -> void:
 
 func _pitch_for(event_id: String) -> float:
 	match event_id:
+		"tatame_impact_light": return 140.0
+		"tatame_impact_heavy": return 85.0
+		"gi_rustle": return 240.0
 		"grip_de_ferro": return 180.0
 		"baiana": return 120.0
 		"corte_joelho": return 210.0
@@ -39,6 +46,9 @@ func _pitch_for(event_id: String) -> float:
 
 func _duration_for(event_id: String) -> float:
 	match event_id:
+		"tatame_impact_light": return 0.07
+		"tatame_impact_heavy": return 0.16
+		"gi_rustle": return 0.05
 		"baiana": return 0.16
 		"encerramento_tecnico": return 0.22
 		"botao": return 0.05

@@ -43,7 +43,7 @@ func configure_from_data(source: Dictionary) -> Dictionary:
 			continue
 		var card: Dictionary = value.duplicate(true)
 		var card_id := str(card.get("id", ""))
-		if card_id != "":
+		if card_id != "" and _validate_technique_ref(card):
 			cards[card_id] = card
 	var equipped: Dictionary = source.get("equipped", {})
 	active_deck = _valid_equipped(equipped.get("active", []), "active", ACTIVE_LIMIT)
@@ -232,6 +232,17 @@ func _valid_equipped(values: Array, kind: String, limit: int) -> Array[String]:
 		if not output.has(card_id) and output.size() < limit:
 			output.append(card_id)
 	return output
+
+func _validate_technique_ref(card: Dictionary) -> bool:
+	var tid: String = card.get("technique_id", "")
+	if tid == "":
+		push_warning("Carta sem technique_id: " + str(card.get("id")))
+		return false
+	if DataRegistry and DataRegistry.has_method("get_technique"):
+		if DataRegistry.get_technique(tid).is_empty():
+			push_warning("Carta com technique_id invalido: " + tid)
+			return false
+	return true
 
 func _draw_until_full() -> void:
 	if active_deck.is_empty():
