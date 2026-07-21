@@ -1,0 +1,20 @@
+{
+  "version": "1.0.0",
+  "event_id": "save_confirm",
+  "category": "ui",
+  "duration_seconds": 0.54,
+  "sample_rate": 48000,
+  "channels": 2,
+  "loop": false,
+  "loop_start_samples": null,
+  "loop_end_samples": null,
+  "aliases": [
+    "save_game"
+  ],
+  "runtime_volume_db": 0.0,
+  "cooldown_ms": 40,
+  "max_polyphony": 4,
+  "generation": "deterministic_original_synthesis",
+  "source_sha256": "dbf27daa68c29444856889456fb56afbdcbec068cccfd7137c20a5516b646d54",
+  "game_sha256": "7bf6e0a57ceacbb12459a29857ad2d2db3133b3ad92bc2c35b2d51926f5666ae"
+}

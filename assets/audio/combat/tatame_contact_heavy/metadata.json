@@ -1,0 +1,22 @@
+{
+  "version": "1.0.0",
+  "event_id": "tatame_contact_heavy",
+  "category": "combat",
+  "duration_seconds": 0.62,
+  "sample_rate": 48000,
+  "channels": 2,
+  "loop": false,
+  "loop_start_samples": null,
+  "loop_end_samples": null,
+  "aliases": [
+    "impacto_pesado",
+    "baiana",
+    "impact"
+  ],
+  "runtime_volume_db": 0.0,
+  "cooldown_ms": 40,
+  "max_polyphony": 4,
+  "generation": "deterministic_original_synthesis",
+  "source_sha256": "1d6f31e80c7cbf0f6d28205623d1adf2924a9fdbaf8893078101b4c9076c4a9d",
+  "game_sha256": "6318885fcffeded5d3eac484e77837a61478f633b9b8d144d8bea33b9d16308f"
+}

@@ -1,0 +1,78 @@
+{
+  "version": "2.0.0",
+  "character_id": "kenzo_kuroi",
+  "source_action_id": "counter",
+  "frame_size": [
+    512,
+    512
+  ],
+  "frame_count": 5,
+  "fps": 12,
+  "loop": false,
+  "pivot": {
+    "x": 256,
+    "y": 492
+  },
+  "alpha_boxes": [
+    [
+      56,
+      29,
+      455,
+      492
+    ],
+    [
+      93,
+      28,
+      419,
+      492
+    ],
+    [
+      77,
+      45,
+      435,
+      492
+    ],
+    [
+      53,
+      33,
+      459,
+      492
+    ],
+    [
+      56,
+      20,
+      456,
+      492
+    ]
+  ],
+  "texture_filter": "nearest",
+  "runtime_transition": {
+    "from": "entrada_queda",
+    "to": "clinch_neutro"
+  },
+  "events": [
+    {
+      "frame": 1,
+      "name": "read_entry"
+    },
+    {
+      "frame": 2,
+      "name": "counter_window"
+    },
+    {
+      "frame": 3,
+      "name": "reangle"
+    },
+    {
+      "frame": 4,
+      "name": "counter_stable"
+    }
+  ],
+  "resource_delta": {
+    "gas": -6,
+    "focus": -3
+  },
+  "result": "counter_success",
+  "qa_status": "source_asset_qa_passed_canonical_opponent_pending",
+  "spritesheet_sha256": "a3e10384ffde722409860b952faf79fa3ab3ec946c176697d60ac03a8c5a967b"
+}

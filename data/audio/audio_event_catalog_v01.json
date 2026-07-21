@@ -1,0 +1,332 @@
+{
+  "version": "1.0.0",
+  "pack_manifest": "assets/audio/audio_pack_manifest_v01.json",
+  "mobile_simultaneous_voice_limit": 24,
+  "events": [
+    {
+      "id": "gi_grip_connect",
+      "category": "combat",
+      "path": "res://assets/audio/combat/gi_grip_connect/game.ogg",
+      "loop": false,
+      "volume_db": 0.0,
+      "cooldown_ms": 40,
+      "max_polyphony": 5,
+      "aliases": [
+        "grip_de_ferro",
+        "grip_connect"
+      ]
+    },
+    {
+      "id": "gi_grip_break",
+      "category": "combat",
+      "path": "res://assets/audio/combat/gi_grip_break/game.ogg",
+      "loop": false,
+      "volume_db": 0.0,
+      "cooldown_ms": 40,
+      "max_polyphony": 4,
+      "aliases": [
+        "grip_break"
+      ]
+    },
+    {
+      "id": "tatame_contact_light",
+      "category": "combat",
+      "path": "res://assets/audio/combat/tatame_contact_light/game.ogg",
+      "loop": false,
+      "volume_db": 0.0,
+      "cooldown_ms": 40,
+      "max_polyphony": 6,
+      "aliases": [
+        "impacto_leve"
+      ]
+    },
+    {
+      "id": "tatame_contact_heavy",
+      "category": "combat",
+      "path": "res://assets/audio/combat/tatame_contact_heavy/game.ogg",
+      "loop": false,
+      "volume_db": 0.0,
+      "cooldown_ms": 40,
+      "max_polyphony": 4,
+      "aliases": [
+        "impacto_pesado",
+        "baiana",
+        "impact"
+      ]
+    },
+    {
+      "id": "sprawl_contact",
+      "category": "combat",
+      "path": "res://assets/audio/combat/sprawl_contact/game.ogg",
+      "loop": false,
+      "volume_db": 0.0,
+      "cooldown_ms": 40,
+      "max_polyphony": 4,
+      "aliases": [
+        "sprawl",
+        "defesa"
+      ]
+    },
+    {
+      "id": "sweep_commit",
+      "category": "combat",
+      "path": "res://assets/audio/combat/sweep_commit/game.ogg",
+      "loop": false,
+      "volume_db": 0.0,
+      "cooldown_ms": 40,
+      "max_polyphony": 4,
+      "aliases": [
+        "raspagem_tesoura",
+        "raspagem_borboleta"
+      ]
+    },
+    {
+      "id": "control_stable",
+      "category": "combat",
+      "path": "res://assets/audio/combat/control_stable/game.ogg",
+      "loop": false,
+      "volume_db": 0.0,
+      "cooldown_ms": 40,
+      "max_polyphony": 4,
+      "aliases": [
+        "corte_joelho",
+        "passagem",
+        "control_start"
+      ]
+    },
+    {
+      "id": "defense_perfect",
+      "category": "combat",
+      "path": "res://assets/audio/combat/defense_perfect/game.ogg",
+      "loop": false,
+      "volume_db": 0.0,
+      "cooldown_ms": 40,
+      "max_polyphony": 4,
+      "aliases": [
+        "defesa_perfeita"
+      ]
+    },
+    {
+      "id": "submission_lock",
+      "category": "combat",
+      "path": "res://assets/audio/combat/submission_lock/game.ogg",
+      "loop": false,
+      "volume_db": 0.0,
+      "cooldown_ms": 40,
+      "max_polyphony": 4,
+      "aliases": [
+        "encerramento_tecnico"
+      ]
+    },
+    {
+      "id": "tap_signal",
+      "category": "combat",
+      "path": "res://assets/audio/combat/tap_signal/game.ogg",
+      "loop": false,
+      "volume_db": 0.0,
+      "cooldown_ms": 40,
+      "max_polyphony": 4,
+      "aliases": [
+        "tap",
+        "tap_window"
+      ]
+    },
+    {
+      "id": "reset_ready",
+      "category": "combat",
+      "path": "res://assets/audio/combat/reset_ready/game.ogg",
+      "loop": false,
+      "volume_db": 0.0,
+      "cooldown_ms": 40,
+      "max_polyphony": 4,
+      "aliases": [
+        "reset"
+      ]
+    },
+    {
+      "id": "score_confirm",
+      "category": "combat",
+      "path": "res://assets/audio/combat/score_confirm/game.ogg",
+      "loop": false,
+      "volume_db": 0.0,
+      "cooldown_ms": 40,
+      "max_polyphony": 4,
+      "aliases": [
+        "score"
+      ]
+    },
+    {
+      "id": "deck_clash_dominant",
+      "category": "combat",
+      "path": "res://assets/audio/combat/deck_clash_dominant/game.ogg",
+      "loop": false,
+      "volume_db": 0.0,
+      "cooldown_ms": 120,
+      "max_polyphony": 3,
+      "aliases": []
+    },
+    {
+      "id": "deck_clash_advantage",
+      "category": "combat",
+      "path": "res://assets/audio/combat/deck_clash_advantage/game.ogg",
+      "loop": false,
+      "volume_db": 0.0,
+      "cooldown_ms": 100,
+      "max_polyphony": 3,
+      "aliases": []
+    },
+    {
+      "id": "deck_clash_contested",
+      "category": "combat",
+      "path": "res://assets/audio/combat/deck_clash_contested/game.ogg",
+      "loop": false,
+      "volume_db": 0.0,
+      "cooldown_ms": 80,
+      "max_polyphony": 3,
+      "aliases": []
+    },
+    {
+      "id": "deck_clash_counter",
+      "category": "combat",
+      "path": "res://assets/audio/combat/deck_clash_counter/game.ogg",
+      "loop": false,
+      "volume_db": 0.0,
+      "cooldown_ms": 120,
+      "max_polyphony": 3,
+      "aliases": []
+    },
+    {
+      "id": "button_confirm",
+      "category": "ui",
+      "path": "res://assets/audio/ui/button_confirm/game.ogg",
+      "loop": false,
+      "volume_db": 0.0,
+      "cooldown_ms": 25,
+      "max_polyphony": 6,
+      "aliases": [
+        "botao",
+        "botao_click"
+      ]
+    },
+    {
+      "id": "menu_open",
+      "category": "ui",
+      "path": "res://assets/audio/ui/menu_open/game.ogg",
+      "loop": false,
+      "volume_db": 0.0,
+      "cooldown_ms": 40,
+      "max_polyphony": 4,
+      "aliases": []
+    },
+    {
+      "id": "cria_live_notification",
+      "category": "ui",
+      "path": "res://assets/audio/ui/cria_live_notification/game.ogg",
+      "loop": false,
+      "volume_db": 0.0,
+      "cooldown_ms": 40,
+      "max_polyphony": 4,
+      "aliases": [
+        "cria_live"
+      ]
+    },
+    {
+      "id": "save_confirm",
+      "category": "ui",
+      "path": "res://assets/audio/ui/save_confirm/game.ogg",
+      "loop": false,
+      "volume_db": 0.0,
+      "cooldown_ms": 40,
+      "max_polyphony": 4,
+      "aliases": [
+        "save_game"
+      ]
+    },
+    {
+      "id": "arena_idle_loop",
+      "category": "ambience",
+      "path": "res://assets/audio/ambience/arena_idle_loop/game.ogg",
+      "loop": true,
+      "volume_db": -8.0,
+      "cooldown_ms": 500,
+      "max_polyphony": 1,
+      "aliases": []
+    },
+    {
+      "id": "terreiro_river_loop",
+      "category": "ambience",
+      "path": "res://assets/audio/ambience/terreiro_river_loop/game.ogg",
+      "loop": true,
+      "volume_db": -9.0,
+      "cooldown_ms": 500,
+      "max_polyphony": 1,
+      "aliases": []
+    },
+    {
+      "id": "salvador_city_loop",
+      "category": "ambience",
+      "path": "res://assets/audio/ambience/salvador_city_loop/game.ogg",
+      "loop": true,
+      "volume_db": -10.0,
+      "cooldown_ms": 500,
+      "max_polyphony": 1,
+      "aliases": []
+    },
+    {
+      "id": "zambiapunga_square_loop",
+      "category": "ambience",
+      "path": "res://assets/audio/ambience/zambiapunga_square_loop/game.ogg",
+      "loop": true,
+      "volume_db": -9.0,
+      "cooldown_ms": 500,
+      "max_polyphony": 1,
+      "aliases": []
+    },
+    {
+      "id": "mangrove_tide_loop",
+      "category": "ambience",
+      "path": "res://assets/audio/ambience/mangrove_tide_loop/game.ogg",
+      "loop": true,
+      "volume_db": -9.0,
+      "cooldown_ms": 500,
+      "max_polyphony": 1,
+      "aliases": []
+    },
+    {
+      "id": "arena_positive",
+      "category": "crowd",
+      "path": "res://assets/audio/crowd/arena_positive/game.ogg",
+      "loop": false,
+      "volume_db": -3.0,
+      "cooldown_ms": 350,
+      "max_polyphony": 2,
+      "aliases": [
+        "vitoria_crowd"
+      ]
+    },
+    {
+      "id": "arena_tension",
+      "category": "crowd",
+      "path": "res://assets/audio/crowd/arena_tension/game.ogg",
+      "loop": false,
+      "volume_db": -5.0,
+      "cooldown_ms": 350,
+      "max_polyphony": 2,
+      "aliases": []
+    },
+    {
+      "id": "arena_dique_pulse_loop",
+      "category": "music",
+      "path": "res://assets/audio/music/arena_dique_pulse_loop/game.ogg",
+      "loop": true,
+      "volume_db": -6.0,
+      "cooldown_ms": 500,
+      "max_polyphony": 1,
+      "aliases": [
+        "arena_do_dique",
+        "dique"
+      ]
+    }
+  ],
+  "fallback_policy": "procedural_tone_only_when_file_missing"
+}

@@ -1,0 +1,103 @@
+{
+  "version": "1.0.0",
+  "character_id": "leoa_quilombola",
+  "source_sheet": "assets/source/characters/leoa_quilombola/action_poses_v01/source_sheet_chroma.png",
+  "source_sha256": "d103d2810e2f3fb311c6a0d0a4a2d537968c72abae1509f7696dd44526a3b4da",
+  "clean_source_sheet": "assets/graphics/characters/leoa_quilombola/action_poses_v01/clean_source_sheet.png",
+  "clean_source_sha256": "393e49f425d384e021942642d6a73d1519fd63fd427bac89d599ef13af5d581b",
+  "pose_size": [
+    512,
+    512
+  ],
+  "anchor": "bottom_center",
+  "action_count": 6,
+  "actions": [
+    {
+      "id": "walk",
+      "path": "assets/graphics/characters/leoa_quilombola/action_poses_v01/poses/walk.png",
+      "sha256": "e9912d981d859fa3e5872484f1ce9cf06de3109cc8599bf0fa5e1a667c3db67c",
+      "alpha_bbox": [
+        140,
+        20,
+        372,
+        492
+      ],
+      "runtime_aliases": [
+        "walk"
+      ],
+      "status": "source_pose_asset_qa_passed_runtime_animation_pending"
+    },
+    {
+      "id": "base",
+      "path": "assets/graphics/characters/leoa_quilombola/action_poses_v01/poses/base.png",
+      "sha256": "e30da9487c9cbdb2d7e6e175512361d5e4f7efa84bfa573d7a003c1b7d60bd9c",
+      "alpha_bbox": [
+        62,
+        20,
+        451,
+        492
+      ],
+      "runtime_aliases": [
+        "base"
+      ],
+      "status": "source_pose_asset_qa_passed_runtime_animation_pending"
+    },
+    {
+      "id": "sweep_setup",
+      "path": "assets/graphics/characters/leoa_quilombola/action_poses_v01/poses/sweep_setup.png",
+      "sha256": "8673d3f924c8fc2c3784e1f96e69fd00f721a1614cdcb97e70dcd59f776d0d7d",
+      "alpha_bbox": [
+        20,
+        150,
+        492,
+        492
+      ],
+      "runtime_aliases": [
+        "sweep_setup"
+      ],
+      "status": "source_pose_asset_qa_passed_runtime_animation_pending"
+    },
+    {
+      "id": "sweep",
+      "path": "assets/graphics/characters/leoa_quilombola/action_poses_v01/poses/sweep.png",
+      "sha256": "8367382833dd67b68715057a6eed3b154899eca4511a05cc33fe25f1626d6806",
+      "alpha_bbox": [
+        20,
+        208,
+        492,
+        492
+      ],
+      "runtime_aliases": [],
+      "status": "source_pose_asset_qa_passed_runtime_animation_pending"
+    },
+    {
+      "id": "root_pressure",
+      "path": "assets/graphics/characters/leoa_quilombola/action_poses_v01/poses/root_pressure.png",
+      "sha256": "c0ee7ccae33ec3d475c7fbd54e459eaf26910ed0e0b2a4e32f1cac299ee5a2c6",
+      "alpha_bbox": [
+        20,
+        268,
+        492,
+        492
+      ],
+      "runtime_aliases": [],
+      "status": "source_pose_asset_qa_passed_runtime_animation_pending"
+    },
+    {
+      "id": "victory",
+      "path": "assets/graphics/characters/leoa_quilombola/action_poses_v01/poses/victory.png",
+      "sha256": "91dda6964fe590aa09377c711d33976c45ff8eb48b46306faf7d038b5543f0a4",
+      "alpha_bbox": [
+        162,
+        20,
+        349,
+        492
+      ],
+      "runtime_aliases": [],
+      "status": "source_pose_asset_qa_passed_runtime_animation_pending"
+    }
+  ],
+  "contact_sheet": "assets/graphics/characters/leoa_quilombola/action_poses_v01/contact_sheet.png",
+  "contact_sheet_sha256": "17c65e39f2e526b097aced8ce089542d62526ad2c048aca6260a6d8d276c09cd",
+  "runtime_status": "source_only_until_godot_gate"
+}

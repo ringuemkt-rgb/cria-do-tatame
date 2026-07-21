@@ -1,0 +1,2 @@
+Original project-generated procedural audio. No external samples, voices, songs or recordings.
+Final release remains subject to project legal and listening review.

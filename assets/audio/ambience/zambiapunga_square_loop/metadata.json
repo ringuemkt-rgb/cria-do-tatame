@@ -1,0 +1,18 @@
+{
+  "version": "1.0.0",
+  "event_id": "zambiapunga_square_loop",
+  "category": "ambience",
+  "duration_seconds": 14.0,
+  "sample_rate": 48000,
+  "channels": 2,
+  "loop": true,
+  "loop_start_samples": 0,
+  "loop_end_samples": 672000,
+  "aliases": [],
+  "runtime_volume_db": -9.0,
+  "cooldown_ms": 500,
+  "max_polyphony": 1,
+  "generation": "deterministic_original_synthesis",
+  "source_sha256": "2f9a73f91e942f3d4ec98a11d6fe97c8cb524e7bc0f7ce91d935d20ce3b5d18c",
+  "game_sha256": "046259acf2c279d15a05025172de61ae658dc06354561842e22d2ade7e11e899"
+}

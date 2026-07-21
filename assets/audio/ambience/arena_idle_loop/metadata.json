@@ -1,0 +1,18 @@
+{
+  "version": "1.0.0",
+  "event_id": "arena_idle_loop",
+  "category": "ambience",
+  "duration_seconds": 12.0,
+  "sample_rate": 48000,
+  "channels": 2,
+  "loop": true,
+  "loop_start_samples": 0,
+  "loop_end_samples": 576000,
+  "aliases": [],
+  "runtime_volume_db": -8.0,
+  "cooldown_ms": 500,
+  "max_polyphony": 1,
+  "generation": "deterministic_original_synthesis",
+  "source_sha256": "e3489f2819ec062e45da5b1ecbd774997f245a6ddaaf0c2eddd2a1b889d349e9",
+  "game_sha256": "19a4fa36625cf32dc0d87e6aaaf4e6fb0814d70357c25beaf4a344d6cc582d50"
+}

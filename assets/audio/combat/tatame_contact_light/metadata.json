@@ -1,0 +1,20 @@
+{
+  "version": "1.0.0",
+  "event_id": "tatame_contact_light",
+  "category": "combat",
+  "duration_seconds": 0.42,
+  "sample_rate": 48000,
+  "channels": 2,
+  "loop": false,
+  "loop_start_samples": null,
+  "loop_end_samples": null,
+  "aliases": [
+    "impacto_leve"
+  ],
+  "runtime_volume_db": 0.0,
+  "cooldown_ms": 40,
+  "max_polyphony": 6,
+  "generation": "deterministic_original_synthesis",
+  "source_sha256": "30238122e9c42a4ee0258d0c4f8abfa6fbfd8c19586435a0dc1d79d0f3707572",
+  "game_sha256": "f8b599f267e1139d43dd238409b2bded7c15798dc7410f6d59acb9225f1e3a82"
+}

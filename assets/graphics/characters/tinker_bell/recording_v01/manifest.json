@@ -1,0 +1,107 @@
+{
+  "version": "2.0.0",
+  "character_id": "tinker_bell",
+  "source_action_id": "filming",
+  "action_id": "recording",
+  "paired_character_id": "",
+  "image": "spritesheet.png",
+  "image_sha256": "9a5fb7dd45d8368828236db37f72a09b19b9f4a26a77b1348c0722f72a114d4c",
+  "preview": "preview.gif",
+  "preview_sha256": "4ae35a1c007163cc759cb1c829ababefebe9d3c0f65b925ad90ad43be88e4815",
+  "raw_sheet": "raw_sheet.png",
+  "raw_sheet_sha256": "bf3b8c27ef307fe1336bb3a65906f5742df3182965bface7a56f3e9ba69ef5b4",
+  "clean_sheet": "clean_sheet.png",
+  "clean_sheet_sha256": "3ca76ff2e3b48431144a3974702eb6372a9b329d30f001597c426088a10a917a",
+  "contact_sheet": "contact_sheet.png",
+  "contact_sheet_sha256": "754125cc9c4eee8c8439a2c1e2da1ec7235fe3a50dacb1812390dd36c87bf6f9",
+  "placeholder": false,
+  "candidate_only": true,
+  "loop": true,
+  "fps": 8,
+  "runtime_context": "hub",
+  "runtime_state_initial": "hub_recording",
+  "runtime_state_final": "hub_recording",
+  "facing": "right",
+  "interaction_origin": {
+    "x": 125,
+    "y": 236
+  },
+  "frame_layout": [
+    {
+      "index": 0,
+      "state": "recording",
+      "path": "frames/01.png",
+      "sha256": "0247c06bb670f5a27f263134c881811fc2866ee1c0d910eba98c9ff356210e6e",
+      "x": 0,
+      "y": 0,
+      "w": 256,
+      "h": 256,
+      "duration_ms": 125,
+      "pivot": {
+        "x": 125,
+        "y": 236
+      }
+    },
+    {
+      "index": 1,
+      "state": "recording",
+      "path": "frames/02.png",
+      "sha256": "743c071e3e082c30ca00a473b37972cce413a394bb8d42b49eff43e5a98e2e6b",
+      "x": 256,
+      "y": 0,
+      "w": 256,
+      "h": 256,
+      "duration_ms": 125,
+      "pivot": {
+        "x": 125,
+        "y": 236
+      }
+    },
+    {
+      "index": 2,
+      "state": "recording",
+      "path": "frames/03.png",
+      "sha256": "4b91f25dabe0c84f9030b9df4cdfc15fbebbcc8ced9c4df8b5bcf39065f6ee83",
+      "x": 512,
+      "y": 0,
+      "w": 256,
+      "h": 256,
+      "duration_ms": 125,
+      "pivot": {
+        "x": 125,
+        "y": 236
+      }
+    },
+    {
+      "index": 3,
+      "state": "recording",
+      "path": "frames/04.png",
+      "sha256": "0247c06bb670f5a27f263134c881811fc2866ee1c0d910eba98c9ff356210e6e",
+      "x": 768,
+      "y": 0,
+      "w": 256,
+      "h": 256,
+      "duration_ms": 125,
+      "pivot": {
+        "x": 125,
+        "y": 236
+      }
+    }
+  ],
+  "events": [
+    {
+      "frame": 1,
+      "name": "record_start"
+    },
+    {
+      "frame": 2,
+      "name": "camera_reframe"
+    }
+  ],
+  "resource_delta": {},
+  "result": "cria_live_capture",
+  "source_anchor": "assets/graphics/characters/tinker_bell/seeds/idle_v01.png",
+  "qa_status": "asset_qa_passed_runtime_test_pending",
+  "runtime_gate": "godot_4_2_and_mobile_pending",
+  "license": "project-generated-original; final release legal review required"
+}

@@ -2,18 +2,87 @@ extends Control
 class_name ArenaBackdrop
 
 @export var arena_id := "arena_do_dique"
+@export var prefer_production_art: bool = true
+
+const DIQUE_BASE_PATH := "res://assets/graphics/arenas/arena_do_dique_v01/background_layers/00_master_environment.png"
+const DIQUE_LIGHT_PATH := "res://assets/graphics/arenas/arena_do_dique_v01/background_layers/10_dynamic_lighting.png"
+const DIQUE_LIGHT_PROFILE := "res://assets/graphics/arenas/arena_do_dique_v01/lighting_profile.tres"
+const TERREIRO_BASE_PATH := "res://assets/graphics/hubs/terreiro_da_luta_v01/environment.png"
+
 var _time := 0.0
+var _production_loaded: bool = false
+var _lighting_layer: TextureRect
+var _light_pulse_speed: float = 0.8
+var _light_alpha_min: float = 0.36
+var _light_alpha_max: float = 0.58
 
 func _ready() -> void:
 	mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_production_loaded = _build_production_layers()
 	set_process(true)
 	queue_redraw()
 
 func _process(delta: float) -> void:
 	_time += delta
-	queue_redraw()
+	if _production_loaded and _lighting_layer != null:
+		var wave: float = (sin(_time * _light_pulse_speed) + 1.0) * 0.5
+		var pulse_color: Color = _lighting_layer.modulate
+		pulse_color.a = lerpf(_light_alpha_min, _light_alpha_max, wave)
+		_lighting_layer.modulate = pulse_color
+	else:
+		queue_redraw()
+
+func _build_production_layers() -> bool:
+	if not prefer_production_art:
+		return false
+	if arena_id == "terreiro_da_luta":
+		if not ResourceLoader.exists(TERREIRO_BASE_PATH):
+			return false
+		var terreiro_resource: Resource = load(TERREIRO_BASE_PATH)
+		if not (terreiro_resource is Texture2D):
+			return false
+		var terreiro_layer := _make_layer("TerreiroEnvironment", terreiro_resource as Texture2D)
+		terreiro_layer.z_index = 0
+		add_child(terreiro_layer)
+		return true
+	if arena_id != "arena_do_dique":
+		return false
+	if not ResourceLoader.exists(DIQUE_BASE_PATH) or not ResourceLoader.exists(DIQUE_LIGHT_PATH):
+		return false
+	var base_resource: Resource = load(DIQUE_BASE_PATH)
+	var light_resource: Resource = load(DIQUE_LIGHT_PATH)
+	if not (base_resource is Texture2D) or not (light_resource is Texture2D):
+		return false
+	var base_layer := _make_layer("MasterEnvironment", base_resource as Texture2D)
+	base_layer.z_index = 0
+	add_child(base_layer)
+	_lighting_layer = _make_layer("DynamicLighting", light_resource as Texture2D)
+	_lighting_layer.z_index = 1
+	_lighting_layer.modulate.a = _light_alpha_min
+	add_child(_lighting_layer)
+	if ResourceLoader.exists(DIQUE_LIGHT_PROFILE):
+		var profile: Resource = load(DIQUE_LIGHT_PROFILE)
+		if profile != null:
+			_light_pulse_speed = float(profile.get("pulse_speed"))
+			_light_alpha_min = float(profile.get("overlay_min_alpha"))
+			_light_alpha_max = float(profile.get("overlay_max_alpha"))
+			var overlay_tint: Color = profile.get("overlay_tint")
+			_lighting_layer.modulate = Color(overlay_tint, _light_alpha_min)
+	return true
+
+func _make_layer(layer_name: String, layer_texture: Texture2D) -> TextureRect:
+	var layer := TextureRect.new()
+	layer.name = layer_name
+	layer.texture = layer_texture
+	layer.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+	layer.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_COVERED
+	layer.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	layer.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	return layer
 
 func _draw() -> void:
+	if _production_loaded:
+		return
 	var w := size.x
 	var h := size.y
 	if w <= 0.0 or h <= 0.0:
@@ -89,4 +158,3 @@ func _draw_mat_mark(w: float, h: float) -> void:
 	draw_polyline(diamond, Color("b8860b"), 7.0, true)
 	draw_circle(center, 44.0, Color(0.72, 0.53, 0.05, 0.12))
 	draw_arc(center, 42.0, 0.0, TAU, 36, Color("f2c230"), 3.0)
-

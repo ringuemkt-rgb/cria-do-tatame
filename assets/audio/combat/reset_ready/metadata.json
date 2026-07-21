@@ -1,0 +1,20 @@
+{
+  "version": "1.0.0",
+  "event_id": "reset_ready",
+  "category": "combat",
+  "duration_seconds": 0.32,
+  "sample_rate": 48000,
+  "channels": 2,
+  "loop": false,
+  "loop_start_samples": null,
+  "loop_end_samples": null,
+  "aliases": [
+    "reset"
+  ],
+  "runtime_volume_db": 0.0,
+  "cooldown_ms": 40,
+  "max_polyphony": 4,
+  "generation": "deterministic_original_synthesis",
+  "source_sha256": "e8832469e0f886bfee8df3fb1406f397de6ed5730dc54ba09daa553af0c16988",
+  "game_sha256": "fc24c494b13376badbd6cbf342b08b28dacce6d4d6b2070d9d5eaebdead074b6"
+}

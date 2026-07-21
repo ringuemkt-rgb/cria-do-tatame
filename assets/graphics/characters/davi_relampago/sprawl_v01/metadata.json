@@ -1,0 +1,88 @@
+{
+  "version": "2.0.0",
+  "character_id": "davi_relampago",
+  "source_action_id": "sprawl",
+  "frame_size": [
+    512,
+    512
+  ],
+  "frame_count": 6,
+  "fps": 12,
+  "loop": false,
+  "pivot": {
+    "x": 256,
+    "y": 492
+  },
+  "alpha_boxes": [
+    [
+      74,
+      247,
+      439,
+      492
+    ],
+    [
+      66,
+      282,
+      446,
+      492
+    ],
+    [
+      82,
+      301,
+      429,
+      492
+    ],
+    [
+      90,
+      329,
+      422,
+      492
+    ],
+    [
+      72,
+      281,
+      440,
+      492
+    ],
+    [
+      60,
+      252,
+      451,
+      492
+    ]
+  ],
+  "texture_filter": "nearest",
+  "runtime_transition": {
+    "from": "entrada_queda",
+    "to": "clinch_neutro"
+  },
+  "events": [
+    {
+      "frame": 1,
+      "name": "read_entry"
+    },
+    {
+      "frame": 2,
+      "name": "hip_commit"
+    },
+    {
+      "frame": 3,
+      "name": "sprawl_contact"
+    },
+    {
+      "frame": 4,
+      "name": "defense_stable"
+    },
+    {
+      "frame": 5,
+      "name": "reset_ready"
+    }
+  ],
+  "resource_delta": {
+    "gas": -8,
+    "focus": -3
+  },
+  "result": "defense_success",
+  "qa_status": "asset_qa_passed_runtime_test_pending",
+  "spritesheet_sha256": "130dae28325ffe05158fc6c72c1dd5036cced93069be97a3388ac13ed49c5ee0"
+}

@@ -41,6 +41,8 @@ var character_animation_catalog := {}
 var apixel_production_briefs := {}
 var arena_animation_flow := {}
 var combat_deck := {}
+var audio_event_catalog := {}
+var world_map_art := {}
 var validation_report := {}
 
 const DATA_FILES := {
@@ -84,7 +86,9 @@ const DATA_FILES := {
 	"character_animation_catalog": "res://data/visual/character_animation_catalog_v01.json",
 	"apixel_production_briefs": "res://data/visual/apixel_production_briefs_v01.json",
 	"arena_animation_flow": "res://data/visual/arena_animation_flow_v01.json",
-	"combat_deck": "res://data/ruan_deck_inicial.json"
+	"combat_deck": "res://data/ruan_deck_inicial.json",
+	"audio_event_catalog": "res://data/audio/audio_event_catalog_v01.json",
+	"world_map_art": "res://data/visual/world_map_art_v01.json"
 }
 
 func _ready():
@@ -132,6 +136,8 @@ func load_all():
 	apixel_production_briefs = _load_raw("apixel_production_briefs")
 	arena_animation_flow = _load_raw("arena_animation_flow")
 	combat_deck = _load_raw("combat_deck")
+	audio_event_catalog = _load_raw("audio_event_catalog")
+	world_map_art = _load_raw("world_map_art")
 	validation_report = validate_core_data()
 	SignalBus.data_validation_finished.emit(validation_report)
 	SignalBus.data_loaded.emit()
@@ -211,7 +217,18 @@ func validate_core_data():
 		errors.append("deck de combate inicial possui menos de 10 cartas")
 	if combat_deck.get("owner_id", "") != "ruan_macacao":
 		errors.append("deck de combate inicial nao pertence a ruan_macacao")
+	if audio_event_catalog.get("events", []).size() < 28:
+		errors.append("catalogo de audio possui menos de 28 eventos")
+	if world_map_art.get("node_positions", {}).size() < 4:
+		errors.append("mapa visual possui menos de 4 hubs")
 	return {"ok": errors.is_empty(), "errors": errors, "characters": characters.size(), "arenas": arenas.size(), "techniques": techniques.size(), "factions": factions.size()}
+
+func get_audio_event(event_id: String) -> Dictionary:
+	for event_value in audio_event_catalog.get("events", []):
+		var event: Dictionary = event_value
+		if str(event.get("id", "")) == event_id or event_id in event.get("aliases", []):
+			return event
+	return {}
 
 func get_character_animation(character_id: String, action_id: String) -> Dictionary:
 	for entry_value in character_animation_catalog.get("entries", []):

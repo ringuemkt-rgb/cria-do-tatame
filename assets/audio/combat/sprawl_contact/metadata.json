@@ -1,0 +1,21 @@
+{
+  "version": "1.0.0",
+  "event_id": "sprawl_contact",
+  "category": "combat",
+  "duration_seconds": 0.48,
+  "sample_rate": 48000,
+  "channels": 2,
+  "loop": false,
+  "loop_start_samples": null,
+  "loop_end_samples": null,
+  "aliases": [
+    "sprawl",
+    "defesa"
+  ],
+  "runtime_volume_db": 0.0,
+  "cooldown_ms": 40,
+  "max_polyphony": 4,
+  "generation": "deterministic_original_synthesis",
+  "source_sha256": "184d45c701b5d9faa157a77f2551f8c32c210442c4ee7f9c929de695ee7aba06",
+  "game_sha256": "e730c67d076eeb388b462353cfcdffa8f2d62e5acb5dcb247cca0cf7a501ebf5"
+}

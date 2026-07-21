@@ -1,0 +1,74 @@
+{
+  "version": "2.0.0",
+  "character_id": "oni_da_lapa",
+  "source_action_id": "pressure",
+  "frame_size": [
+    512,
+    512
+  ],
+  "frame_count": 5,
+  "fps": 10,
+  "loop": true,
+  "pivot": {
+    "x": 256,
+    "y": 492
+  },
+  "alpha_boxes": [
+    [
+      78,
+      189,
+      433,
+      492
+    ],
+    [
+      97,
+      229,
+      415,
+      492
+    ],
+    [
+      92,
+      286,
+      421,
+      492
+    ],
+    [
+      92,
+      281,
+      419,
+      492
+    ],
+    [
+      87,
+      280,
+      425,
+      492
+    ]
+  ],
+  "texture_filter": "nearest",
+  "runtime_transition": {
+    "from": "cem_quilos",
+    "to": "cem_quilos"
+  },
+  "events": [
+    {
+      "frame": 1,
+      "name": "chest_contact"
+    },
+    {
+      "frame": 2,
+      "name": "pressure_commit"
+    },
+    {
+      "frame": 3,
+      "name": "control_stable"
+    }
+  ],
+  "resource_delta": {
+    "gas": -4,
+    "focus": -2
+  },
+  "result": "control_hold",
+  "qa_status": "source_asset_qa_passed_canonical_opponent_pending",
+  "spritesheet_sha256": "8dc944a49ac6a12d4bba5cb46a07b7892efa5202a0d6a35b797143ab74e4bfa6"
+}

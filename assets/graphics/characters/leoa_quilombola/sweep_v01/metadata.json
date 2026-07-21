@@ -1,0 +1,88 @@
+{
+  "version": "2.0.0",
+  "character_id": "leoa_quilombola",
+  "source_action_id": "sweep",
+  "frame_size": [
+    512,
+    512
+  ],
+  "frame_count": 6,
+  "fps": 12,
+  "loop": false,
+  "pivot": {
+    "x": 256,
+    "y": 492
+  },
+  "alpha_boxes": [
+    [
+      34,
+      170,
+      479,
+      492
+    ],
+    [
+      38,
+      161,
+      474,
+      492
+    ],
+    [
+      0,
+      167,
+      512,
+      492
+    ],
+    [
+      22,
+      194,
+      489,
+      492
+    ],
+    [
+      36,
+      174,
+      476,
+      492
+    ],
+    [
+      33,
+      172,
+      479,
+      492
+    ]
+  ],
+  "texture_filter": "nearest",
+  "runtime_transition": {
+    "from": "guarda_fechada",
+    "to": "montada"
+  },
+  "events": [
+    {
+      "frame": 1,
+      "name": "grip_connect"
+    },
+    {
+      "frame": 2,
+      "name": "off_balance"
+    },
+    {
+      "frame": 3,
+      "name": "sweep_commit"
+    },
+    {
+      "frame": 4,
+      "name": "position_flip"
+    },
+    {
+      "frame": 5,
+      "name": "control_stable"
+    }
+  ],
+  "resource_delta": {
+    "gas": -8,
+    "focus": -4
+  },
+  "result": "raspagem",
+  "qa_status": "source_asset_qa_passed_canonical_opponent_pending",
+  "spritesheet_sha256": "772a51aed334c6de5918d5d4061b0ee1cedf283190f9f4d61a92ff9bca989513"
+}

@@ -1,0 +1,19 @@
+{
+  "version": "1.0.0",
+  "map_id": "baixo_sul_hub_map_v01",
+  "manifest": "assets/graphics/world/baixo_sul_map_v01/manifest.json",
+  "image": "assets/graphics/world/baixo_sul_map_v01/map_plate.png",
+  "node_positions": {
+    "itubera": [0.43, 0.50],
+    "zambiapunga": [0.32, 0.42],
+    "camamu_manguezal": [0.58, 0.68],
+    "salvador": [0.83, 0.23]
+  },
+  "route_pairs": [
+    ["itubera", "zambiapunga"],
+    ["itubera", "camamu_manguezal"],
+    ["itubera", "salvador"]
+  ],
+  "ui_safe_margin": 0.055,
+  "status": "asset_qa_passed_runtime_test_pending"
+}

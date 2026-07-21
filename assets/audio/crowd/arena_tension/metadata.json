@@ -1,0 +1,18 @@
+{
+  "version": "1.0.0",
+  "event_id": "arena_tension",
+  "category": "crowd",
+  "duration_seconds": 1.7,
+  "sample_rate": 48000,
+  "channels": 2,
+  "loop": false,
+  "loop_start_samples": null,
+  "loop_end_samples": null,
+  "aliases": [],
+  "runtime_volume_db": -5.0,
+  "cooldown_ms": 350,
+  "max_polyphony": 2,
+  "generation": "deterministic_original_synthesis",
+  "source_sha256": "2f2b8412a60629f9ae9835f129fa5a9ff7211d532c1c3973cb400baca45ef484",
+  "game_sha256": "698290e4c942bf8167a53dab7d36643569186f6caccf0d3236af45f37e50ea90"
+}

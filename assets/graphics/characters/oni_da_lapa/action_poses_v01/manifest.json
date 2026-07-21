@@ -1,0 +1,103 @@
+{
+  "version": "1.0.0",
+  "character_id": "oni_da_lapa",
+  "source_sheet": "assets/source/characters/oni_da_lapa/action_poses_v01/source_sheet_chroma.png",
+  "source_sha256": "80d3fbf1c710197def0f0ad25cb35b2170bd8d6393bad707f90a19d5a7dbcec2",
+  "clean_source_sheet": "assets/graphics/characters/oni_da_lapa/action_poses_v01/clean_source_sheet.png",
+  "clean_source_sha256": "27bdfa36c16f59b5b2cfb4d3bb29028114549236b20db0668372729bfb5e5559",
+  "pose_size": [
+    512,
+    512
+  ],
+  "anchor": "bottom_center",
+  "action_count": 6,
+  "actions": [
+    {
+      "id": "walk",
+      "path": "assets/graphics/characters/oni_da_lapa/action_poses_v01/poses/walk.png",
+      "sha256": "197959a320fe804b928b664bc34a4900916767063d64965165d2a0e1ecee3653",
+      "alpha_bbox": [
+        124,
+        20,
+        389,
+        492
+      ],
+      "runtime_aliases": [
+        "walk"
+      ],
+      "status": "source_pose_asset_qa_passed_runtime_animation_pending"
+    },
+    {
+      "id": "stance",
+      "path": "assets/graphics/characters/oni_da_lapa/action_poses_v01/poses/stance.png",
+      "sha256": "8ede2b49ccb89dfd0ea910134ed96a7cd8d98b2c94c0b3bdb787b43017cc8865",
+      "alpha_bbox": [
+        54,
+        20,
+        459,
+        492
+      ],
+      "runtime_aliases": [
+        "stance"
+      ],
+      "status": "source_pose_asset_qa_passed_runtime_animation_pending"
+    },
+    {
+      "id": "burst",
+      "path": "assets/graphics/characters/oni_da_lapa/action_poses_v01/poses/burst.png",
+      "sha256": "bfccff2aa8d316e218755ea97535a44a194b2cec6111e96daa97ea9bf776742c",
+      "alpha_bbox": [
+        20,
+        185,
+        492,
+        492
+      ],
+      "runtime_aliases": [],
+      "status": "source_pose_asset_qa_passed_runtime_animation_pending"
+    },
+    {
+      "id": "pressure",
+      "path": "assets/graphics/characters/oni_da_lapa/action_poses_v01/poses/pressure.png",
+      "sha256": "8c8857789b70b43a5d9484eb80bcd3b3813956cb868959e8170c838b584bce2e",
+      "alpha_bbox": [
+        20,
+        189,
+        492,
+        492
+      ],
+      "runtime_aliases": [
+        "pressure"
+      ],
+      "status": "source_pose_asset_qa_passed_runtime_animation_pending"
+    },
+    {
+      "id": "underground_win",
+      "path": "assets/graphics/characters/oni_da_lapa/action_poses_v01/poses/underground_win.png",
+      "sha256": "9b75d7f474eb6fa495c2802ceda8dafdba08efa69a1a820155faa2c23d060fa3",
+      "alpha_bbox": [
+        128,
+        20,
+        383,
+        492
+      ],
+      "runtime_aliases": [],
+      "status": "source_pose_asset_qa_passed_runtime_animation_pending"
+    },
+    {
+      "id": "loss",
+      "path": "assets/graphics/characters/oni_da_lapa/action_poses_v01/poses/loss.png",
+      "sha256": "58636daa43719017c5745f554e60741264f7a85b3d8ee148c5e949e7dd8d8f54",
+      "alpha_bbox": [
+        30,
+        20,
+        481,
+        492
+      ],
+      "runtime_aliases": [],
+      "status": "source_pose_asset_qa_passed_runtime_animation_pending"
+    }
+  ],
+  "contact_sheet": "assets/graphics/characters/oni_da_lapa/action_poses_v01/contact_sheet.png",
+  "contact_sheet_sha256": "bd5d424cbeb1f1f76a36517bb8d86c7ce7462c37798623d2c783aa3b2b24a6e3",
+  "runtime_status": "source_only_until_godot_gate"
+}

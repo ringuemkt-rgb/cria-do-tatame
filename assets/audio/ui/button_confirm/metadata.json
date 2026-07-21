@@ -1,0 +1,21 @@
+{
+  "version": "1.0.0",
+  "event_id": "button_confirm",
+  "category": "ui",
+  "duration_seconds": 0.12,
+  "sample_rate": 48000,
+  "channels": 2,
+  "loop": false,
+  "loop_start_samples": null,
+  "loop_end_samples": null,
+  "aliases": [
+    "botao",
+    "botao_click"
+  ],
+  "runtime_volume_db": 0.0,
+  "cooldown_ms": 25,
+  "max_polyphony": 6,
+  "generation": "deterministic_original_synthesis",
+  "source_sha256": "f33a7eef413e22afbd58a2a705ba9ac7e04a166ceaa5aa1729661dfef47b198e",
+  "game_sha256": "8d264b04309f4f93added06bfe95863ab4282102d437f99b76290ee1cc4af989"
+}

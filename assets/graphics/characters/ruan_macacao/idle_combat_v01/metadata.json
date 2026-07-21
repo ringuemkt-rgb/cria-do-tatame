@@ -1,0 +1,22 @@
+{
+  "version": "1.0.0",
+  "character_id": "ruan_macacao",
+  "action_id": "idle_combat",
+  "technique_id": null,
+  "opponent_id": null,
+  "role": "neutral_standing",
+  "camera": "side_2_5d",
+  "facing": "right",
+  "runtime_transition": {"from": "distancia_media", "to": "distancia_media"},
+  "phases": ["base", "inhale", "weight_shift", "exhale_recovery"],
+  "mechanical_events": [],
+  "resource_feedback": {"gas": "stable_breathing_only", "focus": "ready", "grip": "ready"},
+  "result": "no_state_change",
+  "frame_size": [256, 256],
+  "frame_count": 4,
+  "fps": 8,
+  "loop": true,
+  "pivot": {"x": 137, "y": 238},
+  "texture_filter": "nearest",
+  "qa_status": "asset_qa_passed_runtime_test_pending"
+}

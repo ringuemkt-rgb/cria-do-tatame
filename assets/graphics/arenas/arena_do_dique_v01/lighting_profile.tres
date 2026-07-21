@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="ArenaLightingProfile" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://src/visual/ArenaLightingProfile.gd" id="1_profile"]
+
+[resource]
+script = ExtResource("1_profile")
+arena_id = &"arena_do_dique"
+base_tint = Color(0.94, 0.97, 1, 1)
+overlay_tint = Color(0.44, 0.66, 1, 0.7)
+overlay_min_alpha = 0.42
+overlay_max_alpha = 0.72
+pulse_speed = 1.15
+result_flash_strength = 0.7
+crowd_shadow = Color(0.015, 0.025, 0.055, 0.94)

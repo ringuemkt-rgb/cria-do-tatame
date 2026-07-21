@@ -1,0 +1,20 @@
+{
+  "version": "1.0.0",
+  "event_id": "cria_live_notification",
+  "category": "ui",
+  "duration_seconds": 0.48,
+  "sample_rate": 48000,
+  "channels": 2,
+  "loop": false,
+  "loop_start_samples": null,
+  "loop_end_samples": null,
+  "aliases": [
+    "cria_live"
+  ],
+  "runtime_volume_db": 0.0,
+  "cooldown_ms": 40,
+  "max_polyphony": 4,
+  "generation": "deterministic_original_synthesis",
+  "source_sha256": "8d52f7429e014c83f83559276476749345134db0ce794ab945dadbbf86141c29",
+  "game_sha256": "753b23f05b244a3a017a1cffbb176d6440f8d7cc1001d0a9843a3e056d38fdba"
+}

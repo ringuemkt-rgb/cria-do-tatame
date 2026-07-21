@@ -1,0 +1,18 @@
+{
+  "version": "1.0.0",
+  "event_id": "deck_clash_counter",
+  "category": "combat",
+  "duration_seconds": 0.42,
+  "sample_rate": 48000,
+  "channels": 2,
+  "loop": false,
+  "loop_start_samples": null,
+  "loop_end_samples": null,
+  "aliases": [],
+  "runtime_volume_db": 0.0,
+  "cooldown_ms": 120,
+  "max_polyphony": 3,
+  "generation": "deterministic_original_synthesis",
+  "source_sha256": "f185c7be7ac59a75bf7748d106bc32c69347363a62156e208a636e6754790508",
+  "game_sha256": "eeb8f6c0c2606ba1588c1a4e0854b07e5ef8e3a4e644e33bf62cee51b3b077ea"
+}

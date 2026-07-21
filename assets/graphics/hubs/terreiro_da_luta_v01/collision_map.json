@@ -1,0 +1,19 @@
+{
+  "version": "1.0.0",
+  "hub_id": "terreiro_da_luta",
+  "coordinate_space": "normalized_1920x1080",
+  "walkable_polygon": [
+    [0.08, 0.56],
+    [0.94, 0.56],
+    [0.90, 0.93],
+    [0.10, 0.93]
+  ],
+  "interaction_anchors": {
+    "mestre_dende": [0.25, 0.59],
+    "tinker_bell": [0.72, 0.61],
+    "tatame_training": [0.52, 0.76],
+    "dock_exit": [0.62, 0.48],
+    "gi_rack": [0.18, 0.40]
+  },
+  "camera_safe_rect": [0.03, 0.04, 0.94, 0.91]
+}

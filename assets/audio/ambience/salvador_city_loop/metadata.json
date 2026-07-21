@@ -1,0 +1,18 @@
+{
+  "version": "1.0.0",
+  "event_id": "salvador_city_loop",
+  "category": "ambience",
+  "duration_seconds": 14.0,
+  "sample_rate": 48000,
+  "channels": 2,
+  "loop": true,
+  "loop_start_samples": 0,
+  "loop_end_samples": 672000,
+  "aliases": [],
+  "runtime_volume_db": -10.0,
+  "cooldown_ms": 500,
+  "max_polyphony": 1,
+  "generation": "deterministic_original_synthesis",
+  "source_sha256": "fcead78d8832e4e59dfdb11052ac7406ca223e652a84bcf179392fd9bd44430e",
+  "game_sha256": "b3278ad1b28959344ac12a98d9b80c89c6643f08d37c97be91c26cf6650cd924"
+}

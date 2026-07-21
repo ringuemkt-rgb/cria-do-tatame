@@ -1,0 +1,18 @@
+{
+  "version": "1.0.0",
+  "event_id": "menu_open",
+  "category": "ui",
+  "duration_seconds": 0.26,
+  "sample_rate": 48000,
+  "channels": 2,
+  "loop": false,
+  "loop_start_samples": null,
+  "loop_end_samples": null,
+  "aliases": [],
+  "runtime_volume_db": 0.0,
+  "cooldown_ms": 40,
+  "max_polyphony": 4,
+  "generation": "deterministic_original_synthesis",
+  "source_sha256": "5cbae19bc81c7dc1e2f9d0d15b698e2dfedd823e303c1777001a2d728652d650",
+  "game_sha256": "483c07ae290c97a91a754a62ee8b95796d2f7e6e0eaa14fed436ed0e24babfd9"
+}

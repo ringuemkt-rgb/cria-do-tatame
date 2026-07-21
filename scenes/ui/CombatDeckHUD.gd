@@ -72,10 +72,18 @@ func _on_clash(result: Dictionary) -> void:
 	var outcome := str(result.get("outcome", "contested"))
 	var delta := float(result.get("delta", 0.0))
 	match outcome:
-		"critical_advantage": $Panel/Layout/Header/Clash.text = "DOMÍNIO TÉCNICO  %+0.1f" % delta
-		"advantage": $Panel/Layout/Header/Clash.text = "VANTAGEM  %+0.1f" % delta
-		"counter_window": $Panel/Layout/Header/Clash.text = "JANELA DE CONTRA  %+0.1f" % delta
-		_: $Panel/Layout/Header/Clash.text = "DISPUTA  %+0.1f" % delta
+		"critical_advantage":
+			$Panel/Layout/Header/Clash.text = "DOMÍNIO TÉCNICO  %+0.1f" % delta
+			AudioManager.play_sfx("deck_clash_dominant")
+		"advantage":
+			$Panel/Layout/Header/Clash.text = "VANTAGEM  %+0.1f" % delta
+			AudioManager.play_sfx("deck_clash_advantage")
+		"counter_window":
+			$Panel/Layout/Header/Clash.text = "JANELA DE CONTRA  %+0.1f" % delta
+			AudioManager.play_sfx("deck_clash_counter")
+		_:
+			$Panel/Layout/Header/Clash.text = "DISPUTA  %+0.1f" % delta
+			AudioManager.play_sfx("deck_clash_contested")
 
 func _is_compatible(card: Dictionary) -> bool:
 	var states: Array = card.get("valid_states", [])

@@ -1,0 +1,61 @@
+{
+  "version": "2.0.0",
+  "character_id": "mestre_dende",
+  "source_action_id": "teaching",
+  "frame_size": [
+    256,
+    256
+  ],
+  "frame_count": 4,
+  "fps": 8,
+  "loop": true,
+  "pivot": {
+    "x": 115,
+    "y": 237
+  },
+  "alpha_boxes": [
+    [
+      53,
+      6,
+      177,
+      237
+    ],
+    [
+      50,
+      6,
+      181,
+      237
+    ],
+    [
+      46,
+      32,
+      185,
+      237
+    ],
+    [
+      53,
+      6,
+      177,
+      237
+    ]
+  ],
+  "texture_filter": "nearest",
+  "runtime_transition": {
+    "from": "hub_teaching",
+    "to": "hub_teaching"
+  },
+  "events": [
+    {
+      "frame": 1,
+      "name": "teaching_cue"
+    },
+    {
+      "frame": 2,
+      "name": "lesson_emphasis"
+    }
+  ],
+  "resource_delta": {},
+  "result": "lesson_feedback",
+  "qa_status": "asset_qa_passed_runtime_test_pending",
+  "spritesheet_sha256": "381546e361277838d0a11ef3f87fcb526f92227b4a922f48b2c46dd4524bf800"
+}

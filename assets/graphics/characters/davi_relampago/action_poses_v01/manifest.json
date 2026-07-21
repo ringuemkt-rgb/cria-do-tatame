@@ -1,0 +1,101 @@
+{
+  "version": "1.0.0",
+  "character_id": "davi_relampago",
+  "source_sheet": "assets/source/characters/davi_relampago/action_poses_v01/source_sheet_chroma.png",
+  "source_sha256": "61322181120833e85f9cf8e716749304b10e9845a0b637ddeca6be5832fc33af",
+  "clean_source_sheet": "assets/graphics/characters/davi_relampago/action_poses_v01/clean_source_sheet.png",
+  "clean_source_sha256": "a83c2883030aaa9c6a026d87aaaac5bde31854ed95a5842e8334ef9da30fe735",
+  "pose_size": [
+    512,
+    512
+  ],
+  "anchor": "bottom_center",
+  "action_count": 6,
+  "actions": [
+    {
+      "id": "walk",
+      "path": "assets/graphics/characters/davi_relampago/action_poses_v01/poses/walk.png",
+      "sha256": "8b22085e9f18425de3347c0080495a4d86bdda2ed09de368a72c8f2202f57292",
+      "alpha_bbox": [
+        110,
+        20,
+        401,
+        492
+      ],
+      "runtime_aliases": [
+        "walk"
+      ],
+      "status": "source_pose_asset_qa_passed_runtime_animation_pending"
+    },
+    {
+      "id": "sprawl",
+      "path": "assets/graphics/characters/davi_relampago/action_poses_v01/poses/sprawl.png",
+      "sha256": "83c612ac04ab54cce9c401a1407bd0aaa7641b159e1cb5d0c27300da129cb66a",
+      "alpha_bbox": [
+        20,
+        247,
+        492,
+        492
+      ],
+      "runtime_aliases": [
+        "defense"
+      ],
+      "status": "source_pose_asset_qa_passed_runtime_animation_pending"
+    },
+    {
+      "id": "counter",
+      "path": "assets/graphics/characters/davi_relampago/action_poses_v01/poses/counter.png",
+      "sha256": "3a714d493c8f5805dc82055d525c330891a9fc8bda9f51066a75b670ba91f931",
+      "alpha_bbox": [
+        20,
+        114,
+        492,
+        492
+      ],
+      "runtime_aliases": [],
+      "status": "source_pose_asset_qa_passed_runtime_animation_pending"
+    },
+    {
+      "id": "scramble",
+      "path": "assets/graphics/characters/davi_relampago/action_poses_v01/poses/scramble.png",
+      "sha256": "66e89ba2d9203fb20692bef9acb9ae9569e826c71d1d09eaa76705aa40ba91bd",
+      "alpha_bbox": [
+        20,
+        179,
+        492,
+        492
+      ],
+      "runtime_aliases": [],
+      "status": "source_pose_asset_qa_passed_runtime_animation_pending"
+    },
+    {
+      "id": "loss",
+      "path": "assets/graphics/characters/davi_relampago/action_poses_v01/poses/loss.png",
+      "sha256": "9c9ded627666e41e8a7f4bda668515f3f0c1f27db5b517d44b4216f331fbf9b4",
+      "alpha_bbox": [
+        58,
+        20,
+        454,
+        492
+      ],
+      "runtime_aliases": [],
+      "status": "source_pose_asset_qa_passed_runtime_animation_pending"
+    },
+    {
+      "id": "respect",
+      "path": "assets/graphics/characters/davi_relampago/action_poses_v01/poses/respect.png",
+      "sha256": "910d7bcad25a12d1b93fcf997ec5df853fb294f3a38464b71eda85438e6ca6d6",
+      "alpha_bbox": [
+        74,
+        20,
+        439,
+        492
+      ],
+      "runtime_aliases": [],
+      "status": "source_pose_asset_qa_passed_runtime_animation_pending"
+    }
+  ],
+  "contact_sheet": "assets/graphics/characters/davi_relampago/action_poses_v01/contact_sheet.png",
+  "contact_sheet_sha256": "9962f07f675238fc9be909cb92894ca040422867abda48695dcb672fe8982f18",
+  "runtime_status": "source_only_until_godot_gate"
+}

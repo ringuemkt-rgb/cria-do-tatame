@@ -1,0 +1,23 @@
+{
+  "version": "1.0.0",
+  "status": "casting_candidate_not_for_runtime",
+  "runtime_policy": "download_export_license_and_human_approval_required",
+  "candidates": [
+    {
+      "character_id": "mestre_dende",
+      "voice_style": "deep",
+      "usage": "arena_do_dique_coaching_bark",
+      "transcript": "Ruan, respira. Ganhe a pegada, quebre a base e só avance quando o controle estiver firme. Ser forte é ser gentil.",
+      "audio_url": "https://www.aidocmaker.com/g0/audio?name=54c2bab84fb8422aa0f2cbc68eef8dbb",
+      "context_id": "54c2bab84fb8422aa0f2cbc68eef8dbb"
+    },
+    {
+      "character_id": "davi_relampago",
+      "voice_style": "crisp",
+      "usage": "arena_do_dique_intro_bark",
+      "transcript": "No Dique, a pressa cobra caro. Quero ver se sua pressão aguenta quando a arquibancada pesa.",
+      "audio_url": "https://www.aidocmaker.com/g0/audio?name=6e45d8f35f9d44bb8da32c72c837fa66",
+      "context_id": "6e45d8f35f9d44bb8da32c72c837fa66"
+    }
+  ]
+}

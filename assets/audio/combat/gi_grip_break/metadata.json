@@ -1,0 +1,20 @@
+{
+  "version": "1.0.0",
+  "event_id": "gi_grip_break",
+  "category": "combat",
+  "duration_seconds": 0.28,
+  "sample_rate": 48000,
+  "channels": 2,
+  "loop": false,
+  "loop_start_samples": null,
+  "loop_end_samples": null,
+  "aliases": [
+    "grip_break"
+  ],
+  "runtime_volume_db": 0.0,
+  "cooldown_ms": 40,
+  "max_polyphony": 4,
+  "generation": "deterministic_original_synthesis",
+  "source_sha256": "e00ec55cf16487e092fdec5adc385c8128090d773ea5cff2f5cc0d50c47f3d6d",
+  "game_sha256": "5b760ab63c120d3f7ed7901b1f75c5c5c0f6f32b4872df88ba8e22b1e58d8eea"
+}

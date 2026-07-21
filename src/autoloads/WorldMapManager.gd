@@ -21,6 +21,8 @@ func travel_to(hub_id: String) -> Dictionary:
 	if not can_travel_to(hub_id):
 		return {"ok": false, "message": "Destino indisponivel."}
 	var hub := get_hub_data(hub_id)
+	if hub_id == current_hub:
+		return {"ok": true, "message": "Você já está em " + str(hub.get("name", hub_id)) + ".", "hub": hub}
 	var cost := int(hub.get("travel_cost", 0))
 	if WorldState.money < cost:
 		return {"ok": false, "message": "Dinheiro insuficiente para viajar."}

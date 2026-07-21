@@ -11,6 +11,9 @@ __pycache__/
 .env.*
 !.env.example
 ai_lore_guardian/.env
+ai_lore_guardian/storage/
+builds/animation/
+builds/graphics/
 tools/ai_asset_pipeline/.env
 tools/ai_asset_pipeline/generated_queue/
 tools/ai_asset_pipeline/generated_outputs/

@@ -1,0 +1,18 @@
+{
+  "version": "1.0.0",
+  "hub_id": "terreiro_da_luta",
+  "candidate_only": true,
+  "runtime_gate": "godot_4_2_android_and_art_direction_pending",
+  "source": "assets/source/hubs/terreiro_da_luta_v01/master_environment_source.png",
+  "source_sha256": "2d843dacd9ce5b361dba2afd878ba67b8a95023227ea969ecf34518c3f20db1f",
+  "image": "environment.png",
+  "image_sha256": "6acc697762864a883633ebe1e965f864751230236a96fcb64b7d5f883a2f9734",
+  "preview": "preview.png",
+  "preview_sha256": "f0b90d9f1e7a24b51d73d7f0733fa5b83c719a7f40b3b6b01dbb3998f3751061",
+  "canvas": [1920, 1080],
+  "collision_map": "collision_map.json",
+  "world_model": "semi_open_dense_hub",
+  "identity": "itubera_baixo_sul_community_bjj_root",
+  "license": "project-generated-original; final release legal review required",
+  "qa_status": "asset_qa_passed_runtime_test_pending"
+}

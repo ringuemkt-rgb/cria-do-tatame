@@ -2,7 +2,7 @@
 
 ## Canon atual
 
-O protagonista oficial é **Ruan “Macacão” Silva**. Qualquer documento antigo com Caio Ravel ou Ruan “Cria” é legado.
+O protagonista oficial é **Ruan “Macacão” Silva**. Identidades descartadas presentes em documentos antigos são legado.
 
 ## Ruan “Macacão” Silva
 

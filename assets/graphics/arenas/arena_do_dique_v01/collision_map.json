@@ -1,0 +1,19 @@
+{
+  "version": "1.0.0",
+  "arena_id": "arena_do_dique",
+  "coordinate_space": "normalized_1920x1080",
+  "playable_polygon": [
+    [0.08, 0.60],
+    [0.92, 0.60],
+    [0.97, 0.90],
+    [0.03, 0.90]
+  ],
+  "fighter_baseline": 0.73,
+  "spawn_points": {
+    "player": [0.34, 0.73],
+    "opponent": [0.66, 0.73]
+  },
+  "camera_safe_rect": [0.04, 0.08, 0.92, 0.84],
+  "solid_obstacles": [],
+  "gameplay_hazards": []
+}

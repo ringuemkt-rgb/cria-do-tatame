@@ -50,7 +50,7 @@ python tools/integrate_assets_godot.py
 
 ## QA obrigatorio
 
-- Proibido Caio Ravel como asset novo.
+- Proibida qualquer identidade legada como asset novo.
 - Proibido marca real.
 - Proibido equipe real.
 - Silhueta precisa funcionar em celular.

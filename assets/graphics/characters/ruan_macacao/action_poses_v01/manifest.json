@@ -1,0 +1,173 @@
+{
+  "version": "1.0.0",
+  "character_id": "ruan_macacao",
+  "source_sheet": "assets/source/characters/ruan_macacao/action_poses_v01/source_sheet_chroma.png",
+  "source_sha256": "af896d519adefe69da248ac06b7ead7009cc2e73e603eb8389170a49d52809ce",
+  "clean_source_sheet": "assets/graphics/characters/ruan_macacao/action_poses_v01/clean_source_sheet.png",
+  "clean_source_sha256": "a57d3d16100a261f603214808f2f3964595057805b1165f8470c63aff5aa9293",
+  "pose_size": [
+    512,
+    512
+  ],
+  "anchor": "bottom_center",
+  "action_count": 11,
+  "actions": [
+    {
+      "id": "stance",
+      "path": "assets/graphics/characters/ruan_macacao/action_poses_v01/poses/stance.png",
+      "sha256": "62b07cb302b2718f8030cb92eec428464db0f027cabb66f20f4adf21c907d226",
+      "alpha_bbox": [
+        90,
+        20,
+        421,
+        492
+      ],
+      "runtime_aliases": [
+        "stance"
+      ],
+      "status": "source_pose_asset_qa_passed_runtime_animation_pending"
+    },
+    {
+      "id": "grip",
+      "path": "assets/graphics/characters/ruan_macacao/action_poses_v01/poses/grip.png",
+      "sha256": "b7eb382fdd8888acfbb6461e355f10d3987e130d84e79c8c03985d49d0bae996",
+      "alpha_bbox": [
+        20,
+        59,
+        492,
+        492
+      ],
+      "runtime_aliases": [
+        "grip",
+        "grip_fight"
+      ],
+      "status": "source_pose_asset_qa_passed_runtime_animation_pending"
+    },
+    {
+      "id": "clinch",
+      "path": "assets/graphics/characters/ruan_macacao/action_poses_v01/poses/clinch.png",
+      "sha256": "c7839a7bf1e3ebdc7e4d1bb987b1d9e8a7e2e730795c19090d44a8a574ba47c7",
+      "alpha_bbox": [
+        20,
+        26,
+        492,
+        492
+      ],
+      "runtime_aliases": [],
+      "status": "source_pose_asset_qa_passed_runtime_animation_pending"
+    },
+    {
+      "id": "takedown",
+      "path": "assets/graphics/characters/ruan_macacao/action_poses_v01/poses/takedown.png",
+      "sha256": "735d73d17d225f9209f2f61e3fc4d56124cc5c4953289e761afb2bd50e80acfe",
+      "alpha_bbox": [
+        20,
+        177,
+        492,
+        492
+      ],
+      "runtime_aliases": [
+        "baiana_entry"
+      ],
+      "status": "source_pose_asset_qa_passed_runtime_animation_pending"
+    },
+    {
+      "id": "top_guard",
+      "path": "assets/graphics/characters/ruan_macacao/action_poses_v01/poses/top_guard.png",
+      "sha256": "186bb50bc01ce227f0334a6077d298a9c3e689a00340ec82cd7475fcc828e235",
+      "alpha_bbox": [
+        20,
+        222,
+        492,
+        492
+      ],
+      "runtime_aliases": [],
+      "status": "source_pose_asset_qa_passed_runtime_animation_pending"
+    },
+    {
+      "id": "side_control",
+      "path": "assets/graphics/characters/ruan_macacao/action_poses_v01/poses/side_control.png",
+      "sha256": "131176c04537a65480f20afe08b8bb45001feda16fe19a94534fb2668696466d",
+      "alpha_bbox": [
+        20,
+        224,
+        492,
+        492
+      ],
+      "runtime_aliases": [
+        "cem_quilos_control"
+      ],
+      "status": "source_pose_asset_qa_passed_runtime_animation_pending"
+    },
+    {
+      "id": "mount",
+      "path": "assets/graphics/characters/ruan_macacao/action_poses_v01/poses/mount.png",
+      "sha256": "67ba4a2a2d4460cb5f5d4c2ddb8c2ca250eeb6a8056a2e66dfa44392e0f8fa18",
+      "alpha_bbox": [
+        20,
+        70,
+        492,
+        492
+      ],
+      "runtime_aliases": [],
+      "status": "source_pose_asset_qa_passed_runtime_animation_pending"
+    },
+    {
+      "id": "back_control",
+      "path": "assets/graphics/characters/ruan_macacao/action_poses_v01/poses/back_control.png",
+      "sha256": "a2fb5ae8402bef9bfe070119a0e91aadea23b42b0d8dfdb1c05ffde3d7a09099",
+      "alpha_bbox": [
+        20,
+        103,
+        492,
+        492
+      ],
+      "runtime_aliases": [],
+      "status": "source_pose_asset_qa_passed_runtime_animation_pending"
+    },
+    {
+      "id": "technical_finish",
+      "path": "assets/graphics/characters/ruan_macacao/action_poses_v01/poses/technical_finish.png",
+      "sha256": "29df6d737ea38a58dd9420f3267c6b6c73a9e1d4a553ea788d4ac9c46e4c33c5",
+      "alpha_bbox": [
+        20,
+        109,
+        492,
+        492
+      ],
+      "runtime_aliases": [
+        "tap_reset"
+      ],
+      "status": "source_pose_asset_qa_passed_runtime_animation_pending"
+    },
+    {
+      "id": "win",
+      "path": "assets/graphics/characters/ruan_macacao/action_poses_v01/poses/win.png",
+      "sha256": "344b478c473733addd07acfa98ef0fc6fc53c2153e742ee42316cf88f9dbdde5",
+      "alpha_bbox": [
+        104,
+        20,
+        409,
+        492
+      ],
+      "runtime_aliases": [],
+      "status": "source_pose_asset_qa_passed_runtime_animation_pending"
+    },
+    {
+      "id": "loss",
+      "path": "assets/graphics/characters/ruan_macacao/action_poses_v01/poses/loss.png",
+      "sha256": "0f60a636bc636b94b68c8a5ddb9def81eabab08063bd0cee4d6a299b74a61ed5",
+      "alpha_bbox": [
+        83,
+        20,
+        429,
+        492
+      ],
+      "runtime_aliases": [],
+      "status": "source_pose_asset_qa_passed_runtime_animation_pending"
+    }
+  ],
+  "contact_sheet": "assets/graphics/characters/ruan_macacao/action_poses_v01/contact_sheet.png",
+  "contact_sheet_sha256": "8c46e2e11eb50adb78a06df76dbb9989ac55b2af2bddc151001ef5c2f47bb364",
+  "runtime_status": "source_only_until_godot_gate"
+}

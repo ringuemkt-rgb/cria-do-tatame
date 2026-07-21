@@ -1,0 +1,60 @@
+{
+  "version": "1.0.0",
+  "character_id": "mestre_dende",
+  "source_sheet": "assets/source/characters/mestre_dende/action_poses_v01/source_sheet_chroma.png",
+  "source_sha256": "a38943efbb20c46a56b5245a68d7126310e1d42c7ff0a99cd4b5fb830784d605",
+  "clean_source_sheet": "assets/graphics/characters/mestre_dende/action_poses_v01/clean_source_sheet.png",
+  "clean_source_sha256": "59f973c74ed6dfaa847ca0c4f58c6e3e928a977285485f41979b6c333585ce18",
+  "pose_size": [
+    512,
+    512
+  ],
+  "anchor": "bottom_center",
+  "action_count": 3,
+  "actions": [
+    {
+      "id": "teaching",
+      "path": "assets/graphics/characters/mestre_dende/action_poses_v01/poses/teaching.png",
+      "sha256": "c719e9f80f818dfaf1e82c5a727bba2986f025f82823f7b3c857155b7a664fd9",
+      "alpha_bbox": [
+        126,
+        20,
+        386,
+        492
+      ],
+      "runtime_aliases": [
+        "teaching"
+      ],
+      "status": "source_pose_asset_qa_passed_runtime_animation_pending"
+    },
+    {
+      "id": "arms_crossed",
+      "path": "assets/graphics/characters/mestre_dende/action_poses_v01/poses/arms_crossed.png",
+      "sha256": "6317b9623c36f4718ad039f7665b711051fe0b650e8d6bef2388a5b18fa7dc82",
+      "alpha_bbox": [
+        166,
+        20,
+        346,
+        492
+      ],
+      "runtime_aliases": [],
+      "status": "source_pose_asset_qa_passed_runtime_animation_pending"
+    },
+    {
+      "id": "dialogue",
+      "path": "assets/graphics/characters/mestre_dende/action_poses_v01/poses/dialogue.png",
+      "sha256": "6fbf1bc7e1d1504fac5969e1cc34b825d2c22121d1707e441dfa3056a3d2ed38",
+      "alpha_bbox": [
+        133,
+        20,
+        379,
+        492
+      ],
+      "runtime_aliases": [],
+      "status": "source_pose_asset_qa_passed_runtime_animation_pending"
+    }
+  ],
+  "contact_sheet": "assets/graphics/characters/mestre_dende/action_poses_v01/contact_sheet.png",
+  "contact_sheet_sha256": "b8fe7025fa384d3d2b8d03b394dbe209ce5d5e202004c2da8de93cc8586286e5",
+  "runtime_status": "source_only_until_godot_gate"
+}
