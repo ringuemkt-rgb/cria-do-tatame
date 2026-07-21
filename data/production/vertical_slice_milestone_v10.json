@@ -2,7 +2,7 @@
   "version": "1.0.0",
   "milestone_id": "visual_audio_world_vertical_slice_v10",
   "date": "2026-07-20",
-  "status": "integrated_candidate_godot_validation_passed_android_pending",
+  "status": "integrated_candidate_godot_and_android_ci_passed_device_pending",
   "canonical_slice": {
     "hub": "terreiro_da_luta",
     "arena": "arena_do_dique",
@@ -63,6 +63,22 @@
     "full_game_scenes_loaded": 14,
     "hidden_script_errors": 0
   },
+  "android_ci_validation": {
+    "workflow": "Full Game Hardening #89",
+    "run_id": 29799098580,
+    "commit": "ed1582f688be8696a0e26c728a74b707d7a3ec9a",
+    "artifact": "CriaDoTatame-Android-Debug",
+    "export": "passed",
+    "signature": "passed",
+    "archive_integrity": "passed",
+    "arm64_runtime": "passed",
+    "package_id": "com.criadotatame.pressao",
+    "version_name": "1.0.0",
+    "min_sdk": 21,
+    "target_sdk": 34,
+    "apk_size_bytes": 193868415,
+    "apk_sha256": "600712231371372de92236b0b9f128736a2fb32827e4156dc786de7d9d9e69c2"
+  },
   "quality_gates": {
     "npm_quality": "passed",
     "character_art_validator": "passed",
@@ -71,7 +87,8 @@
     "lore_guardian_tests": "passed",
     "specialized_cria_spec_errors": 0,
     "godot_4_2_runtime": "passed",
-    "android_device": "not_executed_toolchain_and_device_unavailable",
+    "android_ci_export": "passed",
+    "android_device": "not_executed_requires_physical_device",
     "human_art_direction": "pending",
     "critical_listening": "pending"
   },
