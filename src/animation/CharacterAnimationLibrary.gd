@@ -11,6 +11,18 @@ static func load_manifest(manifest_path: String) -> Dictionary:
 	file.close()
 	return parsed if typeof(parsed) == TYPE_DICTIONARY else {}
 
+static func _load_atlas_texture(image_path: String) -> Texture2D:
+	if ResourceLoader.exists(image_path):
+		var imported_texture := load(image_path) as Texture2D
+		if imported_texture != null:
+			return imported_texture
+	if not FileAccess.file_exists(image_path):
+		return null
+	var image := Image.new()
+	if image.load(image_path) != OK:
+		return null
+	return ImageTexture.create_from_image(image)
+
 static func build_sprite_frames(manifest_path: String) -> SpriteFrames:
 	var manifest := load_manifest(manifest_path)
 	var frames := SpriteFrames.new()
@@ -18,7 +30,7 @@ static func build_sprite_frames(manifest_path: String) -> SpriteFrames:
 	if manifest.is_empty():
 		return frames
 	var image_path := manifest_path.get_base_dir().path_join(str(manifest.get("image", "sprite_sheet.png")))
-	var atlas: Texture2D = load(image_path)
+	var atlas: Texture2D = _load_atlas_texture(image_path)
 	if atlas == null:
 		return frames
 	var action := str(manifest.get("action_id", "default"))
