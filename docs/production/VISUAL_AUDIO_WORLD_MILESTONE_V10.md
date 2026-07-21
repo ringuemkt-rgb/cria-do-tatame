@@ -1,7 +1,7 @@
 # Marco v10 — visual, áudio, mundo e combate
 
 Data: 20/07/2026
-Estado: vertical slice integrado e aprovado no Godot 4.2.2; validação Android pendente.
+Estado: vertical slice integrado e aprovado no Godot 4.2.2; exportação Android aprovada em CI e homologação em aparelho físico pendente.
 
 ## Resultado entregue
 
@@ -73,10 +73,14 @@ Duas falas foram geradas apenas como **candidatos de casting** para Dendê e Dav
 - Runtime smoke: 137/137 verificações aprovadas e nenhum erro oculto no log.
 - Faction Director smoke: 26/26 verificações aprovadas.
 - Full Game smoke: 146 verificações e 14 cenas carregadas.
+- Android CI: APK debug exportado, assinado e validado estruturalmente.
+- Pacote Android: `com.criadotatame.pressao`, versão `1.0.0`, minSdk 21 e targetSdk 34.
+- APK: 193.868.415 bytes; SHA-256 `600712231371372de92236b0b9f128736a2fb32827e4156dc786de7d9d9e69c2`.
+- GitHub Actions: Validate Cria Data, Repository Quality, Cria Runtime Audit e Full Game Hardening aprovados no commit `ed1582f`.
 
 ## Limites honestos deste marco
 
-Não existe executável novo homologado neste ambiente. A importação, o parser/runtime GDScript e os smokes headless foram validados com Godot 4.2.2 oficial. Ainda faltam SDK Android e aparelho físico para exportação, assinatura, instalação, medição de FPS/memória, teste tátil e escuta crítica.
+Existe um APK debug produzido pelo CI e validado quanto a assinatura, integridade ZIP, biblioteca ARM64 e manifesto. Esse artefato ainda não é um build homologado: faltam instalação em aparelho físico, medição de FPS/memória, teste tátil, escuta crítica e aprovação humana.
 
 O contrato supremo também continua aberto:
 
@@ -94,6 +98,6 @@ Esses números impedem uma declaração indevida de “jogo completo”. O marco
 ## Próximo gate objetivo
 
 1. Capturar vídeo real do fluxo Menu → Terreiro → Dique → Resultado usando a importação já aprovada.
-2. Exportar e testar em Android de referência, com meta de 60 FPS, orçamento de memória e simultaneidade de áudio.
+2. Instalar o APK validado pelo CI em Android de referência, com meta de 60 FPS, orçamento de memória e simultaneidade de áudio.
 3. Realizar escuta crítica, direção vocal e revisão humana de arte em dispositivo.
 4. Depois da homologação do P1, produzir os próximos pares completos: Leoa, Kenzo, Oni e Cássio; em seguida expandir os ambientes dos três hubs regionais.
