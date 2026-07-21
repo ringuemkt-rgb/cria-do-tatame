@@ -63,7 +63,7 @@ jobs:
         shell: bash
         run: |
           set -o pipefail
-          ./godot --headless --editor --path . --quit 2>&1 | tee reports/runtime_audit/godot_import.log
+          ./godot --headless --path . --import 2>&1 | tee reports/runtime_audit/godot_import.log
 
       - name: Run runtime smoke suite
         shell: bash
