@@ -1,0 +1,18 @@
+{
+  "version": "1.0.0",
+  "event_id": "terreiro_river_loop",
+  "category": "ambience",
+  "duration_seconds": 14.0,
+  "sample_rate": 48000,
+  "channels": 2,
+  "loop": true,
+  "loop_start_samples": 0,
+  "loop_end_samples": 672000,
+  "aliases": [],
+  "runtime_volume_db": -9.0,
+  "cooldown_ms": 500,
+  "max_polyphony": 1,
+  "generation": "deterministic_original_synthesis",
+  "source_sha256": "08f1fb6a402a3b18961914ce9327cf1228c01df1f2ffb18feeb8c13554ac1c20",
+  "game_sha256": "73f0d3786919c11ded1139535e146456e15dda24b66485eeeb8c7a020bf92eaf"
+}

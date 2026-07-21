@@ -28,7 +28,7 @@ Não transformar o projeto em galeria de arte. Primeiro deve abrir, rodar, salva
 - Poder: Silverback Grip.
 - Frase eixo: Ser forte é ser gentil.
 
-Qualquer referência antiga a Caio Ravel ou Ruan “Cria” é legado e não deve ir para UI, campanha principal ou dados finais.
+Qualquer identidade descartada de rascunhos antigos é legado e não deve ir para UI, campanha principal ou dados finais.
 
 ## Ordem técnica obrigatória
 

@@ -1,0 +1,96 @@
+version: "1.0.0"
+language: "pt-BR"
+
+server:
+  host: "127.0.0.1"
+  port: 8000
+  log_level: "info"
+  workers: 1
+  request_timeout_seconds: 30.0
+  max_request_chars: 24000
+
+validation:
+  strict_mode: true
+  fail_closed: true
+  protagonist_id: "ruan_macacao"
+  protagonist_symbol: "Gorila Silverback"
+  home_region_tokens:
+    - "baixo sul"
+    - "itubera"
+    - "taperoa"
+    - "valenca"
+    - "camamu"
+    - "cairu"
+    - "nilo pecanha"
+    - "igrapiuna"
+    - "pratigi"
+  central_roles:
+    - "protagonist"
+    - "mentor"
+    - "tactical_support"
+  blocked_instruction_fragments:
+    - "passo a passo para machucar"
+    - "como quebrar"
+    - "torca ate quebrar"
+    - "continue depois do tap"
+    - "ate apagar"
+    - "cause lesao"
+
+models:
+  allow_downloads: false
+  llm:
+    provider: "ollama"
+    repository: "Qwen/Qwen3-4B-GGUF"
+    quantization: "Q4_K_M"
+    runtime_model: "qwen3-4b-q4_k_m"
+    base_url: "http://127.0.0.1:11434"
+    timeout_seconds: 25.0
+    temperature: 0.20
+    max_tokens: 700
+  code_llm:
+    provider: "llama.cpp"
+    repository: "Qwen/Qwen2.5-Coder-7B-Instruct-GGUF"
+    runtime_model: "qwen2.5-coder-7b-instruct-q4_k_m"
+    base_url: "http://127.0.0.1:8080"
+  embeddings:
+    repository: "BAAI/bge-m3"
+    device: "cpu"
+    normalize: true
+    batch_size: 16
+  reranker:
+    repository: "BAAI/bge-reranker-v2-m3"
+    device: "cpu"
+    batch_size: 8
+
+rag:
+  collection_name: "cria_do_tatame_canon_v1"
+  persist_directory: "ai_lore_guardian/storage/chroma"
+  lexical_index_path: "ai_lore_guardian/storage/lexical_index.json"
+  chunk_size_chars: 1800
+  chunk_overlap_chars: 180
+  candidate_count: 12
+  result_count: 5
+  canonical_sources:
+    - "data/characters.json"
+    - "data/arenas.json"
+    - "data/techniques.json"
+    - "data/missions.json"
+    - "data/factions.json"
+    - "data/lore"
+    - "docs/00_MASTER_GDD.md"
+    - "docs/02_COMBAT_BIBLE.md"
+    - "docs/03_CHARACTER_BIBLE.md"
+    - "docs/06_AI_LORE_GUARDIAN.md"
+    - "docs/narrative/MASTER_CANON_BIBLE_V01.md"
+    - "docs/world/BAIXO_SUL_GEO_CANON.md"
+  allowed_extensions:
+    - ".json"
+    - ".md"
+    - ".txt"
+    - ".yaml"
+    - ".yml"
+
+security:
+  allow_remote: false
+  api_key_env: "CRIA_LORE_GUARDIAN_API_KEY"
+  allowed_origins: []

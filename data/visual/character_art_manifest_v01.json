@@ -1,0 +1,267 @@
+{
+  "version": "1.0.0",
+  "generated_at": "2026-07-18",
+  "canon_source": "data/characters.json",
+  "art_direction_source": "data/lore/visual_production_manifest_v01.json",
+  "style": "HD Pixel Art 2.5D Regional Premium",
+  "generation_method": "OpenAI built-in image generation with canonical model-sheet references",
+  "rights_note": "Original project generation without external game assets, real brands or real-person references; release remains subject to the project's final legal review and applicable account terms.",
+  "runtime_policy": {
+    "portrait_size": [512, 512],
+    "seed_frame_size": [256, 256],
+    "texture_filter": "nearest",
+    "alpha": "straight_rgba",
+    "pivot": "bottom_center_from_visible_seed_bbox"
+  },
+  "source_pose_library": {
+    "catalog": "data/visual/character_action_pose_catalog_v01.json",
+    "catalog_sha256": "a9d7d23228c523b8a2a4454c8d4e768d815386b0cbe4f3b3fbee2556e2a052b3",
+    "character_count": 8,
+    "action_key_pose_count": 50,
+    "paired_sequence_count": 1,
+    "paired_key_pose_count": 7,
+    "review_board": "assets/graphics/characters/character_action_pose_roster_v01.jpg",
+    "review_board_sha256": "f6026bcf0fa5598742e2dec4ead6524f6d70d6b781d60673ab0975c2dab84003",
+    "status": "asset_qa_passed_runtime_animation_pending"
+  },
+  "action_animation_batch": {
+    "catalog": "data/visual/character_animation_batch_v02.json",
+    "catalog_sha256": "8282c5b5e98a6d11c699c140f4d448df25f934d0286c64ec59b521a79c7d6e3c",
+    "pack_count": 7,
+    "frame_count": 34,
+    "paired_animatic": "assets/graphics/characters/paired/ruan_vs_davi_baiana_v01/animatic/manifest.json",
+    "paired_animatic_frame_count": 7,
+    "paired_animatic_spritesheet_sha256": "cc679a0ab8a99a0b1bbd3de10b940bfb5e20dddc4a39fde695088f90bf7e897b",
+    "review_board": "assets/graphics/characters/character_animation_batch_v02.jpg",
+    "review_board_sha256": "ee19fd0ff4e2bc30b7e7f8af766a6b0b11bfa3b3b82f9f30d1bae640f14bfd0c",
+    "status": "asset_qa_complete_runtime_test_pending"
+  },
+  "characters": [
+    {
+      "id": "ruan_macacao",
+      "model_sheet": {
+        "path": "assets/source/characters/ruan_macacao/model_sheet_v01.png",
+        "sha256": "a9dfadb66346383a5a982cba30f3abd14a6da8b2ea7486e936272dc3f240667c",
+        "status": "approved_identity_lock"
+      },
+      "dialogue_portrait": {
+        "path": "assets/graphics/characters/ruan_macacao/portrait/dialogue_portrait_v01.png",
+        "sha256": "8f8db2e0865ceaf525c236365d689ee49058332042b3e42f3a8b8ac3e2a18ba8",
+        "status": "approved_asset_qa_not_scene_integrated"
+      },
+      "idle_seed": {
+        "path": "assets/graphics/characters/ruan_macacao/seeds/idle_combat_v01.png",
+        "sha256": "6fd2584d7d0ec334f95fc459194fc1094413954eed6fc85ff0c14ec81d6e9674",
+        "facing": "right",
+        "status": "approved_animation_anchor"
+      },
+      "animation_status": "idle_combat_vertical_slice_generated"
+    },
+    {
+      "id": "davi_relampago",
+      "model_sheet": {
+        "path": "assets/source/characters/davi_relampago/model_sheet_v01.png",
+        "sha256": "00912b138e76b5855597718d01413945c912baffa035ae2d7be45809cb5cc2aa",
+        "status": "approved_identity_lock"
+      },
+      "dialogue_portrait": {
+        "path": "assets/graphics/characters/davi_relampago/portrait/dialogue_portrait_v01.png",
+        "sha256": "db8342defdbf56db8a28b07b451bad6939d78af88b5a2cbd0000da7f82d8396d",
+        "status": "approved_asset_qa_not_scene_integrated"
+      },
+      "idle_seed": {
+        "path": "assets/graphics/characters/davi_relampago/seeds/idle_v01.png",
+        "sha256": "211f2f67ad112deef6d6403430d594ba814d92fda351889f51a635150706e615",
+        "facing": "left",
+        "status": "approved_animation_anchor"
+      },
+      "animation_status": "idle_combat_vertical_slice_generated"
+    },
+    {
+      "id": "mestre_dende",
+      "model_sheet": {
+        "path": "assets/source/characters/mestre_dende/model_sheet_v01.png",
+        "sha256": "581d7b848a6e850d3d1914475f8f19ea111ddd6bc1cd4dbd732aa0b81ac96ebc",
+        "status": "approved_identity_lock"
+      },
+      "dialogue_portrait": {
+        "path": "assets/graphics/characters/mestre_dende/portrait/dialogue_portrait_v01.png",
+        "sha256": "4e0d81bda5d1a8b295602d6bbbc274fcfc121858fda28b3d528bc835e80227b3",
+        "status": "approved_asset_qa_not_scene_integrated"
+      },
+      "idle_seed": {
+        "path": "assets/graphics/characters/mestre_dende/seeds/idle_v01.png",
+        "sha256": "a504d5d183e5c42718b0d5d714d93e3db8e5829c0f4c753f2e569eece8b92d51",
+        "facing": "right",
+        "status": "approved_animation_anchor"
+      },
+      "animation_status": "idle_vertical_slice_generated"
+    },
+    {
+      "id": "tinker_bell",
+      "model_sheet": {
+        "path": "assets/source/characters/tinker_bell/model_sheet_v01.png",
+        "sha256": "b3f0101ff907f728689e7e65c4949bb256fe02a06419c42f23e70212d2329e47",
+        "status": "approved_identity_lock"
+      },
+      "dialogue_portrait": {
+        "path": "assets/graphics/characters/tinker_bell/portrait/dialogue_portrait_v01.png",
+        "sha256": "fe08002dcf3d310c912ec81fa35c2cd2b1c4db165ae265a72dde5de04c6ea538",
+        "status": "approved_asset_qa_not_scene_integrated"
+      },
+      "idle_seed": {
+        "path": "assets/graphics/characters/tinker_bell/seeds/idle_v01.png",
+        "sha256": "5584257deecc19e5ec570f9ecffc3972fd2fc8fa07bea4eeda68728620b59862",
+        "facing": "right",
+        "status": "approved_animation_anchor"
+      },
+      "animation_status": "idle_vertical_slice_generated"
+    },
+    {
+      "id": "cassio_molho",
+      "model_sheet": {
+        "path": "assets/source/characters/cassio_molho/model_sheet_v01.png",
+        "sha256": "6a3eb7dc00d81f4095e2f1db0ba22374d7d107baaf7bfa1f862b71d0dc4e48d8",
+        "status": "approved_identity_lock"
+      },
+      "dialogue_portrait": {
+        "path": "assets/graphics/characters/cassio_molho/portrait/dialogue_portrait_v01.png",
+        "sha256": "95270af350d7a8d87d3a03516ce36fff10d362339fd954dc2e156f4e2da514c0",
+        "status": "approved_asset_qa_not_scene_integrated"
+      },
+      "idle_seed": {
+        "path": "assets/graphics/characters/cassio_molho/seeds/idle_v01.png",
+        "sha256": "b8f41364aa9c53ad9a1729cfa26a82c3b75057328a72be5de4dbe0e712b331e2",
+        "facing": "right",
+        "status": "approved_animation_anchor"
+      },
+      "animation_status": "idle_combat_vertical_slice_generated"
+    },
+    {
+      "id": "kenzo_kuroi",
+      "model_sheet": {
+        "path": "assets/source/characters/kenzo_kuroi/model_sheet_v01.png",
+        "sha256": "47be01698fa9ac420af2f81ce753f0c087e891579342169f7f55c4d3f7183847",
+        "status": "approved_identity_lock"
+      },
+      "dialogue_portrait": {
+        "path": "assets/graphics/characters/kenzo_kuroi/portrait/dialogue_portrait_v01.png",
+        "sha256": "8012a85d81509ea8e1ebef19939b1e1ea4ba77f5a956c14edce46b4d830e9213",
+        "status": "approved_asset_qa_not_scene_integrated"
+      },
+      "idle_seed": {
+        "path": "assets/graphics/characters/kenzo_kuroi/seeds/idle_v01.png",
+        "sha256": "5c5041ff62b6bec3783fd365b682f72da128bd2cdbfc332926d16c966b9439a1",
+        "facing": "left",
+        "status": "approved_animation_anchor"
+      },
+      "animation_status": "idle_combat_vertical_slice_generated"
+    },
+    {
+      "id": "leoa_quilombola",
+      "model_sheet": {
+        "path": "assets/source/characters/leoa_quilombola/model_sheet_v01.png",
+        "sha256": "0ae00aa235c1ef358d2691e7406a8d25499e98b1410a9706a455b82098223dc4",
+        "status": "approved_identity_lock"
+      },
+      "dialogue_portrait": {
+        "path": "assets/graphics/characters/leoa_quilombola/portrait/dialogue_portrait_v01.png",
+        "sha256": "35765ab8287e8bd35c08f5249668961d3cb33aaed5937e0fc2109767547bc0d3",
+        "status": "approved_asset_qa_not_scene_integrated"
+      },
+      "idle_seed": {
+        "path": "assets/graphics/characters/leoa_quilombola/seeds/idle_v01.png",
+        "sha256": "94ee81c37dfa93e6ed44f204ea83e79fddc51e4ef3a94a1d7f966882855424da",
+        "facing": "right",
+        "status": "approved_animation_anchor"
+      },
+      "animation_status": "idle_combat_vertical_slice_generated"
+    },
+    {
+      "id": "oni_da_lapa",
+      "model_sheet": {
+        "path": "assets/source/characters/oni_da_lapa/model_sheet_v01.png",
+        "sha256": "ccbf6aa81b71f53fcf0d17c2905395f42eeed51488b0ac347338793dd044ab6a",
+        "status": "approved_identity_lock"
+      },
+      "dialogue_portrait": {
+        "path": "assets/graphics/characters/oni_da_lapa/portrait/dialogue_portrait_v01.png",
+        "sha256": "fe37b77fa6245d4857463670c6055e0cb54c0b53fc57da46afd1d04e32c2548f",
+        "status": "approved_asset_qa_not_scene_integrated"
+      },
+      "idle_seed": {
+        "path": "assets/graphics/characters/oni_da_lapa/seeds/idle_v01.png",
+        "sha256": "db663c7cde7866d9c100693eb45b33da7a83d538f4e5070a2587baf95de950b4",
+        "facing": "left",
+        "status": "approved_animation_anchor"
+      },
+      "animation_status": "idle_combat_vertical_slice_generated"
+    }
+  ],
+  "vertical_slices": [
+    {
+      "character_id": "ruan_macacao",
+      "action_id": "idle_combat",
+      "manifest": "assets/graphics/characters/ruan_macacao/idle_combat_v01/manifest.json",
+      "spritesheet": "assets/graphics/characters/ruan_macacao/idle_combat_v01/spritesheet.png",
+      "sha256": "5d07d93c35201e1d3d692c20c88b1066557a8fa2c10309322f68a239dbc723c7",
+      "status": "asset_qa_passed_runtime_test_pending"
+    },
+    {
+      "character_id": "davi_relampago",
+      "action_id": "idle_combat",
+      "manifest": "assets/graphics/characters/davi_relampago/idle_combat_v01/manifest.json",
+      "spritesheet": "assets/graphics/characters/davi_relampago/idle_combat_v01/spritesheet.png",
+      "sha256": "a91f8bdfd668ff257ec5dd103de91a6856688c5049b4480a59236907e42d2277",
+      "status": "asset_qa_passed_runtime_test_pending"
+    },
+    {
+      "character_id": "mestre_dende",
+      "action_id": "idle",
+      "manifest": "assets/graphics/characters/mestre_dende/idle_v01/manifest.json",
+      "spritesheet": "assets/graphics/characters/mestre_dende/idle_v01/spritesheet.png",
+      "sha256": "31d065d4c6f6a2867a1663d1752f780f51206ee6a2b4f9a1532c8e6d6e8b54f6",
+      "status": "asset_qa_passed_runtime_test_pending"
+    },
+    {
+      "character_id": "tinker_bell",
+      "action_id": "idle",
+      "manifest": "assets/graphics/characters/tinker_bell/idle_v01/manifest.json",
+      "spritesheet": "assets/graphics/characters/tinker_bell/idle_v01/spritesheet.png",
+      "sha256": "962f0e3596d6057acb37102cd9b29fb79127c4de29f3f2cc1f5948c2d1e71304",
+      "status": "asset_qa_passed_runtime_test_pending"
+    },
+    {
+      "character_id": "cassio_molho",
+      "action_id": "idle_combat",
+      "manifest": "assets/graphics/characters/cassio_molho/idle_combat_v01/manifest.json",
+      "spritesheet": "assets/graphics/characters/cassio_molho/idle_combat_v01/spritesheet.png",
+      "sha256": "fb406ae7c113938f58144b67089ae93b688d746b68bbc44544e771d22cc848a4",
+      "status": "asset_qa_passed_runtime_test_pending"
+    },
+    {
+      "character_id": "kenzo_kuroi",
+      "action_id": "idle_combat",
+      "manifest": "assets/graphics/characters/kenzo_kuroi/idle_combat_v01/manifest.json",
+      "spritesheet": "assets/graphics/characters/kenzo_kuroi/idle_combat_v01/spritesheet.png",
+      "sha256": "5d3b9dd022f58d7f32689bf3f55c6e24aa4d8467daac40f55f1e68d478a46e38",
+      "status": "asset_qa_passed_runtime_test_pending"
+    },
+    {
+      "character_id": "leoa_quilombola",
+      "action_id": "idle_combat",
+      "manifest": "assets/graphics/characters/leoa_quilombola/idle_combat_v01/manifest.json",
+      "spritesheet": "assets/graphics/characters/leoa_quilombola/idle_combat_v01/spritesheet.png",
+      "sha256": "031c9480e4b0d0ff7db87a0fb78191ac798598caadf87bfda57afbee78200df3",
+      "status": "asset_qa_passed_runtime_test_pending"
+    },
+    {
+      "character_id": "oni_da_lapa",
+      "action_id": "idle_combat",
+      "manifest": "assets/graphics/characters/oni_da_lapa/idle_combat_v01/manifest.json",
+      "spritesheet": "assets/graphics/characters/oni_da_lapa/idle_combat_v01/spritesheet.png",
+      "sha256": "cec1d6b898e999d1d749252a3d2632aa579abb3dfe0c8b6033843b322049aa6e",
+      "status": "asset_qa_passed_runtime_test_pending"
+    }
+  ]
+}

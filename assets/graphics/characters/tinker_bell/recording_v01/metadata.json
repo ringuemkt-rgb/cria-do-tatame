@@ -1,0 +1,61 @@
+{
+  "version": "2.0.0",
+  "character_id": "tinker_bell",
+  "source_action_id": "filming",
+  "frame_size": [
+    256,
+    256
+  ],
+  "frame_count": 4,
+  "fps": 8,
+  "loop": true,
+  "pivot": {
+    "x": 125,
+    "y": 236
+  },
+  "alpha_boxes": [
+    [
+      84,
+      9,
+      166,
+      236
+    ],
+    [
+      80,
+      16,
+      169,
+      236
+    ],
+    [
+      81,
+      14,
+      169,
+      236
+    ],
+    [
+      84,
+      9,
+      166,
+      236
+    ]
+  ],
+  "texture_filter": "nearest",
+  "runtime_transition": {
+    "from": "hub_recording",
+    "to": "hub_recording"
+  },
+  "events": [
+    {
+      "frame": 1,
+      "name": "record_start"
+    },
+    {
+      "frame": 2,
+      "name": "camera_reframe"
+    }
+  ],
+  "resource_delta": {},
+  "result": "cria_live_capture",
+  "qa_status": "asset_qa_passed_runtime_test_pending",
+  "spritesheet_sha256": "9a5fb7dd45d8368828236db37f72a09b19b9f4a26a77b1348c0722f72a114d4c"
+}

@@ -1,0 +1,21 @@
+{
+  "version": "1.0.0",
+  "event_id": "sweep_commit",
+  "category": "combat",
+  "duration_seconds": 0.52,
+  "sample_rate": 48000,
+  "channels": 2,
+  "loop": false,
+  "loop_start_samples": null,
+  "loop_end_samples": null,
+  "aliases": [
+    "raspagem_tesoura",
+    "raspagem_borboleta"
+  ],
+  "runtime_volume_db": 0.0,
+  "cooldown_ms": 40,
+  "max_polyphony": 4,
+  "generation": "deterministic_original_synthesis",
+  "source_sha256": "01d9d59671cbe2bf3496252d050a1686cba68b3e5b780f6c2f53b8b7994300f9",
+  "game_sha256": "438945bd251276caef9970e10c58e056ba6ebb7af9b0367e912eb4cb80f032be"
+}

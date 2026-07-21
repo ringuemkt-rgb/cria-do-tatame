@@ -1,0 +1,78 @@
+{
+  "version": "1.0.0",
+  "milestone_id": "visual_audio_world_vertical_slice_v10",
+  "date": "2026-07-20",
+  "status": "integrated_candidate_runtime_validation_pending",
+  "canonical_slice": {
+    "hub": "terreiro_da_luta",
+    "arena": "arena_do_dique",
+    "player": "ruan_macacao",
+    "opponent": "davi_relampago",
+    "mentor": "mestre_dende",
+    "companion": "tinker_bell"
+  },
+  "character_art": {
+    "canonical_characters": 8,
+    "model_sheets": 8,
+    "dialogue_portraits": 8,
+    "idle_animation_packs": 8,
+    "action_key_poses": 50,
+    "priority_action_packs": 7,
+    "priority_action_frames": 34,
+    "paired_animatic_frames": 7
+  },
+  "world_art": {
+    "premium_arena_backgrounds": 1,
+    "premium_hub_backgrounds": 1,
+    "regional_maps": 1,
+    "arena_lighting_overlays": 1,
+    "collision_maps": 2
+  },
+  "review_board": {
+    "path": "assets/graphics/review/world_combat_milestone_v10.jpg",
+    "sha256": "70741de0a4a51fb49c1d2c3d0b6ec6b0eb8416988184128ce744dbc710278fb8"
+  },
+  "audio": {
+    "event_count": 28,
+    "combat": 16,
+    "ui": 4,
+    "crowd": 2,
+    "ambience": 5,
+    "music": 1,
+    "format": "48_khz_stereo_vorbis_runtime_with_wav_source",
+    "binary_reproducible": true,
+    "external_samples": 0
+  },
+  "runtime_integrations": [
+    "candidate_character_animation_with_placeholder_fallback",
+    "arena_do_dique_production_backdrop_and_dynamic_light",
+    "terreiro_production_backdrop",
+    "world_map_normalized_nodes_and_routes",
+    "npc_routine_presence_panel",
+    "animated_representative_npcs",
+    "pooled_file_backed_audio_with_offline_tone_fallback",
+    "technique_and_deck_clash_vfx",
+    "hub_and_arena_ambience_switching"
+  ],
+  "quality_gates": {
+    "npm_quality": "passed",
+    "character_art_validator": "passed",
+    "world_visual_validator": "passed",
+    "audio_integrity_validator": "passed",
+    "lore_guardian_tests": "passed",
+    "specialized_cria_spec_errors": 0,
+    "godot_4_2_runtime": "not_executed_engine_unavailable",
+    "android_device": "not_executed_toolchain_and_device_unavailable",
+    "human_art_direction": "pending",
+    "critical_listening": "pending"
+  },
+  "supreme_target_gap": {
+    "character_visual_sets_remaining": 10,
+    "premium_arena_backgrounds_remaining": 14,
+    "paired_technique_animation_flows_remaining": 43,
+    "sfx_remaining": 78,
+    "music_cues_remaining": 19,
+    "ambience_loops_remaining": 7
+  },
+  "release_claim": "vertical_slice_candidate_not_complete_game_or_release_build"
+}

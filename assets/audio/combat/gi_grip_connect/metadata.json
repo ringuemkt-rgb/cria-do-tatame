@@ -1,0 +1,21 @@
+{
+  "version": "1.0.0",
+  "event_id": "gi_grip_connect",
+  "category": "combat",
+  "duration_seconds": 0.34,
+  "sample_rate": 48000,
+  "channels": 2,
+  "loop": false,
+  "loop_start_samples": null,
+  "loop_end_samples": null,
+  "aliases": [
+    "grip_de_ferro",
+    "grip_connect"
+  ],
+  "runtime_volume_db": 0.0,
+  "cooldown_ms": 40,
+  "max_polyphony": 5,
+  "generation": "deterministic_original_synthesis",
+  "source_sha256": "ae1668ba0a6cf8e025d40f6946242b8dd2980d3200af7de4460eb458de7f42cd",
+  "game_sha256": "d1a2f9afaccfdde6a4a1c2faf50864b2b56d5a22726fcbd3bf52165200c26c26"
+}

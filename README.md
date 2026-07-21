@@ -182,7 +182,7 @@ reports/build/windows_build_report.json
 
 ## Canon obrigatório
 
-O protagonista oficial é **Ruan “Macacão” Silva**. Referências antigas a Caio Ravel ou Ruan “Cria” são legado e não podem entrar em UI, dados finais ou campanha principal.
+O protagonista oficial é **Ruan “Macacão” Silva**. Identidades descartadas de rascunhos antigos são legado e não podem entrar em UI, dados finais ou campanha principal.
 
 - Origem: Ituberá, Baixo Sul da Bahia.
 - Idade: 19 anos no início, 28 no final.

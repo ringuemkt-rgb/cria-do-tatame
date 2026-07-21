@@ -11,7 +11,11 @@ const REQUIRED_SCENES := [
 	"res://scenes/result/ResultScreen.tscn",
 	"res://scenes/ui/CriaLiveUI.tscn",
 	"res://scenes/ui/DeckBuilder.tscn",
-	"res://scenes/ui/CombatDeckHUD.tscn"
+	"res://scenes/ui/CombatDeckHUD.tscn",
+	"res://scenes/world/WorldMapScreen.tscn",
+	"res://scenes/hubs/SalvadorHub.tscn",
+	"res://scenes/hubs/ZambiapungaHub.tscn",
+	"res://scenes/hubs/ManguezalHub.tscn"
 ]
 
 var failures: Array[String] = []
@@ -103,6 +107,8 @@ func _test_data_registry() -> void:
 	var animation_catalog: Dictionary = data_registry.get("character_animation_catalog")
 	var arena_animation_flow: Dictionary = data_registry.get("arena_animation_flow")
 	var combat_deck: Dictionary = data_registry.get("combat_deck")
+	var audio_catalog: Dictionary = data_registry.get("audio_event_catalog")
+	var world_map_art: Dictionary = data_registry.get("world_map_art")
 	_assert(not ruan.is_empty(), "Ruan Macacao nao foi carregado")
 	_assert(not arena.is_empty(), "Terreiro da Luta nao foi carregado")
 	_assert(techniques.size() >= 10, "Catalogo principal possui menos de 10 tecnicas")
@@ -111,6 +117,13 @@ func _test_data_registry() -> void:
 	_assert(animation_catalog.get("entries", []).size() >= 31, "Catalogo de animacoes nao foi carregado")
 	_assert(arena_animation_flow.get("fight_flow", []).size() >= 10, "Fluxo animado das arenas nao foi carregado")
 	_assert(combat_deck.get("cards", []).size() == 10, "Deck inicial nao possui 10 cartas")
+	_assert(audio_catalog.get("events", []).size() == 28, "Catalogo de audio nao possui 28 eventos")
+	_assert(world_map_art.get("node_positions", {}).size() == 4, "Mapa visual nao possui 4 hubs")
+	_assert(ResourceLoader.exists("res://assets/graphics/arenas/arena_do_dique_v01/background_layers/00_master_environment.png"), "Arte da Arena do Dique ausente")
+	_assert(ResourceLoader.exists("res://assets/graphics/hubs/terreiro_da_luta_v01/environment.png"), "Arte do Terreiro ausente")
+	_assert(ResourceLoader.exists("res://assets/graphics/world/baixo_sul_map_v01/map_plate.png"), "Arte do mapa ausente")
+	if audio_manager != null:
+		_assert(int(audio_manager.call("get_event_catalog_size")) == 28, "AudioManager nao indexou os 28 eventos")
 	var ruan_idle: Dictionary = data_registry.call("get_character_animation", "ruan_macacao", "idle")
 	_assert(not ruan_idle.is_empty(), "Animacao idle de Ruan nao foi registrada")
 	_assert(ResourceLoader.exists("res://" + str(ruan_idle.get("manifest", "")).get_base_dir().path_join("sprite_sheet.png")), "Atlas idle de Ruan nao existe")
@@ -223,7 +236,7 @@ func _test_save_roundtrip() -> void:
 func _test_combat_domain() -> void:
 	if combat_manager == null:
 		return
-	var start_result: Dictionary = combat_manager.call("start_combat", "terreiro_da_luta", "ruan_macacao", "davi_relampago")
+	var start_result: Dictionary = combat_manager.call("start_combat", "arena_do_dique", "ruan_macacao", "davi_relampago")
 	_assert(bool(start_result.get("ok", false)), "CombatManager nao iniciou combate")
 	_assert(str(combat_manager.call("get_current_state_name")) == "PLAYER_STANDING_NEUTRAL", "Combate nao iniciou em pe")
 	var available: Array = combat_manager.call("get_available_techniques")

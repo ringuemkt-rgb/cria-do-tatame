@@ -1,0 +1,17 @@
+{
+  "version": "1.0.0",
+  "map_id": "baixo_sul_hub_map_v01",
+  "candidate_only": true,
+  "runtime_gate": "godot_4_2_and_geo_art_review_pending",
+  "source": "assets/source/world/baixo_sul_map_v01/master_map_source.png",
+  "source_sha256": "b689c94c1d2716a417e2c462febc779d9bd75d3a3d3cdb2e2147520519793a74",
+  "image": "map_plate.png",
+  "image_sha256": "a23bc93034715f2a43fb935df5d4047f3d98742381ab7203588a7532cc90824c",
+  "preview": "preview.png",
+  "preview_sha256": "efbc28bf839913624c02a6d26a6996727bfea64b0256aeeccb0d06a1f4ce6867",
+  "canvas": [1920, 1080],
+  "labels_baked": false,
+  "world_model": "semi_open_dense_hubs",
+  "license": "project-generated-original; final release legal review required",
+  "qa_status": "asset_qa_passed_geo_overlay_pending"
+}

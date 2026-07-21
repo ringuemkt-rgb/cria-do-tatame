@@ -1,0 +1,20 @@
+{
+  "version": "1.0.0",
+  "event_id": "arena_positive",
+  "category": "crowd",
+  "duration_seconds": 1.45,
+  "sample_rate": 48000,
+  "channels": 2,
+  "loop": false,
+  "loop_start_samples": null,
+  "loop_end_samples": null,
+  "aliases": [
+    "vitoria_crowd"
+  ],
+  "runtime_volume_db": -3.0,
+  "cooldown_ms": 350,
+  "max_polyphony": 2,
+  "generation": "deterministic_original_synthesis",
+  "source_sha256": "a3e622a05db0e40f2651e3948f7ff5b2def6d0913eaecc1d7908b47f9d22964b",
+  "game_sha256": "77ae8fa752e69c6ebad9f46ae6aa932f803c67146cfba11bdbbb16ef436ce7bd"
+}

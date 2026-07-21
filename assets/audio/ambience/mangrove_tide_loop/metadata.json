@@ -1,0 +1,18 @@
+{
+  "version": "1.0.0",
+  "event_id": "mangrove_tide_loop",
+  "category": "ambience",
+  "duration_seconds": 14.0,
+  "sample_rate": 48000,
+  "channels": 2,
+  "loop": true,
+  "loop_start_samples": 0,
+  "loop_end_samples": 672000,
+  "aliases": [],
+  "runtime_volume_db": -9.0,
+  "cooldown_ms": 500,
+  "max_polyphony": 1,
+  "generation": "deterministic_original_synthesis",
+  "source_sha256": "69fc00e6c5398a685b2c252c7485a3312e052258069675d2896bb1e090d1ac09",
+  "game_sha256": "720183198122d96489d48f90064aee02256e956febc8b975820df39cdf7aabaa"
+}

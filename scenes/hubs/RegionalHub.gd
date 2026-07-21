@@ -8,6 +8,11 @@ extends Control
 const MAP_SCENE: String = "res://scenes/world/WorldMapScreen.tscn"
 const CRIA_LIVE_SCENE: String = "res://scenes/ui/CriaLiveUI.tscn"
 const MAIN_MENU_SCENE: String = "res://scenes/main_menu/MainMenu.tscn"
+const NPCPresencePanelScript = preload("res://scenes/hubs/NPCPresencePanel.gd")
+const VisualTheme = preload("res://src/ui/CriaVisualTheme.gd")
+const FighterPlaceholderScript = preload("res://src/characters/FighterPlaceholder.gd")
+
+const CHARACTER_ALIASES := {"cassio_molho_oliveira": "cassio_molho"}
 
 var _transitioning: bool = false
 
@@ -17,6 +22,10 @@ func _ready() -> void:
 		return
 	WorldMapManager.current_hub = hub_id
 	WorldState.current_hub = hub_id
+	_style_interface()
+	_build_npc_presence()
+	_build_representative_npc()
+	_play_hub_ambience()
 	_connect_if_exists("Panel/ExploreBtn", _on_explore)
 	_connect_if_exists("Panel/RestBtn", _on_rest)
 	_connect_if_exists("Panel/AdvanceDayBtn", _on_advance_day)
@@ -28,6 +37,70 @@ func _ready() -> void:
 		SignalBus.day_advanced.connect(_on_day_changed)
 	_build_activity_buttons()
 	_update_ui()
+
+func _build_npc_presence() -> void:
+	if has_node("NPCPresencePanel"):
+		return
+	var presence := NPCPresencePanelScript.new()
+	presence.call("configure", hub_id)
+	add_child(presence)
+
+func _build_representative_npc() -> void:
+	var hub: Dictionary = WorldMapManager.get_hub_data(hub_id)
+	for npc_id_value in hub.get("npc_pool", []):
+		var raw_id: String = str(npc_id_value)
+		var canonical_id: String = str(CHARACTER_ALIASES.get(raw_id, raw_id))
+		var character: Dictionary = DataRegistry.get_character(canonical_id)
+		if character.is_empty():
+			continue
+		var actor := FighterPlaceholderScript.new()
+		actor.name = "RepresentativeNPC"
+		actor.fighter_id = canonical_id
+		actor.display_name = str(character.get("name", canonical_id))
+		actor.position = Vector2(1080.0, 470.0)
+		actor.scale = Vector2(-0.72, 0.72)
+		actor.z_index = 1
+		add_child(actor)
+		break
+
+func _play_hub_ambience() -> void:
+	var cue_id: String = "arena_idle_loop"
+	match hub_id:
+		"salvador": cue_id = "salvador_city_loop"
+		"zambiapunga": cue_id = "zambiapunga_square_loop"
+		"camamu_manguezal": cue_id = "mangrove_tide_loop"
+	AudioManager.play_ambience(cue_id)
+
+func _style_interface() -> void:
+	if has_node("Panel"):
+		$Panel.z_index = 2
+		var backdrop := Panel.new()
+		backdrop.name = "InterfaceBackdrop"
+		backdrop.anchor_left = 0.5
+		backdrop.anchor_top = 0.5
+		backdrop.anchor_right = 0.5
+		backdrop.anchor_bottom = 0.5
+		backdrop.offset_left = -382.0
+		backdrop.offset_top = -358.0
+		backdrop.offset_right = 382.0
+		backdrop.offset_bottom = 358.0
+		backdrop.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		backdrop.add_theme_stylebox_override("panel", VisualTheme.panel_style(0.88, accent_color, 2, 14))
+		add_child(backdrop)
+		move_child(backdrop, 2)
+	if has_node("Panel/Title"):
+		VisualTheme.style_heading($Panel/Title, 28, accent_color)
+	for label_path in ["Panel/Status", "Panel/Weather"]:
+		if has_node(label_path):
+			get_node(label_path).add_theme_color_override("font_color", VisualTheme.CYAN)
+	if has_node("Panel/Message"):
+		$Panel/Message.add_theme_color_override("font_color", VisualTheme.HONOR)
+	if has_node("Panel/ActivitiesLabel"):
+		$Panel/ActivitiesLabel.add_theme_color_override("font_color", VisualTheme.OFF_WHITE)
+	for button_name in ["ExploreBtn", "RestBtn", "AdvanceDayBtn", "CriaLiveBtn", "MapBtn", "SaveBtn", "MainMenuBtn"]:
+		var path := "Panel/" + button_name
+		if has_node(path):
+			VisualTheme.apply_primary_button(get_node(path))
 
 func _connect_if_exists(path: String, callback: Callable) -> void:
 	if not has_node(path):
@@ -54,6 +127,7 @@ func _build_activity_buttons() -> void:
 		button.text = str(activity.get("name", activity_id.replace("_", " ").capitalize()))
 		button.tooltip_text = _activity_tooltip(activity)
 		button.disabled = activity.is_empty()
+		VisualTheme.apply_action_button(button, accent_color)
 		button.pressed.connect(_on_activity_pressed.bind(activity_id))
 		container.add_child(button)
 
@@ -147,3 +221,6 @@ func _show_message(message: String) -> void:
 
 func _on_day_changed(_day_name, _week_number) -> void:
 	_update_ui()
+
+func _exit_tree() -> void:
+	AudioManager.stop_ambience()

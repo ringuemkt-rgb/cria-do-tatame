@@ -17,7 +17,9 @@
       "target": "assets/source/apixel/characters/main_cast_v01.png",
       "deliverables": ["turnaround_front", "turnaround_side", "turnaround_three_quarter", "action_poses"],
       "quality": "4k",
-      "aspect_ratio": "16:9"
+      "aspect_ratio": "16:9",
+      "status": "generated_source_qa_passed_runtime_pending",
+      "sha256": "2afad9c026cbc38196ded47df62b8d0201a667ca94d28f2dd673896de6332771"
     },
     {
       "id": "apixel_baiana_sequence_v01",
@@ -27,7 +29,9 @@
       "states": ["distancia_media", "disputa_pegada", "entrada_queda", "disputa_queda", "cem_quilos", "resultado_tecnico", "reset"],
       "events": ["grip_connect", "weight_commit", "off_balance", "impact", "control_stable", "tap_window", "reset_ready"],
       "quality": "4k",
-      "aspect_ratio": "16:9"
+      "aspect_ratio": "16:9",
+      "status": "generated_source_qa_passed_runtime_animation_pending",
+      "sha256": "8e5224f16102dd066f089b4803d3e2ca782f5b30bc885b06c2d07333d4024665"
     },
     {
       "id": "apixel_terreiro_layers_v01",

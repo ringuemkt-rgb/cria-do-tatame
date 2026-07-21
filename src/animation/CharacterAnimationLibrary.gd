@@ -23,7 +23,8 @@ static func build_sprite_frames(manifest_path: String) -> SpriteFrames:
 		return frames
 	var action := str(manifest.get("action_id", "default"))
 	frames.add_animation(action)
-	frames.set_animation_loop(action, action in ["idle", "walk", "stance", "recording"])
+	var default_loop := action in ["idle", "walk", "stance", "recording"]
+	frames.set_animation_loop(action, bool(manifest.get("loop", default_loop)))
 	var layout: Array = manifest.get("frame_layout", [])
 	var fps := 8.0
 	if not layout.is_empty():

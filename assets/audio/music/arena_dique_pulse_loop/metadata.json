@@ -1,0 +1,21 @@
+{
+  "version": "1.0.0",
+  "event_id": "arena_dique_pulse_loop",
+  "category": "music",
+  "duration_seconds": 15.6522,
+  "sample_rate": 48000,
+  "channels": 2,
+  "loop": true,
+  "loop_start_samples": 0,
+  "loop_end_samples": 751304,
+  "aliases": [
+    "arena_do_dique",
+    "dique"
+  ],
+  "runtime_volume_db": -6.0,
+  "cooldown_ms": 500,
+  "max_polyphony": 1,
+  "generation": "deterministic_original_synthesis",
+  "source_sha256": "37b95aec76158e31d7c69f7d52595a35619477f48bc61a351960ef0c76676a02",
+  "game_sha256": "048f8f11b8c4f3498da365d7c7dda37c18a3049a0b351bccc2f0d4d3b2d4f883"
+}

@@ -1,0 +1,133 @@
+{
+  "version": "2.0.0",
+  "character_id": "kenzo_kuroi",
+  "source_action_id": "counter",
+  "action_id": "counter",
+  "paired_character_id": "training_mannequin",
+  "image": "spritesheet.png",
+  "image_sha256": "a3e10384ffde722409860b952faf79fa3ab3ec946c176697d60ac03a8c5a967b",
+  "preview": "preview.gif",
+  "preview_sha256": "74621451588a5f2d3526f0af5b6a682bef086a9be42a9a4f2eafe106efada835",
+  "raw_sheet": "raw_sheet.png",
+  "raw_sheet_sha256": "6f99f29af7c53b30ba6a32540273358db74dda85ac73ff980632f5f836b59d6a",
+  "clean_sheet": "clean_sheet.png",
+  "clean_sheet_sha256": "fc4fda4f3c211263dc40c7c466f8e7dd3b4fb907749ce19e443931969fa428dd",
+  "contact_sheet": "contact_sheet.png",
+  "contact_sheet_sha256": "f046b3ed732fc235294195010562ed9025f5760bf3b198fc4c0d39c6c0d57484",
+  "placeholder": false,
+  "candidate_only": true,
+  "loop": false,
+  "fps": 12,
+  "runtime_context": "combat_source",
+  "runtime_state_initial": "entrada_queda",
+  "runtime_state_final": "clinch_neutro",
+  "facing": "right",
+  "interaction_origin": {
+    "x": 256,
+    "y": 492
+  },
+  "frame_layout": [
+    {
+      "index": 0,
+      "state": "counter",
+      "path": "frames/01.png",
+      "sha256": "3edaebe5ebace0f5b3ce53987be84bd45f368bc9cc745cecd66f5c67a52dbb56",
+      "x": 0,
+      "y": 0,
+      "w": 512,
+      "h": 512,
+      "duration_ms": 83,
+      "pivot": {
+        "x": 256,
+        "y": 492
+      }
+    },
+    {
+      "index": 1,
+      "state": "counter",
+      "path": "frames/02.png",
+      "sha256": "e4650ad3cf0a876dde1e1f870bcf39184da4317ce1c5a7bb798ccefee69a3c70",
+      "x": 512,
+      "y": 0,
+      "w": 512,
+      "h": 512,
+      "duration_ms": 83,
+      "pivot": {
+        "x": 256,
+        "y": 492
+      }
+    },
+    {
+      "index": 2,
+      "state": "counter",
+      "path": "frames/03.png",
+      "sha256": "9cf6baafe290b8899311ed72e291a0d82addd2fe204f45616a0ce3e78774042c",
+      "x": 1024,
+      "y": 0,
+      "w": 512,
+      "h": 512,
+      "duration_ms": 83,
+      "pivot": {
+        "x": 256,
+        "y": 492
+      }
+    },
+    {
+      "index": 3,
+      "state": "counter",
+      "path": "frames/04.png",
+      "sha256": "d790ed715d60d0b45ae3bf8197d7770c204a97c552d24bf0e74c7546502e8675",
+      "x": 1536,
+      "y": 0,
+      "w": 512,
+      "h": 512,
+      "duration_ms": 83,
+      "pivot": {
+        "x": 256,
+        "y": 492
+      }
+    },
+    {
+      "index": 4,
+      "state": "counter",
+      "path": "frames/05.png",
+      "sha256": "2f60062ee34a0c0907374d5f22bdadcd42501729272df4ac851fc0321f498ed7",
+      "x": 2048,
+      "y": 0,
+      "w": 512,
+      "h": 512,
+      "duration_ms": 83,
+      "pivot": {
+        "x": 256,
+        "y": 492
+      }
+    }
+  ],
+  "events": [
+    {
+      "frame": 1,
+      "name": "read_entry"
+    },
+    {
+      "frame": 2,
+      "name": "counter_window"
+    },
+    {
+      "frame": 3,
+      "name": "reangle"
+    },
+    {
+      "frame": 4,
+      "name": "counter_stable"
+    }
+  ],
+  "resource_delta": {
+    "gas": -6,
+    "focus": -3
+  },
+  "result": "counter_success",
+  "source_anchor": "assets/graphics/characters/kenzo_kuroi/action_poses_v01/poses/counter.png",
+  "qa_status": "source_asset_qa_passed_canonical_opponent_pending",
+  "runtime_gate": "godot_4_2_and_mobile_pending",
+  "license": "project-generated-original; final release legal review required"
+}

@@ -1,0 +1,61 @@
+{
+  "version": "2.0.0",
+  "character_id": "cassio_molho",
+  "source_action_id": "provocation",
+  "frame_size": [
+    256,
+    256
+  ],
+  "frame_count": 4,
+  "fps": 10,
+  "loop": false,
+  "pivot": {
+    "x": 132,
+    "y": 242
+  },
+  "alpha_boxes": [
+    [
+      79,
+      9,
+      185,
+      242
+    ],
+    [
+      84,
+      9,
+      181,
+      242
+    ],
+    [
+      80,
+      31,
+      183,
+      242
+    ],
+    [
+      79,
+      9,
+      185,
+      242
+    ]
+  ],
+  "texture_filter": "nearest",
+  "runtime_transition": {
+    "from": "distancia_media",
+    "to": "distancia_media"
+  },
+  "events": [
+    {
+      "frame": 1,
+      "name": "provocation_start"
+    },
+    {
+      "frame": 2,
+      "name": "hype_pulse"
+    }
+  ],
+  "resource_delta": {},
+  "result": "psychological_pressure",
+  "qa_status": "asset_qa_passed_runtime_test_pending",
+  "spritesheet_sha256": "dd361ca2efb27032b1acb7f289e9a887d99185867038dd49c3b6b71e27beb081"
+}

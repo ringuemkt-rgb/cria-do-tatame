@@ -1,0 +1,34 @@
+{
+  "version": "1.0.0",
+  "arena_id": "arena_do_dique",
+  "candidate_only": true,
+  "runtime_gate": "godot_4_2_and_android_pending",
+  "source": "assets/source/arenas/arena_do_dique_v01/master_environment_source.png",
+  "source_sha256": "87814ab3cd0a898bbf909e433aa8edc65837c5c6129278e50382e8994ffbf624",
+  "canvas": [1920, 1080],
+  "layers": [
+    {
+      "id": "master_environment",
+      "path": "background_layers/00_master_environment.png",
+      "parallax": 0.0,
+      "sha256": "c2b3ebbe015dc376885f0e9c2773e0562de8fcd377b0381f5bb856fad8eb4402"
+    },
+    {
+      "id": "dynamic_lighting",
+      "path": "background_layers/10_dynamic_lighting.png",
+      "parallax": 0.015,
+      "animated_modulate": true,
+      "sha256": "a666ff7e69696a8631a557cafe8af5447596878ba25acf06beb4d2213ab8d6e4"
+    }
+  ],
+  "collision_map": "collision_map.json",
+  "occlusion_map": "occlusion_map.png",
+  "occlusion_map_sha256": "47c301f1f229a5d397d09ecf2a753e211c3d2bd0d4055312e790642977c38f6d",
+  "lighting_profile": "lighting_profile.tres",
+  "ambience_profile": "ambience_profile.json",
+  "preview": "preview.png",
+  "preview_sha256": "6f5cf31a1bfe01ca77edcde3beab28766ac1c343fdaf618b35f94435e203a527",
+  "identity": "official_circuit_salvador_blue_gold",
+  "license": "project-generated-original; final release legal review required",
+  "qa_status": "asset_qa_passed_runtime_test_pending"
+}

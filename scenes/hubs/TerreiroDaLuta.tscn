@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3]
+[gd_scene load_steps=3 format=3]
 
 [ext_resource type="Script" path="res://scenes/hubs/TerreiroDaLuta.gd" id="1_hub"]
+[ext_resource type="Texture2D" path="res://assets/graphics/hubs/terreiro_da_luta_v01/environment.png" id="2_environment"]
 
 [node name="TerreiroDaLuta" type="Control"]
 layout_mode = 3
@@ -11,15 +12,27 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_hub")
 
-[node name="Background" type="ColorRect" parent="."]
+[node name="Background" type="TextureRect" parent="."]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-color = Color(0.043, 0.051, 0.063, 1)
 mouse_filter = 2
+texture = ExtResource("2_environment")
+expand_mode = 1
+stretch_mode = 6
+
+[node name="Atmosphere" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.015, 0.022, 0.035, 0.26)
 
 [node name="Panel" type="VBoxContainer" parent="."]
 custom_minimum_size = Vector2(620, 0)
@@ -30,12 +43,12 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -310.0
-offset_top = -330.0
+offset_top = -350.0
 offset_right = 310.0
-offset_bottom = 330.0
+offset_bottom = 350.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_constants/separation = 10
+theme_override_constants/separation = 7
 
 [node name="Title" type="Label" parent="Panel"]
 layout_mode = 2
@@ -95,6 +108,11 @@ text = "AVANCAR DIA"
 custom_minimum_size = Vector2(0, 48)
 layout_mode = 2
 text = "ABRIR CRIA LIVE"
+
+[node name="MapBtn" type="Button" parent="Panel"]
+custom_minimum_size = Vector2(0, 48)
+layout_mode = 2
+text = "MAPA DO BAIXO SUL"
 
 [node name="MainMenuBtn" type="Button" parent="Panel"]
 custom_minimum_size = Vector2(0, 48)

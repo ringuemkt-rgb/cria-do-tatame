@@ -1,0 +1,103 @@
+{
+  "version": "1.0.0",
+  "character_id": "cassio_molho",
+  "source_sheet": "assets/source/characters/cassio_molho/action_poses_v01/source_sheet_chroma.png",
+  "source_sha256": "7a9fdf7d8f92873ad47580f475e10bbc1ca63d24593411439278381fdfb18436",
+  "clean_source_sheet": "assets/graphics/characters/cassio_molho/action_poses_v01/clean_source_sheet.png",
+  "clean_source_sha256": "16380d10ee52e843ec25533f725c29c484f0b5daa16fd36991bf059a15dbfc8a",
+  "pose_size": [
+    512,
+    512
+  ],
+  "anchor": "bottom_center",
+  "action_count": 6,
+  "actions": [
+    {
+      "id": "stage",
+      "path": "assets/graphics/characters/cassio_molho/action_poses_v01/poses/stage.png",
+      "sha256": "2097f2218813ab063e79d008bc39c3be3768235101c5529d94c5db044842997a",
+      "alpha_bbox": [
+        148,
+        20,
+        363,
+        492
+      ],
+      "runtime_aliases": [
+        "walk"
+      ],
+      "status": "source_pose_asset_qa_passed_runtime_animation_pending"
+    },
+    {
+      "id": "stance",
+      "path": "assets/graphics/characters/cassio_molho/action_poses_v01/poses/stance.png",
+      "sha256": "4fcdd93495e54bfa926540263ab4a673b855412eed6a2fb55b54ce4bc3161c4d",
+      "alpha_bbox": [
+        134,
+        20,
+        377,
+        492
+      ],
+      "runtime_aliases": [
+        "stance"
+      ],
+      "status": "source_pose_asset_qa_passed_runtime_animation_pending"
+    },
+    {
+      "id": "offer",
+      "path": "assets/graphics/characters/cassio_molho/action_poses_v01/poses/offer.png",
+      "sha256": "99d11be7419b334bbc07577d199a05cf41f1400f44dca53edef29844567a9558",
+      "alpha_bbox": [
+        158,
+        20,
+        353,
+        492
+      ],
+      "runtime_aliases": [],
+      "status": "source_pose_asset_qa_passed_runtime_animation_pending"
+    },
+    {
+      "id": "provocation",
+      "path": "assets/graphics/characters/cassio_molho/action_poses_v01/poses/provocation.png",
+      "sha256": "dd9fdc380f3c1240fb208aa3e8a02ab1691a7be03d30b96f32a07cd6a9073dc5",
+      "alpha_bbox": [
+        144,
+        20,
+        367,
+        492
+      ],
+      "runtime_aliases": [
+        "provocation"
+      ],
+      "status": "source_pose_asset_qa_passed_runtime_animation_pending"
+    },
+    {
+      "id": "contract",
+      "path": "assets/graphics/characters/cassio_molho/action_poses_v01/poses/contract.png",
+      "sha256": "ceacec5451afa8a3cb6f552dcb4c12f95a4157efb9d5f55744ce88d56b7a8671",
+      "alpha_bbox": [
+        142,
+        20,
+        369,
+        492
+      ],
+      "runtime_aliases": [],
+      "status": "source_pose_asset_qa_passed_runtime_animation_pending"
+    },
+    {
+      "id": "stage_composed",
+      "path": "assets/graphics/characters/cassio_molho/action_poses_v01/poses/stage_composed.png",
+      "sha256": "a5c440193a70c2497b69458b78637b1b1fe5f64211e2e15eaff1aecf437cc39f",
+      "alpha_bbox": [
+        179,
+        20,
+        333,
+        492
+      ],
+      "runtime_aliases": [],
+      "status": "source_pose_asset_qa_passed_runtime_animation_pending"
+    }
+  ],
+  "contact_sheet": "assets/graphics/characters/cassio_molho/action_poses_v01/contact_sheet.png",
+  "contact_sheet_sha256": "91e4f41e39cd1d3af40e1dd52d6677696020bcec1cf379982775a7b09f7f02dd",
+  "runtime_status": "source_only_until_godot_gate"
+}

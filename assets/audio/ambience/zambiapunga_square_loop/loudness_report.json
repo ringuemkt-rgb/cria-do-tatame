@@ -1,0 +1,13 @@
+{
+  "version": "1.0.0",
+  "measurement": "deterministic_PCM_peak_and_RMS",
+  "peak_dbfs": -20.443,
+  "rms_dbfs": -33.134,
+  "runtime_processing": {
+    "encoder": "ffmpeg libvorbis q5",
+    "normalization": "EBU_R128_one_pass_-16_LUFS_-1.5_dBTP",
+    "ogg_serial": 3000619551,
+    "binary_reproducibility": "fixed_serial_and_recalculated_crc"
+  },
+  "release_note": "Executar medição EBU R128 de duas passagens antes do master final."
+}

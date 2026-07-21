@@ -1,0 +1,99 @@
+{
+  "version": "1.0.0",
+  "character_id": "tinker_bell",
+  "source_sheet": "assets/source/characters/tinker_bell/action_poses_v01/source_sheet_chroma.png",
+  "source_sha256": "c87851e41b8c876b44218b96b5dbbb4e49c1df477bc9814674ab89065286ceac",
+  "clean_source_sheet": "assets/graphics/characters/tinker_bell/action_poses_v01/clean_source_sheet.png",
+  "clean_source_sha256": "6cf6fb043582d37859e918e77bb6aae343803b96aeba58976bfe96ce3940c77e",
+  "pose_size": [
+    512,
+    512
+  ],
+  "anchor": "bottom_center",
+  "action_count": 6,
+  "actions": [
+    {
+      "id": "phone",
+      "path": "assets/graphics/characters/tinker_bell/action_poses_v01/poses/phone.png",
+      "sha256": "68504e0a6b43227e3c10ae137683afda6822bb103b75821bd2eb306035f53000",
+      "alpha_bbox": [
+        162,
+        20,
+        351,
+        492
+      ],
+      "runtime_aliases": [],
+      "status": "source_pose_asset_qa_passed_runtime_animation_pending"
+    },
+    {
+      "id": "filming",
+      "path": "assets/graphics/characters/tinker_bell/action_poses_v01/poses/filming.png",
+      "sha256": "c54dd44f1bf5e8fb24e195e1221766496619a9b676932202a600d7d3faaca001",
+      "alpha_bbox": [
+        160,
+        20,
+        352,
+        492
+      ],
+      "runtime_aliases": [
+        "recording"
+      ],
+      "status": "source_pose_asset_qa_passed_runtime_animation_pending"
+    },
+    {
+      "id": "concerned",
+      "path": "assets/graphics/characters/tinker_bell/action_poses_v01/poses/concerned.png",
+      "sha256": "c32734cd097f122bd24e879bc56ecfbf553917ea552238d440c025e8d34cb7c4",
+      "alpha_bbox": [
+        160,
+        20,
+        353,
+        492
+      ],
+      "runtime_aliases": [],
+      "status": "source_pose_asset_qa_passed_runtime_animation_pending"
+    },
+    {
+      "id": "celebrating",
+      "path": "assets/graphics/characters/tinker_bell/action_poses_v01/poses/celebrating.png",
+      "sha256": "d5c33f3a4cafc74fd7269a76641d03be434fdfa3fb011bcad66b1c22b6b02541",
+      "alpha_bbox": [
+        146,
+        20,
+        365,
+        492
+      ],
+      "runtime_aliases": [],
+      "status": "source_pose_asset_qa_passed_runtime_animation_pending"
+    },
+    {
+      "id": "leaving",
+      "path": "assets/graphics/characters/tinker_bell/action_poses_v01/poses/leaving.png",
+      "sha256": "4e3e0306550ccaf67066d8e928d04bd2b8557fb10d3928c74e9d735c96bb64ab",
+      "alpha_bbox": [
+        162,
+        20,
+        351,
+        492
+      ],
+      "runtime_aliases": [],
+      "status": "source_pose_asset_qa_passed_runtime_animation_pending"
+    },
+    {
+      "id": "dialogue",
+      "path": "assets/graphics/characters/tinker_bell/action_poses_v01/poses/dialogue.png",
+      "sha256": "71e10e884427675a7cd60cc28998b0f4319fa0829eacb81c9f3c8d357c216f00",
+      "alpha_bbox": [
+        132,
+        20,
+        381,
+        492
+      ],
+      "runtime_aliases": [],
+      "status": "source_pose_asset_qa_passed_runtime_animation_pending"
+    }
+  ],
+  "contact_sheet": "assets/graphics/characters/tinker_bell/action_poses_v01/contact_sheet.png",
+  "contact_sheet_sha256": "b1cb108c69c03ba3fb7e24a583ee0c1fcc5fa0812ba49088ea5086dfe9d0fc8d",
+  "runtime_status": "source_only_until_godot_gate"
+}

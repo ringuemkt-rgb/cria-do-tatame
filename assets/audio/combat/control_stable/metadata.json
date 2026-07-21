@@ -1,0 +1,22 @@
+{
+  "version": "1.0.0",
+  "event_id": "control_stable",
+  "category": "combat",
+  "duration_seconds": 0.44,
+  "sample_rate": 48000,
+  "channels": 2,
+  "loop": false,
+  "loop_start_samples": null,
+  "loop_end_samples": null,
+  "aliases": [
+    "corte_joelho",
+    "passagem",
+    "control_start"
+  ],
+  "runtime_volume_db": 0.0,
+  "cooldown_ms": 40,
+  "max_polyphony": 4,
+  "generation": "deterministic_original_synthesis",
+  "source_sha256": "186b7bfbad5900b9ba4827a007d212d0f49a66be772bd32e72b2a9b9dd1121c2",
+  "game_sha256": "0d3145e900f2478a0a811e4aad35af0893ad9312147029a42a5caf3e5d158cee"
+}

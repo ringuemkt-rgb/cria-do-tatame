@@ -1,0 +1,157 @@
+{
+  "version": "2.0.0",
+  "sequence_id": "ruan_vs_davi_baiana_v01",
+  "characters": [
+    "ruan_macacao",
+    "davi_relampago"
+  ],
+  "image": "spritesheet.png",
+  "image_sha256": "cc679a0ab8a99a0b1bbd3de10b940bfb5e20dddc4a39fde695088f90bf7e897b",
+  "preview": "preview.gif",
+  "preview_sha256": "550da0efd45131ebd9ffd69a95cb62391ec6c75bf9b1dd2b90280ae2861b671a",
+  "contact_sheet": "contact_sheet.png",
+  "contact_sheet_sha256": "6b8f70c7befbe6dc140a612cc54b053f1b17db30fe28265a0adef6a98964c370",
+  "placeholder": false,
+  "animatic_only": true,
+  "loop": false,
+  "fps": 6,
+  "frame_layout": [
+    {
+      "index": 0,
+      "state": "distancia_media",
+      "path": "frames/01_distancia_media.png",
+      "sha256": "b86f096ea6f360f680e32a31012273532c34413bda5f080caa718b7032b35c78",
+      "x": 0,
+      "y": 0,
+      "w": 512,
+      "h": 512,
+      "duration_ms": 167,
+      "pivot": {
+        "x": 256,
+        "y": 492
+      }
+    },
+    {
+      "index": 1,
+      "state": "disputa_pegada",
+      "path": "frames/02_disputa_pegada.png",
+      "sha256": "7fd411d3f1dab5740933b658c0ddf0f4d19a098e0e1dec933d052fb7472c1913",
+      "x": 512,
+      "y": 0,
+      "w": 512,
+      "h": 512,
+      "duration_ms": 167,
+      "pivot": {
+        "x": 256,
+        "y": 492
+      }
+    },
+    {
+      "index": 2,
+      "state": "entrada_queda",
+      "path": "frames/03_entrada_queda.png",
+      "sha256": "78ef2ce261253c223290c150282d7b598590c4e4b471290cecb67c6f0c5a0a30",
+      "x": 1024,
+      "y": 0,
+      "w": 512,
+      "h": 512,
+      "duration_ms": 167,
+      "pivot": {
+        "x": 256,
+        "y": 492
+      }
+    },
+    {
+      "index": 3,
+      "state": "disputa_queda",
+      "path": "frames/04_disputa_queda.png",
+      "sha256": "da8d862170693a98438adcaec3b46a2fb92119493a07d9f9d478ed931ddf9909",
+      "x": 1536,
+      "y": 0,
+      "w": 512,
+      "h": 512,
+      "duration_ms": 167,
+      "pivot": {
+        "x": 256,
+        "y": 492
+      }
+    },
+    {
+      "index": 4,
+      "state": "cem_quilos",
+      "path": "frames/05_cem_quilos.png",
+      "sha256": "9afc98a591120be6cf037bc4550a0599aefd38d7b19b54d7c3b7269a099994e6",
+      "x": 2048,
+      "y": 0,
+      "w": 512,
+      "h": 512,
+      "duration_ms": 167,
+      "pivot": {
+        "x": 256,
+        "y": 492
+      }
+    },
+    {
+      "index": 5,
+      "state": "resultado_tecnico",
+      "path": "frames/06_resultado_tecnico.png",
+      "sha256": "10a392d089922e94d809410d4a92b91c295974cd2b8d4f14c5cb8155c4860699",
+      "x": 2560,
+      "y": 0,
+      "w": 512,
+      "h": 512,
+      "duration_ms": 167,
+      "pivot": {
+        "x": 256,
+        "y": 492
+      }
+    },
+    {
+      "index": 6,
+      "state": "reset",
+      "path": "frames/07_reset.png",
+      "sha256": "6e1e28c4947aad5eaef6a78806dd0865bd7c69a2c22fdbdec6cacb4afae1f905",
+      "x": 3072,
+      "y": 0,
+      "w": 512,
+      "h": 512,
+      "duration_ms": 167,
+      "pivot": {
+        "x": 256,
+        "y": 492
+      }
+    }
+  ],
+  "events": [
+    {
+      "frame": 0,
+      "name": "grip_connect"
+    },
+    {
+      "frame": 1,
+      "name": "weight_commit"
+    },
+    {
+      "frame": 2,
+      "name": "off_balance"
+    },
+    {
+      "frame": 3,
+      "name": "impact"
+    },
+    {
+      "frame": 4,
+      "name": "control_stable"
+    },
+    {
+      "frame": 5,
+      "name": "tap_window"
+    },
+    {
+      "frame": 6,
+      "name": "reset_ready"
+    }
+  ],
+  "qa_status": "asset_qa_passed_runtime_animation_pending",
+  "runtime_gate": "intermediate_frames_and_godot_pending"
+}

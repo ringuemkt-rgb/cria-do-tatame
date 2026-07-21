@@ -23,6 +23,7 @@ func _ready() -> void:
 	_connect_once(audio_toggle_button, _on_audio_toggle_pressed)
 	_connect_once(options_back_button, _on_options_back_pressed)
 	_update_audio_label()
+	AudioManager.play_ambience("terreiro_river_loop")
 
 func _build_premium_shell() -> void:
 	var arena_backdrop := ArenaBackdropScript.new()
@@ -101,8 +102,15 @@ func _on_options_back_pressed() -> void:
 
 func _on_audio_toggle_pressed() -> void:
 	AudioManager.enabled = not AudioManager.enabled
+	if AudioManager.enabled:
+		AudioManager.play_ambience("terreiro_river_loop")
+	else:
+		AudioManager.stop_ambience()
 	_update_audio_label()
 
 func _update_audio_label() -> void:
 	if audio_toggle_button != null:
 		audio_toggle_button.text = "AUDIO: %s" % ("LIGADO" if AudioManager.enabled else "DESLIGADO")
+
+func _exit_tree() -> void:
+	AudioManager.stop_ambience()

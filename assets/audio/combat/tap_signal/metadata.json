@@ -1,0 +1,21 @@
+{
+  "version": "1.0.0",
+  "event_id": "tap_signal",
+  "category": "combat",
+  "duration_seconds": 0.38,
+  "sample_rate": 48000,
+  "channels": 2,
+  "loop": false,
+  "loop_start_samples": null,
+  "loop_end_samples": null,
+  "aliases": [
+    "tap",
+    "tap_window"
+  ],
+  "runtime_volume_db": 0.0,
+  "cooldown_ms": 40,
+  "max_polyphony": 4,
+  "generation": "deterministic_original_synthesis",
+  "source_sha256": "ccfa91c6908a37e52dfe73ce3ae5123733d6ecdc0b80cc701b254cc7c2af377a",
+  "game_sha256": "7520f4590ece30b09fe88e46cb3f1bd40435e9ecdc0270b4514573ced36b8c54"
+}

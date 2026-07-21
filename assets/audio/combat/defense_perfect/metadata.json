@@ -1,0 +1,20 @@
+{
+  "version": "1.0.0",
+  "event_id": "defense_perfect",
+  "category": "combat",
+  "duration_seconds": 0.46,
+  "sample_rate": 48000,
+  "channels": 2,
+  "loop": false,
+  "loop_start_samples": null,
+  "loop_end_samples": null,
+  "aliases": [
+    "defesa_perfeita"
+  ],
+  "runtime_volume_db": 0.0,
+  "cooldown_ms": 40,
+  "max_polyphony": 4,
+  "generation": "deterministic_original_synthesis",
+  "source_sha256": "c27fd62aaba0f90a57d5a5641686582644615cf6e9bf8172357e189cd035f15d",
+  "game_sha256": "5b78a14e4bb7a846185a36cfef23cbce521bc9dd886efbe7e88103800c3dfe6c"
+}

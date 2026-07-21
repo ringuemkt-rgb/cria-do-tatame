@@ -1,0 +1,20 @@
+{
+  "version": "1.0.0",
+  "event_id": "submission_lock",
+  "category": "combat",
+  "duration_seconds": 0.58,
+  "sample_rate": 48000,
+  "channels": 2,
+  "loop": false,
+  "loop_start_samples": null,
+  "loop_end_samples": null,
+  "aliases": [
+    "encerramento_tecnico"
+  ],
+  "runtime_volume_db": 0.0,
+  "cooldown_ms": 40,
+  "max_polyphony": 4,
+  "generation": "deterministic_original_synthesis",
+  "source_sha256": "547eed4fb7ce08708cce372509e361ec436a238acb45f4d7fa0b26a5ea744fe1",
+  "game_sha256": "fdbd0196e2fa605a02fd05c93b98f4656f5b86c18db215e52d8dc72d35f918fc"
+}

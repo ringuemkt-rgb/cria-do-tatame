@@ -1,0 +1,107 @@
+{
+  "version": "2.0.0",
+  "character_id": "cassio_molho",
+  "source_action_id": "provocation",
+  "action_id": "provocation",
+  "paired_character_id": "",
+  "image": "spritesheet.png",
+  "image_sha256": "dd361ca2efb27032b1acb7f289e9a887d99185867038dd49c3b6b71e27beb081",
+  "preview": "preview.gif",
+  "preview_sha256": "97bf065eb64c063aa3cb2fbddecc4fae29cc7b90bb077b01666ad978ba2f3129",
+  "raw_sheet": "raw_sheet.png",
+  "raw_sheet_sha256": "f88c375805d348b684ea827752f06f2a5cc131e701bbd0c5dea36edf01501dde",
+  "clean_sheet": "clean_sheet.png",
+  "clean_sheet_sha256": "965ab33694c61f4b6433710209d09c63288b00be7fe38018d9fc612de933f5c5",
+  "contact_sheet": "contact_sheet.png",
+  "contact_sheet_sha256": "476454cd09fdeca3b2baa9dd950bea72f9929a16e4ae82ee4e82beaeec530958",
+  "placeholder": false,
+  "candidate_only": true,
+  "loop": false,
+  "fps": 10,
+  "runtime_context": "combat",
+  "runtime_state_initial": "distancia_media",
+  "runtime_state_final": "distancia_media",
+  "facing": "left",
+  "interaction_origin": {
+    "x": 132,
+    "y": 242
+  },
+  "frame_layout": [
+    {
+      "index": 0,
+      "state": "provocation",
+      "path": "frames/01.png",
+      "sha256": "2de8f0467bb109465c095bd92a8b299444c7d43a900c4942ddb26bef79f3eae1",
+      "x": 0,
+      "y": 0,
+      "w": 256,
+      "h": 256,
+      "duration_ms": 100,
+      "pivot": {
+        "x": 132,
+        "y": 242
+      }
+    },
+    {
+      "index": 1,
+      "state": "provocation",
+      "path": "frames/02.png",
+      "sha256": "8bc8841e2637011965001f7d5f61c7c617cd30e28a747720681aae4f5fb40af9",
+      "x": 256,
+      "y": 0,
+      "w": 256,
+      "h": 256,
+      "duration_ms": 100,
+      "pivot": {
+        "x": 132,
+        "y": 242
+      }
+    },
+    {
+      "index": 2,
+      "state": "provocation",
+      "path": "frames/03.png",
+      "sha256": "eebca87cd3b68ee63c7c6b2db14b8ce96732764edd54633af297aa85002debcc",
+      "x": 512,
+      "y": 0,
+      "w": 256,
+      "h": 256,
+      "duration_ms": 100,
+      "pivot": {
+        "x": 132,
+        "y": 242
+      }
+    },
+    {
+      "index": 3,
+      "state": "provocation",
+      "path": "frames/04.png",
+      "sha256": "2de8f0467bb109465c095bd92a8b299444c7d43a900c4942ddb26bef79f3eae1",
+      "x": 768,
+      "y": 0,
+      "w": 256,
+      "h": 256,
+      "duration_ms": 100,
+      "pivot": {
+        "x": 132,
+        "y": 242
+      }
+    }
+  ],
+  "events": [
+    {
+      "frame": 1,
+      "name": "provocation_start"
+    },
+    {
+      "frame": 2,
+      "name": "hype_pulse"
+    }
+  ],
+  "resource_delta": {},
+  "result": "psychological_pressure",
+  "source_anchor": "assets/graphics/characters/cassio_molho/seeds/idle_v01.png",
+  "qa_status": "asset_qa_passed_runtime_test_pending",
+  "runtime_gate": "godot_4_2_and_mobile_pending",
+  "license": "project-generated-original; final release legal review required"
+}

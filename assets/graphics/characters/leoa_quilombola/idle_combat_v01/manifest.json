@@ -1,0 +1,75 @@
+{
+  "version": "1.0.0",
+  "character_id": "leoa_quilombola",
+  "action_id": "idle_combat",
+  "image": "spritesheet.png",
+  "preview": "preview.gif",
+  "placeholder": false,
+  "loop": true,
+  "fps": 8,
+  "runtime_context": "combat",
+  "runtime_state_initial": "distancia_media",
+  "runtime_state_final": "distancia_media",
+  "facing": "right",
+  "interaction_origin": {
+    "x": 139,
+    "y": 241
+  },
+  "frame_layout": [
+    {
+      "index": 0,
+      "state": "idle_combat",
+      "x": 0,
+      "y": 0,
+      "w": 256,
+      "h": 256,
+      "duration_ms": 125,
+      "pivot": {
+        "x": 139,
+        "y": 241
+      }
+    },
+    {
+      "index": 1,
+      "state": "idle_combat",
+      "x": 256,
+      "y": 0,
+      "w": 256,
+      "h": 256,
+      "duration_ms": 125,
+      "pivot": {
+        "x": 139,
+        "y": 241
+      }
+    },
+    {
+      "index": 2,
+      "state": "idle_combat",
+      "x": 512,
+      "y": 0,
+      "w": 256,
+      "h": 256,
+      "duration_ms": 125,
+      "pivot": {
+        "x": 139,
+        "y": 241
+      }
+    },
+    {
+      "index": 3,
+      "state": "idle_combat",
+      "x": 768,
+      "y": 0,
+      "w": 256,
+      "h": 256,
+      "duration_ms": 125,
+      "pivot": {
+        "x": 139,
+        "y": 241
+      }
+    }
+  ],
+  "events": [],
+  "source_seed": "assets/graphics/characters/leoa_quilombola/seeds/idle_v01.png",
+  "license": "project-generated-original; final release legal review required"
+}

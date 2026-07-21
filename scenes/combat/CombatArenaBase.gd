@@ -6,6 +6,9 @@ const GameFeelManagerScript = preload("res://src/gamefeel/GameFeelManager.gd")
 const DaviAIControllerScript = preload("res://src/combat/DaviAIController.gd")
 const VisualTheme = preload("res://src/ui/CriaVisualTheme.gd")
 const ArenaBackdropScript = preload("res://src/visual/ArenaBackdrop.gd")
+const CombatVFXControllerScript = preload("res://src/gamefeel/CombatVFXController.gd")
+
+@export var arena_id: String = "arena_do_dique"
 
 var gamefeel: Node
 var davi_ai: Node
@@ -13,6 +16,7 @@ var ruan_placeholder: Node
 var davi_placeholder: Node
 var action_buttons: Array[Button] = []
 var ai_turn_delay: float = 0.35
+var combat_vfx: Node2D
 
 var estados_ptbr: Dictionary = {
 	"DISTANCE": "EM PE - NEUTRO",
@@ -43,22 +47,27 @@ func _ready() -> void:
 	_style_combat_panel()
 	gamefeel = GameFeelManagerScript.new()
 	add_child(gamefeel)
+	gamefeel.call("setup", self)
 	davi_ai = DaviAIControllerScript.new()
 	add_child(davi_ai)
 	davi_ai.call("setup", "davi_relampago", "normal")
 	_build_placeholder_fighters()
 	_connect_buttons()
 	_connect_runtime_signals()
-	CombatManager.start_combat("terreiro_da_luta", "ruan_macacao", "davi_relampago")
+	var arena: Dictionary = DataRegistry.get_arena(arena_id)
+	if has_node("Panel/Title"):
+		$Panel/Title.text = "%s • RUAN MACACAO vs DAVI RELAMPAGO" % str(arena.get("name", "Arena do Dique")).to_upper()
+	CombatManager.start_combat(arena_id, "ruan_macacao", "davi_relampago")
 	_ensure_ai_hint()
 	_update_state_label(CombatManager.get_current_state_name())
 	_refresh_action_buttons()
-	AudioManager.play_music_cue("terreiro")
+	AudioManager.play_music_cue(arena_id)
+	AudioManager.play_ambience("arena_idle_loop")
 
 func _build_arena_visuals() -> void:
 	var backdrop := ArenaBackdropScript.new()
 	backdrop.name = "ArenaBackdrop"
-	backdrop.arena_id = "arena_do_dique"
+	backdrop.arena_id = arena_id
 	backdrop.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	add_child(backdrop)
 	move_child(backdrop, 0)
@@ -72,6 +81,9 @@ func _build_arena_visuals() -> void:
 	lower_panel.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	add_child(lower_panel)
 	move_child(lower_panel, 1)
+	combat_vfx = CombatVFXControllerScript.new()
+	combat_vfx.name = "CombatVFX"
+	add_child(combat_vfx)
 	$Panel.z_index = 4
 
 func _style_combat_panel() -> void:
@@ -95,6 +107,8 @@ func _connect_runtime_signals() -> void:
 		SignalBus.combat_finished.connect(_on_combat_finished)
 	if not SignalBus.technique_resolved.is_connected(_on_technique_resolved):
 		SignalBus.technique_resolved.connect(_on_technique_resolved)
+	if not SignalBus.technique_clash_resolved.is_connected(_on_technique_clash_resolved):
+		SignalBus.technique_clash_resolved.connect(_on_technique_clash_resolved)
 
 func _build_placeholder_fighters() -> void:
 	ruan_placeholder = FighterPlaceholderScript.new()
@@ -234,6 +248,9 @@ func _on_technique_resolved(result) -> void:
 		var actor_id := str(result.get("actor_id", "ruan_macacao"))
 		var actor_name := "Ruan" if actor_id == CombatManager.player_id else "Davi"
 		$Panel/Message.text = "%s • %s: %s" % [actor_name, name_text, _humanize_message(message)]
+	if combat_vfx != null and ruan_placeholder != null and davi_placeholder != null:
+		var contact_point: Vector2 = (ruan_placeholder.position + davi_placeholder.position) * 0.5 + Vector2(0.0, 18.0)
+		combat_vfx.call("emit_technique", str(result.get("technique_id", result.get("action_id", ""))), contact_point, bool(result.get("success", false)))
 	if SignalBus.has_signal("technique_executed"):
 		SignalBus.technique_executed.emit(StringName(result.get("actor_id", "ruan_macacao")), StringName(result.get("technique_id", "unknown")))
 	if SignalBus.has_signal("tecnica_executada"):
@@ -245,6 +262,12 @@ func _humanize_message(message: String) -> String:
 		"recurso_insuficiente": return "gas ou foco insuficiente"
 		"technique_not_found": return "tecnica nao encontrada"
 	return message.replace("_", " ")
+
+func _on_technique_clash_resolved(result: Dictionary) -> void:
+	if combat_vfx == null or ruan_placeholder == null or davi_placeholder == null:
+		return
+	var contact_point: Vector2 = (ruan_placeholder.position + davi_placeholder.position) * 0.5 + Vector2(0.0, 8.0)
+	combat_vfx.call("emit_clash", contact_point, int(result.get("level_gap", 0)))
 
 func _update_state_label(value) -> void:
 	if has_node("Panel/State"):
@@ -259,3 +282,7 @@ func _on_combat_finished(result) -> void:
 	var error: Error = get_tree().change_scene_to_file(RESULT_SCENE)
 	if error != OK:
 		push_error("[CombatArenaBase] Falha ao abrir resultado: %s" % error_string(error))
+
+func _exit_tree() -> void:
+	if AudioManager != null:
+		AudioManager.stop_ambience()

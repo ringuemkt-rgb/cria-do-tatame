@@ -1,0 +1,103 @@
+{
+  "version": "1.0.0",
+  "character_id": "kenzo_kuroi",
+  "source_sheet": "assets/source/characters/kenzo_kuroi/action_poses_v01/source_sheet_chroma.png",
+  "source_sha256": "39d2fc8220e14ff4faa4e7d648c5ed7d539098b72483b0aac5ce9cd3d6558dfb",
+  "clean_source_sheet": "assets/graphics/characters/kenzo_kuroi/action_poses_v01/clean_source_sheet.png",
+  "clean_source_sha256": "b4b28dc135afdcede4eff7786c9e1f3dcb540dbc5adf852345312c5fa71019c3",
+  "pose_size": [
+    512,
+    512
+  ],
+  "anchor": "bottom_center",
+  "action_count": 6,
+  "actions": [
+    {
+      "id": "walk",
+      "path": "assets/graphics/characters/kenzo_kuroi/action_poses_v01/poses/walk.png",
+      "sha256": "116dae1e50176fd3234f071a47120ddbc1a6f9f8add5a3af694ca9142ff60ea8",
+      "alpha_bbox": [
+        134,
+        20,
+        379,
+        492
+      ],
+      "runtime_aliases": [
+        "walk"
+      ],
+      "status": "source_pose_asset_qa_passed_runtime_animation_pending"
+    },
+    {
+      "id": "stance",
+      "path": "assets/graphics/characters/kenzo_kuroi/action_poses_v01/poses/stance.png",
+      "sha256": "02cd6e5cab51f6966421e502a81ed22cd0b1c38a8f3638265976561c55810906",
+      "alpha_bbox": [
+        125,
+        20,
+        387,
+        492
+      ],
+      "runtime_aliases": [
+        "stance"
+      ],
+      "status": "source_pose_asset_qa_passed_runtime_animation_pending"
+    },
+    {
+      "id": "reading",
+      "path": "assets/graphics/characters/kenzo_kuroi/action_poses_v01/poses/reading.png",
+      "sha256": "b58ac8152618d8f75e4b8c4d8e293b5d7bd61cba918d1e780f80804781d9fed7",
+      "alpha_bbox": [
+        181,
+        20,
+        331,
+        492
+      ],
+      "runtime_aliases": [],
+      "status": "source_pose_asset_qa_passed_runtime_animation_pending"
+    },
+    {
+      "id": "punish_error",
+      "path": "assets/graphics/characters/kenzo_kuroi/action_poses_v01/poses/punish_error.png",
+      "sha256": "4b3cddadf1ba6bc7ca831d6d269a283adbf6e84d9689031201ee843ab9f10cf9",
+      "alpha_bbox": [
+        26,
+        20,
+        486,
+        492
+      ],
+      "runtime_aliases": [],
+      "status": "source_pose_asset_qa_passed_runtime_animation_pending"
+    },
+    {
+      "id": "counter",
+      "path": "assets/graphics/characters/kenzo_kuroi/action_poses_v01/poses/counter.png",
+      "sha256": "c7d1a4fbf2e33d3d599895a65d1fd89af8b8cdd64a4e497eea91941758894865",
+      "alpha_bbox": [
+        127,
+        20,
+        385,
+        492
+      ],
+      "runtime_aliases": [
+        "counter"
+      ],
+      "status": "source_pose_asset_qa_passed_runtime_animation_pending"
+    },
+    {
+      "id": "silent_bow",
+      "path": "assets/graphics/characters/kenzo_kuroi/action_poses_v01/poses/silent_bow.png",
+      "sha256": "3eabfb512d3e42b2a9e838321f56da1f757937223c98fba25528b9f3513fd23f",
+      "alpha_bbox": [
+        148,
+        20,
+        363,
+        492
+      ],
+      "runtime_aliases": [],
+      "status": "source_pose_asset_qa_passed_runtime_animation_pending"
+    }
+  ],
+  "contact_sheet": "assets/graphics/characters/kenzo_kuroi/action_poses_v01/contact_sheet.png",
+  "contact_sheet_sha256": "c0f925d0ed81833b3a6e04c8846d9d8b3687dce10c247a658b674dea488a7a01",
+  "runtime_status": "source_only_until_godot_gate"
+}

@@ -1,0 +1,26 @@
+{
+  "version": "1.0.0",
+  "character_id": "tinker_bell",
+  "action_id": "idle",
+  "runtime_context": "hub",
+  "runtime_transition": {
+    "from": "hub_idle",
+    "to": "hub_idle"
+  },
+  "facing": "right",
+  "frame_size": [
+    256,
+    256
+  ],
+  "frame_count": 4,
+  "fps": 8,
+  "loop": true,
+  "pivot": {
+    "x": 125,
+    "y": 236
+  },
+  "texture_filter": "nearest",
+  "mechanical_events": [],
+  "result": "no_state_change",
+  "qa_status": "asset_qa_passed_runtime_test_pending"
+}

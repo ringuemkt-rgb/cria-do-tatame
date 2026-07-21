@@ -1,0 +1,18 @@
+{
+  "version": "1.0.0",
+  "event_id": "deck_clash_advantage",
+  "category": "combat",
+  "duration_seconds": 0.36,
+  "sample_rate": 48000,
+  "channels": 2,
+  "loop": false,
+  "loop_start_samples": null,
+  "loop_end_samples": null,
+  "aliases": [],
+  "runtime_volume_db": 0.0,
+  "cooldown_ms": 100,
+  "max_polyphony": 3,
+  "generation": "deterministic_original_synthesis",
+  "source_sha256": "633e9625b1583a868f799a24b620b10b72da21f7a052bfc9bfaac6d6e954b780",
+  "game_sha256": "9430de4f6e31919e1f311c2a2470373fd30f755f068b5211ac37c9876eb4f727"
+}

@@ -7,6 +7,7 @@ const AnimationLibrary = preload("res://src/animation/CharacterAnimationLibrary.
 @export var display_name := "Ruan Macacao"
 @export var primary_color := Color(0.95, 0.95, 0.92)
 @export var accent_color := Color(0.85, 0.65, 0.15)
+@export var prefer_candidate_art: bool = true
 
 var body: ColorRect
 var head: ColorRect
@@ -62,20 +63,51 @@ func _build_fallback_body() -> void:
 	head.position = Vector2(-18, -52)
 	add_child(head)
 
-func _manifest_path(action: String) -> String:
-	return "res://assets/sprites/%s/%s/manifest.json" % [fighter_id, action]
+func _candidate_manifest_path(action: String) -> String:
+	if not prefer_candidate_art:
+		return ""
+	if action == "idle":
+		var folder: String = "idle_v01" if fighter_id in ["mestre_dende", "tinker_bell"] else "idle_combat_v01"
+		var candidate := "res://assets/graphics/characters/%s/%s/manifest.json" % [fighter_id, folder]
+		if FileAccess.file_exists(candidate):
+			return candidate
+	if fighter_id == "davi_relampago" and action == "defense":
+		return "res://assets/graphics/characters/davi_relampago/sprawl_v01/manifest.json"
+	return ""
+
+func _manifest_paths(action: String) -> Array[String]:
+	var paths: Array[String] = []
+	var candidate_path := _candidate_manifest_path(action)
+	if not candidate_path.is_empty():
+		paths.append(candidate_path)
+	paths.append("res://assets/sprites/%s/%s/manifest.json" % [fighter_id, action])
+	return paths
 
 func _load_clip(action: String) -> bool:
-	var path := _manifest_path(action)
-	if not FileAccess.file_exists(path):
-		return false
-	var frames: SpriteFrames = AnimationLibrary.build_sprite_frames(path)
-	if not frames.has_animation(action) or frames.get_frame_count(action) == 0:
-		return false
-	animated_sprite.sprite_frames = frames
-	animated_sprite.animation = action
-	animated_sprite.play()
-	return true
+	for path in _manifest_paths(action):
+		if not FileAccess.file_exists(path):
+			continue
+		var manifest: Dictionary = AnimationLibrary.load_manifest(path)
+		var manifest_action: String = str(manifest.get("action_id", action))
+		var frames: SpriteFrames = AnimationLibrary.build_sprite_frames(path)
+		if not frames.has_animation(manifest_action) or frames.get_frame_count(manifest_action) == 0:
+			continue
+		animated_sprite.sprite_frames = frames
+		animated_sprite.animation = manifest_action
+		var layout: Array = manifest.get("frame_layout", [])
+		var frame_width: float = float(layout[0].get("w", 128)) if not layout.is_empty() else 128.0
+		var is_candidate: bool = not bool(manifest.get("placeholder", true))
+		var runtime_scale: float = 286.0 / frame_width if is_candidate else 1.55
+		animated_sprite.scale = Vector2(runtime_scale, runtime_scale)
+		var origin: Dictionary = manifest.get("interaction_origin", {})
+		if origin.is_empty() and not layout.is_empty():
+			origin = layout[0].get("pivot", {})
+		var pivot := Vector2(float(origin.get("x", frame_width * 0.5)), float(origin.get("y", frame_width * 0.75)))
+		var center := Vector2(frame_width * 0.5, float(layout[0].get("h", frame_width)) * 0.5) if not layout.is_empty() else Vector2.ONE * frame_width * 0.5
+		animated_sprite.position = Vector2(0.0, 76.0) - (pivot - center) * runtime_scale
+		animated_sprite.play()
+		return true
+	return false
 
 func _clip_for_action(action_id: String) -> String:
 	match action_id:
@@ -113,6 +145,12 @@ func play_action(action_id: String) -> void:
 		_:
 			tween.tween_property(self, "position:y", position.y - 3.0, 0.18)
 			tween.tween_property(self, "position:y", position.y, 0.18)
+	tween.finished.connect(_reset_transform)
+
+func _reset_transform() -> void:
+	position = _base_position
+	rotation = 0.0
+	scale = _base_scale
 
 func _restore_idle_after_clip() -> void:
 	var clip := animated_sprite.animation
@@ -125,6 +163,4 @@ func _restore_idle_after_clip() -> void:
 	await get_tree().create_timer(duration).timeout
 	if is_instance_valid(animated_sprite):
 		_load_clip("idle")
-	position = _base_position
-	rotation = 0.0
-	scale = _base_scale
+	_reset_transform()

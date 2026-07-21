@@ -1,0 +1,17 @@
+{
+  "version": "1.0.0",
+  "arena_id": "arena_do_dique",
+  "music_cue": "arena_do_dique",
+  "ambience_cue": "arena_idle_loop",
+  "reaction_cues": {
+    "advantage": "arena_positive",
+    "clash": "arena_tension",
+    "technical_result": "arena_positive"
+  },
+  "mobile_voice_budget": 24,
+  "ducking": {
+    "voiceover_db": -5.0,
+    "technical_result_db": -3.0,
+    "duration_ms": 650
+  }
+}

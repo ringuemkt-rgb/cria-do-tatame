@@ -1,0 +1,18 @@
+{
+  "version": "1.0.0",
+  "event_id": "deck_clash_dominant",
+  "category": "combat",
+  "duration_seconds": 0.44,
+  "sample_rate": 48000,
+  "channels": 2,
+  "loop": false,
+  "loop_start_samples": null,
+  "loop_end_samples": null,
+  "aliases": [],
+  "runtime_volume_db": 0.0,
+  "cooldown_ms": 120,
+  "max_polyphony": 3,
+  "generation": "deterministic_original_synthesis",
+  "source_sha256": "f5b976ca8f6ecd9f486b2da641d10c38a0f458a1f3b888315f79f995ee0c4ed1",
+  "game_sha256": "8c650b8b1c143c0e6dc9ab20d560bfaec2e17c7ed4a5d879dc5697a76fd8909a"
+}
