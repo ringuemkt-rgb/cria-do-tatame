@@ -89,9 +89,9 @@ func _refresh() -> void:
 func _make_npc_row(raw_npc_id: String) -> Control:
 	var canonical_id: String = str(CHARACTER_ALIASES.get(raw_npc_id, raw_npc_id))
 	var character: Dictionary = DataRegistry.get_character(canonical_id)
-	var routine: Dictionary = WorldDirectorManager.npc_states.get(raw_npc_id, {})
+	var routine: Dictionary = WorldDirectorManager.get_npc_state(raw_npc_id)
 	if routine.is_empty():
-		routine = WorldDirectorManager.npc_states.get(canonical_id, {})
+		routine = WorldDirectorManager.get_npc_state(canonical_id)
 	var available: bool = bool(routine.get("available", true))
 	var row := HBoxContainer.new()
 	row.custom_minimum_size = Vector2(0.0, 54.0)

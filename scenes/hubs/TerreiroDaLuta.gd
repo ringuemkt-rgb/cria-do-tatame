@@ -80,7 +80,7 @@ func _style_interface() -> void:
 	if has_node("Panel/Message"):
 		$Panel/Message.add_theme_color_override("font_color", VisualTheme.HONOR)
 	for button_name in ["TrainBtn", "DeckBtn", "FightDaviBtn", "RestBtn", "SaveBtn", "AdvanceDayBtn", "CriaLiveBtn", "MapBtn", "MainMenuBtn"]:
-		var path := "Panel/" + button_name
+		var path: String = "Panel/" + str(button_name)
 		if has_node(path):
 			VisualTheme.apply_primary_button(get_node(path))
 

@@ -80,7 +80,15 @@ def main() -> int:
     audio_manager = (ROOT / "src/autoloads/AudioManager.gd").read_text(encoding="utf-8")
     require("DEFAULT_POOL_SIZE: int = 24" in audio_manager, "pool mobile de áudio não está configurado", errors)
     require(milestone.get("release_claim") == "vertical_slice_candidate_not_complete_game_or_release_build", "alegação de release insegura", errors)
-    require(milestone.get("quality_gates", {}).get("godot_4_2_runtime") != "passed", "Godot marcado como aprovado sem gate real", errors)
+    godot_validation = milestone.get("godot_validation", {})
+    require(milestone.get("quality_gates", {}).get("godot_4_2_runtime") == "passed", "Gate Godot 4.2 nao aprovado", errors)
+    require(godot_validation.get("engine") == "4.2.2.stable.official.15073afe3", "Versao Godot do gate divergente", errors)
+    require(godot_validation.get("resource_import") == "passed", "Importacao Godot nao aprovada", errors)
+    require(godot_validation.get("runtime_smoke_checks") == 137, "Runtime smoke Godot incompleto", errors)
+    require(godot_validation.get("faction_smoke_checks") == 26, "Faction smoke Godot incompleto", errors)
+    require(godot_validation.get("full_game_smoke_checks") == 146, "Full game smoke Godot incompleto", errors)
+    require(godot_validation.get("full_game_scenes_loaded") == 14, "Carga de cenas Godot incompleta", errors)
+    require(godot_validation.get("hidden_script_errors") == 0, "Godot registrou erros ocultos", errors)
     require(milestone.get("quality_gates", {}).get("android_device") != "passed", "Android marcado como aprovado sem gate real", errors)
 
     if errors:

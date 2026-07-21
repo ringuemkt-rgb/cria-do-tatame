@@ -1,7 +1,7 @@
 extends Node2D
 class_name FighterPlaceholder
 
-const AnimationLibrary = preload("res://src/animation/CharacterAnimationLibrary.gd")
+const CharacterAnimationLibrary = preload("res://src/animation/CharacterAnimationLibrary.gd")
 
 @export var fighter_id := "ruan_macacao"
 @export var display_name := "Ruan Macacao"
@@ -87,9 +87,9 @@ func _load_clip(action: String) -> bool:
 	for path in _manifest_paths(action):
 		if not FileAccess.file_exists(path):
 			continue
-		var manifest: Dictionary = AnimationLibrary.load_manifest(path)
+		var manifest: Dictionary = CharacterAnimationLibrary.load_manifest(path)
 		var manifest_action: String = str(manifest.get("action_id", action))
-		var frames: SpriteFrames = AnimationLibrary.build_sprite_frames(path)
+		var frames: SpriteFrames = CharacterAnimationLibrary.build_sprite_frames(path)
 		if not frames.has_animation(manifest_action) or frames.get_frame_count(manifest_action) == 0:
 			continue
 		animated_sprite.sprite_frames = frames

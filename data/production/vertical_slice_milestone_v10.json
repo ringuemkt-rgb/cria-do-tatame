@@ -2,7 +2,7 @@
   "version": "1.0.0",
   "milestone_id": "visual_audio_world_vertical_slice_v10",
   "date": "2026-07-20",
-  "status": "integrated_candidate_runtime_validation_pending",
+  "status": "integrated_candidate_godot_validation_passed_android_pending",
   "canonical_slice": {
     "hub": "terreiro_da_luta",
     "arena": "arena_do_dique",
@@ -54,6 +54,15 @@
     "technique_and_deck_clash_vfx",
     "hub_and_arena_ambience_switching"
   ],
+  "godot_validation": {
+    "engine": "4.2.2.stable.official.15073afe3",
+    "resource_import": "passed",
+    "runtime_smoke_checks": 137,
+    "faction_smoke_checks": 26,
+    "full_game_smoke_checks": 146,
+    "full_game_scenes_loaded": 14,
+    "hidden_script_errors": 0
+  },
   "quality_gates": {
     "npm_quality": "passed",
     "character_art_validator": "passed",
@@ -61,7 +70,7 @@
     "audio_integrity_validator": "passed",
     "lore_guardian_tests": "passed",
     "specialized_cria_spec_errors": 0,
-    "godot_4_2_runtime": "not_executed_engine_unavailable",
+    "godot_4_2_runtime": "passed",
     "android_device": "not_executed_toolchain_and_device_unavailable",
     "human_art_direction": "pending",
     "critical_listening": "pending"

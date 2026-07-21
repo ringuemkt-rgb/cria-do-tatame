@@ -1,7 +1,7 @@
 # Marco v10 — visual, áudio, mundo e combate
 
 Data: 20/07/2026
-Estado: vertical slice integrado como candidato; validação no Godot e Android pendente.
+Estado: vertical slice integrado e aprovado no Godot 4.2.2; validação Android pendente.
 
 ## Resultado entregue
 
@@ -31,7 +31,7 @@ O pedido informal por “arenas do Rubi” não corresponde a nenhum ID canônic
 
 ### NPCs
 
-- Painel de presença por território conectado a `WorldDirectorManager.npc_states`.
+- Painel de presença por território conectado à API pública `WorldDirectorManager.get_npc_state()`.
 - Estado disponível/ocupado, atividade atual, retrato e atualização por avanço de dia/clima.
 - Alias controlado para Cássio evita duplicar personagem por divergência histórica de ID.
 - Representante animado nos hubs regionais e Dendê/Tinker no Terreiro.
@@ -69,10 +69,14 @@ Duas falas foram geradas apenas como **candidatos de casting** para Dendê e Dav
 - Validador de áudio: 28 eventos, hashes, formato, pico, duração, loop e licença aprovados.
 - Lore Guardian: 7 testes aprovados.
 - Auditor especializado `audit_cria_spec.py`: 0 erros de cânone.
+- Godot 4.2.2: importação integral aprovada, sem erro de parser/recurso.
+- Runtime smoke: 137/137 verificações aprovadas e nenhum erro oculto no log.
+- Faction Director smoke: 26/26 verificações aprovadas.
+- Full Game smoke: 146 verificações e 14 cenas carregadas.
 
 ## Limites honestos deste marco
 
-Não existe executável novo homologado neste ambiente. O binário do Godot, o SDK Android e um aparelho físico não estão disponíveis; portanto ainda faltam importação real, parser/runtime do GDScript, teste de cena, medição de FPS/memória, escuta crítica, assinatura e instalação do APK.
+Não existe executável novo homologado neste ambiente. A importação, o parser/runtime GDScript e os smokes headless foram validados com Godot 4.2.2 oficial. Ainda faltam SDK Android e aparelho físico para exportação, assinatura, instalação, medição de FPS/memória, teste tátil e escuta crítica.
 
 O contrato supremo também continua aberto:
 
@@ -89,7 +93,7 @@ Esses números impedem uma declaração indevida de “jogo completo”. O marco
 
 ## Próximo gate objetivo
 
-1. Abrir no Godot 4.2+, importar todos os assets e executar `tests/runtime_smoke.gd` e `tests/full_game_smoke.gd`.
-2. Corrigir qualquer erro de parser/import e capturar vídeo real do fluxo Menu → Terreiro → Dique → Resultado.
-3. Testar em Android de referência, com meta de 60 FPS, orçamento de memória e simultaneidade de áudio.
+1. Capturar vídeo real do fluxo Menu → Terreiro → Dique → Resultado usando a importação já aprovada.
+2. Exportar e testar em Android de referência, com meta de 60 FPS, orçamento de memória e simultaneidade de áudio.
+3. Realizar escuta crítica, direção vocal e revisão humana de arte em dispositivo.
 4. Depois da homologação do P1, produzir os próximos pares completos: Leoa, Kenzo, Oni e Cássio; em seguida expandir os ambientes dos três hubs regionais.

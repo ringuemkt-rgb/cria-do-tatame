@@ -98,7 +98,7 @@ func _style_interface() -> void:
 	if has_node("Panel/ActivitiesLabel"):
 		$Panel/ActivitiesLabel.add_theme_color_override("font_color", VisualTheme.OFF_WHITE)
 	for button_name in ["ExploreBtn", "RestBtn", "AdvanceDayBtn", "CriaLiveBtn", "MapBtn", "SaveBtn", "MainMenuBtn"]:
-		var path := "Panel/" + button_name
+		var path: String = "Panel/" + str(button_name)
 		if has_node(path):
 			VisualTheme.apply_primary_button(get_node(path))
 
