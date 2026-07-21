@@ -10,6 +10,8 @@ Construir **Cria do Tatame – Pressão**, jogo Godot 4.2+ para Android, PC e We
 
 `ringuemkt-rgb/cria-do-tatame` é o único repositório oficial do jogo.
 
+As decisões de migração e unificação controlada estão em [`docs/DECISIONS.md`](docs/DECISIONS.md).
+
 - Não criar outro repositório para protótipo, APK, arte, lore ou versão alternativa.
 - Protótipos devem viver em branches ou pastas explicitamente delimitadas.
 - Documentos antigos não podem substituir dados e bíblias canônicas atuais.
