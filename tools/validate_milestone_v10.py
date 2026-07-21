@@ -89,7 +89,19 @@ def main() -> int:
     require(godot_validation.get("full_game_smoke_checks") == 146, "Full game smoke Godot incompleto", errors)
     require(godot_validation.get("full_game_scenes_loaded") == 14, "Carga de cenas Godot incompleta", errors)
     require(godot_validation.get("hidden_script_errors") == 0, "Godot registrou erros ocultos", errors)
-    require(milestone.get("quality_gates", {}).get("android_device") != "passed", "Android marcado como aprovado sem gate real", errors)
+    android_ci = milestone.get("android_ci_validation", {})
+    quality_gates = milestone.get("quality_gates", {})
+    require(milestone.get("status") == "integrated_candidate_godot_and_android_ci_passed_device_pending", "Status do marco nao distingue CI de aparelho fisico", errors)
+    require(quality_gates.get("android_ci_export") == "passed", "Exportacao Android em CI nao aprovada", errors)
+    require(android_ci.get("run_id") == 29799098580, "Run Android do marco divergente", errors)
+    require(android_ci.get("commit") == "ed1582f688be8696a0e26c728a74b707d7a3ec9a", "Commit Android do marco divergente", errors)
+    require(android_ci.get("package_id") == "com.criadotatame.pressao", "Package ID Android divergente", errors)
+    require(android_ci.get("version_name") == "1.0.0", "Versao Android divergente", errors)
+    require(android_ci.get("min_sdk") == 21, "minSdk Android divergente", errors)
+    require(android_ci.get("target_sdk") == 34, "targetSdk Android divergente", errors)
+    require(android_ci.get("apk_size_bytes") == 193868415, "Tamanho do APK divergente", errors)
+    require(android_ci.get("apk_sha256") == "600712231371372de92236b0b9f128736a2fb32827e4156dc786de7d9d9e69c2", "SHA-256 do APK divergente", errors)
+    require(quality_gates.get("android_device") != "passed", "Aparelho Android marcado como aprovado sem gate fisico", errors)
 
     if errors:
         for error in errors:
