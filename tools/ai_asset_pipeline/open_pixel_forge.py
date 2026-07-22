@@ -354,7 +354,7 @@ def run(args: argparse.Namespace) -> int:
             seed = seed_for(cfg.seed, task_id, index)
             seeds.append(seed)
             graph = workflow(cfg, prompt_for(task), width, height, seed, f"cria/{slug(task_id)}/{index:02d}")
-            raw.extend(client.generate(graph, raw_dir))
+            raw.extend(client.generate(graph, raw_dir / f"candidate_{index:02d}"))
         write_package(task, raw, task_dir, cfg, seeds)
         results.append({"task_id": task_id, "status": "candidate_generated", "images": len(raw)})
 
