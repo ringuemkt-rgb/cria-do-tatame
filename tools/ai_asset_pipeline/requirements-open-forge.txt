@@ -1,0 +1,5 @@
+# Dependencias do projeto continuam centralizadas no requirements.txt da raiz.
+-r ../../requirements.txt
+
+# Opcional: habilita remove_background=true no Open Pixel Forge.
+rembg>=2.0.75
