@@ -1,6 +1,8 @@
 class_name V4DataBridge
 extends RefCounted
 
+const PositionalCombatScript = preload("res://src/combat/PositionalCardCombatV41.gd")
+
 const PATHS := {
 	"cards": "res://data/combat/cards.json",
 	"positions": "res://data/combat/position_data.json",
@@ -14,10 +16,10 @@ var rulesets: Dictionary = {}
 var factions: Dictionary = {}
 
 func load_all() -> Dictionary:
-	cards = _load_json(PATHS.cards)
-	positions = _load_json(PATHS.positions)
-	rulesets = _load_json(PATHS.rulesets)
-	factions = _load_json(PATHS.factions)
+	cards = _load_json(str(PATHS["cards"]))
+	positions = _load_json(str(PATHS["positions"]))
+	rulesets = _load_json(str(PATHS["rulesets"]))
+	factions = _load_json(str(PATHS["factions"]))
 	return validate()
 
 func validate() -> Dictionary:
@@ -55,9 +57,9 @@ func validate() -> Dictionary:
 		"factions": faction_ids,
 	}
 
-func create_combat(fighter_decks: Dictionary, narrative_flags: Dictionary = {}) -> PositionalCardCombatV41:
-	var combat := PositionalCardCombatV41.new()
-	combat.configure(cards, positions, rulesets, fighter_decks, narrative_flags)
+func create_combat(fighter_decks: Dictionary, narrative_flags: Dictionary = {}) -> Node:
+	var combat: Node = PositionalCombatScript.new()
+	combat.call("configure", cards, positions, rulesets, fighter_decks, narrative_flags)
 	return combat
 
 func _load_json(path: String) -> Dictionary:
