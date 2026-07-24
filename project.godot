@@ -1,4 +1,4 @@
-; Cria do Tatame - Godot 4.2+ base
+; Cria do Tatame - Godot 4.2 compatibility base / target 4.3+
 config_version=5
 
 [application]
@@ -24,7 +24,7 @@ TinkerBondManager="*res://src/autoloads/TinkerBondManager.gd"
 MissionManager="*res://src/autoloads/MissionManager.gd"
 StorySceneDirector="*res://src/autoloads/StorySceneDirector.gd"
 FactionManager="*res://src/autoloads/FactionManager.gd"
-FactionDirectorManager="*res://src/autoloads/FactionDirectorManager.gd"
+FactionDirectorManager="*res://src/autoloads/FactionDirectorV3.gd"
 FactionAIPlanBridge="*res://src/autoloads/FactionAIPlanBridge.gd"
 WorldMapManager="*res://src/autoloads/WorldMapManager.gd"
 GearManager="*res://src/autoloads/GearManager.gd"
