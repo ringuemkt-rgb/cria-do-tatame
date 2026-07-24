@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
-"""Valida a skill Cria do Tatame Game Director e seus vínculos canônicos.
+"""Valida a skill Game Director e seus vínculos canônicos.
 
-Usa somente a biblioteca padrão para rodar localmente e em CI.
+Usa somente a biblioteca padrão para funcionar localmente e na CI.
 """
 from __future__ import annotations
 
@@ -13,6 +13,11 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[4]
 SKILL_ROOT = ROOT / ".agents" / "skills" / "cria-do-tatame-game-director"
 SKILL_FILE = SKILL_ROOT / "SKILL.md"
+PROTOCOL = ROOT / "docs" / "GAME_BUILD_PROTOCOL.md"
+PRECEDENCE = ROOT / "docs" / "DOC_PRECEDENCE.md"
+SUPREME = ROOT / "docs" / "CRIA_DO_TATAME_SUPREME_BUILD_SPEC_V1.md"
+AGENTS = ROOT / "AGENTS.md"
+
 REQUIRED_REFERENCES = {
     "references/OPERATING_MODEL.md",
     "references/QUALITY_GATES.md",
@@ -30,6 +35,16 @@ def load_json(path: Path) -> dict:
     return json.loads(read(path))
 
 
+def require_contains(errors: list[str], path: Path, terms: list[str], label: str) -> None:
+    if not path.exists():
+        errors.append(f"{label} ausente: {path.relative_to(ROOT)}")
+        return
+    text = read(path)
+    for term in terms:
+        if term not in text:
+            errors.append(f"{label} não contém vínculo obrigatório: {term}")
+
+
 def validate_frontmatter(errors: list[str]) -> None:
     if not SKILL_FILE.exists():
         errors.append("SKILL.md ausente")
@@ -42,6 +57,7 @@ def validate_frontmatter(errors: list[str]) -> None:
     header = match.group("header")
     name_match = re.search(r"^name:\s*(.+)$", header, flags=re.MULTILINE)
     description_match = re.search(r"^description:\s*(.+)$", header, flags=re.MULTILINE)
+    version_match = re.search(r'^\s+version:\s+"([^"]+)"$', header, flags=re.MULTILINE)
     if not name_match:
         errors.append("frontmatter sem name")
     elif name_match.group(1).strip() != EXPECTED_NAME:
@@ -50,6 +66,8 @@ def validate_frontmatter(errors: list[str]) -> None:
         errors.append("frontmatter sem description")
     elif len(description_match.group(1).strip()) > 1024:
         errors.append("description excede 1024 caracteres")
+    if not version_match:
+        errors.append("frontmatter sem metadata.version")
 
 
 def validate_package(errors: list[str]) -> None:
@@ -58,15 +76,49 @@ def validate_package(errors: list[str]) -> None:
             errors.append(f"recurso obrigatório ausente: {relative}")
 
 
-def validate_activation(errors: list[str]) -> None:
-    agents = ROOT / "AGENTS.md"
-    if not agents.exists():
-        errors.append("AGENTS.md ausente")
-        return
-    text = read(agents)
-    expected_path = ".agents/skills/cria-do-tatame-game-director/SKILL.md"
-    if expected_path not in text:
-        errors.append("AGENTS.md não ativa a skill do diretor")
+def validate_protocol_bindings(errors: list[str]) -> None:
+    require_contains(
+        errors,
+        AGENTS,
+        [
+            "## 0. PROTOCOLO MESTRE DE CONSTRUÇÃO",
+            "docs/GAME_BUILD_PROTOCOL.md",
+            "docs/DOC_PRECEDENCE.md",
+            ".agents/skills/cria-do-tatame-game-director/SKILL.md",
+        ],
+        "AGENTS.md",
+    )
+    require_contains(
+        errors,
+        SKILL_FILE,
+        ["docs/GAME_BUILD_PROTOCOL.md", "docs/DOC_PRECEDENCE.md", "Handshake"],
+        "SKILL.md",
+    )
+    require_contains(
+        errors,
+        PROTOCOL,
+        [
+            "Status:** CANÔNICO / VINCULANTE",
+            "Handshake de abertura",
+            "Loop de gestão",
+            "Três distinções",
+            "Topologia de PRs",
+            "Auto-verificação",
+        ],
+        "GAME_BUILD_PROTOCOL.md",
+    )
+    require_contains(
+        errors,
+        PRECEDENCE,
+        ["GAME_BUILD_PROTOCOL.md", "CRIA_DO_TATAME_SUPREME_BUILD_SPEC_V1.md"],
+        "DOC_PRECEDENCE.md",
+    )
+    require_contains(
+        errors,
+        SUPREME,
+        ["docs/GAME_BUILD_PROTOCOL.md", "docs/DOC_PRECEDENCE.md"],
+        "SUPREME",
+    )
 
 
 def validate_repository_truth(errors: list[str]) -> None:
@@ -95,12 +147,13 @@ def main() -> int:
     errors: list[str] = []
     validate_frontmatter(errors)
     validate_package(errors)
-    validate_activation(errors)
+    validate_protocol_bindings(errors)
     validate_repository_truth(errors)
 
     report = {
         "ok": not errors,
         "skill": EXPECTED_NAME,
+        "protocol": "docs/GAME_BUILD_PROTOCOL.md",
         "repository": "ringuemkt-rgb/cria-do-tatame",
         "errors": errors,
     }

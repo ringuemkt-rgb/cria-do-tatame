@@ -2,6 +2,8 @@
 
 Status: contrato de produção ativo. Este documento define o produto final desejado, os limites de autonomia de agentes e as evidências necessárias para declarar uma entrega concluída. O contrato executável correspondente está em `data/production/supreme_build_contract_v01.json`.
 
+**Camada de processo vinculante:** toda execução deste contrato segue `docs/GAME_BUILD_PROTOCOL.md`; conflitos documentais são resolvidos por `docs/DOC_PRECEDENCE.md`.
+
 ## 1. Verdade atual e princípio de execução
 
 O repositório já contém um núcleo Godot funcional, dados de combate, carreira, navegação, validadores, pipeline de sprites, manifesto audiovisual e automação de build. Ele ainda não é o jogo completo: boa parte dos visuais é técnica ou provisória; o elenco, as técnicas, as arenas, a campanha e o áudio não atingiram o volume final; APK em aparelho físico e release assinada continuam sendo gates abertos.
@@ -10,11 +12,12 @@ Todo agente deve ampliar o jogo existente em lotes verticais jogáveis. Nenhum r
 
 Ordem de autoridade:
 
-1. `AGENTS.md` e este contrato;
-2. dados canônicos atuais em `data/`;
-3. código e cenas que passam na CI;
-4. documentos atuais em `docs/`;
-5. PDFs de referência e documentos históricos, usados somente quando não contradizem o canon vigente.
+1. este contrato e `data/production/supreme_build_contract_v01.json`;
+2. `docs/GAME_BUILD_PROTOCOL.md` para processo e gestão;
+3. `docs/DOC_PRECEDENCE.md`, cânone atual e dados canônicos em `data/`;
+4. código e cenas que passam na CI;
+5. documentos atuais em `docs/`;
+6. PDFs e documentos históricos, somente quando não contradizem o cânone vigente.
 
 ## 2. Identidade inviolável
 
@@ -157,7 +160,7 @@ Regras de mix:
 
 ## 10. Pipeline gráfico e audiovisual
 
-1. Ler canon, manifesto e ficha do asset.
+1. Ler cânone, manifesto e ficha do asset.
 2. Reunir referências permitidas e registrar origem.
 3. Gerar thumbnails/conceitos; não integrar conceito cru.
 4. Selecionar uma direção e consolidar model sheet/paleta.
@@ -166,7 +169,7 @@ Regras de mix:
 7. Exportar fonte, atlas, preview e metadados.
 8. Importar no Godot com preset determinístico.
 9. Testar em arena real, escala real e câmera real.
-10. Executar QA visual, técnico, licença, performance e canon.
+10. Executar QA visual, técnico, licença, performance e cânone.
 
 Arquivos finais devem ser reprodutíveis. Prompts, seeds, ferramentas, versões, licenças, edição humana e hashes ficam nos metadados quando IA for usada.
 
@@ -210,7 +213,7 @@ Gates por plataforma:
 
 ### P0 — verdade e contratos
 
-Manter dados válidos, backlog honesto, canon auditado e CI verde.
+Manter dados válidos, backlog honesto, cânone auditado e CI verde.
 
 ### P1 — vertical slice de ouro
 
@@ -236,20 +239,22 @@ Cada lote deve conter gameplay, visual, áudio, dados, testes e documentação n
 
 ## 14. Protocolo autônomo GPT-SOL/Codex
 
+O ciclo detalhado e o Handshake obrigatório vivem em `docs/GAME_BUILD_PROTOCOL.md`.
+
 Para cada ciclo:
 
 1. sincronizar e inspecionar o repositório oficial;
-2. executar `npm run quality` antes de modificar;
-3. selecionar o menor lote vertical prioritário desbloqueado;
-4. procurar implementação equivalente e preservar IDs;
-5. implementar dados, runtime e assets sem introduzir outra engine;
-6. executar fila e validações específicas;
-7. testar o fluxo afetado no Godot;
+2. executar o Handshake e registrar o delta;
+3. executar `npm run quality` antes de modificar, quando o ambiente permitir;
+4. selecionar o menor lote vertical prioritário desbloqueado;
+5. procurar implementação equivalente e preservar IDs;
+6. implementar dados, runtime e assets sem introduzir outra engine;
+7. executar validações específicas e testar o fluxo afetado no Godot;
 8. registrar evidência, limitações e licenças;
-9. executar `npm run quality` novamente;
+9. executar os gates novamente;
 10. criar commit focado e atualizar o GitHub quando autorizado.
 
-O agente deve parar e pedir decisão quando houver conflito de canon, licença incerta, ação destrutiva, biomecânica insegura, mudança de público/classificação, gasto externo ou credencial ausente. Autonomia não autoriza inventar evidência nem publicar fora do escopo.
+O agente deve parar e pedir decisão quando houver conflito de cânone, licença incerta, ação destrutiva, biomecânica insegura, mudança de público/classificação, gasto externo ou credencial ausente. Autonomia não autoriza inventar evidência nem publicar fora do escopo.
 
 ## 15. Quality gates e Definition of Done
 
@@ -258,7 +263,7 @@ O comando central é `npm run quality`. Além dele, release exige:
 - import e parser Godot headless;
 - smoke Main Menu → Terreiro → Combate → Resultado → Save;
 - roundtrip de save e avanço de semana;
-- revisão de canon e conteúdo regional;
+- revisão de cânone e conteúdo regional;
 - auditoria de licenças de todo asset;
 - auditoria de loudness e loops;
 - ausência de placeholder no caminho de shipping;
