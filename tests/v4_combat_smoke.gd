@@ -2,6 +2,7 @@ extends SceneTree
 
 const V4DataBridgeScript = preload("res://src/compat/V4DataBridge.gd")
 const SkillHubScript = preload("res://src/hub/SkillHubLoadoutV41.gd")
+const PositionalAdapterScript = preload("res://src/compat/PositionalCombatAdapter.gd")
 
 var failures: Array[String] = []
 var checks := 0
@@ -39,20 +40,22 @@ func _run() -> void:
 	_assert(bool(loadout_result.get("ok", false)), "deck de 12 cartas deve ser aceito")
 	_assert(hub.get_loadout("ruan_macacao").size() == 12, "loadout deve persistir 12 cartas")
 
-	var combat = bridge.create_combat({
+	var combat: Node = bridge.create_combat({
 		"ruan_macacao": deck,
 		"davi_relampago": deck,
 	})
-	var start_result: Dictionary = combat.start_combat("ruan_macacao", "davi_relampago", "OFICIAL")
+	var start_result: Dictionary = combat.call("start_combat", "ruan_macacao", "davi_relampago", "OFICIAL")
 	_assert(bool(start_result.get("ok", false)), "combate oficial deve iniciar")
-	_assert(str(combat.snapshot().get("position", "")) == "STANDING", "combate inicia em STANDING")
-	var hand: Array = combat.get_contextual_hand("ruan_macacao")
+	var first_snapshot: Dictionary = combat.call("snapshot")
+	_assert(str(first_snapshot.get("position", "")) == "STANDING", "combate inicia em STANDING")
+	var hand: Array = combat.call("get_contextual_hand", "ruan_macacao")
 	_assert(not hand.is_empty(), "mão contextual inicial não pode estar vazia")
-	var grip_result: Dictionary = combat.play_card("ruan_macacao", "grip_de_ferro", 1.0)
+	var grip_result: Dictionary = combat.call("play_card", "ruan_macacao", "grip_de_ferro", 1.0)
 	_assert(bool(grip_result.get("ok", false)), "Grip de Ferro deve ser jogável em STANDING")
-	_assert(str(combat.snapshot().get("position", "")) == "CLINCH", "Grip de Ferro deve levar ao CLINCH")
+	var clinch_snapshot: Dictionary = combat.call("snapshot")
+	_assert(str(clinch_snapshot.get("position", "")) == "CLINCH", "Grip de Ferro deve levar ao CLINCH")
 
-	var adapter_report: Dictionary = PositionalCombatAdapter.validate_contract()
+	var adapter_report: Dictionary = PositionalAdapterScript.validate_contract()
 	_assert(bool(adapter_report.get("ok", false)), "adapter legado deve cobrir as 8 posições")
 
 	print("[V4CombatSmoke] %d verificações, %d falhas" % [checks, failures.size()])
