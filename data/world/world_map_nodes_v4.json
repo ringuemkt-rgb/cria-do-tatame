@@ -1,0 +1,25 @@
+{
+  "version": "4.0.0",
+  "nodes": {
+    "itubera": {"municipio":"Ituberá","hub":true,"arena":"terreiro_da_luta","faccao":"neutral","bioma":"mangue_rio","tags":["silencio_eco"],"travel_cost":{"terrestre":{"CRIACOIN":0},"fluvial":{"MOLHO":0}},"scene":"res://scenes/hubs/Terreiro.tscn"},
+    "valenca": {"municipio":"Valença","hub":true,"arena":"arena_do_dique","faccao":"LEM","bioma":"urbano_rio","tags":["plateia"],"travel_cost":{"terrestre":{"CRIACOIN":20},"fluvial":{"MOLHO":12}},"scene":"res://scenes/hubs/SalvadorHub.tscn"},
+    "taperoa": {"municipio":"Taperoá","hub":true,"arena":"congregacao_rua","faccao":"ALE","bioma":"urbano_rural","tags":["manto_olhar"],"travel_cost":{"terrestre":{"CRIACOIN":18}},"scene":""},
+    "nilo_pecanha": {"municipio":"Nilo Peçanha","hub":true,"arena":"zambiapunga","faccao":"neutral","bioma":"mata_rio","tags":["plateia","silencio_eco"],"travel_cost":{"terrestre":{"CRIACOIN":16}},"scene":"res://scenes/hubs/ZambiapungaHub.tscn"},
+    "camamu": {"municipio":"Camamu","hub":true,"arena":"porto_camamu","faccao":"NTM","bioma":"baia_mangue","tags":["mobilidade_instavel"],"travel_cost":{"terrestre":{"CRIACOIN":24},"fluvial":{"MOLHO":10}},"scene":"res://scenes/hubs/ManguezalHub.tscn"},
+    "cairu": {"municipio":"Cairu","hub":true,"arena":"travessia_cairu","faccao":"NTM","bioma":"arquipelago","tags":["mobilidade_instavel","plateia"],"travel_cost":{"fluvial":{"MOLHO":18}},"scene":""},
+    "marau": {"municipio":"Maraú","hub":true,"arena":"trilha_tupa200","faccao":"NTM","nucleo":"ponta_de_areia","bioma":"peninsula_apa","tags":["areia_fofa","mobilidade_instavel"],"travel_cost":{"terrestre":{"CRIACOIN":35},"fluvial":{"MOLHO":25}},"blocked_until":"missao_tupa200_T1","scene":""},
+    "itacare": {"municipio":"Itacaré","hub":true,"arena":"circuito_itacare","faccao":"neutral","bioma":"praia_mata","tags":["areia_fofa","plateia","por_do_sol"],"travel_cost":{"terrestre":{"CRIACOIN":42}},"scene":""},
+    "ibirapitanga": {"municipio":"Ibirapitanga","hub":true,"arena":"obra_nova","faccao":"ALE","bioma":"mata_urbano","tags":["entulho","manto_olhar"],"travel_cost":{"terrestre":{"CRIACOIN":30}},"scene":""},
+    "pirai_do_norte": {"municipio":"Piraí do Norte","hub":true,"arena":"mirante_pirai","faccao":"neutral","bioma":"mata_colina","tags":["estreito_vento"],"travel_cost":{"terrestre":{"CRIACOIN":22}},"scene":""},
+    "presidente_tancredo_neves": {"municipio":"Presidente Tancredo Neves","hub":true,"arena":"congregacao_tancredo","faccao":"ALE","bioma":"urbano_rural","tags":["manto_olhar","plateia"],"travel_cost":{"terrestre":{"CRIACOIN":28}},"scene":""}
+  },
+  "special_locations": {
+    "pratigi": {"municipio":"Ituberá","evento_ciclico":"paralelo_pratigi","faccao":"neutral","bioma":"praia_apa","tags":["areia_fofa","mobilidade_instavel","plateia","por_do_sol","batida_bpm","strobo"],"note":"Pratigi pertence ao eixo territorial de Ituberá neste cânone; não é nó de Itacaré."}
+  },
+  "travel": {
+    "terrestre":{"pressao_faccao":"LEM","risco_se_rep_baixa":"emboscada_pedagio"},
+    "fluvial":{"pressao_faccao":"NTM","pagamento_preferencial":"MOLHO"}
+  },
+  "apa_layer":{"visual":"borda_verde_pulsante","regra":"degradar aumenta roxo e pode fechar rota"},
+  "_invariant":"Onze municípios primários. Pratigi é localização especial vinculada a Ituberá."
+}
