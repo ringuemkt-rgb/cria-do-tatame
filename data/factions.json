@@ -1,97 +1,87 @@
 {
-  "version": "0.3.0",
+  "version": "4.0.0",
   "language": "pt-BR",
-  "design_note": "Faccoes 100% ficcionais. Crime e corrupcao aparecem como consequencia narrativa, nao como tutorial operacional nem glorificacao.",
+  "design_note": "Facções 100% ficcionais. Crime e corrupção aparecem como consequência narrativa, nunca como tutorial operacional ou glorificação.",
+  "_invariant": "A lista factions contém exatamente LEM, NTM e ALE.",
   "factions": [
     {
-      "id": "terreiro",
-      "name": "Terreiro da Luta",
-      "axis": "honra",
-      "description": "Familia de treino, disciplina, protecao comunitaria e base moral.",
-      "system_role": "legitimidade_comunitaria"
+      "id": "LEM",
+      "legacy_ids": ["la_ele_mil_vezes"],
+      "name": "Lá Ele Mil Vezes",
+      "color": "#D92323",
+      "axis": "pressao_sombra",
+      "leader": "coronel_damiao",
+      "face": "oni_da_lapa",
+      "nuclei": ["bonde_dique", "patrulha_br"],
+      "description": "Força terrestre, pressão física, controle de acessos e circuito clandestino.",
+      "system_role": "pressao_territorial"
     },
+    {
+      "id": "NTM",
+      "legacy_ids": ["nos_tem_um_molho"],
+      "name": "Nós Tem Um Molho",
+      "color": "#2D5016",
+      "axis": "caixa_hype",
+      "leader": "mare_solange",
+      "face": "cassio_molho",
+      "nuclei": ["travessia", "ponta_de_areia", "lavanderia_festival"],
+      "description": "Rotas fluviais, eventos, caixa, favores e captura de acesso.",
+      "system_role": "economia_e_circulacao"
+    },
+    {
+      "id": "ALE",
+      "legacy_ids": ["os_aleluia"],
+      "name": "Os Aleluiados",
+      "color": "#4B0082",
+      "axis": "influencia_moral",
+      "leader": "pastor_enoque",
+      "face": "irmao_calebe",
+      "nuclei": ["obra_nova", "congregacao_rua"],
+      "description": "Coerção discursiva, influência comunitária, culpa e máscara institucional.",
+      "system_role": "poder_moral_e_institucional"
+    }
+  ],
+  "institutions": [
     {
       "id": "circuito_oficial",
       "name": "Circuito Oficial",
       "axis": "legado",
-      "description": "Torneios, regras, ranking e visibilidade legitima.",
+      "description": "Torneios, regras, ranking e visibilidade legítima.",
       "system_role": "instituicao_neutra_disputada"
     },
     {
       "id": "cria_live",
       "name": "Cria Live",
       "axis": "hype",
-      "description": "Feed social, torcida, polemica, reputacao e fama rapida.",
+      "description": "Feed social, torcida, polêmica, reputação e fama rápida.",
       "system_role": "arena_publica_disputada"
+    }
+  ],
+  "community_axes": [
+    {
+      "id": "terreiro",
+      "name": "Terreiro da Luta",
+      "axis": "honra",
+      "description": "Hub neutro, família de treino, disciplina e proteção comunitária.",
+      "system_role": "local_e_legitimidade"
+    },
+    {
+      "id": "raiz",
+      "name": "Raiz do Baixo Sul",
+      "axis": "raiz",
+      "description": "Comunidade, mangue, memória ancestral, família e defesa territorial.",
+      "system_role": "flag_narrativa"
     },
     {
       "id": "atalhos",
       "name": "Atalhos",
       "axis": "sombra",
-      "description": "Caminhos faceis que cobram preco moral.",
+      "description": "Caminhos fáceis que cobram preço moral.",
       "system_role": "tentacao_narrativa"
-    },
-    {
-      "id": "raiz",
-      "name": "Casa da Leoa — Raiz do Baixo Sul",
-      "axis": "raiz",
-      "description": "Comunidade, mangue, memoria ancestral, familia e defesa territorial.",
-      "system_role": "coesao_e_territorio"
-    },
-    {
-      "id": "os_aleluia",
-      "name": "Os Aleluia",
-      "axis": "honra_sombra",
-      "tagline": "Fe, Disciplina e Honra",
-      "colors": ["azul", "dourado", "branco"],
-      "symbol": "pomba_ficcional_com_ramo_e_cruz_abstrata",
-      "territories": ["arena_do_dique", "budokan_das_aguas", "igreja_central_ficcional"],
-      "description": "Circuito oficial, tradicao religiosa, controle de torneios e poder institucional de aparencia limpa.",
-      "system_role": "ordem_e_prestigio"
-    },
-    {
-      "id": "la_ele_mil_vezes",
-      "name": "La Ele Mil Vezes",
-      "axis": "sombra_foco",
-      "tagline": "O Olho Tudo Ve, O Tatame Tudo Sabe",
-      "colors": ["roxo", "vermelho", "dourado"],
-      "symbol": "olho_ficcional_e_mao_abstrata",
-      "territories": ["colonia_nishimura", "ferro_velho_da_lapa", "beco_do_engenho"],
-      "description": "Informacao, observacao de luta, arquivos, rumores e poder oculto.",
-      "system_role": "inteligencia_e_previsao"
-    },
-    {
-      "id": "nos_tem_um_molho",
-      "name": "Nos Tem Um Molho",
-      "axis": "hype_sombra",
-      "tagline": "Quem Prova, Nao Esquece",
-      "colors": ["laranja", "amarelo", "vermelho"],
-      "symbol": "pimenta_molho_pilao",
-      "territories": ["zambiapunga", "praia_de_pratigi", "evento_privado_ficcional"],
-      "description": "Fama, cultura popular, eventos, viralizacao e dependencia de imagem.",
-      "system_role": "midia_e_caixa"
-    },
-    {
-      "id": "dragao_vermelho",
-      "name": "Triade Dragao Vermelho",
-      "axis": "sombra_inteligencia",
-      "tagline": "A rota vale mais que o ruido",
-      "colors": ["vermelho_escuro", "preto", "jade"],
-      "symbol": "dragao_ficcional_em_circulo_logistico",
-      "territories": ["entreposto_dragao", "evento_privado_ficcional"],
-      "description": "Rede ficcional de logistica, intercambios esportivos, intermediarios e influencia internacional.",
-      "system_role": "logistica_e_infiltracao"
-    },
-    {
-      "id": "fantasma",
-      "name": "Agencia Fantasma",
-      "axis": "honra_sombra",
-      "tagline": "Proteger sem aparecer",
-      "colors": ["grafite", "cinza", "azul_profundo"],
-      "symbol": "mascara_ficcional_fragmentada",
-      "territories": ["base_fantasma"],
-      "description": "Rede clandestina ficcional de contrainteligencia e protecao regional, marcada por segredo e paranoia.",
-      "system_role": "contrainteligencia_e_protecao"
     }
+  ],
+  "retired_lore": [
+    {"id":"dragao_vermelho","name":"Dragão Vermelho","runtime":false,"note":"Grupo aposentado; memória histórica, nunca facção ativa."},
+    {"id":"fantasma","name":"Fantasma","runtime":false,"note":"Grupo aposentado; memória histórica, nunca facção ativa."}
   ]
 }
