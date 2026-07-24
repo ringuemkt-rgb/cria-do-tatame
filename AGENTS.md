@@ -22,12 +22,14 @@ Assistentes sem memória persistente carregam estes arquivos em toda sessão:
 2. `docs/DOC_PRECEDENCE.md`;
 3. `.agents/skills/cria-do-tatame-game-director/SKILL.md`;
 4. módulos `references/` da skill;
-5. contrato SUPREME e cânone aplicável ao lote.
+5. contrato SUPREME e cânone aplicável ao lote;
+6. para qualquer trabalho visual: `docs/art_bible/OFFICIAL_VISUAL_STANDARD_V1.md` e `data/visual/official_visual_contract_v1.json`.
 
 Validar a ativação com:
 
 ```bash
 python .agents/skills/cria-do-tatame-game-director/scripts/validate_skill.py
+python tools/validate_official_visual_contract.py
 ```
 
 ## Skill operacional obrigatória
@@ -73,17 +75,39 @@ Não transformar o projeto em galeria de arte. Primeiro deve abrir, rodar, salva
 
 Qualquer referência antiga a Caio Ravel ou Ruan “Cria” é legado e não deve ir para UI, campanha principal ou dados finais.
 
+## Logo e identidade visual oficiais
+
+A logo oficial completa do jogo é o lockup `cdt_primary_silverback_lockup_v1`, formado por:
+
+- Silverback frontal;
+- óculos aviador dourados;
+- halo de Disciplina, Foco, Respeito e Evolução;
+- wordmark `CRIA DO TATAME`;
+- assinatura `JIU-JITSU É TUDO`.
+
+O nome oficial do produto é **Cria do Tatame – Pressão**. Não redesenhar, regenerar por IA para shipping, distorcer, recolorir ou incorporar marcas de terceiros à logo.
+
+Toda produção visual deve obedecer:
+
+- `docs/art_bible/OFFICIAL_VISUAL_STANDARD_V1.md`;
+- `docs/art_bible/VISUAL_RECONCILIATION_MATRIX_V1.md`;
+- `data/visual/official_visual_contract_v1.json`;
+- `docs/art_bible/references/REFERENCE_MANIFEST_V1.json`.
+
+Pranchas densas são referência editorial e nunca assets de runtime. O master vetorial/PNG transparente da logo continua `pending_asset_pr` até um lote de asset dedicado passar por QA.
+
 ## Ordem técnica obrigatória
 
 1. Executar o Handshake do protocolo.
 2. Executar `npm run validate:skill`.
-3. Executar `npm run quality` quando o ambiente permitir.
-4. Garantir que `project.godot` abre no Godot suportado pelo lote.
-5. Ligar e validar autoloads.
-6. Preservar o fluxo Main Menu → Terreiro → Combate → Resultado → Save.
-7. Implementar combate por posição e lado relativos de BJJ.
-8. Integrar carreira semanal, reputação, Cria Live, facções e patrocinadores.
-9. Só depois polir sprites, áudio, VFX e cutscenes.
+3. Executar `npm run validate:visual` quando a tarefa tocar marca, arte, UI, HUD, arenas ou sprites.
+4. Executar `npm run quality` quando o ambiente permitir.
+5. Garantir que `project.godot` abre no Godot suportado pelo lote.
+6. Ligar e validar autoloads.
+7. Preservar o fluxo Main Menu → Terreiro → Combate → Resultado → Save.
+8. Implementar combate por posição e lado relativos de BJJ.
+9. Integrar carreira semanal, reputação, Cria Live, facções e patrocinadores.
+10. Só depois polir sprites, áudio, VFX e cutscenes.
 
 O escopo completo e os gates de produção vivem em `docs/CRIA_DO_TATAME_SUPREME_BUILD_SPEC_V1.md`, `docs/GAME_BUILD_PROTOCOL.md`, nos documentos canônicos atuais e em `data/production/supreme_build_contract_v01.json`.
 
@@ -105,6 +129,8 @@ O escopo completo e os gates de produção vivem em `docs/CRIA_DO_TATAME_SUPREME
 - Não apagar arquivos úteis sem relatório de migração.
 - Não introduzir segunda engine, segundo cânone ou segundo backend de conteúdo.
 - Não versionar segredos, chaves, tokens, keystores ou credenciais.
+- Não gravar texto de UI dentro de sprites ou backgrounds de gameplay.
+- Não promover referência visual a asset final sem manifest, cena, licença e QA.
 
 ## Saída esperada de cada agente
 
