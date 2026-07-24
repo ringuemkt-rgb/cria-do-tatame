@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3]
+[gd_scene load_steps=3 format=3]
 
 [ext_resource type="Script" path="res://scenes/combat/CombatArenaV4.gd" id="1_script"]
+[ext_resource type="PackedScene" path="res://scenes/ui/SubmissionHUDV41.tscn" id="2_submission"]
 
 [node name="CombatArenaV4" type="Control"]
 layout_mode = 3
@@ -164,3 +165,5 @@ text = "DEFESA"
 custom_minimum_size = Vector2(145, 54)
 layout_mode = 2
 text = "ENCERRAR"
+
+[node name="SubmissionHUD" parent="." instance=ExtResource("2_submission")]
