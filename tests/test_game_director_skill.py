@@ -12,6 +12,8 @@ VALIDATOR = ROOT / ".agents/skills/cria-do-tatame-game-director/scripts/validate
 PROTOCOL = ROOT / "docs/GAME_BUILD_PROTOCOL.md"
 PRECEDENCE = ROOT / "docs/DOC_PRECEDENCE.md"
 SUPREME = ROOT / "docs/CRIA_DO_TATAME_SUPREME_BUILD_SPEC_V1.md"
+VISUAL_STANDARD = ROOT / "docs/art_bible/OFFICIAL_VISUAL_STANDARD_V1.md"
+VISUAL_CONTRACT = ROOT / "data/visual/official_visual_contract_v1.json"
 
 
 def test_skill_uses_agent_skills_frontmatter() -> None:
@@ -20,16 +22,19 @@ def test_skill_uses_agent_skills_frontmatter() -> None:
     assert header, "SKILL.md deve possuir frontmatter YAML"
     assert "name: cria-do-tatame-game-director" in header.group(1)
     assert re.search(r"^description:\s*\S", header.group(1), flags=re.MULTILINE)
-    assert 'version: "1.1.0"' in header.group(1)
+    assert 'version: "1.2.0"' in header.group(1)
 
 
-def test_agents_file_activates_skill_and_protocol() -> None:
+def test_agents_file_activates_skill_protocol_and_visual_contract() -> None:
     agents = (ROOT / "AGENTS.md").read_text(encoding="utf-8")
     assert "## 0. PROTOCOLO MESTRE DE CONSTRUÇÃO" in agents
     assert "docs/GAME_BUILD_PROTOCOL.md" in agents
     assert "docs/DOC_PRECEDENCE.md" in agents
     assert ".agents/skills/cria-do-tatame-game-director/SKILL.md" in agents
+    assert "OFFICIAL_VISUAL_STANDARD_V1.md" in agents
+    assert "official_visual_contract_v1.json" in agents
     assert "validate_skill.py" in agents
+    assert "validate_official_visual_contract.py" in agents
 
 
 def test_protocol_cross_references_are_bidirectional() -> None:
@@ -46,6 +51,12 @@ def test_protocol_cross_references_are_bidirectional() -> None:
     assert "docs/GAME_BUILD_PROTOCOL.md" in supreme
     assert "docs/DOC_PRECEDENCE.md" in supreme
     assert "docs/GAME_BUILD_PROTOCOL.md" in skill
+    assert "OFFICIAL_VISUAL_STANDARD_V1.md" in skill
+
+
+def test_visual_contract_files_exist() -> None:
+    assert VISUAL_STANDARD.exists()
+    assert VISUAL_CONTRACT.exists()
 
 
 def test_skill_validator_passes() -> None:
