@@ -25,7 +25,7 @@ func _run() -> void:
 	_assert(director != null, "FactionDirectorManager ausente")
 	_assert(cria_live != null, "CriaLiveManager ausente")
 	_assert(save_manager != null, "SaveManager ausente")
-	if director == null or world_state == null:
+	if director == null or world_state == null or faction_manager == null:
 		_finish()
 		return
 
@@ -33,23 +33,26 @@ func _run() -> void:
 	faction_manager.call("reset")
 	director.call("reset_director")
 	var initial: Dictionary = director.call("get_snapshot")
-	_assert(initial.get("factions", {}).size() == 7, "Diretor nao carregou sete faccoes")
-	_assert(initial.get("territories", {}).size() >= 15, "Diretor carregou poucos territorios")
+	var faction_ids: Array = initial.get("factions", {}).keys()
+	faction_ids.sort()
+	_assert(faction_ids == ["ALE", "LEM", "NTM"], "Diretor deve carregar exatamente LEM, NTM e ALE")
+	_assert(initial.get("territories", {}).size() == 15, "Diretor v3 deve carregar quinze territorios")
 	_assert(int(initial.get("pressure_level", -1)) == 0, "Pressao regional inicial deveria ser zero")
-	_assert(not director.call("get_faction", "dragao_vermelho").is_empty(), "Dragao Vermelho ausente")
-	_assert(not director.call("get_faction", "fantasma").is_empty(), "Fantasma ausente")
+	_assert(director.call("get_faction", "dragao_vermelho").is_empty(), "Dragao Vermelho nao pode ser faccao ativa")
+	_assert(director.call("get_faction", "fantasma").is_empty(), "Fantasma nao pode ser faccao ativa")
+	_assert(not director.call("get_faction", "os_aleluia").is_empty(), "Alias os_aleluia deve resolver para ALE")
 
 	var feed_before: int = int(cria_live.call("get_feed").size())
 	director.call("advance_faction_week", 2)
 	var after_start: Dictionary = director.call("get_snapshot")
-	_assert(after_start.get("active_operations", []).size() >= 4, "Faccoes nao iniciaram operacoes autonomas")
+	_assert(after_start.get("active_operations", []).size() == 3, "As tres faccoes devem iniciar operacoes autonomas")
 	director.call("advance_faction_week", 3)
 	director.call("advance_faction_week", 4)
 	var after_resolution: Dictionary = director.call("to_dict")
 	_assert(after_resolution.get("operation_history", []).size() > 0, "Nenhuma operacao foi resolvida")
 	_assert(cria_live.call("get_feed").size() > feed_before, "Operacoes nao produziram impacto no Cria Live")
 
-	var relation_before := float(faction_manager.call("get_relation", "os_aleluia"))
+	var relation_before := float(faction_manager.call("get_relation", "ALE"))
 	var memory: Dictionary = director.call(
 		"register_player_action",
 		"os_aleluia",
@@ -57,35 +60,50 @@ func _run() -> void:
 		-6.0,
 		5.0,
 		{
-			"territory_id": "arena_do_dique",
+			"territory_id": "valenca_dique",
 			"witnesses": ["tinker_bell", "capitao_beto_juiz"],
 			"pressure_effects": {"atencao_publica": 14, "exposicao_digital": 12},
-			"power_effects": {"coesao": -2}
+			"power_effects": {"coesao": -2},
 		}
 	)
 	_assert(not memory.is_empty(), "Acao do jogador nao gerou memoria")
-	_assert(float(faction_manager.call("get_relation", "os_aleluia")) < relation_before, "Relacao nao reagiu a acao do jogador")
-	_assert(director.call("get_recent_memories", "os_aleluia", 4).size() > 0, "Memoria da faccao nao foi registrada")
+	_assert(str(memory.get("faction_id", "")) == "ALE", "Memoria deve gravar ID canônico")
+	_assert(float(faction_manager.call("get_relation", "os_aleluia")) < relation_before, "Relacao ALE nao reagiu a acao do jogador")
+	_assert(director.call("get_recent_memories", "ALE", 4).size() > 0, "Memoria da faccao nao foi registrada")
 	_assert(int(director.call("get_pressure_level")) >= 1, "Pressao regional nao reagiu a exposicao")
 
-	var debt: Dictionary = director.call("add_debt", "nos_tem_um_molho", "imagem", 25.0, "cassio_molho_oliveira", 8, "Convite aceito em evento publico")
+	var debt: Dictionary = director.call("add_debt", "nos_tem_um_molho", "imagem", 25.0, "cassio_molho", 8, "Convite aceito em evento publico")
+	_assert(str(debt.get("faction_id", "")) == "NTM", "Divida deve normalizar para NTM")
 	_assert(str(debt.get("status", "")) == "active", "Divida nao foi criada")
-	_assert(director.call("get_active_debts", "nos_tem_um_molho").size() == 1, "Divida ativa nao foi encontrada")
+	_assert(director.call("get_active_debts", "NTM").size() == 1, "Divida ativa nao foi encontrada")
 	_assert(bool(director.call("settle_debt", str(debt.get("id", "")), "recusada")), "Divida nao foi resolvida")
 	_assert(director.call("get_active_debts", "nos_tem_um_molho").is_empty(), "Divida resolvida permaneceu ativa")
 
 	const SLOT := 9877
-	var saved_power := float(director.call("get_faction", "terreiro").get("power", {}).get("coesao", 0.0))
-	_assert(bool(save_manager.call("save_game", SLOT)), "Save v4 falhou")
-	director.call("adjust_power", "terreiro", "coesao", -25.0, "smoke_mutation")
-	_assert(bool(save_manager.call("load_game", SLOT)), "Load v4 falhou")
-	var loaded_power := float(director.call("get_faction", "terreiro").get("power", {}).get("coesao", 0.0))
+	var saved_power := float(director.call("get_faction", "ALE").get("power", {}).get("coesao", 0.0))
+	_assert(bool(save_manager.call("save_game", SLOT)), "Save v5 falhou")
+	director.call("adjust_power", "ALE", "coesao", -25.0, "smoke_mutation")
+	_assert(bool(save_manager.call("load_game", SLOT)), "Load v5 falhou")
+	var loaded_power := float(director.call("get_faction", "ALE").get("power", {}).get("coesao", 0.0))
 	_assert(is_equal_approx(saved_power, loaded_power), "Save nao restaurou estado politico")
 	save_manager.call("delete_save", SLOT)
 
-	faction_manager.call("load_from_dict", {"relations": {"os_aleluia": 12.0}, "heat": {}})
-	_assert(faction_manager.call("to_dict").get("relations", {}).has("dragao_vermelho"), "Migracao de save antigo perdeu nova faccao")
-	_assert(faction_manager.call("to_dict").get("relations", {}).has("fantasma"), "Migracao de save antigo perdeu Fantasma")
+	faction_manager.call("load_from_dict", {
+		"relations": {
+			"os_aleluia": 12.0,
+			"la_ele_mil_vezes": -5.0,
+			"nos_tem_um_molho": 8.0,
+			"terreiro": 44.0,
+			"dragao_vermelho": -30.0,
+		},
+		"heat": {"fantasma": 20.0},
+	})
+	var canonical_state: Dictionary = faction_manager.call("to_dict")
+	var canonical_relations: Dictionary = canonical_state.get("relations", {})
+	_assert(canonical_relations.keys().size() == 3, "FactionManager serializou mais de tres faccoes")
+	_assert(canonical_relations.has("ALE") and canonical_relations.has("LEM") and canonical_relations.has("NTM"), "Aliases nao migraram para os IDs canônicos")
+	_assert(not canonical_relations.has("dragao_vermelho"), "Grupo aposentado apareceu no estado ativo")
+	_assert(float(faction_manager.call("get_relation", "terreiro")) == 44.0, "Terreiro deveria sobreviver como eixo local")
 	_finish()
 
 func _finish() -> void:
