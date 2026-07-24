@@ -33,6 +33,7 @@ O principal falso positivo era objetivo: os validadores estáticos ficavam verde
 7. Workflow `Repository Quality` passou a executar o gate canônico e toda a suíte Python.
 8. Workflow `Full Game Hardening` passou a rodar em `main` e `release/**`, com concorrência e limites de tempo.
 9. Relatórios gerados localmente foram excluídos do versionamento.
+10. Workflows que executam o gate canônico agora instalam `Pillow`, e a auditoria de runtime aguarda a importação completa dos recursos Godot com `--import`.
 
 ## Validação após as correções
 
