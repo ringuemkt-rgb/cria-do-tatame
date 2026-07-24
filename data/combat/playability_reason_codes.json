@@ -1,0 +1,16 @@
+{
+  "schema_version": "1.0.0",
+  "reason_codes": {
+    "OK": "combat.playability.ok",
+    "DECISION_LOCKED": "combat.playability.decision_locked",
+    "FIGHTER_MISSING": "combat.playability.fighter_missing",
+    "CARD_MISSING": "combat.playability.card_missing",
+    "CARD_NOT_IN_LOADOUT": "combat.playability.card_not_in_loadout",
+    "CARD_FORBIDDEN_BY_PROFILE": "combat.playability.card_forbidden_by_profile",
+    "CARD_NOT_IN_HAND": "combat.playability.card_not_in_hand",
+    "POSITION_INVALID": "combat.playability.position_invalid",
+    "STORY_REQUIREMENT": "combat.playability.story_requirement",
+    "RULESET_FORBIDS_CARD": "combat.playability.ruleset_forbids_card",
+    "RESOURCE_INSUFFICIENT": "combat.playability.resource_insufficient"
+  }
+}
