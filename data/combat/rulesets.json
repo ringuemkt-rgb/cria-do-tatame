@@ -1,0 +1,11 @@
+{
+  "_doc": "6 rulesets. cartas_sujas: banida_desclassifica|livre|incentivada|falha_rito. objetivo_extra usado pelo loop de vitoria.",
+  "rulesets": {
+    "OFICIAL": {"caminhos_vitoria":["finalizacao","pontos","desistencia"],"timer_seg":300,"pontos_ativos":true,"arbitro":true,"plateia":true,"cartas_sujas":"banida_desclassifica","roxo_permitido":false,"objetivo_extra":""},
+    "CLANDESTINA": {"caminhos_vitoria":["finalizacao","desistencia"],"timer_seg":0,"pontos_ativos":false,"arbitro":false,"plateia":true,"cartas_sujas":"livre","roxo_permitido":true,"objetivo_extra":""},
+    "RITO": {"caminhos_vitoria":["ceder"],"timer_seg":0,"pontos_ativos":false,"arbitro":false,"plateia":false,"cartas_sujas":"falha_rito","roxo_permitido":false,"objetivo_extra":"ceder_sem_zerar_integridade"},
+    "FESTIVAL": {"caminhos_vitoria":["finalizacao","pontos"],"timer_seg":120,"pontos_ativos":true,"arbitro":true,"plateia":true,"cartas_sujas":"banida_desclassifica","roxo_permitido":false,"objetivo_extra":"lavagem_em_jogo"},
+    "DOJO": {"caminhos_vitoria":[],"timer_seg":0,"pontos_ativos":false,"arbitro":false,"plateia":false,"cartas_sujas":"banida_desclassifica","roxo_permitido":false,"objetivo_extra":"sem_vitoria_so_treino"},
+    "MORAL": {"caminhos_vitoria":["resistir_discurso"],"timer_seg":0,"pontos_ativos":false,"arbitro":false,"plateia":true,"cartas_sujas":"banida_desclassifica","roxo_permitido":false,"objetivo_extra":"vencer_sem_dar_dano_manter_foco"}
+  }
+}
