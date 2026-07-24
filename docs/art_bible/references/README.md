@@ -1,11 +1,16 @@
 # Referências visuais aprovadas
 
-Esta pasta contém referências fornecidas e aprovadas pelo dono do projeto em 2026-07-24.
+Esta pasta registra as referências fornecidas e aprovadas pelo dono do projeto em 2026-07-24.
 
-## Arquivos
+## Manifesto
 
-- `official_logo_reference_v1.png` — recorte da prancha de identidade que congela a direção da logo oficial completa: Silverback, óculos dourados, halo de valores, wordmark `CRIA DO TATAME` e assinatura `JIU-JITSU É TUDO`.
-- `visual_reference_contact_sheet_v1.jpg` — contato das nove pranchas analisadas para marca, mundo, roster, arenas, NPCs, combate e HUD.
+`REFERENCE_MANIFEST_V1.json` contém:
+
+- IDs das nove imagens-fonte analisadas;
+- dimensões;
+- hashes SHA-256 dos derivados locais aprovados;
+- declaração da logo oficial;
+- estado de importação dos binários.
 
 ## Status
 
@@ -13,11 +18,15 @@ Esta pasta contém referências fornecidas e aprovadas pelo dono do projeto em 2
 brand_status = official_reference
 production_status = master_pending
 runtime_status = not_runtime_asset
+binary_import_status = pending_asset_pr
 ```
 
-Os arquivos desta pasta não devem ser importados como sprites, backgrounds ou telas finais. Eles orientam a reconstrução técnica fiel em assets separados, com manifest, licença, cena de teste e QA.
+A direção da marca está congelada, mas os binários locais não foram enviados por este conector. Um PR de asset dedicado deverá incorporar:
 
-## Integridade
+- recorte de referência da logo;
+- contato das pranchas;
+- master vetorial;
+- PNG transparente 4K;
+- metadados de origem e direitos.
 
-- `official_logo_reference_v1.png` — SHA-256 `ee13214f30fd33d31faa60f394b16d1908e876c0f7d83897b7b2fa470670355b`
-- `visual_reference_contact_sheet_v1.jpg` — SHA-256 `a2b7a4a34ea221ee381a6eb068b6ded6e1fd712f91941f6ac4e43ba6f8e7c061`
+Nenhuma prancha densa deve ser importada como sprite, background ou tela final. Ela orienta a reconstrução técnica em assets separados, com manifest, licença, cena de teste e QA.
