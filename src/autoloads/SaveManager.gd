@@ -41,8 +41,8 @@ func save_game(slot_id := 1) -> bool:
 		data["nft_state"] = NFTManager.to_dict()
 	if has_node("/root/DeckManager"):
 		data["combat_deck_state"] = DeckManager.to_dict()
-	if has_node("/root/SkillHubV41") and get_node("/root/SkillHubV41").has_method("export_state"):
-		data["skill_hub_v41_state"] = get_node("/root/SkillHubV41").call("export_state")
+	if has_node("/root/CombatManager") and CombatManager.has_method("export_v41_state"):
+		data["combat_v41_state"] = CombatManager.export_v41_state()
 	var path := get_slot_path(slot_id)
 	if not _write_atomic_json(path, data):
 		push_error("[SaveManager] Falha ao salvar slot %s de forma atomica." % slot_id)
@@ -137,8 +137,8 @@ func load_game(slot_id := 1) -> bool:
 		NFTManager.load_from_dict(parsed.get("nft_state", {}))
 	if has_node("/root/DeckManager"):
 		DeckManager.load_from_dict(parsed.get("combat_deck_state", {}))
-	if parsed.has("skill_hub_v41_state") and has_node("/root/SkillHubV41") and get_node("/root/SkillHubV41").has_method("import_state"):
-		get_node("/root/SkillHubV41").call("import_state", parsed["skill_hub_v41_state"])
+	if parsed.has("combat_v41_state") and has_node("/root/CombatManager") and CombatManager.has_method("import_v41_state"):
+		CombatManager.import_v41_state(parsed["combat_v41_state"])
 	SignalBus.save_loaded.emit(slot_id)
 	return true
 
