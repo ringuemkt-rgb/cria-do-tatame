@@ -1,0 +1,12 @@
+{
+  "version":"4.0.0",
+  "priority":["martir_do_tatame","ponte","cria_de_verdade","sombra","campeao_oco"],
+  "endings": {
+    "cria_de_verdade": {"name":"Cria de Verdade","boss":"vitor_limpo_ou_abrir_mao","ceremony_giver":"dende","result":"chave_do_terreiro"},
+    "campeao_oco": {"name":"Campeão Oco","boss":"vitoria_suja","ceremony_giver":"patrocinador_molho","result":"terreiro_fecha"},
+    "martir_do_tatame": {"name":"Mártir do Tatame","boss":"perder_final_de_proposito","ceremony_giver":"comunidade","result":"dossie_vaza"},
+    "sombra": {"name":"Sombra","boss":"oni_ou_novo_cassio","ceremony_giver":"underground","result":"ruan_novo_executor"},
+    "ponte": {"name":"Ponte","boss":"vitor_limpo_ou_abrir_mao","ceremony_giver":"leoa_e_dende","result":"terreiro_na_trilha_reconhecida"}
+  },
+  "moral_boss": {"id":"irmao_calebe","win_condition":"recusar_discurso_manter_foco","terrain_tag":"manto_olhar"}
+}

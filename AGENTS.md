@@ -2,9 +2,29 @@
 
 Este arquivo orienta Codex, Manus, agentes locais e qualquer assistente automatizado que trabalhe neste repositório.
 
+## Skill operacional obrigatória
+
+Para qualquer tarefa de construção, continuidade, auditoria, arte, narrativa, gestão, QA ou release do jogo, carregar e seguir:
+
+`.agents/skills/cria-do-tatame-game-director/SKILL.md`
+
+Também são obrigatórios os módulos referenciados pela skill:
+
+- `references/OPERATING_MODEL.md`;
+- `references/QUALITY_GATES.md`;
+- `references/TOOL_ROUTING.md`.
+
+A skill funciona como orquestradora do projeto e não substitui as fontes canônicas. Em caso de conflito, interromper a implementação, registrar o conflito e priorizar a decisão canônica mais recente e explicitamente aprovada.
+
+Validar a ativação com:
+
+```bash
+python .agents/skills/cria-do-tatame-game-director/scripts/validate_skill.py
+```
+
 ## Missão
 
-Construir **Cria do Tatame – Pressão**, jogo Godot 4.2+ para Android, PC e Web, com combate tático de Jiu-Jitsu Brasileiro, carreira, reputação, mundo vivo do Baixo Sul da Bahia e identidade visual preto/dourado premium.
+Construir **Cria do Tatame – Pressão**, jogo Godot 4.3+ para Android, PC e Web, preservando compatibilidade 4.2.2 enquanto o gate legado permanecer ativo, com combate tático de Jiu-Jitsu Brasileiro, carreira, reputação, mundo vivo do Baixo Sul da Bahia e identidade visual pixel art preto/dourado premium.
 
 ## Fonte única de verdade
 
@@ -27,20 +47,22 @@ Não transformar o projeto em galeria de arte. Primeiro deve abrir, rodar, salva
 - Estilo: pressão pesada, grip de ferro, top game dominante.
 - Poder: Silverback Grip.
 - Frase eixo: Ser forte é ser gentil.
+- Facções: exatamente `LEM`, `NTM` e `ALE`.
 
 Qualquer referência antiga a Caio Ravel ou Ruan “Cria” é legado e não deve ir para UI, campanha principal ou dados finais.
 
 ## Ordem técnica obrigatória
 
 1. Executar `npm run quality`.
-2. Garantir que `project.godot` abre no Godot 4.2+.
-3. Ligar e validar autoloads.
-4. Preservar o fluxo Main Menu → Terreiro → Combate → Resultado → Save.
-5. Implementar combate por estados relativos de BJJ.
-6. Integrar carreira semanal, reputação, Cria Live, facções e patrocinadores.
-7. Só depois polir sprites, áudio, VFX e cutscenes.
+2. Executar o validador da skill.
+3. Garantir que `project.godot` abre no Godot suportado pelo lote.
+4. Ligar e validar autoloads.
+5. Preservar o fluxo Main Menu → Terreiro → Combate → Resultado → Save.
+6. Implementar combate por posição e lado relativos de BJJ.
+7. Integrar carreira semanal, reputação, Cria Live, facções e patrocinadores.
+8. Só depois polir sprites, áudio, VFX e cutscenes.
 
-O escopo completo e os gates de produção vivem em `docs/CRIA_DO_TATAME_SUPREME_BUILD_SPEC_V1.md` e `data/production/supreme_build_contract_v01.json`. Um agente não pode reduzir essas metas nem declarar conclusão ignorando o contrato executável.
+O escopo completo e os gates de produção vivem em `docs/CRIA_DO_TATAME_SUPREME_BUILD_SPEC_V1.md`, nos documentos canônicos atuais e em `data/production/supreme_build_contract_v01.json`. Um agente não pode reduzir essas metas nem declarar conclusão ignorando o contrato executável.
 
 ## Contratos de arquitetura
 
@@ -49,6 +71,7 @@ O escopo completo e os gates de produção vivem em `docs/CRIA_DO_TATAME_SUPREME
 - Dados em `data/` precisam manter IDs estáveis e referências válidas.
 - Sistemas novos devem possuir ponto de entrada claro, teste ou checklist de validação e documentação mínima.
 - Código temporário deve conter prazo ou condição objetiva de remoção.
+- Não criar singleton, manager, deck, áudio ou cânone paralelo.
 
 ## Restrições
 
@@ -74,8 +97,8 @@ Todo agente deve entregar:
 ## Protocolo de autonomia
 
 - Trabalhar em lotes verticais jogáveis e commits focados.
-- Executar `npm run quality` antes e depois de cada lote.
-- Usar GitHub, geração de imagem, Hugging Face e Sites apenas nas funções autorizadas pelo contrato supremo.
+- Executar `npm run quality` e o validador da skill antes e depois de cada lote.
+- Usar GitHub, geração de imagem, Hugging Face e Sites apenas nas funções autorizadas pelo contrato supremo e pela skill.
 - Fixar versão e auditar licença antes de incorporar ferramenta externa.
 - Parar diante de conflito de canon, licença incerta, biomecânica insegura, credencial ausente ou ação destrutiva.
 - Nunca confundir conceito gerado, placeholder, mockup ou fila de produção com asset final integrado.

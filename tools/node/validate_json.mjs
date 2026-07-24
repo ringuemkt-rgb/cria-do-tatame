@@ -1,21 +1,32 @@
 import { readFile, readdir } from "node:fs/promises";
-import { join } from "node:path";
+import { join, relative } from "node:path";
 
 const folders = ["data", "schemas"];
 let checked = 0;
 let failed = false;
 
+const walkJson = async (folder) => {
+  const entries = await readdir(folder, { withFileTypes: true }).catch(() => []);
+  const nested = await Promise.all(
+    entries.map(async (entry) => {
+      const path = join(folder, entry.name);
+      if (entry.isDirectory()) return walkJson(path);
+      return entry.isFile() && entry.name.endsWith(".json") ? [path] : [];
+    }),
+  );
+  return nested.flat();
+};
+
 for (const folder of folders) {
-  const files = await readdir(folder).catch(() => []);
-  for (const file of files.filter((name) => name.endsWith(".json"))) {
-    const filePath = join(folder, file);
+  const files = (await walkJson(folder)).sort();
+  for (const filePath of files) {
     checked += 1;
     try {
       JSON.parse(await readFile(filePath, "utf8"));
-      console.log(`OK ${filePath}`);
+      console.log(`OK ${relative(".", filePath)}`);
     } catch (error) {
       failed = true;
-      console.error(`INVALID ${filePath}: ${error.message}`);
+      console.error(`INVALID ${relative(".", filePath)}: ${error.message}`);
     }
   }
 }

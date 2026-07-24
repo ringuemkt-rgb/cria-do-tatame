@@ -1,0 +1,42 @@
+{
+  "schema_version": 3,
+  "faccoes": {
+    "LEM": {
+      "nome": "Lá Ele Mil Vezes",
+      "cor": "#D92323",
+      "lider": "Coronel Damião",
+      "rosto": "oni_da_lapa",
+      "nucleos": ["bonde_dique", "patrulha_br"]
+    },
+    "NTM": {
+      "nome": "Nós Tem Um Molho",
+      "cor": "#2D5016",
+      "lider": "Maré Solange",
+      "rosto": "cassio_molho",
+      "nucleos": ["travessia", "ponta_de_areia", "lavanderia_festival"]
+    },
+    "ALE": {
+      "nome": "Os Aleluiados",
+      "cor": "#4B0082",
+      "lider": "Pastor Enoque",
+      "rosto": "irmao_calebe",
+      "nucleos": ["obra_nova", "congregacao_rua"],
+      "mascara_lei": "montenegro"
+    }
+  },
+  "nucleos": {
+    "bonde_dique": {"faccao_pai": "LEM"},
+    "patrulha_br": {"faccao_pai": "LEM"},
+    "travessia": {"faccao_pai": "NTM"},
+    "ponta_de_areia": {"faccao_pai": "NTM"},
+    "lavanderia_festival": {"faccao_pai": "NTM"},
+    "obra_nova": {"faccao_pai": "ALE"},
+    "congregacao_rua": {"faccao_pai": "ALE"}
+  },
+  "lei": {
+    "PF_limpa": "verena",
+    "PM_honesta": "reis",
+    "PM_suja": "montenegro"
+  },
+  "_invariante": "EXATAMENTE 3 facções; núcleos não são facções"
+}

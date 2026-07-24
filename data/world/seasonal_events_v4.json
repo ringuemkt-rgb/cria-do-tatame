@@ -1,0 +1,14 @@
+{
+  "version": "4.0.0",
+  "eventos": [
+    {"id":"zambiapunga","janela":"31-10->01-11","local":"nilo_pecanha","tipo":"cultura","mecanicas":["plateia","rito","cria_live"],"base_canonica":"celebracao regional de matriz bantu tratada com respeito"},
+    {"id":"paralelo_pratigi","ciclo":"verao","local":"pratigi_itubera","tipo":"festival","mecanicas":["batida_bpm","strobo","lavagem_MOLHO_CRIACOIN","informante","escolha_ambiental"]},
+    {"id":"sao_joao","janela":"junho","local":"todos","tipo":"cultura","mecanicas":["plateia","economia_local","rotas_noturnas"]},
+    {"id":"chuvas_itubera","janela":"fev-mar","local":"itubera","tipo":"clima","mecanicas":["lama","rota_interdita","apoio_comunitario"]}
+  ],
+  "operacoes_ficticias": [
+    {"id":"op_carimbo","alvo":"grilagem_ficcional_maranau_camamu_cairu","npc":"verena","mecanicas":["coletar_prova","rota_apa","nao_letal"]},
+    {"id":"op_tres_mangues","alvo":"rede_ficcional_LEM","npc":"ficco_sul_ficcional","mecanicas":["informante","pressao_regional","escape"]}
+  ],
+  "safety":"Somente nomes e operações fictícios no runtime; nenhuma operação policial real é reproduzida."
+}

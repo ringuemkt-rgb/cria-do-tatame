@@ -1,0 +1,80 @@
+{
+  "schema_version": "1.0.0",
+  "updated_at": "2026-07-24",
+  "policy": {
+    "status_values": [
+      "pending",
+      "passed",
+      "failed",
+      "blocked"
+    ],
+    "passed_requires": [
+      "commit_sha",
+      "checked_at",
+      "evidence"
+    ],
+    "completion_requires_all_passed": true
+  },
+  "gates": {
+    "npm_run_quality": {
+      "status": "pending",
+      "owner": "engineering",
+      "evidence": null
+    },
+    "godot_headless_import": {
+      "status": "pending",
+      "owner": "engineering",
+      "evidence": null
+    },
+    "godot_parser_check": {
+      "status": "pending",
+      "owner": "engineering",
+      "evidence": null
+    },
+    "vertical_slice_smoke": {
+      "status": "pending",
+      "owner": "gameplay",
+      "evidence": null
+    },
+    "save_load_roundtrip": {
+      "status": "pending",
+      "owner": "engineering",
+      "evidence": null
+    },
+    "android_arm64_export": {
+      "status": "pending",
+      "owner": "release",
+      "evidence": null
+    },
+    "android_physical_device_playtest": {
+      "status": "pending",
+      "owner": "qa",
+      "evidence": null
+    },
+    "windows_export_smoke": {
+      "status": "pending",
+      "owner": "release",
+      "evidence": null
+    },
+    "asset_license_audit": {
+      "status": "pending",
+      "owner": "art",
+      "evidence": null
+    },
+    "audio_loudness_audit": {
+      "status": "pending",
+      "owner": "audio",
+      "evidence": null
+    },
+    "accessibility_review": {
+      "status": "pending",
+      "owner": "qa",
+      "evidence": null
+    },
+    "canon_review": {
+      "status": "pending",
+      "owner": "narrative",
+      "evidence": null
+    }
+  }
+}

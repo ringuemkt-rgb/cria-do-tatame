@@ -4,28 +4,32 @@ on:
   push:
     paths:
       - "data/factions/**"
-      - "data/world/faction_territories_v02.json"
+      - "data/world/faction_territories_v3.json"
       - "src/autoloads/FactionManager.gd"
-      - "src/autoloads/FactionDirectorManager.gd"
+      - "src/autoloads/FactionDirectorV3.gd"
+      - "src/compat/FactionSaveMigrationV3.gd"
       - "src/autoloads/FactionAIPlanBridge.gd"
       - "src/autoloads/CriaLiveManager.gd"
       - "src/autoloads/SaveManager.gd"
       - "src/autoloads/SignalBus.gd"
       - "tests/test_faction_director_data.py"
       - "tests/faction_director_smoke.gd"
+      - "tools/lint_canon_v4.py"
       - "project.godot"
   pull_request:
     paths:
       - "data/factions/**"
-      - "data/world/faction_territories_v02.json"
+      - "data/world/faction_territories_v3.json"
       - "src/autoloads/FactionManager.gd"
-      - "src/autoloads/FactionDirectorManager.gd"
+      - "src/autoloads/FactionDirectorV3.gd"
+      - "src/compat/FactionSaveMigrationV3.gd"
       - "src/autoloads/FactionAIPlanBridge.gd"
       - "src/autoloads/CriaLiveManager.gd"
       - "src/autoloads/SaveManager.gd"
       - "src/autoloads/SignalBus.gd"
       - "tests/test_faction_director_data.py"
       - "tests/faction_director_smoke.gd"
+      - "tools/lint_canon_v4.py"
       - "project.godot"
 
 jobs:
@@ -36,8 +40,9 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
-      - run: pip install pytest
-      - run: pytest -q tests/test_faction_director_data.py
+      - run: python -m pip install --disable-pip-version-check pytest
+      - run: python tools/lint_canon_v4.py
+      - run: pytest -q tests/test_faction_director_data.py tests/test_v4_integration_contract.py
       - run: python tools/cria_forge/cria_forge.py validate
 
   faction-godot-smoke:
@@ -45,7 +50,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Download Godot 4.2.2
+      - name: Download Godot 4.2.2 compatibility gate
         run: |
           curl -L --fail --retry 3 \
             -o godot.zip \
@@ -59,7 +64,7 @@ jobs:
         shell: bash
         run: |
           set -o pipefail
-          ./godot --headless --editor --path . --quit 2>&1 | tee reports/faction_director/import.log
+          timeout 180 ./godot --headless --editor --path . --import 2>&1 | tee reports/faction_director/import.log
       - name: Run faction simulation smoke
         shell: bash
         run: |

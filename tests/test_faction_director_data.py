@@ -4,24 +4,18 @@ import json
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
+CANONICAL = {"LEM", "NTM", "ALE"}
 
 
 def load(relative: str) -> dict:
     return json.loads((ROOT / relative).read_text(encoding="utf-8"))
 
 
-def test_seven_active_factions_have_complete_identity() -> None:
-    data = load("data/factions/faction_director_v02.json")
+def test_exactly_three_active_factions_have_complete_identity() -> None:
+    data = load("data/factions/faction_director_v3.json")
     factions = data["factions"]
-    assert set(factions) == {
-        "terreiro",
-        "os_aleluia",
-        "la_ele_mil_vezes",
-        "nos_tem_um_molho",
-        "raiz",
-        "dragao_vermelho",
-        "fantasma",
-    }
+    assert set(factions) == CANONICAL
+    assert data["faction_ids"] == ["LEM", "NTM", "ALE"]
     dimensions = set(data["power_dimensions"])
     for faction_id, faction in factions.items():
         assert faction["desire"], faction_id
@@ -34,10 +28,11 @@ def test_seven_active_factions_have_complete_identity() -> None:
         assert faction["leader"]
         assert faction["succession_candidates"]
         assert faction["combat_doctrine"]["preferred_actions"]
+        assert faction["color"] in {"#D92323", "#2D5016", "#4B0082"}
 
 
 def test_operation_weights_reference_existing_templates() -> None:
-    director = load("data/factions/faction_director_v02.json")
+    director = load("data/factions/faction_director_v3.json")
     operations = load("data/factions/faction_operations_v02.json")["operations"]
     categories = {operation["category"] for operation in operations}
     ids = [operation["id"] for operation in operations]
@@ -59,28 +54,32 @@ def test_operation_weights_reference_existing_templates() -> None:
         }
 
 
-def test_territories_reference_known_factions() -> None:
-    factions = set(load("data/factions/faction_director_v02.json")["factions"])
-    world = load("data/world/faction_territories_v02.json")
+def test_v3_territories_reference_only_canonical_factions() -> None:
+    world = load("data/world/faction_territories_v3.json")
     territories = world["territories"]
-    assert len(territories) >= 15
+    assert len(territories) == 15
     for territory_id, territory in territories.items():
-        assert territory["owner"] in factions | {"neutral"}, territory_id
-        assert set(territory.get("challengers", [])).issubset(factions), territory_id
+        assert territory["owner"] in CANONICAL | {"neutral"}, territory_id
+        assert set(territory.get("challengers", [])).issubset(CANONICAL), territory_id
         assert 0 <= float(territory["control"]) <= 100
         assert 0 <= float(territory["apoio_popular"]) <= 100
         assert 0 <= float(territory["seguranca"]) <= 100
         assert 0 <= float(territory["renda"]) <= 100
     for rivalry in world["initial_rivalries"]:
-        assert rivalry["a"] in factions
-        assert rivalry["b"] in factions
+        assert rivalry["a"] in CANONICAL
+        assert rivalry["b"] in CANONICAL
         assert rivalry["a"] != rivalry["b"]
 
 
-def test_core_catalog_contains_new_canonical_factions() -> None:
-    core = load("data/factions.json")
-    ids = {item["id"] for item in core["factions"]}
-    assert {"dragao_vermelho", "fantasma", "raiz"}.issubset(ids)
+def test_retired_groups_and_axes_are_not_active_factions() -> None:
+    manager = (ROOT / "src/autoloads/FactionManager.gd").read_text(encoding="utf-8")
+    director = (ROOT / "src/autoloads/FactionDirectorV3.gd").read_text(encoding="utf-8")
+    assert 'const ALL_FACTIONS := ["LEM", "NTM", "ALE"]' in manager
+    assert 'const CANONICAL_IDS := ["LEM", "NTM", "ALE"]' in director
+    assert 'const NON_FACTION_AXES := ["terreiro", "raiz", "cria_live", "circuito_oficial"]' in manager
+    assert 'const RETIRED_IDS := ["dragao_vermelho", "fantasma"]' in manager
+    for forbidden in ("terreiro", "raiz", "dragao_vermelho", "fantasma"):
+        assert forbidden not in load("data/factions/faction_director_v3.json")["factions"]
 
 
 def test_runtime_contracts_are_registered() -> None:
@@ -88,20 +87,22 @@ def test_runtime_contracts_are_registered() -> None:
     signal_bus = (ROOT / "src/autoloads/SignalBus.gd").read_text(encoding="utf-8")
     save_manager = (ROOT / "src/autoloads/SaveManager.gd").read_text(encoding="utf-8")
     live = (ROOT / "src/autoloads/CriaLiveManager.gd").read_text(encoding="utf-8")
-    assert 'FactionDirectorManager="*res://src/autoloads/FactionDirectorManager.gd"' in project
+    assert 'FactionDirectorManager="*res://src/autoloads/FactionDirectorV3.gd"' in project
     assert 'FactionAIPlanBridge="*res://src/autoloads/FactionAIPlanBridge.gd"' in project
     assert "signal faction_operation_started" in signal_bus
     assert "signal faction_leadership_changed" in signal_bus
     assert 'data["faction_director_state"]' in save_manager
+    assert "const SAVE_VERSION := 5" in save_manager
+    assert "FactionSaveMigrationV3Script.migrate" in save_manager
     assert 'data["cria_live_state"]' in save_manager
     assert "func create_faction_post" in live
 
 
 def test_no_secret_or_pay_to_win_contract_was_added() -> None:
     paths = [
-        ROOT / "data/factions/faction_director_v02.json",
+        ROOT / "data/factions/faction_director_v3.json",
         ROOT / "data/factions/faction_operations_v02.json",
-        ROOT / "src/autoloads/FactionDirectorManager.gd",
+        ROOT / "src/autoloads/FactionDirectorV3.gd",
     ]
     combined = "\n".join(path.read_text(encoding="utf-8").lower() for path in paths)
     assert "openrouter_api_key=" not in combined

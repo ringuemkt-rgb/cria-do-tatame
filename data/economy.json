@@ -1,16 +1,42 @@
 {
-  "version": "0.1.0",
-  "currency": "BRL",
+  "version": "4.0.0",
+  "legacy_currency": "BRL",
   "starting_money": 0,
-  "training_costs": {
-    "basic": 0,
-    "technical": 10,
-    "physical": 10,
-    "recovery": 15
+  "training_costs": {"basic":0,"technical":10,"physical":10,"recovery":15},
+  "fight_rewards": {"local_sparring":0,"official_match":50,"regional_event":120},
+  "moedas": {
+    "CRIACOIN": {
+      "simbolo": "₵",
+      "cor": "#F2C230",
+      "tipo": "limpa_rastreavel",
+      "saldo_inicial": 0,
+      "ganho": ["luta_limpa","treino","trabalho","premio_circuito"],
+      "compra": ["gi","equipamento","treino","viagem_terrestre","skill_tree"],
+      "moral": {"honra":1,"hype":1,"roxo":0}
+    },
+    "MOLHO": {
+      "simbolo": "💵",
+      "cor": "#2D5016",
+      "tipo": "cinza_nao_rastreavel",
+      "saldo_inicial": 0,
+      "ganho": ["underground","favor","pedagio","festival_lavagem"],
+      "compra": ["viagem_fluvial","seguranca","atalho","suborno_narrativo"],
+      "moral": {"honra":-1,"hype":1,"roxo":2,"faccao_NTM":1}
+    }
   },
-  "fight_rewards": {
-    "local_sparring": 0,
-    "official_match": 50,
-    "regional_event": 120
-  }
+  "lavagem": {
+    "local": "paralelo_pratigi",
+    "entrada": "MOLHO",
+    "saida": "CRIACOIN",
+    "taxa_base": 0.65,
+    "missao_informante": "fotografar_contador",
+    "recompensa": {"prova_pf":1},
+    "risco": "identidade_vazou"
+  },
+  "regras": [
+    {"id":"ntm_marcacao","when":{"molho_min":5000,"honra_max":0},"then":{"ntm_marcacao":2}},
+    {"id":"pedagio_fluvial","when":{"viagem":"fluvial","pagamento":"CRIACOIN"},"then":{"custo_mult":1.5}},
+    {"id":"sem_poder_por_molho","when":{"categoria":"combate"},"then":{"molho_permitido":false}}
+  ],
+  "_invariant": "Molho nunca compra carta, atributo, nó de skill ou vantagem de combate."
 }

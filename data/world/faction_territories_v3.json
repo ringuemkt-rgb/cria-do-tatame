@@ -1,0 +1,26 @@
+{
+  "version": "3.0.0",
+  "territories": {
+    "itubera_terreiro": {"name":"Terreiro da Luta","municipio":"itubera","owner":"neutral","resource":"raiz","renda":30,"seguranca":72,"apoio_popular":82,"control":55,"challengers":["LEM","NTM","ALE"],"event_tags":["treino","hub"]},
+    "itubera_centro": {"name":"Centro de Ituberá","municipio":"itubera","owner":"neutral","resource":"comercio","renda":58,"seguranca":54,"apoio_popular":61,"control":42,"challengers":["NTM","ALE"],"event_tags":["midia","evento"]},
+    "itubera_mangue": {"name":"Manguezal de Ituberá","municipio":"itubera","owner":"NTM","resource":"rota_fluvial","renda":47,"seguranca":41,"apoio_popular":57,"control":58,"challengers":["LEM"],"event_tags":["apa","rito"]},
+    "valenca_dique": {"name":"Arena do Dique","municipio":"valenca","owner":"LEM","resource":"arena","renda":64,"seguranca":39,"apoio_popular":48,"control":68,"challengers":["NTM"],"event_tags":["torneio","evento"]},
+    "valenca_lapa": {"name":"Ferro Velho da Lapa","municipio":"valenca","owner":"LEM","resource":"underground","renda":52,"seguranca":28,"apoio_popular":34,"control":74,"challengers":["ALE"],"event_tags":["clandestino"]},
+    "taperoa_centro": {"name":"Centro de Taperoá","municipio":"taperoa","owner":"ALE","resource":"influencia","renda":45,"seguranca":59,"apoio_popular":63,"control":62,"challengers":["LEM"],"event_tags":["midia"]},
+    "nilo_pecanha_zambiapunga": {"name":"Circuito do Zambiapunga","municipio":"nilo_pecanha","owner":"neutral","resource":"cultura","renda":49,"seguranca":66,"apoio_popular":88,"control":35,"challengers":["ALE","NTM"],"event_tags":["evento","cultura"]},
+    "camamu_porto": {"name":"Porto de Camamu","municipio":"camamu","owner":"NTM","resource":"transporte","renda":73,"seguranca":46,"apoio_popular":52,"control":69,"challengers":["LEM"],"event_tags":["rota_fluvial"]},
+    "cairu_travessia": {"name":"Travessia de Cairu","municipio":"cairu","owner":"NTM","resource":"pedagio_fluvial","renda":78,"seguranca":43,"apoio_popular":45,"control":72,"challengers":["ALE"],"event_tags":["rota_fluvial","evento"]},
+    "marau_ponta_areia": {"name":"Ponta de Areia","municipio":"marau","owner":"NTM","resource":"acesso_praia","renda":67,"seguranca":44,"apoio_popular":39,"control":65,"challengers":["LEM","ALE"],"event_tags":["apa","evento"]},
+    "ibirapitanga_obra_nova": {"name":"Obra Nova","municipio":"ibirapitanga","owner":"ALE","resource":"expansao","renda":51,"seguranca":55,"apoio_popular":54,"control":64,"challengers":["LEM"],"event_tags":["obra","midia"]},
+    "tancredo_neves_congregacao": {"name":"Congregação de Rua","municipio":"presidente_tancredo_neves","owner":"ALE","resource":"rede_social","renda":42,"seguranca":58,"apoio_popular":67,"control":70,"challengers":["NTM"],"event_tags":["midia","evento"]},
+    "br101_patrulha": {"name":"Trecho da BR-101","municipio":"baixo_sul","owner":"LEM","resource":"rota_terrestre","renda":61,"seguranca":35,"apoio_popular":31,"control":71,"challengers":["NTM"],"event_tags":["rota_terrestre"]},
+    "itacare_circuito": {"name":"Circuito de Itacaré","municipio":"itacare","owner":"neutral","resource":"circuito_oficial","renda":75,"seguranca":70,"apoio_popular":72,"control":40,"challengers":["LEM","NTM","ALE"],"event_tags":["torneio","evento","midia"]},
+    "pratigi_festival": {"name":"Paralelo Pratigi","municipio":"itubera","owner":"neutral","resource":"festival","renda":82,"seguranca":50,"apoio_popular":58,"control":38,"challengers":["NTM","ALE","LEM"],"event_tags":["evento","festival","apa"]}
+  },
+  "initial_rivalries": [
+    {"a":"LEM","b":"NTM","stage":"provocacao","intensity":34},
+    {"a":"LEM","b":"ALE","stage":"vigilancia","intensity":22},
+    {"a":"NTM","b":"ALE","stage":"disputa_indireta","intensity":47}
+  ],
+  "_invariant": "Owners e challengers aceitam somente LEM, NTM, ALE ou neutral."
+}

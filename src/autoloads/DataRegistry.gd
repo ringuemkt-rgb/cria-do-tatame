@@ -41,6 +41,12 @@ var character_animation_catalog := {}
 var apixel_production_briefs := {}
 var arena_animation_flow := {}
 var combat_deck := {}
+var combat_cards_v41 := {}
+var combat_positions_v41 := {}
+var combat_rulesets_v41 := {}
+var factions_v3 := {}
+var faction_director_v3 := {}
+var faction_territories_v3 := {}
 var validation_report := {}
 
 const DATA_FILES := {
@@ -84,7 +90,13 @@ const DATA_FILES := {
 	"character_animation_catalog": "res://data/visual/character_animation_catalog_v01.json",
 	"apixel_production_briefs": "res://data/visual/apixel_production_briefs_v01.json",
 	"arena_animation_flow": "res://data/visual/arena_animation_flow_v01.json",
-	"combat_deck": "res://data/ruan_deck_inicial.json"
+	"combat_deck": "res://data/ruan_deck_inicial.json",
+	"combat_cards_v41": "res://data/combat/cards.json",
+	"combat_positions_v41": "res://data/combat/position_data.json",
+	"combat_rulesets_v41": "res://data/combat/rulesets.json",
+	"factions_v3": "res://data/factions/factions_v3.json",
+	"faction_director_v3": "res://data/factions/faction_director_v3.json",
+	"faction_territories_v3": "res://data/world/faction_territories_v3.json"
 }
 
 func _ready():
@@ -132,6 +144,12 @@ func load_all():
 	apixel_production_briefs = _load_raw("apixel_production_briefs")
 	arena_animation_flow = _load_raw("arena_animation_flow")
 	combat_deck = _load_raw("combat_deck")
+	combat_cards_v41 = _load_raw("combat_cards_v41")
+	combat_positions_v41 = _load_raw("combat_positions_v41")
+	combat_rulesets_v41 = _load_raw("combat_rulesets_v41")
+	factions_v3 = _load_raw("factions_v3")
+	faction_director_v3 = _load_raw("faction_director_v3")
+	faction_territories_v3 = _load_raw("faction_territories_v3")
 	validation_report = validate_core_data()
 	SignalBus.data_validation_finished.emit(validation_report)
 	SignalBus.data_loaded.emit()
@@ -211,7 +229,33 @@ func validate_core_data():
 		errors.append("deck de combate inicial possui menos de 10 cartas")
 	if combat_deck.get("owner_id", "") != "ruan_macacao":
 		errors.append("deck de combate inicial nao pertence a ruan_macacao")
-	return {"ok": errors.is_empty(), "errors": errors, "characters": characters.size(), "arenas": arenas.size(), "techniques": techniques.size(), "factions": factions.size()}
+	if combat_cards_v41.get("cartas", []).size() != 20:
+		errors.append("cards.json v4.1 deve possuir exatamente 20 cartas")
+	if combat_positions_v41.get("posicoes", {}).size() != 8:
+		errors.append("position_data.json deve possuir exatamente 8 posicoes")
+	if combat_rulesets_v41.get("rulesets", {}).size() != 6:
+		errors.append("rulesets.json deve possuir exatamente 6 regras")
+	var faction_ids: Array = factions.keys()
+	faction_ids.sort()
+	if faction_ids != ["ALE", "LEM", "NTM"]:
+		errors.append("data/factions.json deve carregar exatamente ALE, LEM e NTM")
+	var director_ids: Array = faction_director_v3.get("factions", {}).keys()
+	director_ids.sort()
+	if director_ids != ["ALE", "LEM", "NTM"]:
+		errors.append("Faction Director v3 deve carregar exatamente ALE, LEM e NTM")
+	if faction_territories_v3.get("territories", {}).size() != 15:
+		errors.append("Faction Director v3 deve possuir 15 territorios")
+	return {
+		"ok": errors.is_empty(),
+		"errors": errors,
+		"characters": characters.size(),
+		"arenas": arenas.size(),
+		"techniques": techniques.size(),
+		"factions": factions.size(),
+		"combat_cards_v41": combat_cards_v41.get("cartas", []).size(),
+		"combat_positions_v41": combat_positions_v41.get("posicoes", {}).size(),
+		"combat_rulesets_v41": combat_rulesets_v41.get("rulesets", {}).size(),
+	}
 
 func get_character_animation(character_id: String, action_id: String) -> Dictionary:
 	for entry_value in character_animation_catalog.get("entries", []):
@@ -228,6 +272,18 @@ func get_arena(id):
 
 func get_technique(id):
 	return techniques.get(str(id), {})
+
+func get_combat_card_v41(id):
+	for card_value in combat_cards_v41.get("cartas", []):
+		if str(card_value.get("id", "")) == str(id):
+			return card_value
+	return {}
+
+func get_combat_position_v41(id):
+	return combat_positions_v41.get("posicoes", {}).get(str(id), {})
+
+func get_combat_ruleset_v41(id):
+	return combat_rulesets_v41.get("rulesets", {}).get(str(id), {})
 
 func get_lore_character(id):
 	return character_bible.get("characters", {}).get(str(id), {})

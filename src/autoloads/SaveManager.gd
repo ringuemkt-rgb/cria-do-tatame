@@ -1,9 +1,13 @@
 extends Node
 
-const SAVE_VERSION := 4
+const FactionSaveMigrationV3Script = preload("res://src/compat/FactionSaveMigrationV3.gd")
+
+const SAVE_VERSION := 5
 const SAVE_PREFIX := "user://cria_save_"
 const SAVE_SUFFIX := ".json"
 const SAVE_PATH := "user://savegame.json"
+
+var last_migration_log: Array = []
 
 func save_game(slot_id := 1) -> bool:
 	var data: Dictionary = WorldState.to_dict()
@@ -37,6 +41,8 @@ func save_game(slot_id := 1) -> bool:
 		data["nft_state"] = NFTManager.to_dict()
 	if has_node("/root/DeckManager"):
 		data["combat_deck_state"] = DeckManager.to_dict()
+	if has_node("/root/CombatManager") and CombatManager.has_method("export_v41_state"):
+		data["combat_v41_state"] = CombatManager.export_v41_state()
 	var path := get_slot_path(slot_id)
 	if not _write_atomic_json(path, data):
 		push_error("[SaveManager] Falha ao salvar slot %s de forma atomica." % slot_id)
@@ -82,7 +88,7 @@ func _write_atomic_json(final_path: String, data: Dictionary) -> bool:
 
 func load_game(slot_id := 1) -> bool:
 	var path := get_slot_path(slot_id)
-	var parsed := _read_json_dictionary(path)
+	var parsed: Dictionary = _read_json_dictionary(path)
 	if parsed.is_empty():
 		var backup_path := path + ".bak"
 		parsed = _read_json_dictionary(backup_path)
@@ -90,6 +96,18 @@ func load_game(slot_id := 1) -> bool:
 			return false
 		if not _write_atomic_json(path, parsed):
 			push_warning("[SaveManager] Backup carregado, mas nao foi possivel restaurar o arquivo principal.")
+
+	if FactionSaveMigrationV3Script.needs_migration(parsed):
+		var original_version := int(parsed.get("save_version", 0))
+		parsed = FactionSaveMigrationV3Script.migrate(parsed)
+		last_migration_log = parsed.get("migration_v3_log", []).duplicate(true)
+		if not _write_atomic_json(path, parsed):
+			push_warning("[SaveManager] Save migrado em memoria, mas nao foi possivel persistir a versao v5.")
+		else:
+			print("[SaveManager] Save v%s migrado para v%s: %s" % [original_version, SAVE_VERSION, last_migration_log])
+	else:
+		last_migration_log = parsed.get("migration_v3_log", []).duplicate(true)
+
 	WorldState.load_from_dict(parsed)
 	if parsed.has("tinker_bond") and has_node("/root/TinkerBondManager"):
 		TinkerBondManager.load_from_dict(parsed["tinker_bond"])
@@ -119,6 +137,8 @@ func load_game(slot_id := 1) -> bool:
 		NFTManager.load_from_dict(parsed.get("nft_state", {}))
 	if has_node("/root/DeckManager"):
 		DeckManager.load_from_dict(parsed.get("combat_deck_state", {}))
+	if parsed.has("combat_v41_state") and has_node("/root/CombatManager") and CombatManager.has_method("import_v41_state"):
+		CombatManager.import_v41_state(parsed["combat_v41_state"])
 	SignalBus.save_loaded.emit(slot_id)
 	return true
 

@@ -22,6 +22,16 @@ signal technique_clash_resolved(result)
 signal card_xp_changed(card_id, xp, xp_to_next)
 signal deck_configuration_changed(deck_state)
 
+# Contratos do combate posicional v4.1.
+signal positional_mode_changed(active, ruleset_id)
+signal positional_snapshot_changed(snapshot)
+signal combat_hand_changed_v41(hand)
+signal combat_card_selected_v41(card_id)
+signal defense_window_opened_v41(window)
+signal dirty_move_attempted(card_id)
+signal moral_tension_changed(value)
+signal code_break_in_final(broken)
+
 # Contratos de compatibilidade PT-BR usados por módulos e conteúdo legado.
 # Mantidos explicitamente para que listeners antigos não falhem em silêncio.
 signal combate_iniciado(opponent_id)

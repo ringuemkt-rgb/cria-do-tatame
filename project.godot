@@ -1,4 +1,4 @@
-; Cria do Tatame - Godot 4.2+ base
+; Cria do Tatame - Godot 4.2 compatibility base / target 4.3+
 config_version=5
 
 [application]
@@ -8,14 +8,16 @@ run/main_scene="res://scenes/main_menu/MainMenu.tscn"
 
 [autoload]
 SignalBus="*res://src/autoloads/SignalBus.gd"
-DataRegistry="*res://src/autoloads/DataRegistry.gd"
+DataRegistry="*res://src/autoloads/DataRegistryV4.gd"
 DeckManager="*res://src/autoloads/DeckManager.gd"
 LocalAIManager="*res://src/autoloads/LocalAIManager.gd"
-WorldState="*res://src/autoloads/WorldState.gd"
+WorldState="*res://src/autoloads/WorldStateV4.gd"
+Economy="*res://src/autoloads/EconomyV4.gd"
+InformantSystem="*res://src/autoloads/InformantSystem.gd"
 WorldDirectorManager="*res://src/autoloads/WorldDirectorManager.gd"
 NFTManager="*res://src/autoloads/NFTManager.gd"
 SaveManager="*res://src/autoloads/SaveManager.gd"
-CombatManager="*res://src/autoloads/CombatManager.gd"
+CombatManager="*res://src/autoloads/CombatManagerV41.gd"
 CareerLoop="*res://src/autoloads/CareerLoop.gd"
 ReputationMatrix="*res://src/autoloads/ReputationMatrix.gd"
 CriaLiveManager="*res://src/autoloads/CriaLiveManager.gd"
@@ -24,9 +26,9 @@ TinkerBondManager="*res://src/autoloads/TinkerBondManager.gd"
 MissionManager="*res://src/autoloads/MissionManager.gd"
 StorySceneDirector="*res://src/autoloads/StorySceneDirector.gd"
 FactionManager="*res://src/autoloads/FactionManager.gd"
-FactionDirectorManager="*res://src/autoloads/FactionDirectorManager.gd"
+FactionDirectorManager="*res://src/autoloads/FactionDirectorV3.gd"
 FactionAIPlanBridge="*res://src/autoloads/FactionAIPlanBridge.gd"
-WorldMapManager="*res://src/autoloads/WorldMapManager.gd"
+WorldMapManager="*res://src/autoloads/WorldMapManagerV4.gd"
 GearManager="*res://src/autoloads/GearManager.gd"
 TrainingManager="*res://src/autoloads/TrainingManager.gd"
 HubActivityManager="*res://src/autoloads/HubActivityManager.gd"

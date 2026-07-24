@@ -1,0 +1,77 @@
+{
+  "version": "3.0.0",
+  "faction_ids": ["LEM", "NTM", "ALE"],
+  "power_dimensions": ["territorio", "caixa", "influencia", "medo", "inteligencia", "coesao", "forca_marcial"],
+  "pressure_axes": ["atencao_publica", "vigilancia_faccoes", "desconfianca_comunitaria", "interesse_autoridades", "exposicao_digital"],
+  "conflict_stages": ["desconfianca", "vigilancia", "provocacao", "disputa_indireta", "retaliacao", "guerra_aberta", "tregua", "reorganizacao"],
+  "power_tiers": [
+    {"id":"colapso","min":0,"max":19.99},
+    {"id":"presenca_local","min":20,"max":39.99},
+    {"id":"forca_regional","min":40,"max":59.99},
+    {"id":"potencia","min":60,"max":79.99},
+    {"id":"hegemonia","min":80,"max":100}
+  ],
+  "factions": {
+    "LEM": {
+      "name": "Lá Ele Mil Vezes",
+      "color": "#D92323",
+      "leader": "coronel_damiao",
+      "face": "oni_da_lapa",
+      "desire": "Controlar os acessos terrestres, o circuito clandestino e a narrativa da força.",
+      "fear": "Perder o medo que mantém sua rede coesa.",
+      "taboo": "Demonstrar fraqueza diante de um rival.",
+      "public_face": "Disciplina, segurança e oportunidade para lutadores duros.",
+      "hidden_face": "Pedágios sociais, intimidação e pressão sobre rotas.",
+      "hierarchy": {"leader":"coronel_damiao","combat_master":"oni_da_lapa","public_voice":"capitao_beto_juiz"},
+      "succession_candidates": [
+        {"id":"oni_da_lapa","ambition":0.85,"loyalty":0.52,"leadership_style":"forca_direta"},
+        {"id":"capitao_beto_juiz","ambition":0.62,"loyalty":0.68,"leadership_style":"controle_publico"}
+      ],
+      "initial_power": {"territorio":58,"caixa":52,"influencia":48,"medo":72,"inteligencia":44,"coesao":61,"forca_marcial":74},
+      "combat_doctrine": {"id":"pressao_bruta","preferred_actions":["pressao","queda","montada","movimento_sujo"]},
+      "operation_weights": {"formar_campeao":1.2,"recrutar":0.8,"pressionar_rival":1.4,"expandir_territorio":1.1,"controlar_evento":0.7,"negociar_tregua":0.3,"encobrir_crise":0.8,"campanha_publica":0.5,"investigar":0.6},
+      "preferred_debts": ["protecao","medo","contrato"]
+    },
+    "NTM": {
+      "name": "Nós Tem Um Molho",
+      "color": "#2D5016",
+      "leader": "mare_solange",
+      "face": "cassio_molho",
+      "desire": "Controlar circulação fluvial, eventos, caixa e favores.",
+      "fear": "Que a rede financeira e seus registros sejam expostos.",
+      "taboo": "Desperdiçar oportunidade de negócio ou quebrar um acordo lucrativo.",
+      "public_face": "Produção cultural, transporte e patrocínio regional.",
+      "hidden_face": "Favores, marcação por dívida e captura de acesso.",
+      "hierarchy": {"leader":"mare_solange","combat_master":"cassio_molho","public_voice":"produtor_marola"},
+      "succession_candidates": [
+        {"id":"cassio_molho","ambition":0.82,"loyalty":0.49,"leadership_style":"negocio_agressivo"},
+        {"id":"produtor_marola","ambition":0.58,"loyalty":0.73,"leadership_style":"imagem_e_evento"}
+      ],
+      "initial_power": {"territorio":53,"caixa":76,"influencia":69,"medo":42,"inteligencia":63,"coesao":55,"forca_marcial":48},
+      "combat_doctrine": {"id":"controle_e_favor","preferred_actions":["grip","raspagem","controle","atalho"]},
+      "operation_weights": {"controlar_evento":1.5,"comprar_influencia":1.4,"campanha_publica":1.2,"investigar":0.8,"infiltrar":0.8,"espalhar_rumor":1.0,"roubar_influencia":1.1,"recrutar":0.7,"encobrir_crise":1.0},
+      "preferred_debts": ["dinheiro","imagem","favor","segredo"]
+    },
+    "ALE": {
+      "name": "Os Aleluiados",
+      "color": "#4B0082",
+      "leader": "pastor_enoque",
+      "face": "irmao_calebe",
+      "desire": "Transformar julgamento moral e influência comunitária em poder político.",
+      "fear": "Que sua máscara de legitimidade seja separada da coerção interna.",
+      "taboo": "Ser publicamente recusado sem controlar a interpretação do fato.",
+      "public_face": "Ordem, acolhimento, obra social e linguagem de redenção.",
+      "hidden_face": "Vigilância, culpa e captura do discurso.",
+      "hierarchy": {"leader":"pastor_enoque","combat_master":"irmao_calebe","public_voice":"montenegro"},
+      "succession_candidates": [
+        {"id":"irmao_calebe","ambition":0.77,"loyalty":0.66,"leadership_style":"coercao_moral"},
+        {"id":"montenegro","ambition":0.9,"loyalty":0.31,"leadership_style":"controle_institucional"}
+      ],
+      "initial_power": {"territorio":46,"caixa":57,"influencia":73,"medo":59,"inteligencia":71,"coesao":68,"forca_marcial":43},
+      "combat_doctrine": {"id":"manto_olhar","preferred_actions":["drenar_foco","defesa","pressao_moral","rumor"]},
+      "operation_weights": {"campanha_publica":1.4,"investigar":1.1,"infiltrar":1.2,"espalhar_rumor":1.3,"comprar_influencia":0.9,"recrutar":1.0,"encobrir_crise":1.1,"pressionar_rival":0.8,"negociar_tregua":0.6},
+      "preferred_debts": ["moral","segredo","familia","politica"]
+    }
+  },
+  "_invariant": "EXATAMENTE 3 facções. Terreiro, Raiz, Cria Live, Circuito Oficial, Dragão Vermelho e Fantasma não são facções."
+}
