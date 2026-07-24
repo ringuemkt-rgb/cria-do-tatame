@@ -34,7 +34,9 @@ jobs:
         run: python tools/lint_canon_v4.py
 
       - name: Run Python contract tests
-        run: python -m pytest -q
+        run: |
+          mkdir -p reports/runtime_audit
+          python -m pytest -q --junitxml=reports/runtime_audit/pytest-junit.xml
 
       - name: Upload static audit reports
         if: always()
