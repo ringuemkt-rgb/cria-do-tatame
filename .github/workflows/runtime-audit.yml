@@ -5,6 +5,7 @@ on:
     branches:
       - main
       - 'upgrade/**'
+      - 'release/**'
   pull_request:
   workflow_dispatch:
 
@@ -29,6 +30,12 @@ jobs:
       - name: Validate runtime contracts
         run: python tools/validate_runtime_contracts.py
 
+      - name: Validate GDD v4 canon
+        run: python tools/lint_canon_v4.py
+
+      - name: Run Python contract tests
+        run: python -m pytest -q
+
       - name: Upload static audit reports
         if: always()
         uses: actions/upload-artifact@v4
@@ -46,7 +53,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Download Godot 4.2.2
+      - name: Download Godot 4.2.2 compatibility gate
         run: |
           curl -L --fail --retry 3 \
             -o godot.zip \
@@ -65,11 +72,23 @@ jobs:
           set -o pipefail
           timeout 180 ./godot --headless --editor --path . --import 2>&1 | tee reports/runtime_audit/godot_import.log
 
-      - name: Run runtime smoke suite
+      - name: Run legacy runtime smoke suite
         shell: bash
         run: |
           set -o pipefail
           ./godot --headless --path . --script res://tests/runtime_smoke.gd 2>&1 | tee reports/runtime_audit/godot_smoke.log
+
+      - name: Run v4 positional combat smoke suite
+        shell: bash
+        run: |
+          set -o pipefail
+          ./godot --headless --path . --script res://tests/v4_combat_smoke.gd 2>&1 | tee reports/runtime_audit/godot_v4_combat_smoke.log
+
+      - name: Parse reference Combat Arena v4 scene
+        shell: bash
+        run: |
+          set -o pipefail
+          timeout 60 ./godot --headless --path . --editor --quit-after 2 res://scenes/combat/CombatArenaV4.tscn 2>&1 | tee reports/runtime_audit/godot_v4_arena.log
 
       - name: Upload Godot logs
         if: always()
@@ -79,4 +98,6 @@ jobs:
           path: |
             reports/runtime_audit/godot_import.log
             reports/runtime_audit/godot_smoke.log
+            reports/runtime_audit/godot_v4_combat_smoke.log
+            reports/runtime_audit/godot_v4_arena.log
           if-no-files-found: warn
