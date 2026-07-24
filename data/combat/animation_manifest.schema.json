@@ -1,0 +1,32 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://criadotatame.local/schemas/animation_manifest.schema.json",
+  "title": "Cria do Tatame Character Animation Manifest",
+  "type": "object",
+  "required": ["schema_version", "character_id", "bindings"],
+  "properties": {
+    "schema_version": {"type": "string", "const": "1.0.0"},
+    "character_id": {"type": "string", "minLength": 1},
+    "bindings": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "required": ["card_id", "move_id", "move_number", "technique_id", "animation_state"],
+        "properties": {
+          "card_id": {"type": "string", "minLength": 1},
+          "move_id": {"type": "string", "minLength": 1},
+          "move_number": {"type": "integer", "minimum": 1, "maximum": 33},
+          "technique_id": {"type": "string", "minLength": 1},
+          "animation_state": {"type": "string", "minLength": 1},
+          "frame_range": {"type": "string"},
+          "attacker_frames": {"type": "string"},
+          "defender_frames": {"type": "string"},
+          "sync_map": {"type": "string"},
+          "hitbox": {"type": "string"}
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "additionalProperties": false
+}

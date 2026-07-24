@@ -19,6 +19,9 @@ const NARRATIVE_DEFAULTS := {
 	"mangue_estado": "vivo",
 	"tupa200_resolucao": "pendente",
 	"provas_joaquim": 0,
+	"moral_nao_humilhar": false,
+	"dirty_cards_forbidden": false,
+	"combat_passives": {},
 	"beats": [],
 }
 

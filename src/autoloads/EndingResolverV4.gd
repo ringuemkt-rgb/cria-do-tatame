@@ -20,6 +20,7 @@ func evaluate() -> Dictionary:
 	var evidence := maxi(int(flags.get("provas_joaquim", 0)), int(InformantSystem.evidence_count))
 	var leoa := int(flags.get("leoa_vinculo", 0))
 	var underground := str(flags.get("underground_acesso", "nenhum"))
+	var moral_nao_humilhar := bool(flags.get("moral_nao_humilhar", false))
 	var molho := Economy.get_balance(Economy.MOLHO)
 	var candidates: Array[String] = []
 
@@ -27,7 +28,7 @@ func evaluate() -> Dictionary:
 		candidates.append("martir_do_tatame")
 	if honra >= 8.0 and raiz >= 8.0 and leoa >= 3 and tupa_comunitaria and mangue_vivo:
 		candidates.append("ponte")
-	if honra >= 8.0 and raiz >= 8.0 and mangue_vivo and tupa_comunitaria and informant_status != "queimado":
+	if honra >= 8.0 and raiz >= 8.0 and mangue_vivo and tupa_comunitaria and informant_status != "queimado" and moral_nao_humilhar:
 		candidates.append("cria_de_verdade")
 	if sombra >= 40.0 and underground == "cedo" and informant_status == "queimado":
 		candidates.append("sombra")
@@ -36,7 +37,7 @@ func evaluate() -> Dictionary:
 
 	var ending_id := _highest_priority(candidates)
 	if ending_id == "":
-		ending_id = _fallback_ending(honra, raiz, sombra, molho)
+		ending_id = _fallback_ending(honra, raiz, sombra, molho, moral_nao_humilhar)
 	var ending: Dictionary = definitions.get("endings", {}).get(ending_id, {}).duplicate(true)
 	last_resolution = {
 		"id": ending_id,
@@ -53,6 +54,7 @@ func evaluate() -> Dictionary:
 			"informant_status": informant_status,
 			"evidence": evidence,
 			"leoa_vinculo": leoa,
+			"moral_nao_humilhar": moral_nao_humilhar,
 			"molho": molho,
 		},
 	}
@@ -89,16 +91,23 @@ func _highest_priority(candidates: Array[String]) -> String:
 			return ending_id
 	return ""
 
-func _fallback_ending(honra: float, raiz: float, sombra: float, molho: int) -> String:
-	if sombra > maxf(honra, raiz): return "sombra"
-	if molho > 0 and honra < 0.0: return "campeao_oco"
-	if raiz >= honra: return "ponte"
+func _fallback_ending(honra: float, raiz: float, sombra: float, molho: int, moral_nao_humilhar: bool) -> String:
+	if sombra > maxf(honra, raiz):
+		return "sombra"
+	if molho > 0 and honra < 0.0:
+		return "campeao_oco"
+	if not moral_nao_humilhar:
+		return "ponte"
+	if raiz >= honra:
+		return "ponte"
 	return "cria_de_verdade"
 
 func _load_json(path: String) -> Dictionary:
-	if not FileAccess.file_exists(path): return {}
+	if not FileAccess.file_exists(path):
+		return {}
 	var file := FileAccess.open(path, FileAccess.READ)
-	if file == null: return {}
+	if file == null:
+		return {}
 	var parsed = JSON.parse_string(file.get_as_text())
 	file.close()
 	return parsed if typeof(parsed) == TYPE_DICTIONARY else {}

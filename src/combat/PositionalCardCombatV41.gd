@@ -10,7 +10,9 @@ signal action_window_opened(window: Dictionary)
 signal card_resolved(result: Dictionary)
 signal combat_finished(result: Dictionary)
 signal dirty_move_attempted(card_id: String)
+signal victory_rejected(candidate: Dictionary, ruleset_id: String)
 
+const PassiveSnapshotScript = preload("res://src/combat/CombatPassiveSnapshot.gd")
 const POSITIONS := ["STANDING", "CLINCH", "GUARD", "HALF", "SIDE_CONTROL", "MOUNT", "BACK_CONTROL", "SUBMISSION"]
 const SIDES := ["any", "top", "bottom"]
 const DEFAULT_RESOURCES := {
@@ -32,6 +34,7 @@ var hands: Dictionary = {}
 var draw_cursor: Dictionary = {}
 var fighters: Dictionary = {}
 var scores: Dictionary = {}
+var passive_snapshots: Dictionary = {}
 var position: String = "STANDING"
 var player_side: String = "any"
 var player_id: String = ""
@@ -41,7 +44,14 @@ var phase: String = "ready"
 var pending_action: Dictionary = {}
 var time_left: float = 0.0
 
-func configure(cards_payload: Dictionary, positions_payload: Dictionary, rulesets_payload: Dictionary, fighter_decks: Dictionary, narrative_flags: Dictionary = {}) -> Dictionary:
+func configure(
+	cards_payload: Dictionary,
+	positions_payload: Dictionary,
+	rulesets_payload: Dictionary,
+	fighter_decks: Dictionary,
+	narrative_flags: Dictionary = {},
+	fighter_passives: Dictionary = {}
+) -> Dictionary:
 	cards.clear()
 	for raw in cards_payload.get("cartas", []):
 		if typeof(raw) != TYPE_DICTIONARY:
@@ -54,11 +64,16 @@ func configure(cards_payload: Dictionary, positions_payload: Dictionary, ruleset
 	rulesets = rulesets_payload.get("rulesets", {}).duplicate(true)
 	decks = fighter_decks.duplicate(true)
 	flags = narrative_flags.duplicate(true)
+	passive_snapshots.clear()
+	for fighter_id_value in fighter_decks.keys():
+		var fighter_id := str(fighter_id_value)
+		passive_snapshots[fighter_id] = PassiveSnapshotScript.normalize(fighter_passives.get(fighter_id, {}))
 	return {
 		"ok": cards.size() == 20 and position_data.size() == 8 and rulesets.size() == 6,
 		"cards": cards.size(),
 		"positions": position_data.size(),
 		"rulesets": rulesets.size(),
+		"passive_snapshots": passive_snapshots.size(),
 	}
 
 func start_combat(new_player_id: String, new_opponent_id: String, new_ruleset_id: String = "OFICIAL") -> Dictionary:
@@ -70,8 +85,8 @@ func start_combat(new_player_id: String, new_opponent_id: String, new_ruleset_id
 	opponent_id = new_opponent_id
 	ruleset_id = new_ruleset_id
 	fighters = {
-		player_id: DEFAULT_RESOURCES.duplicate(true),
-		opponent_id: DEFAULT_RESOURCES.duplicate(true),
+		player_id: _initial_resources(player_id),
+		opponent_id: _initial_resources(opponent_id),
 	}
 	scores = {player_id: 0, opponent_id: 0}
 	position = "STANDING"
@@ -101,31 +116,41 @@ func tick(delta: float) -> void:
 			_finish_by_points()
 	_emit_snapshot()
 
-func can_play_card(fighter_id: String, card_id: String) -> Dictionary:
-	if phase != "decision":
-		return {"ok": false, "reason": "decision_locked"}
+## Única fonte de verdade para HUD, IA e comandos.
+func pode_jogar(fighter_id: String, card_id: String) -> Dictionary:
+	if not cards.has(card_id):
+		return _blocked("CARD_MISSING", "card_missing")
 	if not fighters.has(fighter_id):
-		return {"ok": false, "reason": "fighter_missing"}
-	if not cards.has(card_id) or not hands.get(fighter_id, []).has(card_id):
-		return {"ok": false, "reason": "card_not_in_hand"}
+		return _blocked("FIGHTER_MISSING", "fighter_missing", cards[card_id])
+	if not decks.get(fighter_id, []).has(card_id):
+		return _blocked("CARD_NOT_IN_LOADOUT", "card_not_in_loadout", cards[card_id])
 	var card: Dictionary = cards[card_id]
+	if not _profile_allows(fighter_id, card):
+		return _blocked("CARD_FORBIDDEN_BY_PROFILE", "card_forbidden_by_profile", card)
+	if not hands.get(fighter_id, []).has(card_id):
+		return _blocked("CARD_NOT_IN_HAND", "card_not_in_hand", card)
 	if not _matches_position(fighter_id, card):
-		return {"ok": false, "reason": "wrong_position_or_side"}
+		return _blocked("POSITION_INVALID", "wrong_position_or_side", card)
 	if not _flag_requirement_met(str(card.get("requisito_flag", ""))):
-		return {"ok": false, "reason": "story_requirement"}
-	if not _has_cost(fighter_id, card.get("custo", {})):
-		return {"ok": false, "reason": "insufficient_resources"}
+		return _blocked("STORY_REQUIREMENT", "story_requirement", card)
 	var dirty_rule := str(rulesets[ruleset_id].get("cartas_sujas", "banida_desclassifica"))
 	if str(card.get("moral", "limpa")) == "suja" and dirty_rule in ["banida_desclassifica", "falha_rito"]:
-		return {"ok": false, "reason": dirty_rule}
-	return {"ok": true}
+		return _blocked("RULESET_FORBIDS_CARD", dirty_rule, card)
+	if not _has_cost(fighter_id, card.get("custo", {})):
+		return _blocked("RESOURCE_INSUFFICIENT", "insufficient_resources", card)
+	if phase != "decision":
+		return _blocked("DECISION_LOCKED", "decision_locked", card)
+	return _playability_result(true, "OK", "ok", card)
+
+func can_play_card(fighter_id: String, card_id: String) -> Dictionary:
+	return pode_jogar(fighter_id, card_id)
 
 func play_card(fighter_id: String, card_id: String, input_quality: float = 0.5) -> Dictionary:
-	var validation := can_play_card(fighter_id, card_id)
+	var validation := pode_jogar(fighter_id, card_id)
 	if not bool(validation.get("ok", false)):
 		if str(validation.get("reason", "")) in ["banida_desclassifica", "falha_rito"]:
 			dirty_move_attempted.emit(card_id)
-		return {"ok": false, "error": validation.get("reason", "blocked")}
+		return {"ok": false, "error": validation.get("reason", "blocked"), "playability": validation}
 	var card: Dictionary = cards[card_id]
 	_consume_cost(fighter_id, card.get("custo", {}))
 	if str(card.get("moral", "limpa")) == "suja":
@@ -180,6 +205,7 @@ func generic_transition(fighter_id: String, transition_index: int = 0) -> Dictio
 	generic["custo"] = generic.get("custo", {})
 	generic["deck_cost"] = 0
 	cards[generic["id"]] = generic
+	decks[fighter_id] = [generic["id"]]
 	hands[fighter_id] = [generic["id"]]
 	return play_card(fighter_id, generic["id"], 0.5)
 
@@ -189,24 +215,69 @@ func resolve_submission(attacker_progress: float, defender_progress: float, atta
 	var attacker := str(pending_action.get("attacker_id", player_id if player_side == "top" else opponent_id))
 	var defender := _other(attacker)
 	if attacker_releases:
+		var release_resolution := try_resolve_victory({"method": "ceder", "winner_id": attacker, "loser_id": defender})
+		if bool(release_resolution.get("accepted", false)):
+			return {"ok": true, "released": true, "winner": attacker, "method": "ceder"}
 		position = "STANDING"
 		player_side = "any"
 		phase = "decision"
+		pending_action.clear()
 		_adjust(attacker, "tensao_moral", -10.0)
-		return {"ok": true, "released": true}
-	var attack_power := clampf(attacker_progress, 0.0, 1.0) + float(fighters[attacker].get("grip", 0.0)) * 0.06
-	var defense_power := clampf(defender_progress, 0.0, 1.0) + float(fighters[defender].get("foco", 0.0)) / 220.0
+		_draw_all_hands()
+		return {"ok": true, "released": true, "victory": release_resolution}
+	var attacker_passives := get_passive_snapshot(attacker)
+	var defender_passives := get_passive_snapshot(defender)
+	var attack_power := clampf(attacker_progress, 0.0, 1.0)
+	attack_power *= float(attacker_passives.get("sweet_spot_mult", 1.0))
+	attack_power *= float(attacker_passives.get("submission_attack_mult", 1.0))
+	attack_power += float(fighters[attacker].get("grip", 0.0)) * 0.06
+	var defense_power := clampf(defender_progress, 0.0, 1.0)
+	defense_power *= float(defender_passives.get("submission_defense_mult", 1.0))
+	defense_power += float(fighters[defender].get("foco", 0.0)) / 220.0
 	if attack_power >= defense_power + 0.12:
-		_adjust(defender, "integridade", -100.0)
-		_finish(attacker, defender, "finalizacao")
-		return {"ok": true, "winner": attacker, "method": "finalizacao"}
+		var resolution := try_resolve_victory({"method": "finalizacao", "winner_id": attacker, "loser_id": defender})
+		if bool(resolution.get("accepted", false)):
+			_adjust(defender, "integridade", -100.0)
+			return {"ok": true, "winner": attacker, "method": "finalizacao", "victory": resolution}
+		_reset_after_blocked_submission(attacker, defender)
+		return {"ok": true, "victory_blocked": true, "method": "finalizacao", "victory": resolution}
 	position = "GUARD"
 	player_side = "bottom" if attacker == player_id else "top"
 	phase = "decision"
+	pending_action.clear()
 	_adjust(attacker, "gas", -15.0)
 	_adjust(defender, "gas", -10.0)
 	_draw_all_hands()
 	return {"ok": true, "escaped": true}
+
+func resolve_ruleset_objective(method: String, winner_id: String, loser_id: String = "") -> Dictionary:
+	return try_resolve_victory({"method": method, "winner_id": winner_id, "loser_id": loser_id})
+
+func try_resolve_victory(candidate: Dictionary) -> Dictionary:
+	var method := str(candidate.get("method", ""))
+	var allowed: Array = rulesets.get(ruleset_id, {}).get("caminhos_vitoria", [])
+	if method == "" or not allowed.has(method):
+		var rejected := {
+			"accepted": false,
+			"method": method,
+			"ruleset_id": ruleset_id,
+			"allowed_methods": allowed.duplicate(),
+		}
+		victory_rejected.emit(candidate.duplicate(true), ruleset_id)
+		return rejected
+	var winner := str(candidate.get("winner_id", ""))
+	var loser := str(candidate.get("loser_id", ""))
+	_finish(winner, loser, method)
+	return {"accepted": true, "method": method, "ruleset_id": ruleset_id, "winner_id": winner, "loser_id": loser}
+
+func apply_external_focus_drain(fighter_id: String, amount: float, _source: String = "arena") -> float:
+	var passive := get_passive_snapshot(fighter_id)
+	var applied := maxf(0.0, amount) * float(passive.get("dreno_foco_arena_mult", 1.0))
+	_adjust(fighter_id, "foco", -applied)
+	return applied
+
+func get_passive_snapshot(fighter_id: String) -> Dictionary:
+	return passive_snapshots.get(fighter_id, PassiveSnapshotScript.empty()).duplicate(true)
 
 func get_contextual_hand(fighter_id: String) -> Array:
 	var result: Array = []
@@ -215,9 +286,10 @@ func get_contextual_hand(fighter_id: String) -> Array:
 		if not cards.has(card_id):
 			continue
 		var view: Dictionary = cards[card_id].duplicate(true)
-		var validation := can_play_card(fighter_id, card_id)
+		var validation := pode_jogar(fighter_id, card_id)
 		view["playable"] = bool(validation.get("ok", false))
 		view["blocked_reason"] = str(validation.get("reason", ""))
+		view["playability"] = validation
 		result.append(view)
 	return result
 
@@ -233,6 +305,7 @@ func snapshot() -> Dictionary:
 		"scores": scores.duplicate(true),
 		"hands": hands.duplicate(true),
 		"pending_action": pending_action.duplicate(true),
+		"passive_snapshots": passive_snapshots.duplicate(true),
 	}
 
 func _resolve_pending(defended: bool, defense_label: String) -> Dictionary:
@@ -257,6 +330,8 @@ func _resolve_card_success(attacker: String, defender: String, card: Dictionary)
 	_adjust(defender, "integridade", -float(card.get("dano_pos", 0.0)))
 	_adjust(defender, "guarda", -maxf(3.0, float(card.get("dano_pos", 0.0)) * 1.2))
 	_adjust(attacker, "pressao", 10.0)
+	if str(card.get("tipo", "")) == "pegada" or str(card.get("tecnica", "")).contains("grip"):
+		_adjust(attacker, "grip", float(get_passive_snapshot(attacker).get("grip_por_pegada", 0.0)))
 	_apply_extra(attacker, defender, card.get("efeito_extra", {}))
 	if bool(rulesets[ruleset_id].get("pontos_ativos", false)):
 		scores[attacker] = int(scores.get(attacker, 0)) + int(card.get("pontos", 0))
@@ -265,10 +340,29 @@ func _resolve_card_success(attacker: String, defender: String, card: Dictionary)
 	_draw_all_hands()
 	var result := {"ok": true, "success": true, "card_id": card.get("id", ""), "attacker_id": attacker, "defender_id": defender, "snapshot": snapshot()}
 	card_resolved.emit(result)
-	if float(fighters[defender].get("integridade", 0.0)) <= 0.0 and rulesets[ruleset_id].get("caminhos_vitoria", []).has("desistencia"):
-		_finish(attacker, defender, "desistencia")
+	if float(fighters[defender].get("integridade", 0.0)) <= 0.0:
+		result["victory"] = try_resolve_victory({"method": "desistencia", "winner_id": attacker, "loser_id": defender})
 	_emit_snapshot()
 	return result
+
+func _playability_result(allowed: bool, reason_code: String, reason: String, card: Dictionary = {}) -> Dictionary:
+	var cost: Dictionary = card.get("custo", {}).duplicate(true)
+	return {
+		"ok": allowed,
+		"allowed": allowed,
+		"reason_code": reason_code,
+		"reason": reason,
+		"localized_reason_key": "combat.playability.%s" % reason_code.to_lower(),
+		"specialized_slot": str(card.get("slot", card.get("tipo", ""))),
+		"resource_preview": cost,
+		"predicted_transition": {
+			"position": str(card.get("destino", "keep")),
+			"set_side": str(card.get("set_side", "keep")),
+		},
+	}
+
+func _blocked(reason_code: String, reason: String, card: Dictionary = {}) -> Dictionary:
+	return _playability_result(false, reason_code, reason, card)
 
 func _matches_position(fighter_id: String, card: Dictionary) -> bool:
 	if not card.get("origem", []).has(position):
@@ -276,14 +370,24 @@ func _matches_position(fighter_id: String, card: Dictionary) -> bool:
 	var required_side := str(card.get("lado", "any"))
 	return required_side == "any" or required_side == _side_for(fighter_id)
 
+func _profile_allows(fighter_id: String, card: Dictionary) -> bool:
+	var policies: Dictionary = flags.get("owner_policies", {})
+	var policy: Dictionary = policies.get(fighter_id, {})
+	var forbidden: Array = policy.get("forbidden_morals", [])
+	return not forbidden.has(str(card.get("moral", "limpa")))
+
 func _has_cost(fighter_id: String, cost: Dictionary) -> bool:
 	var res: Dictionary = fighters.get(fighter_id, {})
-	return float(res.get("grip", 0.0)) >= float(cost.get("grip", 0.0)) and float(res.get("gas", 0.0)) >= float(cost.get("gas", 0.0)) and float(res.get("foco", 0.0)) >= float(cost.get("foco", 0.0))
+	var passive := get_passive_snapshot(fighter_id)
+	var gas_cost := float(cost.get("gas", 0.0)) * float(passive.get("gas_cost_mult", 1.0))
+	var focus_cost := float(cost.get("foco", 0.0)) * float(passive.get("focus_cost_mult", 1.0))
+	return float(res.get("grip", 0.0)) >= float(cost.get("grip", 0.0)) and float(res.get("gas", 0.0)) >= gas_cost and float(res.get("foco", 0.0)) >= focus_cost
 
 func _consume_cost(fighter_id: String, cost: Dictionary) -> void:
+	var passive := get_passive_snapshot(fighter_id)
 	_adjust(fighter_id, "grip", -float(cost.get("grip", 0.0)))
-	_adjust(fighter_id, "gas", -float(cost.get("gas", 0.0)))
-	_adjust(fighter_id, "foco", -float(cost.get("foco", 0.0)))
+	_adjust(fighter_id, "gas", -float(cost.get("gas", 0.0)) * float(passive.get("gas_cost_mult", 1.0)))
+	_adjust(fighter_id, "foco", -float(cost.get("foco", 0.0)) * float(passive.get("focus_cost_mult", 1.0)))
 
 func _apply_side(attacker: String, set_side: String) -> void:
 	match set_side:
@@ -309,11 +413,13 @@ func _apply_extra(attacker: String, defender: String, extra: Dictionary) -> void
 			_adjust(defender, "grip", -float(value))
 
 func _parse_delta(value: Variant) -> float:
-	if typeof(value) in [TYPE_INT, TYPE_FLOAT]: return float(value)
+	if typeof(value) in [TYPE_INT, TYPE_FLOAT]:
+		return float(value)
 	return float(str(value).replace("+", ""))
 
 func _flag_requirement_met(requirement: String) -> bool:
-	if requirement == "": return true
+	if requirement == "":
+		return true
 	if requirement.contains(">="):
 		var parts := requirement.split(">=")
 		return float(flags.get(parts[0], 0)) >= float(parts[1])
@@ -324,10 +430,13 @@ func _draw_hand(fighter_id: String) -> void:
 	var pool: Array = []
 	for card_id_value in deck:
 		var card_id := str(card_id_value)
-		if cards.has(card_id) and _matches_position(fighter_id, cards[card_id]):
+		if cards.has(card_id) and _profile_allows(fighter_id, cards[card_id]) and _matches_position(fighter_id, cards[card_id]):
 			pool.append(card_id)
 	if pool.is_empty():
-		pool = deck.duplicate()
+		for card_id_value in deck:
+			var fallback_id := str(card_id_value)
+			if cards.has(fallback_id) and _profile_allows(fighter_id, cards[fallback_id]):
+				pool.append(fallback_id)
 	var hand: Array = []
 	if not pool.is_empty():
 		var cursor := int(draw_cursor.get(fighter_id, 0))
@@ -336,7 +445,8 @@ func _draw_hand(fighter_id: String) -> void:
 			var card_id := str(pool[cursor % pool.size()])
 			cursor += 1
 			attempts += 1
-			if not hand.has(card_id): hand.append(card_id)
+			if not hand.has(card_id):
+				hand.append(card_id)
 		draw_cursor[fighter_id] = cursor
 	hands[fighter_id] = hand
 
@@ -351,21 +461,50 @@ func _regenerate(delta: float) -> void:
 		_adjust(fighter_id, "foco", 1.0 * delta)
 		_adjust(fighter_id, "pressao", -1.5 * delta)
 		if float(fighters[fighter_id].get("gas", 0.0)) <= 0.0:
-			_adjust(fighter_id, "integridade", -1.0 * delta)
+			var fatigue_mult := float(get_passive_snapshot(fighter_id).get("fadiga_dano_mult", 1.0))
+			_adjust(fighter_id, "integridade", -1.0 * fatigue_mult * delta)
+
+func _initial_resources(fighter_id: String) -> Dictionary:
+	var resources := DEFAULT_RESOURCES.duplicate(true)
+	var passive := get_passive_snapshot(fighter_id)
+	resources["integridade"] = 100.0 + float(passive.get("vida_max_bonus", 0.0))
+	resources["gas"] = 100.0 + float(passive.get("gas_max_bonus", 0.0))
+	resources["foco"] = 100.0 + float(passive.get("foco_max_bonus", 0.0))
+	resources["grip"] = clampf(float(passive.get("grip_inicial", 0.0)), 0.0, 3.0)
+	return resources
 
 func _adjust(fighter_id: String, key: String, delta: float) -> void:
-	if not fighters.has(fighter_id): return
-	var maximum := 3.0 if key == "grip" else 100.0
-	fighters[fighter_id][key] = clampf(float(fighters[fighter_id].get(key, 0.0)) + delta, 0.0, maximum)
+	if not fighters.has(fighter_id):
+		return
+	fighters[fighter_id][key] = clampf(float(fighters[fighter_id].get(key, 0.0)) + delta, 0.0, _maximum_for(fighter_id, key))
+
+func _maximum_for(fighter_id: String, key: String) -> float:
+	var passive := get_passive_snapshot(fighter_id)
+	match key:
+		"grip": return 3.0
+		"integridade": return 100.0 + float(passive.get("vida_max_bonus", 0.0))
+		"gas": return 100.0 + float(passive.get("gas_max_bonus", 0.0))
+		"foco": return 100.0 + float(passive.get("foco_max_bonus", 0.0))
+		_: return 100.0
 
 func _finish_by_points() -> void:
-	if not bool(rulesets[ruleset_id].get("pontos_ativos", false)): return
+	if not bool(rulesets[ruleset_id].get("pontos_ativos", false)):
+		return
 	if int(scores[player_id]) == int(scores[opponent_id]):
-		_finish("", "", "empate")
+		try_resolve_victory({"method": "pontos", "winner_id": "", "loser_id": ""})
 	elif int(scores[player_id]) > int(scores[opponent_id]):
-		_finish(player_id, opponent_id, "pontos")
+		try_resolve_victory({"method": "pontos", "winner_id": player_id, "loser_id": opponent_id})
 	else:
-		_finish(opponent_id, player_id, "pontos")
+		try_resolve_victory({"method": "pontos", "winner_id": opponent_id, "loser_id": player_id})
+
+func _reset_after_blocked_submission(attacker: String, defender: String) -> void:
+	position = "GUARD"
+	player_side = "bottom" if attacker == player_id else "top"
+	phase = "decision"
+	pending_action.clear()
+	_adjust(attacker, "gas", -15.0)
+	_adjust(defender, "gas", -10.0)
+	_draw_all_hands()
 
 func _finish(winner: String, loser: String, method: String) -> void:
 	phase = "finished"
@@ -373,12 +512,15 @@ func _finish(winner: String, loser: String, method: String) -> void:
 	combat_finished.emit(result)
 
 func _side_for(fighter_id: String) -> String:
-	if player_side == "any": return "any"
+	if player_side == "any":
+		return "any"
 	return player_side if fighter_id == player_id else _opposite_side(player_side)
 
 func _opposite_side(side: String) -> String:
-	if side == "top": return "bottom"
-	if side == "bottom": return "top"
+	if side == "top":
+		return "bottom"
+	if side == "bottom":
+		return "top"
 	return "any"
 
 func _other(fighter_id: String) -> String:

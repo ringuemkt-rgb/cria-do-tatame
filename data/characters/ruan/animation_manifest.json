@@ -1,0 +1,14 @@
+{
+  "schema_version": "1.0.0",
+  "character_id": "ruan",
+  "bindings": {
+    "kimura": {
+      "card_id": "kimura",
+      "move_id": "submission_kimura",
+      "move_number": 23,
+      "technique_id": "kimura_lock",
+      "animation_state": "ruan_kimura_right",
+      "frame_range": "23_01-23_04"
+    }
+  }
+}

@@ -60,6 +60,7 @@ func start_positional_combat_v41(new_arena_id: String, new_player_id: String = D
 	positional_mode_active = true
 	state_machine.call("reiniciar_em_pe")
 
+	_sync_owner_policy_v41(player_id)
 	var resolved_player_deck := _resolve_v41_deck(player_id, player_deck)
 	var resolved_opponent_deck := _resolve_v41_deck(opponent_id, opponent_deck)
 	var configure_report: Dictionary = positional_runtime.call(
@@ -68,7 +69,8 @@ func start_positional_combat_v41(new_arena_id: String, new_player_id: String = D
 		DataRegistry.combat_positions_v41,
 		DataRegistry.combat_rulesets_v41,
 		{player_id: resolved_player_deck, opponent_id: resolved_opponent_deck},
-		_build_v41_flags()
+		_build_v41_flags(),
+		_build_v41_passives()
 	)
 	if not bool(configure_report.get("ok", false)):
 		positional_mode_active = false
@@ -152,6 +154,11 @@ func resolve_submission_v41(attacker_progress: float, defender_progress: float, 
 		return {"ok": false, "error": "positional_mode_inactive"}
 	return positional_runtime.call("resolve_submission", attacker_progress, defender_progress, attacker_releases)
 
+func resolve_ruleset_objective_v41(method: String, winner_id: String, loser_id: String = "") -> Dictionary:
+	if not positional_mode_active or positional_runtime == null:
+		return {"ok": false, "error": "positional_mode_inactive"}
+	return positional_runtime.call("resolve_ruleset_objective", method, winner_id, loser_id)
+
 func get_skill_hub_v41() -> Node:
 	_ensure_v41_components()
 	return skill_hub_v41
@@ -175,7 +182,7 @@ func import_v41_state(data: Dictionary) -> void:
 func _resolve_v41_deck(owner_id: String, requested: Array) -> Array:
 	_ensure_v41_components()
 	if not requested.is_empty():
-		_unlock_requested_cards(requested)
+		_unlock_requested_cards(owner_id, requested)
 		skill_hub_v41.call("set_deck_points", owner_id, 100)
 		var set_result: Dictionary = skill_hub_v41.call("set_loadout", owner_id, requested)
 		if bool(set_result.get("ok", false)):
@@ -184,19 +191,19 @@ func _resolve_v41_deck(owner_id: String, requested: Array) -> Array:
 	if stored.size() == 12:
 		return stored
 	var starter := _default_v41_deck()
-	_unlock_requested_cards(starter)
+	_unlock_requested_cards(owner_id, starter)
 	skill_hub_v41.call("set_deck_points", owner_id, 100)
 	skill_hub_v41.call("set_loadout", owner_id, starter)
 	return skill_hub_v41.call("get_loadout", owner_id)
 
-func _unlock_requested_cards(cards: Array) -> void:
+func _unlock_requested_cards(owner_id: String, cards: Array) -> void:
 	for card_id_value in cards:
 		var card_id := str(card_id_value)
 		var card: Dictionary = DataRegistry.get_combat_card_v41(card_id)
 		if card.is_empty():
 			continue
 		if str(card.get("raridade", "base")) != "base":
-			skill_hub_v41.call("unlock", card_id, "training")
+			skill_hub_v41.call("unlock_for_owner", owner_id, card_id, "training")
 
 func _default_v41_deck() -> Array:
 	return [
@@ -204,6 +211,12 @@ func _default_v41_deck() -> Array:
 		"knee_cut_pass", "cem_quilos", "montada", "kimura",
 		"triangulo", "mata_leao", "grip_de_ferro", "baiana",
 	]
+
+func _sync_owner_policy_v41(owner_id: String) -> void:
+	var forbidden: Array[String] = []
+	if bool(WorldState.flags.get("dirty_cards_forbidden", false)):
+		forbidden.append("suja")
+	skill_hub_v41.call("set_owner_policy", owner_id, {"forbidden_morals": forbidden})
 
 func _build_v41_flags() -> Dictionary:
 	return {
@@ -213,6 +226,17 @@ func _build_v41_flags() -> Dictionary:
 		"bencao_mare": bool(WorldState.flags.get("bencao_mare", false)),
 		"leoa_vinculo": int(WorldState.flags.get("leoa_vinculo", 0)),
 		"dende_confianca": int(WorldState.flags.get("dende_confianca", 0)),
+		"owner_policies": {
+			player_id: skill_hub_v41.call("get_owner_policy", player_id),
+			opponent_id: skill_hub_v41.call("get_owner_policy", opponent_id),
+		},
+	}
+
+func _build_v41_passives() -> Dictionary:
+	var stored: Dictionary = WorldState.flags.get("combat_passives", {})
+	return {
+		player_id: stored.get(player_id, {}).duplicate(true),
+		opponent_id: stored.get(opponent_id, {}).duplicate(true),
 	}
 
 func _on_v41_snapshot(snapshot: Dictionary) -> void:
