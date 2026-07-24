@@ -94,6 +94,22 @@ The current repository does not yet satisfy this canon:
 
 These conflicts require a save-aware migration, not a blind search-and-replace.
 
+## Exact legacy-ID disposition
+
+The seven current IDs and their required v4 destinations are now known:
+
+| Legacy ID | v4 disposition | Runtime domain |
+|---|---|---|
+| `la_ele_mil_vezes` | map to `lem` | faction |
+| `nos_tem_um_molho` | map to `ntm` | faction |
+| `os_aleluia` | map to `ale` and normalize display name to Os Aleluiados | faction |
+| `terreiro` | reclassify as Ituberá hub/local | world node |
+| `raiz` | reclassify as narrative axis/flag | NarrativeFlags |
+| `dragao_vermelho` | retire from active runtime; optional lore flag during migration | retired lore |
+| `fantasma` | retire from active runtime; optional lore flag during migration | retired lore |
+
+`cria_live` and `circuito_oficial`, although present in the broader legacy data catalog, are systems/institutions and must never become v4 faction IDs.
+
 ## Migration policy
 
 1. Preserve boot and the canonical main scene.
@@ -103,7 +119,22 @@ These conflicts require a save-aware migration, not a blind search-and-replace.
 5. Rebuild faction JSON, territory ownership, director operations, and tests around `lem`, `ntm`, and `ale`.
 6. Add a lint test that fails on any fourth faction ID.
 7. Do not merge implementation changes until boot audit and automated tests pass.
+8. Upgrade Godot 4.2 → 4.3 in a separate pull request.
 
-## Intake completeness note
+## Canon continuation
 
-The source message received on 2026-07-24 was truncated during Section 8 and did not include the promised complete Sections 9–17 or appendices. This file records the authoritative rules that were fully received. Missing sections must be added verbatim or reconstructed in a later reviewed change; they must not be silently invented and labeled as user-approved canon.
+The approved material for Sections 9–17 is stored in:
+
+- `docs/canon/GDD_CDT_V4_SECTIONS_09_17.md`
+
+It defines the beat sheet, systems, five endings, target autoload contracts, art/audio direction, QA, accessibility, milestones and the approved seven-phase implementation approach.
+
+## Completeness note
+
+This intake is no longer missing the material content of Sections 9–15 and 17. Three documentary gaps remain explicit:
+
+1. The original full Section 16 text containing the exact branch/commit/PR-template sequence was referenced but not reproduced verbatim; Issue #28 remains the executable source until that text arrives.
+2. Appendix B was truncated again after the opening source list and must be resent and audited before being treated as factual canon.
+3. Appendix C, the master list of flags, was not included in the received message.
+
+No missing text may be silently invented and labeled as user-approved canon.
