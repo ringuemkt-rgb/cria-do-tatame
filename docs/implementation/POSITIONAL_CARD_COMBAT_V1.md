@@ -4,52 +4,56 @@
 
 Implementar o coração jogável de Cria do Tatame como jiu-jitsu posicional orientado por cartas do Hub de Habilidades.
 
-## Fluxo implementado
+## Fluxo
 
-1. O Hub desbloqueia e treina técnicas por treino, mestre, skill tree ou flag narrativa.
-2. O jogador monta um deck de 12 cartas, com no máximo duas cópias por técnica.
-3. Ao iniciar a luta, o runtime saca uma mão contextual de três cartas.
-4. A posição compartilhada define quais cartas podem ser usadas.
-5. Jogar uma carta consome gás, foco, grip e/ou pressão.
-6. O defensor recebe uma janela de resposta específica: sprawl, frame, base, bridge, elbow escape ou defesa de finalização.
-7. Sucesso altera posição, recursos, integridade, guarda, pressão e pontos.
-8. A mão é redesenhada após cada mudança posicional.
-9. A luta termina por finalização, desistência ou pontos.
+Hub de Habilidades → deck de 12 → mão contextual → posição simétrica + lado → carta válida → janela de defesa → recursos/pontos/transição → finalização, desistência, pontos, rito ou objetivo especial do ruleset.
 
-## Arquivos
+## Modelo canônico v4.1-FINAL
 
-- `src/combat/PositionalCardCombat.gd`: orquestrador do loop.
-- `src/hub/SkillHubLoadout.gd`: desbloqueio, treino e montagem do deck.
-- `data/combat/hub_skill_cards_v1.json`: dez cartas canônicas e decks iniciais.
-- `tests/test_positional_card_combat_data.py`: gates de schema e contratos.
+A fonte da verdade passa a ser composta por oito posições simétricas:
 
-## Posições
+- `STANDING`
+- `CLINCH`
+- `GUARD`
+- `HALF`
+- `SIDE_CONTROL`
+- `MOUNT`
+- `BACK_CONTROL`
+- `SUBMISSION`
 
-`standing -> clinch -> guard/half -> side_control -> mount/back_control -> submission`
+`top`, `bottom` e `any` são armazenados separadamente como lado do jogador. O lado do oponente é derivado e nunca persistido duas vezes.
 
-A posição é única e compartilhada. `top_id` e `bottom_id` definem o lado relativo dos lutadores.
+## Dados canônicos recebidos
 
-## Recursos
+- `data/combat/cards.json`: 20 cartas — 10 limpas canônicas, 6 sujas e 4 de raiz/história.
+- `data/combat/position_data.json`: transições genéricas para as oito posições.
+- `data/combat/rulesets.json`: `OFICIAL`, `CLANDESTINA`, `RITO`, `FESTIVAL`, `DOJO` e `MORAL`.
+- `tests/test_gdd_systems_v41_data.py`: contratos de schema e invariantes de design.
 
-- Integridade
-- Gás
-- Foco
-- Grip 0–3
-- Pressão
-- Guarda
-- Tensão moral
+## Implementação já existente nesta branch
+
+- `src/combat/PositionalCardCombat.gd`: protótipo do orquestrador de combate.
+- `src/hub/SkillHubLoadout.gd`: protótipo do Hub e loadout.
+- `data/combat/hub_skill_cards_v1.json`: catálogo inicial anterior ao pacote final.
+- `tests/test_positional_card_combat_data.py`: gates do primeiro vertical slice.
+
+## Reconciliação obrigatória antes do merge
+
+1. Trocar o modelo provisório pelo contrato canônico de 8 posições + lado.
+2. Carregar cartas, posições e rulesets dos JSONs canônicos.
+3. Implementar enforcement das cartas sujas por ruleset: desclassificação, uso livre ou falha do rito.
+4. Executar `efeito_extra` somente por vocabulário fechado.
+5. Avaliar requisitos como `leoa_vinculo>=2` sem executar expressões arbitrárias.
+6. Criar adapter para os aliases legados de `CombatStateMachine`.
+7. Conectar `CombatDeckHUD`, touch, IA, animações e Submission HUD.
+8. Rodar testes Python, GUT e smoke headless do Godot 4.3.
 
 ## Regras de integridade
 
 - Sem gacha, loot box ou compra de poder com Molho.
-- Cartas sujas podem existir futuramente apenas como escolha narrativa do underground e devem subir tensão moral.
-- O motor não substitui `CombatManager`, `DeckManager` ou `CombatStateMachine`; ele deve ser integrado por fachada após auditoria.
+- Cartas sujas são decisões narrativas e mecânicas de risco; nunca progressão premium.
+- O motor não substitui `CombatManager`, `DeckManager` ou `CombatStateMachine` sem adapter e testes.
 
-## Próxima integração
+## Nota de integridade documental
 
-1. Criar `PositionalCombatAdapter.gd` para traduzir estados legados `PLAYER_TOP_GUARD` etc.
-2. Conectar `CombatDeckHUD.gd` à mão contextual e estados bloqueados.
-3. Criar Submission HUD acessível.
-4. Conectar animações por `animation_id`.
-5. Adicionar IA que escolhe cartas por perfil e posição.
-6. Executar smoke test no Godot 4.3 e validar Android touch.
+A mensagem `GDD-SYSTEMS v4.1-FINAL` foi truncada durante `data/skill_tree/tree.json`, no nó `foco_leitura_quadril`. O restante da Seção 3 e as Seções 4–6 não foram recebidos integralmente e não foram reconstruídos como se fossem aprovados.
