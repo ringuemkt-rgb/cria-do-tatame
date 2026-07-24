@@ -1,0 +1,150 @@
+{
+  "schema_version": "1.0.0",
+  "status": "canonical",
+  "product": {
+    "official_title": "Cria do Tatame – Pressão",
+    "master_brand_name": "CRIA DO TATAME",
+    "descriptor": "JIU-JITSU É TUDO",
+    "repository": "ringuemkt-rgb/cria-do-tatame"
+  },
+  "official_logo": {
+    "id": "cdt_primary_silverback_lockup_v1",
+    "status": "official_reference",
+    "declaration": "Esta é a logo oficial completa do jogo.",
+    "components_required": [
+      "silverback_gorilla",
+      "gold_aviator_glasses",
+      "circular_discipline_focus_respect_evolution_halo",
+      "wordmark_CRIA_DO_TATAME",
+      "descriptor_JIU_JITSU_E_TUDO"
+    ],
+    "reference_asset": "docs/art_bible/references/official_logo_reference_v1.png",
+    "production_master_required": true,
+    "production_master_formats": ["svg", "pdf_vector", "png_transparent_4k"],
+    "allowed_variants": [
+      "primary_full_color",
+      "primary_monochrome_light",
+      "primary_monochrome_dark",
+      "horizontal_wordmark",
+      "silverback_seal"
+    ],
+    "forbidden_operations": [
+      "distort",
+      "stretch",
+      "rotate_wordmark",
+      "recolor_outside_brand_palette",
+      "remove_required_components_from_primary_lockup",
+      "place_on_complex_background_without_protection",
+      "regenerate_logo_with_ai_for_shipping",
+      "embed_third_party_marks"
+    ]
+  },
+  "palettes": {
+    "brand": ["#F2C230", "#F2F2F2", "#0A0A0A", "#D92323", "#1E5BFF"],
+    "pixel_art": ["#0A0A0A", "#1A1A1A", "#B8860B", "#F2C230", "#F2F2F2", "#D92323", "#1E3A5F", "#2D5016", "#4B0082"],
+    "factions": {
+      "LEM": "#D92323",
+      "NTM": "#2D5016",
+      "ALE": "#4B0082"
+    },
+    "hud_semantics": {
+      "integridade": "#D92323",
+      "gas": "#1E5BFF",
+      "foco": "#F2C230",
+      "grip": "#B02BCB",
+      "controle": "#3FE3F5",
+      "buff": "#2D9A43",
+      "debuff": "#D92323",
+      "moral_baixa": "#4B0082"
+    }
+  },
+  "art_direction": {
+    "style": "HD pixel art 2D/2.5D with thick black contour, controlled cel-shading, golden rim light and regional cinematic atmosphere",
+    "runtime_sprite_native_sizes": {
+      "combat_height_px": 72,
+      "hub_height_px": 64,
+      "grid_px": 16
+    },
+    "rendering": {
+      "texture_filter": "nearest",
+      "integer_scaling": true,
+      "text_in_sprite": false,
+      "ui_text_native_labels": true
+    },
+    "presentation_principles": [
+      "clear_character_silhouette",
+      "gameplay_center_kept_readable",
+      "editorial_gold_frame_used_only_on menus_and_docs",
+      "biome_changes_gameplay_and_not_only_background",
+      "regional_identity_without_generic_tropical_stereotype",
+      "premium_dark_contrast_without_crushing_shadow_detail"
+    ]
+  },
+  "reference_classification": {
+    "brand_identity": "approved_direction",
+    "world_and_roster_boards": "composition_reference_only",
+    "arena_and_npc_boards": "environment_and_flow_reference_only",
+    "combat_hud_board": "hud_direction_reference",
+    "generated_dense_boards": "not_runtime_assets"
+  },
+  "canon_corrections": {
+    "protagonist_display": "Ruan ‘Macacão’ Silva",
+    "forbidden_protagonist_alias": "Ruan ‘Cria’ Silva",
+    "forbidden_legacy_character": "Caio Ravel",
+    "arena_do_dique_region": "Salvador - Bahia",
+    "praia_de_pratigi_region": "Ituberá - Bahia",
+    "factions_exact": ["LEM", "NTM", "ALE"],
+    "real_third_party_marks_in_shipping": false,
+    "real_police_or_federation_logos_in_shipping": false
+  },
+  "quality_states": [
+    "reference_only",
+    "design_approved",
+    "runtime_candidate",
+    "runtime_executable",
+    "shipping_approved"
+  ],
+  "shipping_gates": {
+    "character": [
+      "turnaround",
+      "native_sprite",
+      "paired_animation_manifest",
+      "pivot_and_scale_normalized",
+      "test_scene",
+      "biomechanics_review",
+      "palette_review",
+      "license_manifest"
+    ],
+    "arena": [
+      "side_view",
+      "top_down_plan",
+      "parallax_layers",
+      "collision_map",
+      "terrain_tags",
+      "audio_points",
+      "mobile_budget",
+      "playtest_report"
+    ],
+    "ui": [
+      "safe_area",
+      "touch_targets_48dp",
+      "contrast",
+      "localization_labels",
+      "reduced_motion",
+      "position_and_resource_readability",
+      "no_text_baked_into_gameplay_art"
+    ],
+    "release": [
+      "godot_import_green",
+      "runtime_smoke_green",
+      "save_roundtrip_green",
+      "android_device_45fps_minimum",
+      "audio_and_license_review",
+      "human_art_direction_approval"
+    ]
+  },
+  "reference_manifest": {
+    "contact_sheet": "docs/art_bible/references/visual_reference_contact_sheet_v1.jpg",
+    "source_note": "User-provided visual direction approved on 2026-07-24; references do not override canonical runtime data."
+  }
+}
