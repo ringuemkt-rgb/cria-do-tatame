@@ -23,5 +23,7 @@ builds/android/*.idsig
 builds/android/*.sha256.txt
 reports/build/
 reports/runtime_audit/
+reports/full_game_audit/
+reports/cria_forge/
 *.translation
 .android/

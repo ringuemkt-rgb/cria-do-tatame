@@ -8,7 +8,9 @@ from typing import Any
 
 ROOT = Path(__file__).resolve().parents[1]
 CONTRACT_PATH = ROOT / "data" / "production" / "supreme_build_contract_v01.json"
+GATE_STATUS_PATH = ROOT / "data" / "production" / "release_gate_status_v01.json"
 SPEC_PATH = ROOT / "docs" / "CRIA_DO_TATAME_SUPREME_BUILD_SPEC_V1.md"
+VALID_GATE_STATUSES = {"pending", "passed", "failed", "blocked"}
 
 MINIMUM_TARGETS = {
     "characters": 18,
@@ -78,6 +80,8 @@ def main() -> int:
 
     if not SPEC_PATH.exists():
         errors.append(f"especificação ausente: {SPEC_PATH.relative_to(ROOT)}")
+    if not GATE_STATUS_PATH.exists():
+        errors.append(f"ledger de release ausente: {GATE_STATUS_PATH.relative_to(ROOT)}")
 
     contract = load_json(CONTRACT_PATH)
     canon = contract.get("canon", {})
@@ -120,6 +124,40 @@ def main() -> int:
     if missing_gates:
         errors.append(f"release gates ausentes: {', '.join(missing_gates)}")
 
+    gate_statuses: dict[str, Any] = {}
+    if GATE_STATUS_PATH.exists():
+        ledger = load_json(GATE_STATUS_PATH)
+        gate_statuses = ledger.get("gates", {})
+        contract_gates = set(contract.get("release_gates", []))
+        ledger_gates = set(gate_statuses)
+        missing_statuses = sorted(contract_gates - ledger_gates)
+        unexpected_statuses = sorted(ledger_gates - contract_gates)
+        if missing_statuses:
+            errors.append(f"release gates sem status: {', '.join(missing_statuses)}")
+        if unexpected_statuses:
+            errors.append(f"status sem gate no contrato: {', '.join(unexpected_statuses)}")
+        for gate_id, gate in gate_statuses.items():
+            status = gate.get("status")
+            if status not in VALID_GATE_STATUSES:
+                errors.append(f"status inválido para {gate_id}: {status}")
+            if status != "passed":
+                continue
+            evidence = gate.get("evidence")
+            if not isinstance(evidence, dict):
+                errors.append(f"gate aprovado sem evidência estruturada: {gate_id}")
+                continue
+            missing_evidence = [
+                field
+                for field in ("commit_sha", "checked_at")
+                if not evidence.get(field)
+            ]
+            if not evidence.get("url") and not evidence.get("artifact"):
+                missing_evidence.append("url|artifact")
+            if missing_evidence:
+                errors.append(
+                    f"gate aprovado com evidência incompleta ({', '.join(missing_evidence)}): {gate_id}"
+                )
+
     phases = contract.get("production_phases", [])
     phase_ids = [phase.get("id") for phase in phases]
     if len(phases) < 6 or len(set(phase_ids)) != len(phase_ids):
@@ -128,6 +166,23 @@ def main() -> int:
     claim = contract.get("completion_claim", {})
     if claim.get("allowed_only_when_all_release_gates_pass") is not True:
         errors.append("declaração de conclusão deve depender de todos os release gates")
+
+    passed_gates = sorted(
+        gate_id
+        for gate_id, gate in gate_statuses.items()
+        if gate.get("status") == "passed"
+    )
+    non_passing_gates = sorted(
+        gate_id
+        for gate_id, gate in gate_statuses.items()
+        if gate.get("status") != "passed"
+    )
+    completion_ready = bool(gate_statuses) and not non_passing_gates and not errors
+    if non_passing_gates:
+        warnings.append(
+            "declaração de conclusão bloqueada; gates não aprovados: "
+            + ", ".join(non_passing_gates)
+        )
 
     catalog = contract.get("approved_research_catalog", [])
     for item in catalog:
@@ -143,6 +198,9 @@ def main() -> int:
         "warnings": warnings,
         "targets": targets,
         "release_gate_count": len(contract.get("release_gates", [])),
+        "release_gates_passed": len(passed_gates),
+        "release_gates_pending_or_blocked": non_passing_gates,
+        "completion_ready": completion_ready,
         "research_tool_count": len(catalog),
     }
     print(json.dumps(result, ensure_ascii=False, indent=2))

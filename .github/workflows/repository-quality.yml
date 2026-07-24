@@ -31,23 +31,14 @@ jobs:
         with:
           python-version: "3.12"
 
-      - name: Validate JSON syntax with Python
-        run: python tools/validate_json.py
+      - name: Install test runner
+        run: python -m pip install --disable-pip-version-check pytest
 
-      - name: Validate JSON syntax with Node
-        run: node tools/node/validate_json.mjs
+      - name: Run canonical quality gate
+        run: npm run quality
 
-      - name: Validate game-data references
-        run: node tools/node/validate_game_data.mjs
-
-      - name: Validate complete repository
-        run: python tools/validate_complete_game.py
-
-      - name: Validate runtime contracts
-        run: python tools/validate_runtime_contracts.py
-
-      - name: Validate release readiness
-        run: python tools/validate_release_readiness.py
+      - name: Run Python tests
+        run: pytest -q
 
       - name: Generate asset manifest
         run: node tools/node/generate_asset_manifest.mjs
