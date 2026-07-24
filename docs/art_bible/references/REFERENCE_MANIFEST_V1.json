@@ -1,0 +1,31 @@
+{
+  "schema_version": "1.0.0",
+  "approved_at": "2026-07-24",
+  "status": "external_user_reference",
+  "binary_import_status": "pending_asset_pr",
+  "official_logo_reference": {
+    "source_upload": "file_000000009cd4820e83758957b8183657",
+    "source_dimensions": [1536, 1024],
+    "approved_crop_dimensions": [755, 600],
+    "approved_crop_sha256": "ee13214f30fd33d31faa60f394b16d1908e876c0f7d83897b7b2fa470670355b",
+    "meaning": "Silverback frontal, óculos dourados, halo de valores, wordmark CRIA DO TATAME e assinatura JIU-JITSU É TUDO",
+    "contract_id": "cdt_primary_silverback_lockup_v1"
+  },
+  "visual_reference_set": {
+    "count": 9,
+    "contact_sheet_dimensions": [1020, 1920],
+    "contact_sheet_sha256": "a2b7a4a34ea221ee381a6eb068b6ded6e1fd712f91941f6ac4e43ba6f8e7c061",
+    "source_uploads": [
+      "file_000000003570820ea7f14f937394f648",
+      "file_00000000e930820eb54ea86486aa5d7d",
+      "file_00000000c6bc820ead51e63b155cb15a",
+      "file_0000000041e8820e99026faed29d5888",
+      "file_0000000009b4820eba962d1900084a1b",
+      "file_000000009cd4820e83758957b8183657",
+      "file_00000000e3e0820e8d92236145fd749b",
+      "file_0000000066e0820e8f9a01eb74185278",
+      "file_00000000b8ac820e951aceca81130dd8"
+    ]
+  },
+  "promotion_rule": "No reference image becomes a runtime or shipping asset without a dedicated asset PR, source/rights metadata, manifest, test scene and human QA."
+}

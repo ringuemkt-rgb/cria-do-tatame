@@ -1,10 +1,10 @@
 ---
 name: cria-do-tatame-game-director
-description: Orquestra a construção e a gestão completa de Cria do Tatame – Pressão. Use para auditar, planejar, implementar, integrar, testar, documentar e liberar sistemas Godot, combate de BJJ, mundo, narrativa, economia, facções, UI, áudio, sprites, animações, Android, CI e governança GitHub, seguindo o GAME_BUILD_PROTOCOL e os gates canônicos.
+description: Orquestra a construção e a gestão completa de Cria do Tatame – Pressão. Use para auditar, planejar, implementar, integrar, testar, documentar e liberar sistemas Godot, combate de BJJ, mundo, narrativa, economia, facções, UI, áudio, sprites, animações, Android, CI e governança GitHub, seguindo o GAME_BUILD_PROTOCOL, a logo oficial e os gates canônicos.
 license: Proprietary
 metadata:
   author: Instituto CRIA / Satoshi Nishiuchi
-  version: "1.1.0"
+  version: "1.2.0"
   repository: ringuemkt-rgb/cria-do-tatame
 ---
 
@@ -23,7 +23,7 @@ Ativar sempre que o pedido envolver:
 - construir, continuar, completar, atualizar ou gerir o jogo;
 - revisar, consolidar ou auditar o repositório;
 - implementar Godot, combate, cartas, IA, save, mundo, facções, economia ou narrativa;
-- produzir sprites, animações, arenas, HUD, áudio, VFX ou material visual;
+- produzir logo, sprites, animações, arenas, HUD, áudio, VFX ou material visual;
 - criar APK, release, testes, CI, backlog, issues, commits ou pull requests;
 - avaliar progresso, riscos, dívida técnica ou Definition of Done.
 
@@ -38,9 +38,10 @@ Antes de propor ou executar mudanças:
 5. Ler `references/QUALITY_GATES.md`.
 6. Ler `references/TOOL_ROUTING.md`.
 7. Consultar o contrato SUPREME, o cânone aplicável, os dados e o estado ao vivo do GitHub.
-8. Executar o Handshake do protocolo; quando indisponível, declarar modo degradado.
-9. Procurar implementação equivalente antes de criar outro sistema.
-10. Definir um lote vertical pequeno, testável, reversível e com rollback.
+8. Para qualquer tarefa visual, ler `docs/art_bible/OFFICIAL_VISUAL_STANDARD_V1.md`, `docs/art_bible/VISUAL_RECONCILIATION_MATRIX_V1.md` e `data/visual/official_visual_contract_v1.json`.
+9. Executar o Handshake do protocolo; quando indisponível, declarar modo degradado.
+10. Procurar implementação equivalente antes de criar outro sistema.
+11. Definir um lote vertical pequeno, testável, reversível e com rollback.
 
 ## Invariantes
 
@@ -56,14 +57,29 @@ Antes de propor ou executar mudanças:
 - Sem gacha, poder por Molho ou finalização automática.
 - Sem segredos, credenciais, keystores ou dados pessoais no Git.
 
+## Logo oficial
+
+A logo oficial completa é `cdt_primary_silverback_lockup_v1`:
+
+- Silverback frontal;
+- óculos aviador dourados;
+- halo de Disciplina, Foco, Respeito e Evolução;
+- wordmark `CRIA DO TATAME`;
+- assinatura `JIU-JITSU É TUDO`.
+
+O produto chama-se **Cria do Tatame – Pressão**. Não redesenhar, regenerar por IA para shipping, deformar, recolorir ou misturar a logo com marcas reais. O master vetorial/PNG 4K permanece `pending_asset_pr` até QA humano.
+
 ## Cânone visual
 
 - Pixel art 16-bit/2.5D em resolução nativa, contorno preto, cel-shading e rim light dourado.
 - Paleta de arte: `#0A0A0A #1A1A1A #B8860B #F2C230 #F2F2F2 #D92323 #1E3A5F #2D5016 #4B0082`.
+- Personagens: 72 px em combate, 64 px em hub, grid 16 px, nearest e escala inteira.
 - Não usar fotografia, 3D realista ou cartoon infantil como arte final.
 - Sem texto embutido em sprites, marcas de terceiros, armas de fogo, gore ou pessoa real.
 - Produção visual em lotes de até dez imagens do mesmo tipo; um lote corresponde a um commit e exige QA antes do seguinte.
-- CPS/prancha densa é referência, não spritesheet final.
+- CPS/prancha densa é referência editorial, nunca spritesheet ou tela final.
+- Todo personagem exige `sync_map`, atlas, manifest, cena de teste e revisão biomecânica.
+- Toda arena exige vista lateral/top-down, parallax, colisão, terrain tags, áudio e playtest.
 
 ## Loop operacional
 
@@ -89,6 +105,7 @@ Seguir `docs/GAME_BUILD_PROTOCOL.md`:
 - Mudança de combate exige smoke de posição, lado, recursos, defesa, submissão e encerramento.
 - Técnica pareada exige `sync_map` e revisão biomecânica.
 - Asset exige paleta, dimensão, transparência, pivô, nome, licença, manifest, preview, cena e QA.
+- UI usa texto nativo/localizável e alvos touch de pelo menos 48 dp.
 - LLM remoto não participa do loop crítico de combate.
 
 ## Gestão GitHub
@@ -107,14 +124,14 @@ Consultar `references/TOOL_ROUTING.md`.
 
 - GitHub: código, dados, PRs, issues, CI e governança.
 - Godot/headless: parser, runtime, smokes e export.
-- Geração visual: conceito e assets aprovados, nunca promoção automática.
+- Geração visual: conceito e candidatos, nunca promoção automática nem regeneração da logo oficial para shipping.
 - Pipeline de sprites: strip, pivô, escala, transparência, atlas e preview.
 - Web: documentação primária, fatos atuais e licenças.
 - Não enviar segredos a serviços externos.
 
 ## Gates
 
-Aplicar `references/QUALITY_GATES.md` e o contrato SUPREME.
+Aplicar `references/QUALITY_GATES.md`, o contrato SUPREME e `official_visual_contract_v1.json`.
 
 Nenhum lote está concluído quando testes falham, o projeto não faz parse, fluxo/save quebram, referências estão ausentes, documentação contradiz runtime, APK não foi instalado quando exigido, performance foi estimada ou falta aprovação humana/licença.
 

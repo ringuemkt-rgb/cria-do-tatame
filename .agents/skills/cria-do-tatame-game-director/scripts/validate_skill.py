@@ -16,6 +16,9 @@ SKILL_FILE = SKILL_ROOT / "SKILL.md"
 PROTOCOL = ROOT / "docs" / "GAME_BUILD_PROTOCOL.md"
 PRECEDENCE = ROOT / "docs" / "DOC_PRECEDENCE.md"
 SUPREME = ROOT / "docs" / "CRIA_DO_TATAME_SUPREME_BUILD_SPEC_V1.md"
+VISUAL_STANDARD = ROOT / "docs" / "art_bible" / "OFFICIAL_VISUAL_STANDARD_V1.md"
+VISUAL_MATRIX = ROOT / "docs" / "art_bible" / "VISUAL_RECONCILIATION_MATRIX_V1.md"
+VISUAL_CONTRACT = ROOT / "data" / "visual" / "official_visual_contract_v1.json"
 AGENTS = ROOT / "AGENTS.md"
 
 REQUIRED_REFERENCES = {
@@ -68,6 +71,8 @@ def validate_frontmatter(errors: list[str]) -> None:
         errors.append("description excede 1024 caracteres")
     if not version_match:
         errors.append("frontmatter sem metadata.version")
+    elif version_match.group(1) != "1.2.0":
+        errors.append("skill deve estar na versão 1.2.0 para ativar o contrato visual")
 
 
 def validate_package(errors: list[str]) -> None:
@@ -85,13 +90,22 @@ def validate_protocol_bindings(errors: list[str]) -> None:
             "docs/GAME_BUILD_PROTOCOL.md",
             "docs/DOC_PRECEDENCE.md",
             ".agents/skills/cria-do-tatame-game-director/SKILL.md",
+            "OFFICIAL_VISUAL_STANDARD_V1.md",
+            "official_visual_contract_v1.json",
         ],
         "AGENTS.md",
     )
     require_contains(
         errors,
         SKILL_FILE,
-        ["docs/GAME_BUILD_PROTOCOL.md", "docs/DOC_PRECEDENCE.md", "Handshake"],
+        [
+            "docs/GAME_BUILD_PROTOCOL.md",
+            "docs/DOC_PRECEDENCE.md",
+            "Handshake",
+            "OFFICIAL_VISUAL_STANDARD_V1.md",
+            "official_visual_contract_v1.json",
+            "cdt_primary_silverback_lockup_v1",
+        ],
         "SKILL.md",
     )
     require_contains(
@@ -119,6 +133,18 @@ def validate_protocol_bindings(errors: list[str]) -> None:
         ["docs/GAME_BUILD_PROTOCOL.md", "docs/DOC_PRECEDENCE.md"],
         "SUPREME",
     )
+    require_contains(
+        errors,
+        VISUAL_STANDARD,
+        ["logo oficial completa do jogo", "cdt_primary_silverback_lockup_v1", "45 FPS"],
+        "Padrão Visual Oficial",
+    )
+    require_contains(
+        errors,
+        VISUAL_MATRIX,
+        ["Ruan “Macacão” Silva", "Arena do Dique", "Praia de Pratigi"],
+        "Matriz de Reconciliação Visual",
+    )
 
 
 def validate_repository_truth(errors: list[str]) -> None:
@@ -142,6 +168,15 @@ def validate_repository_truth(errors: list[str]) -> None:
             if nucleus.get("faccao_pai") not in EXPECTED_FACTIONS:
                 errors.append(f"núcleo {nucleus_id} sem facção-pai válida")
 
+    if not VISUAL_CONTRACT.exists():
+        errors.append("official_visual_contract_v1.json ausente")
+    else:
+        visual = load_json(VISUAL_CONTRACT)
+        if visual.get("official_logo", {}).get("id") != "cdt_primary_silverback_lockup_v1":
+            errors.append("logo oficial divergente no contrato visual")
+        if visual.get("product", {}).get("official_title") != "Cria do Tatame – Pressão":
+            errors.append("título oficial divergente no contrato visual")
+
 
 def main() -> int:
     errors: list[str] = []
@@ -153,7 +188,9 @@ def main() -> int:
     report = {
         "ok": not errors,
         "skill": EXPECTED_NAME,
+        "version": "1.2.0",
         "protocol": "docs/GAME_BUILD_PROTOCOL.md",
+        "official_visual_contract": "data/visual/official_visual_contract_v1.json",
         "repository": "ringuemkt-rgb/cria-do-tatame",
         "errors": errors,
     }
