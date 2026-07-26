@@ -1,0 +1,24 @@
+name: Boot Graph Audit
+
+on:
+  push:
+    branches: [main, 'build/**', 'release/**']
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  audit-boot:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Verify main scene, autoloads and scene resources
+        run: python tools/audit/audit_boot.py .

@@ -37,6 +37,10 @@ func save_game(slot_id := 1) -> bool:
 		data["game_flow_state"] = GameFlowManager.to_dict()
 	if has_node("/root/WorldDirectorManager"):
 		data["world_director_state"] = WorldDirectorManager.to_dict()
+	if has_node("/root/Economy"):
+		data["economy_v4_state"] = Economy.to_dict()
+	if has_node("/root/InformantSystem"):
+		data["informant_state"] = InformantSystem.to_dict()
 	if has_node("/root/NFTManager"):
 		data["nft_state"] = NFTManager.to_dict()
 	if has_node("/root/DeckManager"):
@@ -133,6 +137,10 @@ func load_game(slot_id := 1) -> bool:
 		GameFlowManager.load_from_dict(parsed["game_flow_state"])
 	if has_node("/root/WorldDirectorManager"):
 		WorldDirectorManager.load_from_dict(parsed.get("world_director_state", {}))
+	if parsed.has("economy_v4_state") and has_node("/root/Economy"):
+		Economy.load_from_dict(parsed["economy_v4_state"])
+	if parsed.has("informant_state") and has_node("/root/InformantSystem"):
+		InformantSystem.load_from_dict(parsed["informant_state"])
 	if has_node("/root/NFTManager"):
 		NFTManager.load_from_dict(parsed.get("nft_state", {}))
 	if has_node("/root/DeckManager"):

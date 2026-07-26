@@ -83,6 +83,17 @@ signal world_economy_changed(multipliers)
 signal world_ai_plan_applied(plan)
 signal world_ai_plan_failed(reason)
 
+# Eventos v4 consolidados aqui porque SignalBus é o único barramento carregado
+# pelo project.godot. SignalBusV4 permanece somente como referência de migração.
+signal economy_balance_changed(currency, balance)
+signal economy_transaction_recorded(transaction)
+signal informant_status_changed(status, state)
+signal informant_evidence_added(record, total)
+signal world_node_unlocked(node_id, reason)
+signal world_travel_completed_v4(from_id, to_id, mode, quote)
+signal terrain_modifiers_changed(tags, modifiers)
+signal ending_resolved_v4(resolution)
+
 signal nft_entitlements_synced(entitlements, source)
 signal nft_entitlement_sync_failed(reason)
 

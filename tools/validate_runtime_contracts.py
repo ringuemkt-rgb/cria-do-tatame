@@ -28,11 +28,11 @@ REQUIRED_SCENES = {
 
 REQUIRED_AUTOLOADS = {
     "SignalBus": "src/autoloads/SignalBus.gd",
-    "DataRegistry": "src/autoloads/DataRegistry.gd",
+    "DataRegistry": "src/autoloads/DataRegistryV4.gd",
     "DeckManager": "src/autoloads/DeckManager.gd",
-    "WorldState": "src/autoloads/WorldState.gd",
+    "WorldState": "src/autoloads/WorldStateV4.gd",
     "SaveManager": "src/autoloads/SaveManager.gd",
-    "CombatManager": "src/autoloads/CombatManager.gd",
+    "CombatManager": "src/autoloads/CombatManagerV41.gd",
     "CareerLoop": "src/autoloads/CareerLoop.gd",
     "GameFlowManager": "src/autoloads/GameFlowManager.gd",
     "AudioManager": "src/autoloads/AudioManager.gd",
@@ -278,7 +278,12 @@ def validate_scene_scripts(result: dict[str, list[str]]) -> None:
         "scenes/hubs/TerreiroDaLuta.gd": ["_on_train", "_on_fight_davi", "_on_save"],
         "scenes/combat/CombatArenaBase.gd": ["_refresh_action_buttons", "_on_combat_finished"],
         "scenes/result/ResultScreen.gd": ["_on_cria_live_pressed", "_on_back_pressed"],
-        "src/autoloads/CombatManager.gd": ["start_combat", "apply_player_action", "finish_combat", "get_available_techniques"],
+        "src/autoloads/CombatManagerV41.gd": [
+            "start_positional_combat_v41",
+            "play_card_v41",
+            "defend_v41",
+            "resolve_submission_v41",
+        ],
         "src/autoloads/SaveManager.gd": ["save_game", "load_game", "has_save"],
     }
     for rel, methods in contracts.items():

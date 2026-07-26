@@ -27,9 +27,9 @@ func play_card(actor_id: String, card_id: String, input_quality: float = 0.5) ->
 		_apply_extra_positional_damage(result, card, input_quality >= 0.55)
 	return result
 
-func generic_transition(actor_id: String) -> Dictionary:
+func generic_transition(actor_id: String, transition_index: int = 0) -> Dictionary:
 	var before_gas := _fighter_gas(actor_id)
-	var result: Dictionary = super.generic_transition(actor_id)
+	var result: Dictionary = super.generic_transition(actor_id, transition_index)
 	if bool(result.get("ok", false)):
 		var spent := maxf(0.0, before_gas - _fighter_gas(actor_id))
 		var multiplier := float(terrain_modifiers.get("gas_cost_mult", 1.0))
@@ -51,7 +51,7 @@ func defend(actor_id: String, defense_id: String, timing_quality: float = 0.5) -
 
 func tick(delta: float) -> void:
 	super.tick(delta)
-	if not active or phase == "finished":
+	if phase in ["ready", "finished"] or player_id == "":
 		return
 	var drain := float(terrain_modifiers.get("focus_drain_per_sec", 0.0)) * delta
 	var regen_mult := float(terrain_modifiers.get("focus_regen_mult", 1.0))
@@ -68,9 +68,8 @@ func get_terrain_contract() -> Dictionary:
 	return {"tags": terrain_tags.duplicate(), "modifiers": terrain_modifiers.duplicate(true), "reduced_flash": reduced_flash}
 
 func _card_by_id(card_id: String) -> Dictionary:
-	for card_value in cards_data.get("cartas", []):
-		if str(card_value.get("id", "")) == card_id:
-			return card_value
+	if cards.has(card_id):
+		return cards[card_id]
 	return {}
 
 func _fighter_gas(actor_id: String) -> float:
