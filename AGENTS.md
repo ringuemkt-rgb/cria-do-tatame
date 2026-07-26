@@ -23,7 +23,8 @@ Assistentes sem memória persistente carregam estes arquivos em toda sessão:
 3. `.agents/skills/cria-do-tatame-game-director/SKILL.md`;
 4. módulos `references/` da skill;
 5. contrato SUPREME e cânone aplicável ao lote;
-6. para qualquer trabalho visual: `docs/art_bible/OFFICIAL_VISUAL_STANDARD_V1.md` e `data/visual/official_visual_contract_v1.json`.
+6. `docs/DECISIONS.md` para migrações e limites arquiteturais congelados;
+7. para qualquer trabalho visual: `docs/art_bible/OFFICIAL_VISUAL_STANDARD_V1.md` e `data/visual/official_visual_contract_v1.json`.
 
 Validar a ativação com:
 
@@ -113,6 +114,7 @@ O escopo completo e os gates de produção vivem em `docs/CRIA_DO_TATAME_SUPREME
 
 ## Contratos de arquitetura
 
+- `docs/DECISIONS.md` congela as decisões do Master Plan; alterações exigem reconciliação documentada e aprovação do dono.
 - Gameplay crítico deve ser determinístico e executável offline.
 - IA pode criar, revisar e classificar conteúdo; não pode sustentar o loop principal em tempo real.
 - Dados em `data/` precisam manter IDs estáveis e referências válidas.

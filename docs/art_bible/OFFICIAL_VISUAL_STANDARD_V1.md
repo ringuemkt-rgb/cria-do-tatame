@@ -282,7 +282,8 @@ wireframe
 ### Gate de conteúdo
 
 - local e bioma canônicos;
-- nome e função do personagem validados;
+- nome e função do personagem validados; protagonista: `Ruan “Macacão” Silva`;
+- Praia de Pratigi situada em Ituberá – Bahia;
 - exatamente três facções;
 - sem `Caio Ravel` ou `Ruan “Cria” Silva` em shipping;
 - sem pessoa real criminalizada;
