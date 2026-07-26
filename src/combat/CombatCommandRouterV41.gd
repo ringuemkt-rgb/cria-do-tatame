@@ -1,9 +1,11 @@
 class_name CombatCommandRouterV41
 extends RefCounted
 
-var combat: PositionalCardCombatV41
+# Keep the router structurally typed during the strangler migration. Using the
+# concrete class_name here made Godot 4.2.2 resolve scripts in an unsafe order.
+var combat: Node
 
-func setup(runtime: PositionalCardCombatV41) -> void:
+func setup(runtime: Node) -> void:
 	combat = runtime
 
 func execute(actor_id: String, command: String, selected_card_id: String = "", quality: float = 0.5) -> Dictionary:
@@ -47,7 +49,7 @@ func _pressure(actor_id: String) -> Dictionary:
 		return {"ok": false, "error": "insufficient_gas"}
 	resources["gas"] = maxf(0.0, float(resources.get("gas", 0.0)) - 10.0)
 	resources["pressao"] = minf(100.0, float(resources.get("pressao", 0.0)) + 14.0)
-	var defender := combat.opponent_id if actor_id == combat.player_id else combat.player_id
+	var defender: String = str(combat.opponent_id if actor_id == combat.player_id else combat.player_id)
 	combat.fighters[defender]["guarda"] = maxf(0.0, float(combat.fighters[defender].get("guarda", 0.0)) - 8.0)
 	combat.call("_emit_snapshot")
 	return {"ok": true, "command": "pressao", "snapshot": combat.snapshot()}
