@@ -227,8 +227,13 @@ func validate_core_data():
 		errors.append("ruleset padrao precisa ser GI para compatibilidade")
 	if technique_rulesets.get("default_policy", {}).get("rulesets", []) != ["GI", "NO_GI"]:
 		errors.append("politica padrao de tecnicas deve permitir GI e NO_GI")
-	if technique_allowed_in_ruleset("pegada_lapela_manga", "NO_GI"):
-		errors.append("pegada de lapela e manga nao pode ser permitida no No-Gi")
+	var fabric_template: Dictionary = technique_rulesets.get("fabric_technique_template", {})
+	if fabric_template.get("rulesets", []) != ["GI"] or not bool(fabric_template.get("requires_fabric", false)):
+		errors.append("template de tecnica com tecido precisa ser exclusivo de GI")
+	for technique_id_value in technique_rulesets.get("techniques", {}).keys():
+		var technique_id := str(technique_id_value)
+		if not techniques.has(technique_id):
+			errors.append("projecao de ruleset referencia tecnica fora de data/techniques.json: %s" % technique_id)
 	return {
 		"ok": errors.is_empty(),
 		"errors": errors,
