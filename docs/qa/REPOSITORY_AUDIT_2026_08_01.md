@@ -1,18 +1,21 @@
 # Auditoria do Repositório — 1º de agosto de 2026
 
 **Status:** ACTIVE  
-**Branch auditada:** `main` em `f098ab57c0eae545ae097b6d5ea02c39788324e5`
+**Branch auditada inicialmente:** `main` em `f098ab57c0eae545ae097b6d5ea02c39788324e5`  
+**Base revalidada:** `main` em `246201e6319915652476b27da7334229b26d67fd`
 
 ## Resultado executivo
 
 O repositório contém uma base Godot real e auditada, mas a construção está fragmentada entre muitas branches e PRs empilhados. O risco dominante não é ausência de implementação: é integração concorrente, documentação com precedência ambígua e branches que permanecem abertas depois de absorção ou abandono.
 
+Durante esta auditoria, o smoke da `main` revelou dois bloqueadores P0 antigos: uma constante chamada `AnimationLibrary` sombreava uma classe nativa do Godot, e o workflow iniciava o smoke antes de concluir a importação dos atlases. O PR #40 corrigiu os dois pontos e foi mesclado após aprovação de auditoria estática, testes Python, parser/import, smokes completos e exportação/inspeção do APK Android.
+
 ## Inventário observado
 
 - 1 repositório canônico;
 - 36 branches remotas encontradas;
-- 9 pull requests abertos;
-- `main` sem atividade integrada desde 18/07/2026;
+- 9 pull requests abertos no início da auditoria;
+- `main` voltou a ter todos os pipelines verdes após o PR #40;
 - branch `release/v4-integration` com grande volume de mudanças ainda fora de `main`;
 - PRs visuais, game feel e ferramentas partindo de bases diferentes;
 - issues antigas descrevendo estados já parcialmente superados.
@@ -47,6 +50,7 @@ Devem ser verificadas contra o commit de merge antes da remoção:
 - `feature/local-ai-dialogue`;
 - `feature/world-director-ai-nft-v1`;
 - `fix/p0-bugs`;
+- `fix/runtime-smoke-main`;
 - `upgrade/apk-visual-pipeline-v09`;
 - `upgrade/runtime-audit-v08`;
 - `rescue/sprint-0-complete`;
@@ -72,7 +76,7 @@ Precisam de inspeção e, se não contiverem trabalho exclusivo, remoção:
 - `codex/vertical-slice-system`;
 - `docs/cps-standard-v43`.
 
-## Pull requests abertos
+## Pull requests abertos no início da auditoria
 
 | PR | Base | Diagnóstico |
 |---|---|---|
@@ -100,6 +104,7 @@ Precisam de inspeção e, se não contiverem trabalho exclusivo, remoção:
 
 ## Correções aplicadas nesta auditoria
 
+- correção P0 do parser e importação do Godot via PR #40;
 - `.editorconfig` e `.gitattributes`;
 - CODEOWNERS;
 - template de PR;
@@ -116,7 +121,7 @@ Precisam de inspeção e, se não contiverem trabalho exclusivo, remoção:
 
 ### Fase 1 — Integrar governança
 
-Mesclar o PR de profissionalização após checks verdes.
+Mesclar o PR de profissionalização após checks verdes sobre a `main` corrigida.
 
 ### Fase 2 — Classificar branches
 
