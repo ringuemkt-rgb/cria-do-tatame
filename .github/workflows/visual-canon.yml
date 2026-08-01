@@ -60,5 +60,7 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: "20"
+      - name: Install Python dependencies used by quality
+        run: python -m pip install Pillow
       - name: Run complete repository quality gate
         run: npm run quality
