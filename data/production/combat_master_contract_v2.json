@@ -1,0 +1,160 @@
+{
+  "schema_version": "2.0.0",
+  "contract_id": "cria_do_tatame_combat_master_v2",
+  "status": "canonical_specification",
+  "tracking_issue": 46,
+  "repository": "ringuemkt-rgb/cria-do-tatame",
+  "engine": "Godot 4.x",
+  "platform_floor": "Android ARM64",
+  "runtime": {
+    "offline_required": true,
+    "deterministic_required": true,
+    "generative_ai_allowed": false,
+    "critical_loop_network_dependency_allowed": false
+  },
+  "canon": {
+    "protagonist_id": "ruan_macacao",
+    "protagonist_display_name": "Ruan Macacão Silva",
+    "origin": "Ituberá, Baixo Sul da Bahia",
+    "symbol": "Silverback",
+    "motto": "Ser forte é ser gentil.",
+    "combat_identity": "jiu_jitsu_posicional",
+    "beat_em_up_forbidden": true
+  },
+  "runtime_authorities": {
+    "combat": "CombatManager",
+    "deck": "DeckManager",
+    "data": "DataRegistry",
+    "clash": "TechniqueClashResolver",
+    "save": "SaveManager",
+    "audio": "AudioManager"
+  },
+  "combat_invariants": {
+    "technique_source": "data/techniques.json",
+    "position_before_submission": true,
+    "submission_control_threshold": 75,
+    "instant_finish": false,
+    "clash_modifier_min": -0.3,
+    "clash_modifier_max": 0.35,
+    "submission_end_states": ["tap", "escape", "technical_intervention"],
+    "injury_reward_animation_forbidden": true,
+    "real_commercial_league_reference_forbidden": true,
+    "control_and_flow_are_distinct_resources": true,
+    "health_is_not_primary_victory_resource": true
+  },
+  "rulesets": {
+    "source": "data/combat/rulesets_v01.json",
+    "ids": ["GI", "NO_GI"],
+    "default": "GI",
+    "no_gi_cosmetic_only_forbidden": true
+  },
+  "grapplemap": {
+    "repository": "Eelis/GrappleMap",
+    "declared_license": "public_domain",
+    "license_evidence": "README.md FAQ",
+    "approved_uses": [
+      "directed_position_graph_reference",
+      "pose_and_entanglement_reference",
+      "taxonomy_and_tags",
+      "schematic_transition_sequence"
+    ],
+    "forbidden_claims": [
+      "authoritative_real_world_timing",
+      "gi_specific_coverage",
+      "final_art_asset",
+      "biomechanical_validation_without_human_review"
+    ],
+    "gi_reference_policy": "GI-specific grips and cloth interactions require separate licensed reference and human review."
+  },
+  "existing_states_to_preserve": [
+    "PLAYER_STANDING_NEUTRAL",
+    "PLAYER_TOP_CLINCH",
+    "PLAYER_TOP_GUARD",
+    "PLAYER_TOP_SIDE",
+    "PLAYER_TOP_MOUNT",
+    "PLAYER_BOTTOM_GUARD",
+    "PLAYER_BOTTOM_MOUNT",
+    "PLAYER_BOTTOM_SIDE",
+    "PLAYER_BACK_ATTACK",
+    "PLAYER_SUBMISSION_ATTACK",
+    "RESET"
+  ],
+  "planned_states": [
+    "PLAYER_TOP_HALF_GUARD",
+    "PLAYER_BOTTOM_HALF_GUARD",
+    "PLAYER_TURTLE",
+    "PLAYER_50_50",
+    "PLAYER_KNEE_ON_BELLY"
+  ],
+  "resources": [
+    "health",
+    "gas",
+    "focus",
+    "grip",
+    "positional_control",
+    "flow"
+  ],
+  "deck": {
+    "active_limit": 5,
+    "passive_limit": 3,
+    "hand_size": 3,
+    "deterministic_hand_required": true,
+    "dead_hand_action": {
+      "gas_cost": 5,
+      "effect": "discard_and_draw_next"
+    },
+    "xp_success": 10,
+    "xp_attempt": 3
+  },
+  "position_control": {
+    "range": [0, 100],
+    "bands": {
+      "neutral": [0, 24],
+      "alert": [25, 49],
+      "pressure": [50, 74],
+      "domain": [75, 100]
+    },
+    "submission_enabled_band": "domain"
+  },
+  "flow": {
+    "range": [0, 100],
+    "activation_value": 100,
+    "duration_seconds": 10,
+    "cooldown_rounds": 1,
+    "must_not_break_clash_clamp": true
+  },
+  "finalization_mobile": {
+    "touch_steps": ["grip_point_tap", "fit_direction_drag", "pressure_hold"],
+    "technical_intervention_timeout_seconds": 8,
+    "instant_resolution_forbidden": true,
+    "accessibility_required": true
+  },
+  "visual": {
+    "style": "HD painted pixel art 2D/2.5D",
+    "regional_specificity_required": true,
+    "generic_tropical_favela_forbidden": true,
+    "paired_attacker_defender_required": true,
+    "logical_state_must_match_visual": true,
+    "readable_at_quarter_scale": true
+  },
+  "delivery": {
+    "golden_vertical_slice_before_scale": true,
+    "golden_slice": {
+      "player": "ruan_macacao",
+      "opponent": "davi_relampago",
+      "arena": "arena_do_dique",
+      "rulesets": ["GI", "NO_GI"]
+    },
+    "completion_requires": [
+      "contract",
+      "implementation",
+      "real_consumer",
+      "automated_test",
+      "biomechanical_review",
+      "pt_br_review",
+      "visual_evidence",
+      "android_device_test",
+      "rollback"
+    ]
+  }
+}

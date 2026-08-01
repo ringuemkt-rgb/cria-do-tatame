@@ -1,5 +1,5 @@
 {
-  "schema_version": "1.0.2",
+  "schema_version": "1.0.3",
   "repository": "ringuemkt-rgb/cria-do-tatame",
   "default_branch": "main",
   "single_source_of_truth": true,
@@ -28,8 +28,15 @@
     "docs/ROADMAP.md",
     "data/production/canon_contract_v4_1.json",
     "data/production/faction_migration_v4_2.json",
+    "data/production/ruleset_contract_v4_3.json",
+    "data/production/combat_master_contract_v2.json",
+    "data/combat/rulesets_v01.json",
+    "data/combat/technique_rulesets_v01.json",
     "tools/audit/validate_faction_migration_v4_2.py",
+    "tools/audit/validate_rulesets_v4_3.py",
     "tests/test_faction_migration_v4_2.py",
+    "tests/test_rulesets_v4_3.py",
+    "tests/ruleset_smoke.gd",
     "data/production/release_gate_status_v01.json"
   ],
   "canonical_directories": [
@@ -74,6 +81,11 @@
       "os_aleluia": "ALE"
     },
     "faction_save_version": 5,
+    "combat_rulesets": ["GI", "NO_GI"],
+    "default_combat_ruleset": "GI",
+    "technique_source": "data/techniques.json",
+    "instant_finish": false,
+    "clash_modifier_range": [-0.3, 0.35],
     "critical_gameplay_offline": true,
     "second_runtime_forbidden": true,
     "secrets_in_repository_forbidden": true

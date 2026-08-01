@@ -12,9 +12,12 @@ Antes de criar, editar, apagar, mover ou integrar qualquer arquivo:
 4. leia `docs/ROADMAP.md`;
 5. leia `docs/INDEX.md` e a fonte canônica da área;
 6. consulte `data/production/canon_contract_v4_1.json`;
-7. consulte `data/production/supreme_build_contract_v01.json`;
-8. procure implementação, issue ou PR equivalente;
-9. defina um lote vertical pequeno, testável e reversível.
+7. consulte `data/production/faction_migration_v4_2.json` quando tocar facções ou save;
+8. consulte `data/production/combat_master_contract_v2.json` quando tocar combate, progressão, arenas ou pipeline visual;
+9. consulte `data/production/ruleset_contract_v4_3.json`, `data/combat/rulesets_v01.json` e `data/combat/technique_rulesets_v01.json` quando tocar GI, No-Gi, técnicas, cartas, uniformes ou animações;
+10. consulte `data/production/supreme_build_contract_v01.json`;
+11. procure implementação, issue ou PR equivalente;
+12. defina um lote vertical pequeno, testável e reversível.
 
 Não comece implementando apenas porque a solicitação parece clara. Primeiro confirme a posição da tarefa na arquitetura e no roadmap.
 
@@ -50,9 +53,12 @@ O repositório não é galeria de prompts, depósito de concept art ou cemitéri
 - frase eixo: Ser forte é ser gentil;
 - facções ativas do cânone v4: LEM, NTM e ALE;
 - nome de exibição de ALE: **Os Aleluiado**;
-- ID legado `os_aleluia` é alias de migração e não deve ser renomeado em lugar.
+- ID legado `os_aleluia` é alias de migração e não deve ser renomeado em lugar;
+- rulesets canônicos: `GI` e `NO_GI`;
+- `GI` permanece padrão para compatibilidade enquanto a seleção completa não estiver integrada;
+- No-Gi não pode ser apenas troca cosmética de uniforme.
 
-Caio Ravel, Ruan “Cria” e uma quarta facção ativa são bloqueados em shipping.
+Caio Ravel, Ruan “Cria”, uma quarta facção ativa, `instant_finish=true` e técnica fora de `data/techniques.json` são bloqueados em shipping.
 
 ## Hierarquia de autoridade
 
@@ -73,12 +79,28 @@ Nunca escolha a versão “mais bonita” ou “mais completa” sem verificar i
 - Godot é o único runtime.
 - `main` deve permanecer bootável.
 - Gameplay crítico é determinístico e offline.
-- `CombatManager`, `DeckManager`, `AudioManager` e managers de mundo existentes não podem ser duplicados.
+- `CombatManager`, `DeckManager`, `DataRegistry`, `TechniqueClashResolver`, `SaveManager`, `AudioManager` e managers de mundo existentes não podem ser duplicados.
 - Migrações usam adapter/fachada e testes de compatibilidade.
 - Alteração de autoload exige auditoria de boot.
 - Dados persistíveis exigem versão e migração de save.
 - IDs de dados são estáveis; renome só com mapper.
+- Técnicas vêm exclusivamente de `data/techniques.json`; catálogos auxiliares são projeções e contratos, não segunda fonte.
+- O modificador final de clash deve permanecer entre `-0.30` e `+0.35`.
+- `instant_finish` é sempre falso.
+- Finalizações terminam em tap, escape ou intervenção técnica.
+- Controle posicional e fluxo são recursos distintos.
 - Uma classe, JSON ou asset sem consumidor real não conta como feature integrada.
+
+## GrappleMap
+
+`Eelis/GrappleMap` pode ser usado como referência de domínio público para:
+
+- grafo dirigido de posições;
+- taxonomia e tags;
+- poses e entanglements;
+- sequência esquemática de transições.
+
+Não pode ser tratado como fonte autoritativa de timing real, cobertura específica de Gi, validação biomecânica ou arte final. Técnicas de tecido exigem referência separada e revisão humana.
 
 ## Fluxo que não pode regredir
 
@@ -119,9 +141,12 @@ PR empilhado deve declarar dependência, ordem de merge e base ativa. Se a base 
 
 - Concept art, mockup, geração bruta e fila de produção são candidatos.
 - Asset final exige origem/licença, metadata, preview, QA, aprovação humana e integração Godot.
-- Técnica pareada exige atacante, defensor, pivô compartilhado, timing e `sync_map`.
+- Técnica pareada exige atacante, defensor, pivô compartilhado, timing validado, `sync_map` e correspondência entre estado lógico e visual.
+- GI e No-Gi exigem variantes quando pegadas, roupa, contato ou áudio divergem.
+- Nenhum tecido de kimono pode aparecer em animação No-Gi.
 - Não copiar pessoa, marca, frame, aula, logo ou áudio de terceiro sem licença.
 - Não promover automaticamente saída de IA para caminhos de shipping.
+- Sem teleporte, clipping, pegada invisível antes de projeção ou defensor dessincronizado.
 
 ## Segurança
 
@@ -129,6 +154,8 @@ PR empilhado deve declarar dependência, ordem de merge e base ativa. Se a base 
 - Serviços externos são opcionais e tratados como não confiáveis.
 - Nenhuma LLM controla o loop de combate.
 - Conteúdo cosmético opcional não concede poder jogável.
+- Sem animação de lesão como prêmio.
+- Sem referência a liga comercial real.
 
 ## Gates mínimos
 
@@ -143,6 +170,7 @@ Quando aplicável:
 ```bash
 godot --headless --editor --path . --quit
 godot --headless --path . --script res://tests/runtime_smoke.gd
+godot --headless --path . --script res://tests/ruleset_smoke.gd
 ```
 
 Mudanças de release Android exigem instalação e teste em aparelho físico. Desempenho estimado não é evidência.

@@ -29,6 +29,7 @@ jobs:
           python tools/cria_forge/cria_forge.py validate
           python tools/validate_complete_game.py
           python tools/validate_runtime_contracts.py
+          python tools/audit/validate_rulesets_v4_3.py
       - name: Python compile check
         run: python -m compileall -q tools tests
       - name: Ruff critical errors
@@ -77,6 +78,11 @@ jobs:
         run: |
           set -o pipefail
           ./godot --headless --path . --script res://tests/faction_director_smoke.gd 2>&1 | tee reports/full_game_audit/faction_smoke.log
+      - name: GI and No-Gi ruleset smoke
+        shell: bash
+        run: |
+          set -o pipefail
+          ./godot --headless --path . --script res://tests/ruleset_smoke.gd 2>&1 | tee reports/full_game_audit/ruleset_smoke.log
       - name: Full game smoke
         shell: bash
         run: |
