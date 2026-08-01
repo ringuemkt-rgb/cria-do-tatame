@@ -1,0 +1,152 @@
+{
+  "version": "1.0.0",
+  "language": "pt-BR",
+  "source_catalog": "data/techniques.json",
+  "default_policy": {
+    "rulesets": ["GI", "NO_GI"],
+    "requires_fabric": false,
+    "grip_type": "body_control",
+    "blocked_reason": ""
+  },
+  "techniques": {
+    "pegada_lapela_manga": {
+      "rulesets": ["GI"],
+      "requires_fabric": true,
+      "grip_type": "lapel_sleeve",
+      "blocked_reason": "Esta técnica exige pegada na lapela e na manga e não pode ser usada no No-Gi.",
+      "visual_variants": {
+        "GI": "pegada_lapela_manga_gi"
+      }
+    },
+    "grip_de_ferro": {
+      "rulesets": ["GI", "NO_GI"],
+      "requires_fabric": false,
+      "grip_type": "adaptive_grip",
+      "visual_variants": {
+        "GI": "grip_de_ferro_lapela_manga",
+        "NO_GI": "grip_de_ferro_punho_collar_tie"
+      },
+      "contact_anchors": {
+        "GI": ["lapel", "sleeve"],
+        "NO_GI": ["wrist", "neck"]
+      }
+    },
+    "silverback_grip": {
+      "rulesets": ["GI", "NO_GI"],
+      "requires_fabric": false,
+      "grip_type": "adaptive_power_grip",
+      "visual_variants": {
+        "GI": "silverback_grip_gi",
+        "NO_GI": "silverback_body_lock"
+      },
+      "contact_anchors": {
+        "GI": ["lapel", "sleeve", "torso"],
+        "NO_GI": ["wrist", "torso", "head_control"]
+      }
+    },
+    "pressao_cabeca": {
+      "rulesets": ["GI", "NO_GI"],
+      "requires_fabric": false,
+      "grip_type": "head_control"
+    },
+    "quebra_base": {
+      "rulesets": ["GI", "NO_GI"],
+      "requires_fabric": false,
+      "grip_type": "adaptive_clinch"
+    },
+    "baiana": {
+      "rulesets": ["GI", "NO_GI"],
+      "requires_fabric": false,
+      "grip_type": "leg_and_body_lock"
+    },
+    "sprawl": {
+      "rulesets": ["GI", "NO_GI"],
+      "requires_fabric": false,
+      "grip_type": "head_and_hip_control"
+    },
+    "puxada_guarda": {
+      "rulesets": ["GI", "NO_GI"],
+      "requires_fabric": false,
+      "grip_type": "adaptive_guard_pull",
+      "visual_variants": {
+        "GI": "puxada_guarda_lapela_manga",
+        "NO_GI": "puxada_guarda_punho_collar_tie"
+      }
+    },
+    "corte_joelho": {
+      "rulesets": ["GI", "NO_GI"],
+      "requires_fabric": false,
+      "grip_type": "underhook_head_control",
+      "visual_variants": {
+        "GI": "corte_joelho_gi",
+        "NO_GI": "corte_joelho_no_gi"
+      }
+    },
+    "crossface": {
+      "rulesets": ["GI", "NO_GI"],
+      "requires_fabric": false,
+      "grip_type": "head_and_shoulder_control"
+    },
+    "raspagem_tesoura": {
+      "rulesets": ["GI", "NO_GI"],
+      "requires_fabric": false,
+      "grip_type": "adaptive_guard_control"
+    },
+    "raspagem_borboleta": {
+      "rulesets": ["GI", "NO_GI"],
+      "requires_fabric": false,
+      "grip_type": "underhook_or_overhook"
+    },
+    "cem_quilos": {
+      "rulesets": ["GI", "NO_GI"],
+      "requires_fabric": false,
+      "grip_type": "torso_control"
+    },
+    "montada_pesada": {
+      "rulesets": ["GI", "NO_GI"],
+      "requires_fabric": false,
+      "grip_type": "hip_and_head_control"
+    },
+    "saida_montada": {
+      "rulesets": ["GI", "NO_GI"],
+      "requires_fabric": false,
+      "grip_type": "frame_and_hip_escape"
+    },
+    "saida_cem_quilos": {
+      "rulesets": ["GI", "NO_GI"],
+      "requires_fabric": false,
+      "grip_type": "frame_and_hip_escape"
+    },
+    "chave_braco": {
+      "rulesets": ["GI", "NO_GI"],
+      "requires_fabric": false,
+      "grip_type": "arm_control"
+    },
+    "mata_leao": {
+      "rulesets": ["GI", "NO_GI"],
+      "requires_fabric": false,
+      "grip_type": "neck_and_torso_control"
+    },
+    "encerramento_tecnico": {
+      "rulesets": ["GI", "NO_GI"],
+      "requires_fabric": false,
+      "grip_type": "submission_resolution"
+    }
+  },
+  "planned_no_gi_techniques": [
+    "collar_tie",
+    "pummel",
+    "underhook",
+    "overhook",
+    "whizzer",
+    "body_lock",
+    "two_on_one",
+    "arm_drag_no_gi"
+  ],
+  "policy": {
+    "missing_technique_uses_default_policy": true,
+    "deck_cards_are_never_deleted_by_ruleset": true,
+    "incompatible_cards_are_filtered_from_combat_hand": true,
+    "visual_variant_is_required_before_shipping": true
+  }
+}
