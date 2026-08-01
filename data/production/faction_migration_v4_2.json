@@ -1,0 +1,75 @@
+{
+  "schema_version": "4.2.0",
+  "contract_id": "cria_do_tatame_faction_migration_v4_2",
+  "status": "candidate_until_merge",
+  "source_contract": "data/production/canon_contract_v4_1.json",
+  "active_faction_ids": ["ALE", "LEM", "NTM"],
+  "active_factions": {
+    "ALE": {
+      "display_name": "Os Aleluiado",
+      "legacy_ids": ["os_aleluia"]
+    },
+    "LEM": {
+      "display_name": "Lá Ele Mil Vezes",
+      "legacy_ids": ["la_ele_mil_vezes"]
+    },
+    "NTM": {
+      "display_name": "Nós Tem Um Molho",
+      "legacy_ids": ["nos_tem_um_molho"]
+    }
+  },
+  "non_faction_policy": {
+    "community": ["terreiro", "raiz"],
+    "institutions": ["circuito_oficial", "cria_live"],
+    "narrative_axes": ["atalhos"],
+    "retired_lore": ["dragao_vermelho", "fantasma"],
+    "must_not_run_autonomous_faction_operations": true,
+    "legacy_values_must_be_archived_not_discarded": true
+  },
+  "save_migration": {
+    "previous_version": 4,
+    "current_version": 5,
+    "atomic_write_required": true,
+    "backup_fallback_required": true,
+    "rewrite_after_successful_migration": true,
+    "idempotent_loading_required": true,
+    "legacy_archive_required": true
+  },
+  "runtime_authorities": {
+    "faction_relations": "FactionManager",
+    "faction_simulation": "FactionDirectorManager",
+    "save": "SaveManager"
+  },
+  "files": {
+    "identity_mapper": "src/factions/FactionIdentityV4.gd",
+    "faction_manager": "src/autoloads/FactionManager.gd",
+    "director": "src/autoloads/FactionDirectorManager.gd",
+    "save_manager": "src/autoloads/SaveManager.gd",
+    "director_data": "data/factions/faction_director_v02.json",
+    "territories": "data/world/faction_territories_v02.json",
+    "catalog": "data/factions.json",
+    "runtime_smoke": "tests/faction_director_smoke.gd"
+  },
+  "compatibility": {
+    "legacy_ids_accepted_at_boundaries": true,
+    "canonical_ids_written_to_new_saves": true,
+    "legacy_ids_must_not_create_duplicate_factions": true,
+    "missions_may_temporarily_emit_legacy_ids": true,
+    "global_text_replacement_for_aleluia_forbidden": true
+  },
+  "forbidden": [
+    "new_faction_autoload",
+    "second_save_manager",
+    "destructive_rename_without_alias",
+    "discarding_retired_faction_state",
+    "runtime_operations_for_terreiro_or_raiz",
+    "runtime_operations_for_dragao_vermelho_or_fantasma",
+    "combat_deck_or_audio_authority_changes",
+    "no_gi_runtime_changes_in_v4_2"
+  ],
+  "next_batch": {
+    "id": "v4_3",
+    "scope": "cartas_posicoes_rulesets_gi_no_gi",
+    "tracking_issue": 44
+  }
+}
