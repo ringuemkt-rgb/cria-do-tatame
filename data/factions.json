@@ -1,97 +1,121 @@
 {
-  "version": "0.3.1",
+  "version": "0.4.0",
   "language": "pt-BR",
-  "design_note": "Faccoes 100% ficcionais. Crime e corrupcao aparecem como consequencia narrativa, nao como tutorial operacional nem glorificacao.",
+  "active_faction_ids": ["ALE", "LEM", "NTM"],
+  "design_note": "As facções são 100% ficcionais. Crime e corrupção aparecem como consequência narrativa, nunca como tutorial operacional ou glorificação.",
   "factions": [
     {
       "id": "terreiro",
       "name": "Terreiro da Luta",
+      "domain_type": "community",
+      "active_faction": false,
       "axis": "honra",
-      "description": "Familia de treino, disciplina, protecao comunitaria e base moral.",
+      "description": "Família de treino, disciplina, proteção comunitária e base moral.",
       "system_role": "legitimidade_comunitaria"
     },
     {
       "id": "circuito_oficial",
       "name": "Circuito Oficial",
+      "domain_type": "institution",
+      "active_faction": false,
       "axis": "legado",
-      "description": "Torneios, regras, ranking e visibilidade legitima.",
+      "description": "Torneios, regras, ranking e visibilidade legítima.",
       "system_role": "instituicao_neutra_disputada"
     },
     {
       "id": "cria_live",
       "name": "Cria Live",
+      "domain_type": "institution",
+      "active_faction": false,
       "axis": "hype",
-      "description": "Feed social, torcida, polemica, reputacao e fama rapida.",
+      "description": "Feed social, torcida, polêmica, reputação e fama rápida.",
       "system_role": "arena_publica_disputada"
     },
     {
       "id": "atalhos",
       "name": "Atalhos",
+      "domain_type": "narrative_axis",
+      "active_faction": false,
       "axis": "sombra",
-      "description": "Caminhos faceis que cobram preco moral.",
+      "description": "Caminhos fáceis que cobram preço moral.",
       "system_role": "tentacao_narrativa"
     },
     {
       "id": "raiz",
       "name": "Casa da Leoa — Raiz do Baixo Sul",
+      "domain_type": "community",
+      "active_faction": false,
       "axis": "raiz",
-      "description": "Comunidade, mangue, memoria ancestral, familia e defesa territorial.",
+      "description": "Comunidade, mangue, memória ancestral, família e defesa territorial.",
       "system_role": "coesao_e_territorio"
     },
     {
       "id": "os_aleluia",
+      "canonical_id": "ALE",
       "name": "Os Aleluiado",
+      "domain_type": "active_faction",
+      "active_faction": true,
       "axis": "honra_sombra",
-      "tagline": "Fe, Disciplina e Honra",
+      "tagline": "Fé, Disciplina e Honra",
       "colors": ["azul", "dourado", "branco"],
       "symbol": "pomba_ficcional_com_ramo_e_cruz_abstrata",
       "territories": ["arena_do_dique", "budokan_das_aguas", "igreja_central_ficcional"],
-      "description": "Circuito oficial, tradicao religiosa, controle de torneios e poder institucional de aparencia limpa.",
+      "description": "Circuito oficial, tradição religiosa ficcional, controle de torneios e poder institucional de aparência limpa.",
       "system_role": "ordem_e_prestigio"
     },
     {
       "id": "la_ele_mil_vezes",
-      "name": "La Ele Mil Vezes",
+      "canonical_id": "LEM",
+      "name": "Lá Ele Mil Vezes",
+      "domain_type": "active_faction",
+      "active_faction": true,
       "axis": "sombra_foco",
-      "tagline": "O Olho Tudo Ve, O Tatame Tudo Sabe",
+      "tagline": "O Olho Tudo Vê, o Tatame Tudo Sabe",
       "colors": ["roxo", "vermelho", "dourado"],
       "symbol": "olho_ficcional_e_mao_abstrata",
       "territories": ["colonia_nishimura", "ferro_velho_da_lapa", "beco_do_engenho"],
-      "description": "Informacao, observacao de luta, arquivos, rumores e poder oculto.",
+      "description": "Informação, observação de luta, arquivos, rumores e poder oculto.",
       "system_role": "inteligencia_e_previsao"
     },
     {
       "id": "nos_tem_um_molho",
-      "name": "Nos Tem Um Molho",
+      "canonical_id": "NTM",
+      "name": "Nós Tem Um Molho",
+      "domain_type": "active_faction",
+      "active_faction": true,
       "axis": "hype_sombra",
-      "tagline": "Quem Prova, Nao Esquece",
+      "tagline": "Quem Prova, Não Esquece",
       "colors": ["laranja", "amarelo", "vermelho"],
       "symbol": "pimenta_molho_pilao",
       "territories": ["zambiapunga", "praia_de_pratigi", "evento_privado_ficcional"],
-      "description": "Fama, cultura popular, eventos, viralizacao e dependencia de imagem.",
+      "description": "Fama, cultura popular, eventos, viralização e dependência de imagem.",
       "system_role": "midia_e_caixa"
     },
     {
       "id": "dragao_vermelho",
-      "name": "Triade Dragao Vermelho",
+      "name": "Tríade Dragão Vermelho",
+      "domain_type": "retired_lore",
+      "active_faction": false,
       "axis": "sombra_inteligencia",
-      "tagline": "A rota vale mais que o ruido",
+      "tagline": "A rota vale mais que o ruído",
       "colors": ["vermelho_escuro", "preto", "jade"],
       "symbol": "dragao_ficcional_em_circulo_logistico",
       "territories": ["entreposto_dragao", "evento_privado_ficcional"],
-      "description": "Rede ficcional de logistica, intercambios esportivos, intermediarios e influencia internacional.",
-      "system_role": "logistica_e_infiltracao"
+      "description": "Rede ficcional de logística, intercâmbios esportivos, intermediários e influência internacional, preservada somente como lore aposentado.",
+      "system_role": "lore_aposentado"
     },
     {
       "id": "fantasma",
-      "name": "Agencia Fantasma",
+      "name": "Agência Fantasma",
+      "domain_type": "retired_lore",
+      "active_faction": false,
       "axis": "honra_sombra",
       "tagline": "Proteger sem aparecer",
       "colors": ["grafite", "cinza", "azul_profundo"],
       "symbol": "mascara_ficcional_fragmentada",
       "territories": ["base_fantasma"],
-      "description": "Rede clandestina ficcional de contrainteligencia e protecao regional, marcada por segredo e paranoia.",
-      "system_role": "contrainteligencia_e_protecao"
+      "description": "Rede ficcional de contrainteligência e proteção regional, preservada somente como lore aposentado.",
+      "system_role": "lore_aposentado"
     }
   ]
 }
