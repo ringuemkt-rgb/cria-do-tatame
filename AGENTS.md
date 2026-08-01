@@ -12,10 +12,12 @@ Antes de criar, editar, apagar, mover ou integrar qualquer arquivo:
 4. leia `docs/ROADMAP.md`;
 5. leia `docs/INDEX.md` e a fonte canônica da área;
 6. consulte `data/production/canon_contract_v4_1.json`;
-7. consulte `data/visual/brand_identity_v01.json` quando tocar logo, marca, UI, personagem, uniforme, marketing ou material promocional;
-8. consulte `data/production/supreme_build_contract_v01.json`;
-9. procure implementação, issue ou PR equivalente;
-10. defina um lote vertical pequeno, testável e reversível.
+7. consulte `data/production/faction_migration_v4_2.json` quando tocar facções, aliases ou save;
+8. consulte `data/visual/brand_identity_v01.json` quando tocar logo ou marca;
+9. para qualquer tarefa visual, leia `.agents/skills/cria-visual-canon-director/SKILL.md` e `data/visual/visual_canon_contract_v2.json`;
+10. consulte `data/production/supreme_build_contract_v01.json`;
+11. procure implementação, issue ou PR equivalente;
+12. defina um lote vertical pequeno, testável e reversível.
 
 Não comece implementando apenas porque a solicitação parece clara. Primeiro confirme a posição da tarefa na arquitetura e no roadmap.
 
@@ -50,15 +52,19 @@ O repositório não é galeria de prompts, depósito de concept art ou cemitéri
 - poder: Silverback Grip;
 - frase eixo: Ser forte é ser gentil;
 - facções ativas do cânone v4: LEM, NTM e ALE;
-- nome de exibição de ALE: **Os Aleluiado**;
+- nome de exibição de ALE: **Os Aleluiados**;
 - ID legado `os_aleluia` é alias de migração e não deve ser renomeado em lugar;
 - logo oficial: `assets/branding/logo_oficial_cria_do_tatame.svg`;
 - contrato visual oficial: `data/visual/brand_identity_v01.json`;
+- sistema visual canônico: `data/visual/visual_canon_contract_v2.json`;
+- skill visual obrigatória: `.agents/skills/cria-visual-canon-director/SKILL.md`;
 - composição protegida do logo: Silverback frontal, coroa dourada, kimono preto, emblema circular e wordmark `CRIA DO TATAME`;
 - paleta principal do logo: preto, branco e dourado;
-- `Cria` é o título da marca e não substitui o apelido canônico `Macacão`.
+- `Cria` é o título da marca e não substitui o apelido canônico `Macacão`;
+- arte final: pixel art 2D;
+- apresentação 2.5D: somente por camadas, parallax, oclusão, luz, partículas e câmera.
 
-Caio Ravel, Ruan “Cria”, uma quarta facção ativa e qualquer substituição não aprovada do logo oficial são bloqueados em shipping.
+Caio Ravel, Ruan “Cria”, uma quarta facção ativa, arte final 3D realista e qualquer substituição não aprovada do logo oficial são bloqueados em shipping.
 
 O arquivo visual do logo é a fonte canônica aprovada pelo criador, mas contém uma marca de terceiro observada nos óculos. Nenhum build comercial pode usar essa versão antes da limpeza jurídica registrada no contrato visual.
 
@@ -70,7 +76,7 @@ Quando houver conflito:
 2. `docs/DECISIONS.md`, `docs/canon/` e decisões aprovadas;
 3. runtime, cenas e dados realmente consumidos;
 4. `docs/REPOSITORY_GOVERNANCE.md` e este arquivo;
-5. documentação técnica ativa;
+5. skills e documentação técnica ativa;
 6. issues/PRs;
 7. prompts, concept art, relatórios antigos e branches legadas.
 
@@ -104,7 +110,7 @@ Main Menu
 
 ## Processo de trabalho
 
-1. **Inventário:** arquivos, sistemas, PRs, testes e dependências.
+1. **Inventário:** arquivos, sistemas, referências, testes e dependências.
 2. **Diagnóstico:** fato, conflito, lacuna, risco e dívida.
 3. **Plano vertical:** objetivo observável, escopo, fora do escopo, testes e rollback.
 4. **Implementação:** reutilizar arquitetura existente.
@@ -125,13 +131,20 @@ PR empilhado deve declarar dependência, ordem de merge e base ativa. Se a base 
 
 ## Arte, animação e áudio
 
-- Concept art, mockup, geração bruta e fila de produção são candidatos.
+- Toda tarefa visual ativa `.agents/skills/cria-visual-canon-director/SKILL.md`.
+- Concept art, mockup, geração bruta e fila de produção são referências ou candidatos.
+- Estados de asset devem avançar sequencialmente de `reference_only` até `release_ready`.
 - Asset final exige origem/licença, metadata, preview, QA, aprovação humana e integração Godot.
 - Técnica pareada exige atacante, defensor, pivô compartilhado, timing e `sync_map`.
+- Técnicas vêm exclusivamente de `data/techniques.json`.
 - Não copiar pessoa, marca, frame, aula, logo ou áudio de terceiro sem licença.
 - Não promover automaticamente saída de IA para caminhos de shipping.
 - Não redesenhar, simplificar, recolorir ou remover Silverback/coroa do logo oficial sem aprovação explícita do criador.
 - Derivados do logo devem preservar proporção, hierarquia, contraste e identidade de Jiu-Jitsu.
+- Produção visual ocorre em lotes de até dez itens do mesmo tipo, uma âncora e um commit; QA antes do lote seguinte.
+- Finalização visual termina em tap, escape ou intervenção técnica; lesão não é prêmio.
+- Mapas conceituais não são autoridade geográfica.
+- Prancha editorial não é HUD runtime.
 
 ## Segurança
 
@@ -140,6 +153,7 @@ PR empilhado deve declarar dependência, ordem de merge e base ativa. Se a base 
 - Nenhuma LLM controla o loop de combate.
 - Conteúdo cosmético opcional não concede poder jogável.
 - Marcas, brasões, academias, ligas, eventos e patrocinadores reais exigem autorização escrita ou substituição ficcional antes de shipping.
+- Zambiapunga, referências quilombolas, japonesas, afro-baianas e religiosas exigem contexto e revisão humana.
 
 ## Gates mínimos
 
@@ -147,6 +161,13 @@ Sempre execute:
 
 ```bash
 npm run quality
+```
+
+Para trabalho visual:
+
+```bash
+python .agents/skills/cria-visual-canon-director/scripts/validate_skill.py
+python tools/audit/validate_visual_canon_v2.py
 ```
 
 Quando aplicável:
@@ -168,6 +189,8 @@ Mudanças de release Android exigem instalação e teste em aparelho físico. De
 6. Riscos — falhas, incertezas e dívida;
 7. Próximo lote — menor passo vertical de maior valor.
 
+Em tarefas visuais, adicionar classificação do asset, cânone aplicado, aprovação humana, licença/cultura e estado Android.
+
 ## Condições de parada
 
 Pare e registre bloqueio quando houver:
@@ -177,6 +200,8 @@ Pare e registre bloqueio quando houver:
 - branch-base abandonada sem estratégia de port;
 - licença ou origem incerta;
 - biomecânica insegura;
+- símbolo cultural sem contexto suficiente;
+- asset sem consumidor definido;
 - credencial ausente;
 - ação irreversível não autorizada;
 - teste obrigatório impossível no ambiente.
