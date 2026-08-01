@@ -1,5 +1,5 @@
 {
-  "schema_version": "1.0.2",
+  "schema_version": "1.0.3",
   "repository": "ringuemkt-rgb/cria-do-tatame",
   "default_branch": "main",
   "single_source_of_truth": true,
@@ -28,6 +28,12 @@
     "docs/ROADMAP.md",
     "data/production/canon_contract_v4_1.json",
     "data/production/faction_migration_v4_2.json",
+    ".agents/skills/cria-visual-production-director/SKILL.md",
+    "data/visual/visual_production_director_v1.json",
+    "data/visual/templates/visual_asset_brief_v1.json",
+    "docs/art_bible/VISUAL_RECONCILIATION_AND_PRODUCTION_STANDARD_V2.md",
+    "tools/audit/validate_visual_production_director_v1.py",
+    "tests/test_visual_production_director_v1.py",
     "tools/audit/validate_faction_migration_v4_2.py",
     "tests/test_faction_migration_v4_2.py",
     "data/production/release_gate_status_v01.json"
@@ -66,7 +72,7 @@
     "active_faction_display_names": {
       "LEM": "Lá Ele Mil Vezes",
       "NTM": "Nós Tem Um Molho",
-      "ALE": "Os Aleluiado"
+      "ALE": "Os Aleluiados"
     },
     "legacy_faction_aliases": {
       "la_ele_mil_vezes": "LEM",
@@ -74,6 +80,13 @@
       "os_aleluia": "ALE"
     },
     "faction_save_version": 5,
+    "visual_skill": ".agents/skills/cria-visual-production-director/SKILL.md",
+    "visual_contract": "data/visual/visual_production_director_v1.json",
+    "visual_style": "HD Painted Pixel Art 2D/2.5D Regional Premium",
+    "visual_viewport": [1280, 720],
+    "visual_grid_px": 16,
+    "visual_texture_filter": "nearest",
+    "visual_quality_minimum": 90,
     "critical_gameplay_offline": true,
     "second_runtime_forbidden": true,
     "secrets_in_repository_forbidden": true

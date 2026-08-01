@@ -16,7 +16,7 @@ AGENTS_PATH = ROOT / "AGENTS.md"
 PROJECT_PATH = ROOT / "project.godot"
 
 EXPECTED_IDS = ["LEM", "NTM", "ALE"]
-EXPECTED_DISPLAY = "Os Aleluiado"
+EXPECTED_DISPLAY = "Os Aleluiados"
 LEGACY_ID = "os_aleluia"
 
 
@@ -67,6 +67,8 @@ def validate_contract() -> None:
     assert d10.get("canonical_display_name") == EXPECTED_DISPLAY
     assert d10.get("canonical_future_id") == "ALE"
     assert d10.get("preserved_legacy_id") == LEGACY_ID
+    assert d10.get("display_only_change") is True
+    assert d10.get("save_migration_required") is False
     assert d10.get("religious_context_must_not_be_rewritten") is True
     assert d10.get("ambiguous_occurrences_require_human_review") is True
 

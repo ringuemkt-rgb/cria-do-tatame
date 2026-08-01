@@ -1,12 +1,12 @@
 {
-  "schema_version": "4.2.0",
+  "schema_version": "4.2.1",
   "contract_id": "cria_do_tatame_faction_migration_v4_2",
   "status": "canonical_contract",
   "source_contract": "data/production/canon_contract_v4_1.json",
   "active_faction_ids": ["ALE", "LEM", "NTM"],
   "active_factions": {
     "ALE": {
-      "display_name": "Os Aleluiado",
+      "display_name": "Os Aleluiados",
       "legacy_ids": ["os_aleluia"]
     },
     "LEM": {
@@ -17,6 +17,12 @@
       "display_name": "Nós Tem Um Molho",
       "legacy_ids": ["nos_tem_um_molho"]
     }
+  },
+  "display_name_policy": {
+    "display_only_change": true,
+    "ids_unchanged": true,
+    "save_version_unchanged": true,
+    "superseded_active_displays": ["Os Aleluia", "Os Aleluiado"]
   },
   "non_faction_policy": {
     "community": ["terreiro", "raiz"],

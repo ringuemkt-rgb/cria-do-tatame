@@ -22,7 +22,8 @@ def test_three_active_factions_have_complete_identity() -> None:
     assert set(factions) == ACTIVE
     assert data["active_faction_ids"] == ["ALE", "LEM", "NTM"]
     assert data["legacy_aliases"] == ALIASES
-    assert factions["ALE"]["name"] == "Os Aleluiado"
+    assert factions["ALE"]["name"] == "Os Aleluiados"
+    assert factions["ALE"]["short_name"] == "Aleluiados"
     dimensions = set(data["power_dimensions"])
     for faction_id, faction in factions.items():
         assert faction["id"] == faction_id
@@ -97,7 +98,7 @@ def test_core_catalog_classifies_active_and_non_faction_domains() -> None:
     }
     assert set(active) == ACTIVE
     assert active["ALE"]["id"] == "os_aleluia"
-    assert active["ALE"]["name"] == "Os Aleluiado"
+    assert active["ALE"]["name"] == "Os Aleluiados"
     assert active["LEM"]["id"] == "la_ele_mil_vezes"
     assert active["NTM"]["id"] == "nos_tem_um_molho"
     retired = {

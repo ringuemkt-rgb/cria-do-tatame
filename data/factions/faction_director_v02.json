@@ -1,5 +1,5 @@
 {
-  "version": "2.1.0",
+  "version": "2.1.1",
   "language": "pt-BR",
   "schema": "faction_director_v4_2",
   "active_faction_ids": ["ALE", "LEM", "NTM"],
@@ -55,8 +55,8 @@
     "ALE": {
       "id": "ALE",
       "legacy_id": "os_aleluia",
-      "name": "Os Aleluiado",
-      "short_name": "Aleluiado",
+      "name": "Os Aleluiados",
+      "short_name": "Aleluiados",
       "headquarters": "budokan_das_aguas",
       "public_face": "Academias disciplinadas, circuito oficial e formação esportiva de aparência impecável.",
       "hidden_face": "Estrutura rígida de contratos, prestígio e silêncio institucional.",

@@ -1,0 +1,307 @@
+{
+  "schema_version": "1.0.0",
+  "contract_id": "cria_visual_production_director_v1",
+  "status": "active_contract",
+  "effective_date": "2026-08-01",
+  "repository": "ringuemkt-rgb/cria-do-tatame",
+  "skill_path": ".agents/skills/cria-visual-production-director/SKILL.md",
+  "human_standard": "docs/art_bible/VISUAL_RECONCILIATION_AND_PRODUCTION_STANDARD_V2.md",
+  "source_manifest": "data/visual/production_manifest_v02.json",
+  "target": {
+    "engine": "Godot 4.x",
+    "viewport": [1280, 720],
+    "platform_floor": "android_arm64",
+    "secondary_platform": "windows_x86_64",
+    "runtime": "deterministic_offline_mobile_first"
+  },
+  "canon": {
+    "protagonist": {
+      "id": "ruan_macacao",
+      "display_name": "Ruan Macacão Silva",
+      "nickname": "Macacão",
+      "origin": "Ituberá, Baixo Sul da Bahia",
+      "symbol": "silverback",
+      "style": ["pressao", "pegada", "top_game"],
+      "signature_power": "silverback_grip",
+      "motto": "Ser forte é ser gentil."
+    },
+    "active_factions": [
+      {
+        "id": "ALE",
+        "display_name": "Os Aleluiados",
+        "legacy_ids": ["os_aleluia"],
+        "palette": ["azul_profundo", "branco", "dourado"],
+        "symbol_language": ["pomba_ficcional", "halo_abstrato", "cruz_abstrata"]
+      },
+      {
+        "id": "LEM",
+        "display_name": "Lá Ele Mil Vezes",
+        "legacy_ids": ["la_ele_mil_vezes"],
+        "palette": ["vermelho", "azul", "roxo", "dourado"],
+        "symbol_language": ["olho_ficcional", "mao_abstrata", "observacao"]
+      },
+      {
+        "id": "NTM",
+        "display_name": "Nós Tem Um Molho",
+        "legacy_ids": ["nos_tem_um_molho"],
+        "palette": ["amarelo", "laranja", "vermelho", "azul"],
+        "symbol_language": ["pilao_ficcional", "pimenta", "molho"]
+      }
+    ],
+    "combat_identity": {
+      "discipline": "Brazilian Jiu-Jitsu",
+      "position_before_submission": true,
+      "beat_em_up": false,
+      "mma_core": false,
+      "striking_core": false,
+      "instant_finish": false,
+      "finish_outcomes": ["tap", "escape", "technical_intervention"],
+      "technique_authority": "data/techniques.json"
+    }
+  },
+  "visual_style": {
+    "name": "HD Painted Pixel Art 2D/2.5D Regional Premium",
+    "dimension": "2D_with_2_5D_depth",
+    "grid_px": 16,
+    "combat_sprite_height_px": 72,
+    "hub_sprite_cell_px": 64,
+    "outline_px": 1,
+    "rim_light_px_max": 1,
+    "texture_filter": "nearest",
+    "anti_aliasing": "forbidden_blurred",
+    "upscale": "integer_when_applicable",
+    "pixel_clusters": "deliberate",
+    "material_readability": ["madeira", "palha", "tatame", "tecido", "agua", "barro", "metal", "vegetacao"],
+    "lighting": ["regional_warmth", "deep_blue_contrast", "selective_rim_light"],
+    "final_render_forbidden": ["photorealism", "generic_3d", "smooth_vector_cartoon", "childish_cartoon", "ai_painterly_blur"]
+  },
+  "reference_classes": [
+    "visual_north",
+    "canon_candidate",
+    "production_brief",
+    "runtime_mockup",
+    "art_bible_sheet",
+    "asset_candidate",
+    "shipping_asset"
+  ],
+  "reference_policy": {
+    "classification_required_before_use": true,
+    "concept_is_not_runtime_asset": true,
+    "poster_is_not_sprite_scale": true,
+    "dense_sheet_is_not_runtime_hud": true,
+    "mockup_does_not_prove_implementation": true,
+    "creator_image_can_define_visual_direction": true,
+    "creator_image_cannot_override_code_or_data_silently": true
+  },
+  "surfaces": {
+    "character_sheet": {
+      "purpose": "art_bible_and_production_reference",
+      "runtime_direct_use": false,
+      "required_sections": ["identity", "turnaround", "palette", "expressions", "outfits", "animation_plan", "legal_review"]
+    },
+    "fighter_sprite": {
+      "purpose": "runtime",
+      "required_anchor": "bottom_center",
+      "transparent_background": true,
+      "whole_strip_generation": true,
+      "independent_frame_generation_forbidden": true
+    },
+    "paired_technique": {
+      "purpose": "runtime",
+      "attacker_and_defender_required": true,
+      "equal_frame_count_required": true,
+      "shared_pivot_required": true,
+      "sync_map_required": true,
+      "contact_map_required": true,
+      "tap_escape_intervention_required": true
+    },
+    "arena_sheet": {
+      "purpose": "art_bible_and_production_brief",
+      "runtime_direct_use": false,
+      "layers_required": ["background_far", "background_mid", "playfield", "foreground_occlusion", "lighting_fx"]
+    },
+    "arena_runtime": {
+      "purpose": "runtime",
+      "playfield_clarity_required": true,
+      "camera_bounds_required": true,
+      "collision_required": true,
+      "mobile_budget_required": true
+    },
+    "world_map": {
+      "purpose": "regional_node_route_interface",
+      "continuous_open_world_promise": false,
+      "hubs_and_instanced_arenas": true,
+      "land_and_water_routes": true
+    },
+    "combat_hud": {
+      "purpose": "runtime",
+      "playfield_protection_required": true,
+      "persistent_primary_clusters_max": 1,
+      "persistent_secondary_clusters_max": 1,
+      "touch_target_dp_min": 48,
+      "safe_area_percent_min": 7,
+      "dense_lore_panels_forbidden_during_combat": true
+    },
+    "art_bible_hud": {
+      "purpose": "explanation_and_pitch",
+      "runtime_direct_use": false,
+      "dense_information_allowed": true
+    }
+  },
+  "gi_no_gi": {
+    "simple_costume_swap_forbidden": true,
+    "ruleset_compatibility_required": true,
+    "gi": {
+      "cloth_grips_allowed_only_by_technique": true,
+      "lapel_and_sleeve_readability_required": true,
+      "fictional_patches_only": true
+    },
+    "no_gi": {
+      "grippable_cloth_actions_forbidden": true,
+      "anatomical_controls_required": true,
+      "mma_conversion_forbidden": true,
+      "limb_readability_priority": true
+    }
+  },
+  "animation": {
+    "workflow": [
+      "approved_seed",
+      "whole_strip_generation",
+      "shared_scale_normalization",
+      "bottom_center_anchor",
+      "paired_sync",
+      "preview",
+      "godot_import",
+      "scene_test"
+    ],
+    "required_events": ["anticipation", "grip_contact", "base_break", "transition", "stabilization", "resolution"],
+    "blockers": [
+      "teleport",
+      "severe_clipping",
+      "missing_defender",
+      "frame_count_mismatch",
+      "unreadable_grip",
+      "logical_visual_state_mismatch",
+      "injury_celebration",
+      "mutating_outfit",
+      "scale_drift"
+    ]
+  },
+  "arena": {
+    "cultural_specificity_required": true,
+    "generic_tropical_favela_forbidden": true,
+    "location_text_authority": "data/arenas.json",
+    "unknown_location_behavior": "remove_text_and_mark_pending_canon_location",
+    "ritual_space_exoticization_forbidden": true,
+    "hazards_must_be_stylized_and_safe": true,
+    "arena_modifiers_must_be_bounded": true
+  },
+  "ui": {
+    "language": "pt-BR",
+    "reviewed_text_required": true,
+    "baked_long_text_in_sprite_forbidden": true,
+    "reduced_motion_required": true,
+    "contextual_disclosure_required": true,
+    "generic_dashboard_layout_forbidden": true,
+    "runtime_hud_priority": ["immediate_decision", "position", "resources", "time_or_score", "contextual_action"]
+  },
+  "legal": {
+    "real_people_forbidden_without_release": true,
+    "real_brands_forbidden_without_license": true,
+    "real_leagues_forbidden_without_license": true,
+    "real_academies_forbidden_without_license": true,
+    "real_government_or_police_symbols_forbidden": true,
+    "third_party_frames_forbidden_without_rights": true,
+    "ai_output_auto_promotion_forbidden": true,
+    "metadata_license_required": true
+  },
+  "forbidden_display_strings_in_new_assets": [
+    "Ruan Cria Silva",
+    "Ruan “Cria” Silva",
+    "OS ALELUIA",
+    "Os Aleluia",
+    "OS ALELUIADO",
+    "Os Aleluiado"
+  ],
+  "forbidden_unlicensed_marks": [
+    "Ray-Ban",
+    "IBJJF",
+    "CBJJ",
+    "UFC",
+    "Polícia Federal",
+    "PF",
+    "Gracie Barra",
+    "Graciemag"
+  ],
+  "production_states": [
+    "reference_only",
+    "canon_pending",
+    "brief_approved",
+    "seed_approved",
+    "candidate_generated",
+    "normalized",
+    "qa_passed",
+    "integrated",
+    "device_tested",
+    "shipping_approved",
+    "rejected",
+    "archived"
+  ],
+  "quality_score": {
+    "minimum_total": 90,
+    "dimensions": {
+      "canon": 20,
+      "bjj_technical_coherence": 15,
+      "silhouette_readability": 15,
+      "frame_consistency": 15,
+      "integration_metadata": 10,
+      "mobile_performance": 10,
+      "regional_respect": 5,
+      "accessibility": 5,
+      "license_origin": 5
+    },
+    "full_score_required": ["canon", "bjj_technical_coherence", "license_origin"],
+    "blocker_overrides_score": true,
+    "shipping_requires_human_approval": true,
+    "shipping_requires_physical_device_test": true
+  },
+  "asset_metadata_required": [
+    "asset_id",
+    "asset_type",
+    "canon_version",
+    "source_classification",
+    "source_origin",
+    "ruleset_compatibility",
+    "consumer_path",
+    "dimensions",
+    "palette_ref",
+    "anchor",
+    "license",
+    "hash_sha256",
+    "status",
+    "qa"
+  ],
+  "commands": [
+    "/auditar",
+    "/canonizar",
+    "/personagem",
+    "/animacao",
+    "/arena",
+    "/mapa",
+    "/hud",
+    "/faccao",
+    "/prompt",
+    "/integrar",
+    "/qa"
+  ],
+  "integration": {
+    "runtime_authority": "Godot",
+    "critical_gameplay_network_dependency": false,
+    "generative_ai_in_runtime": false,
+    "consumer_required_before_integrated_status": true,
+    "import_notes_required": true,
+    "preview_required": true,
+    "qa_report_required": true,
+    "physical_android_test_required_for_shipping": true
+  }
+}
