@@ -11,11 +11,13 @@ Migrar o runtime de sete organizações ativas para exatamente três facções c
 
 | ID canônico | Nome de exibição | ID legado aceito |
 |---|---|---|
-| `ALE` | Os Aleluiado | `os_aleluia` |
+| `ALE` | Os Aleluiados | `os_aleluia` |
 | `LEM` | Lá Ele Mil Vezes | `la_ele_mil_vezes` |
 | `NTM` | Nós Tem Um Molho | `nos_tem_um_molho` |
 
 Novos saves escrevem os IDs canônicos. Missões e dados antigos podem continuar emitindo IDs legados temporariamente; o mapper converte esses valores na borda do sistema.
+
+A atualização de **Os Aleluiado** para **Os Aleluiados** é exclusivamente visual. O ID `ALE`, o alias `os_aleluia`, o save v5, relações e territórios permanecem inalterados.
 
 ## O que deixou de ser facção ativa
 
