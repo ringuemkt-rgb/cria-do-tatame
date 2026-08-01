@@ -16,7 +16,9 @@ def load(relative: str) -> dict:
 def test_contract_freezes_three_factions_and_save_v5() -> None:
     contract = load("data/production/faction_migration_v4_2.json")
     assert set(contract["active_faction_ids"]) == ACTIVE
-    assert contract["active_factions"]["ALE"]["display_name"] == "Os Aleluiado"
+    assert contract["active_factions"]["ALE"]["display_name"] == "Os Aleluiados"
+    assert contract["display_name_policy"]["display_only_change"] is True
+    assert contract["display_name_policy"]["save_version_unchanged"] is True
     assert contract["save_migration"]["previous_version"] == 4
     assert contract["save_migration"]["current_version"] == 5
     assert contract["save_migration"]["legacy_archive_required"] is True
@@ -34,7 +36,7 @@ def test_runtime_writes_canonical_ids_and_keeps_aliases() -> None:
     assert '"os_aleluia": "ALE"' in mapper
     assert '"la_ele_mil_vezes": "LEM"' in mapper
     assert '"nos_tem_um_molho": "NTM"' in mapper
-    assert '"ALE": "Os Aleluiado"' in mapper
+    assert '"ALE": "Os Aleluiados"' in mapper
     assert 'const ACTIVE_FACTIONS := ["ALE", "LEM", "NTM"]' in manager
     assert '"legacy_archive": legacy_archive.duplicate(true)' in manager
     assert "const SAVE_VERSION := 5" in save
@@ -45,7 +47,8 @@ def test_director_and_territories_use_only_active_ids() -> None:
     director = load("data/factions/faction_director_v02.json")
     territories = load("data/world/faction_territories_v02.json")
     assert set(director["factions"]) == ACTIVE
-    assert director["factions"]["ALE"]["name"] == "Os Aleluiado"
+    assert director["factions"]["ALE"]["name"] == "Os Aleluiados"
+    assert director["factions"]["ALE"]["short_name"] == "Aleluiados"
     for territory in territories["territories"].values():
         assert territory["owner"] in ACTIVE | {"neutral"}
         assert set(territory.get("challengers", [])).issubset(ACTIVE)
