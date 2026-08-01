@@ -1,6 +1,7 @@
 extends Node
 
-const SAVE_VERSION := 4
+const FactionIdentityV4 = preload("res://src/factions/FactionIdentityV4.gd")
+const SAVE_VERSION := 5
 const SAVE_PREFIX := "user://cria_save_"
 const SAVE_SUFFIX := ".json"
 const SAVE_PATH := "user://savegame.json"
@@ -90,6 +91,10 @@ func load_game(slot_id := 1) -> bool:
 			return false
 		if not _write_atomic_json(path, parsed):
 			push_warning("[SaveManager] Backup carregado, mas nao foi possivel restaurar o arquivo principal.")
+	var original_version := int(parsed.get("save_version", 1))
+	var migration_required := original_version < SAVE_VERSION or _contains_legacy_faction_state(parsed)
+	if parsed.has("faction_director_state") and typeof(parsed["faction_director_state"]) == TYPE_DICTIONARY:
+		parsed["faction_director_state"] = FactionIdentityV4.migrate_director_state(parsed["faction_director_state"])
 	WorldState.load_from_dict(parsed)
 	if parsed.has("tinker_bond") and has_node("/root/TinkerBondManager"):
 		TinkerBondManager.load_from_dict(parsed["tinker_bond"])
@@ -119,8 +124,38 @@ func load_game(slot_id := 1) -> bool:
 		NFTManager.load_from_dict(parsed.get("nft_state", {}))
 	if has_node("/root/DeckManager"):
 		DeckManager.load_from_dict(parsed.get("combat_deck_state", {}))
+	if migration_required:
+		_persist_migrated_save(path, parsed, original_version)
 	SignalBus.save_loaded.emit(slot_id)
 	return true
+
+func _persist_migrated_save(path: String, source: Dictionary, original_version: int) -> void:
+	var migrated := source.duplicate(true)
+	migrated["save_version"] = SAVE_VERSION
+	migrated["migrated_from_save_version"] = original_version
+	migrated["migrated_at"] = Time.get_datetime_string_from_system()
+	if has_node("/root/FactionManager"):
+		migrated["faction_state"] = FactionManager.to_dict()
+	if has_node("/root/FactionDirectorManager"):
+		migrated["faction_director_state"] = FactionDirectorManager.to_dict()
+	if not _write_atomic_json(path, migrated):
+		push_warning("[SaveManager] Save carregado, mas a persistencia da migracao v5 falhou.")
+
+func _contains_legacy_faction_state(data: Dictionary) -> bool:
+	var faction_state: Dictionary = data.get("faction_state", {})
+	for map_key_value in ["relations", "heat", "faction_flags"]:
+		var map_key := str(map_key_value)
+		var state_map: Dictionary = faction_state.get(map_key, {})
+		for faction_id_value in state_map.keys():
+			var faction_id := str(faction_id_value)
+			if FactionIdentityV4.canonical_id(faction_id) != faction_id:
+				return true
+	var director_state: Dictionary = data.get("faction_director_state", {})
+	for faction_id_value in director_state.get("factions", {}).keys():
+		var faction_id := str(faction_id_value)
+		if FactionIdentityV4.canonical_id(faction_id) != faction_id:
+			return true
+	return false
 
 func _read_json_dictionary(path: String) -> Dictionary:
 	if not FileAccess.file_exists(path):

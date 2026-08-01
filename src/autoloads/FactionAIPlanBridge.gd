@@ -7,8 +7,20 @@ func _ready() -> void:
 		SignalBus.world_tick_completed.connect(_on_world_tick_completed)
 
 func _on_world_ai_plan_applied(plan: Dictionary) -> void:
-	if has_node("/root/FactionDirectorManager"):
-		FactionDirectorManager.apply_external_pressure(plan.get("faction_pressure", {}))
+	if not has_node("/root/FactionDirectorManager"):
+		return
+	var normalized: Dictionary = {}
+	for faction_id_value in plan.get("faction_pressure", {}).keys():
+		var raw_id := str(faction_id_value)
+		var canonical := FactionManager.canonicalize_faction_id(raw_id) if has_node("/root/FactionManager") else raw_id
+		if canonical == "":
+			continue
+		normalized[canonical] = clampf(
+			float(normalized.get(canonical, 0.0)) + float(plan["faction_pressure"][faction_id_value]),
+			-3.0,
+			3.0
+		)
+	FactionDirectorManager.apply_external_pressure(normalized)
 
 func _on_world_tick_completed(_snapshot: Dictionary) -> void:
 	if not has_node("/root/FactionDirectorManager"):

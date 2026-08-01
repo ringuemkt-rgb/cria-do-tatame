@@ -161,13 +161,19 @@ func _test_faction_director() -> void:
 		return
 	faction_director.call("reset_director")
 	var initial: Dictionary = faction_director.call("get_snapshot")
-	_assert(initial.get("factions", {}).size() == 7, "Quantidade de facções inesperada")
+	var factions: Dictionary = initial.get("factions", {})
+	_assert(factions.size() == 3, "Quantidade de facções inesperada")
+	_assert(factions.has("ALE"), "ALE ausente no diretor")
+	_assert(factions.has("LEM"), "LEM ausente no diretor")
+	_assert(factions.has("NTM"), "NTM ausente no diretor")
+	_assert(not factions.has("terreiro"), "Terreiro permaneceu como facção ativa")
+	_assert(not factions.has("dragao_vermelho"), "Dragão Vermelho permaneceu como facção ativa")
 	_assert(initial.get("territories", {}).size() >= 15, "Territórios insuficientes")
 	for week_number in range(1, 6):
 		faction_director.call("advance_faction_week", week_number)
 	var after: Dictionary = faction_director.call("get_snapshot")
 	_assert(not after.get("active_operations", []).is_empty() or not after.get("operation_history", []).is_empty(), "Facções não iniciaram nem resolveram operações")
-	_assert(after.get("champions", {}).size() == 7, "Campeões das facções incompletos")
+	_assert(after.get("champions", {}).size() == 3, "Campeões das facções incompletos")
 	_assert(after.get("pressure", {}).size() == 5, "Eixos de Pressão Regional incompletos")
 
 func _test_hub_travel_and_activities() -> void:
@@ -199,9 +205,20 @@ func _test_cria_live() -> void:
 		return
 	var before: int = int(cria_live.call("get_feed").size()) if cria_live.has_method("get_feed") else 0
 	if cria_live.has_method("create_faction_post"):
-		cria_live.call("create_faction_post", "terreiro", "Auditoria do Terreiro concluída.", "smoke", {"reach": 1.0, "credibility": 1.0})
-	var after: int = int(cria_live.call("get_feed").size()) if cria_live.has_method("get_feed") else before
-	_assert(after == before + 1, "Cria Live não criou exatamente um post de facção")
+		var rejected = cria_live.call("create_faction_post", "terreiro", "Auditoria comunitária concluída.", "smoke", {"reach": 1.0, "credibility": 1.0})
+		_assert(typeof(rejected) == TYPE_DICTIONARY and rejected.is_empty(), "Cria Live aceitou domínio não ativo como facção")
+	var after_rejected: int = int(cria_live.call("get_feed").size()) if cria_live.has_method("get_feed") else before
+	_assert(after_rejected == before, "Domínio não ativo criou post político")
+	if cria_live.has_method("create_faction_post"):
+		var created = cria_live.call("create_faction_post", "os_aleluia", "Operação de ALE registrada.", "smoke", {"reach": 1.0, "credibility": 1.0})
+		_assert(typeof(created) == TYPE_DICTIONARY and str(created.get("faction_id", "")) == "ALE", "Alias legado não gerou post canônico")
+	var after_created: int = int(cria_live.call("get_feed").size()) if cria_live.has_method("get_feed") else after_rejected
+	_assert(after_created == after_rejected + 1, "Cria Live não criou exatamente um post de facção ativa")
+	if cria_live.has_method("get_faction_metrics"):
+		var canonical_metrics: Dictionary = cria_live.call("get_faction_metrics", "ALE")
+		var legacy_metrics: Dictionary = cria_live.call("get_faction_metrics", "os_aleluia")
+		_assert(not canonical_metrics.is_empty(), "Métricas canônicas de ALE não foram criadas")
+		_assert(canonical_metrics == legacy_metrics, "Alias legado e ID canônico retornaram métricas diferentes")
 
 func _test_combat_catalog() -> void:
 	if registry == null or combat_manager == null:

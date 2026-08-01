@@ -1,13 +1,22 @@
 {
-  "version": "2.0.0",
+  "version": "2.1.0",
   "language": "pt-BR",
+  "schema": "faction_director_v4_2",
+  "active_faction_ids": ["ALE", "LEM", "NTM"],
+  "legacy_aliases": {
+    "os_aleluia": "ALE",
+    "la_ele_mil_vezes": "LEM",
+    "nos_tem_um_molho": "NTM"
+  },
   "design_principles": {
     "fictional_only": true,
     "moral_complexity": true,
     "no_operational_crime_instruction": true,
     "world_continues_without_player": true,
     "player_choices_leave_memory": true,
-    "factions_can_split_merge_and_change_leadership": true
+    "exactly_three_active_factions": true,
+    "institutions_are_not_factions": true,
+    "retired_lore_is_not_runtime_faction": true
   },
   "power_dimensions": [
     "territorio",
@@ -43,38 +52,11 @@
     "exposicao_digital"
   ],
   "factions": {
-    "terreiro": {
-      "name": "Terreiro da Luta",
-      "short_name": "Terreiro",
-      "headquarters": "terreiro_da_luta",
-      "public_face": "Escola comunitária de jiu-jitsu, disciplina e formação de jovens.",
-      "hidden_face": "Rede informal de proteção, memória do bairro e mediação de conflitos.",
-      "desire": "Formar campeões sem perder a alma nem abandonar a comunidade.",
-      "fear": "Tornar-se irrelevante, pobre ou corrompido pelo prestígio.",
-      "taboo": "Abandonar um aluno vulnerável por dinheiro ou fama.",
-      "moral_question": "Como crescer sem vender aquilo que tornou o Terreiro digno?",
-      "leader": "mestre_dende",
-      "hierarchy": {
-        "right_hand": "tinker_bell",
-        "strategist": "tinker_bell",
-        "treasurer": "conselho_terreiro",
-        "intelligence_chief": "tinker_bell",
-        "combat_master": "mestre_dende",
-        "recruiters": ["pedro_discipulo", "moradores_raiz"]
-      },
-      "succession_candidates": [
-        {"id": "tinker_bell", "ambition": 0.35, "loyalty": 0.92, "leadership_style": "analitico_protetor"},
-        {"id": "pedro_discipulo", "ambition": 0.5, "loyalty": 0.8, "leadership_style": "jovem_idealista"}
-      ],
-      "initial_power": {"territorio": 38, "caixa": 24, "influencia": 58, "medo": 12, "inteligencia": 54, "coesao": 82, "forca_marcial": 62},
-      "combat_doctrine": {"id": "base_e_controle", "principles": ["base", "seguranca", "paciencia", "controle", "tecnica_limpa"], "preferred_actions": ["quebra_base", "cem_quilos", "saida_cem_quilos", "raspagem_tesoura"]},
-      "operation_weights": {"proteger_comunidade": 1.6, "formar_campeao": 1.4, "recrutar": 0.8, "campanha_publica": 0.6, "investigar": 1.0, "expandir_territorio": 0.45, "negociar_tregua": 1.2},
-      "starting_territories": ["terreiro_da_luta", "mercado_itubera"],
-      "preferred_debts": ["honra", "protecao", "familia"]
-    },
-    "os_aleluia": {
-      "name": "Os Aleluia",
-      "short_name": "Aleluia",
+    "ALE": {
+      "id": "ALE",
+      "legacy_id": "os_aleluia",
+      "name": "Os Aleluiado",
+      "short_name": "Aleluiado",
       "headquarters": "budokan_das_aguas",
       "public_face": "Academias disciplinadas, circuito oficial e formação esportiva de aparência impecável.",
       "hidden_face": "Estrutura rígida de contratos, prestígio e silêncio institucional.",
@@ -96,12 +78,27 @@
         {"id": "pastora_ana_anja", "ambition": 0.74, "loyalty": 0.65, "leadership_style": "institucional_pragmatica"}
       ],
       "initial_power": {"territorio": 64, "caixa": 68, "influencia": 72, "medo": 46, "inteligencia": 61, "coesao": 76, "forca_marcial": 74},
-      "combat_doctrine": {"id": "regra_e_pressao", "principles": ["defesa_solida", "pontuacao", "controle_de_ritmo", "pressao_psicologica"], "preferred_actions": ["sprawl", "pressao_cabeca", "montada_pesada", "corte_joelho"]},
-      "operation_weights": {"controlar_evento": 1.5, "campanha_publica": 1.25, "recrutar": 1.0, "formar_campeao": 1.3, "investigar": 0.9, "pressionar_rival": 1.0, "encobrir_crise": 1.4},
+      "combat_doctrine": {
+        "id": "regra_e_pressao",
+        "principles": ["defesa_solida", "pontuacao", "controle_de_ritmo", "pressao_psicologica"],
+        "preferred_actions": ["sprawl", "pressao_cabeca", "montada_pesada", "corte_joelho"]
+      },
+      "operation_weights": {
+        "controlar_evento": 1.5,
+        "campanha_publica": 1.25,
+        "recrutar": 1.0,
+        "formar_campeao": 1.3,
+        "investigar": 0.9,
+        "pressionar_rival": 1.0,
+        "encobrir_crise": 1.4,
+        "negociar_tregua": 0.7
+      },
       "starting_territories": ["arena_do_dique", "budokan_das_aguas"],
       "preferred_debts": ["politica", "contrato", "protecao"]
     },
-    "la_ele_mil_vezes": {
+    "LEM": {
+      "id": "LEM",
+      "legacy_id": "la_ele_mil_vezes",
       "name": "Lá Ele Mil Vezes",
       "short_name": "Lá Ele",
       "headquarters": "colonia_nishimura",
@@ -121,16 +118,31 @@
         "recruiters": ["akira_linha_tanaka"]
       },
       "succession_candidates": [
-        {"id": "marina_silencio_costa", "ambition": 0.68, "loyalty": 0.7, "leadership_style": "silenciosa_observadora"},
+        {"id": "marina_silencio_costa", "ambition": 0.68, "loyalty": 0.70, "leadership_style": "silenciosa_observadora"},
         {"id": "hiro_estrategista_nakamura", "ambition": 0.82, "loyalty": 0.56, "leadership_style": "calculista_frio"}
       ],
       "initial_power": {"territorio": 46, "caixa": 57, "influencia": 48, "medo": 58, "inteligencia": 91, "coesao": 66, "forca_marcial": 70},
-      "combat_doctrine": {"id": "leitura_e_armadilha", "principles": ["observacao", "finta", "punicao", "economia", "controle_de_risco"], "preferred_actions": ["arm_drag", "grip_de_ferro", "torreando", "mata_leao"]},
-      "operation_weights": {"investigar": 1.8, "infiltrar": 1.55, "espalhar_rumor": 1.2, "formar_campeao": 1.0, "pressionar_rival": 0.8, "roubar_influencia": 1.15, "encobrir_crise": 1.0},
+      "combat_doctrine": {
+        "id": "leitura_e_armadilha",
+        "principles": ["observacao", "finta", "punicao", "economia", "controle_de_risco"],
+        "preferred_actions": ["arm_drag", "grip_de_ferro", "torreando", "mata_leao"]
+      },
+      "operation_weights": {
+        "investigar": 1.8,
+        "infiltrar": 1.55,
+        "espalhar_rumor": 1.2,
+        "formar_campeao": 1.0,
+        "pressionar_rival": 0.8,
+        "roubar_influencia": 1.15,
+        "encobrir_crise": 1.0,
+        "negociar_tregua": 0.65
+      },
       "starting_territories": ["colonia_nishimura", "beco_do_engenho"],
       "preferred_debts": ["segredo", "informacao", "honra"]
     },
-    "nos_tem_um_molho": {
+    "NTM": {
+      "id": "NTM",
+      "legacy_id": "nos_tem_um_molho",
       "name": "Nós Tem Um Molho",
       "short_name": "Molho",
       "headquarters": "zambiapunga",
@@ -154,97 +166,23 @@
         {"id": "lucas_tempero_mendes", "ambition": 0.72, "loyalty": 0.46, "leadership_style": "editor_estrategista"}
       ],
       "initial_power": {"territorio": 58, "caixa": 82, "influencia": 88, "medo": 38, "inteligencia": 64, "coesao": 49, "forca_marcial": 61},
-      "combat_doctrine": {"id": "espetaculo_e_ritmo", "principles": ["provocacao", "alto_risco", "ritmo_caotico", "pressao_curta", "finalizacao_visual"], "preferred_actions": ["baiana", "montada_pesada", "raspagem_borboleta", "encerramento_tecnico"]},
-      "operation_weights": {"campanha_publica": 1.8, "controlar_evento": 1.6, "recrutar": 1.25, "espalhar_rumor": 1.35, "formar_campeao": 1.1, "comprar_influencia": 1.45, "encobrir_crise": 0.85},
+      "combat_doctrine": {
+        "id": "espetaculo_e_ritmo",
+        "principles": ["provocacao", "alto_risco", "ritmo_caotico", "pressao_curta", "finalizacao_visual"],
+        "preferred_actions": ["baiana", "montada_pesada", "raspagem_borboleta", "encerramento_tecnico"]
+      },
+      "operation_weights": {
+        "campanha_publica": 1.8,
+        "controlar_evento": 1.6,
+        "recrutar": 1.25,
+        "espalhar_rumor": 1.35,
+        "formar_campeao": 1.1,
+        "comprar_influencia": 1.45,
+        "encobrir_crise": 0.85,
+        "negociar_tregua": 0.55
+      },
       "starting_territories": ["zambiapunga", "palco_cultural"],
       "preferred_debts": ["financeira", "imagem", "contrato"]
-    },
-    "raiz": {
-      "name": "Casa da Leoa — Raiz do Baixo Sul",
-      "short_name": "Casa da Leoa",
-      "headquarters": "casa_leoa",
-      "public_face": "Núcleo comunitário ligado ao mangue, memória ancestral e defesa cultural.",
-      "hidden_face": "Rede territorial de apoio mútuo que fecha caminhos para quem desrespeita a comunidade.",
-      "desire": "Proteger território, cultura e crianças sem se submeter aos centros de poder.",
-      "fear": "Isolamento político, exploração externa e perda da memória coletiva.",
-      "taboo": "Usar a comunidade como cenário para benefício individual.",
-      "moral_question": "Como abrir caminhos para o futuro sem entregar a raiz que sustenta todos?",
-      "leader": "leoa_quilombola",
-      "hierarchy": {
-        "right_hand": "conselho_do_mangue",
-        "strategist": "tinker_bell",
-        "treasurer": "cooperativa_camamu",
-        "intelligence_chief": "pescadores",
-        "combat_master": "leoa_quilombola",
-        "recruiters": ["moradores_raiz", "jovens_camamu"]
-      },
-      "succession_candidates": [
-        {"id": "conselho_do_mangue", "ambition": 0.25, "loyalty": 0.94, "leadership_style": "coletivo_ancestral"},
-        {"id": "jovens_camamu", "ambition": 0.58, "loyalty": 0.78, "leadership_style": "renovacao_comunitaria"}
-      ],
-      "initial_power": {"territorio": 71, "caixa": 31, "influencia": 57, "medo": 29, "inteligencia": 69, "coesao": 90, "forca_marcial": 68},
-      "combat_doctrine": {"id": "lama_e_base", "principles": ["equilibrio", "resiliencia", "raspagem", "controle_de_quadril", "adaptacao"], "preferred_actions": ["raspagem_tesoura", "raspagem_borboleta", "saida_cem_quilos", "cem_quilos"]},
-      "operation_weights": {"proteger_comunidade": 1.8, "negociar_tregua": 1.3, "formar_campeao": 1.15, "investigar": 0.95, "recrutar": 0.75, "expandir_territorio": 0.4, "campanha_publica": 0.45},
-      "starting_territories": ["camamu_manguezal", "casa_leoa", "doca_camamu"],
-      "preferred_debts": ["familia", "honra", "protecao"]
-    },
-    "dragao_vermelho": {
-      "name": "Tríade Dragão Vermelho",
-      "short_name": "Dragão Vermelho",
-      "headquarters": "entreposto_dragao",
-      "public_face": "Rede de comércio, intercâmbio esportivo e eventos privados internacionais.",
-      "hidden_face": "Estrutura de logística, influência e recrutamento que prefere intermediários à exposição direta.",
-      "desire": "Controlar fluxos de atletas, informação e recursos sem parecer presente.",
-      "fear": "Exposição pública, quebra da cadeia de confiança e perda de intermediários.",
-      "taboo": "Agir por emoção ou permitir que um membro coloque o nome da rede acima do objetivo.",
-      "moral_question": "Uma ordem eficiente continua legítima quando ninguém consegue enxergar quem a escolheu?",
-      "leader": "zhang_wei",
-      "hierarchy": {
-        "right_hand": "yuki_tanaka",
-        "strategist": "sr_sato",
-        "treasurer": "administrador_entreposto",
-        "intelligence_chief": "yuki_tanaka",
-        "combat_master": "kenzo_kuroi",
-        "recruiters": ["intermediarios_dragao"]
-      },
-      "succession_candidates": [
-        {"id": "yuki_tanaka", "ambition": 0.76, "loyalty": 0.72, "leadership_style": "precisa_diplomatica"},
-        {"id": "sr_sato", "ambition": 0.54, "loyalty": 0.63, "leadership_style": "negociador_invisivel"}
-      ],
-      "initial_power": {"territorio": 43, "caixa": 91, "influencia": 66, "medo": 73, "inteligencia": 88, "coesao": 72, "forca_marcial": 79},
-      "combat_doctrine": {"id": "precisao_logistica", "principles": ["preparacao_especifica", "pegada", "economia", "controle", "adaptacao_ao_alvo"], "preferred_actions": ["grip_de_ferro", "arm_drag", "torreando", "mata_leao"]},
-      "operation_weights": {"infiltrar": 1.55, "comprar_influencia": 1.45, "investigar": 1.35, "roubar_influencia": 1.25, "recrutar": 1.0, "negociar_tregua": 0.9, "expandir_territorio": 0.85},
-      "starting_territories": ["entreposto_dragao", "evento_privado_ficcional"],
-      "preferred_debts": ["segredo", "financeira", "politica"]
-    },
-    "fantasma": {
-      "name": "Agência Fantasma",
-      "short_name": "Fantasma",
-      "headquarters": "base_fantasma",
-      "public_face": "Não possui existência pública confirmada.",
-      "hidden_face": "Rede clandestina de contrainteligência dedicada a impedir domínio externo sobre o Baixo Sul.",
-      "desire": "Preservar autonomia regional e conter ameaças que instituições visíveis não conseguem enfrentar.",
-      "fear": "Infiltração interna, paranoia e tornar-se igual às forças que combate.",
-      "taboo": "Revelar agentes, fontes ou operações para obter prestígio pessoal.",
-      "moral_question": "Quem vigia o protetor quando sua missão exige trabalhar sem testemunhas?",
-      "leader": "diretor_fantasma",
-      "hierarchy": {
-        "right_hand": "o_prior",
-        "strategist": "tinker_bell",
-        "treasurer": "celula_logistica_fantasma",
-        "intelligence_chief": "o_prior",
-        "combat_master": "agente_cinza",
-        "recruiters": ["observadores_fantasma"]
-      },
-      "succession_candidates": [
-        {"id": "o_prior", "ambition": 0.64, "loyalty": 0.61, "leadership_style": "austero_paranoico"},
-        {"id": "agente_cinza", "ambition": 0.42, "loyalty": 0.84, "leadership_style": "operador_protetor"}
-      ],
-      "initial_power": {"territorio": 22, "caixa": 52, "influencia": 31, "medo": 69, "inteligencia": 96, "coesao": 58, "forca_marcial": 76},
-      "combat_doctrine": {"id": "neutralizacao_silenciosa", "principles": ["economia_de_movimento", "controle_sem_espetaculo", "leitura_ambiental", "objetivo_acima_do_ego"], "preferred_actions": ["arm_drag", "sprawl", "cem_quilos", "encerramento_tecnico"]},
-      "operation_weights": {"investigar": 1.75, "infiltrar": 1.4, "proteger_comunidade": 1.2, "negociar_tregua": 1.0, "pressionar_rival": 0.9, "encobrir_crise": 1.35, "roubar_influencia": 0.7},
-      "starting_territories": ["base_fantasma"],
-      "preferred_debts": ["segredo", "protecao", "honra"]
     }
   }
 }
