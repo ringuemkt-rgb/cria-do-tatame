@@ -1,5 +1,5 @@
 {
-  "version": "0.3.0",
+  "version": "0.3.1",
   "language": "pt-BR",
   "design_note": "Faccoes 100% ficcionais. Crime e corrupcao aparecem como consequencia narrativa, nao como tutorial operacional nem glorificacao.",
   "factions": [
@@ -40,7 +40,7 @@
     },
     {
       "id": "os_aleluia",
-      "name": "Os Aleluia",
+      "name": "Os Aleluiado",
       "axis": "honra_sombra",
       "tagline": "Fe, Disciplina e Honra",
       "colors": ["azul", "dourado", "branco"],
