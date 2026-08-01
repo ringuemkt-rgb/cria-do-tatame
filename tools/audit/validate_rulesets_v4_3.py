@@ -42,12 +42,17 @@ def validate_technique_projection() -> None:
     default = projection["default_policy"]
     assert default["rulesets"] == RULESET_IDS
     assert default["requires_fabric"] is False
+
+    fabric = projection["fabric_technique_template"]
+    assert fabric["rulesets"] == ["GI"]
+    assert fabric["requires_fabric"] is True
+    assert "tecido" in fabric["blocked_reason"].lower()
+
     techniques = projection["techniques"]
-    lapel = techniques["pegada_lapela_manga"]
-    assert lapel["rulesets"] == ["GI"]
-    assert lapel["requires_fabric"] is True
-    assert "lapela" in lapel["blocked_reason"].lower()
-    assert "NO_GI" not in lapel.get("visual_variants", {})
+    source = load_json("data/techniques.json")
+    source_ids = {item["id"] for item in source["techniques"]}
+    assert set(techniques).issubset(source_ids), sorted(set(techniques) - source_ids)
+    assert projection["policy"]["projection_ids_must_exist_in_source_catalog"] is True
 
     grip = techniques["grip_de_ferro"]
     assert grip["rulesets"] == RULESET_IDS
@@ -70,12 +75,16 @@ def validate_technique_projection() -> None:
 def validate_ruleset_contract() -> None:
     contract = load_json("data/production/ruleset_contract_v4_3.json")
     assert contract["tracking_issue"] == 44
+    assert contract["master_tracking_issue"] == 46
+    assert contract["source_contract"] == "data/production/combat_master_contract_v2.json"
     assert contract["ruleset_ids"] == RULESET_IDS
     assert contract["default_ruleset_id"] == "GI"
     assert contract["product_decisions"]["gi_and_no_gi_are_canonical"] is True
     assert contract["product_decisions"]["no_gi_is_not_cosmetic_only"] is True
     assert contract["compatibility_policy"]["equipped_cards_must_not_be_deleted"] is True
     assert contract["compatibility_policy"]["incompatible_cards_must_not_enter_combat_hand"] is True
+    assert "real_world_timing" in contract["reference_policy"]["grapplemap_not_authoritative_for"]
+    assert "gi_specific_grips" in contract["reference_policy"]["grapplemap_not_authoritative_for"]
     batches = {item["id"]: item for item in contract["delivery_batches"]}
     assert batches["v4_3a"]["playable_no_gi"] is False
     assert batches["v4_3b"]["playable_no_gi"] is True
@@ -108,10 +117,10 @@ def validate_master_contract_and_clash() -> None:
     resolver = read_text("src/combat/TechniqueClashResolver.gd")
     assert '"instant_finish": false' in resolver
     assert "clampf(chance_modifier, -0.30, 0.35)" in resolver
-    assert 'chance_modifier = 0.25' in resolver
-    assert 'chance_modifier = 0.12' in resolver
-    assert 'chance_modifier = 0.03' in resolver
-    assert 'chance_modifier = -0.18' in resolver
+    assert "chance_modifier = 0.25" in resolver
+    assert "chance_modifier = 0.12" in resolver
+    assert "chance_modifier = 0.03" in resolver
+    assert "chance_modifier = -0.18" in resolver
 
     project = read_text("project.godot")
     assert 'CombatManager="*res://src/autoloads/CombatManager.gd"' in project
@@ -133,6 +142,7 @@ def validate_registry_and_deck() -> None:
         "func technique_allowed_in_ruleset",
         "func get_technique_ruleset_block_reason",
         "func get_technique_visual_variant",
+        "projecao de ruleset referencia tecnica fora de data/techniques.json",
     ]:
         assert token in registry, token
 
@@ -143,7 +153,9 @@ def validate_registry_and_deck() -> None:
         "func get_card_ruleset_status",
         "func get_blocked_equipped_cards",
         "func _compatible_active_deck",
+        "func _normalize_ruleset(ruleset_id: String, allow_default: bool)",
         '"current_ruleset": current_ruleset',
+        '"error": "ruleset_invalid"',
     ]:
         assert token in deck, token
 
@@ -155,11 +167,13 @@ def validate_registry_and_deck() -> None:
 def validate_tests_and_quality_gate() -> None:
     smoke = read_text("tests/ruleset_smoke.gd")
     package = load_json("package.json")
-    assert "pegada_lapela_manga" in smoke
-    assert "set_ruleset" in smoke
+    workflow = read_text(".github/workflows/full-game-hardening.yml")
+    assert "test_fabric_grip" in smoke
+    assert "ruleset_invalid" in smoke
     assert "Troca de ruleset apagou carta da coleção" in smoke
     assert "validate:rulesets" in package["scripts"]
     assert "validate:rulesets" in package["scripts"]["quality"]
+    assert "res://tests/ruleset_smoke.gd" in workflow
 
 
 def main() -> int:
@@ -182,7 +196,7 @@ def main() -> int:
         for error in errors:
             print(f" - {error}")
         return 1
-    print("[RulesetsV4.3] OK - GI, No-Gi, contrato mestre, clamp e deck validados")
+    print("[RulesetsV4.3] OK - GI, No-Gi, fonte única, clamp e deck validados")
     return 0
 
 
