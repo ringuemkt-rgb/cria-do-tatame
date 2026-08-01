@@ -3,6 +3,8 @@
   "contract_id": "cria_do_tatame_rulesets_v4_3",
   "status": "candidate_until_merge",
   "tracking_issue": 44,
+  "master_tracking_issue": 46,
+  "source_contract": "data/production/combat_master_contract_v2.json",
   "source_of_truth": {
     "techniques": "data/techniques.json",
     "rulesets": "data/combat/rulesets_v01.json",
@@ -20,6 +22,21 @@
     "offline_runtime_required": true,
     "automatic_submission_forbidden": true,
     "accessibility_profile_required": true
+  },
+  "reference_policy": {
+    "grapplemap_license_declared": "public_domain",
+    "grapplemap_use": [
+      "directed_graph",
+      "taxonomy",
+      "pose_and_entanglement",
+      "schematic_transition_sequence"
+    ],
+    "grapplemap_not_authoritative_for": [
+      "real_world_timing",
+      "gi_specific_grips",
+      "biomechanical_validation",
+      "final_art"
+    ]
   },
   "runtime_authorities": {
     "combat": "CombatManager",
