@@ -196,16 +196,19 @@ def validate_active_faction_display() -> None:
     assert DISPLAY_ALE in decisions
     assert DISPLAY_ALE in agents
 
-    exact_runtime_sources = {
-        "data/production/canon_contract_v4_1.json": json.dumps(canon, ensure_ascii=False),
-        "data/production/faction_migration_v4_2.json": json.dumps(migration, ensure_ascii=False),
+    runtime_display_sources = {
         "data/factions.json": json.dumps(catalog, ensure_ascii=False),
         "data/factions/faction_director_v02.json": json.dumps(director, ensure_ascii=False),
         "src/factions/FactionIdentityV4.gd": mapper,
     }
-    for path, content in exact_runtime_sources.items():
+    for path, content in runtime_display_sources.items():
         assert '"Os Aleluiado"' not in content, f"display antigo exato ativo em {path}"
         assert '"Os Aleluia"' not in content, f"display legado exato ativo em {path}"
+
+    assert "Os Aleluiado" in canon["d10"]["supersedes_active_displays"]
+    assert "Os Aleluia" in canon["d10"]["supersedes_active_displays"]
+    assert migration["display_name_policy"]["display_only_change"] is True
+    assert migration["display_name_policy"]["save_version_unchanged"] is True
 
 
 def validate_governance_and_package() -> None:
