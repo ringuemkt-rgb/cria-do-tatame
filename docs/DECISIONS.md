@@ -4,7 +4,7 @@
 **Atualizado:** 2026-08-01  
 **Escopo:** integração v4 incremental sobre a `main` estável.
 
-Este registro documenta decisões vinculantes para agentes, revisores e contribuições. Em conflito, prevalecem os contratos executáveis em `data/production/`, seguidos deste documento e das demais fontes conforme a hierarquia definida em `AGENTS.md`.
+Este registro documenta decisões vinculantes para agentes, revisores e contribuições. Em conflito, prevalecem os contratos executáveis em `data/production/` e `data/visual/`, seguidos deste documento e das demais fontes conforme a hierarquia definida em `AGENTS.md`.
 
 ## D1 — Fonte única
 
@@ -64,16 +64,17 @@ O vertical slice ouro Ruan × Davi tem precedência sobre expansão massiva de m
 
 ## D10 — Nome canônico da facção ALE
 
-O nome de exibição aprovado é exatamente **Os Aleluiado**.
+O nome de exibição aprovado é exatamente **Os Aleluiados**.
 
-- ID canônico futuro: `ALE`.
+- ID canônico: `ALE`.
 - ID legado preservado: `os_aleluia`.
-- O ID legado deve funcionar como alias de migração, nunca como quarta facção.
-- Alterações são restritas a `name`, `display_name` e lore inequivocamente referente à facção ficcional.
+- O ID legado funciona como alias de migração, nunca como quarta facção.
+- A alteração é exclusivamente de exibição e não modifica save, relações, territórios ou IDs persistíveis.
+- Alterações automáticas são restritas a `name`, `display_name` e lore inequivocamente referente à facção ficcional.
 - A palavra “aleluia” em contexto religioso real não deve ser alterada automaticamente.
 - Ocorrências ambíguas permanecem intactas e devem ser registradas para revisão humana.
 
-Esta decisão substitui, para o nome de exibição, a forma plural “Os Aleluiados” encontrada na branch-fonte do PR #32.
+Esta decisão substitui as formas anteriores **Os Aleluia** e **Os Aleluiado** em material ativo. Documentos históricos podem registrar essas formas somente como estado anterior ou exemplo de migração.
 
 ## D11 — Integração v4
 
