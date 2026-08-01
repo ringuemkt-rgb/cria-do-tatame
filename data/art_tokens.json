@@ -1,0 +1,304 @@
+{
+  "schema_version": "1.0.0",
+  "protocol_version": "1.0.0",
+  "status": "canonical",
+  "last_reviewed": "2026-08-02",
+  "owner": "Direção de Arte — Cria do Tatame",
+  "authority": {
+    "protocol": "docs/ART_PROTOCOL.md",
+    "visual_canon": "data/visual/visual_canon_contract_v2.json",
+    "brand_contract": "data/visual/brand_identity_v01.json",
+    "rule": "Em execução visual, ART_PROTOCOL vence documentação conflitante; fatos de cânone, IDs e licenças continuam sob seus contratos executáveis."
+  },
+  "changelog": [
+    {
+      "date": "2026-08-02",
+      "version": "1.0.0",
+      "change": "Criação da fonte única de verdade visual, tokens, regras de composição, HUD, pixel art e gates.",
+      "reason": "Impedir deriva entre concept art, HUD, mapas, arenas, marca e assets futuros."
+    }
+  ],
+  "palette": {
+    "ratio": {
+      "preto_tatame": 60,
+      "neutro": 30,
+      "ouro_cria": 10
+    },
+    "tokens": {
+      "preto-tatame": {
+        "hex": "#0B0B0C",
+        "role": "base_60",
+        "use": ["fundo principal", "moldura", "área negativa", "placas"],
+        "forbidden": ["texto longo sobre fundo sem contraste", "substituir sombra por preto chapado em pele"],
+        "contrast_with_branco_giz": "AAA"
+      },
+      "ouro-cria": {
+        "hex": "#E8A317",
+        "role": "accent_10",
+        "use": ["foco", "borda ativa", "títulos", "estado selecionado", "marca"],
+        "forbidden": ["grandes fundos contínuos", "texto pequeno sobre branco-giz"],
+        "contrast_with_branco_giz": "decorative_only"
+      },
+      "ouro-claro": {
+        "hex": "#F2B705",
+        "role": "highlight",
+        "use": ["brilho curto", "feedback perfeito", "ícone raro"],
+        "forbidden": ["corpo de texto", "fundo de painel", "substituir ouro-cria em toda a tela"],
+        "contrast_with_branco_giz": "decorative_only"
+      },
+      "branco-giz": {
+        "hex": "#F4EFE6",
+        "role": "text_primary",
+        "use": ["texto principal", "ícone neutro", "número crítico"],
+        "forbidden": ["fundo dominante", "efeito emissivo permanente"],
+        "contrast_with_branco_giz": "self"
+      },
+      "cinza-grunge": {
+        "hex": "#1A1A1C",
+        "role": "neutral_30",
+        "use": ["painel", "superfície secundária", "separador", "textura"],
+        "forbidden": ["texto sobre preto-tatame sem diferença de luminância", "substituir todas as cores de bioma"],
+        "contrast_with_branco_giz": "AAA"
+      },
+      "verde-mangue": {
+        "hex": "#2F5D3A",
+        "role": "biome_mangrove",
+        "use": ["mangue", "natureza", "estado seguro regional", "nó de serviço local"],
+        "forbidden": ["sucesso universal", "pele", "marca principal"],
+        "contrast_with_branco_giz": "AA"
+      },
+      "azul-agua": {
+        "hex": "#1E6E7C",
+        "role": "biome_water",
+        "use": ["rios", "mar", "rota marítima", "informação hídrica"],
+        "forbidden": ["borda de perigo", "substituir azul de facção sem metadata"],
+        "contrast_with_branco_giz": "AA"
+      },
+      "vermelho-perigo": {
+        "hex": "#C0392B",
+        "role": "danger",
+        "use": ["risco", "rota perigosa", "falha crítica", "alerta"],
+        "forbidden": ["recompensa", "texto longo", "sangue como espetáculo"],
+        "contrast_with_branco_giz": "AA_large"
+      },
+      "roxo-evento": {
+        "hex": "#8E44AD",
+        "role": "event",
+        "use": ["evento", "facção ou estado narrativo quando documentado", "efeito temporário"],
+        "forbidden": ["gradiente neon", "fundo dominante", "mistura índigo-violeta-rosa"],
+        "contrast_with_branco_giz": "AA_large"
+      },
+      "ocre-terra": {
+        "hex": "#8A5A2B",
+        "role": "biome_earth",
+        "use": ["terra", "madeira", "barro", "cais", "roça"],
+        "forbidden": ["corpo de texto", "substituir ouro-cria em UI"],
+        "contrast_with_branco_giz": "AA"
+      }
+    },
+    "screen_ratios": {
+      "world_map": {"preto-tatame": 60, "neutral_group": 30, "ouro-cria": 10},
+      "combat_hud": {"preto-tatame": 60, "neutral_group": 30, "ouro-cria": 10},
+      "menus": {"preto-tatame": 60, "neutral_group": 30, "ouro-cria": 10},
+      "art_bible": {"preto-tatame": 60, "neutral_group": 30, "ouro-cria": 10}
+    }
+  },
+  "typography": {
+    "functions": {
+      "logo": {
+        "kind": "custom_brush_art",
+        "families": ["Cria Brush Custom"],
+        "rules": ["desenho vetorial/raster aprovado", "não substituir por fonte de sistema"]
+      },
+      "title_hud": {
+        "kind": "font",
+        "families": ["Saira Condensed", "Oswald"],
+        "weights": [700],
+        "case": "UPPERCASE",
+        "tracking_percent": -2,
+        "skew_degrees": 4
+      },
+      "body": {
+        "kind": "font",
+        "families": ["Hanken Grotesk", "Spline Sans"],
+        "weights": [400, 500],
+        "minimum_mobile_px": 12
+      },
+      "numbers": {
+        "kind": "font",
+        "families": ["Saira", "Space Mono"],
+        "tabular_required": true,
+        "minimum_bar_px": 14
+      }
+    },
+    "forbidden_families": ["Inter", "Roboto", "Arial"],
+    "fifth_function_requires_version_bump": true
+  },
+  "mascot": {
+    "id": "silverback",
+    "required": {
+      "attire": "gi preto",
+      "glasses": "óculos dourado genérico sem logotipo",
+      "expression": "estoica",
+      "shoulder_patch": "ícone Silverback",
+      "japanese_detail": "柔術 somente como detalhe de ombro",
+      "values_ring": ["DISCIPLINA", "FOCO", "RESPEITO", "EVOLUÇÃO"]
+    },
+    "required_variants": ["logo_cheio", "cabeca_com_oculos", "cabeca_mono_circulo", "triangulo_favicon"],
+    "taglines": ["JIU-JITSU É TUDO", "DE CRIA PRA CRIA"],
+    "canonical_applications": ["kimono_costas", "rashguard_peito", "duffel_patch", "splash", "app_icon", "screen_corner"],
+    "frozen": ["silhueta de ombros", "direção frontal do olhar", "paleta do gi", "presença da coroa no logo cheio", "óculos genérico sem marca"],
+    "variable": ["expressão sutil", "faixa do cinto conforme progresso", "tratamento monocromático autorizado"]
+  },
+  "iconography": {
+    "node_states": ["completed", "available", "locked", "boss"],
+    "required_node_fields": ["icon_type", "state", "narrative_detail"],
+    "icons": {
+      "diamond": {"meaning": "hub ou seleção principal", "base_token": "ouro-cria", "detail": "landmark municipal"},
+      "crown": {"meaning": "torneio ou chefão", "base_token": "ouro-cria", "detail": "troféu, faixa ou arquibancada"},
+      "skull": {"meaning": "área perigosa", "base_token": "vermelho-perigo", "detail": "sucata, ponte, mangue ou mata"},
+      "note": {"meaning": "evento cultural", "base_token": "roxo-evento", "detail": "instrumento, bandeirinha ou palco"},
+      "fist": {"meaning": "desafio", "base_token": "ocre-terra", "detail": "luva não; usar pegada, faixa ou tatame"},
+      "mask": {"meaning": "evento ritual ficcional ou Zambiapunga revisada", "base_token": "roxo-evento", "detail": "símbolo validado culturalmente"},
+      "trophy": {"meaning": "competição oficial", "base_token": "ouro-claro", "detail": "placar ou medalha ficcional"},
+      "cherry_tree": {"meaning": "treino nipo-baiano revisado", "base_token": "roxo-evento", "detail": "árvore ou tecido; nunca manchete japonesa"},
+      "tools": {"meaning": "serviço, oficina ou ferro-velho", "base_token": "ocre-terra", "detail": "ferramenta ou sucata"},
+      "lock": {"meaning": "bloqueado", "base_token": "cinza-grunge", "detail": "sem detalhe narrativo animado"}
+    },
+    "routes": {
+      "main": {"token": "ouro-cria", "dash": "8-4", "meaning": "rota principal segura", "risk": "low"},
+      "secondary": {"token": "azul-agua", "dash": "6-4", "meaning": "rota secundária ou marítima", "risk": "medium"},
+      "dangerous": {"token": "vermelho-perigo", "dash": "4-4", "meaning": "rota narrativa de risco", "risk": "high"},
+      "blocked": {"token": "cinza-grunge", "dash": "2-6", "meaning": "conteúdo não disponível", "risk": "none"}
+    }
+  },
+  "composition": {
+    "world_screen_zones": ["Topbar", "LeftRail", "Center", "RightRail", "BottomBar"],
+    "grid_tracks": 3,
+    "center_never_hidden": true,
+    "mobile_collapse": {"LeftRail": "horizontal_swipe", "RightRail": "horizontal_swipe"},
+    "density": {
+      "maximum_primary_focal_points": 3,
+      "one_primary_action_per_zone": true,
+      "center_minimum_width_percent": 50
+    }
+  },
+  "combat_hud": {
+    "fixed_bars": [
+      {"id": "gas", "display": "GÁS"},
+      {"id": "positional_control", "display": "CONTROLE"},
+      {"id": "grip", "display": "PEGADA"},
+      {"id": "flow", "display": "FLUXO"}
+    ],
+    "contextual": ["vida", "guarda", "foco", "moral", "pontos", "vantagens", "penalidades"],
+    "contextual_card_rule": "o botão é a carta",
+    "arena_card_modifiers_required": 4,
+    "timing_states": ["CEDO", "PERFEITO", "TARDE"],
+    "submission_flow": ["SETUP", "LOCK", "FINISH"],
+    "console_platform_icons_forbidden": true
+  },
+  "pixel_art": {
+    "style": "HD painted pixel art 2D com apresentação 2.5D",
+    "base_resolution": [640, 360],
+    "reference_output": [1280, 720],
+    "texture_filter": "nearest",
+    "integer_scale_required": true,
+    "pixel_snap_required": true,
+    "grid_px": 16,
+    "combat_sprite_height_px": 72,
+    "outline_px": 1,
+    "rim_light_px": 1,
+    "contact_shadow_required": true,
+    "occlusion_mask_required": true,
+    "biomes": {
+      "mangue": ["verde-mangue", "azul-agua", "ocre-terra", "preto-tatame", "branco-giz"],
+      "rio": ["azul-agua", "verde-mangue", "ocre-terra", "branco-giz", "preto-tatame"],
+      "areia": ["ocre-terra", "ouro-claro", "azul-agua", "verde-mangue", "preto-tatame"],
+      "mata": ["verde-mangue", "ocre-terra", "cinza-grunge", "azul-agua", "branco-giz"],
+      "cais": ["ocre-terra", "cinza-grunge", "azul-agua", "vermelho-perigo", "branco-giz"],
+      "ginasio": ["preto-tatame", "cinza-grunge", "ouro-cria", "branco-giz", "azul-agua"],
+      "roca": ["ocre-terra", "verde-mangue", "ouro-claro", "preto-tatame", "branco-giz"]
+    },
+    "lighting_variants": {
+      "morning": {"visual": "luz lateral limpa", "mechanical_effect": "none_by_default"},
+      "afternoon": {"visual": "luz quente e sombras longas", "mechanical_effect": "none_by_default"},
+      "night": {"visual": "contraste alto e fontes locais", "mechanical_effect": "only_if_declared_in_arena_data"}
+    }
+  },
+  "mobile_budget": {
+    "parallax_layers_max": 4,
+    "draw_calls_target_max": 40,
+    "animated_background_sprites_max": 12,
+    "crowd_states": ["idle", "pressure", "climax"],
+    "minimum_touch_target_dp": 48,
+    "safe_area_percent": 7,
+    "minimum_device_fps": 45
+  },
+  "motion": {
+    "micro_interactions": {
+      "map_node_focus": {"duration_ms": 140, "ease": "out_cubic"},
+      "route_available": {"duration_ms": 220, "ease": "in_out_sine"},
+      "detail_panel": {"duration_ms": 180, "ease": "out_quart"},
+      "flow_full": {"duration_ms": 420, "ease": "in_out_sine"},
+      "success_hitstop": {"duration_ms": 70, "ease": "linear"},
+      "success_shake": {"duration_ms": 120, "ease": "out_quad"},
+      "success_flash": {"duration_ms": 80, "ease": "out_quad"},
+      "failure_dry_shake": {"duration_ms": 90, "ease": "out_expo"},
+      "map_zoom_transition": {"duration_ms": 360, "ease": "in_out_cubic"},
+      "day_night_weather": {"duration_ms": 900, "ease": "in_out_sine"}
+    }
+  },
+  "voice": {
+    "language": "pt-BR",
+    "reviewed_text_required": true,
+    "npc_orality_allowed": ["visse", "oxente", "bora", "massa", "tu é doido"],
+    "forbidden_references": ["marca real", "pessoa real", "liga real", "facção real"],
+    "forbidden_phrases": ["favela tropical genérica"],
+    "injury_as_reward_forbidden": true
+  },
+  "hard_prohibitions": [
+    "gradient_indigo_violet_pink",
+    "screen_glassmorphism",
+    "font_inter",
+    "font_roboto",
+    "font_arial",
+    "cream_terracotta_serif_system",
+    "single_acid_neon_on_near_black",
+    "three_equal_cards_row_layout",
+    "branded_glasses",
+    "japanese_as_headline",
+    "console_platform_hud",
+    "salvador_as_playable_node",
+    "sao_paulo_as_playable_node",
+    "itacare_as_playable_node",
+    "arena_drawn_as_city",
+    "woman_without_function",
+    "weapon_as_mechanic_or_reward"
+  ],
+  "validation": {
+    "world_scene_globs": ["scenes/world/**/*.tscn", "scenes/hubs/**/*.tscn"],
+    "theme_globs": ["scenes/**/*.tscn", "assets/**/*.tres", "src/**/*.gd"],
+    "arena_data_path": "data/arenas.json",
+    "migration_exceptions": [
+      {
+        "path": "scenes/world/WorldMapScreen.tscn",
+        "rules": ["R4", "R8"],
+        "reason": "Protótipo legado será substituído pelo Mapa V2 do Baixo Sul.",
+        "expires_when": "world_map_v2_integrated"
+      }
+    ],
+    "raw_hex_exceptions": [
+      "data/visual/brand_identity_v01.json",
+      "data/visual/visual_canon_contract_v2.json",
+      "data/art_tokens.json"
+    ],
+    "manual_checks": [
+      "R2 proporção visual 60/30/10",
+      "R6 pixel clusters e oclusão",
+      "R7 draw calls e sprites animados medidos",
+      "R8 detalhe narrativo desenhado",
+      "R9 oralidade e ausência de marcas reais",
+      "R10 anatomia do mascote"
+    ]
+  }
+}

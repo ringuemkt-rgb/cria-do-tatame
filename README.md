@@ -114,7 +114,14 @@ cd cria-do-tatame
 npm run quality
 ```
 
-O quality gate verifica governança, cânone, facções, identidade visual, JSON, referências de dados, animações, estrutura, runtime, release readiness, contrato supremo e deck.
+O quality gate verifica governança, cânone, facções, identidade visual, ART_PROTOCOL, tokens, JSON, referências de dados, animações, estrutura, runtime, release readiness, contrato supremo e deck.
+
+Validar somente o protocolo visual:
+
+```bash
+npm run validate:art-protocol
+python -m pytest -q tests/test_art_protocol.py
+```
 
 ### Godot headless
 
@@ -162,6 +169,15 @@ Um APK não é considerado pronto apenas porque foi exportado. O gate exige inst
 
 ## Produção visual e audiovisual
 
+Fonte única de verdade da execução visual:
+
+```text
+docs/ART_PROTOCOL.md
+data/art_tokens.json
+```
+
+O protocolo fixa paleta, tipografia, proporção 60/30/10, iconografia, grid, quatro barras de combate, pixel art, motion, orçamento mobile e proibições. Qualquer mudança nesses elementos exige bump SemVer e changelog. Mockup, prompt ou concept art não substituem o protocolo.
+
 Inventário canônico:
 
 ```text
@@ -181,12 +197,15 @@ Concept art, mockup, prompt, spritesheet bruto ou fila JSONL não são assets fi
 ## Documentação essencial
 
 - [`docs/INDEX.md`](docs/INDEX.md) — índice canônico;
+- [`docs/ART_PROTOCOL.md`](docs/ART_PROTOCOL.md) — protocolo visual permanente e checklist `/ARTE-CHECK`;
+- [`data/art_tokens.json`](data/art_tokens.json) — tokens visuais machine-readable;
 - [`docs/REPOSITORY_GOVERNANCE.md`](docs/REPOSITORY_GOVERNANCE.md) — branches, PRs e fonte única;
 - [`docs/ROADMAP.md`](docs/ROADMAP.md) — sequência oficial de construção;
 - [`AGENTS.md`](AGENTS.md) — regras para agentes;
 - [`CONTRIBUTING.md`](CONTRIBUTING.md) — fluxo de colaboração;
 - [`docs/CRIA_DO_TATAME_SUPREME_BUILD_SPEC_V1.md`](docs/CRIA_DO_TATAME_SUPREME_BUILD_SPEC_V1.md) — escopo completo;
 - [`data/visual/brand_identity_v01.json`](data/visual/brand_identity_v01.json) — identidade visual e logo oficial;
+- [`data/visual/visual_canon_contract_v2.json`](data/visual/visual_canon_contract_v2.json) — contrato visual geral;
 - [`data/production/supreme_build_contract_v01.json`](data/production/supreme_build_contract_v01.json) — metas e release gates;
 - [`docs/qa/RUNTIME_AUDIT_V08.md`](docs/qa/RUNTIME_AUDIT_V08.md) — auditoria do runtime;
 - [`docs/production/APK_VISUAL_COMPLETION_PLAN_V09.md`](docs/production/APK_VISUAL_COMPLETION_PLAN_V09.md) — Definition of Done Android e audiovisual.

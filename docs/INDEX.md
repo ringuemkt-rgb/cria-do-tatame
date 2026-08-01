@@ -6,6 +6,7 @@ Este arquivo é a porta de entrada da documentação ativa. Antes de criar um do
 
 - [`../README.md`](../README.md) — visão do produto, instalação e comandos principais;
 - [`../AGENTS.md`](../AGENTS.md) — regras obrigatórias para agentes;
+- [`ART_PROTOCOL.md`](ART_PROTOCOL.md) — fonte única de verdade da execução visual, tokens, composição, HUD, pixel art e manutenção SemVer;
 - [`../CONTRIBUTING.md`](../CONTRIBUTING.md) — fluxo de contribuição;
 - [`DECISIONS.md`](DECISIONS.md) — decisões arquiteturais e canônicas D1–D13;
 - [`REPOSITORY_GOVERNANCE.md`](REPOSITORY_GOVERNANCE.md) — fonte única, branches, PRs e gates;
@@ -17,6 +18,7 @@ Este arquivo é a porta de entrada da documentação ativa. Antes de criar um do
 - [`../data/production/faction_migration_v4_2.json`](../data/production/faction_migration_v4_2.json) — três facções ativas, aliases e save v5;
 - [`../data/visual/brand_identity_v01.json`](../data/visual/brand_identity_v01.json) — logo oficial, elementos protegidos, derivados obrigatórios e bloqueio jurídico de shipping;
 - [`../data/visual/visual_canon_contract_v2.json`](../data/visual/visual_canon_contract_v2.json) — estilo 2D/2.5D, estados de asset, batch policy, HUD, mapa, arena, segurança e QA visual;
+- [`../data/art_tokens.json`](../data/art_tokens.json) — paleta, tipografia, iconografia, grid, HUD, pixel art, motion e proibições em formato machine-readable;
 - [`../data/visual/reference_audit_v2.json`](../data/visual/reference_audit_v2.json) — auditoria estruturada do acervo de imagens enviado pelo criador;
 - [`../assets/branding/logo_oficial_cria_do_tatame.svg`](../assets/branding/logo_oficial_cria_do_tatame.svg) — fonte visual oficial aprovada pelo criador;
 - [`../data/production/supreme_build_contract_v01.json`](../data/production/supreme_build_contract_v01.json) — metas e release gates;
@@ -44,11 +46,13 @@ Este arquivo é a porta de entrada da documentação ativa. Antes de criar um do
 
 ## Arte e produção
 
+- [`ART_PROTOCOL.md`](ART_PROTOCOL.md) — protocolo visual permanente v1.0.0;
 - [`art_bible/VISUAL_CANON_SYSTEM_V2.md`](art_bible/VISUAL_CANON_SYSTEM_V2.md) — sistema visual canônico, padrões, reconciliações e ordem de produção;
 - `art_bible/` — identidade visual e contratos de qualidade ativos;
 - `production/` — planos de lote, APK, animação, áudio e conteúdo;
 - [`../data/visual/brand_identity_v01.json`](../data/visual/brand_identity_v01.json) — contrato da marca e do Silverback oficial;
 - [`../data/visual/visual_canon_contract_v2.json`](../data/visual/visual_canon_contract_v2.json) — contrato visual geral;
+- [`../data/art_tokens.json`](../data/art_tokens.json) — tokens obrigatórios para Theme, cena, mapa, arena e HUD;
 - [`production/APK_VISUAL_COMPLETION_PLAN_V09.md`](production/APK_VISUAL_COMPLETION_PLAN_V09.md) — gates de vertical slice e Android;
 - [`../data/visual/production_manifest_v02.json`](../data/visual/production_manifest_v02.json) — entregáveis mínimos por asset.
 
@@ -62,7 +66,9 @@ Este arquivo é a porta de entrada da documentação ativa. Antes de criar um do
 - [`../tools/audit/validate_faction_migration_v4_2.py`](../tools/audit/validate_faction_migration_v4_2.py) — gate das três facções, aliases e save v5;
 - [`../tools/audit/validate_brand_identity_v01.py`](../tools/audit/validate_brand_identity_v01.py) — gate do logo, hash, Silverback, protagonista e bloqueio jurídico;
 - [`../tools/audit/validate_visual_canon_v2.py`](../tools/audit/validate_visual_canon_v2.py) — gate da skill, contrato 2D/2.5D, referências, facções, governança e integração visual;
-- [`../tests/test_visual_canon_skill_v2.py`](../tests/test_visual_canon_skill_v2.py) — regressão da skill e do contrato visual.
+- [`../tools/validate_art_protocol.py`](../tools/validate_art_protocol.py) — gate de versão, tokens, tipografia, HUD, mapa, arena, proibições e referências do ART_PROTOCOL;
+- [`../tests/test_visual_canon_skill_v2.py`](../tests/test_visual_canon_skill_v2.py) — regressão da skill e do contrato visual;
+- [`../tests/test_art_protocol.py`](../tests/test_art_protocol.py) — regressão do protocolo, paleta e quatro barras fixas.
 
 ## Status dos documentos
 
