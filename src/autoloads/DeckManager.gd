@@ -40,7 +40,7 @@ func configure_from_data(source: Dictionary) -> Dictionary:
 		return {"ok": false, "error": "deck_data_missing"}
 	owner_id = str(source.get("owner_id", "ruan_macacao"))
 	belt = str(source.get("belt", "branca"))
-	current_ruleset = _normalize_ruleset(str(source.get("current_ruleset", current_ruleset)))
+	current_ruleset = _normalize_ruleset(str(source.get("current_ruleset", "")), true)
 	for value in source.get("cards", []):
 		if typeof(value) != TYPE_DICTIONARY:
 			continue
@@ -62,7 +62,7 @@ func configure_from_data(source: Dictionary) -> Dictionary:
 	}
 
 func set_ruleset(ruleset_id: String) -> Dictionary:
-	var normalized := _normalize_ruleset(ruleset_id)
+	var normalized := _normalize_ruleset(ruleset_id, false)
 	if normalized == "":
 		return {"ok": false, "error": "ruleset_invalid", "ruleset_id": ruleset_id}
 	current_ruleset = normalized
@@ -80,7 +80,7 @@ func get_ruleset_id() -> String:
 
 func start_combat_hand(ruleset_id: String = "") -> void:
 	if ruleset_id != "":
-		var normalized := _normalize_ruleset(ruleset_id)
+		var normalized := _normalize_ruleset(ruleset_id, false)
 		if normalized != "":
 			current_ruleset = normalized
 	if has_node("/root/WorldState"):
@@ -260,7 +260,7 @@ func get_card_ruleset_status(card_id: String, ruleset_id: String = "") -> Dictio
 	var card: Dictionary = cards.get(card_id, {})
 	if card.is_empty():
 		return {"allowed": false, "reason": "Carta não encontrada.", "ruleset_id": current_ruleset}
-	var resolved_ruleset := current_ruleset if ruleset_id == "" else _normalize_ruleset(ruleset_id)
+	var resolved_ruleset := current_ruleset if ruleset_id == "" else _normalize_ruleset(ruleset_id, false)
 	if resolved_ruleset == "":
 		return {"allowed": false, "reason": "Ruleset de combate inválido.", "ruleset_id": ruleset_id}
 	var technique_id := str(card.get("technique_id", ""))
@@ -342,11 +342,14 @@ func _card_is_allowed(card: Dictionary) -> bool:
 		return true
 	return bool(DataRegistry.technique_allowed_in_ruleset(technique_id, current_ruleset))
 
-func _normalize_ruleset(ruleset_id: String) -> String:
+func _normalize_ruleset(ruleset_id: String, allow_default: bool) -> String:
 	var normalized := str(DataRegistry.normalize_ruleset_id(ruleset_id)) if DataRegistry != null else ""
-	if normalized == "":
-		normalized = str(DataRegistry.get_default_ruleset_id()) if DataRegistry != null else DEFAULT_RULESET
-	return normalized if normalized != "" else DEFAULT_RULESET
+	if normalized != "":
+		return normalized
+	if not allow_default:
+		return ""
+	var fallback := str(DataRegistry.get_default_ruleset_id()) if DataRegistry != null else DEFAULT_RULESET
+	return fallback if fallback != "" else DEFAULT_RULESET
 
 func _state_is_valid(card: Dictionary, current_state: String) -> bool:
 	var states: Array = card.get("valid_states", [])
