@@ -1,0 +1,83 @@
+{
+  "schema_version": "4.3.0",
+  "contract_id": "cria_do_tatame_rulesets_v4_3",
+  "status": "candidate_until_merge",
+  "tracking_issue": 44,
+  "source_of_truth": {
+    "techniques": "data/techniques.json",
+    "rulesets": "data/combat/rulesets_v01.json",
+    "compatibility_projection": "data/combat/technique_rulesets_v01.json"
+  },
+  "ruleset_ids": ["GI", "NO_GI"],
+  "default_ruleset_id": "GI",
+  "product_decisions": {
+    "gi_and_no_gi_are_canonical": true,
+    "no_gi_is_not_cosmetic_only": true,
+    "shared_position_graph_allowed": true,
+    "different_grip_models_required": true,
+    "different_visual_variants_required": true,
+    "different_audio_profiles_required": true,
+    "offline_runtime_required": true,
+    "automatic_submission_forbidden": true,
+    "accessibility_profile_required": true
+  },
+  "runtime_authorities": {
+    "combat": "CombatManager",
+    "deck": "DeckManager",
+    "data": "DataRegistry",
+    "save": "SaveManager",
+    "audio": "AudioManager"
+  },
+  "compatibility_policy": {
+    "existing_calls_without_ruleset_use_gi": true,
+    "equipped_cards_must_not_be_deleted": true,
+    "incompatible_cards_must_not_enter_combat_hand": true,
+    "blocked_reason_must_be_available_in_pt_br": true,
+    "unknown_techniques_use_explicit_default_policy": true,
+    "fabric_required_techniques_forbidden_in_no_gi": true
+  },
+  "delivery_batches": [
+    {
+      "id": "v4_3a",
+      "scope": "contrato_dados_registry_filtro_deck",
+      "playable_no_gi": false
+    },
+    {
+      "id": "v4_3b",
+      "scope": "combat_manager_save_missoes_hud",
+      "playable_no_gi": true
+    },
+    {
+      "id": "v4_3c",
+      "scope": "vertical_slice_ruan_davi_arte_audio_qa",
+      "playable_no_gi": true
+    }
+  ],
+  "vertical_slice": {
+    "player": "ruan_macacao",
+    "opponent": "davi_relampago",
+    "ruleset": "NO_GI",
+    "required_flow": [
+      "distancia_media",
+      "collar_tie_ou_pummel",
+      "body_lock_ou_baiana",
+      "sprawl",
+      "guarda_aberta",
+      "corte_joelho",
+      "montada",
+      "costas",
+      "mata_leao",
+      "escape_ou_tap"
+    ]
+  },
+  "forbidden_in_v4_3a": [
+    "project_godot_changes",
+    "new_ruleset_autoload",
+    "second_combat_manager",
+    "second_deck_manager",
+    "binary_asset_claims",
+    "claiming_no_gi_playable_before_v4_3b",
+    "deleting_incompatible_saved_cards",
+    "fabric_grip_in_no_gi"
+  ]
+}
