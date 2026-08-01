@@ -1,0 +1,79 @@
+name: Lote de construção
+about: Planeje uma entrega vertical pequena, testável e integrada.
+title: "[LOTE] "
+body:
+  - type: dropdown
+    id: area
+    attributes:
+      label: Área principal
+      options:
+        - Runtime e arquitetura
+        - Combate e deck
+        - Mundo, carreira e narrativa
+        - UI, touch e acessibilidade
+        - Personagem e animação
+        - Arena, VFX e iluminação
+        - Áudio
+        - Build, CI e release
+        - Dados, cânone e documentação
+    validations:
+      required: true
+  - type: textarea
+    id: objective
+    attributes:
+      label: Objetivo jogável
+      description: Descreva o resultado que um jogador, tester ou pipeline conseguirá observar.
+    validations:
+      required: true
+  - type: textarea
+    id: scope
+    attributes:
+      label: Escopo incluído
+      placeholder: Arquivos, cenas, sistemas, assets e dados que entram neste lote.
+    validations:
+      required: true
+  - type: textarea
+    id: out
+    attributes:
+      label: Fora do escopo
+      description: Registre o que não será resolvido para impedir crescimento descontrolado.
+    validations:
+      required: true
+  - type: textarea
+    id: dependencies
+    attributes:
+      label: Dependências e PRs relacionados
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: Critérios de aceite
+      placeholder: |
+        - [ ] Fluxo executável...
+        - [ ] Save validado...
+        - [ ] Teste...
+    validations:
+      required: true
+  - type: textarea
+    id: validation
+    attributes:
+      label: Plano de validação
+      placeholder: npm run quality, Godot headless, smoke, device test, QA visual...
+    validations:
+      required: true
+  - type: textarea
+    id: risks
+    attributes:
+      label: Riscos, migração e rollback
+  - type: checkboxes
+    id: invariants
+    attributes:
+      label: Invariantes
+      options:
+        - label: A entrega usa este repositório como única fonte.
+          required: true
+        - label: Não cria manager ou runtime concorrente sem adapter aprovado.
+          required: true
+        - label: Não declara placeholder ou concept art como asset final.
+          required: true
+        - label: Não inclui segredo, credencial ou asset sem licença.
+          required: true

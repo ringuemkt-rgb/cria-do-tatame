@@ -1,0 +1,24 @@
+# Responsável final pelo produto e pelo cânone
+* @ringuemkt-rgb
+
+# Runtime Godot, cenas, scripts e testes
+/project.godot @ringuemkt-rgb
+/src/ @ringuemkt-rgb
+/scenes/ @ringuemkt-rgb
+/tests/ @ringuemkt-rgb
+
+# Dados, cânone e produção
+/data/ @ringuemkt-rgb
+/docs/canon/ @ringuemkt-rgb
+/docs/art_bible/ @ringuemkt-rgb
+/docs/gameplay/ @ringuemkt-rgb
+
+# Build, CI, auditoria e release
+/.github/ @ringuemkt-rgb
+/tools/build/ @ringuemkt-rgb
+/tools/audit/ @ringuemkt-rgb
+/export_presets.cfg @ringuemkt-rgb
+/package.json @ringuemkt-rgb
+
+# Assets finais exigem aprovação humana
+/assets/ @ringuemkt-rgb

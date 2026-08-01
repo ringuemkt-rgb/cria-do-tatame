@@ -1,0 +1,84 @@
+{
+  "schema_version": "1.0.0",
+  "updated_at": "2026-08-01",
+  "source_commit": "246201e6319915652476b27da7334229b26d67fd",
+  "policy": {
+    "status_values": ["pending", "passed", "failed", "blocked"],
+    "passed_requires": ["commit_sha", "checked_at", "evidence"],
+    "completion_requires_all_passed": true,
+    "automated_export_is_not_physical_playtest": true
+  },
+  "gates": {
+    "npm_run_quality": {
+      "status": "passed",
+      "owner": "engineering",
+      "commit_sha": "246201e6319915652476b27da7334229b26d67fd",
+      "checked_at": "2026-08-01",
+      "evidence": "PR #40 — Repository Quality e Full Game Hardening"
+    },
+    "godot_headless_import": {
+      "status": "passed",
+      "owner": "engineering",
+      "commit_sha": "246201e6319915652476b27da7334229b26d67fd",
+      "checked_at": "2026-08-01",
+      "evidence": "PR #40 — Godot 4.2.2 import completo"
+    },
+    "godot_parser_check": {
+      "status": "passed",
+      "owner": "engineering",
+      "commit_sha": "246201e6319915652476b27da7334229b26d67fd",
+      "checked_at": "2026-08-01",
+      "evidence": "PR #40 — parser e erros ocultos verdes"
+    },
+    "vertical_slice_smoke": {
+      "status": "pending",
+      "owner": "gameplay",
+      "evidence": null,
+      "note": "Smokes automatizados passam, mas o vertical slice ouro com touch e assets finais ainda não foi certificado."
+    },
+    "save_load_roundtrip": {
+      "status": "passed",
+      "owner": "engineering",
+      "commit_sha": "246201e6319915652476b27da7334229b26d67fd",
+      "checked_at": "2026-08-01",
+      "evidence": "PR #40 — runtime smoke e full game smoke"
+    },
+    "android_arm64_export": {
+      "status": "passed",
+      "owner": "release",
+      "commit_sha": "246201e6319915652476b27da7334229b26d67fd",
+      "checked_at": "2026-08-01",
+      "evidence": "PR #40 — APK debug exportado e estruturalmente inspecionado"
+    },
+    "android_physical_device_playtest": {
+      "status": "pending",
+      "owner": "qa",
+      "evidence": null
+    },
+    "windows_export_smoke": {
+      "status": "pending",
+      "owner": "release",
+      "evidence": null
+    },
+    "asset_license_audit": {
+      "status": "pending",
+      "owner": "art",
+      "evidence": null
+    },
+    "audio_loudness_audit": {
+      "status": "pending",
+      "owner": "audio",
+      "evidence": null
+    },
+    "accessibility_review": {
+      "status": "pending",
+      "owner": "qa",
+      "evidence": null
+    },
+    "canon_review": {
+      "status": "pending",
+      "owner": "narrative",
+      "evidence": null
+    }
+  }
+}

@@ -1,0 +1,78 @@
+name: Bug no jogo
+about: Reporte falha reproduzível no runtime, build, save, UI ou conteúdo.
+title: "[BUG] "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Registre evidência objetiva. Erro sem reprodução vira lenda urbana do Terreiro.
+  - type: dropdown
+    id: area
+    attributes:
+      label: Área
+      options:
+        - Boot e cenas
+        - Combate
+        - Save e progressão
+        - Hub, mapa e narrativa
+        - UI, touch e acessibilidade
+        - Arte, animação ou áudio
+        - Android, Windows ou Web
+        - CI, ferramentas ou dados
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: Commit, branch ou versão
+      placeholder: main @ SHA, release/v4-integration, APK 0.9.0
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Passos para reproduzir
+      placeholder: |
+        1. Abrir...
+        2. Entrar...
+        3. Executar...
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Resultado esperado
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: Resultado observado
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Logs e evidências
+      description: Inclua erro, screenshot, vídeo, relatório ou trecho de log sem dados pessoais.
+  - type: dropdown
+    id: severity
+    attributes:
+      label: Severidade
+      options:
+        - P0 — impede boot, save ou fluxo principal
+        - P1 — quebra feature importante
+        - P2 — degrada experiência, mas há contorno
+        - P3 — cosmético ou baixo impacto
+    validations:
+      required: true
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Confirmações
+      options:
+        - label: Procurei issue duplicada.
+          required: true
+        - label: Removi segredos e dados pessoais dos anexos.
+          required: true
