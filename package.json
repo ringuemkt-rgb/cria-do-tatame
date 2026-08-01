@@ -8,6 +8,7 @@
     "validate:governance": "python tools/audit/validate_repository_governance.py",
     "validate:canon": "python tools/audit/validate_canon_contract_v4_1.py",
     "validate:factions-v4": "python tools/audit/validate_faction_migration_v4_2.py",
+    "validate:visual-director": "python tools/audit/validate_visual_production_director_v1.py",
     "validate:python": "python tools/validate_json.py",
     "validate:node": "node tools/node/validate_json.mjs",
     "validate:data": "node tools/node/validate_game_data.mjs",
@@ -20,7 +21,7 @@
     "assets:queue": "python tools/ai_asset_pipeline/build_production_queue_v02.py",
     "animations:generate": "python tools/animation/generate_character_animation_pack.py",
     "validate:animations": "python tools/animation/generate_character_animation_pack.py --validate-only",
-    "quality": "npm run validate:governance && npm run validate:canon && npm run validate:factions-v4 && npm run validate:python && npm run validate:node && npm run validate:data && npm run validate:animations && npm run validate:repository && npm run validate:runtime && npm run validate:release && npm run validate:supreme && npm run validate:deck",
+    "quality": "npm run validate:governance && npm run validate:canon && npm run validate:factions-v4 && npm run validate:visual-director && npm run validate:python && npm run validate:node && npm run validate:data && npm run validate:animations && npm run validate:repository && npm run validate:runtime && npm run validate:release && npm run validate:supreme && npm run validate:deck",
     "build:android:windows": "powershell -ExecutionPolicy Bypass -File tools/build/build_android_debug.ps1",
     "build:android:linux": "bash tools/build/build_android_debug.sh",
     "build:windows": "powershell -ExecutionPolicy Bypass -File tools/build/build_windows_debug.ps1"
