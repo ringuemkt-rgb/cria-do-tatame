@@ -12,9 +12,11 @@ Antes de criar, editar, apagar, mover ou integrar qualquer arquivo:
 4. leia `docs/ROADMAP.md`;
 5. leia `docs/INDEX.md` e a fonte canônica da área;
 6. consulte `data/production/canon_contract_v4_1.json`;
-7. consulte `data/production/supreme_build_contract_v01.json`;
-8. procure implementação, issue ou PR equivalente;
-9. defina um lote vertical pequeno, testável e reversível.
+7. consulte `data/production/faction_migration_v4_2.json`;
+8. para qualquer tarefa visual, leia `.agents/skills/cria-visual-production-director/SKILL.md` e `data/visual/visual_production_director_v1.json`;
+9. consulte `data/production/supreme_build_contract_v01.json`;
+10. procure implementação, issue ou PR equivalente;
+11. defina um lote vertical pequeno, testável e reversível.
 
 Não comece implementando apenas porque a solicitação parece clara. Primeiro confirme a posição da tarefa na arquitetura e no roadmap.
 
@@ -49,20 +51,20 @@ O repositório não é galeria de prompts, depósito de concept art ou cemitéri
 - poder: Silverback Grip;
 - frase eixo: Ser forte é ser gentil;
 - facções ativas do cânone v4: LEM, NTM e ALE;
-- nome de exibição de ALE: **Os Aleluiado**;
+- nome de exibição de ALE: **Os Aleluiados**;
 - ID legado `os_aleluia` é alias de migração e não deve ser renomeado em lugar.
 
-Caio Ravel, Ruan “Cria” e uma quarta facção ativa são bloqueados em shipping.
+Caio Ravel, Ruan “Cria”, `Os Aleluia`, `Os Aleluiado` e uma quarta facção ativa são bloqueados em material novo e shipping.
 
 ## Hierarquia de autoridade
 
 Quando houver conflito:
 
-1. contratos executáveis em `data/production/` e contratos canônicos mais recentes;
+1. contratos executáveis em `data/production/` e `data/visual/` e contratos canônicos mais recentes;
 2. `docs/DECISIONS.md`, `docs/canon/` e decisões aprovadas;
 3. runtime, cenas e dados realmente consumidos;
 4. `docs/REPOSITORY_GOVERNANCE.md` e este arquivo;
-5. documentação técnica ativa;
+5. documentação técnica e art bible ativas;
 6. issues/PRs;
 7. prompts, concept art, relatórios antigos e branches legadas.
 
@@ -117,11 +119,19 @@ PR empilhado deve declarar dependência, ordem de merge e base ativa. Se a base 
 
 ## Arte, animação e áudio
 
-- Concept art, mockup, geração bruta e fila de produção são candidatos.
+- Toda tarefa visual ativa obrigatoriamente a skill `.agents/skills/cria-visual-production-director/SKILL.md`.
+- O contrato executável é `data/visual/visual_production_director_v1.json`.
+- O padrão humano é `docs/art_bible/VISUAL_RECONCILIATION_AND_PRODUCTION_STANDARD_V2.md`.
+- Concept art, mockup, ficha densa, geração bruta e fila de produção são candidatos.
+- Prancha 1536×1536 não é HUD de runtime, sprite ou prova de integração.
 - Asset final exige origem/licença, metadata, preview, QA, aprovação humana e integração Godot.
-- Técnica pareada exige atacante, defensor, pivô compartilhado, timing e `sync_map`.
+- Técnica pareada exige atacante, defensor, pivô compartilhado, mesmo frame count, timing e `sync_map`.
+- Personagens são produzidos a partir de seed aprovado e strip completa; frame independente é proibido por padrão.
+- GI e No-Gi exigem variantes técnicas reais, não apenas troca de roupa.
 - Não copiar pessoa, marca, frame, aula, logo ou áudio de terceiro sem licença.
 - Não promover automaticamente saída de IA para caminhos de shipping.
+- Pixel art final deve usar filtro nearest, grade legível, escala estável e leitura em Android.
+- HUD runtime protege o playfield; lore e estatística extensa ficam em tutorial, codex, pausa ou art bible.
 
 ## Segurança
 
@@ -129,6 +139,7 @@ PR empilhado deve declarar dependência, ordem de merge e base ativa. Se a base 
 - Serviços externos são opcionais e tratados como não confiáveis.
 - Nenhuma LLM controla o loop de combate.
 - Conteúdo cosmético opcional não concede poder jogável.
+- Marcas, brasões, ligas, academias, polícias, prefeituras e patrocinadores reais exigem licença ou substituição ficcional.
 
 ## Gates mínimos
 
@@ -157,6 +168,14 @@ Mudanças de release Android exigem instalação e teste em aparelho físico. De
 6. Riscos — falhas, incertezas e dívida;
 7. Próximo lote — menor passo vertical de maior valor.
 
+Para tarefas visuais, acrescente:
+
+8. classificação da referência;
+9. correções canônicas aplicadas;
+10. seed/âncora/escala e regras GI/No-Gi;
+11. score visual e blockers;
+12. aprovação humana e teste de aparelho.
+
 ## Condições de parada
 
 Pare e registre bloqueio quando houver:
@@ -166,6 +185,9 @@ Pare e registre bloqueio quando houver:
 - branch-base abandonada sem estratégia de port;
 - licença ou origem incerta;
 - biomecânica insegura;
+- técnica ausente de `data/techniques.json`;
+- personagem, facção, ruleset ou localização não confirmados;
+- animação pareada sem defensor ou sincronização;
 - credencial ausente;
 - ação irreversível não autorizada;
 - teste obrigatório impossível no ambiente.
