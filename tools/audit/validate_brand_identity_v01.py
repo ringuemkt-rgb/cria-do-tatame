@@ -11,6 +11,21 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[2]
 CONTRACT_PATH = ROOT / "data/visual/brand_identity_v01.json"
 LOGO_PATH = ROOT / "assets/branding/logo_oficial_cria_do_tatame.svg"
+SOF_MARKERS = {
+    0xC0,
+    0xC1,
+    0xC2,
+    0xC3,
+    0xC5,
+    0xC6,
+    0xC7,
+    0xC9,
+    0xCA,
+    0xCB,
+    0xCD,
+    0xCE,
+    0xCF,
+}
 
 
 def read_text(path: Path) -> str:
@@ -21,6 +36,36 @@ def read_text(path: Path) -> str:
 
 def load_contract() -> dict:
     return json.loads(read_text(CONTRACT_PATH))
+
+
+def jpeg_dimensions(binary: bytes) -> tuple[int, int]:
+    assert binary.startswith(b"\xff\xd8"), "JPEG sem marcador SOI"
+    assert binary.endswith(b"\xff\xd9"), "JPEG sem marcador EOI"
+    cursor = 2
+    while cursor + 3 < len(binary):
+        if binary[cursor] != 0xFF:
+            cursor += 1
+            continue
+        while cursor < len(binary) and binary[cursor] == 0xFF:
+            cursor += 1
+        if cursor >= len(binary):
+            break
+        marker = binary[cursor]
+        cursor += 1
+        if marker == 0xD9:
+            break
+        if marker == 0x01 or 0xD0 <= marker <= 0xD7:
+            continue
+        assert cursor + 2 <= len(binary), "segmento JPEG truncado"
+        segment_length = int.from_bytes(binary[cursor : cursor + 2], "big")
+        assert segment_length >= 2, "comprimento de segmento JPEG inválido"
+        if marker in SOF_MARKERS:
+            assert cursor + 7 <= len(binary), "segmento SOF truncado"
+            height = int.from_bytes(binary[cursor + 3 : cursor + 5], "big")
+            width = int.from_bytes(binary[cursor + 5 : cursor + 7], "big")
+            return width, height
+        cursor += segment_length
+    raise AssertionError("JPEG sem marcador SOF reconhecido")
 
 
 def validate_contract() -> None:
@@ -59,9 +104,11 @@ def validate_embedded_logo() -> None:
     payload += "=" * (-len(payload) % 4)
     binary = base64.b64decode(payload, validate=True)
     digest = hashlib.sha256(binary).hexdigest()
-    expected = contract["official_logo"]["repository_derivative"]["embedded_jpeg_sha256"]
+    derivative = contract["official_logo"]["repository_derivative"]
+    expected = derivative["embedded_jpeg_sha256"]
     assert digest == expected, f"hash do logo divergente: {digest} != {expected}"
     assert len(binary) >= 50_000, "derivativo visual parece truncado"
+    assert list(jpeg_dimensions(binary)) == derivative["dimensions_px"]
 
 
 def validate_governance_links() -> None:
@@ -97,7 +144,7 @@ def main() -> int:
         for error in errors:
             print(f" - {error}")
         return 1
-    print("[BrandIdentityV1] OK - logo, contrato, hash e cânone validados")
+    print("[BrandIdentityV1] OK - logo, JPEG, hash, dimensões e cânone validados")
     return 0
 
 
