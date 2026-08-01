@@ -97,7 +97,7 @@ def validate_embedded_logo() -> None:
     contract = load_contract()
     svg = read_text(LOGO_PATH)
     assert '<title id="title">Logo oficial Cria do Tatame</title>' in svg
-    assert 'width="512" height="512" viewBox="0 0 512 512"' in svg
+    assert 'width="256" height="256" viewBox="0 0 256 256"' in svg
     match = re.search(r"href=\"data:image/jpeg;base64,([^\"]+)\"", svg)
     assert match is not None, "SVG não contém JPEG oficial embutido"
     payload = match.group(1).strip()
@@ -107,7 +107,7 @@ def validate_embedded_logo() -> None:
     derivative = contract["official_logo"]["repository_derivative"]
     expected = derivative["embedded_jpeg_sha256"]
     assert digest == expected, f"hash do logo divergente: {digest} != {expected}"
-    assert len(binary) >= 50_000, "derivativo visual parece truncado"
+    assert len(binary) == derivative["embedded_jpeg_bytes"], "tamanho do derivativo diverge do contrato"
     assert list(jpeg_dimensions(binary)) == derivative["dimensions_px"]
 
 
