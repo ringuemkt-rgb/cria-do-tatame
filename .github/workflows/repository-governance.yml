@@ -1,0 +1,56 @@
+name: Repository Governance
+
+on:
+  pull_request:
+    paths:
+      - '.github/**'
+      - '.agents/**'
+      - 'docs/**'
+      - 'data/production/**'
+      - 'tools/audit/**'
+      - 'AGENTS.md'
+      - 'CONTRIBUTING.md'
+      - 'SECURITY.md'
+      - 'README.md'
+      - 'package.json'
+      - 'project.godot'
+      - '.editorconfig'
+      - '.gitattributes'
+  push:
+    branches: [main]
+    paths:
+      - '.github/**'
+      - '.agents/**'
+      - 'docs/**'
+      - 'data/production/**'
+      - 'tools/audit/**'
+      - 'AGENTS.md'
+      - 'CONTRIBUTING.md'
+      - 'SECURITY.md'
+      - 'README.md'
+      - 'package.json'
+      - 'project.godot'
+      - '.editorconfig'
+      - '.gitattributes'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: repository-governance-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  governance:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Validate repository governance
+        run: python tools/audit/validate_repository_governance.py
+      - name: Validate governance JSON
+        run: python -m json.tool data/production/repository_governance_v01.json > /dev/null
