@@ -1,5 +1,5 @@
 {
-  "version": "0.4.0",
+  "version": "0.4.1",
   "language": "pt-BR",
   "active_faction_ids": ["ALE", "LEM", "NTM"],
   "design_note": "As facções são 100% ficcionais. Crime e corrupção aparecem como consequência narrativa, nunca como tutorial operacional ou glorificação.",
@@ -52,7 +52,7 @@
     {
       "id": "os_aleluia",
       "canonical_id": "ALE",
-      "name": "Os Aleluiado",
+      "name": "Os Aleluiados",
       "domain_type": "active_faction",
       "active_faction": true,
       "axis": "honra_sombra",

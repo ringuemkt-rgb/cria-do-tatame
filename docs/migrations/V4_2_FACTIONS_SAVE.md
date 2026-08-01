@@ -11,11 +11,13 @@ Migrar o runtime de sete organizações ativas para exatamente três facções c
 
 | ID canônico | Nome de exibição | ID legado aceito |
 |---|---|---|
-| `ALE` | Os Aleluiado | `os_aleluia` |
+| `ALE` | Os Aleluiados | `os_aleluia` |
 | `LEM` | Lá Ele Mil Vezes | `la_ele_mil_vezes` |
 | `NTM` | Nós Tem Um Molho | `nos_tem_um_molho` |
 
 Novos saves escrevem os IDs canônicos. Missões e dados antigos podem continuar emitindo IDs legados temporariamente; o mapper converte esses valores na borda do sistema.
+
+A mudança de exibição de `Os Aleluiado` para **Os Aleluiados** é não destrutiva: `ALE`, `os_aleluia`, save v5, relações, territórios e flags permanecem iguais.
 
 ## O que deixou de ser facção ativa
 
@@ -44,7 +46,7 @@ A migração é idempotente: carregar novamente um save já migrado não cria fa
 
 ## Arquivos principais
 
-- `src/factions/FactionIdentityV4.gd` — mapper e migração estrutural;
+- `src/factions/FactionIdentityV4.gd` — mapper, displays e migração estrutural;
 - `src/autoloads/FactionManager.gd` — relações, heat, flags e aliases;
 - `src/autoloads/FactionDirectorManager.gd` — simulação política existente;
 - `src/autoloads/SaveManager.gd` — save v5 e persistência pós-migração;
@@ -55,6 +57,9 @@ A migração é idempotente: carregar novamente um save já migrado não cria fa
 
 ## O que não mudou
 
+- IDs `ALE`, `LEM`, `NTM`;
+- aliases legados;
+- versão do save;
 - `CombatManager`;
 - `DeckManager`;
 - `AudioManager`;

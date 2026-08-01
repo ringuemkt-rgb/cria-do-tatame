@@ -1,0 +1,66 @@
+name: Visual Canon QA
+
+on:
+  pull_request:
+    paths:
+      - ".agents/skills/cria-visual-canon-director/**"
+      - "assets/branding/**"
+      - "data/visual/**"
+      - "data/factions.json"
+      - "data/factions/**"
+      - "data/production/canon_contract_v4_1.json"
+      - "data/production/faction_migration_v4_2.json"
+      - "data/production/repository_governance_v01.json"
+      - "docs/art_bible/**"
+      - "docs/DECISIONS.md"
+      - "docs/INDEX.md"
+      - "src/factions/FactionIdentityV4.gd"
+      - "tools/audit/validate_visual_canon_v2.py"
+      - "tests/test_visual_canon_skill_v2.py"
+      - "package.json"
+      - ".github/workflows/visual-canon.yml"
+  push:
+    branches: [main]
+    paths:
+      - ".agents/skills/cria-visual-canon-director/**"
+      - "data/visual/**"
+      - "docs/art_bible/**"
+      - "tools/audit/validate_visual_canon_v2.py"
+      - "tests/test_visual_canon_skill_v2.py"
+      - ".github/workflows/visual-canon.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  visual-contract:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Validate visual skill package
+        run: python .agents/skills/cria-visual-canon-director/scripts/validate_skill.py
+      - name: Validate visual canon contract
+        run: python tools/audit/validate_visual_canon_v2.py
+      - name: Run visual canon tests
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install pytest
+          python -m pytest -q tests/test_visual_canon_skill_v2.py
+
+  repository-quality:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+      - name: Install Python dependencies used by quality
+        run: python -m pip install Pillow
+      - name: Run complete repository quality gate
+        run: npm run quality

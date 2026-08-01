@@ -16,7 +16,7 @@ AGENTS_PATH = ROOT / "AGENTS.md"
 PROJECT_PATH = ROOT / "project.godot"
 
 EXPECTED_IDS = ["LEM", "NTM", "ALE"]
-EXPECTED_DISPLAY = "Os Aleluiado"
+EXPECTED_DISPLAY = "Os Aleluiados"
 LEGACY_ID = "os_aleluia"
 
 
@@ -69,6 +69,7 @@ def validate_contract() -> None:
     assert d10.get("preserved_legacy_id") == LEGACY_ID
     assert d10.get("religious_context_must_not_be_rewritten") is True
     assert d10.get("ambiguous_occurrences_require_human_review") is True
+    assert d10.get("change_scope") == "display_only_no_id_or_save_migration"
 
     legacy_policy = contract.get("legacy_domain_policy", {})
     assert legacy_policy.get("stable_ids_must_not_be_renamed_in_place") is True
@@ -89,11 +90,12 @@ def validate_legacy_catalog_display_only() -> None:
 
 def validate_document_authority() -> None:
     decisions = read_text(DECISIONS_PATH)
-    for decision in range(1, 12):
+    for decision in range(1, 14):
         assert f"## D{decision} —" in decisions, f"D{decision} ausente em docs/DECISIONS.md"
     assert EXPECTED_DISPLAY in decisions
     assert "PR #32" in decisions
     assert "não deve ser mesclado monoliticamente" in decisions
+    assert "## D13 — Sistema visual canônico" in decisions
 
     index = read_text(INDEX_PATH)
     agents = read_text(AGENTS_PATH)

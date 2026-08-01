@@ -64,16 +64,17 @@ O vertical slice ouro Ruan × Davi tem precedência sobre expansão massiva de m
 
 ## D10 — Nome canônico da facção ALE
 
-O nome de exibição aprovado é exatamente **Os Aleluiado**.
+O nome de exibição aprovado é exatamente **Os Aleluiados**.
 
-- ID canônico futuro: `ALE`.
+- ID canônico: `ALE`.
 - ID legado preservado: `os_aleluia`.
-- O ID legado deve funcionar como alias de migração, nunca como quarta facção.
+- O ID legado funciona como alias de migração, nunca como quarta facção.
+- A atualização de `Os Aleluiado` para `Os Aleluiados` é somente de exibição; não altera IDs, saves ou relações.
 - Alterações são restritas a `name`, `display_name` e lore inequivocamente referente à facção ficcional.
 - A palavra “aleluia” em contexto religioso real não deve ser alterada automaticamente.
 - Ocorrências ambíguas permanecem intactas e devem ser registradas para revisão humana.
 
-Esta decisão substitui, para o nome de exibição, a forma plural “Os Aleluiados” encontrada na branch-fonte do PR #32.
+Esta decisão mais recente do criador substitui a forma singular **Os Aleluiado** anteriormente congelada na D10, preservando integralmente `ALE` e `os_aleluia`.
 
 ## D11 — Integração v4
 
@@ -114,3 +115,30 @@ Regras:
 - o contrato executável é `data/visual/brand_identity_v01.json`.
 
 A versão-fonte contém um wordmark de terceiro observado nos óculos. Ela permanece canônica como referência visual, porém está bloqueada para publicação comercial até a substituição desse detalhe por elemento original ou autorização escrita. Nenhuma limpeza jurídica autoriza alterar a composição geral aprovada.
+
+## D13 — Sistema visual canônico
+
+Toda produção visual do projeto é governada por:
+
+- `.agents/skills/cria-visual-canon-director/SKILL.md`;
+- `data/visual/visual_canon_contract_v2.json`;
+- `data/visual/reference_audit_v2.json`;
+- `docs/art_bible/VISUAL_CANON_SYSTEM_V2.md`;
+- `data/visual/production_manifest_v02.json`.
+
+Decisões vinculantes:
+
+1. a arte final do jogo é **pixel art 2D**;
+2. a apresentação 2.5D é construída com camadas, parallax, oclusão, sombras, partículas, luz 2D e câmera;
+3. concept art, mockup e imagem gerada não são assets de runtime;
+4. estados de maturidade avançam sequencialmente de `reference_only` até `release_ready`;
+5. toda técnica visual é pareada entre atacante e defensor;
+6. toda técnica vem de `data/techniques.json`;
+7. toda saída de IA exige limpeza e aprovação humana;
+8. o mapa de produto é regional por nós e rotas, sem promessa de mundo aberto contínuo 3D;
+9. pranchas editoriais, tutorial, menu e HUD runtime são superfícies diferentes;
+10. lotes visuais possuem no máximo dez itens do mesmo tipo, uma âncora e um commit, com QA antes do lote seguinte;
+11. marca real, pessoa real, órgão público, federação, academia ou patrocinador exigem licença escrita ou substituição ficcional;
+12. contextos como Zambiapunga, referências quilombolas, japonesas, afro-baianas e religiosas exigem revisão humana contextual.
+
+As bibliotecas dos PRs #24, #26, #35 e #38 são fontes de produção e pesquisa; não devem ser mescladas monoliticamente nem criar pipeline concorrente. Conteúdo útil deve ser portado por pacote vertical e reconciliado com este contrato.

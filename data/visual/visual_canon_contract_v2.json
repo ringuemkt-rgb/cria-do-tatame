@@ -1,0 +1,263 @@
+{
+  "schema_version": "2.0.0",
+  "contract_id": "cria_visual_canon_v2",
+  "status": "canonical_contract",
+  "effective_date": "2026-08-01",
+  "repository": "ringuemkt-rgb/cria-do-tatame",
+  "skill_path": ".agents/skills/cria-visual-canon-director/SKILL.md",
+  "authority_dependencies": [
+    "data/production/canon_contract_v4_1.json",
+    "data/production/faction_migration_v4_2.json",
+    "data/visual/brand_identity_v01.json",
+    "data/visual/production_manifest_v02.json",
+    "data/characters.json",
+    "data/arenas.json",
+    "data/factions.json",
+    "data/techniques.json"
+  ],
+  "product": {
+    "title": "Cria do Tatame – Pressão",
+    "protagonist_id": "ruan_macacao",
+    "protagonist_display": "Ruan Macacão Silva",
+    "origin": "Ituberá, Baixo Sul da Bahia",
+    "core": "Jiu-Jitsu Brasileiro posicional",
+    "platform_floor": "android_arm64",
+    "engine": "Godot 4.x",
+    "runtime": "deterministic_offline"
+  },
+  "visual_style": {
+    "name": "HD painted pixel art 2D with 2.5D presentation",
+    "final_art_dimension": "2D",
+    "depth_methods": [
+      "parallax",
+      "layered_composition",
+      "occlusion",
+      "contact_shadows",
+      "camera_motion",
+      "particles",
+      "baked_or_runtime_2d_lighting"
+    ],
+    "three_dimensional_reference_allowed": true,
+    "three_dimensional_final_art_forbidden": true,
+    "texture_filter": "nearest",
+    "grid_px": 16,
+    "combat_sprite_height_px": 72,
+    "hub_sprite_cell_px": 64,
+    "outline_px": 1,
+    "rim_light_px": 1,
+    "safe_area_percent": 7,
+    "minimum_touch_target_dp": 48,
+    "minimum_device_fps": 45,
+    "readability_scales_percent": [100, 50, 25]
+  },
+  "palette": {
+    "base": [
+      "#0A0A0A",
+      "#1A1A1A",
+      "#B8860B",
+      "#F2C230",
+      "#F2F2F2",
+      "#D92323",
+      "#1E3A5F",
+      "#2D5016",
+      "#4B0082"
+    ],
+    "brand_primary": ["#000000", "#F2F2F2", "#B8860B", "#F2C230"],
+    "extensions_require_metadata": true
+  },
+  "factions": {
+    "active_ids": ["ALE", "LEM", "NTM"],
+    "display_names": {
+      "ALE": "Os Aleluiados",
+      "LEM": "Lá Ele Mil Vezes",
+      "NTM": "Nós Tem Um Molho"
+    },
+    "legacy_aliases": {
+      "os_aleluia": "ALE",
+      "la_ele_mil_vezes": "LEM",
+      "nos_tem_um_molho": "NTM"
+    },
+    "visual_rules": {
+      "fourth_faction_forbidden": true,
+      "religious_real_group_implication_forbidden": true,
+      "real_brand_on_ntm_bottle_forbidden": true,
+      "compact_icon_required": true,
+      "full_banner_required": true
+    }
+  },
+  "asset_states": [
+    "reference_only",
+    "canon_reconciled",
+    "production_candidate",
+    "qa_passed",
+    "human_approved",
+    "godot_integrated",
+    "device_tested",
+    "release_ready"
+  ],
+  "state_transitions_must_be_sequential": true,
+  "reference_material_policy": {
+    "concept_art_is_runtime_evidence": false,
+    "mockup_is_runtime_evidence": false,
+    "generated_image_is_final_asset": false,
+    "art_bible_can_be_dense": true,
+    "runtime_hud_must_be_reduced": true,
+    "art_never_overrides_gameplay_data": true,
+    "art_never_defines_geography": true
+  },
+  "source_of_truth_by_category": {
+    "characters": "data/characters.json",
+    "arenas": "data/arenas.json",
+    "factions": "data/factions.json",
+    "techniques": "data/techniques.json",
+    "visual_inventory": "data/visual/production_manifest_v02.json",
+    "brand": "data/visual/brand_identity_v01.json"
+  },
+  "production_priorities": [
+    "brand_legal_cleanup",
+    "ruan_macacao_gi_no_gi",
+    "davi_relampago_gi_no_gi",
+    "arena_do_dique",
+    "terreiro_da_luta",
+    "combat_hud_mobile",
+    "eight_paired_vertical_slice_techniques",
+    "submission_hud",
+    "representative_audio_vfx",
+    "physical_android_validation"
+  ],
+  "batch_policy": {
+    "maximum_items": 10,
+    "same_asset_type_required": true,
+    "single_visual_anchor_required": true,
+    "one_batch_one_commit": true,
+    "qa_before_next_batch": true,
+    "automatic_promotion_forbidden": true
+  },
+  "paired_animation": {
+    "attacker_and_defender_required": true,
+    "equal_frame_count_required": true,
+    "shared_pivot_required": true,
+    "contact_line_required": true,
+    "grip_before_force_required": true,
+    "logical_entry_and_exit_required": true,
+    "finish_resolutions": ["tap", "escape", "technical_intervention"],
+    "instant_finish": false,
+    "severe_clipping_forbidden": true,
+    "teleport_forbidden": true,
+    "human_biomechanics_review_required": true
+  },
+  "hud": {
+    "surfaces": [
+      "combat_runtime",
+      "submission_runtime",
+      "tutorial_codex",
+      "character_menu",
+      "art_bible",
+      "marketing_mockup"
+    ],
+    "runtime_priority": [
+      "current_position",
+      "gas",
+      "positional_control",
+      "focus_or_flow",
+      "time_and_points_when_ruleset_requires",
+      "three_contextual_cards_or_commands"
+    ],
+    "editorial_panels_in_combat_forbidden": true,
+    "long_text_in_combat_forbidden": true
+  },
+  "world_map": {
+    "model": "regional_node_and_route_map",
+    "continuous_3d_open_world_promised": false,
+    "terrestrial_and_maritime_routes": true,
+    "runtime_nodes_must_exist": true,
+    "duplicate_city_forbidden": true,
+    "artistic_map_is_not_cartographic_authority": true
+  },
+  "arena": {
+    "canonical_source": "data/arenas.json",
+    "minimum_primary_layers": 5,
+    "required_elements": [
+      "far_background",
+      "architecture",
+      "midground_and_crowd",
+      "playable_area",
+      "foreground_occlusion",
+      "camera_bounds",
+      "collision",
+      "contact_shadow",
+      "audio_points",
+      "mobile_budget"
+    ],
+    "real_sponsor_or_institution_forbidden": true,
+    "fighter_readability_over_background_detail": true
+  },
+  "cultural_safety": {
+    "contexts_requiring_human_review": [
+      "zambiapunga",
+      "quilombola",
+      "japanese_brazilian",
+      "afro_bahian",
+      "christian_fictional_iconography",
+      "regional_community_identity"
+    ],
+    "exoticization_forbidden": true,
+    "tradition_as_generic_magic_forbidden": true,
+    "arbitrary_symbol_mixing_forbidden": true
+  },
+  "legal_safety": {
+    "real_people_forbidden_without_release": true,
+    "real_logos_forbidden_without_license": true,
+    "real_police_or_government_branding_forbidden": true,
+    "real_league_or_academy_branding_forbidden": true,
+    "broadcast_frame_redistribution_forbidden": true,
+    "source_hash_required": true,
+    "license_metadata_required": true,
+    "human_approval_required_for_ai_output": true
+  },
+  "permanent_reconciliations": {
+    "ruan_cria_to_ruan_macacao": true,
+    "ale_display_to_os_aleluiados": true,
+    "leoa_hair_attack_to_bjj_transition": true,
+    "cassio_mma_strikes_to_grappling": true,
+    "delegado_real_police_to_fictional_institution": true,
+    "kenzo_criminal_stereotype_to_technical_rival": true,
+    "jacare_dirty_fighting_to_respectful_pressure": true,
+    "pancada_grande_chapada_to_itubera_context": true,
+    "real_sponsors_to_fictional_brands": true,
+    "damage_language_to_control_and_submission": true
+  },
+  "forbidden_final_styles": [
+    "photography",
+    "photorealistic_3d",
+    "smooth_vector_character_art",
+    "childish_cartoon",
+    "blurred_pixel_art",
+    "uncontrolled_ai_texture_noise",
+    "generic_tropical_favela",
+    "mma_striking_core",
+    "gore",
+    "injury_reward_animation"
+  ],
+  "quality": {
+    "minimum_score_for_qa": 90,
+    "minimum_score_for_human_approval": 95,
+    "blockers_override_score": true,
+    "quality_gates_path": ".agents/skills/cria-visual-canon-director/references/QUALITY_GATES.md"
+  },
+  "integration": {
+    "godot_consumer_required_for_integrated_state": true,
+    "metadata_required": true,
+    "preview_required": true,
+    "qa_report_required": true,
+    "fallback_required": true,
+    "network_dependency_forbidden": true,
+    "physical_device_required_for_release_visuals": true
+  },
+  "supersession_policy": {
+    "pr_38_visual_forge": "source_only_until_reconciled; do_not_merge_monolithically",
+    "pr_35_visual_standard": "source_only; absorbed concepts must not duplicate this contract",
+    "pr_24_visual_world": "production_library; port by vertical package",
+    "pr_26_open_pixel_forge": "optional_offline_tool; never runtime dependency"
+  }
+}
