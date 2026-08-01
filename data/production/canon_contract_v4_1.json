@@ -1,0 +1,68 @@
+{
+  "schema_version": "4.1.0",
+  "contract_id": "cria_do_tatame_canon_v4_1",
+  "status": "canonical_contract",
+  "effective_date": "2026-08-01",
+  "source_repository": "ringuemkt-rgb/cria-do-tatame",
+  "integration_source_pr": 32,
+  "integration_policy": {
+    "monolithic_merge_forbidden": true,
+    "port_in_small_batches": true,
+    "stable_runtime_must_remain_bootable": true
+  },
+  "runtime_authorities": {
+    "combat": "CombatManager",
+    "deck": "DeckManager",
+    "audio": "AudioManager",
+    "world_state": "WorldState",
+    "world_events": "WorldDirectorManager",
+    "world_map": "WorldMapManager"
+  },
+  "active_factions_future_domain": [
+    {
+      "id": "LEM",
+      "display_name": "Lá Ele Mil Vezes",
+      "legacy_ids": ["la_ele_mil_vezes"]
+    },
+    {
+      "id": "NTM",
+      "display_name": "Nós Tem Um Molho",
+      "legacy_ids": ["nos_tem_um_molho"]
+    },
+    {
+      "id": "ALE",
+      "display_name": "Os Aleluiado",
+      "legacy_ids": ["os_aleluia"]
+    }
+  ],
+  "legacy_domain_policy": {
+    "stable_ids_must_not_be_renamed_in_place": true,
+    "aliases_are_migration_only": true,
+    "legacy_catalog_may_temporarily_contain_non_faction_domains": true,
+    "runtime_three_faction_migration_deferred_to_v4_2": true
+  },
+  "non_faction_domains": {
+    "institutions": ["circuito_oficial", "cria_live"],
+    "community_or_narrative": ["terreiro", "raiz", "atalhos"],
+    "retired_lore": ["dragao_vermelho", "fantasma"]
+  },
+  "d10": {
+    "canonical_display_name": "Os Aleluiado",
+    "canonical_future_id": "ALE",
+    "preserved_legacy_id": "os_aleluia",
+    "religious_context_must_not_be_rewritten": true,
+    "ambiguous_occurrences_require_human_review": true,
+    "supersedes_source_branch_display": "Os Aleluiados"
+  },
+  "forbidden_in_this_batch": [
+    "project_godot_changes",
+    "autoload_changes",
+    "combat_runtime_changes",
+    "deck_runtime_changes",
+    "audio_runtime_changes",
+    "save_migration",
+    "new_runtime_faction_manager",
+    "new_characters_or_story_acts",
+    "binary_asset_changes"
+  ]
+}
