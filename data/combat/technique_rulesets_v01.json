@@ -1,5 +1,5 @@
 {
-  "version": "1.0.0",
+  "version": "1.0.1",
   "language": "pt-BR",
   "source_catalog": "data/techniques.json",
   "default_policy": {
@@ -8,16 +8,13 @@
     "grip_type": "body_control",
     "blocked_reason": ""
   },
+  "fabric_technique_template": {
+    "rulesets": ["GI"],
+    "requires_fabric": true,
+    "grip_type": "lapel_or_sleeve",
+    "blocked_reason": "Esta técnica exige pegada no tecido e não pode ser usada no No-Gi."
+  },
   "techniques": {
-    "pegada_lapela_manga": {
-      "rulesets": ["GI"],
-      "requires_fabric": true,
-      "grip_type": "lapel_sleeve",
-      "blocked_reason": "Esta técnica exige pegada na lapela e na manga e não pode ser usada no No-Gi.",
-      "visual_variants": {
-        "GI": "pegada_lapela_manga_gi"
-      }
-    },
     "grip_de_ferro": {
       "rulesets": ["GI", "NO_GI"],
       "requires_fabric": false,
@@ -144,6 +141,7 @@
     "arm_drag_no_gi"
   ],
   "policy": {
+    "projection_ids_must_exist_in_source_catalog": true,
     "missing_technique_uses_default_policy": true,
     "deck_cards_are_never_deleted_by_ruleset": true,
     "incompatible_cards_are_filtered_from_combat_hand": true,
