@@ -59,7 +59,7 @@
       "description": "Jiu-jitsu sem kimono, baseado em controles corporais, punhos, cabeça, underhooks, overhooks e body locks.",
       "attire": {
         "required": ["rashguard", "shorts_no_gi"],
-        "forbidden": ["kimono", "faixa_soltaa", "pegada_em_tecido"],
+        "forbidden": ["kimono", "faixa_solta", "pegada_em_tecido"],
         "visual_variant": "no_gi"
       },
       "grip_model": {
