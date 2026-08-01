@@ -1,0 +1,125 @@
+{
+  "schema_version": "2.0.0",
+  "audit_id": "cria_visual_reference_audit_v2",
+  "status": "canonical_reference_audit",
+  "reviewed_at": "2026-08-01",
+  "source": "creator-provided image corpus in ChatGPT conversation",
+  "policy": {
+    "images_are_reference_not_runtime": true,
+    "canon_overrides_image_text": true,
+    "gameplay_overrides_visual_invention": true,
+    "legal_and_cultural_review_required": true
+  },
+  "groups": [
+    {
+      "id": "brand_logo",
+      "quality": "high",
+      "preserve": ["silverback", "gold_crown", "black_gi", "circular_lockup", "black_white_gold"],
+      "correct": ["remove_third_party_eyewear_wordmark", "produce_transparent_and_small_pixel_derivatives"],
+      "destination": "brand_source_and_derivatives",
+      "runtime_direct": false
+    },
+    {
+      "id": "character_bible_sheets",
+      "quality": "high",
+      "preserve": ["portrait_hierarchy", "unique_silhouettes", "individual_palettes", "sprite_lineup", "regional_backdrops"],
+      "correct": ["canonical_names", "canonical_origins", "belt_by_act", "bjj_only_moves", "gi_no_gi_rules", "remove_real_marks"],
+      "destination": "character_bible",
+      "runtime_direct": false
+    },
+    {
+      "id": "faction_banners",
+      "quality": "high",
+      "preserve": ["mosaic_texture", "clear_symbols", "ornamental_gold", "distinct_palettes"],
+      "correct": ["ALE_display_OS_ALELUIADOS", "fictional_religious_symbolism", "fictional_sauce_brand"],
+      "destination": "faction_asset_source",
+      "runtime_direct": false
+    },
+    {
+      "id": "arena_bible_sheets",
+      "quality": "high",
+      "preserve": ["arena_identity", "layered_depth", "crowd_language", "lighting", "environmental_storytelling"],
+      "correct": ["canonical_location", "remove_real_institutions", "safe_playable_surface", "mobile_budget", "data_driven_modifiers"],
+      "destination": "arena_bible",
+      "runtime_direct": false
+    },
+    {
+      "id": "combat_mockups",
+      "quality": "high",
+      "preserve": ["fighter_focus", "premium_frame", "position_readability", "arena_presence"],
+      "correct": ["reduce_runtime_hud", "cards_not_fighting_game_combos", "control_not_damage", "mobile_safe_area", "canonical_name_ruan_macacao"],
+      "destination": "combat_composition_reference",
+      "runtime_direct": false
+    },
+    {
+      "id": "tutorial_position_sheets",
+      "quality": "high",
+      "preserve": ["top_and_side_views", "risk_reward_explanation", "position_diagrams"],
+      "correct": ["use_codex_not_runtime_hud", "use_canonical_terms", "remove_real_ruleset_branding"],
+      "destination": "tutorial_and_codex",
+      "runtime_direct": false
+    },
+    {
+      "id": "terreiro_hub_mockups",
+      "quality": "high",
+      "preserve": ["wood", "river", "community", "master_center", "training_zones", "warm_light"],
+      "correct": ["reduce_ui_density", "separate_hub_and_combat_scene", "respect_cultural_symbols", "use_existing_services_only"],
+      "destination": "hub_scene_direction",
+      "runtime_direct": false
+    },
+    {
+      "id": "world_maps",
+      "quality": "high",
+      "preserve": ["regional_identity", "water_routes", "node_icons", "itubera_as_core"],
+      "correct": ["canonical_geography", "remove_duplicate_nodes", "node_route_model", "do_not_promise_continuous_3d_world"],
+      "destination": "world_bible_and_runtime_map_source",
+      "runtime_direct": false
+    },
+    {
+      "id": "technique_breakdowns",
+      "quality": "medium_high",
+      "preserve": ["phase_decomposition", "contact_visualization", "pose_guides", "codex_value"],
+      "correct": ["catalog_only", "paired_animation", "biomechanics_review", "tap_escape_intervention", "no_mma_strikes"],
+      "destination": "storyboard_and_pose_reference",
+      "runtime_direct": false
+    },
+    {
+      "id": "gi_no_gi_variants",
+      "quality": "medium_high",
+      "preserve": ["distinct_uniform_silhouettes", "ruleset_identity", "character_consistency"],
+      "correct": ["grip_policy", "cloth_dependent_moves", "audio_and_friction", "ruleset_runtime_dependency"],
+      "destination": "ruleset_visual_variants",
+      "runtime_direct": false
+    }
+  ],
+  "character_corrections": {
+    "ruan_macacao": ["replace_Ruan_Cria_header", "Itubera_origin", "pressure_grip_top_game"],
+    "davi_relampago": ["keep_blue_electric_identity", "avoid_confusion_with_davi_profeta"],
+    "mestre_dende": ["single_belt_canon", "mentor_moral_authority"],
+    "leoa_quilombola": ["hair_is_not_weapon", "cultural_review_required"],
+    "cassio_molho": ["replace_knee_strikes_with_grappling", "hype_is_moral_pressure"],
+    "kenzo_kuroi": ["remove_criminal_japanese_stereotype", "ruleset_gate_leg_locks"],
+    "oni_da_lapa": ["reconcile_origin_and_scene", "no_joint_destruction_language"],
+    "jacare_mangue": ["remove_dirty_fighting_claim", "respectful_survival_pressure"],
+    "delegado_montenegro": ["replace_real_police_branding", "fictional_institution_only"],
+    "mestre_guigo": ["advanced_no_gi_coach_not_primary_mentor", "fictional_school_brand"]
+  },
+  "arena_corrections": {
+    "arena_do_dique": ["Salvador_Bahia_by_current_data", "fictional_federation_and_sponsors"],
+    "terreiro_da_luta": ["Itubera_hub", "separate_hub_and_sparring"],
+    "budokan_das_aguas": ["location_from_data_only", "review_japanese_text"],
+    "zambiapunga": ["local_cultural_review", "no_generic_tribal_fantasy"],
+    "pancada_grande": ["Itubera_context_not_Chapada_Diamantina", "safe_platform_near_waterfall"],
+    "manguezal_profundo": ["traction_effect_subtle", "no_hazardous_realism"],
+    "praia_de_pratigi": ["Itubera_context", "sand_effect_mobile_safe"],
+    "ferro_velho_da_lapa": ["fictional_clandestine_context", "no_real_branding"]
+  },
+  "shipping_blockers": [
+    "brand_legal_cleanup",
+    "human_art_direction_approval",
+    "biomechanics_review",
+    "cultural_review_for_specific_contexts",
+    "godot_integration",
+    "physical_android_validation"
+  ]
+}
