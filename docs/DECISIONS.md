@@ -4,7 +4,7 @@
 **Atualizado:** 2026-08-01  
 **Escopo:** integração v4 incremental sobre a `main` estável.
 
-Este registro documenta decisões vinculantes para agentes, revisores e contribuições. Em conflito, prevalecem os contratos executáveis em `data/production/`, seguidos deste documento e das demais fontes conforme a hierarquia definida em `AGENTS.md`.
+Este registro documenta decisões vinculantes para agentes, revisores e contribuições. Em conflito, prevalecem os contratos executáveis em `data/production/` e `data/visual/`, seguidos deste documento e das demais fontes conforme a hierarquia definida em `AGENTS.md`.
 
 ## D1 — Fonte única
 
@@ -90,3 +90,27 @@ A ordem oficial de port é:
 7. terreno e acessibilidade.
 
 Cada lote deve partir da `main` mais recente, ter escopo vertical pequeno, rollback claro e checks verdes antes do próximo.
+
+## D12 — Logo e identidade oficial
+
+O arquivo `assets/branding/logo_oficial_cria_do_tatame.svg` é a fonte visual oficial aprovada pelo criador.
+
+Elementos canônicos obrigatórios:
+
+- gorila Silverback adulto em pose frontal;
+- coroa dourada central;
+- kimono preto com acabamento dourado;
+- composição circular com anéis concêntricos;
+- wordmark principal `CRIA DO TATAME`;
+- paleta preta, branca e dourada;
+- identidade visual de força disciplinada e Jiu-Jitsu Brasileiro.
+
+Regras:
+
+- não distorcer, remover o Silverback, remover a coroa, substituir a paleta ou redesenhar sem aprovação explícita;
+- o logo representa o projeto inteiro e não uma facção;
+- `Cria do Tatame` é o título da marca; o protagonista continua sendo **Ruan “Macacão” Silva**;
+- versões compactas, monocromáticas, de patch, app icon e pixel art devem derivar do original e preservar reconhecimento;
+- o contrato executável é `data/visual/brand_identity_v01.json`.
+
+A versão-fonte contém um wordmark de terceiro observado nos óculos. Ela permanece canônica como referência visual, porém está bloqueada para publicação comercial até a substituição desse detalhe por elemento original ou autorização escrita. Nenhuma limpeza jurídica autoriza alterar a composição geral aprovada.

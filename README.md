@@ -5,6 +5,16 @@ Jogo de luta 2D e Action RPG de carreira sobre **Jiu-Jitsu Brasileiro posicional
 > **Ser forte é ser gentil.**  
 > De cria pra cria. Luta. Disciplina. Evolução.
 
+## Logo oficial
+
+<p align="center">
+  <img src="assets/branding/logo_oficial_cria_do_tatame.svg" width="360" alt="Logo oficial Cria do Tatame: gorila Silverback coroado, kimono preto e paleta dourada" />
+</p>
+
+A fonte visual aprovada pelo criador está em [`assets/branding/logo_oficial_cria_do_tatame.svg`](assets/branding/logo_oficial_cria_do_tatame.svg). Seu contrato canônico, hashes, regras de uso e derivados obrigatórios estão em [`data/visual/brand_identity_v01.json`](data/visual/brand_identity_v01.json).
+
+> **Atenção jurídica:** a imagem-fonte contém um wordmark de terceiro observado nos óculos. Ela é a referência visual oficial, mas não está liberada para publicação comercial até a limpeza registrada no contrato visual.
+
 ## Estado do projeto
 
 | Camada | Estado |
@@ -34,12 +44,13 @@ Este é o único repositório oficial do jogo. Código, dados, lore, arte, áudi
 - **Símbolo:** Gorila Silverback;
 - **Estilo:** pressão, grip de ferro e top game dominante;
 - **Poder:** Silverback Grip;
+- **Logo oficial:** Silverback coroado, kimono preto, emblema circular e wordmark `CRIA DO TATAME`;
 - **Facções ativas do cânone v4:** LEM, NTM e ALE;
 - **Visual:** Pixel Art 16-bit 2.5D Regional Premium;
 - **Plataformas-alvo:** Android ARM64 e Windows x86_64;
 - **Engine:** Godot 4.3+; compatibilidade mínima atualmente auditada em 4.2.2.
 
-Referências antigas a Caio Ravel ou Ruan “Cria” são legado e não entram em shipping.
+Referências antigas a Caio Ravel ou Ruan “Cria” são legado e não entram em shipping. `Cria do Tatame` é o título da marca; o protagonista permanece Ruan “Macacão” Silva.
 
 ## Fluxo jogável obrigatório
 
@@ -103,7 +114,7 @@ cd cria-do-tatame
 npm run quality
 ```
 
-O quality gate verifica governança, JSON, referências de dados, animações, estrutura, runtime, release readiness, contrato supremo e deck.
+O quality gate verifica governança, cânone, facções, identidade visual, JSON, referências de dados, animações, estrutura, runtime, release readiness, contrato supremo e deck.
 
 ### Godot headless
 
@@ -175,6 +186,7 @@ Concept art, mockup, prompt, spritesheet bruto ou fila JSONL não são assets fi
 - [`AGENTS.md`](AGENTS.md) — regras para agentes;
 - [`CONTRIBUTING.md`](CONTRIBUTING.md) — fluxo de colaboração;
 - [`docs/CRIA_DO_TATAME_SUPREME_BUILD_SPEC_V1.md`](docs/CRIA_DO_TATAME_SUPREME_BUILD_SPEC_V1.md) — escopo completo;
+- [`data/visual/brand_identity_v01.json`](data/visual/brand_identity_v01.json) — identidade visual e logo oficial;
 - [`data/production/supreme_build_contract_v01.json`](data/production/supreme_build_contract_v01.json) — metas e release gates;
 - [`docs/qa/RUNTIME_AUDIT_V08.md`](docs/qa/RUNTIME_AUDIT_V08.md) — auditoria do runtime;
 - [`docs/production/APK_VISUAL_COMPLETION_PLAN_V09.md`](docs/production/APK_VISUAL_COMPLETION_PLAN_V09.md) — Definition of Done Android e audiovisual.
@@ -195,6 +207,8 @@ A `main` deve permanecer bootável. Novos managers, engines ou sistemas concorre
 Não versione tokens, `.env`, keystore, senha, dados pessoais, modelos gigantes ou assets sem licença. Consulte [`SECURITY.md`](SECURITY.md).
 
 Gameplay crítico funciona offline. Serviços externos e IA são opcionais e não controlam o combate em tempo real.
+
+Marcas, brasões, academias, ligas, eventos e patrocinadores reais não entram em shipping sem autorização escrita ou substituição ficcional.
 
 ## Próximo objetivo
 

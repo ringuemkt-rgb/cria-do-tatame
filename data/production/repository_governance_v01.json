@@ -1,5 +1,5 @@
 {
-  "schema_version": "1.0.2",
+  "schema_version": "1.0.3",
   "repository": "ringuemkt-rgb/cria-do-tatame",
   "default_branch": "main",
   "single_source_of_truth": true,
@@ -28,6 +28,10 @@
     "docs/ROADMAP.md",
     "data/production/canon_contract_v4_1.json",
     "data/production/faction_migration_v4_2.json",
+    "data/visual/brand_identity_v01.json",
+    "assets/branding/logo_oficial_cria_do_tatame.svg",
+    "tools/audit/validate_brand_identity_v01.py",
+    "tests/test_brand_identity_v01.py",
     "tools/audit/validate_faction_migration_v4_2.py",
     "tests/test_faction_migration_v4_2.py",
     "data/production/release_gate_status_v01.json"
@@ -62,6 +66,11 @@
   "protected_invariants": {
     "main_scene": "res://scenes/main_menu/MainMenu.tscn",
     "protagonist_id": "ruan_macacao",
+    "official_logo": "res://assets/branding/logo_oficial_cria_do_tatame.svg",
+    "brand_contract": "res://data/visual/brand_identity_v01.json",
+    "brand_mascot": "silverback",
+    "brand_palette": ["#000000", "#F2F2F2", "#B8860B", "#F2C230"],
+    "brand_legal_cleanup_required": true,
     "active_factions": ["LEM", "NTM", "ALE"],
     "active_faction_display_names": {
       "LEM": "Lá Ele Mil Vezes",
