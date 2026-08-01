@@ -55,7 +55,9 @@ def validate_embedded_logo() -> None:
     assert 'width="512" height="512" viewBox="0 0 512 512"' in svg
     match = re.search(r"href=\"data:image/jpeg;base64,([^\"]+)\"", svg)
     assert match is not None, "SVG não contém JPEG oficial embutido"
-    binary = base64.b64decode(match.group(1), validate=True)
+    payload = match.group(1).strip()
+    payload += "=" * (-len(payload) % 4)
+    binary = base64.b64decode(payload, validate=True)
     digest = hashlib.sha256(binary).hexdigest()
     expected = contract["official_logo"]["repository_derivative"]["embedded_jpeg_sha256"]
     assert digest == expected, f"hash do logo divergente: {digest} != {expected}"
