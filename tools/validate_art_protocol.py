@@ -199,6 +199,11 @@ def parse_protocol_metadata(text: str) -> dict[str, str]:
     return result
 
 
+def normalize_markdown_text(text: str) -> str:
+    """Remove marcação inline que não muda o conteúdo semântico validado."""
+    return re.sub(r"[`*_]", "", text)
+
+
 def validate_protocol_document(report: Report, tokens: dict[str, Any], text: str) -> None:
     metadata = parse_protocol_metadata(text)
     report.assert_true(metadata.get("status") == "CANONICAL", "status do documento deve ser CANONICAL")
@@ -212,6 +217,7 @@ def validate_protocol_document(report: Report, tokens: dict[str, Any], text: str
         report.assert_true(marker in text, f"mecanismo ausente: {marker}")
     report.assert_true("# CHECKLIST DE CONFORMIDADE POR ASSET" in text, "checklist de asset ausente")
 
+    semantic_text = normalize_markdown_text(text)
     for phrase in (
         "O nome do token é a verdade",
         "DISCIPLINA · FOCO · RESPEITO · EVOLUÇÃO",
@@ -219,7 +225,7 @@ def validate_protocol_document(report: Report, tokens: dict[str, Any], text: str
         "Salvador, São Paulo ou Itacaré como nó jogável",
         "óculos dourado genérico",
     ):
-        report.assert_true(phrase in text, f"frase obrigatória ausente: {phrase}")
+        report.assert_true(phrase in semantic_text, f"frase obrigatória ausente: {phrase}")
 
 
 def validate_references(report: Report, tokens: dict[str, Any]) -> None:
