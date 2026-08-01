@@ -5,11 +5,21 @@
   "effective_date": "2026-08-01",
   "repository": "ringuemkt-rgb/cria-do-tatame",
   "skill_path": ".agents/skills/cria-visual-canon-director/SKILL.md",
+  "art_protocol": {
+    "path": "docs/ART_PROTOCOL.md",
+    "tokens": "data/art_tokens.json",
+    "validator": "tools/validate_art_protocol.py",
+    "version": "1.0.0",
+    "visual_execution_precedence": true,
+    "canon_ids_and_licenses_remain_in_executable_contracts": true
+  },
   "authority_dependencies": [
     "data/production/canon_contract_v4_1.json",
     "data/production/faction_migration_v4_2.json",
     "data/visual/brand_identity_v01.json",
     "data/visual/production_manifest_v02.json",
+    "docs/ART_PROTOCOL.md",
+    "data/art_tokens.json",
     "data/characters.json",
     "data/arenas.json",
     "data/factions.json",
@@ -51,6 +61,8 @@
     "readability_scales_percent": [100, 50, 25]
   },
   "palette": {
+    "token_source": "data/art_tokens.json",
+    "art_protocol_precedence": true,
     "base": [
       "#0A0A0A",
       "#1A1A1A",
@@ -155,11 +167,13 @@
       "art_bible",
       "marketing_mockup"
     ],
+    "fixed_bars_from_art_protocol": ["gas", "positional_control", "grip", "flow"],
     "runtime_priority": [
       "current_position",
       "gas",
       "positional_control",
-      "focus_or_flow",
+      "grip",
+      "flow",
       "time_and_points_when_ruleset_requires",
       "three_contextual_cards_or_commands"
     ],
@@ -172,11 +186,13 @@
     "terrestrial_and_maritime_routes": true,
     "runtime_nodes_must_exist": true,
     "duplicate_city_forbidden": true,
-    "artistic_map_is_not_cartographic_authority": true
+    "artistic_map_is_not_cartographic_authority": true,
+    "screen_zones_from_art_protocol": ["Topbar", "LeftRail", "Center", "RightRail", "BottomBar"]
   },
   "arena": {
     "canonical_source": "data/arenas.json",
     "minimum_primary_layers": 5,
+    "arena_card_modifiers_required": 4,
     "required_elements": [
       "far_background",
       "architecture",
@@ -243,7 +259,8 @@
     "minimum_score_for_qa": 90,
     "minimum_score_for_human_approval": 95,
     "blockers_override_score": true,
-    "quality_gates_path": ".agents/skills/cria-visual-canon-director/references/QUALITY_GATES.md"
+    "quality_gates_path": ".agents/skills/cria-visual-canon-director/references/QUALITY_GATES.md",
+    "art_protocol_validator": "tools/validate_art_protocol.py"
   },
   "integration": {
     "godot_consumer_required_for_integrated_state": true,
