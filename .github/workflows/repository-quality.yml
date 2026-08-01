@@ -31,6 +31,9 @@ jobs:
         with:
           python-version: "3.12"
 
+      - name: Install Python test dependencies
+        run: python -m pip install --disable-pip-version-check pytest
+
       - name: Validate canon contract
         run: python tools/audit/validate_canon_contract_v4_1.py
 
