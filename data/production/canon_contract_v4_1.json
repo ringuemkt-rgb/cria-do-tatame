@@ -1,5 +1,5 @@
 {
-  "schema_version": "4.1.0",
+  "schema_version": "4.1.1",
   "contract_id": "cria_do_tatame_canon_v4_1",
   "status": "canonical_contract",
   "effective_date": "2026-08-01",
@@ -31,7 +31,7 @@
     },
     {
       "id": "ALE",
-      "display_name": "Os Aleluiado",
+      "display_name": "Os Aleluiados",
       "legacy_ids": ["os_aleluia"]
     }
   ],
@@ -47,12 +47,13 @@
     "retired_lore": ["dragao_vermelho", "fantasma"]
   },
   "d10": {
-    "canonical_display_name": "Os Aleluiado",
+    "canonical_display_name": "Os Aleluiados",
     "canonical_future_id": "ALE",
     "preserved_legacy_id": "os_aleluia",
     "religious_context_must_not_be_rewritten": true,
     "ambiguous_occurrences_require_human_review": true,
-    "supersedes_source_branch_display": "Os Aleluiados"
+    "supersedes_previous_display": "Os Aleluiado",
+    "change_scope": "display_only_no_id_or_save_migration"
   },
   "forbidden_in_this_batch": [
     "project_godot_changes",
