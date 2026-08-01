@@ -12,7 +12,7 @@ const CANON_TO_LEGACY := {
 	"NTM": "nos_tem_um_molho"
 }
 const DISPLAY_NAMES := {
-	"ALE": "Os Aleluiado",
+	"ALE": "Os Aleluiados",
 	"LEM": "Lá Ele Mil Vezes",
 	"NTM": "Nós Tem Um Molho"
 }
