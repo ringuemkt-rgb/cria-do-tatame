@@ -1,0 +1,101 @@
+{
+  "schema_version": "1.0.0",
+  "contract_id": "cria_do_tatame_brand_identity_v01",
+  "status": "canonical_source_with_legal_cleanup_pending",
+  "approved_by_creator": true,
+  "approved_at": "2026-08-01",
+  "official_logo": {
+    "asset_path": "res://assets/branding/logo_oficial_cria_do_tatame.svg",
+    "source_upload": {
+      "original_filename": "1000397752.jpg",
+      "original_dimensions_px": [1536, 1536],
+      "original_format": "JPEG",
+      "original_sha256": "b37f428da06cf61d03813009c613b44b080a1fd743825a739e69153a025253a9"
+    },
+    "repository_derivative": {
+      "container": "SVG with embedded JPEG",
+      "dimensions_px": [512, 512],
+      "embedded_jpeg_sha256": "7ed46a9de99878bde44e83e2671066c5f22b75efcc485c1de1f669375100d151",
+      "purpose": "canonical repository preview and Godot-importable branding reference"
+    }
+  },
+  "canonical_elements": {
+    "mascot": "gorila Silverback adulto",
+    "pose": "frontal, dominante, tronco e ombros largos",
+    "attire": "kimono preto com acabamento dourado",
+    "crown": "coroa dourada central acima da cabeça",
+    "composition": "emblema circular com anéis concêntricos",
+    "primary_wordmark": "CRIA DO TATAME",
+    "secondary_line": "JIU-JITSU É TUDO",
+    "outer_words": ["DISCIPLINA", "FOCO", "RESPEITO", "EVOLUÇÃO"],
+    "japanese_text": "柔術",
+    "palette": ["#000000", "#F2F2F2", "#B8860B", "#F2C230"],
+    "visual_language": [
+      "alto contraste",
+      "linhas angulares",
+      "contorno forte",
+      "energia esportiva premium",
+      "identidade de jiu-jitsu",
+      "força disciplinada"
+    ]
+  },
+  "brand_meaning": {
+    "silverback": ["pressão pesada", "proteção", "força domada", "liderança silenciosa"],
+    "crown": ["disciplina", "domínio técnico", "responsabilidade"],
+    "kimono": ["jiu-jitsu brasileiro", "respeito ao tatame"],
+    "black_gold": ["excelência", "prestígio", "raízes", "forja"]
+  },
+  "usage_rules": {
+    "exact_visual_fidelity_required": true,
+    "clear_space_required": true,
+    "distortion_forbidden": true,
+    "recolor_outside_palette_forbidden": true,
+    "removing_gorilla_forbidden": true,
+    "removing_crown_forbidden": true,
+    "removing_jiu_jitsu_identity_forbidden": true,
+    "redrawing_without_creator_approval_forbidden": true,
+    "using_as_faction_logo_forbidden": true,
+    "allowed_surfaces": [
+      "main_menu",
+      "loading_screen",
+      "app_icon_source",
+      "HUD branding",
+      "kimono patch",
+      "No-Gi rashguard patch",
+      "Cria Live",
+      "codex",
+      "marketing",
+      "store art",
+      "credits"
+    ]
+  },
+  "required_derivatives": [
+    "transparent_master",
+    "one_color_gold",
+    "one_color_white",
+    "horizontal_wordmark",
+    "compact_emblem",
+    "app_icon_safe_area",
+    "small_size_pixel_variant",
+    "gi_patch_variant",
+    "no_gi_patch_variant"
+  ],
+  "legal_and_shipping": {
+    "source_is_canonical_visual": true,
+    "current_source_contains_third_party_mark": true,
+    "observed_mark": "Ray-Ban wordmark on sunglasses",
+    "shipping_status": "legal_cleanup_required",
+    "required_action": "remove or replace the third-party wordmark with a generic original eyewear detail while preserving the approved composition",
+    "do_not_publish_commercially_before_cleanup": true,
+    "other_brand_review_required": true
+  },
+  "canon_reconciliation": {
+    "game_title": "Cria do Tatame",
+    "protagonist": "Ruan Macacão Silva",
+    "cria_is_not_protagonist_official_nickname": true,
+    "silverback_is_project_symbol": true,
+    "logo_is_not_faction_identity": true,
+    "game_motto": "Ser forte é ser gentil.",
+    "logo_secondary_line_is_brand_copy": "Jiu-Jitsu é tudo"
+  }
+}
