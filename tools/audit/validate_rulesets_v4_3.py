@@ -119,7 +119,7 @@ def validate_master_contract_and_clash() -> None:
     assert "clampf(chance_modifier, -0.30, 0.35)" in resolver
     assert "chance_modifier = 0.25" in resolver
     assert "chance_modifier = 0.12" in resolver
-    assert "chance_modifier = 0.03" in resolver
+    assert "var chance_modifier := 0.03" in resolver
     assert "chance_modifier = -0.18" in resolver
 
     project = read_text("project.godot")
