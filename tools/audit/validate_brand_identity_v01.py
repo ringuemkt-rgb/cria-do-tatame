@@ -97,7 +97,7 @@ def validate_embedded_logo() -> None:
     contract = load_contract()
     svg = read_text(LOGO_PATH)
     assert '<title id="title">Logo oficial Cria do Tatame</title>' in svg
-    assert 'width="256" height="256" viewBox="0 0 256 256"' in svg
+    assert 'width="128" height="128" viewBox="0 0 128 128"' in svg
     match = re.search(r"href=\"data:image/jpeg;base64,([^\"]+)\"", svg)
     assert match is not None, "SVG não contém JPEG oficial embutido"
     payload = match.group(1).strip()
