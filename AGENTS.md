@@ -1,81 +1,169 @@
 # AGENTS.md — Cria do Tatame
 
-Este arquivo orienta Codex, Manus, agentes locais e qualquer assistente automatizado que trabalhe neste repositório.
+Este arquivo é vinculante para Codex, Manus, agentes locais e qualquer assistente automatizado que trabalhe neste repositório.
+
+## 0. Inicialização obrigatória
+
+Antes de criar, editar, apagar, mover ou integrar qualquer arquivo:
+
+1. leia `README.md`;
+2. leia `docs/REPOSITORY_GOVERNANCE.md`;
+3. leia `docs/ROADMAP.md`;
+4. leia `docs/INDEX.md` e a fonte canônica da área;
+5. consulte `data/production/supreme_build_contract_v01.json`;
+6. procure implementação, issue ou PR equivalente;
+7. defina um lote vertical pequeno, testável e reversível.
+
+Não comece implementando apenas porque a solicitação parece clara. Primeiro confirme a posição da tarefa na arquitetura e no roadmap.
 
 ## Missão
 
-Construir **Cria do Tatame – Pressão**, jogo Godot 4.2+ para Android, PC e Web, com combate tático de Jiu-Jitsu Brasileiro, carreira, reputação, mundo vivo do Baixo Sul da Bahia e identidade visual preto/dourado premium.
+Construir **Cria do Tatame – Pressão**, jogo Godot para Android e Windows com combate tático de Jiu-Jitsu Brasileiro, carreira, reputação, mundo vivo do Baixo Sul da Bahia e identidade visual regional premium.
 
 ## Fonte única de verdade
 
-`ringuemkt-rgb/cria-do-tatame` é o único repositório oficial do jogo.
+```text
+ringuemkt-rgb/cria-do-tatame
+```
 
-- Não criar outro repositório para protótipo, APK, arte, lore ou versão alternativa.
-- Protótipos devem viver em branches ou pastas explicitamente delimitadas.
-- Documentos antigos não podem substituir dados e bíblias canônicas atuais.
-- Antes de criar algo, procure implementação equivalente neste repositório.
+- Não criar outro repositório do jogo.
+- Protótipos vivem em branches e precisam de condição de encerramento.
+- Não criar segunda árvore de runtime, outro `project.godot`, frontend concorrente ou backend obrigatório.
+- Antes de criar sistema novo, procure implementação equivalente.
+- Trabalho existente fora de `main` só conta como produto depois de integrado e validado.
 
 ## Regra de ouro
 
-Não transformar o projeto em galeria de arte. Primeiro deve abrir, rodar, salvar, lutar, avançar a semana e exportar.
+Primeiro abrir, rodar, salvar, lutar, concluir, avançar a semana e exportar. Depois expandir e polir.
 
-## Canon inviolável
+O repositório não é galeria de prompts, depósito de concept art ou cemitério de branches.
 
-- Protagonista: Ruan “Macacão” Silva.
-- Símbolo: Gorila Silverback.
-- Origem: Ituberá, Baixo Sul da Bahia.
-- Estilo: pressão pesada, grip de ferro, top game dominante.
-- Poder: Silverback Grip.
-- Frase eixo: Ser forte é ser gentil.
+## Cânone inviolável
 
-Qualquer referência antiga a Caio Ravel ou Ruan “Cria” é legado e não deve ir para UI, campanha principal ou dados finais.
+- Protagonista: Ruan “Macacão” Silva;
+- símbolo: Gorila Silverback;
+- origem: Ituberá, Baixo Sul da Bahia;
+- estilo: pressão, grip de ferro e top game dominante;
+- poder: Silverback Grip;
+- frase eixo: Ser forte é ser gentil;
+- facções ativas do cânone v4: LEM, NTM e ALE.
 
-## Ordem técnica obrigatória
+Caio Ravel, Ruan “Cria” e uma quarta facção ativa são bloqueados em shipping.
 
-1. Executar `npm run quality`.
-2. Garantir que `project.godot` abre no Godot 4.2+.
-3. Ligar e validar autoloads.
-4. Preservar o fluxo Main Menu → Terreiro → Combate → Resultado → Save.
-5. Implementar combate por estados relativos de BJJ.
-6. Integrar carreira semanal, reputação, Cria Live, facções e patrocinadores.
-7. Só depois polir sprites, áudio, VFX e cutscenes.
+## Hierarquia de autoridade
 
-O escopo completo e os gates de produção vivem em `docs/CRIA_DO_TATAME_SUPREME_BUILD_SPEC_V1.md` e `data/production/supreme_build_contract_v01.json`. Um agente não pode reduzir essas metas nem declarar conclusão ignorando o contrato executável.
+Quando houver conflito:
 
-## Contratos de arquitetura
+1. contratos executáveis em `data/production/` e contratos canônicos mais recentes;
+2. `docs/canon/` e decisões aprovadas;
+3. runtime, cenas e dados realmente consumidos;
+4. `docs/REPOSITORY_GOVERNANCE.md` e este arquivo;
+5. documentação técnica ativa;
+6. issues/PRs;
+7. prompts, concept art, relatórios antigos e branches legadas.
 
-- Gameplay crítico deve ser determinístico e executável offline.
-- IA pode criar, revisar e classificar conteúdo; não pode sustentar o loop principal em tempo real.
-- Dados em `data/` precisam manter IDs estáveis e referências válidas.
-- Sistemas novos devem possuir ponto de entrada claro, teste ou checklist de validação e documentação mínima.
-- Código temporário deve conter prazo ou condição objetiva de remoção.
+Nunca escolha a versão “mais bonita” ou “mais completa” sem verificar integração, data, testes e precedência.
 
-## Restrições
+## Arquitetura obrigatória
 
-- Não usar assets comerciais sem licença.
-- Não copiar jogos existentes.
-- Não criar sistema de soco/chute genérico como núcleo.
-- Não afirmar APK pronto sem build validado.
-- Não apagar arquivos úteis sem relatório de migração.
-- Não introduzir segunda engine, segundo canon ou segundo backend de conteúdo.
-- Não versionar segredos, chaves, tokens, keystores ou credenciais.
+- Godot é o único runtime.
+- `main` deve permanecer bootável.
+- Gameplay crítico é determinístico e offline.
+- `CombatManager`, `DeckManager`, `AudioManager` e managers de mundo existentes não podem ser duplicados.
+- Migrações usam adapter/fachada e testes de compatibilidade.
+- Alteração de autoload exige auditoria de boot.
+- Dados persistíveis exigem versão e migração de save.
+- IDs de dados são estáveis; renome só com mapper.
+- Uma classe, JSON ou asset sem consumidor real não conta como feature integrada.
 
-## Saída esperada de cada agente
+## Fluxo que não pode regredir
 
-Todo agente deve entregar:
+```text
+Main Menu
+→ Terreiro
+→ treino/deck
+→ combate
+→ resultado
+→ Cria Live
+→ avanço da semana
+→ save
+→ retorno ao Terreiro
+```
 
-1. arquivos criados;
-2. arquivos modificados;
-3. testes executados;
-4. erros encontrados;
-5. riscos ou dívidas técnicas;
-6. próximo passo recomendado.
+## Processo de trabalho
 
-## Protocolo de autonomia
+1. **Inventário:** arquivos, sistemas, PRs, testes e dependências.
+2. **Diagnóstico:** fato, conflito, lacuna, risco e dívida.
+3. **Plano vertical:** objetivo observável, escopo, fora do escopo, testes e rollback.
+4. **Implementação:** reutilizar arquitetura existente.
+5. **Integração:** cena, fluxo, sinais, save, dados e UI.
+6. **Validação:** `npm run quality`, Godot, smokes e gates específicos.
+7. **Documentação:** decisões, migrações, limitações e evidências.
+8. **GitHub:** commit focado, issue e PR atualizados.
 
-- Trabalhar em lotes verticais jogáveis e commits focados.
-- Executar `npm run quality` antes e depois de cada lote.
-- Usar GitHub, geração de imagem, Hugging Face e Sites apenas nas funções autorizadas pelo contrato supremo.
-- Fixar versão e auditar licença antes de incorporar ferramenta externa.
-- Parar diante de conflito de canon, licença incerta, biomecânica insegura, credencial ausente ou ação destrutiva.
-- Nunca confundir conceito gerado, placeholder, mockup ou fila de produção com asset final integrado.
+## Branches e commits
+
+Use somente prefixos aprovados:
+
+- `fix/`, `feat/`, `content/`, `visual/`, `build/`, `docs/`, `chore/`, `release/`.
+
+Use Conventional Commits. Não trabalhe diretamente em `main` sem autorização explícita e checks verdes.
+
+PR empilhado deve declarar dependência, ordem de merge e base ativa. Se a base for abandonada, porte ou encerre o PR.
+
+## Arte, animação e áudio
+
+- Concept art, mockup, geração bruta e fila de produção são candidatos.
+- Asset final exige origem/licença, metadata, preview, QA, aprovação humana e integração Godot.
+- Técnica pareada exige atacante, defensor, pivô compartilhado, timing e `sync_map`.
+- Não copiar pessoa, marca, frame, aula, logo ou áudio de terceiro sem licença.
+- Não promover automaticamente saída de IA para caminhos de shipping.
+
+## Segurança
+
+- Não versionar tokens, chaves, `.env`, keystore, senha, credenciais ou dados pessoais.
+- Serviços externos são opcionais e tratados como não confiáveis.
+- Nenhuma LLM controla o loop de combate.
+- Conteúdo cosmético opcional não concede poder jogável.
+
+## Gates mínimos
+
+Sempre execute:
+
+```bash
+npm run quality
+```
+
+Quando aplicável:
+
+```bash
+godot --headless --editor --path . --quit
+godot --headless --path . --script res://tests/runtime_smoke.gd
+```
+
+Mudanças de release Android exigem instalação e teste em aparelho físico. Desempenho estimado não é evidência.
+
+## Saída obrigatória de cada agente
+
+1. Entregue — resultado funcional;
+2. Arquivos — criados, modificados e removidos;
+3. Integração — consumidor real e fluxo afetado;
+4. Validação — comandos e resultados;
+5. GitHub — branch, commits, issue e PR;
+6. Riscos — falhas, incertezas e dívida;
+7. Próximo lote — menor passo vertical de maior valor.
+
+## Condições de parada
+
+Pare e registre bloqueio quando houver:
+
+- conflito de cânone ou precedência;
+- risco de apagar trabalho útil;
+- branch-base abandonada sem estratégia de port;
+- licença ou origem incerta;
+- biomecânica insegura;
+- credencial ausente;
+- ação irreversível não autorizada;
+- teste obrigatório impossível no ambiente.
+
+Nunca invente sucesso. Entregue a parte segura e registre a evidência faltante.
