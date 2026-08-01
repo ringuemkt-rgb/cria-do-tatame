@@ -1,0 +1,91 @@
+{
+  "schema_version": "1.0.0",
+  "asset_id": "replace_me",
+  "asset_type": "character|paired_technique|arena|hub|world_map|hud|ui_screen|faction_banner|vfx|prop",
+  "status": "canon_pending",
+  "canon_version": "v4",
+  "source": {
+    "classification": "visual_north|canon_candidate|production_brief|runtime_mockup|art_bible_sheet|asset_candidate",
+    "origin": "creator_upload|repository|licensed_reference|original_design",
+    "reference_ids": [],
+    "license": "original|licensed|public_domain|not_verified",
+    "notes": ""
+  },
+  "canon": {
+    "character_id": null,
+    "faction_id": null,
+    "arena_id": null,
+    "technique_id": null,
+    "ruleset_compatibility": ["GI", "NO_GI"],
+    "location_id": null,
+    "approved_display_text": []
+  },
+  "consumer": {
+    "godot_scene": null,
+    "script_or_registry": null,
+    "runtime_required": false,
+    "art_bible_only": true
+  },
+  "visual": {
+    "style_contract": "data/visual/visual_production_director_v1.json",
+    "dimensions_px": [1280, 720],
+    "logical_grid_px": 16,
+    "palette_ref": "project_master",
+    "anchor": "bottom_center|center|top_left|not_applicable",
+    "layers": [],
+    "frame_count": null,
+    "transparent_background": false,
+    "safe_area_percent": 7,
+    "text_policy": "ui_layer_only|diegetic_approved|no_text"
+  },
+  "animation": {
+    "whole_strip_required": false,
+    "paired": false,
+    "attacker_frames": null,
+    "defender_frames": null,
+    "shared_pivot": null,
+    "sync_markers": [],
+    "contact_markers": [],
+    "entry_state": null,
+    "exit_state": null
+  },
+  "mobile_budget": {
+    "texture_memory_estimate_mb": null,
+    "atlas_group": null,
+    "draw_calls_target": null,
+    "animated_layer_count": null,
+    "fallback_variant_required": false
+  },
+  "legal_review": {
+    "real_person": false,
+    "real_brand": false,
+    "real_institution_or_league": false,
+    "third_party_frame": false,
+    "release_or_license_evidence": [],
+    "blockers": []
+  },
+  "qa": {
+    "canon": 0,
+    "bjj_technical_coherence": 0,
+    "silhouette_readability": 0,
+    "frame_consistency": 0,
+    "integration_metadata": 0,
+    "mobile_performance": 0,
+    "regional_respect": 0,
+    "accessibility": 0,
+    "license_origin": 0,
+    "total": 0,
+    "blockers": [],
+    "human_approved": false,
+    "device_tested": false
+  },
+  "outputs": {
+    "raw": [],
+    "normalized": [],
+    "preview": null,
+    "metadata": null,
+    "qa_report": null,
+    "import_notes": null,
+    "hash_sha256": null
+  }
+}
