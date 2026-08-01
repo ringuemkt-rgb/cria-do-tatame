@@ -3,6 +3,7 @@ extends Node
 var posts: Array = []
 var pending_crises: Array = []
 var faction_metrics: Dictionary = {}
+var legacy_faction_metrics: Dictionary = {}
 var _last_combat_fingerprint: String = ""
 
 func _ready() -> void:
@@ -12,7 +13,14 @@ func _ready() -> void:
 		SignalBus.reputation_changed.connect(_on_reputation_changed)
 
 func create_post(text: String, tone: String, author := "cria_live", metadata: Dictionary = {}) -> Dictionary:
-	var fingerprint := "%s|%s|%s|%s|%s" % [author, tone, text, WorldState.week, posts.size()]
+	var raw_faction_id := str(metadata.get("faction_id", ""))
+	var faction_id := _normalized_active_faction_id(raw_faction_id)
+	if faction_id == "":
+		faction_id = raw_faction_id
+	var normalized_author := _normalized_active_faction_id(str(author))
+	if normalized_author == "":
+		normalized_author = str(author)
+	var fingerprint := "%s|%s|%s|%s|%s" % [normalized_author, tone, text, WorldState.week, posts.size()]
 	var rng := RandomNumberGenerator.new()
 	rng.seed = absi(hash(fingerprint))
 	var base_metrics := {
@@ -31,8 +39,8 @@ func create_post(text: String, tone: String, author := "cria_live", metadata: Di
 			base_metrics[key] = _merge_metric(base_metrics[key], metadata["metrics"][key_value])
 	var post: Dictionary = {
 		"id": "post_%d" % posts.size(),
-		"author": author,
-		"faction_id": str(metadata.get("faction_id", "")),
+		"author": normalized_author,
+		"faction_id": faction_id,
 		"tone": tone,
 		"text": text.left(420),
 		"week": WorldState.week,
@@ -54,6 +62,10 @@ func create_post(text: String, tone: String, author := "cria_live", metadata: Di
 	return post
 
 func create_faction_post(faction_id: String, text: String, tone: String, metrics: Dictionary = {}) -> Dictionary:
+	var canonical := _normalized_active_faction_id(faction_id)
+	if canonical == "":
+		push_warning("[CriaLive] Post de facção ignorado para domínio não ativo: %s" % faction_id)
+		return {}
 	var normalized_metrics := {
 		"reach": float(metrics.get("reach", 0.0)) * 60.0,
 		"credibility": float(metrics.get("credibility", 0.0)) * 5.0,
@@ -64,8 +76,8 @@ func create_faction_post(faction_id: String, text: String, tone: String, metrics
 		"sponsor_interest": float(metrics.get("sponsor_interest", 0.0)) * 5.0,
 		"authority_attention": float(metrics.get("authority_attention", 0.0)) * 5.0
 	}
-	return create_post(text, tone, faction_id, {
-		"faction_id": faction_id,
+	return create_post(text, tone, canonical, {
+		"faction_id": canonical,
 		"metrics": normalized_metrics,
 		"source_event": "faction_operation",
 		"resolved": bool(metrics.get("resolved", false))
@@ -126,39 +138,64 @@ func _on_reputation_changed(axis, _delta, new_value) -> void:
 		generate_post("crise", {"axis": axis, "value": new_value})
 
 func _update_faction_metrics(post: Dictionary) -> void:
-	var faction_id := str(post.get("faction_id", ""))
-	if faction_id == "":
+	var raw_faction_id := str(post.get("faction_id", ""))
+	if raw_faction_id == "":
 		return
-	var aggregate: Dictionary = faction_metrics.get(faction_id, {
-		"posts": 0,
-		"reach": 0.0,
-		"credibility": 50.0,
-		"polarization": 0.0,
-		"hype": 0.0,
-		"rejection": 0.0,
-		"community_support": 0.0,
-		"sponsor_interest": 0.0,
-		"authority_attention": 0.0
-	})
+	var faction_id := _normalized_active_faction_id(raw_faction_id)
+	if faction_id == "":
+		legacy_faction_metrics[raw_faction_id] = _merge_aggregate(
+			legacy_faction_metrics.get(raw_faction_id, {}),
+			post.get("metrics", {})
+		)
+		return
+	post["faction_id"] = faction_id
+	faction_metrics[faction_id] = _merge_aggregate(
+		faction_metrics.get(faction_id, {}),
+		post.get("metrics", {})
+	)
+
+func _merge_aggregate(existing: Dictionary, metrics: Dictionary) -> Dictionary:
+	var aggregate: Dictionary = existing.duplicate(true)
+	if aggregate.is_empty():
+		aggregate = {
+			"posts": 0,
+			"reach": 0.0,
+			"credibility": 50.0,
+			"polarization": 0.0,
+			"hype": 0.0,
+			"rejection": 0.0,
+			"community_support": 0.0,
+			"sponsor_interest": 0.0,
+			"authority_attention": 0.0
+		}
 	aggregate["posts"] = int(aggregate.get("posts", 0)) + 1
-	var metrics: Dictionary = post.get("metrics", {})
 	aggregate["reach"] = float(aggregate.get("reach", 0.0)) + float(metrics.get("reach", 0.0))
 	for key in ["credibility", "polarization", "hype", "rejection", "community_support", "sponsor_interest", "authority_attention"]:
 		var current := float(aggregate.get(key, 0.0))
 		var incoming := float(metrics.get(key, current))
 		aggregate[key] = clamp(current * 0.75 + incoming * 0.25, 0.0, 100.0)
-	faction_metrics[faction_id] = aggregate
+	return aggregate
 
 func _merge_metric(base_value, incoming):
 	if typeof(base_value) == TYPE_INT:
 		return max(0, int(base_value) + int(incoming))
 	return clamp(float(base_value) + float(incoming), 0.0, 100.0)
 
+func _normalized_active_faction_id(faction_id: String) -> String:
+	if faction_id == "":
+		return ""
+	if has_node("/root/FactionManager"):
+		return str(FactionManager.canonicalize_faction_id(faction_id))
+	return faction_id if faction_id in ["ALE", "LEM", "NTM"] else ""
+
 func get_feed() -> Array:
 	return posts.duplicate(true)
 
 func get_faction_metrics(faction_id: String) -> Dictionary:
-	return faction_metrics.get(faction_id, {}).duplicate(true)
+	var canonical := _normalized_active_faction_id(faction_id)
+	if canonical != "":
+		return faction_metrics.get(canonical, {}).duplicate(true)
+	return legacy_faction_metrics.get(faction_id, {}).duplicate(true)
 
 func has_pending_crisis() -> bool:
 	return pending_crises.size() > 0
@@ -168,13 +205,44 @@ func to_dict() -> Dictionary:
 		"posts": posts.duplicate(true),
 		"pending_crises": pending_crises.duplicate(true),
 		"faction_metrics": faction_metrics.duplicate(true),
+		"legacy_faction_metrics": legacy_faction_metrics.duplicate(true),
 		"last_combat_fingerprint": _last_combat_fingerprint
 	}
 
 func load_from_dict(data: Dictionary) -> void:
 	posts = data.get("posts", []).duplicate(true)
 	pending_crises = data.get("pending_crises", []).duplicate(true)
-	faction_metrics = data.get("faction_metrics", {}).duplicate(true)
+	faction_metrics = {}
+	legacy_faction_metrics = data.get("legacy_faction_metrics", {}).duplicate(true)
+	for raw_id_value in data.get("faction_metrics", {}).keys():
+		var raw_id := str(raw_id_value)
+		var canonical := _normalized_active_faction_id(raw_id)
+		var aggregate: Dictionary = data["faction_metrics"][raw_id_value].duplicate(true)
+		if canonical == "":
+			legacy_faction_metrics[raw_id] = aggregate
+		else:
+			faction_metrics[canonical] = _merge_saved_aggregate(faction_metrics.get(canonical, {}), aggregate)
+	for index in range(posts.size()):
+		if typeof(posts[index]) != TYPE_DICTIONARY:
+			continue
+		var post: Dictionary = posts[index]
+		var raw_faction_id := str(post.get("faction_id", ""))
+		var canonical := _normalized_active_faction_id(raw_faction_id)
+		if canonical != "":
+			post["faction_id"] = canonical
+			if _normalized_active_faction_id(str(post.get("author", ""))) != "":
+				post["author"] = canonical
+		posts[index] = post
 	_last_combat_fingerprint = str(data.get("last_combat_fingerprint", ""))
 	while posts.size() > 120:
 		posts.pop_front()
+
+func _merge_saved_aggregate(existing: Dictionary, incoming: Dictionary) -> Dictionary:
+	if existing.is_empty():
+		return incoming.duplicate(true)
+	var merged := existing.duplicate(true)
+	merged["posts"] = int(existing.get("posts", 0)) + int(incoming.get("posts", 0))
+	merged["reach"] = float(existing.get("reach", 0.0)) + float(incoming.get("reach", 0.0))
+	for key in ["credibility", "polarization", "hype", "rejection", "community_support", "sponsor_interest", "authority_attention"]:
+		merged[key] = maxf(float(existing.get(key, 0.0)), float(incoming.get(key, 0.0)))
+	return merged
