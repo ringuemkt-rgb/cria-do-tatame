@@ -8,11 +8,13 @@ Antes de criar, editar, apagar, mover ou integrar qualquer arquivo:
 
 1. leia `README.md`;
 2. leia `docs/REPOSITORY_GOVERNANCE.md`;
-3. leia `docs/ROADMAP.md`;
-4. leia `docs/INDEX.md` e a fonte canônica da área;
-5. consulte `data/production/supreme_build_contract_v01.json`;
-6. procure implementação, issue ou PR equivalente;
-7. defina um lote vertical pequeno, testável e reversível.
+3. leia `docs/DECISIONS.md`;
+4. leia `docs/ROADMAP.md`;
+5. leia `docs/INDEX.md` e a fonte canônica da área;
+6. consulte `data/production/canon_contract_v4_1.json`;
+7. consulte `data/production/supreme_build_contract_v01.json`;
+8. procure implementação, issue ou PR equivalente;
+9. defina um lote vertical pequeno, testável e reversível.
 
 Não comece implementando apenas porque a solicitação parece clara. Primeiro confirme a posição da tarefa na arquitetura e no roadmap.
 
@@ -46,7 +48,9 @@ O repositório não é galeria de prompts, depósito de concept art ou cemitéri
 - estilo: pressão, grip de ferro e top game dominante;
 - poder: Silverback Grip;
 - frase eixo: Ser forte é ser gentil;
-- facções ativas do cânone v4: LEM, NTM e ALE.
+- facções ativas do cânone v4: LEM, NTM e ALE;
+- nome de exibição de ALE: **Os Aleluiado**;
+- ID legado `os_aleluia` é alias de migração e não deve ser renomeado em lugar.
 
 Caio Ravel, Ruan “Cria” e uma quarta facção ativa são bloqueados em shipping.
 
@@ -55,7 +59,7 @@ Caio Ravel, Ruan “Cria” e uma quarta facção ativa são bloqueados em shipp
 Quando houver conflito:
 
 1. contratos executáveis em `data/production/` e contratos canônicos mais recentes;
-2. `docs/canon/` e decisões aprovadas;
+2. `docs/DECISIONS.md`, `docs/canon/` e decisões aprovadas;
 3. runtime, cenas e dados realmente consumidos;
 4. `docs/REPOSITORY_GOVERNANCE.md` e este arquivo;
 5. documentação técnica ativa;
