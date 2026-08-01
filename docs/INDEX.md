@@ -7,7 +7,7 @@ Este arquivo é a porta de entrada da documentação ativa. Antes de criar um do
 - [`../README.md`](../README.md) — visão do produto, instalação e comandos principais;
 - [`../AGENTS.md`](../AGENTS.md) — regras obrigatórias para agentes;
 - [`../CONTRIBUTING.md`](../CONTRIBUTING.md) — fluxo de contribuição;
-- [`DECISIONS.md`](DECISIONS.md) — decisões arquiteturais e canônicas D1–D11;
+- [`DECISIONS.md`](DECISIONS.md) — decisões arquiteturais e canônicas D1–D12;
 - [`REPOSITORY_GOVERNANCE.md`](REPOSITORY_GOVERNANCE.md) — fonte única, branches, PRs e gates;
 - [`ROADMAP.md`](ROADMAP.md) — sequência oficial de construção.
 
@@ -15,6 +15,8 @@ Este arquivo é a porta de entrada da documentação ativa. Antes de criar um do
 
 - [`../data/production/canon_contract_v4_1.json`](../data/production/canon_contract_v4_1.json) — cânone v4.1, autoridades de runtime, facções e aliases;
 - [`../data/production/faction_migration_v4_2.json`](../data/production/faction_migration_v4_2.json) — três facções ativas, aliases e save v5;
+- [`../data/visual/brand_identity_v01.json`](../data/visual/brand_identity_v01.json) — logo oficial, elementos protegidos, derivados obrigatórios e bloqueio jurídico de shipping;
+- [`../assets/branding/logo_oficial_cria_do_tatame.svg`](../assets/branding/logo_oficial_cria_do_tatame.svg) — fonte visual oficial aprovada pelo criador;
 - [`../data/production/supreme_build_contract_v01.json`](../data/production/supreme_build_contract_v01.json) — metas e release gates;
 - [`../data/production/release_gate_status_v01.json`](../data/production/release_gate_status_v01.json) — ledger único com evidências e pendências de release;
 - [`../data/visual/production_manifest_v02.json`](../data/visual/production_manifest_v02.json) — inventário audiovisual;
@@ -35,6 +37,7 @@ Este arquivo é a porta de entrada da documentação ativa. Antes de criar um do
 
 - `art_bible/` — identidade visual e contratos de qualidade ativos;
 - `production/` — planos de lote, APK, animação, áudio e conteúdo;
+- [`../data/visual/brand_identity_v01.json`](../data/visual/brand_identity_v01.json) — contrato da marca e do Silverback oficial;
 - [`production/APK_VISUAL_COMPLETION_PLAN_V09.md`](production/APK_VISUAL_COMPLETION_PLAN_V09.md) — gates de vertical slice e Android;
 - [`../data/visual/production_manifest_v02.json`](../data/visual/production_manifest_v02.json) — entregáveis mínimos por asset.
 
@@ -45,7 +48,8 @@ Este arquivo é a porta de entrada da documentação ativa. Antes de criar um do
 - [`qa/RUNTIME_AUDIT_V08.md`](qa/RUNTIME_AUDIT_V08.md) — auditoria do fluxo central;
 - [`../tools/audit/validate_repository_governance.py`](../tools/audit/validate_repository_governance.py) — gate de organização;
 - [`../tools/audit/validate_canon_contract_v4_1.py`](../tools/audit/validate_canon_contract_v4_1.py) — gate do cânone e da D10;
-- [`../tools/audit/validate_faction_migration_v4_2.py`](../tools/audit/validate_faction_migration_v4_2.py) — gate das três facções, aliases e save v5.
+- [`../tools/audit/validate_faction_migration_v4_2.py`](../tools/audit/validate_faction_migration_v4_2.py) — gate das três facções, aliases e save v5;
+- [`../tools/audit/validate_brand_identity_v01.py`](../tools/audit/validate_brand_identity_v01.py) — gate do logo, hash, Silverback, protagonista e bloqueio jurídico.
 
 ## Status dos documentos
 
