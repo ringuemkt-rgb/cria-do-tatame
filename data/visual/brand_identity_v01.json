@@ -1,5 +1,5 @@
 {
-  "schema_version": "1.0.2",
+  "schema_version": "1.0.3",
   "contract_id": "cria_do_tatame_brand_identity_v01",
   "status": "canonical_source_with_legal_cleanup_pending",
   "approved_by_creator": true,
@@ -14,10 +14,10 @@
     },
     "repository_derivative": {
       "container": "SVG with embedded JPEG",
-      "dimensions_px": [256, 256],
-      "embedded_jpeg_sha256": "314b7099964dd0b6117faeabfa6dc7c69d72fdae6a0e54a06c14678e3e7acddc",
-      "embedded_jpeg_bytes": 23690,
-      "purpose": "canonical repository preview and Godot-importable branding reference",
+      "dimensions_px": [128, 128],
+      "embedded_jpeg_sha256": "94add776b8b0567d6f7a96580f28f436b38e871acc67caa973e644721ac49417",
+      "embedded_jpeg_bytes": 7838,
+      "purpose": "compact canonical repository preview; the original source hash remains the fidelity authority",
       "hash_source": "known-good derivative generated from the creator-approved source upload"
     }
   },
