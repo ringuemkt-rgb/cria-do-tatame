@@ -1,7 +1,7 @@
 {
   "schema_version": "4.2.0",
   "contract_id": "cria_do_tatame_faction_migration_v4_2",
-  "status": "candidate_until_merge",
+  "status": "canonical_contract",
   "source_contract": "data/production/canon_contract_v4_1.json",
   "active_faction_ids": ["ALE", "LEM", "NTM"],
   "active_factions": {
