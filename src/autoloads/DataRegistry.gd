@@ -41,6 +41,8 @@ var character_animation_catalog := {}
 var apixel_production_briefs := {}
 var arena_animation_flow := {}
 var combat_deck := {}
+var combat_rulesets := {}
+var technique_rulesets := {}
 var validation_report := {}
 
 const DATA_FILES := {
@@ -84,7 +86,9 @@ const DATA_FILES := {
 	"character_animation_catalog": "res://data/visual/character_animation_catalog_v01.json",
 	"apixel_production_briefs": "res://data/visual/apixel_production_briefs_v01.json",
 	"arena_animation_flow": "res://data/visual/arena_animation_flow_v01.json",
-	"combat_deck": "res://data/ruan_deck_inicial.json"
+	"combat_deck": "res://data/ruan_deck_inicial.json",
+	"combat_rulesets": "res://data/combat/rulesets_v01.json",
+	"technique_rulesets": "res://data/combat/technique_rulesets_v01.json"
 }
 
 func _ready():
@@ -132,6 +136,8 @@ func load_all():
 	apixel_production_briefs = _load_raw("apixel_production_briefs")
 	arena_animation_flow = _load_raw("arena_animation_flow")
 	combat_deck = _load_raw("combat_deck")
+	combat_rulesets = _load_raw("combat_rulesets")
+	technique_rulesets = _load_raw("technique_rulesets")
 	validation_report = validate_core_data()
 	SignalBus.data_validation_finished.emit(validation_report)
 	SignalBus.data_loaded.emit()
@@ -211,7 +217,92 @@ func validate_core_data():
 		errors.append("deck de combate inicial possui menos de 10 cartas")
 	if combat_deck.get("owner_id", "") != "ruan_macacao":
 		errors.append("deck de combate inicial nao pertence a ruan_macacao")
-	return {"ok": errors.is_empty(), "errors": errors, "characters": characters.size(), "arenas": arenas.size(), "techniques": techniques.size(), "factions": factions.size()}
+	var ruleset_ids: Array = []
+	for ruleset_value in combat_rulesets.get("rulesets", []):
+		if typeof(ruleset_value) == TYPE_DICTIONARY:
+			ruleset_ids.append(str(ruleset_value.get("id", "")))
+	if ruleset_ids != ["GI", "NO_GI"]:
+		errors.append("rulesets de combate devem ser exatamente GI e NO_GI")
+	if str(combat_rulesets.get("default_ruleset_id", "")) != "GI":
+		errors.append("ruleset padrao precisa ser GI para compatibilidade")
+	if technique_rulesets.get("default_policy", {}).get("rulesets", []) != ["GI", "NO_GI"]:
+		errors.append("politica padrao de tecnicas deve permitir GI e NO_GI")
+	if technique_allowed_in_ruleset("pegada_lapela_manga", "NO_GI"):
+		errors.append("pegada de lapela e manga nao pode ser permitida no No-Gi")
+	return {
+		"ok": errors.is_empty(),
+		"errors": errors,
+		"characters": characters.size(),
+		"arenas": arenas.size(),
+		"techniques": techniques.size(),
+		"factions": factions.size(),
+		"rulesets": ruleset_ids.size()
+	}
+
+func normalize_ruleset_id(value) -> String:
+	var raw := str(value).strip_edges()
+	if raw == "":
+		return ""
+	var upper := raw.to_upper()
+	for ruleset_value in combat_rulesets.get("rulesets", []):
+		if typeof(ruleset_value) != TYPE_DICTIONARY:
+			continue
+		var ruleset: Dictionary = ruleset_value
+		var ruleset_id := str(ruleset.get("id", ""))
+		if upper == ruleset_id.to_upper():
+			return ruleset_id
+		for alias_value in ruleset.get("aliases", []):
+			if raw.to_lower() == str(alias_value).to_lower():
+				return ruleset_id
+	return ""
+
+func get_default_ruleset_id() -> String:
+	var configured := normalize_ruleset_id(combat_rulesets.get("default_ruleset_id", "GI"))
+	return configured if configured != "" else "GI"
+
+func get_combat_ruleset(ruleset_id) -> Dictionary:
+	var normalized := normalize_ruleset_id(ruleset_id)
+	for ruleset_value in combat_rulesets.get("rulesets", []):
+		if typeof(ruleset_value) == TYPE_DICTIONARY and str(ruleset_value.get("id", "")) == normalized:
+			return ruleset_value.duplicate(true)
+	return {}
+
+func get_technique_ruleset_policy(technique_id) -> Dictionary:
+	var policy: Dictionary = technique_rulesets.get("default_policy", {}).duplicate(true)
+	var overrides: Dictionary = technique_rulesets.get("techniques", {})
+	var key := str(technique_id)
+	if overrides.has(key) and typeof(overrides[key]) == TYPE_DICTIONARY:
+		policy.merge(overrides[key], true)
+	return policy
+
+func technique_allowed_in_ruleset(technique_id, ruleset_id) -> bool:
+	var normalized := normalize_ruleset_id(ruleset_id)
+	if normalized == "":
+		return false
+	var policy := get_technique_ruleset_policy(technique_id)
+	var allowed: Array = policy.get("rulesets", [])
+	if not allowed.has(normalized):
+		return false
+	if normalized == "NO_GI" and bool(policy.get("requires_fabric", false)):
+		return false
+	return true
+
+func get_technique_ruleset_block_reason(technique_id, ruleset_id) -> String:
+	if technique_allowed_in_ruleset(technique_id, ruleset_id):
+		return ""
+	var normalized := normalize_ruleset_id(ruleset_id)
+	if normalized == "":
+		return "Ruleset de combate inválido."
+	var policy := get_technique_ruleset_policy(technique_id)
+	var configured := str(policy.get("blocked_reason", ""))
+	if configured != "":
+		return configured
+	return "Esta técnica não está disponível em %s." % str(get_combat_ruleset(normalized).get("display_name", normalized))
+
+func get_technique_visual_variant(technique_id, ruleset_id) -> String:
+	var normalized := normalize_ruleset_id(ruleset_id)
+	var policy := get_technique_ruleset_policy(technique_id)
+	return str(policy.get("visual_variants", {}).get(normalized, str(technique_id)))
 
 func get_character_animation(character_id: String, action_id: String) -> Dictionary:
 	for entry_value in character_animation_catalog.get("entries", []):
