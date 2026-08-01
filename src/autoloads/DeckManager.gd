@@ -3,6 +3,7 @@ extends Node
 const ACTIVE_LIMIT := 5
 const PASSIVE_LIMIT := 3
 const HAND_SIZE := 3
+const DEFAULT_RULESET := "GI"
 const BELT_LEVEL_LIMIT := {
 	"branca": 2,
 	"azul": 3,
@@ -13,6 +14,7 @@ const BELT_LEVEL_LIMIT := {
 
 var owner_id := "ruan_macacao"
 var belt := "branca"
+var current_ruleset := DEFAULT_RULESET
 var cards: Dictionary = {}
 var active_deck: Array[String] = []
 var passive_deck: Array[String] = []
@@ -38,6 +40,7 @@ func configure_from_data(source: Dictionary) -> Dictionary:
 		return {"ok": false, "error": "deck_data_missing"}
 	owner_id = str(source.get("owner_id", "ruan_macacao"))
 	belt = str(source.get("belt", "branca"))
+	current_ruleset = _normalize_ruleset(str(source.get("current_ruleset", current_ruleset)))
 	for value in source.get("cards", []):
 		if typeof(value) != TYPE_DICTIONARY:
 			continue
@@ -48,10 +51,38 @@ func configure_from_data(source: Dictionary) -> Dictionary:
 	var equipped: Dictionary = source.get("equipped", {})
 	active_deck = _valid_equipped(equipped.get("active", []), "active", ACTIVE_LIMIT)
 	passive_deck = _valid_equipped(equipped.get("passive", []), "passive", PASSIVE_LIMIT)
-	start_combat_hand()
-	return {"ok": true, "cards": cards.size(), "active": active_deck.size(), "passive": passive_deck.size()}
+	start_combat_hand(current_ruleset)
+	return {
+		"ok": true,
+		"cards": cards.size(),
+		"active": active_deck.size(),
+		"passive": passive_deck.size(),
+		"ruleset": current_ruleset,
+		"blocked_equipped": get_blocked_equipped_cards().size()
+	}
 
-func start_combat_hand() -> void:
+func set_ruleset(ruleset_id: String) -> Dictionary:
+	var normalized := _normalize_ruleset(ruleset_id)
+	if normalized == "":
+		return {"ok": false, "error": "ruleset_invalid", "ruleset_id": ruleset_id}
+	current_ruleset = normalized
+	start_combat_hand(current_ruleset)
+	SignalBus.deck_configuration_changed.emit(to_dict())
+	return {
+		"ok": true,
+		"ruleset_id": current_ruleset,
+		"hand": get_hand(),
+		"blocked_equipped": get_blocked_equipped_cards()
+	}
+
+func get_ruleset_id() -> String:
+	return current_ruleset
+
+func start_combat_hand(ruleset_id: String = "") -> void:
+	if ruleset_id != "":
+		var normalized := _normalize_ruleset(ruleset_id)
+		if normalized != "":
+			current_ruleset = normalized
 	if has_node("/root/WorldState"):
 		var world_belt := str(WorldState.belt)
 		if BELT_LEVEL_LIMIT.has(world_belt):
@@ -59,27 +90,35 @@ func start_combat_hand() -> void:
 	hand.clear()
 	draw_cursor = 0
 	selected_card_id = ""
-	while hand.size() < mini(HAND_SIZE, active_deck.size()):
-		hand.append(active_deck[draw_cursor])
-		draw_cursor += 1
+	_draw_until_full()
 	_emit_hand_changed()
 
 func get_hand() -> Array:
 	var output: Array = []
 	for card_id in hand:
 		if cards.has(card_id):
-			output.append(cards[card_id].duplicate(true))
+			var card: Dictionary = cards[card_id].duplicate(true)
+			card["ruleset_id"] = current_ruleset
+			card["ruleset_compatible"] = true
+			card["ruleset_block_reason"] = ""
+			output.append(card)
 	return output
 
 func get_collection() -> Array:
 	var output: Array = []
-	for value in cards.values():
-		output.append(value.duplicate(true))
+	for card_id_value in cards.keys():
+		var card_id := str(card_id_value)
+		var card: Dictionary = cards[card_id].duplicate(true)
+		var status := get_card_ruleset_status(card_id)
+		card["ruleset_id"] = current_ruleset
+		card["ruleset_compatible"] = bool(status.get("allowed", false))
+		card["ruleset_block_reason"] = str(status.get("reason", ""))
+		output.append(card)
 	output.sort_custom(func(a: Dictionary, b: Dictionary) -> bool: return str(a.get("name", "")) < str(b.get("name", "")))
 	return output
 
 func select_card(card_id: String) -> bool:
-	if not hand.has(card_id) or not cards.has(card_id):
+	if not hand.has(card_id) or not cards.has(card_id) or not _card_is_allowed(cards[card_id]):
 		return false
 	selected_card_id = card_id
 	SignalBus.combat_card_selected.emit(cards[card_id].duplicate(true))
@@ -95,6 +134,8 @@ func get_attack_card(technique_id: String, resources: Dictionary, current_state:
 			candidates.append(card_id)
 	for card_id in candidates:
 		var card: Dictionary = cards.get(card_id, {})
+		if not _card_is_allowed(card):
+			continue
 		if str(card.get("technique_id", "")) != technique_id:
 			continue
 		if not _state_is_valid(card, current_state) or not can_activate(card, resources):
@@ -106,7 +147,7 @@ func get_defense_card(attack_family: String, resources: Dictionary, current_stat
 	var best: Dictionary = {}
 	for card_id in passive_deck + hand:
 		var card: Dictionary = cards.get(card_id, {})
-		if not bool(card.get("unlocked", false)):
+		if not bool(card.get("unlocked", false)) or not _card_is_allowed(card):
 			continue
 		var responses: Array = card.get("response_to_families", [])
 		if not responses.has(attack_family):
@@ -118,6 +159,8 @@ func get_defense_card(attack_family: String, resources: Dictionary, current_stat
 	return best.duplicate(true)
 
 func can_activate(card: Dictionary, resources: Dictionary) -> bool:
+	if not _card_is_allowed(card):
+		return false
 	var cost: Dictionary = card.get("activation_cost", {})
 	return (
 		float(resources.get("focus", 0.0)) >= float(cost.get("focus", 0.0))
@@ -158,9 +201,14 @@ func equip_card(card_id: String, slot_kind: String, slot_index: int = -1) -> Dic
 		target.append(card_id)
 	else:
 		return {"ok": false, "error": "deck_full"}
-	start_combat_hand()
+	start_combat_hand(current_ruleset)
 	SignalBus.deck_configuration_changed.emit(to_dict())
-	return {"ok": true}
+	var status := get_card_ruleset_status(card_id)
+	return {
+		"ok": true,
+		"ruleset_compatible": bool(status.get("allowed", false)),
+		"ruleset_block_reason": str(status.get("reason", ""))
+	}
 
 func upgrade_card(card_id: String, payment: String = "xp") -> Dictionary:
 	var card: Dictionary = cards.get(card_id, {})
@@ -199,17 +247,51 @@ func unlock_card(card_id: String) -> Dictionary:
 func passive_modifiers() -> Dictionary:
 	var output: Dictionary = {}
 	for card_id in passive_deck:
-		var effect: Dictionary = cards.get(card_id, {}).get("passive_effect", {})
+		var card: Dictionary = cards.get(card_id, {})
+		if not _card_is_allowed(card):
+			continue
+		var effect: Dictionary = card.get("passive_effect", {})
 		for key_value in effect.keys():
 			var key := str(key_value)
 			output[key] = float(output.get(key, 0.0)) + float(effect[key_value])
 	return output
 
+func get_card_ruleset_status(card_id: String, ruleset_id: String = "") -> Dictionary:
+	var card: Dictionary = cards.get(card_id, {})
+	if card.is_empty():
+		return {"allowed": false, "reason": "Carta não encontrada.", "ruleset_id": current_ruleset}
+	var resolved_ruleset := current_ruleset if ruleset_id == "" else _normalize_ruleset(ruleset_id)
+	if resolved_ruleset == "":
+		return {"allowed": false, "reason": "Ruleset de combate inválido.", "ruleset_id": ruleset_id}
+	var technique_id := str(card.get("technique_id", ""))
+	if technique_id == "":
+		return {"allowed": true, "reason": "", "ruleset_id": resolved_ruleset}
+	var allowed := bool(DataRegistry.technique_allowed_in_ruleset(technique_id, resolved_ruleset))
+	return {
+		"allowed": allowed,
+		"reason": "" if allowed else str(DataRegistry.get_technique_ruleset_block_reason(technique_id, resolved_ruleset)),
+		"ruleset_id": resolved_ruleset,
+		"technique_id": technique_id,
+		"visual_variant": str(DataRegistry.get_technique_visual_variant(technique_id, resolved_ruleset))
+	}
+
+func get_blocked_equipped_cards(ruleset_id: String = "") -> Array:
+	var output: Array = []
+	for card_id in active_deck + passive_deck:
+		var status := get_card_ruleset_status(card_id, ruleset_id)
+		if not bool(status.get("allowed", false)):
+			var item := status.duplicate(true)
+			item["card_id"] = card_id
+			item["name"] = str(cards.get(card_id, {}).get("name", card_id))
+			output.append(item)
+	return output
+
 func to_dict() -> Dictionary:
 	return {
-		"schema_version": "1.0.0",
+		"schema_version": "1.1.0",
 		"owner_id": owner_id,
 		"belt": belt,
+		"current_ruleset": current_ruleset,
 		"limits": {"active": ACTIVE_LIMIT, "passive": PASSIVE_LIMIT, "hand": HAND_SIZE},
 		"cards": get_collection(),
 		"equipped": {"active": active_deck.duplicate(), "passive": passive_deck.duplicate()}
@@ -234,15 +316,37 @@ func _valid_equipped(values: Array, kind: String, limit: int) -> Array[String]:
 	return output
 
 func _draw_until_full() -> void:
-	if active_deck.is_empty():
+	var compatible := _compatible_active_deck()
+	if compatible.is_empty():
 		return
 	var attempts := 0
-	while hand.size() < mini(HAND_SIZE, active_deck.size()) and attempts < active_deck.size() * 2:
-		var card_id := active_deck[draw_cursor % active_deck.size()]
-		draw_cursor = (draw_cursor + 1) % active_deck.size()
+	while hand.size() < mini(HAND_SIZE, compatible.size()) and attempts < compatible.size() * 2:
+		var card_id := compatible[draw_cursor % compatible.size()]
+		draw_cursor = (draw_cursor + 1) % compatible.size()
 		if not hand.has(card_id):
 			hand.append(card_id)
 		attempts += 1
+
+func _compatible_active_deck() -> Array[String]:
+	var output: Array[String] = []
+	for card_id in active_deck:
+		if cards.has(card_id) and _card_is_allowed(cards[card_id]):
+			output.append(card_id)
+	return output
+
+func _card_is_allowed(card: Dictionary) -> bool:
+	if card.is_empty():
+		return false
+	var technique_id := str(card.get("technique_id", ""))
+	if technique_id == "":
+		return true
+	return bool(DataRegistry.technique_allowed_in_ruleset(technique_id, current_ruleset))
+
+func _normalize_ruleset(ruleset_id: String) -> String:
+	var normalized := str(DataRegistry.normalize_ruleset_id(ruleset_id)) if DataRegistry != null else ""
+	if normalized == "":
+		normalized = str(DataRegistry.get_default_ruleset_id()) if DataRegistry != null else DEFAULT_RULESET
+	return normalized if normalized != "" else DEFAULT_RULESET
 
 func _state_is_valid(card: Dictionary, current_state: String) -> bool:
 	var states: Array = card.get("valid_states", [])
