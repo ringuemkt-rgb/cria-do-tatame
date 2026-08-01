@@ -1,0 +1,102 @@
+{
+  "version": "1.0.0",
+  "language": "pt-BR",
+  "default_ruleset_id": "GI",
+  "rulesets": [
+    {
+      "id": "GI",
+      "display_name": "Com kimono (Gi)",
+      "short_name": "GI",
+      "aliases": ["gi", "kimono", "com_kimono"],
+      "description": "Jiu-jitsu com kimono, pegadas de tecido e controle posicional de maior estabilidade.",
+      "attire": {
+        "required": ["kimono", "faixa"],
+        "forbidden": ["rashguard_sem_kimono_como_uniforme_principal"],
+        "visual_variant": "gi"
+      },
+      "grip_model": {
+        "fabric_grips_allowed": true,
+        "body_grips_allowed": true,
+        "allowed_types": [
+          "lapel",
+          "sleeve",
+          "belt",
+          "pants",
+          "wrist",
+          "collar_tie",
+          "underhook",
+          "overhook",
+          "body_lock",
+          "head_control"
+        ],
+        "default_visual_contact": "lapela_e_manga"
+      },
+      "gameplay": {
+        "transition_speed_multiplier": 1.0,
+        "grip_stability_multiplier": 1.12,
+        "grip_break_cost_multiplier": 1.0,
+        "gas_cost_multiplier": 1.0,
+        "focus_cost_multiplier": 1.0,
+        "scramble_frequency_multiplier": 0.92
+      },
+      "audio_profile": "gi_fabric",
+      "accessibility": {
+        "same_input_windows_as_base": true,
+        "sensory_profile_required": true,
+        "slow_motion_training_allowed": true
+      },
+      "runtime_policy": {
+        "offline_required": true,
+        "automatic_submission_forbidden": true,
+        "fabric_techniques_must_declare_requirement": true
+      }
+    },
+    {
+      "id": "NO_GI",
+      "display_name": "No-Gi (sem kimono)",
+      "short_name": "NO-GI",
+      "aliases": ["no_gi", "no-gi", "nogi", "sem_kimono"],
+      "description": "Jiu-jitsu sem kimono, baseado em controles corporais, punhos, cabeça, underhooks, overhooks e body locks.",
+      "attire": {
+        "required": ["rashguard", "shorts_no_gi"],
+        "forbidden": ["kimono", "faixa_soltaa", "pegada_em_tecido"],
+        "visual_variant": "no_gi"
+      },
+      "grip_model": {
+        "fabric_grips_allowed": false,
+        "body_grips_allowed": true,
+        "allowed_types": [
+          "wrist",
+          "two_on_one",
+          "collar_tie",
+          "underhook",
+          "overhook",
+          "whizzer",
+          "body_lock",
+          "head_control",
+          "ankle_control"
+        ],
+        "default_visual_contact": "punho_e_collar_tie"
+      },
+      "gameplay": {
+        "transition_speed_multiplier": 1.06,
+        "grip_stability_multiplier": 0.86,
+        "grip_break_cost_multiplier": 0.86,
+        "gas_cost_multiplier": 1.02,
+        "focus_cost_multiplier": 1.0,
+        "scramble_frequency_multiplier": 1.12
+      },
+      "audio_profile": "no_gi_contact",
+      "accessibility": {
+        "same_input_windows_as_base": true,
+        "sensory_profile_required": true,
+        "slow_motion_training_allowed": true
+      },
+      "runtime_policy": {
+        "offline_required": true,
+        "automatic_submission_forbidden": true,
+        "fabric_grips_forbidden": true
+      }
+    }
+  ]
+}
