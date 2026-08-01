@@ -12,9 +12,10 @@ Antes de criar, editar, apagar, mover ou integrar qualquer arquivo:
 4. leia `docs/ROADMAP.md`;
 5. leia `docs/INDEX.md` e a fonte canônica da área;
 6. consulte `data/production/canon_contract_v4_1.json`;
-7. consulte `data/production/supreme_build_contract_v01.json`;
-8. procure implementação, issue ou PR equivalente;
-9. defina um lote vertical pequeno, testável e reversível.
+7. consulte `data/visual/brand_identity_v01.json` quando tocar logo, marca, UI, personagem, uniforme, marketing ou material promocional;
+8. consulte `data/production/supreme_build_contract_v01.json`;
+9. procure implementação, issue ou PR equivalente;
+10. defina um lote vertical pequeno, testável e reversível.
 
 Não comece implementando apenas porque a solicitação parece clara. Primeiro confirme a posição da tarefa na arquitetura e no roadmap.
 
@@ -50,15 +51,22 @@ O repositório não é galeria de prompts, depósito de concept art ou cemitéri
 - frase eixo: Ser forte é ser gentil;
 - facções ativas do cânone v4: LEM, NTM e ALE;
 - nome de exibição de ALE: **Os Aleluiado**;
-- ID legado `os_aleluia` é alias de migração e não deve ser renomeado em lugar.
+- ID legado `os_aleluia` é alias de migração e não deve ser renomeado em lugar;
+- logo oficial: `assets/branding/logo_oficial_cria_do_tatame.svg`;
+- contrato visual oficial: `data/visual/brand_identity_v01.json`;
+- composição protegida do logo: Silverback frontal, coroa dourada, kimono preto, emblema circular e wordmark `CRIA DO TATAME`;
+- paleta principal do logo: preto, branco e dourado;
+- `Cria` é o título da marca e não substitui o apelido canônico `Macacão`.
 
-Caio Ravel, Ruan “Cria” e uma quarta facção ativa são bloqueados em shipping.
+Caio Ravel, Ruan “Cria”, uma quarta facção ativa e qualquer substituição não aprovada do logo oficial são bloqueados em shipping.
+
+O arquivo visual do logo é a fonte canônica aprovada pelo criador, mas contém uma marca de terceiro observada nos óculos. Nenhum build comercial pode usar essa versão antes da limpeza jurídica registrada no contrato visual.
 
 ## Hierarquia de autoridade
 
 Quando houver conflito:
 
-1. contratos executáveis em `data/production/` e contratos canônicos mais recentes;
+1. contratos executáveis em `data/production/` e `data/visual/` e contratos canônicos mais recentes;
 2. `docs/DECISIONS.md`, `docs/canon/` e decisões aprovadas;
 3. runtime, cenas e dados realmente consumidos;
 4. `docs/REPOSITORY_GOVERNANCE.md` e este arquivo;
@@ -122,6 +130,8 @@ PR empilhado deve declarar dependência, ordem de merge e base ativa. Se a base 
 - Técnica pareada exige atacante, defensor, pivô compartilhado, timing e `sync_map`.
 - Não copiar pessoa, marca, frame, aula, logo ou áudio de terceiro sem licença.
 - Não promover automaticamente saída de IA para caminhos de shipping.
+- Não redesenhar, simplificar, recolorir ou remover Silverback/coroa do logo oficial sem aprovação explícita do criador.
+- Derivados do logo devem preservar proporção, hierarquia, contraste e identidade de Jiu-Jitsu.
 
 ## Segurança
 
@@ -129,6 +139,7 @@ PR empilhado deve declarar dependência, ordem de merge e base ativa. Se a base 
 - Serviços externos são opcionais e tratados como não confiáveis.
 - Nenhuma LLM controla o loop de combate.
 - Conteúdo cosmético opcional não concede poder jogável.
+- Marcas, brasões, academias, ligas, eventos e patrocinadores reais exigem autorização escrita ou substituição ficcional antes de shipping.
 
 ## Gates mínimos
 
