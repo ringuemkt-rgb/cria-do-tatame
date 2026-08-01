@@ -31,6 +31,18 @@ jobs:
         with:
           python-version: "3.12"
 
+      - name: Validate canon contract
+        run: python tools/audit/validate_canon_contract_v4_1.py
+
+      - name: Validate faction migration
+        run: python tools/audit/validate_faction_migration_v4_2.py
+
+      - name: Validate visual production director
+        run: python tools/audit/validate_visual_production_director_v1.py
+
+      - name: Run visual and faction Python tests
+        run: python -m pytest -q tests/test_visual_production_director_v1.py tests/test_faction_migration_v4_2.py tests/test_faction_director_data.py
+
       - name: Validate JSON syntax with Python
         run: python tools/validate_json.py
 
