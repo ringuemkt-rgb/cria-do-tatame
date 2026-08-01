@@ -67,7 +67,7 @@ def validate_technique_projection() -> None:
         assert techniques[technique_id]["requires_fabric"] is False, technique_id
 
 
-def validate_contract() -> None:
+def validate_ruleset_contract() -> None:
     contract = load_json("data/production/ruleset_contract_v4_3.json")
     assert contract["tracking_issue"] == 44
     assert contract["ruleset_ids"] == RULESET_IDS
@@ -82,6 +82,43 @@ def validate_contract() -> None:
     assert contract["vertical_slice"]["ruleset"] == "NO_GI"
     assert contract["vertical_slice"]["player"] == "ruan_macacao"
     assert contract["vertical_slice"]["opponent"] == "davi_relampago"
+
+
+def validate_master_contract_and_clash() -> None:
+    contract = load_json("data/production/combat_master_contract_v2.json")
+    invariants = contract["combat_invariants"]
+    assert contract["tracking_issue"] == 46
+    assert contract["runtime"]["generative_ai_allowed"] is False
+    assert contract["runtime"]["critical_loop_network_dependency_allowed"] is False
+    assert invariants["technique_source"] == "data/techniques.json"
+    assert invariants["position_before_submission"] is True
+    assert invariants["instant_finish"] is False
+    assert invariants["clash_modifier_min"] == -0.3
+    assert invariants["clash_modifier_max"] == 0.35
+    assert invariants["submission_end_states"] == [
+        "tap",
+        "escape",
+        "technical_intervention",
+    ]
+    assert contract["grapplemap"]["declared_license"] == "public_domain"
+    assert "authoritative_real_world_timing" in contract["grapplemap"]["forbidden_claims"]
+    assert "gi_specific_coverage" in contract["grapplemap"]["forbidden_claims"]
+    assert contract["delivery"]["golden_vertical_slice_before_scale"] is True
+
+    resolver = read_text("src/combat/TechniqueClashResolver.gd")
+    assert '"instant_finish": false' in resolver
+    assert "clampf(chance_modifier, -0.30, 0.35)" in resolver
+    assert 'chance_modifier = 0.25' in resolver
+    assert 'chance_modifier = 0.12' in resolver
+    assert 'chance_modifier = 0.03' in resolver
+    assert 'chance_modifier = -0.18' in resolver
+
+    project = read_text("project.godot")
+    assert 'CombatManager="*res://src/autoloads/CombatManager.gd"' in project
+    assert 'DeckManager="*res://src/autoloads/DeckManager.gd"' in project
+    assert 'DataRegistry="*res://src/autoloads/DataRegistry.gd"' in project
+    assert 'SaveManager="*res://src/autoloads/SaveManager.gd"' in project
+    assert 'AudioManager="*res://src/autoloads/AudioManager.gd"' in project
 
 
 def validate_registry_and_deck() -> None:
@@ -129,7 +166,8 @@ def main() -> int:
     checks = [
         validate_rulesets,
         validate_technique_projection,
-        validate_contract,
+        validate_ruleset_contract,
+        validate_master_contract_and_clash,
         validate_registry_and_deck,
         validate_tests_and_quality_gate,
     ]
@@ -144,7 +182,7 @@ def main() -> int:
         for error in errors:
             print(f" - {error}")
         return 1
-    print("[RulesetsV4.3] OK - GI e No-Gi, projeção e filtro de deck validados")
+    print("[RulesetsV4.3] OK - GI, No-Gi, contrato mestre, clamp e deck validados")
     return 0
 
 
