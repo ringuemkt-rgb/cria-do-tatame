@@ -24,7 +24,8 @@
     ".github/ISSUE_TEMPLATE/config.yml",
     "docs/INDEX.md",
     "docs/REPOSITORY_GOVERNANCE.md",
-    "docs/ROADMAP.md"
+    "docs/ROADMAP.md",
+    "data/production/release_gate_status_v01.json"
   ],
   "canonical_directories": [
     ".github",
