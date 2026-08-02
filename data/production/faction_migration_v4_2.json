@@ -1,12 +1,12 @@
 {
-  "schema_version": "4.2.0",
+  "schema_version": "4.2.1",
   "contract_id": "cria_do_tatame_faction_migration_v4_2",
   "status": "canonical_contract",
   "source_contract": "data/production/canon_contract_v4_1.json",
   "active_faction_ids": ["ALE", "LEM", "NTM"],
   "active_factions": {
     "ALE": {
-      "display_name": "Os Aleluiado",
+      "display_name": "Os Aleluiados",
       "legacy_ids": ["os_aleluia"]
     },
     "LEM": {
@@ -33,7 +33,8 @@
     "backup_fallback_required": true,
     "rewrite_after_successful_migration": true,
     "idempotent_loading_required": true,
-    "legacy_archive_required": true
+    "legacy_archive_required": true,
+    "display_name_change_does_not_increment_save_version": true
   },
   "runtime_authorities": {
     "faction_relations": "FactionManager",
@@ -55,7 +56,8 @@
     "canonical_ids_written_to_new_saves": true,
     "legacy_ids_must_not_create_duplicate_factions": true,
     "missions_may_temporarily_emit_legacy_ids": true,
-    "global_text_replacement_for_aleluia_forbidden": true
+    "global_text_replacement_for_aleluia_forbidden": true,
+    "canonical_display_name": "Os Aleluiados"
   },
   "forbidden": [
     "new_faction_autoload",
