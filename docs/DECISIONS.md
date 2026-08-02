@@ -1,7 +1,7 @@
 # Decisões Arquiteturais e Canônicas
 
 **Status:** CANONICAL  
-**Atualizado:** 2026-08-01  
+**Atualizado:** 2026-08-02  
 **Escopo:** integração v4 incremental sobre a `main` estável.
 
 Este registro documenta decisões vinculantes para agentes, revisores e contribuições. Em conflito, prevalecem os contratos executáveis em `data/production/`, seguidos deste documento e das demais fontes conforme a hierarquia definida em `AGENTS.md`.
@@ -64,16 +64,16 @@ O vertical slice ouro Ruan × Davi tem precedência sobre expansão massiva de m
 
 ## D10 — Nome canônico da facção ALE
 
-O nome de exibição aprovado é exatamente **Os Aleluiado**.
+O nome de exibição aprovado é exatamente **Os Aleluiados**.
 
-- ID canônico futuro: `ALE`.
+- ID canônico: `ALE`.
 - ID legado preservado: `os_aleluia`.
-- O ID legado deve funcionar como alias de migração, nunca como quarta facção.
+- O ID legado funciona como alias de migração, nunca como quarta facção.
 - Alterações são restritas a `name`, `display_name` e lore inequivocamente referente à facção ficcional.
 - A palavra “aleluia” em contexto religioso real não deve ser alterada automaticamente.
 - Ocorrências ambíguas permanecem intactas e devem ser registradas para revisão humana.
 
-Esta decisão substitui, para o nome de exibição, a forma plural “Os Aleluiados” encontrada na branch-fonte do PR #32.
+Esta decisão substitui as formas anteriores “Os Aleluia” e “Os Aleluiado” como nome de exibição da facção ficcional, sem alterar o ID `ALE`, o alias `os_aleluia`, relações, territórios, flags ou save v5.
 
 ## D11 — Integração v4
 
@@ -90,3 +90,33 @@ A ordem oficial de port é:
 7. terreno e acessibilidade.
 
 Cada lote deve partir da `main` mais recente, ter escopo vertical pequeno, rollback claro e checks verdes antes do próximo.
+
+## D14 — Mundo jogável: Baixo Sul da Bahia
+
+O jogo ocorre exclusivamente no **Baixo Sul da Bahia**. O mapa canônico está em `data/world/baixo_sul_map_v2.json`.
+
+- Ituberá é o hub principal.
+- Município e arena são níveis distintos: o município é nó de viagem; arena e ponto de interesse são subnós.
+- A Ponte do Saicí, a Praia de Pratigi, a Cachoeira da Pancada Grande, o Terreiro, o Dique e o Manguezal Profundo pertencem ao núcleo jogável de Ituberá.
+- Zambiapunga é evento cultural situado em Nilo Peçanha, nunca município independente.
+- Valença recebe o grande palco oficial da Copa do Baixo Sul.
+- Camamu recebe o eixo portuário e o Ferro Velho do Cais.
+- Igrapiúna recebe o treino avançado; Cairu, a travessia insular; Wenceslau Guimarães, o clímax de mata.
+- Salvador, São Paulo e Itacaré não são nós jogáveis. Podem existir apenas como referência histórica, borda de mapa ou conteúdo arquivado.
+- Nenhum asset, missão, arena ou rota nova pode promover local externo ao território jogável sem nova decisão canônica e migração coordenada.
+
+As quinze arenas canônicas e seus municípios estão congelados no contrato de mapa. O runtime antigo pode permanecer temporariamente como legado durante a migração, mas não orienta produção nova.
+
+## D15 — Vertical slice ouro Ruan × Davi
+
+O contrato `data/production/vertical_slice_gold_v1.json` define o primeiro pacote de qualidade representativa do jogo.
+
+- Ruan “Macacão” Silva enfrenta Davi Relâmpago na Arena do Dique de Ituberá.
+- Terreiro da Luta é o hub de entrada e retorno.
+- Gi e No-Gi são obrigatórios como rulesets reais, não troca cosmética.
+- O HUD fixo usa Gás, Controle, Pegada e Fluxo; Vida, Guarda, Foco e Moral são contextuais.
+- O deck equipa cinco cartas ativas, três fundamentos passivos e apresenta mão contextual de três.
+- Oito técnicas pareadas são congeladas para o lote: `grip_de_ferro`, `baiana`, `sprawl`, `puxada_guarda`, `corte_joelho`, `montada_pesada`, `saida_montada` e `mata_leao`.
+- Toda técnica pareada exige atacante, defensor, pivô compartilhado, contato, `sync_map`, metadata, preview e QA biomecânico humano.
+- `instant_finish` permanece falso e o modificador de clash permanece limitado a `[-0.30, +0.35]`.
+- O vertical slice só pode ser declarado concluído após integração real, gates automatizados e teste Android ARM64 físico com pelo menos 45 FPS sustentados.
