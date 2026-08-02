@@ -1,8 +1,8 @@
 {
-  "schema_version": "4.1.0",
+  "schema_version": "4.1.1",
   "contract_id": "cria_do_tatame_canon_v4_1",
   "status": "canonical_contract",
-  "effective_date": "2026-08-01",
+  "effective_date": "2026-08-02",
   "source_repository": "ringuemkt-rgb/cria-do-tatame",
   "integration_source_pr": 32,
   "integration_policy": {
@@ -31,7 +31,7 @@
     },
     {
       "id": "ALE",
-      "display_name": "Os Aleluiado",
+      "display_name": "Os Aleluiados",
       "legacy_ids": ["os_aleluia"]
     }
   ],
@@ -39,7 +39,8 @@
     "stable_ids_must_not_be_renamed_in_place": true,
     "aliases_are_migration_only": true,
     "legacy_catalog_may_temporarily_contain_non_faction_domains": true,
-    "runtime_three_faction_migration_deferred_to_v4_2": true
+    "runtime_three_faction_migration_deferred_to_v4_2": false,
+    "runtime_three_faction_migration_completed_in_v4_2": true
   },
   "non_faction_domains": {
     "institutions": ["circuito_oficial", "cria_live"],
@@ -47,12 +48,27 @@
     "retired_lore": ["dragao_vermelho", "fantasma"]
   },
   "d10": {
-    "canonical_display_name": "Os Aleluiado",
+    "canonical_display_name": "Os Aleluiados",
     "canonical_future_id": "ALE",
     "preserved_legacy_id": "os_aleluia",
     "religious_context_must_not_be_rewritten": true,
     "ambiguous_occurrences_require_human_review": true,
-    "supersedes_source_branch_display": "Os Aleluiados"
+    "supersedes_previous_displays": ["Os Aleluia", "Os Aleluiado"]
+  },
+  "d14": {
+    "playable_region": "Baixo Sul da Bahia",
+    "hub_municipality_id": "itubera",
+    "map_contract": "data/world/baixo_sul_map_v2.json",
+    "playable_outside_region_forbidden": true,
+    "non_playable_boundaries": ["salvador", "sao_paulo", "itacare"]
+  },
+  "d15": {
+    "vertical_slice_contract": "data/production/vertical_slice_gold_v1.json",
+    "player_character_id": "ruan_macacao",
+    "opponent_character_id": "davi_relampago",
+    "hub_arena_id": "terreiro_luta",
+    "combat_arena_id": "dique_itubera",
+    "android_physical_test_required": true
   },
   "forbidden_in_this_batch": [
     "project_godot_changes",
@@ -60,7 +76,7 @@
     "combat_runtime_changes",
     "deck_runtime_changes",
     "audio_runtime_changes",
-    "save_migration",
+    "save_schema_changes",
     "new_runtime_faction_manager",
     "new_characters_or_story_acts",
     "binary_asset_changes"

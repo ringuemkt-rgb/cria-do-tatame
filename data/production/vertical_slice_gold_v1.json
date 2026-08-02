@@ -1,0 +1,162 @@
+{
+  "schema_version": "1.0.0",
+  "contract_id": "cria_do_tatame_vertical_slice_gold_v1",
+  "status": "canonical_specification",
+  "effective_date": "2026-08-02",
+  "priority": "P0",
+  "player": {
+    "character_id": "ruan_macacao",
+    "display_name": "Ruan Macacão Silva",
+    "screen_side": "left",
+    "required_rulesets": ["GI", "NO_GI"]
+  },
+  "opponent": {
+    "character_id": "davi_relampago",
+    "display_name": "Davi Relâmpago",
+    "screen_side": "right",
+    "required_rulesets": ["GI", "NO_GI"]
+  },
+  "world": {
+    "hub_arena_id": "terreiro_luta",
+    "combat_arena_id": "dique_itubera",
+    "map_contract": "data/world/baixo_sul_map_v2.json"
+  },
+  "mandatory_flow": [
+    "main_menu",
+    "new_game_or_load",
+    "terreiro_luta",
+    "dialogue_or_training",
+    "deck_setup",
+    "travel_to_dique_itubera",
+    "ruan_vs_davi_combat",
+    "result",
+    "cria_live",
+    "career_week_advance",
+    "save",
+    "reload",
+    "return_to_terreiro"
+  ],
+  "combat": {
+    "domain": "Brazilian Jiu-Jitsu positional grappling",
+    "generic_striking_forbidden": true,
+    "instant_finish": false,
+    "clash_modifier": {"min": -0.30, "max": 0.35},
+    "fixed_hud_resources": ["gas", "control", "grip", "flow"],
+    "contextual_hud_resources": ["health", "guard", "focus", "moral"],
+    "required_positions": [
+      "PLAYER_STANDING_NEUTRAL",
+      "PLAYER_TOP_CLINCH",
+      "PLAYER_TOP_GUARD",
+      "PLAYER_BOTTOM_GUARD",
+      "PLAYER_TOP_SIDE",
+      "PLAYER_TOP_MOUNT",
+      "PLAYER_BOTTOM_MOUNT",
+      "PLAYER_BACK_ATTACK",
+      "PLAYER_SUBMISSION_ATTACK"
+    ],
+    "paired_technique_ids": [
+      "grip_de_ferro",
+      "baiana",
+      "sprawl",
+      "puxada_guarda",
+      "corte_joelho",
+      "montada_pesada",
+      "saida_montada",
+      "mata_leao"
+    ],
+    "submission_phases": ["setup", "lock", "technical_pressure", "tap_or_escape", "referee_or_recovery"],
+    "defense_timing_states": ["cedo", "perfeito", "tarde"],
+    "human_biomechanical_review_required": true
+  },
+  "deck": {
+    "active_cards_equipped": 5,
+    "passive_fundamentals": 3,
+    "contextual_hand_size": 3,
+    "position_and_ruleset_filter_required": true,
+    "incompatible_cards_remain_in_collection": true,
+    "dead_hand_forbidden": true
+  },
+  "visual": {
+    "style": "HD Painted Pixel Art 2D with 2.5D layered presentation, Regional Premium",
+    "reference_viewport": [1280, 720],
+    "integer_scale_required": true,
+    "nearest_filter_required": true,
+    "pixel_snap_required": true,
+    "safe_area_percent": 7,
+    "minimum_touch_target_dp": 48,
+    "final_assets_required": [
+      "ruan_gi_runtime_pack",
+      "ruan_no_gi_runtime_pack",
+      "davi_gi_runtime_pack",
+      "davi_no_gi_runtime_pack",
+      "dique_itubera_five_layer_arena",
+      "mobile_reduced_combat_hud",
+      "eight_paired_technique_packs"
+    ]
+  },
+  "paired_animation_contract": {
+    "same_frame_count_for_both_fighters": true,
+    "shared_pivot_required": true,
+    "contact_marker_required": true,
+    "sync_map_required": true,
+    "attacker_and_defender_preview_required": true,
+    "required_files": [
+      "attacker_spritesheet.png",
+      "defender_spritesheet.png",
+      "sync_map.json",
+      "hitbox.json",
+      "metadata.json",
+      "preview.gif",
+      "qa_report.md"
+    ]
+  },
+  "audio": {
+    "original_or_licensed_only": true,
+    "master_wav_and_runtime_ogg_required": true,
+    "loudness_report_required": true,
+    "minimum_event_groups": [
+      "cloth_and_grip",
+      "tatame_or_wood_contact",
+      "fighter_breathing",
+      "crowd_dique",
+      "ui_and_cards",
+      "tap_and_referee",
+      "terreiro_ambience",
+      "dique_ambience",
+      "music_hub",
+      "music_combat"
+    ]
+  },
+  "accessibility": {
+    "reduce_flash": true,
+    "reduce_shake": true,
+    "focus_mode": true,
+    "no_timer_mode": true,
+    "narration_mode": true,
+    "large_touch_targets": true,
+    "left_handed_layout": true,
+    "settings_persisted": true
+  },
+  "device_gate": {
+    "android_arm64_physical_test_required": true,
+    "minimum_sustained_fps": 45,
+    "required_evidence": [
+      "device_model",
+      "android_version",
+      "complete_touch_flow",
+      "safe_area_screenshots",
+      "fps_profile",
+      "memory_profile",
+      "temperature_notes",
+      "battery_notes",
+      "save_after_restart",
+      "known_bugs"
+    ]
+  },
+  "completion_claim": {
+    "allowed_only_after_all_required_assets_integrated": true,
+    "allowed_only_after_automated_gates_pass": true,
+    "allowed_only_after_physical_device_gate_pass": true,
+    "concept_art_does_not_count_as_completion": true
+  }
+}

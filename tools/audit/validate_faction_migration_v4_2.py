@@ -13,6 +13,7 @@ ALIASES = {
     "la_ele_mil_vezes": "LEM",
     "nos_tem_um_molho": "NTM",
 }
+EXPECTED_ALE_DISPLAY = "Os Aleluiados"
 NON_FACTION = {
     "terreiro",
     "raiz",
@@ -41,10 +42,11 @@ def validate_contract() -> None:
     assert contract["save_migration"]["previous_version"] == 4
     assert contract["save_migration"]["current_version"] == 5
     assert contract["save_migration"]["legacy_archive_required"] is True
+    assert contract["save_migration"]["display_name_change_does_not_increment_save_version"] is True
     assert contract["next_batch"]["tracking_issue"] == 44
     factions = contract["active_factions"]
     assert set(factions) == ACTIVE_SET
-    assert factions["ALE"]["display_name"] == "Os Aleluiado"
+    assert factions["ALE"]["display_name"] == EXPECTED_ALE_DISPLAY
     flattened_aliases = {
         legacy: canonical
         for canonical, data in factions.items()
@@ -64,7 +66,7 @@ def validate_runtime_sources() -> None:
         assert f'"{canonical}"' in mapper
     for legacy, canonical in ALIASES.items():
         assert f'"{legacy}": "{canonical}"' in mapper
-    assert '"ALE": "Os Aleluiado"' in mapper
+    assert f'"ALE": "{EXPECTED_ALE_DISPLAY}"' in mapper
     assert "static func migrate_director_state" in mapper
     assert 'const ACTIVE_FACTIONS := ["ALE", "LEM", "NTM"]' in faction_manager
     assert "legacy_archive" in faction_manager
@@ -87,7 +89,8 @@ def validate_director_data() -> None:
     assert director["active_faction_ids"] == ACTIVE
     assert director["legacy_aliases"] == ALIASES
     assert set(director["factions"]) == ACTIVE_SET
-    assert director["factions"]["ALE"]["name"] == "Os Aleluiado"
+    assert director["factions"]["ALE"]["name"] == EXPECTED_ALE_DISPLAY
+    assert director["factions"]["ALE"]["short_name"] == "Aleluiados"
     for faction_id, data in director["factions"].items():
         assert data["id"] == faction_id
         assert ALIASES[data["legacy_id"]] == faction_id
@@ -122,7 +125,7 @@ def validate_catalog_classification() -> None:
     assert {item["canonical_id"] for item in active} == ACTIVE_SET
     assert {item["id"] for item in active} == set(ALIASES)
     ale = next(item for item in active if item["canonical_id"] == "ALE")
-    assert ale["name"] == "Os Aleluiado"
+    assert ale["name"] == EXPECTED_ALE_DISPLAY
     classified_non_factions = {
         item["id"]
         for item in catalog["factions"]
@@ -142,6 +145,7 @@ def validate_tests_and_scope() -> None:
     assert "initial_factions.size() == 3" in smoke
     assert "legacy_archive" in smoke
     assert "migrate_director_state" in smoke
+    assert EXPECTED_ALE_DISPLAY in smoke
     assert "validate:factions-v4" in package["scripts"]
     assert "validate:factions-v4" in package["scripts"]["quality"]
 
@@ -173,7 +177,7 @@ def main() -> int:
         for failure in failures:
             print(f" - {failure}")
         return 1
-    print("[FactionMigrationV4.2] OK - 3 facções, aliases e save v5 validados")
+    print("[FactionMigrationV4.2] OK - 3 facções, aliases, display e save v5 validados")
     return 0
 
 

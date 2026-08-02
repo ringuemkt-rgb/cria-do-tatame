@@ -1,0 +1,216 @@
+{
+  "schema_version": "2.0.0",
+  "contract_id": "cria_do_tatame_baixo_sul_map_v2",
+  "status": "canonical_specification",
+  "effective_date": "2026-08-02",
+  "world_scope": {
+    "playable_region": "Baixo Sul da Bahia",
+    "hub_municipality_id": "itubera",
+    "playable_outside_region_forbidden": true,
+    "city_and_arena_are_distinct_levels": true,
+    "hierarchy": ["municipality", "arena_or_point_of_interest"]
+  },
+  "municipalities": [
+    {
+      "id": "itubera",
+      "name": "Ituberá",
+      "role": "hub_principal",
+      "playable": true,
+      "arena_ids": [
+        "terreiro_luta",
+        "dique_itubera",
+        "praia_pratigi",
+        "cachoeira_pancada",
+        "ponte_saici",
+        "manguezal_profundo"
+      ]
+    },
+    {
+      "id": "igrapiuna",
+      "name": "Igrapiúna",
+      "role": "treino_avancado_e_travessia",
+      "playable": true,
+      "arena_ids": ["dojo_igrapiuna"]
+    },
+    {
+      "id": "camamu",
+      "name": "Camamu",
+      "role": "porto_historico_e_cais",
+      "playable": true,
+      "arena_ids": ["ferro_velho_cais", "casario_camamu"]
+    },
+    {
+      "id": "nilo_pecanha",
+      "name": "Nilo Peçanha",
+      "role": "rio_e_evento_cultural",
+      "playable": true,
+      "arena_ids": ["zambiapunga", "beira_rio_nilo"]
+    },
+    {
+      "id": "valenca",
+      "name": "Valença",
+      "role": "polo_oficial_do_baixo_sul",
+      "playable": true,
+      "arena_ids": ["ginasio_valenca", "porto_valenca"]
+    },
+    {
+      "id": "cairu",
+      "name": "Cairu",
+      "role": "travessia_insular",
+      "playable": true,
+      "arena_ids": ["praia_gamboa"]
+    },
+    {
+      "id": "wenceslau_guimaraes",
+      "name": "Wenceslau Guimarães",
+      "role": "interior_e_climax_de_mata",
+      "playable": true,
+      "arena_ids": ["clareira_mata"]
+    }
+  ],
+  "arenas": [
+    {
+      "id": "terreiro_luta",
+      "name": "Terreiro da Luta",
+      "municipality_id": "itubera",
+      "type": "community_hub",
+      "mechanical_effect": null,
+      "vertical_slice": true
+    },
+    {
+      "id": "dique_itubera",
+      "name": "Arena do Dique",
+      "municipality_id": "itubera",
+      "type": "official_hybrid",
+      "mechanical_effect": {"resource": "gas", "modifier": 0.10},
+      "vertical_slice": true
+    },
+    {
+      "id": "praia_pratigi",
+      "name": "Praia de Pratigi",
+      "municipality_id": "itubera",
+      "type": "hybrid_sand",
+      "mechanical_effect": {"resource": "gas", "modifier": -0.10},
+      "vertical_slice": false
+    },
+    {
+      "id": "cachoeira_pancada",
+      "name": "Cachoeira da Pancada Grande",
+      "municipality_id": "itubera",
+      "type": "respect_nature",
+      "mechanical_effect": {"resource": "focus", "modifier": -0.10},
+      "vertical_slice": false
+    },
+    {
+      "id": "ponte_saici",
+      "name": "Ponte do Saicí",
+      "municipality_id": "itubera",
+      "type": "clandestine_high_risk",
+      "mechanical_effect": {"resource": "retreat_space", "modifier": -1.0},
+      "vertical_slice": false
+    },
+    {
+      "id": "manguezal_profundo",
+      "name": "Manguezal Profundo",
+      "municipality_id": "itubera",
+      "type": "clandestine_high_risk",
+      "mechanical_effect": {"resource": "grip", "modifier": -0.15},
+      "vertical_slice": false
+    },
+    {
+      "id": "zambiapunga",
+      "name": "Zambiapunga",
+      "municipality_id": "nilo_pecanha",
+      "type": "event_ritual",
+      "mechanical_effect": {"resource": "timing", "modifier": 0.10},
+      "vertical_slice": false,
+      "cultural_review_required": true
+    },
+    {
+      "id": "beira_rio_nilo",
+      "name": "Beira-Rio de Nilo Peçanha",
+      "municipality_id": "nilo_pecanha",
+      "type": "hybrid_river",
+      "mechanical_effect": {"resource": "retreat_space", "modifier": -0.25},
+      "vertical_slice": false
+    },
+    {
+      "id": "ferro_velho_cais",
+      "name": "Ferro Velho do Cais",
+      "municipality_id": "camamu",
+      "type": "clandestine_port",
+      "mechanical_effect": {"resource": "grip", "modifier": -0.10},
+      "vertical_slice": false
+    },
+    {
+      "id": "casario_camamu",
+      "name": "Casario de Camamu",
+      "municipality_id": "camamu",
+      "type": "official_hybrid",
+      "mechanical_effect": {"resource": "control", "modifier": 0.05},
+      "vertical_slice": false
+    },
+    {
+      "id": "ginasio_valenca",
+      "name": "Ginásio de Valença — Copa do Baixo Sul",
+      "municipality_id": "valenca",
+      "type": "official_tournament",
+      "mechanical_effect": {"resource": "control", "modifier": 0.05},
+      "vertical_slice": false
+    },
+    {
+      "id": "porto_valenca",
+      "name": "Porto de Valença",
+      "municipality_id": "valenca",
+      "type": "hybrid_informal",
+      "mechanical_effect": {"resource": "focus", "modifier": -0.05},
+      "vertical_slice": false
+    },
+    {
+      "id": "praia_gamboa",
+      "name": "Praia de Gamboa",
+      "municipality_id": "cairu",
+      "type": "hybrid_island",
+      "mechanical_effect": {"resource": "external_support", "modifier": -1.0},
+      "vertical_slice": false
+    },
+    {
+      "id": "dojo_igrapiuna",
+      "name": "Dojo de Igrapiúna",
+      "municipality_id": "igrapiuna",
+      "type": "advanced_training",
+      "mechanical_effect": {"resource": "reading", "modifier": 0.10},
+      "vertical_slice": false
+    },
+    {
+      "id": "clareira_mata",
+      "name": "Clareira de Mata",
+      "municipality_id": "wenceslau_guimaraes",
+      "type": "clandestine_climax",
+      "mechanical_effect": {"resource": "grip", "modifier": -0.10},
+      "vertical_slice": false
+    }
+  ],
+  "routes": [
+    {"from": "itubera", "to": "igrapiuna", "type": "land", "status": "available"},
+    {"from": "itubera", "to": "camamu", "type": "river_or_land", "status": "available"},
+    {"from": "itubera", "to": "nilo_pecanha", "type": "land", "status": "available"},
+    {"from": "itubera", "to": "valenca", "type": "land", "status": "available"},
+    {"from": "camamu", "to": "cairu", "type": "maritime", "status": "unlockable"},
+    {"from": "valenca", "to": "cairu", "type": "maritime", "status": "unlockable"},
+    {"from": "nilo_pecanha", "to": "wenceslau_guimaraes", "type": "land_interior", "status": "unlockable"}
+  ],
+  "non_playable_boundaries": [
+    {"id": "salvador", "display_name": "Salvador", "reason": "fora_do_escopo_jogavel"},
+    {"id": "sao_paulo", "display_name": "São Paulo", "reason": "fora_do_escopo_jogavel"},
+    {"id": "itacare", "display_name": "Itacaré", "reason": "fora_do_baixo_sul_e_apenas_horizonte"}
+  ],
+  "technical_invariants": {
+    "instant_finish": false,
+    "clash_modifier_min": -0.30,
+    "clash_modifier_max": 0.35,
+    "runtime_ai_generation_forbidden": true,
+    "real_factions_forbidden": true,
+    "real_brands_and_leagues_forbidden": true
+  }
+}

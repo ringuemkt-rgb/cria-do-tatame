@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Validate the V4.1 canon/contract batch without migrating runtime systems."""
+"""Validate the V4.1 canon contract and its approved P0 amendments."""
 from __future__ import annotations
 
 import json
@@ -14,9 +14,11 @@ DECISIONS_PATH = ROOT / "docs" / "DECISIONS.md"
 INDEX_PATH = ROOT / "docs" / "INDEX.md"
 AGENTS_PATH = ROOT / "AGENTS.md"
 PROJECT_PATH = ROOT / "project.godot"
+WORLD_MAP_PATH = ROOT / "data" / "world" / "baixo_sul_map_v2.json"
+VERTICAL_SLICE_PATH = ROOT / "data" / "production" / "vertical_slice_gold_v1.json"
 
 EXPECTED_IDS = ["LEM", "NTM", "ALE"]
-EXPECTED_DISPLAY = "Os Aleluiado"
+EXPECTED_DISPLAY = "Os Aleluiados"
 LEGACY_ID = "os_aleluia"
 
 
@@ -72,7 +74,23 @@ def validate_contract() -> None:
 
     legacy_policy = contract.get("legacy_domain_policy", {})
     assert legacy_policy.get("stable_ids_must_not_be_renamed_in_place") is True
-    assert legacy_policy.get("runtime_three_faction_migration_deferred_to_v4_2") is True
+    assert legacy_policy.get("runtime_three_faction_migration_completed_in_v4_2") is True
+
+    d14 = contract.get("d14", {})
+    assert d14.get("playable_region") == "Baixo Sul da Bahia"
+    assert d14.get("hub_municipality_id") == "itubera"
+    assert d14.get("map_contract") == "data/world/baixo_sul_map_v2.json"
+    assert d14.get("playable_outside_region_forbidden") is True
+
+    d15 = contract.get("d15", {})
+    assert d15.get("vertical_slice_contract") == "data/production/vertical_slice_gold_v1.json"
+    assert d15.get("player_character_id") == "ruan_macacao"
+    assert d15.get("opponent_character_id") == "davi_relampago"
+    assert d15.get("combat_arena_id") == "dique_itubera"
+    assert d15.get("android_physical_test_required") is True
+
+    assert WORLD_MAP_PATH.is_file(), "contrato de mapa do Baixo Sul ausente"
+    assert VERTICAL_SLICE_PATH.is_file(), "contrato do vertical slice ausente"
 
 
 def validate_legacy_catalog_display_only() -> None:
@@ -82,15 +100,15 @@ def validate_legacy_catalog_display_only() -> None:
     entry = entries[0]
     assert entry.get("id") == LEGACY_ID, "D10 nao pode renomear o ID legado"
     assert entry.get("name") == EXPECTED_DISPLAY, "display D10 incorreto"
-
-    serialized = json.dumps(data, ensure_ascii=False)
-    assert '"id": "ALE"' not in serialized, "V4.1 nao deve migrar o catalogo legado para ALE"
+    assert entry.get("canonical_id") == "ALE", "catalogo deve projetar o alias legado para ALE"
 
 
 def validate_document_authority() -> None:
     decisions = read_text(DECISIONS_PATH)
     for decision in range(1, 12):
         assert f"## D{decision} —" in decisions, f"D{decision} ausente em docs/DECISIONS.md"
+    assert "## D14 — Mundo jogável: Baixo Sul da Bahia" in decisions
+    assert "## D15 — Vertical slice ouro Ruan × Davi" in decisions
     assert EXPECTED_DISPLAY in decisions
     assert "PR #32" in decisions
     assert "não deve ser mesclado monoliticamente" in decisions
@@ -99,6 +117,8 @@ def validate_document_authority() -> None:
     agents = read_text(AGENTS_PATH)
     assert "DECISIONS.md" in index, "docs/INDEX.md nao referencia DECISIONS.md"
     assert "canon_contract_v4_1.json" in index, "docs/INDEX.md nao referencia o contrato v4.1"
+    assert "baixo_sul_map_v2.json" in index, "docs/INDEX.md nao referencia o mapa v2"
+    assert "vertical_slice_gold_v1.json" in index, "docs/INDEX.md nao referencia o vertical slice"
     assert "DECISIONS.md" in agents, "AGENTS.md nao referencia DECISIONS.md"
 
 
@@ -108,7 +128,7 @@ def validate_runtime_untouched_contract() -> None:
     assert 'CombatManager="*res://src/autoloads/CombatManager.gd"' in project
     assert 'DeckManager="*res://src/autoloads/DeckManager.gd"' in project
     assert 'AudioManager="*res://src/autoloads/AudioManager.gd"' in project
-    assert "TransitionManager=" not in project, "V4.1 nao deve adicionar TransitionManager como autoload"
+    assert "TransitionManager=" not in project, "este lote nao deve adicionar TransitionManager como autoload"
 
 
 def main() -> int:
@@ -132,10 +152,11 @@ def main() -> int:
         return 1
 
     print("Canon contract V4.1 validation passed.")
-    print("- future active faction IDs: LEM, NTM, ALE")
+    print("- active faction IDs: LEM, NTM, ALE")
     print(f"- ALE display: {EXPECTED_DISPLAY}")
     print(f"- preserved legacy ID: {LEGACY_ID}")
-    print("- runtime/autoload migration: deferred to V4.2+")
+    print("- playable region: Baixo Sul da Bahia")
+    print("- gold vertical slice: Ruan versus Davi at Dique de Itubera")
     return 0
 
 

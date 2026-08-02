@@ -12,9 +12,11 @@ Antes de criar, editar, apagar, mover ou integrar qualquer arquivo:
 4. leia `docs/ROADMAP.md`;
 5. leia `docs/INDEX.md` e a fonte canônica da área;
 6. consulte `data/production/canon_contract_v4_1.json`;
-7. consulte `data/production/supreme_build_contract_v01.json`;
-8. procure implementação, issue ou PR equivalente;
-9. defina um lote vertical pequeno, testável e reversível.
+7. consulte `data/world/baixo_sul_map_v2.json` para qualquer tarefa de mapa, arena, missão ou worldbuilding;
+8. consulte `data/production/vertical_slice_gold_v1.json` para combate, HUD, personagens, animações, áudio ou Android;
+9. consulte `data/production/supreme_build_contract_v01.json`;
+10. procure implementação, issue ou PR equivalente;
+11. defina um lote vertical pequeno, testável e reversível.
 
 Não comece implementando apenas porque a solicitação parece clara. Primeiro confirme a posição da tarefa na arquitetura e no roadmap.
 
@@ -49,17 +51,23 @@ O repositório não é galeria de prompts, depósito de concept art ou cemitéri
 - poder: Silverback Grip;
 - frase eixo: Ser forte é ser gentil;
 - facções ativas do cânone v4: LEM, NTM e ALE;
-- nome de exibição de ALE: **Os Aleluiado**;
-- ID legado `os_aleluia` é alias de migração e não deve ser renomeado em lugar.
+- nome de exibição de ALE: **Os Aleluiados**;
+- ID legado `os_aleluia` é alias de migração e não deve ser renomeado em lugar;
+- mundo jogável: exclusivamente Baixo Sul da Bahia;
+- hub municipal: Ituberá;
+- mapa canônico: `data/world/baixo_sul_map_v2.json`;
+- vertical slice ouro: Ruan × Davi na Arena do Dique de Ituberá;
+- Terreiro da Luta é o hub do vertical slice;
+- Salvador, São Paulo e Itacaré não são nós jogáveis.
 
-Caio Ravel, Ruan “Cria” e uma quarta facção ativa são bloqueados em shipping.
+Caio Ravel, Ruan “Cria”, uma quarta facção ativa e locais jogáveis fora do Baixo Sul são bloqueados em shipping.
 
 ## Hierarquia de autoridade
 
 Quando houver conflito:
 
 1. contratos executáveis em `data/production/` e contratos canônicos mais recentes;
-2. `docs/DECISIONS.md`, `docs/canon/` e decisões aprovadas;
+2. `data/world/baixo_sul_map_v2.json`, `docs/DECISIONS.md`, `docs/canon/` e decisões aprovadas;
 3. runtime, cenas e dados realmente consumidos;
 4. `docs/REPOSITORY_GOVERNANCE.md` e este arquivo;
 5. documentação técnica ativa;
@@ -94,6 +102,19 @@ Main Menu
 → retorno ao Terreiro
 ```
 
+## Contrato mínimo do vertical slice
+
+- Ruan à esquerda e Davi à direita;
+- versões Gi e No-Gi tecnicamente distintas;
+- Arena do Dique de Ituberá;
+- HUD fixo com Gás, Controle, Pegada e Fluxo;
+- cinco cartas ativas, três fundamentos passivos e mão contextual de três;
+- oito técnicas pareadas definidas em `vertical_slice_gold_v1.json`;
+- `instant_finish = false`;
+- clash limitado a `[-0.30, +0.35]`;
+- finalização por setup, lock, pressão técnica, tap/escape e intervenção;
+- teste Android físico e 45 FPS sustentados antes de declarar conclusão.
+
 ## Processo de trabalho
 
 1. **Inventário:** arquivos, sistemas, PRs, testes e dependências.
@@ -120,6 +141,7 @@ PR empilhado deve declarar dependência, ordem de merge e base ativa. Se a base 
 - Concept art, mockup, geração bruta e fila de produção são candidatos.
 - Asset final exige origem/licença, metadata, preview, QA, aprovação humana e integração Godot.
 - Técnica pareada exige atacante, defensor, pivô compartilhado, timing e `sync_map`.
+- Gere a faixa inteira a partir de um frame-semente aprovado; geração quadro a quadro independente é proibida para shipping por risco de deriva.
 - Não copiar pessoa, marca, frame, aula, logo ou áudio de terceiro sem licença.
 - Não promover automaticamente saída de IA para caminhos de shipping.
 
