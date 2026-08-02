@@ -7,14 +7,16 @@ Este arquivo é a porta de entrada da documentação ativa. Antes de criar um do
 - [`../README.md`](../README.md) — visão do produto, instalação e comandos principais;
 - [`../AGENTS.md`](../AGENTS.md) — regras obrigatórias para agentes;
 - [`../CONTRIBUTING.md`](../CONTRIBUTING.md) — fluxo de contribuição;
-- [`DECISIONS.md`](DECISIONS.md) — decisões arquiteturais e canônicas D1–D11;
+- [`DECISIONS.md`](DECISIONS.md) — decisões arquiteturais e canônicas D1–D15;
 - [`REPOSITORY_GOVERNANCE.md`](REPOSITORY_GOVERNANCE.md) — fonte única, branches, PRs e gates;
 - [`ROADMAP.md`](ROADMAP.md) — sequência oficial de construção.
 
 ## Contratos executáveis
 
-- [`../data/production/canon_contract_v4_1.json`](../data/production/canon_contract_v4_1.json) — cânone v4.1, autoridades de runtime, facções e aliases;
-- [`../data/production/faction_migration_v4_2.json`](../data/production/faction_migration_v4_2.json) — três facções ativas, aliases e save v5;
+- [`../data/production/canon_contract_v4_1.json`](../data/production/canon_contract_v4_1.json) — cânone v4.1 e emendas D10, D14 e D15;
+- [`../data/production/faction_migration_v4_2.json`](../data/production/faction_migration_v4_2.json) — três facções ativas, aliases, display e save v5;
+- [`../data/world/baixo_sul_map_v2.json`](../data/world/baixo_sul_map_v2.json) — sete municípios, quinze arenas e limite geográfico jogável;
+- [`../data/production/vertical_slice_gold_v1.json`](../data/production/vertical_slice_gold_v1.json) — Ruan × Davi, HUD, deck, oito técnicas, assets e gate Android;
 - [`../data/production/supreme_build_contract_v01.json`](../data/production/supreme_build_contract_v01.json) — metas e release gates;
 - [`../data/production/release_gate_status_v01.json`](../data/production/release_gate_status_v01.json) — ledger único com evidências e pendências de release;
 - [`../data/visual/production_manifest_v02.json`](../data/visual/production_manifest_v02.json) — inventário audiovisual;
@@ -27,15 +29,24 @@ Este arquivo é a porta de entrada da documentação ativa. Antes de criar um do
 - `canon/` — personagens, facções, mundo e narrativa aprovados;
 - `gameplay/` — combate, progressão, regras e economia.
 
+## Mundo canônico
+
+- [`../data/world/baixo_sul_map_v2.json`](../data/world/baixo_sul_map_v2.json) — fonte única para municípios, arenas e rotas novas;
+- Ituberá é o hub principal;
+- Ponte do Saicí e Pratigi pertencem a Ituberá;
+- Zambiapunga pertence a Nilo Peçanha;
+- Salvador, São Paulo e Itacaré não são nós jogáveis.
+
 ## Migrações ativas
 
-- [`migrations/V4_2_FACTIONS_SAVE.md`](migrations/V4_2_FACTIONS_SAVE.md) — explicação simples da migração para `ALE`, `LEM`, `NTM` e save v5.
+- [`migrations/V4_2_FACTIONS_SAVE.md`](migrations/V4_2_FACTIONS_SAVE.md) — explicação da migração para `ALE`, `LEM`, `NTM` e save v5.
 
 ## Arte e produção
 
 - `art_bible/` — identidade visual e contratos de qualidade ativos;
 - `production/` — planos de lote, APK, animação, áudio e conteúdo;
 - [`production/APK_VISUAL_COMPLETION_PLAN_V09.md`](production/APK_VISUAL_COMPLETION_PLAN_V09.md) — gates de vertical slice e Android;
+- [`../data/production/vertical_slice_gold_v1.json`](../data/production/vertical_slice_gold_v1.json) — pacote de produção prioritário;
 - [`../data/visual/production_manifest_v02.json`](../data/visual/production_manifest_v02.json) — entregáveis mínimos por asset.
 
 ## Engenharia e QA
@@ -44,8 +55,9 @@ Este arquivo é a porta de entrada da documentação ativa. Antes de criar um do
 - `qa/` — auditorias e evidências;
 - [`qa/RUNTIME_AUDIT_V08.md`](qa/RUNTIME_AUDIT_V08.md) — auditoria do fluxo central;
 - [`../tools/audit/validate_repository_governance.py`](../tools/audit/validate_repository_governance.py) — gate de organização;
-- [`../tools/audit/validate_canon_contract_v4_1.py`](../tools/audit/validate_canon_contract_v4_1.py) — gate do cânone e da D10;
-- [`../tools/audit/validate_faction_migration_v4_2.py`](../tools/audit/validate_faction_migration_v4_2.py) — gate das três facções, aliases e save v5.
+- [`../tools/audit/validate_canon_contract_v4_1.py`](../tools/audit/validate_canon_contract_v4_1.py) — gate do cânone e das decisões P0;
+- [`../tools/audit/validate_faction_migration_v4_2.py`](../tools/audit/validate_faction_migration_v4_2.py) — gate das três facções, aliases e save v5;
+- [`../tools/audit/validate_p0_canon_baixo_sul.py`](../tools/audit/validate_p0_canon_baixo_sul.py) — gate de Os Aleluiados, mapa do Baixo Sul e vertical slice ouro.
 
 ## Status dos documentos
 
