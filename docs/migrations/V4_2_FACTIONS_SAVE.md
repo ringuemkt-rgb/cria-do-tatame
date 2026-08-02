@@ -1,7 +1,7 @@
 # Migração V4.2 — Facções e Save
 
 **Status:** ACTIVE  
-**Escopo:** três facções canônicas, aliases legados e save v5.
+**Escopo:** três facções canônicas, aliases legados, display aprovado e save v5.
 
 ## Objetivo
 
@@ -11,11 +11,13 @@ Migrar o runtime de sete organizações ativas para exatamente três facções c
 
 | ID canônico | Nome de exibição | ID legado aceito |
 |---|---|---|
-| `ALE` | Os Aleluiado | `os_aleluia` |
+| `ALE` | Os Aleluiados | `os_aleluia` |
 | `LEM` | Lá Ele Mil Vezes | `la_ele_mil_vezes` |
 | `NTM` | Nós Tem Um Molho | `nos_tem_um_molho` |
 
 Novos saves escrevem os IDs canônicos. Missões e dados antigos podem continuar emitindo IDs legados temporariamente; o mapper converte esses valores na borda do sistema.
+
+A alteração do nome de exibição de `ALE` não muda o ID canônico, não muda o alias e não incrementa a versão do save. Relações, heat, flags, territórios, operações e memória continuam associados a `ALE`.
 
 ## O que deixou de ser facção ativa
 
@@ -38,13 +40,14 @@ Ao carregar um save antigo:
 4. territórios antigos desses domínios passam a neutros, mantendo `legacy_owner`;
 5. conflitos e operações inválidos são arquivados;
 6. o save migrado é regravado atomicamente como versão 5;
-7. o backup continua disponível caso a promoção do arquivo falhe.
+7. o backup continua disponível caso a promoção do arquivo falhe;
+8. a apresentação de `ALE` é resolvida como **Os Aleluiados** sem modificar dados persistíveis.
 
 A migração é idempotente: carregar novamente um save já migrado não cria facções duplicadas.
 
 ## Arquivos principais
 
-- `src/factions/FactionIdentityV4.gd` — mapper e migração estrutural;
+- `src/factions/FactionIdentityV4.gd` — mapper, display e migração estrutural;
 - `src/autoloads/FactionManager.gd` — relações, heat, flags e aliases;
 - `src/autoloads/FactionDirectorManager.gd` — simulação política existente;
 - `src/autoloads/SaveManager.gd` — save v5 e persistência pós-migração;
