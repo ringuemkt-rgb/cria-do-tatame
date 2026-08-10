@@ -1,0 +1,64 @@
+{
+  "$schema": "biome_tileset_contract_v1",
+  "version": "1.0.0",
+  "art_direction": "pixel_art_2_5d_isometric_baixo_sul",
+  "master_tile_size": [128, 64],
+  "runtime_tile_size": [64, 32],
+  "projection": "isometric_2_to_1",
+  "required_format": "PNG_RGBA8",
+  "required_alpha": true,
+  "baked_checkerboard_forbidden": true,
+  "baked_arrows_or_labels_forbidden": true,
+  "runtime_import": {"filter": false, "mipmaps": false, "repeat": false, "compression": "lossless"},
+  "biome_order": [
+    "oceano",
+    "baia",
+    "estuario",
+    "mangue",
+    "mata_atlantica",
+    "cabruca",
+    "restinga",
+    "praia",
+    "vila_urbana",
+    "borda"
+  ],
+  "layers": ["base_solo", "water_overlay", "vegetacao", "props", "occlusion_foreground"],
+  "animation_contracts": {
+    "oceano": {"frames": 4, "fps": 5, "loop": true},
+    "baia": {"frames": 4, "fps": 6, "loop": true},
+    "estuario": {"frames": 4, "fps": 4, "loop": true},
+    "mangue": {"frames": 2, "fps": 2, "loop": true}
+  },
+  "quality_gates": {
+    "silhouette_readable_at_runtime_size": true,
+    "seamless_edges": true,
+    "consistent_light_direction": "upper_left",
+    "palette_limit_per_tile": 32,
+    "license_or_studio_provenance_required": true,
+    "android_texture_budget_kb_per_atlas": 2048
+  },
+  "reference_intake": [
+    {
+      "id": "user_biomes_sheet_2026_08_10",
+      "sha256": "3a809cfafd9d23e213afb98ca2981d57474de684bc4c4c0ba85f02d95f7a26ae",
+      "reported_extension": "png",
+      "detected_encoding": "JPEG_JFIF",
+      "size": [1536, 857],
+      "alpha": false,
+      "license_status": "pending_user_confirmation",
+      "shipping_status": "blocked_reference_only",
+      "blocking_reasons": ["no_alpha", "baked_checkerboard", "mixed_tile_dimensions", "baked_arrow", "unknown_license"]
+    },
+    {
+      "id": "user_water_sheet_2026_08_10",
+      "sha256": "101f281395efa74c92473ad79414e80dc371cc43e1148f8cfa293cf91fe35bf2",
+      "reported_extension": "png",
+      "detected_encoding": "JPEG_JFIF",
+      "size": [1536, 857],
+      "alpha": false,
+      "license_status": "pending_user_confirmation",
+      "shipping_status": "blocked_reference_only",
+      "blocking_reasons": ["no_alpha", "white_background", "mixed_tile_dimensions", "perspective_mismatch", "unknown_license"]
+    }
+  ]
+}

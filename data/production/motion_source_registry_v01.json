@@ -1,0 +1,115 @@
+{
+  "$schema": "motion_source_registry_v1",
+  "version": "1.0.0",
+  "verified_on": "2026-08-10",
+  "policy": {
+    "runtime_ai_required": false,
+    "runtime_network_required": false,
+    "human_bjj_review_required": true,
+    "performer_consent_required": true,
+    "source_video_rights_required": true,
+    "face_data_retention_allowed": false,
+    "commercial_release_requires_approved_status": true,
+    "generated_motion_is_reference_not_truth": true
+  },
+  "sources": [
+    {
+      "id": "own_capture",
+      "name": "Captura própria com atletas autorizados",
+      "type": "first_party_capture",
+      "license": "studio_owned_with_performer_release",
+      "status": "preferred",
+      "commercial_use": true,
+      "notes": "Fonte prioritária. Exige autorização de imagem/movimento e revisão técnica humana."
+    },
+    {
+      "id": "pose2sim",
+      "name": "Pose2Sim",
+      "type": "external_tool",
+      "url": "https://github.com/perfanalytics/pose2sim",
+      "license": "BSD-3-Clause",
+      "status": "approved_external_tool",
+      "commercial_use": true,
+      "vendor_into_game": false,
+      "notes": "Usar fora do APK para cinemática multi-câmera; exportar apenas dados próprios revisados."
+    },
+    {
+      "id": "freemocap",
+      "name": "FreeMoCap",
+      "type": "external_tool",
+      "url": "https://github.com/freemocap/freemocap",
+      "license": "AGPL-3.0",
+      "status": "approved_external_copyleft",
+      "commercial_use": true,
+      "vendor_into_game": false,
+      "notes": "Executar como ferramenta separada. Modificações/distribuição exigem conformidade AGPL; os vídeos e movimentos de entrada continuam exigindo direitos próprios."
+    },
+    {
+      "id": "grappling_pose_identification",
+      "name": "grappling-pose-identification",
+      "type": "research_classifier",
+      "url": "https://github.com/talhaahussain/grappling-pose-identification",
+      "license": "MIT",
+      "status": "evaluation_only",
+      "commercial_use": true,
+      "vendor_into_game": false,
+      "notes": "Projeto acadêmico pequeno em notebook. Pode auxiliar triagem, mas não aprova posição, anatomia ou timing do jogo."
+    },
+    {
+      "id": "gem_x",
+      "name": "NVIDIA GEM-X",
+      "type": "external_model",
+      "url": "https://huggingface.co/nvidia/GEM-X",
+      "license": "NVIDIA-Open-Model-License",
+      "code_license": "Apache-2.0",
+      "status": "conditional_legal_review",
+      "commercial_use": true,
+      "vendor_into_game": false,
+      "notes": "Processamento offline opcional. Fixar versão/checksum e revisar os termos NVIDIA antes de qualquer lote comercial."
+    },
+    {
+      "id": "spinepose",
+      "name": "SpinePose",
+      "type": "external_model",
+      "url": "https://huggingface.co/dfki-av/spinepose",
+      "license": "CC-BY-NC-4.0",
+      "status": "blocked_commercial",
+      "commercial_use": false,
+      "vendor_into_game": false,
+      "notes": "Somente pesquisa interna não comercial até obter licença separada."
+    },
+    {
+      "id": "kungfu_fiesta",
+      "name": "KungFu-Fiesta",
+      "type": "external_dataset",
+      "url": "https://huggingface.co/datasets/MingfuYAN/KungFu-Fiesta",
+      "license": "CC-BY-NC-4.0",
+      "status": "blocked_commercial",
+      "commercial_use": false,
+      "vendor_into_game": false,
+      "notes": "Dataset parcial de kung fu; não é BJJ e não pode alimentar arte comercial sob a licença publicada."
+    },
+    {
+      "id": "motionmillion",
+      "name": "MotionMillion",
+      "type": "external_dataset",
+      "url": "https://huggingface.co/datasets/InternRobotics/MotionMillion",
+      "license": "CC-BY-NC-SA-4.0",
+      "status": "blocked_commercial",
+      "commercial_use": false,
+      "vendor_into_game": false,
+      "notes": "Acesso controlado e licença não comercial; partes agregadas ainda herdam licenças próprias."
+    },
+    {
+      "id": "ai4animation",
+      "name": "AI4Animation",
+      "type": "research_framework",
+      "url": "https://github.com/sebastianstarke/AI4Animation",
+      "license": "research-education-only_and_CC-BY-NC-data",
+      "status": "blocked_commercial",
+      "commercial_use": false,
+      "vendor_into_game": false,
+      "notes": "Referência de pesquisa; o próprio projeto restringe uso comercial e redistribuição."
+    }
+  ]
+}
