@@ -110,7 +110,7 @@ func get_available_actions(actor_id: String) -> Array:
 		available.append(item)
 	return available
 
-func apply_action(actor_id: String, action_id: String) -> Dictionary:
+func apply_action(actor_id: String, action_id: String, effectiveness: float = 1.0) -> Dictionary:
 	if not active:
 		return _action_error(action_id, actor_id, "submission_exchange_inactive")
 	var role := _role_for_actor(actor_id)
@@ -122,13 +122,14 @@ func apply_action(actor_id: String, action_id: String) -> Dictionary:
 	var terminal_outcome := str(action.get("terminal_outcome", ""))
 	if terminal_outcome != "":
 		return _resolve(terminal_outcome, action_id, actor_id)
+	var bounded_effectiveness := clampf(effectiveness, 0.6, 1.0)
 	technical_control = clampf(
-		technical_control + float(action.get("control_delta", 0.0)),
+		technical_control + float(action.get("control_delta", 0.0)) * bounded_effectiveness,
 		0.0,
 		float(config.get("rules", {}).get("control_max", 100.0))
 	)
 	escape_progress = clampf(
-		escape_progress + float(action.get("escape_delta", 0.0)),
+		escape_progress + float(action.get("escape_delta", 0.0)) * bounded_effectiveness,
 		0.0,
 		float(config.get("rules", {}).get("escape_max", 100.0))
 	)
@@ -143,7 +144,7 @@ func apply_action(actor_id: String, action_id: String) -> Dictionary:
 	if turn_count >= int(rules.get("max_turns", 10)):
 		return _resolve("time_or_points", action_id, actor_id)
 	_emit_snapshot()
-	return _build_action_result(action, actor_id, false)
+	return _build_action_result(action, actor_id, false, bounded_effectiveness)
 
 func get_snapshot() -> Dictionary:
 	return {
@@ -253,7 +254,7 @@ func _resolve(resolved_outcome: String, action_id: String, actor_id: String) -> 
 	SignalBus.submission_resolved.emit(result.duplicate(true))
 	return result
 
-func _build_action_result(action: Dictionary, actor_id: String, terminal: bool) -> Dictionary:
+func _build_action_result(action: Dictionary, actor_id: String, terminal: bool, effectiveness: float = 1.0) -> Dictionary:
 	return {
 		"success": true,
 		"terminal": terminal,
@@ -267,6 +268,7 @@ func _build_action_result(action: Dictionary, actor_id: String, terminal: bool) 
 		"phase": phase,
 		"technical_control": technical_control,
 		"escape_progress": escape_progress,
+		"effectiveness": effectiveness,
 		"cost": action.get("cost", {}).duplicate(true)
 	}
 

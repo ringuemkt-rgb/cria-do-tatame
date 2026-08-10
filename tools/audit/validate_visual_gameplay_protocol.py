@@ -14,6 +14,9 @@ CANON_PATH = ROOT / "data" / "production" / "canon_contract_v4_1.json"
 SUPREME_PATH = ROOT / "data" / "production" / "supreme_build_contract_v01.json"
 MANIFEST_PATH = ROOT / "data" / "visual" / "production_manifest_v02.json"
 ARENA_ANIMATION_PATH = ROOT / "data" / "visual" / "arena_animation_flow_v01.json"
+BOM_PATH = ROOT / "data" / "production" / "visual_asset_bom_v01.json"
+BRIEFS_PATH = ROOT / "data" / "visual" / "vertical_slice_asset_briefs_v01.json"
+PROMPT_BUILDER_PATH = ROOT / "tools" / "visual" / "build_asset_prompt.py"
 THEME_PATH = ROOT / "src" / "ui" / "CriaVisualTheme.gd"
 TACTICAL_HUD_PATH = ROOT / "scenes" / "ui" / "CombatTacticalHUD.gd"
 COMBAT_SCENE_PATH = ROOT / "scenes" / "combat" / "CombatArenaBase.tscn"
@@ -47,6 +50,8 @@ def main() -> int:
     supreme = load_json(SUPREME_PATH)
     manifest = load_json(MANIFEST_PATH)
     arena_animation = load_json(ARENA_ANIMATION_PATH)
+    bom = load_json(BOM_PATH)
+    briefs = load_json(BRIEFS_PATH)
 
     require(protocol.get("$schema") == "visual_gameplay_protocol_v1", "invalid visual protocol schema")
     require(protocol.get("status") == "active_production_contract", "visual protocol is not active")
@@ -114,6 +119,33 @@ def main() -> int:
 
     image_steps = protocol.get("image_creation_protocol", {}).get("steps", [])
     require(len(image_steps) == 9 and image_steps[-1] == "reference_side_by_side_and_human_approval", "image workflow must end in visual comparison and approval")
+    evidence = protocol.get("image_creation_protocol", {}).get("quality_evidence", {})
+    require(evidence.get("retry_limit_is_not_quality_guarantee") is True, "visual retry limit was misrepresented as a guarantee")
+    require("visual_fidelity" in evidence.get("automation_cannot_certify", []), "automation must not certify visual fidelity")
+    require("reference_and_runtime_capture_same_viewport_side_by_side" in evidence.get("human_checks", []), "side-by-side visual review is missing")
+
+    require(bom.get("$schema") == "visual_asset_bom_v1", "invalid visual BOM")
+    require(bom.get("counting_unit") == "approved_asset_pack", "visual BOM must count packs, not arbitrary files")
+    require(bom.get("file_count_claimed") is False, "visual BOM makes an unsupported file-count claim")
+    target_map = {str(item.get("id", "")): int(item.get("target", 0)) for item in bom.get("targets", [])}
+    content_targets = supreme.get("content_targets", {})
+    require(target_map.get("character_pack") == content_targets.get("characters"), "character BOM differs from supreme target")
+    require(target_map.get("paired_technique_pack") == content_targets.get("paired_bjj_techniques"), "technique BOM differs from supreme target")
+    require(target_map.get("arena_pack") == content_targets.get("arenas"), "arena BOM differs from supreme target")
+    require(target_map.get("ui_screen") == content_targets.get("ui_screens"), "UI BOM differs from supreme target")
+    require(target_map.get("sfx_pack") == content_targets.get("sfx"), "SFX BOM differs from supreme target")
+
+    require(briefs.get("$schema") == "visual_asset_briefs_v1" and briefs.get("shipping_ready") is False, "visual briefs were promoted prematurely")
+    brief_ids = set()
+    for brief in briefs.get("briefs", []):
+        brief_id = str(brief.get("id", ""))
+        require(brief_id and brief_id not in brief_ids, "visual brief IDs must be unique")
+        brief_ids.add(brief_id)
+        require(set(brief.get("reference_ids", [])) <= reference_ids, f"{brief_id} uses an unknown reference")
+        require(set(brief.get("palette_tokens", [])) <= set(palette), f"{brief_id} uses an unknown palette token")
+        require("visible_words" in brief.get("forbidden", []), f"{brief_id} allows generated text")
+        require(brief.get("required_review"), f"{brief_id} lacks human review gates")
+    require(PROMPT_BUILDER_PATH.is_file(), "visual prompt builder is missing")
 
     paired = protocol.get("paired_animation_protocol", {})
     require(paired.get("phases") == supreme.get("combat_contract", {}).get("paired_animation_phases"), "paired animation phases differ from supreme contract")

@@ -1,0 +1,58 @@
+{
+  "$schema": "ground_stamina_v1",
+  "version": "1.0.0",
+  "status": "implemented_vertical_slice",
+  "simulation": "per_resolved_action_deterministic",
+  "resource": "gas",
+  "runtime_owner": "CombatManager",
+  "policy": {
+    "wall_clock_drain": false,
+    "background_process": false,
+    "health_damage": false,
+    "injury_outcome": false,
+    "submission_terminal_actions_scaled": false
+  },
+  "limits": {
+    "max_action_surcharge": 2.0,
+    "min_submission_effectiveness": 0.6,
+    "max_submission_effectiveness": 1.0,
+    "min_chance_modifier": -0.14,
+    "max_chance_modifier": 0.0
+  },
+  "state_action_surcharge": {
+    "PLAYER_STANDING_NEUTRAL": 0.0,
+    "PLAYER_TOP_CLINCH": 0.8,
+    "PLAYER_BOTTOM_CLINCH": 1.0,
+    "PLAYER_TOP_GUARD": 1.0,
+    "PLAYER_BOTTOM_GUARD": 1.2,
+    "PLAYER_TOP_SIDE": 0.9,
+    "PLAYER_BOTTOM_SIDE": 1.5,
+    "PLAYER_TOP_MOUNT": 1.1,
+    "PLAYER_BOTTOM_MOUNT": 1.7,
+    "PLAYER_BACK_ATTACK": 1.2,
+    "PLAYER_BACK_DEFENSE": 1.8,
+    "PLAYER_SUBMISSION_ATTACK": 1.5,
+    "PLAYER_SUBMISSION_DEFENSE": 2.0,
+    "RESET": 0.0
+  },
+  "fatigue_bands": [
+    {
+      "id": "tired",
+      "gas_at_or_below": 50.0,
+      "chance_modifier": -0.03,
+      "submission_effectiveness": 0.92
+    },
+    {
+      "id": "fatigued",
+      "gas_at_or_below": 25.0,
+      "chance_modifier": -0.08,
+      "submission_effectiveness": 0.78
+    },
+    {
+      "id": "exhausted",
+      "gas_at_or_below": 10.0,
+      "chance_modifier": -0.14,
+      "submission_effectiveness": 0.60
+    }
+  ]
+}

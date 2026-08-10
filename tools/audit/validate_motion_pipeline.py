@@ -58,6 +58,15 @@ def main() -> int:
     require(sources.get("own_capture", {}).get("status") == "preferred", "first-party capture must be preferred")
     require(sources.get("pose2sim", {}).get("license") == "BSD-3-Clause", "Pose2Sim license decision changed")
     require(sources.get("freemocap", {}).get("license") == "AGPL-3.0", "FreeMoCap copyleft must stay explicit")
+    grapplemap = sources.get("grapplemap", {})
+    require(grapplemap.get("license") == "public_domain", "GrappleMap license snapshot changed")
+    require(
+        grapplemap.get("status") == "blocked_pending_parser_and_bjj_review",
+        "GrappleMap must remain quarantined until parser and BJJ review pass",
+    )
+    grapplemap_format = grapplemap.get("format_snapshot", {})
+    require(grapplemap_format.get("proposed_line_parser_compatible") is False, "unverified GrappleMap parser was approved")
+    require(grapplemap_format.get("uses_position_transition_keywords") is False, "GrappleMap format was misrepresented")
     hf_bjj = sources.get("bjj_positions_submissions_hf", {})
     require(
         hf_bjj.get("status") == "blocked_pending_source_rights",
@@ -99,6 +108,15 @@ def main() -> int:
         require("blocked_pending_source_rights" in str(exc), "unverified dataset failed for the wrong reason")
     else:
         raise AssertionError("unverified third-party keypoints produced a motion package")
+
+    grapplemap_fixture = deepcopy(raw_fixture)
+    grapplemap_fixture["source"]["source_id"] = "grapplemap"
+    try:
+        builder.build_package(grapplemap_fixture, "baiana")
+    except ValueError as exc:
+        require("blocked_pending_parser_and_bjj_review" in str(exc), "GrappleMap failed for the wrong reason")
+    else:
+        raise AssertionError("quarantined GrappleMap data produced a motion package")
 
     require(tileset.get("$schema") == "biome_tileset_contract_v1", "invalid tileset contract schema")
     require(tileset.get("projection") == "isometric_2_to_1", "tileset projection must stay 2:1")

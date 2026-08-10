@@ -25,6 +25,8 @@ Este arquivo é a porta de entrada da documentação ativa. Antes de criar um do
 - [`../data/production/biome_tileset_contract_v01.json`](../data/production/biome_tileset_contract_v01.json) — contrato do TileSet regional.
 - [`../data/production/ai_production_sop_v01.json`](../data/production/ai_production_sop_v01.json) — orquestração de produção assistida sem duplicar runtime ou remover revisão humana.
 - [`../data/visual/visual_gameplay_protocol_v01.json`](../data/visual/visual_gameplay_protocol_v01.json) — direção derivada das dez pranchas, contratos de tela, imagem, animação pareada, áudio e HUD tático.
+- [`../data/production/visual_asset_bom_v01.json`](../data/production/visual_asset_bom_v01.json) — metas em packs aprovados, prioridades da vertical slice e estados de promoção;
+- [`../data/visual/vertical_slice_asset_briefs_v01.json`](../data/visual/vertical_slice_asset_briefs_v01.json) — briefs candidatos de Dique, Ruan, Davi e animação pareada, sempre sujeitos a revisão humana;
 
 ## Produto e gameplay
 
@@ -32,6 +34,7 @@ Este arquivo é a porta de entrada da documentação ativa. Antes de criar um do
 - [`gameplay/COMBAT_DECK_SYSTEM_V01.md`](gameplay/COMBAT_DECK_SYSTEM_V01.md) — deck atual integrado à `main`;
 - [`gameplay/FIGHTER_STYLES_SKILL_TREE_V01.md`](gameplay/FIGHTER_STYLES_SKILL_TREE_V01.md) — oito estilos, quatro ramos, save e consumidores reais de combate/Cria Live;
 - [`gameplay/GROUND_SUBMISSION_SYSTEM_V01.md`](gameplay/GROUND_SUBMISSION_SYSTEM_V01.md) — grafo posicional sobre a FSM existente, anatomia segura e troca determinística de controle/escape;
+- [`gameplay/GROUND_STAMINA_V01.md`](gameplay/GROUND_STAMINA_V01.md) — sobretaxa por ação/posição e faixas limitadas de fadiga, sem dreno por frame;
 - `canon/` — personagens, facções, mundo e narrativa aprovados;
 - `gameplay/` — combate, progressão, regras e economia.
 - [`implementation/PRATIGI_FESTIVAL_ARENA_V01.md`](implementation/PRATIGI_FESTIVAL_ARENA_V01.md) — arena paralela de Pratigi, aposta interna, heat, interdição e limites de escopo.

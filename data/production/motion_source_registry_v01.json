@@ -57,6 +57,24 @@
       "notes": "Projeto acadêmico pequeno em notebook. A licença MIT do repositório não licencia automaticamente pesos, datasets ou vídeos de entrada. Pode auxiliar triagem, mas não aprova posição, anatomia ou timing do jogo."
     },
     {
+      "id": "grapplemap",
+      "name": "GrappleMap",
+      "type": "schematic_pose_graph",
+      "url": "https://github.com/Eelis/GrappleMap",
+      "license": "public_domain",
+      "status": "blocked_pending_parser_and_bjj_review",
+      "commercial_use": true,
+      "vendor_into_game": false,
+      "verified_on": "2026-08-10",
+      "format_snapshot": {
+        "file": "GrappleMap.txt",
+        "proposed_line_parser_compatible": false,
+        "uses_position_transition_keywords": false,
+        "compact_pose_encoding_requires_official_decoder_review": true
+      },
+      "notes": "O repositório declara código e dados em domínio público, mas o banco real usa codificação compacta própria e não corresponde ao parser position/transition/player/frame/j proposto. O README também descreve timing rudimentar, omissão de hand-fighting e ausência de revisão por especialista. Nenhum dado entra no pipeline até existir parser testado contra fixtures oficiais e revisão humana de BJJ."
+    },
+    {
       "id": "bjj_positions_submissions_hf",
       "name": "BJJ_Positions_Submissions (Hugging Face)",
       "type": "external_dataset",

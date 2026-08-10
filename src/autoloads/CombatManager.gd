@@ -11,6 +11,7 @@ const FrameDataSystemScript = preload("res://src/combat/FrameDataSystem.gd")
 const FighterStyleSystemScript = preload("res://src/career/FighterStyleSystem.gd")
 const GroundGraphRulesScript = preload("res://src/combat/GroundGraphRules.gd")
 const SubmissionExchangeScript = preload("res://src/combat/SubmissionExchange.gd")
+const GroundStaminaRulesScript = preload("res://src/combat/GroundStaminaRules.gd")
 
 const STATE_MIRROR := {
 	"PLAYER_STANDING_NEUTRAL": "PLAYER_STANDING_NEUTRAL",
@@ -43,6 +44,7 @@ var frame_data_system: Node
 var fighter_style_system: RefCounted
 var ground_graph_rules: RefCounted
 var submission_exchange: Node
+var ground_stamina_rules: RefCounted
 
 func _ready() -> void:
 	_ensure_runtime_components()
@@ -74,6 +76,9 @@ func _ensure_runtime_components() -> void:
 		submission_exchange.name = "SubmissionExchangeRuntime"
 		add_child(submission_exchange)
 		submission_exchange.call("configure", DataRegistry.submission_exchange, DataRegistry.submissions_anatomy)
+	if ground_stamina_rules == null:
+		ground_stamina_rules = GroundStaminaRulesScript.new()
+		ground_stamina_rules.call("configure", DataRegistry.ground_stamina)
 
 func start_combat(new_arena_id: String, new_player_id: String, new_opponent_id: String) -> Dictionary:
 	_ensure_runtime_components()
@@ -167,11 +172,11 @@ func get_available_techniques(actor_id: String = "") -> Array:
 		var owner: String = str(technique.get("dono", technique.get("owner", "qualquer")))
 		if owner != "" and owner != "qualquer" and owner != resolved_actor:
 			continue
-		var cost: Dictionary = technique.get("cost", technique.get("custo", {}))
+		var item: Dictionary = ground_stamina_rules.call("decorate_technique", technique, actor_state)
+		var cost: Dictionary = item.get("cost", {})
 		var gas_cost: float = float(cost.get("gas", technique.get("gas_cost", 0)))
 		var focus_cost: float = float(cost.get("focus", cost.get("foco", technique.get("focus_cost", 0))))
 		var moral_cost: float = float(cost.get("moral", technique.get("moral_cost", 0)))
-		var item: Dictionary = technique.duplicate(true)
 		item["affordable"] = (
 			float(actor.get("gas", 0)) >= gas_cost
 			and float(actor.get("focus", 0)) >= focus_cost
@@ -267,10 +272,11 @@ func execute_technique(actor_id: String, defender_id: String, technique: Diction
 	var player_state_before: String = get_current_state_name()
 	var actor: Dictionary = fighters.get(actor_id, {})
 	var defender: Dictionary = fighters.get(defender_id, {})
-	var card_context := _build_card_context(actor_id, defender_id, technique, actor, defender, actor_state_before)
+	var runtime_technique: Dictionary = ground_stamina_rules.call("decorate_technique", technique, actor_state_before)
+	var card_context := _build_card_context(actor_id, defender_id, runtime_technique, actor, defender, actor_state_before)
 	var resolver_result: Dictionary = technique_resolver.call(
 		"resolve_technique",
-		technique,
+		runtime_technique,
 		actor,
 		defender,
 		card_context
@@ -287,6 +293,9 @@ func execute_technique(actor_id: String, defender_id: String, technique: Diction
 	last_result["defender_id"] = defender_id
 	last_result["state_from"] = player_state_before
 	last_result["actor_state_from"] = actor_state_before
+	last_result["ground_stamina"] = ground_stamina_rules.call(
+		"get_action_snapshot", runtime_technique, actor_state_before, float(actor.get("gas", 0.0))
+	)
 
 	if _resolve_finisher_before_transition(actor_id, defender_id, technique, last_result, actor_state_before):
 		last_result["phase"] = CombatPhase.keys()[phase]
@@ -370,6 +379,10 @@ func _build_card_context(
 	context["defense_card"] = defense_card
 	context["deck_clash"] = clash
 	context["chance_modifier"] = float(clash.get("chance_modifier", 0.0))
+	if ground_stamina_rules != null:
+		var fatigue_profile: Dictionary = ground_stamina_rules.call("get_fatigue_profile", float(actor.get("gas", 0.0)))
+		context["ground_fatigue"] = fatigue_profile
+		context["chance_modifier"] = float(context["chance_modifier"]) + float(fatigue_profile.get("chance_modifier", 0.0))
 	if actor_id == player_id and fighter_style_system != null:
 		context["chance_modifier"] = float(context["chance_modifier"]) + float(
 			fighter_style_system.call("get_family_chance_bonus", family)
@@ -426,7 +439,14 @@ func _apply_submission_action(actor_id: String, action_id: String) -> Dictionary
 	var cost: Dictionary = selected.get("cost", {})
 	if not _can_pay_action(actor, cost):
 		return {"success": false, "error": "resource_insufficient", "action_id": action_id, "actor_id": actor_id}
-	var action_result: Dictionary = submission_exchange.call("apply_action", actor_id, action_id)
+	var submission_effectiveness := 1.0
+	if ground_stamina_rules != null:
+		submission_effectiveness = float(ground_stamina_rules.call(
+			"get_submission_effectiveness", float(actor.get("gas", 0.0))
+		))
+	var action_result: Dictionary = submission_exchange.call(
+		"apply_action", actor_id, action_id, submission_effectiveness
+	)
 	if not bool(action_result.get("success", false)):
 		return action_result
 	_adjust(actor_id, "gas", -float(cost.get("gas", 0.0)))

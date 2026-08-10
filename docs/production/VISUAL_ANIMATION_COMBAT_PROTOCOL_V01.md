@@ -106,6 +106,10 @@ no graphic injury, no copied person, leave declared safe zones empty.
 
 O prompt produz **candidato**, não asset final. Texto, logo, molduras e controles são compostos no Godot ou em assets vetoriais/pixel aprovados; nunca dependem da grafia de um gerador de imagem.
 
+`tools/visual/build_asset_prompt.py <brief_id>` materializa esse prompt a partir de `vertical_slice_asset_briefs_v01.json`. O builder torna a direção repetível, mas não é “infalível”: resolução, hashes, alpha, metadados e arquivos do pack são verificáveis por máquina; fidelidade visual, cultura, consistência de personagem e biomecânica exigem comparação lado a lado e revisão humana.
+
+O Bill of Materials executável está em `data/production/visual_asset_bom_v01.json`. Ele conta **packs aprovados**, não presume que cada arquivo interno tenha o mesmo peso e não transforma a estimativa informal de 920 ativos em promessa de release.
+
 ## 5. Protocolo de animação pareada
 
 Toda técnica tem atacante e defensor no mesmo relógio. O pacote mínimo contém spritesheets separados, `sync_markers.json`, preview, metadata e QA.
@@ -142,6 +146,12 @@ Cada quadro lógico declara:
 - Android real confirma leitura, memória e FPS.
 
 Keypoints, mocap ou IA podem acelerar blockout. Eles não aprovam biomecânica, licença ou asset final.
+
+### GrappleMap: quarentena técnica
+
+O repositório oficial declara código e dados em domínio público, mas `GrappleMap.txt` usa uma codificação compacta própria. Ele não contém o formato textual `position/transition/player/frame/j` assumido pelo parser apresentado na diretiva 003. O README também caracteriza as animações como esquemáticas, com timing rudimentar e sem hand-fighting, e pede revisão por praticantes.
+
+Portanto, `grapplemap_import.py` não foi adicionado. A fonte permanece `blocked_pending_parser_and_bjj_review` no registro de movimento. Uma futura ingestão precisa de fixture extraída do banco oficial, decoder compatível, teste de roundtrip, auditoria de licença e revisão humana de BJJ antes de produzir qualquer `motion.json`.
 
 ## 6. Protocolo audiovisual
 

@@ -7,6 +7,8 @@
     "canon": "data/production/canon_contract_v4_1.json",
     "supreme_build": "data/production/supreme_build_contract_v01.json",
     "asset_manifest": "data/visual/production_manifest_v02.json",
+    "visual_asset_bom": "data/production/visual_asset_bom_v01.json",
+    "vertical_slice_asset_briefs": "data/visual/vertical_slice_asset_briefs_v01.json",
     "arena_animation": "data/visual/arena_animation_flow_v01.json",
     "combat_presentation": "data/combat/combat_presentation_v01.json",
     "audio": "data/audio/audio_cues_v01.json"
@@ -263,7 +265,31 @@
       "separate_subject_from_background_before_pixel_cleanup",
       "nearest_neighbor_only_after_master_cleanup",
       "candidate_assets_never_enter_shipping_automatically"
-    ]
+    ],
+    "quality_evidence": {
+      "automatic_checks": [
+        "declared_resolution",
+        "file_signature_and_hash",
+        "alpha_requirement",
+        "palette_token_presence_in_metadata",
+        "required_pack_files",
+        "runtime_import_settings"
+      ],
+      "human_checks": [
+        "reference_and_runtime_capture_same_viewport_side_by_side",
+        "character_consistency",
+        "regional_cultural_accuracy",
+        "bjj_contact_and_safety",
+        "android_readability"
+      ],
+      "automation_cannot_certify": [
+        "visual_fidelity",
+        "cultural_accuracy",
+        "biomechanical_correctness",
+        "shipping_quality"
+      ],
+      "retry_limit_is_not_quality_guarantee": true
+    }
   },
   "paired_animation_protocol": {
     "roles": ["attacker", "defender", "referee_optional"],

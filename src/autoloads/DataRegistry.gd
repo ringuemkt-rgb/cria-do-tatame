@@ -48,6 +48,7 @@ var skill_tree_v2 := {}
 var ground_graph := {}
 var submissions_anatomy := {}
 var submission_exchange := {}
+var ground_stamina := {}
 var validation_report := {}
 
 const DATA_FILES := {
@@ -98,7 +99,8 @@ const DATA_FILES := {
 	"skill_tree_v2": "res://data/player/skill_tree_v02.json",
 	"ground_graph": "res://data/combat/ground_graph_v01.json",
 	"submissions_anatomy": "res://data/combat/submissions_anatomy_v01.json",
-	"submission_exchange": "res://data/combat/submission_exchange_v01.json"
+	"submission_exchange": "res://data/combat/submission_exchange_v01.json",
+	"ground_stamina": "res://data/combat/ground_stamina_v01.json"
 }
 
 func _ready():
@@ -153,6 +155,7 @@ func load_all():
 	ground_graph = _load_raw("ground_graph")
 	submissions_anatomy = _load_raw("submissions_anatomy")
 	submission_exchange = _load_raw("submission_exchange")
+	ground_stamina = _load_raw("ground_stamina")
 	validation_report = validate_core_data()
 	SignalBus.data_validation_finished.emit(validation_report)
 	SignalBus.data_loaded.emit()
@@ -246,6 +249,8 @@ func validate_core_data():
 		errors.append("catalogo anatomico seguro de finalizacoes nao carregado")
 	if submission_exchange.get("$schema", "") != "submission_exchange_v1" or submission_exchange.get("actions", []).size() < 7:
 		errors.append("contrato de troca de finalizacao nao carregado")
+	if ground_stamina.get("$schema", "") != "ground_stamina_v1" or ground_stamina.get("state_action_surcharge", {}).size() != 14:
+		errors.append("contrato deterministico de stamina de solo nao carregado")
 	return {"ok": errors.is_empty(), "errors": errors, "characters": characters.size(), "arenas": arenas.size(), "techniques": techniques.size(), "factions": factions.size()}
 
 func get_character_animation(character_id: String, action_id: String) -> Dictionary:

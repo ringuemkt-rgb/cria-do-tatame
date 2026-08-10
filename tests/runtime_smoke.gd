@@ -5,6 +5,7 @@ const DaviAIControllerScript = preload("res://src/combat/DaviAIController.gd")
 const TechniqueClashResolverScript = preload("res://src/combat/TechniqueClashResolver.gd")
 const GroundGraphRulesScript = preload("res://src/combat/GroundGraphRules.gd")
 const SubmissionExchangeScript = preload("res://src/combat/SubmissionExchange.gd")
+const GroundStaminaRulesScript = preload("res://src/combat/GroundStaminaRules.gd")
 const FighterStyleSystemScript = preload("res://src/career/FighterStyleSystem.gd")
 
 const REQUIRED_SCENES := [
@@ -57,6 +58,7 @@ func _run() -> void:
 	_test_combat_deck()
 	_test_fighter_style_runtime()
 	_test_ground_submission_data()
+	_test_ground_stamina_data()
 	await _test_local_ai_fallback()
 	await _test_scene_loading()
 	_test_save_roundtrip()
@@ -218,6 +220,24 @@ func _test_ground_submission_data() -> void:
 	_assert(str(tap.get("outcome", "")) == "tap", "Tap nao encerrou a troca imediatamente")
 	_assert(not bool(exchange.get("active")), "Troca continuou ativa depois do tap")
 	exchange.queue_free()
+
+func _test_ground_stamina_data() -> void:
+	if data_registry == null:
+		return
+	var rules: RefCounted = GroundStaminaRulesScript.new()
+	rules.call("configure", data_registry.get("ground_stamina"))
+	var technique: Dictionary = data_registry.call("get_technique", "chave_braco")
+	var decorated: Dictionary = rules.call("decorate_technique", technique, "PLAYER_TOP_MOUNT")
+	var original_cost: Dictionary = technique.get("cost", {})
+	var decorated_cost: Dictionary = decorated.get("cost", {})
+	_assert(
+		float(decorated_cost.get("gas", 0.0)) > float(original_cost.get("gas", 0.0)),
+		"Stamina de solo nao adicionou sobretaxa posicional"
+	)
+	var fresh: Dictionary = rules.call("get_fatigue_profile", 100.0)
+	var exhausted: Dictionary = rules.call("get_fatigue_profile", 10.0)
+	_assert(str(fresh.get("id", "")) == "fresh", "Gas cheio nao retornou faixa fresh")
+	_assert(float(exhausted.get("submission_effectiveness", 1.0)) == 0.60, "Fadiga extrema nao aplicou o limite seguro")
 
 func _test_local_ai_fallback() -> void:
 	if local_ai_manager == null:
