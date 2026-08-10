@@ -75,6 +75,17 @@ def main() -> int:
 
     tools = {str(item.get("id", "")): item for item in sop.get("toolchain_decisions", [])}
     require(tools.get("pixelorama", {}).get("license") == "MIT", "Pixelorama license changed")
+    sprite_forge = tools.get("agent_sprite_forge", {})
+    require(sprite_forge.get("license") == "MIT", "Agent Sprite Forge license changed")
+    require(
+        sprite_forge.get("decision") == "approved_candidate_postprocessor",
+        "Agent Sprite Forge cannot be promoted beyond candidate postprocessing",
+    )
+    require(sprite_forge.get("runtime_dependency") is False, "Agent Sprite Forge cannot enter runtime")
+    require(
+        sprite_forge.get("profile") == "data/production/agent_sprite_forge_profile_v01.json",
+        "Agent Sprite Forge profile path changed",
+    )
     require(tools.get("penpot", {}).get("license") == "MPL-2.0", "Penpot license changed")
     require(tools.get("tiled", {}).get("native_godot4_tmx_import_assumed") is False, "native TMX import must not be assumed")
     require(tools.get("yarn_spinner_godot_gdscript", {}).get("decision") == "blocked_current_runtime", "alpha Godot 4.6 Yarn integration cannot enter current runtime")

@@ -50,6 +50,7 @@ Este arquivo é a porta de entrada da documentação ativa. Antes de criar um do
 - [`production/APK_VISUAL_COMPLETION_PLAN_V09.md`](production/APK_VISUAL_COMPLETION_PLAN_V09.md) — gates de vertical slice e Android;
 - [`production/PROFESSIONAL_GAME_BUILD_MASTER_V01.md`](production/PROFESSIONAL_GAME_BUILD_MASTER_V01.md) — arquitetura integrada, audiovisual, mapa, mocap e Definition of Done;
 - [`production/VISUAL_ANIMATION_COMBAT_PROTOCOL_V01.md`](production/VISUAL_ANIMATION_COMBAT_PROTOCOL_V01.md) — análise das referências e protocolo executável de fidelidade visual/combate;
+- [`production/AGENT_SPRITE_FORGE_INTEGRATION_V01.md`](production/AGENT_SPRITE_FORGE_INTEGRATION_V01.md) — auditoria, pin e adapter candidato do Agent Sprite Forge, com limites explícitos para grappling pareado;
 - [`../data/visual/production_manifest_v02.json`](../data/visual/production_manifest_v02.json) — entregáveis mínimos por asset.
 
 ## Engenharia e QA

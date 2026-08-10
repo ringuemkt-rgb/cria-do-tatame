@@ -88,6 +88,16 @@
       "decision": "approved_external_authoring_tool"
     },
     {
+      "id": "agent_sprite_forge",
+      "url": "https://github.com/0x0funky/agent-sprite-forge",
+      "license": "MIT",
+      "pinned_commit": "64fd0b57d3f2ae117ef0a95e4c2decc25b4c9dd2",
+      "decision": "approved_candidate_postprocessor",
+      "runtime_dependency": false,
+      "profile": "data/production/agent_sprite_forge_profile_v01.json",
+      "notes": "Aprovado somente como checkout externo fixado para limpeza, recorte, escala, ancora e preview de candidatos. Prompt builder generico, geracao de video no Codex, promocao automatica e export pareado de grappling para shipping permanecem bloqueados."
+    },
+    {
       "id": "penpot",
       "url": "https://github.com/penpot/penpot",
       "license": "MPL-2.0",
