@@ -9,6 +9,9 @@
     "validate:canon": "python tools/audit/validate_canon_contract_v4_1.py",
     "validate:factions-v4": "python tools/audit/validate_faction_migration_v4_2.py",
     "validate:pratigi": "python tools/audit/validate_pratigi_festival.py",
+    "validate:combat-presentation": "python tools/audit/validate_combat_presentation.py",
+    "validate:motion-pipeline": "python tools/audit/validate_motion_pipeline.py",
+    "validate:ai-production-sop": "python tools/audit/validate_ai_production_sop.py",
     "validate:python": "python tools/validate_json.py",
     "validate:node": "node tools/node/validate_json.mjs",
     "validate:data": "node tools/node/validate_game_data.mjs",
@@ -22,7 +25,7 @@
     "animations:generate": "python tools/animation/generate_character_animation_pack.py",
     "validate:animations": "python tools/animation/generate_character_animation_pack.py --validate-only",
     "smoke:pratigi": "godot --headless --path . --script res://tests/pratigi_festival_smoke.gd",
-    "quality": "npm run validate:governance && npm run validate:canon && npm run validate:factions-v4 && npm run validate:pratigi && npm run validate:python && npm run validate:node && npm run validate:data && npm run validate:animations && npm run validate:repository && npm run validate:runtime && npm run validate:release && npm run validate:supreme && npm run validate:deck",
+    "quality": "npm run validate:governance && npm run validate:canon && npm run validate:factions-v4 && npm run validate:pratigi && npm run validate:combat-presentation && npm run validate:motion-pipeline && npm run validate:ai-production-sop && npm run validate:python && npm run validate:node && npm run validate:data && npm run validate:animations && npm run validate:repository && npm run validate:runtime && npm run validate:release && npm run validate:supreme && npm run validate:deck",
     "build:android:windows": "powershell -ExecutionPolicy Bypass -File tools/build/build_android_debug.ps1",
     "build:android:linux": "bash tools/build/build_android_debug.sh",
     "build:windows": "powershell -ExecutionPolicy Bypass -File tools/build/build_windows_debug.ps1"

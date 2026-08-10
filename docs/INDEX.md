@@ -19,6 +19,11 @@ Este arquivo é a porta de entrada da documentação ativa. Antes de criar um do
 - [`../data/production/release_gate_status_v01.json`](../data/production/release_gate_status_v01.json) — ledger único com evidências e pendências de release;
 - [`../data/visual/production_manifest_v02.json`](../data/visual/production_manifest_v02.json) — inventário audiovisual;
 - [`../data/production/repository_governance_v01.json`](../data/production/repository_governance_v01.json) — governança validável por máquina.
+- [`../data/combat/combat_presentation_v01.json`](../data/combat/combat_presentation_v01.json) — orçamento e cues de apresentação do combate;
+- [`../data/audio/audio_cues_v01.json`](../data/audio/audio_cues_v01.json) — catálogo de áudio com fallback offline;
+- [`../data/production/motion_source_registry_v01.json`](../data/production/motion_source_registry_v01.json) — licenças e gates do mocap;
+- [`../data/production/biome_tileset_contract_v01.json`](../data/production/biome_tileset_contract_v01.json) — contrato do TileSet regional.
+- [`../data/production/ai_production_sop_v01.json`](../data/production/ai_production_sop_v01.json) — orquestração de produção assistida sem duplicar runtime ou remover revisão humana.
 
 ## Produto e gameplay
 
@@ -37,6 +42,7 @@ Este arquivo é a porta de entrada da documentação ativa. Antes de criar um do
 - `art_bible/` — identidade visual e contratos de qualidade ativos;
 - `production/` — planos de lote, APK, animação, áudio e conteúdo;
 - [`production/APK_VISUAL_COMPLETION_PLAN_V09.md`](production/APK_VISUAL_COMPLETION_PLAN_V09.md) — gates de vertical slice e Android;
+- [`production/PROFESSIONAL_GAME_BUILD_MASTER_V01.md`](production/PROFESSIONAL_GAME_BUILD_MASTER_V01.md) — arquitetura integrada, audiovisual, mapa, mocap e Definition of Done;
 - [`../data/visual/production_manifest_v02.json`](../data/visual/production_manifest_v02.json) — entregáveis mínimos por asset.
 
 ## Engenharia e QA

@@ -49,11 +49,25 @@ def main() -> int:
     require(policy.get("runtime_network_required") is False, "motion runtime must stay offline")
     require(policy.get("human_bjj_review_required") is True, "human BJJ review is mandatory")
     require(policy.get("performer_consent_required") is True, "performer consent is mandatory")
+    require(
+        policy.get("derived_keypoints_do_not_waive_source_rights") is True,
+        "derived keypoints cannot waive source-video rights",
+    )
 
     sources = {str(item.get("id", "")): item for item in registry.get("sources", [])}
     require(sources.get("own_capture", {}).get("status") == "preferred", "first-party capture must be preferred")
     require(sources.get("pose2sim", {}).get("license") == "BSD-3-Clause", "Pose2Sim license decision changed")
     require(sources.get("freemocap", {}).get("license") == "AGPL-3.0", "FreeMoCap copyleft must stay explicit")
+    hf_bjj = sources.get("bjj_positions_submissions_hf", {})
+    require(
+        hf_bjj.get("status") == "blocked_pending_source_rights",
+        "unverified BJJ video/keypoint input must remain blocked",
+    )
+    hf_snapshot = hf_bjj.get("dataset_card_snapshot", {})
+    require(
+        hf_snapshot.get("sample_count") == 1 and hf_snapshot.get("class_count") == 1,
+        "BJJ dataset snapshot must not be overstated as a motion library",
+    )
     for blocked_id in ["spinepose", "kungfu_fiesta", "motionmillion", "ai4animation"]:
         require(sources.get(blocked_id, {}).get("status") == "blocked_commercial", f"{blocked_id} must remain blocked for commercial output")
 
@@ -77,6 +91,15 @@ def main() -> int:
     else:
         raise AssertionError("non-commercial source produced a commercial motion package")
 
+    unverified_fixture = deepcopy(raw_fixture)
+    unverified_fixture["source"]["source_id"] = "bjj_positions_submissions_hf"
+    try:
+        builder.build_package(unverified_fixture, "baiana")
+    except ValueError as exc:
+        require("blocked_pending_source_rights" in str(exc), "unverified dataset failed for the wrong reason")
+    else:
+        raise AssertionError("unverified third-party keypoints produced a motion package")
+
     require(tileset.get("$schema") == "biome_tileset_contract_v1", "invalid tileset contract schema")
     require(tileset.get("projection") == "isometric_2_to_1", "tileset projection must stay 2:1")
     require(tileset.get("required_alpha") is True, "shipping tiles require real alpha")
@@ -88,7 +111,7 @@ def main() -> int:
 
     print(
         "[motion-pipeline] ok: source licenses, consent, two-body sync, "
-        "human review and supplied tileset intake validated"
+        "human review, third-party dataset gates and supplied tileset intake validated"
     )
     return 0
 
