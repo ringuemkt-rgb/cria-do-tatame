@@ -26,6 +26,7 @@ Este arquivo é a porta de entrada da documentação ativa. Antes de criar um do
 - [`gameplay/COMBAT_DECK_SYSTEM_V01.md`](gameplay/COMBAT_DECK_SYSTEM_V01.md) — deck atual integrado à `main`;
 - `canon/` — personagens, facções, mundo e narrativa aprovados;
 - `gameplay/` — combate, progressão, regras e economia.
+- [`implementation/PRATIGI_FESTIVAL_ARENA_V01.md`](implementation/PRATIGI_FESTIVAL_ARENA_V01.md) — arena paralela de Pratigi, aposta interna, heat, interdição e limites de escopo.
 
 ## Migrações ativas
 

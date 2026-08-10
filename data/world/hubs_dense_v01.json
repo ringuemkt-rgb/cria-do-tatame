@@ -54,5 +54,20 @@
       "activities": ["treino_base_lama", "corrida_mangue", "missao_raiz", "descanso_natureza"],
       "reactivity": {"raiz_high": "atalhos_abrem", "sombra_high": "moradores_fecham_portas", "legado_high": "leoa_ensina_raspagem"}
     }
+  },
+  "event_destinations": {
+    "pratigi_festival": {
+      "name": "Pratigi — Festival Maré Alta",
+      "role": "parallel_hype_event",
+      "entry_scene": "res://scenes/combat/arenas/PratigiFestivalArena.tscn",
+      "travel_cost": 25,
+      "travel_hours": 2,
+      "unlock_act": 2,
+      "locations": ["praia_de_pratigi", "palco_mare_alta", "arena_areia", "ponto_cria_live"],
+      "npc_pool": ["dj_veneno", "fans", "mediador_comunitario", "equipe_evento"],
+      "features": ["luta_pratigi_paralela", "mare_visual", "cria_live_hype"],
+      "reactivity": {"hype_high": "crowd_grita_macacao", "honra_low": "mediador_desconfia", "sombra_high": "autoridades_observam"},
+      "content_policy": {"fictional_event": true, "real_money_betting": false, "authority_evasion": false}
+    }
   }
 }

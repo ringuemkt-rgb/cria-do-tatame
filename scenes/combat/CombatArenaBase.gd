@@ -1,11 +1,19 @@
 extends Control
 
-const RESULT_SCENE: String = "res://scenes/result/ResultScreen.tscn"
+const DEFAULT_RESULT_SCENE: String = "res://scenes/result/ResultScreen.tscn"
 const FighterPlaceholderScript = preload("res://src/characters/FighterPlaceholder.gd")
 const GameFeelManagerScript = preload("res://src/gamefeel/GameFeelManager.gd")
 const DaviAIControllerScript = preload("res://src/combat/DaviAIController.gd")
 const VisualTheme = preload("res://src/ui/CriaVisualTheme.gd")
 const ArenaBackdropScript = preload("res://src/visual/ArenaBackdrop.gd")
+
+@export var configured_arena_id: String = "terreiro_da_luta"
+@export var configured_backdrop_id: String = "arena_do_dique"
+@export var configured_player_id: String = "ruan_macacao"
+@export var configured_opponent_id: String = "davi_relampago"
+@export var configured_music_cue: String = "terreiro"
+@export_file("*.tscn") var configured_result_scene: String = DEFAULT_RESULT_SCENE
+@export var start_combat_immediately: bool = true
 
 var gamefeel: Node
 var davi_ai: Node
@@ -49,19 +57,32 @@ func _ready() -> void:
 	_build_placeholder_fighters()
 	_connect_buttons()
 	_connect_runtime_signals()
-	CombatManager.start_combat("terreiro_da_luta", "ruan_macacao", "davi_relampago")
 	_ensure_ai_hint()
+	if start_combat_immediately:
+		_start_configured_combat()
+	else:
+		_set_actions_enabled(false)
+
+func _start_configured_combat() -> Dictionary:
+	var result: Dictionary = CombatManager.start_combat(
+		configured_arena_id,
+		configured_player_id,
+		configured_opponent_id
+	)
 	_update_state_label(CombatManager.get_current_state_name())
 	_refresh_action_buttons()
-	AudioManager.play_music_cue("terreiro")
+	_set_actions_enabled(true)
+	AudioManager.play_music_cue(configured_music_cue)
+	return result
 
 func _build_arena_visuals() -> void:
-	var backdrop := ArenaBackdropScript.new()
-	backdrop.name = "ArenaBackdrop"
-	backdrop.arena_id = "arena_do_dique"
-	backdrop.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
-	add_child(backdrop)
-	move_child(backdrop, 0)
+	if not has_node("ArenaBackdrop"):
+		var backdrop := ArenaBackdropScript.new()
+		backdrop.name = "ArenaBackdrop"
+		backdrop.arena_id = configured_backdrop_id
+		backdrop.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+		add_child(backdrop)
+		move_child(backdrop, 0)
 	var lower_panel := Panel.new()
 	lower_panel.name = "CombatPanelBackdrop"
 	lower_panel.anchor_left = 0.025
@@ -256,6 +277,7 @@ func _on_combat_finished(result) -> void:
 	WorldState.last_combat_result = result
 	SaveManager.save_game(1)
 	AudioManager.play_music_cue("vitoria" if result.get("winner", "") == "ruan_macacao" else "derrota")
-	var error: Error = get_tree().change_scene_to_file(RESULT_SCENE)
+	var target_scene := configured_result_scene if configured_result_scene != "" else DEFAULT_RESULT_SCENE
+	var error: Error = get_tree().change_scene_to_file(target_scene)
 	if error != OK:
 		push_error("[CombatArenaBase] Falha ao abrir resultado: %s" % error_string(error))

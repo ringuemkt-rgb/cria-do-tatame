@@ -420,6 +420,8 @@ func finish_combat(result: Dictionary) -> void:
 	is_running = false
 	phase = CombatPhase.RESET
 	last_result = result.duplicate(true)
+	if not last_result.has("arena_id"):
+		last_result["arena_id"] = arena_id
 	last_result["fighters"] = fighters.duplicate(true)
 	last_result["final_state"] = get_current_state_name()
 	_apply_post_combat_effects(last_result)
@@ -434,6 +436,9 @@ func finalizar_combate(result: Dictionary) -> void:
 
 func _apply_post_combat_effects(result: Dictionary) -> void:
 	WorldState.last_combat_result = result
+	if bool(result.get("skip_career_result", false)):
+		WorldState._sync_aliases()
+		return
 	if result.get("winner", "") == player_id:
 		WorldState.fights_won += 1
 		WorldState.money += 200

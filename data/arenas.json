@@ -1,5 +1,5 @@
 {
-  "version": "0.1.0",
+  "version": "0.2.0",
   "arenas": [
     {
       "id": "terreiro_da_luta",
@@ -44,6 +44,28 @@
       "type": "hype_arena",
       "visual_identity": "areia, sol, crowd regional, barracas e mar",
       "modifiers": {"hype_bonus": 4, "speed_penalty": 0.08}
+    },
+    {
+      "id": "praia_de_pratigi_festival",
+      "name": "Festival Maré Alta — Rota Paralela",
+      "region": "Praia de Pratigi, Ituberá - Bahia",
+      "type": "clandestine_parallel_event",
+      "parallel_variant_of": "praia_de_pratigi",
+      "fictional_event": true,
+      "officially_sanctioned": false,
+      "referee_role": "community_mediator",
+      "visual_identity": "praia noturna, palco de DJ ficcional, crowd de rave regional, maré animada e cantos azul/dourado",
+      "music_theme": "electronic_baixo_sul_original_candidate",
+      "modifiers": {
+        "hype_bonus": 6,
+        "speed_penalty": 0.1,
+        "gas_drain_multiplier": 1.08,
+        "crowd_pressure": 0.15,
+        "authority_heat": true,
+        "technical_stoppage": true
+      },
+      "narrative_tags": ["rota_paralela", "tentacao_hype", "consequencia", "cria_live", "16_plus"],
+      "asset_requirements": ["bg_far_ocean_night", "animated_water_line", "dj_stage", "rave_crowd", "community_referee", "blue_gold_corners"]
     },
     {
       "id": "colonia_nishimura",

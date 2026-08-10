@@ -23,11 +23,19 @@ func play_music_cue(cue_id: String) -> void:
 			_play_tone(330.0, 0.18)
 		"derrota":
 			_play_tone(98.0, 0.22)
+		"pratigi_festival":
+			_play_tone(82.0, 0.16)
+			_play_tone(164.0, 0.12)
+			_play_tone(246.0, 0.10)
+		"authority_warning":
+			_play_tone(196.0, 0.14)
+			_play_tone(147.0, 0.14)
 		_:
 			_play_tone(160.0, 0.12)
 
 func _pitch_for(event_id: String) -> float:
 	match event_id:
+		"crowd_roar": return 116.0
 		"grip_de_ferro": return 180.0
 		"baiana": return 120.0
 		"corte_joelho": return 210.0
@@ -39,6 +47,7 @@ func _pitch_for(event_id: String) -> float:
 
 func _duration_for(event_id: String) -> float:
 	match event_id:
+		"crowd_roar": return 0.38
 		"baiana": return 0.16
 		"encerramento_tecnico": return 0.22
 		"botao": return 0.05

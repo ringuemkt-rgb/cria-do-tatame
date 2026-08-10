@@ -1,0 +1,399 @@
+[gd_scene load_steps=7 format=3]
+
+[ext_resource type="Script" path="res://scenes/combat/arenas/PratigiFestivalArena.gd" id="1_arena"]
+[ext_resource type="PackedScene" path="res://scenes/ui/CombatHUD.tscn" id="2_hud"]
+[ext_resource type="PackedScene" path="res://scenes/ui/CombatDeckHUD.tscn" id="3_deck"]
+[ext_resource type="Script" path="res://src/visual/PratigiFestivalBackdrop.gd" id="4_backdrop"]
+[ext_resource type="Script" path="res://src/visual/AnimatedWaterLine.gd" id="5_water"]
+[ext_resource type="Script" path="res://src/combat/arena/ClandestineEventDirector.gd" id="6_event"]
+
+[node name="PratigiFestivalArena" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_arena")
+configured_arena_id = "praia_de_pratigi_festival"
+configured_backdrop_id = "praia_de_pratigi"
+configured_player_id = "ruan_macacao"
+configured_opponent_id = "davi_relampago"
+configured_music_cue = "pratigi_festival"
+start_combat_immediately = false
+
+[node name="ArenaBackdrop" type="Control" parent="."]
+z_index = -20
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("4_backdrop")
+
+[node name="AnimatedWaterLine" type="Control" parent="."]
+z_index = -19
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("5_water")
+
+[node name="ArenaMarkers" type="Node2D" parent="."]
+
+[node name="BlueCorner" type="Marker2D" parent="ArenaMarkers"]
+position = Vector2(320, 554)
+
+[node name="GoldCorner" type="Marker2D" parent="ArenaMarkers"]
+position = Vector2(960, 554)
+
+[node name="CommunityReferee" type="Marker2D" parent="ArenaMarkers"]
+position = Vector2(640, 370)
+
+[node name="DJStage" type="Marker2D" parent="ArenaMarkers"]
+position = Vector2(205, 198)
+
+[node name="RaveCrowd" type="Marker2D" parent="ArenaMarkers"]
+position = Vector2(640, 430)
+
+[node name="WaterLineAnchor" type="Marker2D" parent="ArenaMarkers"]
+position = Vector2(640, 390)
+
+[node name="FestivalTitle" type="Label" parent="."]
+z_index = -5
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = 12.0
+offset_bottom = 50.0
+grow_horizontal = 2
+theme_override_colors/font_color = Color(0.961, 0.773, 0.259, 1)
+theme_override_font_sizes/font_size = 24
+text = "FESTIVAL MARÉ ALTA — ROTA PARALELA"
+horizontal_alignment = 1
+
+[node name="StageCaption" type="Label" parent="."]
+z_index = -4
+layout_mode = 0
+offset_left = 92.0
+offset_top = 205.0
+offset_right = 290.0
+offset_bottom = 237.0
+theme_override_colors/font_color = Color(0.133, 0.827, 0.933, 1)
+theme_override_font_sizes/font_size = 14
+text = "DJ • GRAVE DA MARÉ"
+horizontal_alignment = 1
+
+[node name="RefereeCaption" type="Label" parent="."]
+z_index = -4
+layout_mode = 0
+offset_left = 579.0
+offset_top = 404.0
+offset_right = 701.0
+offset_bottom = 430.0
+theme_override_colors/font_color = Color(0.92, 0.92, 0.88, 1)
+theme_override_font_sizes/font_size = 11
+text = "MEDIADOR"
+horizontal_alignment = 1
+
+[node name="EventDirector" type="Node" parent="."]
+script = ExtResource("6_event")
+
+[node name="CombatHUD" parent="." instance=ExtResource("2_hud")]
+
+[node name="CombatDeckHUD" parent="." instance=ExtResource("3_deck")]
+
+[node name="Panel" type="VBoxContainer" parent="."]
+layout_mode = 2
+anchor_left = 0.04
+anchor_top = 0.68
+anchor_right = 0.96
+anchor_bottom = 0.98
+theme_override_constants/separation = 6
+
+[node name="Title" type="Label" parent="Panel"]
+layout_mode = 2
+horizontal_alignment = 1
+text = "RUAN MACACÃO vs DAVI RELÂMPAGO • AREIA DE PRATIGI"
+
+[node name="State" type="Label" parent="Panel"]
+layout_mode = 2
+text = "Estado: AGUARDANDO EVENTO"
+
+[node name="Resources" type="Label" parent="Panel"]
+layout_mode = 2
+text = "Recursos"
+
+[node name="Message" type="Label" parent="Panel"]
+layout_mode = 2
+autowrap_mode = 3
+text = "A areia pune pressa. O público testa caráter."
+
+[node name="AIHint" type="Label" parent="Panel"]
+layout_mode = 2
+autowrap_mode = 3
+text = "Davi usa o barulho para esconder o ritmo."
+
+[node name="Buttons" type="HBoxContainer" parent="Panel"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="Action1" type="Button" parent="Panel/Buttons"]
+custom_minimum_size = Vector2(0, 64)
+layout_mode = 2
+size_flags_horizontal = 3
+text = "—"
+
+[node name="Action2" type="Button" parent="Panel/Buttons"]
+custom_minimum_size = Vector2(0, 64)
+layout_mode = 2
+size_flags_horizontal = 3
+text = "—"
+
+[node name="Action3" type="Button" parent="Panel/Buttons"]
+custom_minimum_size = Vector2(0, 64)
+layout_mode = 2
+size_flags_horizontal = 3
+text = "—"
+
+[node name="Action4" type="Button" parent="Panel/Buttons"]
+custom_minimum_size = Vector2(0, 64)
+layout_mode = 2
+size_flags_horizontal = 3
+text = "—"
+
+[node name="Action5" type="Button" parent="Panel/Buttons"]
+custom_minimum_size = Vector2(0, 64)
+layout_mode = 2
+size_flags_horizontal = 3
+text = "—"
+
+[node name="EventHUD" type="PanelContainer" parent="."]
+visible = false
+z_index = 20
+layout_mode = 1
+anchor_left = 0.72
+anchor_top = 0.08
+anchor_right = 0.98
+anchor_bottom = 0.32
+offset_left = -8.0
+offset_top = -8.0
+offset_right = -8.0
+offset_bottom = -8.0
+
+[node name="VBox" type="VBoxContainer" parent="EventHUD"]
+layout_mode = 2
+theme_override_constants/separation = 6
+
+[node name="Title" type="Label" parent="EventHUD/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.961, 0.773, 0.259, 1)
+theme_override_font_sizes/font_size = 16
+text = "MARÉ ALTA • EVENTO PARALELO"
+
+[node name="HeatLabel" type="Label" parent="EventHUD/VBox"]
+layout_mode = 2
+text = "HEAT 20% • organização"
+
+[node name="HeatBar" type="ProgressBar" parent="EventHUD/VBox"]
+custom_minimum_size = Vector2(0, 20)
+layout_mode = 2
+max_value = 100.0
+value = 20.0
+show_percentage = false
+
+[node name="BetLabel" type="Label" parent="EventHUD/VBox"]
+layout_mode = 2
+text = "Aposta: R$ 0"
+
+[node name="TideLabel" type="Label" parent="EventHUD/VBox"]
+layout_mode = 2
+text = "Maré: subindo • 50%"
+
+[node name="Safety" type="Label" parent="EventHUD/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.65, 0.82, 0.88, 1)
+theme_override_font_sizes/font_size = 11
+text = "Tap e parada técnica permanecem obrigatórios."
+autowrap_mode = 3
+
+[node name="WarningBanner" type="Label" parent="."]
+visible = false
+z_index = 30
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = 54.0
+offset_bottom = 94.0
+grow_horizontal = 2
+theme_override_colors/font_color = Color(1, 0.82, 0.34, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_x = 2
+theme_override_constants/shadow_offset_y = 2
+theme_override_font_sizes/font_size = 18
+text = "ATENÇÃO: AUTORIDADES A CAMINHO"
+horizontal_alignment = 1
+
+[node name="CrowdChant" type="Label" parent="."]
+visible = false
+z_index = 15
+layout_mode = 0
+offset_left = 420.0
+offset_top = 430.0
+offset_right = 860.0
+offset_bottom = 474.0
+pivot_offset = Vector2(220, 22)
+theme_override_colors/font_color = Color(0.961, 0.773, 0.259, 1)
+theme_override_colors/font_outline_color = Color(0.025, 0.035, 0.07, 1)
+theme_override_constants/outline_size = 6
+theme_override_font_sizes/font_size = 24
+text = "MACACÃO! MACACÃO!"
+horizontal_alignment = 1
+
+[node name="PreFightModal" type="ColorRect" parent="."]
+z_index = 50
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.015, 0.025, 0.05, 0.88)
+
+[node name="Center" type="CenterContainer" parent="PreFightModal"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Card" type="PanelContainer" parent="PreFightModal/Center"]
+custom_minimum_size = Vector2(620, 430)
+layout_mode = 2
+
+[node name="VBox" type="VBoxContainer" parent="PreFightModal/Center/Card"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="Title" type="Label" parent="PreFightModal/Center/Card/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.961, 0.773, 0.259, 1)
+theme_override_font_sizes/font_size = 26
+text = "FESTIVAL MARÉ ALTA"
+horizontal_alignment = 1
+
+[node name="Subtitle" type="Label" parent="PreFightModal/Center/Card/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.133, 0.827, 0.933, 1)
+theme_override_font_sizes/font_size = 16
+text = "PRATIGI • ROTA PARALELA FICCIONAL • 16+"
+horizontal_alignment = 1
+
+[node name="Description" type="Label" parent="PreFightModal/Center/Card/VBox"]
+layout_mode = 2
+text = "DJ no palco, crowd ao redor e areia sob os pés. Aqui o hype sobe junto com o heat. O mediador respeita o tap; se as autoridades chegarem, o combate para — sem fuga jogável."
+autowrap_mode = 3
+
+[node name="Policy" type="Label" parent="PreFightModal/Center/Card/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.72, 0.78, 0.84, 1)
+theme_override_font_sizes/font_size = 12
+text = "Aposta opcional com moeda interna. Sem dinheiro real, compra, loot box ou marca de festival real."
+autowrap_mode = 3
+
+[node name="Wallet" type="Label" parent="PreFightModal/Center/Card/VBox"]
+layout_mode = 2
+text = "Carteira: R$ 0 (somente moeda interna)"
+
+[node name="BetRow" type="HBoxContainer" parent="PreFightModal/Center/Card/VBox"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="BetCaption" type="Label" parent="PreFightModal/Center/Card/VBox/BetRow"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Valor da aposta opcional"
+
+[node name="BetAmount" type="SpinBox" parent="PreFightModal/Center/Card/VBox/BetRow"]
+custom_minimum_size = Vector2(170, 52)
+layout_mode = 2
+max_value = 150.0
+step = 25.0
+prefix = "R$ "
+
+[node name="Potential" type="Label" parent="PreFightModal/Center/Card/VBox"]
+layout_mode = 2
+text = "Retorno transparente se vencer: R$ 0"
+
+[node name="PlaceBet" type="Button" parent="PreFightModal/Center/Card/VBox"]
+custom_minimum_size = Vector2(0, 54)
+layout_mode = 2
+text = "REGISTRAR ESCOLHA"
+
+[node name="StartEvent" type="Button" parent="PreFightModal/Center/Card/VBox"]
+custom_minimum_size = Vector2(0, 60)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.05, 0.07, 0.09, 1)
+text = "ENTRAR NA ARENA"
+
+[node name="Cancel" type="Button" parent="PreFightModal/Center/Card/VBox"]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+text = "VOLTAR AO MAPA"
+
+[node name="Message" type="Label" parent="PreFightModal/Center/Card/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.76, 0.22, 1)
+text = "Você pode entrar sem apostar."
+horizontal_alignment = 1
+autowrap_mode = 3
+
+[node name="InterdictionOverlay" type="ColorRect" parent="."]
+visible = false
+z_index = 100
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.05, 0.06, 0.09, 0.94)
+
+[node name="Center" type="CenterContainer" parent="InterdictionOverlay"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBox" type="VBoxContainer" parent="InterdictionOverlay/Center"]
+custom_minimum_size = Vector2(680, 180)
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="Title" type="Label" parent="InterdictionOverlay/Center/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.35, 0.32, 1)
+theme_override_font_sizes/font_size = 30
+text = "EVENTO INTERDITADO"
+horizontal_alignment = 1
+
+[node name="Details" type="Label" parent="InterdictionOverlay/Center/VBox"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 16
+text = "Combate encerrado com segurança."
+horizontal_alignment = 1
+autowrap_mode = 3
+
+[node name="Consequence" type="Label" parent="InterdictionOverlay/Center/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.72, 0.78, 0.84, 1)
+text = "O Cria Live registra. A sombra cresce. A aposta não é paga."
+horizontal_alignment = 1
