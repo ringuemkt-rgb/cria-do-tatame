@@ -1,0 +1,64 @@
+{
+  "$schema": "pratigi_festival_event_v1",
+  "version": "1.0.0",
+  "arena_id": "praia_de_pratigi_festival",
+  "base_arena_id": "praia_de_pratigi",
+  "display_name": "Festival Maré Alta — Rota Paralela",
+  "status": "fictional_parallel_variant",
+  "location": {
+    "municipality": "itubera",
+    "region": "Praia de Pratigi, Baixo Sul da Bahia",
+    "geo_policy": "fictional_event_inside_canonical_pratigi_anchor"
+  },
+  "content_policy": {
+    "age_rating": "16+",
+    "real_brand_references": false,
+    "drug_depiction": false,
+    "real_money_gambling": false,
+    "authority_evasion_gameplay": false,
+    "technical_stoppage_required": true
+  },
+  "presentation": {
+    "time": "night",
+    "crowd_style": "rave_regional_ficcional",
+    "dj_stage": true,
+    "community_referee": true,
+    "officially_sanctioned": false,
+    "corners": ["azul", "dourado"],
+    "sensory_safe_strobe_hz_max": 2.0,
+    "crowd_count_mobile": 40
+  },
+  "betting": {
+    "enabled": true,
+    "currency": "moeda_interna",
+    "real_money_allowed": false,
+    "minimum_stake": 0,
+    "maximum_stake": 150,
+    "stake_step": 25,
+    "payout_multiplier": 1.75,
+    "transparent_odds": true,
+    "purchase_with_real_money": false
+  },
+  "heat": {
+    "starting_value": 20.0,
+    "passive_per_second": 0.42,
+    "bet_exposure": 4.0,
+    "technique_exposure": 1.4,
+    "successful_technique_bonus": 1.6,
+    "technical_phase_bonus": 2.0,
+    "warning_threshold": 65.0,
+    "interdiction_threshold": 100.0
+  },
+  "tide": {
+    "visual_cycle_seconds": 124.2,
+    "low_threshold": 0.35,
+    "high_threshold": 0.65,
+    "animated_water_line": true
+  },
+  "consequences": {
+    "participation": {"hype": 1.0, "sombra": 1.0},
+    "clean_win": {"hype": 4.0, "honra": 1.0},
+    "interdiction": {"hype": 1.0, "sombra": 3.0, "honra": -2.0},
+    "cria_live_authority_attention": 18.0
+  }
+}

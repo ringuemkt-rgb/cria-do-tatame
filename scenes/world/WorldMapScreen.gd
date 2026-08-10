@@ -7,6 +7,7 @@ func _ready() -> void:
 	_connect("Panel/Salvador", "salvador")
 	_connect("Panel/Zambiapunga", "zambiapunga")
 	_connect("Panel/Camamu", "camamu_manguezal")
+	_connect("Panel/Pratigi", "pratigi_festival")
 	if has_node("Panel/Back"):
 		$Panel/Back.pressed.connect(func(): get_tree().change_scene_to_file(HUB_SCENE))
 	_update_status()
@@ -27,3 +28,6 @@ func _on_travel_pressed(hub_id: String) -> void:
 func _update_status() -> void:
 	if has_node("Panel/Status"):
 		$Panel/Status.text = "Hub atual: %s • R$ %d • Semana %d" % [WorldMapManager.current_hub, WorldState.money, WorldState.week]
+	if has_node("Panel/Pratigi"):
+		$Panel/Pratigi.disabled = not WorldMapManager.can_travel_to("pratigi_festival")
+		$Panel/Pratigi.tooltip_text = WorldMapManager.get_travel_lock_reason("pratigi_festival")

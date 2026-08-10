@@ -4,6 +4,7 @@ const COMBAT_SCENE := "res://scenes/combat/CombatArenaBase.tscn"
 const CRIA_LIVE_SCENE := "res://scenes/ui/CriaLiveUI.tscn"
 const MAIN_MENU_SCENE := "res://scenes/main_menu/MainMenu.tscn"
 const DECK_SCENE := "res://scenes/ui/DeckBuilder.tscn"
+const MAP_SCENE := "res://scenes/world/WorldMapScreen.tscn"
 
 var _transitioning := false
 
@@ -15,6 +16,7 @@ func _ready() -> void:
 	_connect_if_exists("Panel/SaveBtn", _on_save)
 	_connect_if_exists("Panel/AdvanceDayBtn", _on_advance_day)
 	_connect_if_exists("Panel/CriaLiveBtn", _on_cria_live)
+	_connect_if_exists("Panel/WorldMapBtn", _on_world_map)
 	_connect_if_exists("Panel/MainMenuBtn", _on_main_menu)
 	if not SignalBus.day_advanced.is_connected(_on_day_changed):
 		SignalBus.day_advanced.connect(_on_day_changed)
@@ -95,6 +97,11 @@ func _on_advance_day() -> void:
 
 func _on_cria_live() -> void:
 	_change_scene(CRIA_LIVE_SCENE)
+
+func _on_world_map() -> void:
+	WorldMapManager.current_hub = "itubera"
+	WorldState.current_hub = "itubera"
+	_change_scene(MAP_SCENE)
 
 func _on_main_menu() -> void:
 	SaveManager.save_game(1)

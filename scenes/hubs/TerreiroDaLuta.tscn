@@ -96,6 +96,11 @@ custom_minimum_size = Vector2(0, 48)
 layout_mode = 2
 text = "ABRIR CRIA LIVE"
 
+[node name="WorldMapBtn" type="Button" parent="Panel"]
+custom_minimum_size = Vector2(0, 48)
+layout_mode = 2
+text = "MAPA DO BAIXO SUL"
+
 [node name="MainMenuBtn" type="Button" parent="Panel"]
 custom_minimum_size = Vector2(0, 48)
 layout_mode = 2

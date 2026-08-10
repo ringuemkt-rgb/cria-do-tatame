@@ -31,6 +31,12 @@ Cada arena deve ter identidade visual, trilha, mecânica e consequência narrati
 - Visual: areia, sol, barracas, crowd regional.
 - Modificadores: queda de velocidade, hype alto.
 
+#### Variante — Festival Maré Alta (Rota Paralela)
+- Status: evento noturno ficcional; não substitui a Praia de Pratigi canônica.
+- Visual: palco de DJ ficcional, crowd dançando ao redor, cantos azul/dourado e linha d'água animada.
+- Mecânica: aposta opcional apenas com moeda interna, heat visível, aviso e interdição segura.
+- Consequência: Cria Live, hype, sombra e atenção de autoridade; não existe gameplay de fuga.
+
 ### Zambiapunga
 - Função: cultura, ritmo e pressão coletiva.
 - Modificadores: moral e foco oscilam com o público.

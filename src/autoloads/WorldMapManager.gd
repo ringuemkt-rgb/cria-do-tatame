@@ -3,19 +3,33 @@ extends Node
 var current_hub := "itubera"
 var visited_hubs := ["itubera"]
 var travel_log := []
-var unlocked_hubs := ["itubera", "salvador", "zambiapunga", "camamu_manguezal"]
+var unlocked_hubs := ["itubera", "salvador", "zambiapunga", "camamu_manguezal", "pratigi_festival"]
 
 func reset() -> void:
 	current_hub = "itubera"
 	visited_hubs = ["itubera"]
 	travel_log = []
-	unlocked_hubs = ["itubera", "salvador", "zambiapunga", "camamu_manguezal"]
+	unlocked_hubs = ["itubera", "salvador", "zambiapunga", "camamu_manguezal", "pratigi_festival"]
 
 func get_hub_data(hub_id: String) -> Dictionary:
 	return DataRegistry.hubs_dense.get("hubs", {}).get(hub_id, {})
 
 func can_travel_to(hub_id: String) -> bool:
-	return unlocked_hubs.has(hub_id) and not get_hub_data(hub_id).is_empty()
+	var hub: Dictionary = get_hub_data(hub_id)
+	if hub.is_empty() or not unlocked_hubs.has(hub_id):
+		return false
+	return WorldState.act >= int(hub.get("unlock_act", 1))
+
+func get_travel_lock_reason(hub_id: String) -> String:
+	var hub: Dictionary = get_hub_data(hub_id)
+	if hub.is_empty():
+		return "Destino sem dados."
+	if not unlocked_hubs.has(hub_id):
+		return "Destino ainda não descoberto."
+	var required_act := int(hub.get("unlock_act", 1))
+	if WorldState.act < required_act:
+		return "Liberado no Ato %d." % required_act
+	return ""
 
 func travel_to(hub_id: String) -> Dictionary:
 	if not can_travel_to(hub_id):
@@ -50,3 +64,5 @@ func load_from_dict(data: Dictionary) -> void:
 	visited_hubs = data.get("visited_hubs", ["itubera"])
 	travel_log = data.get("travel_log", [])
 	unlocked_hubs = data.get("unlocked_hubs", unlocked_hubs)
+	if not unlocked_hubs.has("pratigi_festival"):
+		unlocked_hubs.append("pratigi_festival")

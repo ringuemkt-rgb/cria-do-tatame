@@ -37,6 +37,14 @@
       "mission_links": ["ato3_comunicado_ou_silencio"],
       "visual_mood": "areia, mar, celulares, crowd leve"
     },
+    "praia_de_pratigi_festival": {
+      "role": "rota paralela de hype, aposta e consequencia",
+      "story_function": "Uma versão ficcional noturna de Pratigi onde o palco amplifica a tentação do público e a exposição chama atenção das autoridades.",
+      "gameplay_modifiers": {"explosion_penalty": -0.10, "hype_on_win": 4, "sombra_on_entry": 1, "authority_heat": true},
+      "mission_links": ["molho_pratigi_silencio"],
+      "visual_mood": "praia noturna, DJ ficcional, crowd dançando, maré viva, luz lenta ciano/magenta",
+      "safety": {"technical_stoppage": true, "authority_evasion": false, "real_money_betting": false}
+    },
     "colonia_nishimura": {
       "role": "disciplina fria",
       "story_function": "Lugar de silencio, precisao e custo do erro.",

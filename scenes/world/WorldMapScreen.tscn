@@ -40,6 +40,11 @@ text = "ZAMBIAPUNGA"
 layout_mode = 2
 text = "CAMAMU E MANGUEZAL"
 
+[node name="Pratigi" type="Button" parent="Panel"]
+custom_minimum_size = Vector2(0, 56)
+layout_mode = 2
+text = "PRATIGI — FESTIVAL MARÉ ALTA (ATO 2)"
+
 [node name="Back" type="Button" parent="Panel"]
 layout_mode = 2
 text = "VOLTAR"
