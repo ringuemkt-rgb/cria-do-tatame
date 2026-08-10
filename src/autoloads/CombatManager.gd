@@ -8,6 +8,10 @@ const CombatStateMachineScript = preload("res://src/combat/CombatStateMachine.gd
 const TechniqueResolverScript = preload("res://src/combat/TechniqueResolver.gd")
 const TechniqueClashResolverScript = preload("res://src/combat/TechniqueClashResolver.gd")
 const FrameDataSystemScript = preload("res://src/combat/FrameDataSystem.gd")
+const FighterStyleSystemScript = preload("res://src/career/FighterStyleSystem.gd")
+const GroundGraphRulesScript = preload("res://src/combat/GroundGraphRules.gd")
+const SubmissionExchangeScript = preload("res://src/combat/SubmissionExchange.gd")
+const GroundStaminaRulesScript = preload("res://src/combat/GroundStaminaRules.gd")
 
 const STATE_MIRROR := {
 	"PLAYER_STANDING_NEUTRAL": "PLAYER_STANDING_NEUTRAL",
@@ -37,6 +41,10 @@ var state_machine: Node
 var technique_resolver: Node
 var clash_resolver: Node
 var frame_data_system: Node
+var fighter_style_system: RefCounted
+var ground_graph_rules: RefCounted
+var submission_exchange: Node
+var ground_stamina_rules: RefCounted
 
 func _ready() -> void:
 	_ensure_runtime_components()
@@ -58,6 +66,19 @@ func _ensure_runtime_components() -> void:
 		frame_data_system = FrameDataSystemScript.new()
 		frame_data_system.name = "FrameDataSystemRuntime"
 		add_child(frame_data_system)
+	if fighter_style_system == null:
+		fighter_style_system = FighterStyleSystemScript.new()
+	if ground_graph_rules == null:
+		ground_graph_rules = GroundGraphRulesScript.new()
+		ground_graph_rules.call("configure", DataRegistry.ground_graph)
+	if submission_exchange == null:
+		submission_exchange = SubmissionExchangeScript.new()
+		submission_exchange.name = "SubmissionExchangeRuntime"
+		add_child(submission_exchange)
+		submission_exchange.call("configure", DataRegistry.submission_exchange, DataRegistry.submissions_anatomy)
+	if ground_stamina_rules == null:
+		ground_stamina_rules = GroundStaminaRulesScript.new()
+		ground_stamina_rules.call("configure", DataRegistry.ground_stamina)
 
 func start_combat(new_arena_id: String, new_player_id: String, new_opponent_id: String) -> Dictionary:
 	_ensure_runtime_components()
@@ -67,6 +88,7 @@ func start_combat(new_arena_id: String, new_player_id: String, new_opponent_id: 
 	phase = CombatPhase.DISTANCE
 	is_running = true
 	last_result = {}
+	submission_exchange.call("reset_exchange", false)
 	fighters = {
 		player_id: _create_runtime_stats(player_id),
 		opponent_id: _create_runtime_stats(opponent_id)
@@ -93,7 +115,7 @@ func iniciar_combate(id_jogador: String, id_oponente: String, arena: String) -> 
 func _create_runtime_stats(character_id: String) -> Dictionary:
 	var base: Dictionary = DataRegistry.characters.get(character_id, {})
 	var stats: Dictionary = base.get("stats", {})
-	return {
+	var runtime_stats := {
 		"health": float(stats.get("health", stats.get("hp", 100))),
 		"gas": float(stats.get("gas", 70)),
 		"focus": float(stats.get("focus", 50)),
@@ -103,6 +125,9 @@ func _create_runtime_stats(character_id: String) -> Dictionary:
 		"control": float(stats.get("control", stats.get("technique", 50))),
 		"moral": float(stats.get("moral", 50))
 	}
+	if character_id == player_id and fighter_style_system != null:
+		return fighter_style_system.call("apply_starting_resources", runtime_stats)
+	return runtime_stats
 
 func get_current_state_name() -> String:
 	if state_machine == null:
@@ -126,6 +151,15 @@ func _state_to_player_perspective(actor_id: String, actor_state_name: String) ->
 func get_available_techniques(actor_id: String = "") -> Array:
 	var resolved_actor: String = actor_id if actor_id != "" else player_id
 	var actor: Dictionary = fighters.get(resolved_actor, {})
+	if _is_submission_exchange_active():
+		var exchange_actions: Array = submission_exchange.call("get_available_actions", resolved_actor)
+		for action_value in exchange_actions:
+			if typeof(action_value) != TYPE_DICTIONARY:
+				continue
+			var action: Dictionary = action_value
+			var action_cost: Dictionary = action.get("cost", {})
+			action["affordable"] = _can_pay_action(actor, action_cost)
+		return exchange_actions
 	var actor_state: String = get_actor_state_name(resolved_actor)
 	var available: Array = []
 	for technique_value in DataRegistry.techniques.values():
@@ -138,11 +172,11 @@ func get_available_techniques(actor_id: String = "") -> Array:
 		var owner: String = str(technique.get("dono", technique.get("owner", "qualquer")))
 		if owner != "" and owner != "qualquer" and owner != resolved_actor:
 			continue
-		var cost: Dictionary = technique.get("cost", technique.get("custo", {}))
+		var item: Dictionary = ground_stamina_rules.call("decorate_technique", technique, actor_state)
+		var cost: Dictionary = item.get("cost", {})
 		var gas_cost: float = float(cost.get("gas", technique.get("gas_cost", 0)))
 		var focus_cost: float = float(cost.get("focus", cost.get("foco", technique.get("focus_cost", 0))))
 		var moral_cost: float = float(cost.get("moral", technique.get("moral_cost", 0)))
-		var item: Dictionary = technique.duplicate(true)
 		item["affordable"] = (
 			float(actor.get("gas", 0)) >= gas_cost
 			and float(actor.get("focus", 0)) >= focus_cost
@@ -166,6 +200,8 @@ func _sort_techniques_by_name(a: Dictionary, b: Dictionary) -> bool:
 func apply_player_action(action_id: String) -> Dictionary:
 	if not is_running:
 		return {"success": false, "error": "combat_not_running", "action_id": action_id}
+	if _is_submission_exchange_active():
+		return apply_actor_action(player_id, action_id)
 	if action_id == "reset_position":
 		state_machine.call("reiniciar_em_pe")
 		_change_phase(CombatPhase.RESET)
@@ -193,6 +229,16 @@ func apply_opponent_action(action_id: String) -> Dictionary:
 func apply_actor_action(actor_id: String, action_id: String) -> Dictionary:
 	if not is_running:
 		return {"success": false, "error": "combat_not_running", "action_id": action_id}
+	if _is_submission_exchange_active():
+		if action_id.begins_with("submission_"):
+			return _apply_submission_action(actor_id, action_id)
+		return {
+			"success": false,
+			"error": "submission_exchange_requires_context_action",
+			"action_id": action_id,
+			"actor_id": actor_id,
+			"message": "A troca tecnica precisa ser resolvida antes de outra posicao."
+		}
 	var defender_id := opponent_id if actor_id == player_id else player_id
 	var technique: Dictionary = DataRegistry.get_technique(action_id)
 	if technique.is_empty():
@@ -209,15 +255,28 @@ func apply_actor_action(actor_id: String, action_id: String) -> Dictionary:
 func execute_technique(actor_id: String, defender_id: String, technique: Dictionary) -> Dictionary:
 	if not fighters.has(actor_id) or not fighters.has(defender_id):
 		return {"success": false, "error": "fighter_not_found", "technique_id": technique.get("id", "unknown")}
+	var actor_state_before: String = get_actor_state_name(actor_id)
+	var graph_validation: Dictionary = ground_graph_rules.call(
+		"validate_technique_transition", technique, actor_state_before
+	)
+	if not bool(graph_validation.get("ok", false)):
+		return {
+			"success": false,
+			"error": str(graph_validation.get("error", "ground_graph_rejected")),
+			"technique_id": str(technique.get("id", "unknown")),
+			"actor_id": actor_id,
+			"defender_id": defender_id,
+			"message": "Transicao recusada pelo contrato posicional."
+		}
 	SignalBus.technique_started.emit(technique.get("id", "unknown"), actor_id)
 	var player_state_before: String = get_current_state_name()
-	var actor_state_before: String = get_actor_state_name(actor_id)
 	var actor: Dictionary = fighters.get(actor_id, {})
 	var defender: Dictionary = fighters.get(defender_id, {})
-	var card_context := _build_card_context(actor_id, defender_id, technique, actor, defender, actor_state_before)
+	var runtime_technique: Dictionary = ground_stamina_rules.call("decorate_technique", technique, actor_state_before)
+	var card_context := _build_card_context(actor_id, defender_id, runtime_technique, actor, defender, actor_state_before)
 	var resolver_result: Dictionary = technique_resolver.call(
 		"resolve_technique",
-		technique,
+		runtime_technique,
 		actor,
 		defender,
 		card_context
@@ -234,6 +293,9 @@ func execute_technique(actor_id: String, defender_id: String, technique: Diction
 	last_result["defender_id"] = defender_id
 	last_result["state_from"] = player_state_before
 	last_result["actor_state_from"] = actor_state_before
+	last_result["ground_stamina"] = ground_stamina_rules.call(
+		"get_action_snapshot", runtime_technique, actor_state_before, float(actor.get("gas", 0.0))
+	)
 
 	if _resolve_finisher_before_transition(actor_id, defender_id, technique, last_result, actor_state_before):
 		last_result["phase"] = CombatPhase.keys()[phase]
@@ -260,6 +322,18 @@ func execute_technique(actor_id: String, defender_id: String, technique: Diction
 		last_result["state_to"] = player_state_to
 		_apply_state_transition(player_state_to)
 		_change_phase(_phase_from_string(str(technique.get("phase_to", "TRANSITION"))))
+		var submission_start: Dictionary = _maybe_start_submission_exchange(
+			actor_id,
+			defender_id,
+			technique,
+			player_state_before,
+			last_result
+		)
+		if bool(submission_start.get("ok", false)):
+			last_result["submission_exchange"] = submission_start
+			_change_phase(CombatPhase.TECHNICAL)
+		elif str(submission_start.get("error", "")) != "not_submission_setup":
+			last_result["submission_exchange_error"] = str(submission_start.get("error", "submission_start_failed"))
 	else:
 		_adjust(defender_id, "focus", 2.0)
 
@@ -305,6 +379,14 @@ func _build_card_context(
 	context["defense_card"] = defense_card
 	context["deck_clash"] = clash
 	context["chance_modifier"] = float(clash.get("chance_modifier", 0.0))
+	if ground_stamina_rules != null:
+		var fatigue_profile: Dictionary = ground_stamina_rules.call("get_fatigue_profile", float(actor.get("gas", 0.0)))
+		context["ground_fatigue"] = fatigue_profile
+		context["chance_modifier"] = float(context["chance_modifier"]) + float(fatigue_profile.get("chance_modifier", 0.0))
+	if actor_id == player_id and fighter_style_system != null:
+		context["chance_modifier"] = float(context["chance_modifier"]) + float(
+			fighter_style_system.call("get_family_chance_bonus", family)
+		)
 	context["frame_data"] = frame_data
 	if bool(clash.get("enabled", false)):
 		SignalBus.technique_clash_resolved.emit(clash.duplicate(true))
@@ -334,6 +416,100 @@ func _can_pay_technique_and_card(actor: Dictionary, technique: Dictionary, card:
 	var gas_total := float(technique_cost.get("gas", 0.0)) + float(card_cost.get("gas", 0.0))
 	var focus_total := float(technique_cost.get("focus", technique_cost.get("foco", 0.0))) + float(card_cost.get("focus", 0.0))
 	return float(actor.get("gas", 0.0)) >= gas_total and float(actor.get("focus", 0.0)) >= focus_total
+
+func _can_pay_action(actor: Dictionary, cost: Dictionary) -> bool:
+	return (
+		float(actor.get("gas", 0.0)) >= float(cost.get("gas", 0.0))
+		and float(actor.get("focus", 0.0)) >= float(cost.get("focus", 0.0))
+	)
+
+func _is_submission_exchange_active() -> bool:
+	return submission_exchange != null and bool(submission_exchange.get("active"))
+
+func _apply_submission_action(actor_id: String, action_id: String) -> Dictionary:
+	var available: Array = submission_exchange.call("get_available_actions", actor_id)
+	var selected: Dictionary = {}
+	for action_value in available:
+		if typeof(action_value) == TYPE_DICTIONARY and str(action_value.get("id", "")) == action_id:
+			selected = action_value
+			break
+	if selected.is_empty():
+		return {"success": false, "error": "submission_action_unavailable", "action_id": action_id, "actor_id": actor_id}
+	var actor: Dictionary = fighters.get(actor_id, {})
+	var cost: Dictionary = selected.get("cost", {})
+	if not _can_pay_action(actor, cost):
+		return {"success": false, "error": "resource_insufficient", "action_id": action_id, "actor_id": actor_id}
+	var submission_effectiveness := 1.0
+	if ground_stamina_rules != null:
+		submission_effectiveness = float(ground_stamina_rules.call(
+			"get_submission_effectiveness", float(actor.get("gas", 0.0))
+		))
+	var action_result: Dictionary = submission_exchange.call(
+		"apply_action", actor_id, action_id, submission_effectiveness
+	)
+	if not bool(action_result.get("success", false)):
+		return action_result
+	_adjust(actor_id, "gas", -float(cost.get("gas", 0.0)))
+	_adjust(actor_id, "focus", -float(cost.get("focus", 0.0)))
+	action_result["fighters"] = fighters
+	last_result = action_result.duplicate(true)
+	SignalBus.technique_resolved.emit(action_result.duplicate(true))
+	_emit_resources()
+	if bool(action_result.get("terminal", false)):
+		_resolve_submission_outcome(action_result)
+	return action_result
+
+func _maybe_start_submission_exchange(
+	actor_id: String,
+	defender_id: String,
+	technique: Dictionary,
+	player_state_before: String,
+	result: Dictionary
+) -> Dictionary:
+	var family := str(technique.get("family", technique.get("familia", "")))
+	var exit_state := str(technique.get("exit_state", technique.get("estado_saida", "")))
+	if family != "finalizacao" or exit_state != "PLAYER_SUBMISSION_ATTACK":
+		return {"ok": false, "error": "not_submission_setup"}
+	var frame_data: Dictionary = result.get("frame_data", {})
+	var presentation: Dictionary = frame_data.get("presentation", {})
+	var initial_advantage := float(presentation.get("submission_start", 0.50))
+	return submission_exchange.call(
+		"start_exchange",
+		str(technique.get("id", "")),
+		actor_id,
+		defender_id,
+		player_state_before,
+		initial_advantage,
+		_submission_rules_context()
+	)
+
+func _submission_rules_context() -> Dictionary:
+	var arena: Dictionary = DataRegistry.get_arena(arena_id)
+	return {
+		"arena_id": arena_id,
+		"arena_type": str(arena.get("type", "")),
+		"uniform": "gi",
+		"age_division": "adult",
+		"belt": str(WorldState.belt)
+	}
+
+func _resolve_submission_outcome(result: Dictionary) -> void:
+	var resolved_outcome := str(result.get("outcome", ""))
+	var attacker := str(result.get("attacker_id", ""))
+	var defender := str(result.get("defender_id", ""))
+	if resolved_outcome in ["tap", "technical_stop"]:
+		finish_combat({
+			"winner": attacker,
+			"loser": defender,
+			"method": str(result.get("technique_id", "submission")),
+			"technical": true,
+			"submission_outcome": resolved_outcome,
+			"state_from": get_current_state_name()
+		})
+		return
+	var recovery_state := str(result.get("source_player_state", "PLAYER_STANDING_NEUTRAL"))
+	_apply_state_transition(recovery_state)
+	_change_phase(CombatPhase.GROUND if recovery_state != "PLAYER_STANDING_NEUTRAL" else CombatPhase.DISTANCE)
 
 func _resolve_finisher_before_transition(
 	actor_id: String,
@@ -366,6 +542,8 @@ func _apply_state_transition(state_name: String) -> void:
 
 func _check_end(actor_id: String, defender_id: String, technique: Dictionary = {}, result: Dictionary = {}) -> void:
 	if not is_running:
+		return
+	if _is_submission_exchange_active():
 		return
 	var actor: Dictionary = fighters.get(actor_id, {})
 	var defender: Dictionary = fighters.get(defender_id, {})
@@ -425,6 +603,8 @@ func finish_combat(result: Dictionary) -> void:
 	last_result["fighters"] = fighters.duplicate(true)
 	last_result["final_state"] = get_current_state_name()
 	_apply_post_combat_effects(last_result)
+	if submission_exchange != null:
+		submission_exchange.call("reset_exchange", false)
 	state_machine.call("reset")
 	SignalBus.combat_finished.emit(last_result)
 	SignalBus.combat_ended.emit(last_result)
@@ -435,15 +615,19 @@ func finalizar_combate(result: Dictionary) -> void:
 	finish_combat(result)
 
 func _apply_post_combat_effects(result: Dictionary) -> void:
+	var style_rewards := {"money_multiplier": 1.0, "honor_win_bonus": 0.0, "hype_win_bonus": 0.0}
+	if fighter_style_system != null:
+		style_rewards = fighter_style_system.call("get_post_combat_modifiers")
+		result["active_style_id"] = fighter_style_system.call("get_active_style_id")
 	WorldState.last_combat_result = result
 	if bool(result.get("skip_career_result", false)):
 		WorldState._sync_aliases()
 		return
 	if result.get("winner", "") == player_id:
 		WorldState.fights_won += 1
-		WorldState.money += 200
-		WorldState.modify_reputation("honra", 5.0)
-		WorldState.modify_reputation("hype", 3.0)
+		WorldState.money += int(round(200.0 * float(style_rewards.get("money_multiplier", 1.0))))
+		WorldState.modify_reputation("honra", 5.0 + float(style_rewards.get("honor_win_bonus", 0.0)))
+		WorldState.modify_reputation("hype", 3.0 + float(style_rewards.get("hype_win_bonus", 0.0)))
 		if bool(result.get("technical", false)):
 			WorldState.technical_finishes += 1
 	else:

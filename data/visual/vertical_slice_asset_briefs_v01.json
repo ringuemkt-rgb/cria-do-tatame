@@ -1,0 +1,60 @@
+{
+  "$schema": "visual_asset_briefs_v1",
+  "version": "1.0.0",
+  "status": "specified_candidates_only",
+  "shipping_ready": false,
+  "briefs": [
+    {
+      "id": "arena_dique_environment_master",
+      "asset_type": "environment",
+      "generation_role": "layered_source_candidate",
+      "screen_contract": "combat",
+      "reference_ids": ["official_arena_live_combat", "combat_tactical_flow"],
+      "resolution": [1280, 720],
+      "palette_tokens": ["ink", "charcoal", "frame_gold", "tatame_blue", "off_white"],
+      "subject": "Arena oficial de jiu-jitsu no Dique, Salvador, arquibancada baiana, juiz e mesa tecnica, tatame azul e dourado, iluminacao noturna institucional",
+      "safe_zones": ["center_fighter_stage_52_percent", "top_hud_25_percent", "bottom_actions_18_percent"],
+      "forbidden": ["visible_words", "logos", "real_brands", "copied_people", "ui_panels", "graphic_injury"],
+      "required_review": ["reference_side_by_side", "regional_cultural_review", "android_visual_test"]
+    },
+    {
+      "id": "ruan_macacao_model_sheet",
+      "asset_type": "character",
+      "generation_role": "model_sheet_candidate",
+      "screen_contract": "combat",
+      "reference_ids": ["terreiro_hub", "official_arena_live_combat"],
+      "resolution": [1280, 720],
+      "palette_tokens": ["ink", "frame_gold", "off_white", "tatame_blue", "respect_green"],
+      "subject": "Ruan Macacao Silva, lutador baiano adulto, identidade original sem semelhanca com pessoa real, kimono branco faixa azul, postura atletica de grappling, vistas frontal tres-quartos perfil e costas",
+      "safe_zones": ["separate_turnaround_figures", "clear_silhouette_at_72px"],
+      "forbidden": ["real_person_likeness", "extra_limbs", "visible_words", "logos", "real_brands", "graphic_injury"],
+      "required_review": ["canon_review", "character_consistency_review", "bjj_human_review"]
+    },
+    {
+      "id": "davi_relampago_model_sheet",
+      "asset_type": "character",
+      "generation_role": "model_sheet_candidate",
+      "screen_contract": "combat",
+      "reference_ids": ["official_arena_live_combat", "combat_tactical_flow"],
+      "resolution": [1280, 720],
+      "palette_tokens": ["ink", "charcoal", "frame_gold", "off_white", "conflict_red"],
+      "subject": "Davi Relampago, rival tecnico baiano adulto e original, kimono preto, silhueta leve e explosiva, vistas frontal tres-quartos perfil e costas",
+      "safe_zones": ["separate_turnaround_figures", "clear_silhouette_at_72px"],
+      "forbidden": ["real_person_likeness", "extra_limbs", "visible_words", "logos", "real_brands", "graphic_injury"],
+      "required_review": ["canon_review", "character_consistency_review", "bjj_human_review"]
+    },
+    {
+      "id": "chave_braco_paired_blockout",
+      "asset_type": "paired_animation",
+      "generation_role": "art_direction_blockout_only",
+      "screen_contract": "combat",
+      "reference_ids": ["combat_tactical_flow"],
+      "resolution": [1280, 720],
+      "palette_tokens": ["ink", "off_white", "tatame_blue", "conflict_red", "focus_violet"],
+      "subject": "Contact sheet de blockout para chave de braco da montada com dois lutadores, seis fases sincronizadas anticipation entry establish stabilize response recovery, tap seguro e soltura respeitosa",
+      "safe_zones": ["shared_root_visible", "contact_anchor_visible", "no_ui_overlap"],
+      "forbidden": ["real_world_instruction", "joint_break", "graphic_injury", "extra_limbs", "visible_words", "logos"],
+      "required_review": ["first_party_motion_required_for_runtime", "bjj_human_review", "paired_sync_review", "android_visual_test"]
+    }
+  ]
+}

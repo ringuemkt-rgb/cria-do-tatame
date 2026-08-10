@@ -19,11 +19,22 @@ Este arquivo é a porta de entrada da documentação ativa. Antes de criar um do
 - [`../data/production/release_gate_status_v01.json`](../data/production/release_gate_status_v01.json) — ledger único com evidências e pendências de release;
 - [`../data/visual/production_manifest_v02.json`](../data/visual/production_manifest_v02.json) — inventário audiovisual;
 - [`../data/production/repository_governance_v01.json`](../data/production/repository_governance_v01.json) — governança validável por máquina.
+- [`../data/combat/combat_presentation_v01.json`](../data/combat/combat_presentation_v01.json) — orçamento e cues de apresentação do combate;
+- [`../data/audio/audio_cues_v01.json`](../data/audio/audio_cues_v01.json) — catálogo de áudio com fallback offline;
+- [`../data/production/motion_source_registry_v01.json`](../data/production/motion_source_registry_v01.json) — licenças e gates do mocap;
+- [`../data/production/biome_tileset_contract_v01.json`](../data/production/biome_tileset_contract_v01.json) — contrato do TileSet regional.
+- [`../data/production/ai_production_sop_v01.json`](../data/production/ai_production_sop_v01.json) — orquestração de produção assistida sem duplicar runtime ou remover revisão humana.
+- [`../data/visual/visual_gameplay_protocol_v01.json`](../data/visual/visual_gameplay_protocol_v01.json) — direção derivada das dez pranchas, contratos de tela, imagem, animação pareada, áudio e HUD tático.
+- [`../data/production/visual_asset_bom_v01.json`](../data/production/visual_asset_bom_v01.json) — metas em packs aprovados, prioridades da vertical slice e estados de promoção;
+- [`../data/visual/vertical_slice_asset_briefs_v01.json`](../data/visual/vertical_slice_asset_briefs_v01.json) — briefs candidatos de Dique, Ruan, Davi e animação pareada, sempre sujeitos a revisão humana;
 
 ## Produto e gameplay
 
 - [`CRIA_DO_TATAME_SUPREME_BUILD_SPEC_V1.md`](CRIA_DO_TATAME_SUPREME_BUILD_SPEC_V1.md) — escopo de produto;
 - [`gameplay/COMBAT_DECK_SYSTEM_V01.md`](gameplay/COMBAT_DECK_SYSTEM_V01.md) — deck atual integrado à `main`;
+- [`gameplay/FIGHTER_STYLES_SKILL_TREE_V01.md`](gameplay/FIGHTER_STYLES_SKILL_TREE_V01.md) — oito estilos, quatro ramos, save e consumidores reais de combate/Cria Live;
+- [`gameplay/GROUND_SUBMISSION_SYSTEM_V01.md`](gameplay/GROUND_SUBMISSION_SYSTEM_V01.md) — grafo posicional sobre a FSM existente, anatomia segura e troca determinística de controle/escape;
+- [`gameplay/GROUND_STAMINA_V01.md`](gameplay/GROUND_STAMINA_V01.md) — sobretaxa por ação/posição e faixas limitadas de fadiga, sem dreno por frame;
 - `canon/` — personagens, facções, mundo e narrativa aprovados;
 - `gameplay/` — combate, progressão, regras e economia.
 - [`implementation/PRATIGI_FESTIVAL_ARENA_V01.md`](implementation/PRATIGI_FESTIVAL_ARENA_V01.md) — arena paralela de Pratigi, aposta interna, heat, interdição e limites de escopo.
@@ -37,6 +48,10 @@ Este arquivo é a porta de entrada da documentação ativa. Antes de criar um do
 - `art_bible/` — identidade visual e contratos de qualidade ativos;
 - `production/` — planos de lote, APK, animação, áudio e conteúdo;
 - [`production/APK_VISUAL_COMPLETION_PLAN_V09.md`](production/APK_VISUAL_COMPLETION_PLAN_V09.md) — gates de vertical slice e Android;
+- [`production/PROFESSIONAL_GAME_BUILD_MASTER_V01.md`](production/PROFESSIONAL_GAME_BUILD_MASTER_V01.md) — arquitetura integrada, audiovisual, mapa, mocap e Definition of Done;
+- [`production/VISUAL_ANIMATION_COMBAT_PROTOCOL_V01.md`](production/VISUAL_ANIMATION_COMBAT_PROTOCOL_V01.md) — análise das referências e protocolo executável de fidelidade visual/combate;
+- [`production/AGENT_SPRITE_FORGE_INTEGRATION_V01.md`](production/AGENT_SPRITE_FORGE_INTEGRATION_V01.md) — auditoria, pin e adapter candidato do Agent Sprite Forge, com limites explícitos para grappling pareado;
+- [`production/NEPLEX_VECTORIZER_INTEGRATION_V01.md`](production/NEPLEX_VECTORIZER_INTEGRATION_V01.md) — pin, adaptador local e auditoria fail-closed para SVGs de emblemas/ícones, mantendo toda pixel art em PNG;
 - [`../data/visual/production_manifest_v02.json`](../data/visual/production_manifest_v02.json) — entregáveis mínimos por asset.
 
 ## Engenharia e QA

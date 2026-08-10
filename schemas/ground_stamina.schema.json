@@ -1,0 +1,63 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "ground_stamina.schema.json",
+  "title": "Cria do Tatame Ground Stamina",
+  "type": "object",
+  "required": [
+    "$schema",
+    "version",
+    "simulation",
+    "runtime_owner",
+    "policy",
+    "limits",
+    "state_action_surcharge",
+    "fatigue_bands"
+  ],
+  "properties": {
+    "$schema": {"const": "ground_stamina_v1"},
+    "version": {"type": "string"},
+    "status": {"type": "string"},
+    "simulation": {"const": "per_resolved_action_deterministic"},
+    "resource": {"const": "gas"},
+    "runtime_owner": {"const": "CombatManager"},
+    "policy": {
+      "type": "object",
+      "required": ["wall_clock_drain", "background_process", "health_damage", "injury_outcome", "submission_terminal_actions_scaled"],
+      "properties": {
+        "wall_clock_drain": {"const": false},
+        "background_process": {"const": false},
+        "health_damage": {"const": false},
+        "injury_outcome": {"const": false},
+        "submission_terminal_actions_scaled": {"const": false}
+      },
+      "additionalProperties": false
+    },
+    "limits": {
+      "type": "object",
+      "required": ["max_action_surcharge", "min_submission_effectiveness", "max_submission_effectiveness", "min_chance_modifier", "max_chance_modifier"],
+      "additionalProperties": {"type": "number"}
+    },
+    "state_action_surcharge": {
+      "type": "object",
+      "minProperties": 14,
+      "additionalProperties": {"type": "number", "minimum": 0, "maximum": 2}
+    },
+    "fatigue_bands": {
+      "type": "array",
+      "minItems": 3,
+      "maxItems": 3,
+      "items": {
+        "type": "object",
+        "required": ["id", "gas_at_or_below", "chance_modifier", "submission_effectiveness"],
+        "properties": {
+          "id": {"type": "string"},
+          "gas_at_or_below": {"type": "number", "minimum": 0, "maximum": 100},
+          "chance_modifier": {"type": "number", "minimum": -0.14, "maximum": 0},
+          "submission_effectiveness": {"type": "number", "minimum": 0.6, "maximum": 1}
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "additionalProperties": false
+}

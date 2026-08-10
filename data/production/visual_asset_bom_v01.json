@@ -1,0 +1,43 @@
+{
+  "$schema": "visual_asset_bom_v1",
+  "version": "1.0.0",
+  "status": "production_plan",
+  "source_authority": "data/production/supreme_build_contract_v01.json",
+  "counting_unit": "approved_asset_pack",
+  "file_count_claimed": false,
+  "notes": "Targets count approved packs or runtime surfaces, not individual PNG, OGG or metadata files. The earlier estimate of approximately 920 assets is not used as a release claim.",
+  "batch_policy": {
+    "preferred_pack_count": 20,
+    "candidate_auto_promotion": false,
+    "human_art_direction_required": true,
+    "android_device_gate_required": true
+  },
+  "targets": [
+    {"id": "character_pack", "target": 18, "contract_key": "character"},
+    {"id": "paired_technique_pack", "target": 50, "contract_key": "paired_technique"},
+    {"id": "arena_pack", "target": 15, "contract_key": "arena"},
+    {"id": "ui_screen", "target": 18, "contract_key": "runtime_scene"},
+    {"id": "sfx_pack", "target": 100, "contract_key": "audio"},
+    {"id": "music_cue_pack", "target": 20, "contract_key": "audio"},
+    {"id": "ambience_loop_pack", "target": 12, "contract_key": "audio"}
+  ],
+  "gold_slice_priority": [
+    "ruan_character_pack",
+    "davi_character_pack",
+    "arena_do_dique_pack",
+    "ruan_vs_davi_core_paired_techniques",
+    "combat_hud_mobile",
+    "submission_hud",
+    "official_arena_audio_pack"
+  ],
+  "promotion_states": [
+    "specified",
+    "candidate_generated",
+    "pixel_cleanup_complete",
+    "integrated",
+    "side_by_side_reviewed",
+    "bjj_or_cultural_reviewed",
+    "android_tested",
+    "release_ready"
+  ]
+}

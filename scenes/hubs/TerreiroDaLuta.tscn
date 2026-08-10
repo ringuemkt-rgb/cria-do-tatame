@@ -30,12 +30,12 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -310.0
-offset_top = -330.0
+offset_top = -350.0
 offset_right = 310.0
-offset_bottom = 330.0
+offset_bottom = 350.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_constants/separation = 10
+theme_override_constants/separation = 6
 
 [node name="Title" type="Label" parent="Panel"]
 layout_mode = 2
@@ -70,6 +70,11 @@ text = "TREINAR"
 custom_minimum_size = Vector2(0, 54)
 layout_mode = 2
 text = "MONTAR GI DE COMBATE"
+
+[node name="ProgressionBtn" type="Button" parent="Panel"]
+custom_minimum_size = Vector2(0, 48)
+layout_mode = 2
+text = "ESTILOS E PROGRESSAO"
 
 [node name="FightDaviBtn" type="Button" parent="Panel"]
 custom_minimum_size = Vector2(0, 54)

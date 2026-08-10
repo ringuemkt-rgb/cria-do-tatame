@@ -1,0 +1,44 @@
+{
+  "$schema": "submission_exchange_v1",
+  "version": "1.0.0",
+  "simulation": "turn_based_deterministic",
+  "meters": ["technical_control", "escape_progress"],
+  "phases": [
+    {"id": "setup", "min_control": 0},
+    {"id": "lock", "min_control": 45},
+    {"id": "technical_pressure", "min_control": 68},
+    {"id": "tap_or_escape", "min_control": 86},
+    {"id": "referee_or_recovery", "terminal": true}
+  ],
+  "rules": {
+    "control_max": 100,
+    "escape_max": 100,
+    "initial_control_min": 28,
+    "initial_control_max": 54,
+    "technical_stop_threshold": 100,
+    "escape_threshold": 100,
+    "max_turns": 10,
+    "tap_priority": true,
+    "damage_meter": false,
+    "injury_outcome": false
+  },
+  "actions": [
+    {"id": "submission_adjust", "name": "AJUSTAR CONTROLE", "role": "attacker", "control_delta": 12, "escape_delta": 0, "cost": {"gas": 2, "focus": 1}, "base_chance": 0.70},
+    {"id": "submission_stabilize", "name": "ESTABILIZAR", "role": "attacker", "control_delta": 9, "escape_delta": -3, "cost": {"gas": 3, "focus": 1}, "base_chance": 0.68},
+    {"id": "submission_pressure", "name": "PRESSAO TECNICA", "role": "attacker", "control_delta": 17, "escape_delta": 3, "cost": {"gas": 5, "focus": 2}, "base_chance": 0.62, "min_phase": "lock"},
+    {"id": "submission_release", "name": "SOLTAR COM SEGURANCA", "role": "attacker", "terminal_outcome": "release", "cost": {"gas": 0, "focus": 0}, "base_chance": 1.0},
+    {"id": "submission_protect", "name": "PROTEGER ESTRUTURA", "role": "defender", "control_delta": -5, "escape_delta": 13, "cost": {"gas": 2, "focus": 1}, "base_chance": 0.72},
+    {"id": "submission_escape", "name": "CRIAR ESPACO", "role": "defender", "control_delta": -8, "escape_delta": 18, "cost": {"gas": 4, "focus": 2}, "base_chance": 0.66},
+    {"id": "submission_tap", "name": "BATER TAP", "role": "defender", "terminal_outcome": "tap", "cost": {"gas": 0, "focus": 0}, "base_chance": 0.10}
+  ],
+  "arena_safety_profiles": {
+    "default": {"intervention_enabled": true, "intervention_role": "corner_mediator"},
+    "terreiro_da_luta": {"intervention_enabled": true, "intervention_role": "instructor"},
+    "arena_do_dique": {"intervention_enabled": true, "intervention_role": "referee"},
+    "ferro_velho_da_lapa": {"intervention_enabled": true, "intervention_role": "community_mediator"},
+    "manguezal_profundo": {"intervention_enabled": true, "intervention_role": "community_mediator"},
+    "praia_de_pratigi": {"intervention_enabled": true, "intervention_role": "event_mediator"},
+    "praia_de_pratigi_festival": {"intervention_enabled": true, "intervention_role": "event_mediator"}
+  },
+  "approved_outcomes": ["tap", "escape", "release", "technical_stop", "time_or_points"]
+}

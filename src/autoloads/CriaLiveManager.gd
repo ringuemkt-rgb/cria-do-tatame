@@ -1,12 +1,16 @@
 extends Node
 
+const FighterStyleSystemScript = preload("res://src/career/FighterStyleSystem.gd")
+
 var posts: Array = []
 var pending_crises: Array = []
 var faction_metrics: Dictionary = {}
 var legacy_faction_metrics: Dictionary = {}
 var _last_combat_fingerprint: String = ""
+var fighter_style_system: RefCounted
 
 func _ready() -> void:
+	fighter_style_system = FighterStyleSystemScript.new()
 	if SignalBus.has_signal("combat_finished") and not SignalBus.combat_finished.is_connected(_on_combat_finished):
 		SignalBus.combat_finished.connect(_on_combat_finished)
 	if SignalBus.has_signal("reputation_changed") and not SignalBus.reputation_changed.is_connected(_on_reputation_changed):
@@ -49,6 +53,7 @@ func create_post(text: String, tone: String, author := "cria_live", metadata: Di
 		"comments": metadata.get("comments", []).slice(0, 12),
 		"metrics": base_metrics,
 		"source_event": str(metadata.get("source_event", "")),
+		"style_id": str(metadata.get("style_id", "")),
 		"resolved": bool(metadata.get("resolved", false))
 	}
 	posts.append(post)
@@ -129,9 +134,17 @@ func _on_combat_finished(result: Dictionary) -> void:
 		})
 		return
 	if result.get("winner", "") == WorldState.player_id or result.get("winner", "") == "ruan_macacao":
-		create_post(_text_for_context("vitoria", result), "vitoria", "cria_live", {
+		var live_profile: Dictionary = fighter_style_system.call("get_cria_live_profile") if fighter_style_system != null else {}
+		var style_id := str(result.get("active_style_id", "pressao"))
+		var recommended_tone := str(live_profile.get("recommended_tone", "vitoria"))
+		create_post(_text_for_context("vitoria", result), recommended_tone, "cria_live", {
 			"source_event": "combat_finished",
-			"metrics": {"reach": 180, "hype": 12, "sponsor_interest": 4}
+			"style_id": style_id,
+			"metrics": {
+				"reach": 180.0 + float(live_profile.get("reach_bonus", 0.0)),
+				"hype": 12.0 + float(live_profile.get("hype_bonus", 0.0)),
+				"sponsor_interest": 4
+			}
 		})
 	else:
 		create_post(_text_for_context("derrota", result), "derrota", "cria_live", {

@@ -1,0 +1,148 @@
+{
+  "$schema": "ai_production_sop_v1",
+  "version": "1.0.0",
+  "status": "active_production_contract",
+  "verified_on": "2026-08-10",
+  "purpose": "Orquestrar producao assistida por IA sem duplicar autoridades, promover candidatos automaticamente ou substituir revisao humana.",
+  "memory_authorities": [
+    "AGENTS.md",
+    "README.md",
+    "docs/INDEX.md",
+    "docs/DECISIONS.md",
+    "docs/ROADMAP.md",
+    "data/production/canon_contract_v4_1.json",
+    "data/production/supreme_build_contract_v01.json"
+  ],
+  "runtime_authorities": {
+    "combat": "CombatManager",
+    "deck": "DeckManager",
+    "audio": "AudioManager",
+    "world_state": "WorldState",
+    "world_events": "WorldDirectorManager",
+    "world_map": "WorldMapManager"
+  },
+  "repository_policy": {
+    "single_runtime": "Godot",
+    "canonical_data_root": "data/",
+    "canonical_document_index": "docs/INDEX.md",
+    "parallel_spec_tree_forbidden": true,
+    "parallel_runtime_tree_forbidden": true,
+    "forbidden_parallel_paths": ["specs/", "scripts/core/", "game/project.godot"],
+    "new_autoload_requires_boot_audit": true,
+    "stable_ids_require_migration": true
+  },
+  "production_loop": [
+    "inventory",
+    "diagnose",
+    "small_vertical_contract",
+    "implement_or_author",
+    "integrate_real_consumer",
+    "validate_automatically",
+    "review_human_or_device",
+    "publish_draft_pr_with_evidence"
+  ],
+  "artifact_states": [
+    "specified",
+    "implemented",
+    "integrated",
+    "validated_automatically",
+    "tested_by_human_or_device",
+    "release_ready"
+  ],
+  "automation_limits": {
+    "autonomous_merge_allowed": false,
+    "autonomous_shipping_asset_promotion_allowed": false,
+    "runtime_network_ai_allowed": false,
+    "llm_may_change_combat_outcome": false,
+    "human_approval_required": true,
+    "android_physical_device_gate_required": true,
+    "binary_assets_allowed_with_provenance": true,
+    "text_specification_replaces_asset_qa": false
+  },
+  "asset_pipeline": {
+    "generated_output_initial_state": "candidate",
+    "required_before_shipping": ["origin", "license", "metadata", "preview", "qa", "human_approval", "godot_integration"],
+    "paired_grappling_required": ["attacker", "defender", "shared_pivot", "timing", "sync_map", "human_bjj_review"],
+    "style_compiler_policy": "assistive_not_authoritative",
+    "palette_quantization_may_not_replace_manual_pixel_qa": true,
+    "alpha_must_be_preserved": true
+  },
+  "resolution_policy": {
+    "current_runtime_viewport": [1280, 720],
+    "candidate_authoring_grids": [[640, 360], [480, 270]],
+    "runtime_change_requires_dedicated_device_batch": true,
+    "nearest_filter_required_for_pixel_assets": true
+  },
+  "toolchain_decisions": [
+    {
+      "id": "godot",
+      "url": "https://github.com/godotengine/godot",
+      "license": "MIT",
+      "decision": "runtime_authority",
+      "notes": "Minimo auditado 4.2.2; producao 4.3+. Versao muda somente em lote de upgrade."
+    },
+    {
+      "id": "pixelorama",
+      "url": "https://github.com/Orama-Interactive/Pixelorama",
+      "license": "MIT",
+      "decision": "approved_external_authoring_tool"
+    },
+    {
+      "id": "agent_sprite_forge",
+      "url": "https://github.com/0x0funky/agent-sprite-forge",
+      "license": "MIT",
+      "pinned_commit": "64fd0b57d3f2ae117ef0a95e4c2decc25b4c9dd2",
+      "decision": "approved_candidate_postprocessor",
+      "runtime_dependency": false,
+      "profile": "data/production/agent_sprite_forge_profile_v01.json",
+      "notes": "Aprovado somente como checkout externo fixado para limpeza, recorte, escala, ancora e preview de candidatos. Prompt builder generico, geracao de video no Codex, promocao automatica e export pareado de grappling para shipping permanecem bloqueados."
+    },
+    {
+      "id": "neplex_vectorizer",
+      "url": "https://github.com/neplextech/vectorizer",
+      "license": "MIT",
+      "package": "@neplex/vectorizer",
+      "package_version": "0.1.0",
+      "package_git_head": "dd96eea07d1eb6c0c796801a385efbf53d512591",
+      "decision": "approved_vector_source_candidate_tool",
+      "runtime_dependency": false,
+      "profile": "data/production/neplex_vectorizer_profile_v01.json",
+      "notes": "Aprovado via CLI local fixada somente para emblemas, icones, marcas e diagramas. Lutadores, sprites pareados, tiles, arenas e demais pixel art permanecem PNG. O SVG e fonte candidata, exige auditoria de conteudo ativo, bake PNG por tamanho, revisao Godot/Android e aprovacao humana."
+    },
+    {
+      "id": "penpot",
+      "url": "https://github.com/penpot/penpot",
+      "license": "MPL-2.0",
+      "decision": "approved_external_design_tool"
+    },
+    {
+      "id": "tiled",
+      "url": "https://github.com/mapeditor/tiled",
+      "license": "GPL-2.0_or_commercial_with_component_exceptions",
+      "decision": "evaluate_deterministic_export_adapter",
+      "native_godot4_tmx_import_assumed": false,
+      "notes": "Nao adicionar plugin/runtime antes de provar export deterministico para recursos Godot atuais."
+    },
+    {
+      "id": "yarn_spinner_godot_gdscript",
+      "url": "https://github.com/YarnSpinnerTool/YarnSpinner-Godot-GDScript",
+      "license": "Yarn-Spinner-Public-License",
+      "decision": "blocked_current_runtime",
+      "notes": "Integracao oficial esta em alpha e requer Godot 4.6+; manter dialogos JSON existentes."
+    },
+    {
+      "id": "godot_ci",
+      "url": "https://github.com/aBARICHELLO/godot-ci",
+      "license": "MIT",
+      "decision": "optional_evaluation",
+      "notes": "Workflows atuais ja baixam Godot 4.2.2 fixado; container nao substitui teste fisico."
+    }
+  ],
+  "ci_authorities": [
+    ".github/workflows/repository-quality.yml",
+    ".github/workflows/runtime-audit.yml",
+    ".github/workflows/full-game-hardening.yml"
+  ],
+  "required_local_gate": "npm run quality",
+  "evidence_contract": ["files", "integration", "commands", "results", "rollback", "risks", "next_batch"]
+}

@@ -1,8 +1,10 @@
-[gd_scene load_steps=4 format=3]
+[gd_scene load_steps=6 format=3]
 
 [ext_resource type="Script" path="res://scenes/combat/CombatArenaBase.gd" id="1_combat"]
 [ext_resource type="PackedScene" path="res://scenes/ui/CombatHUD.tscn" id="2_hud"]
 [ext_resource type="PackedScene" path="res://scenes/ui/CombatDeckHUD.tscn" id="3_deck_hud"]
+[ext_resource type="PackedScene" path="res://scenes/ui/CombatTacticalHUD.tscn" id="4_tactical_hud"]
+[ext_resource type="PackedScene" path="res://scenes/ui/SubmissionHUD.tscn" id="5_submission_hud"]
 
 [node name="CombatArenaBase" type="Control"]
 layout_mode = 3
@@ -15,24 +17,31 @@ script = ExtResource("1_combat")
 
 [node name="CombatDeckHUD" parent="." instance=ExtResource("3_deck_hud")]
 
+[node name="CombatTacticalHUD" parent="." instance=ExtResource("4_tactical_hud")]
+
+[node name="SubmissionHUD" parent="." instance=ExtResource("5_submission_hud")]
+
 [node name="Panel" type="VBoxContainer" parent="."]
 layout_mode = 2
 anchor_left = 0.04
-anchor_top = 0.68
+anchor_top = 0.825
 anchor_right = 0.96
 anchor_bottom = 0.98
 theme_override_constants/separation = 6
 
 [node name="Title" type="Label" parent="Panel"]
+visible = false
 layout_mode = 2
 horizontal_alignment = 1
 text = "RUAN MACACAO vs DAVI RELAMPAGO"
 
 [node name="State" type="Label" parent="Panel"]
+visible = false
 layout_mode = 2
 text = "Estado: EM PE - NEUTRO"
 
 [node name="Resources" type="Label" parent="Panel"]
+visible = false
 layout_mode = 2
 text = "Recursos"
 
@@ -42,6 +51,7 @@ autowrap_mode = 3
 text = "Ganhe a pegada, quebre a base e estabilize."
 
 [node name="AIHint" type="Label" parent="Panel"]
+visible = false
 layout_mode = 2
 autowrap_mode = 3
 text = "Davi esta lendo seu ritmo. Varie as entradas."

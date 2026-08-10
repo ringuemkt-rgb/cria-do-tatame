@@ -3,6 +3,7 @@ extends Control
 const DEFAULT_RESULT_SCENE: String = "res://scenes/result/ResultScreen.tscn"
 const FighterPlaceholderScript = preload("res://src/characters/FighterPlaceholder.gd")
 const GameFeelManagerScript = preload("res://src/gamefeel/GameFeelManager.gd")
+const CombatPresentationDirectorScript = preload("res://src/combat/presentation/CombatPresentationDirector.gd")
 const DaviAIControllerScript = preload("res://src/combat/DaviAIController.gd")
 const VisualTheme = preload("res://src/ui/CriaVisualTheme.gd")
 const ArenaBackdropScript = preload("res://src/visual/ArenaBackdrop.gd")
@@ -16,6 +17,7 @@ const ArenaBackdropScript = preload("res://src/visual/ArenaBackdrop.gd")
 @export var start_combat_immediately: bool = true
 
 var gamefeel: Node
+var presentation_director: Node
 var davi_ai: Node
 var ruan_placeholder: Node
 var davi_placeholder: Node
@@ -51,6 +53,10 @@ func _ready() -> void:
 	_style_combat_panel()
 	gamefeel = GameFeelManagerScript.new()
 	add_child(gamefeel)
+	presentation_director = CombatPresentationDirectorScript.new()
+	presentation_director.name = "CombatPresentationDirector"
+	add_child(presentation_director)
+	presentation_director.call("configure", gamefeel)
 	davi_ai = DaviAIControllerScript.new()
 	add_child(davi_ai)
 	davi_ai.call("setup", "davi_relampago", "normal")
@@ -184,15 +190,12 @@ func _on_action_button_pressed(button: Button) -> void:
 	var action_id: String = str(button.get_meta("action_id", ""))
 	if action_id == "" or not bool(button.get_meta("affordable", true)):
 		return
-	AudioManager.play_sfx("botao")
+	AudioManager.play_sfx("ui_confirm")
 	_set_actions_enabled(false)
 	if ruan_placeholder != null:
 		ruan_placeholder.call("play_action", action_id)
-	var result: Dictionary = CombatManager.apply_player_action(action_id)
+	CombatManager.apply_player_action(action_id)
 	davi_ai.call("record_player_action", action_id)
-	var success: bool = bool(result.get("success", false))
-	AudioManager.play_sfx(action_id)
-	gamefeel.call("apply_for_technique", action_id, success)
 	if CombatManager.is_running:
 		await _run_davi_turn()
 	if not is_inside_tree():
@@ -215,9 +218,7 @@ func _run_davi_turn() -> void:
 	_set_ai_hint("%s Resposta escolhida: %s." % [str(davi_ai.call("pressure_message")), technique_name])
 	if davi_placeholder != null:
 		davi_placeholder.call("play_action", technique_id)
-	AudioManager.play_sfx(technique_id)
-	var result: Dictionary = CombatManager.apply_opponent_action(technique_id)
-	gamefeel.call("apply_for_technique", technique_id, bool(result.get("success", false)))
+	CombatManager.apply_opponent_action(technique_id)
 
 func _set_actions_enabled(enabled: bool) -> void:
 	for button in action_buttons:
@@ -250,7 +251,7 @@ func _on_technique_resolved(result) -> void:
 	if has_node("Panel/Message"):
 		var technique_id: String = str(result.get("technique_id", result.get("action_id", "")))
 		var technique: Dictionary = DataRegistry.get_technique(technique_id)
-		var name_text: String = str(technique.get("nome", technique.get("name", technique_id)))
+		var name_text: String = str(result.get("name", technique.get("nome", technique.get("name", technique_id))))
 		var message: String = str(result.get("message", "sucesso" if result.get("success", false) else "defendido"))
 		var actor_id := str(result.get("actor_id", "ruan_macacao"))
 		var actor_name := "Ruan" if actor_id == CombatManager.player_id else "Davi"

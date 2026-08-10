@@ -1,0 +1,48 @@
+{
+  "$schema": "audio_cues_v1",
+  "version": "1.0.0",
+  "policy": {
+    "runtime_offline": true,
+    "procedural_fallback_required": true,
+    "final_assets_must_have_provenance": true,
+    "voice_cloning_allowed": false
+  },
+  "budgets": {"max_concurrent_sfx": 8, "music_crossfade_seconds": 0.8, "generator_mix_rate": 22050},
+  "sfx": {
+    "ui_confirm": {"asset": "res://assets/audio/ui/ui_confirm.ogg", "gain_db": -10.0, "fallback": {"frequency": 440.0, "duration": 0.05, "wave": "sine"}},
+    "botao": {"alias": "ui_confirm"},
+    "technique_success": {"asset": "res://assets/audio/combat/technique_success.ogg", "gain_db": -7.0, "fallback": {"frequency": 210.0, "duration": 0.09, "wave": "triangle"}},
+    "technique_defended": {"asset": "res://assets/audio/combat/technique_defended.ogg", "gain_db": -8.0, "fallback": {"frequency": 145.0, "duration": 0.08, "wave": "triangle"}},
+    "grip_lock": {"asset": "res://assets/audio/combat/grip_lock.ogg", "gain_db": -7.0, "fallback": {"frequency": 180.0, "duration": 0.10, "wave": "square"}},
+    "grip_de_ferro": {"alias": "grip_lock"},
+    "pressure_settle": {"asset": "res://assets/audio/combat/pressure_settle.ogg", "gain_db": -8.0, "fallback": {"frequency": 112.0, "duration": 0.14, "wave": "triangle"}},
+    "takedown_land": {"asset": "res://assets/audio/combat/takedown_land.ogg", "gain_db": -5.0, "fallback": {"frequency": 78.0, "duration": 0.18, "wave": "sine"}},
+    "baiana": {"alias": "takedown_land"},
+    "sprawl": {"asset": "res://assets/audio/combat/sprawl.ogg", "gain_db": -7.0, "fallback": {"frequency": 150.0, "duration": 0.11, "wave": "triangle"}},
+    "sweep_land": {"asset": "res://assets/audio/combat/sweep_land.ogg", "gain_db": -6.0, "fallback": {"frequency": 124.0, "duration": 0.15, "wave": "sine"}},
+    "pass_settle": {"asset": "res://assets/audio/combat/pass_settle.ogg", "gain_db": -7.0, "fallback": {"frequency": 205.0, "duration": 0.11, "wave": "triangle"}},
+    "corte_joelho": {"alias": "pass_settle"},
+    "dominance_settle": {"asset": "res://assets/audio/combat/dominance_settle.ogg", "gain_db": -6.0, "fallback": {"frequency": 132.0, "duration": 0.16, "wave": "square"}},
+    "technical_control": {"asset": "res://assets/audio/combat/technical_control.ogg", "gain_db": -5.0, "fallback": {"frequency": 260.0, "duration": 0.22, "wave": "triangle"}},
+    "encerramento_tecnico": {"alias": "technical_control"},
+    "silverback_grip": {"asset": "res://assets/audio/combat/silverback_grip.ogg", "gain_db": -5.0, "fallback": {"frequency": 96.0, "duration": 0.20, "wave": "square"}},
+    "deck_clash_dominant": {"asset": "res://assets/audio/deck/clash_dominant.ogg", "gain_db": -7.0, "fallback": {"frequency": 520.0, "duration": 0.12, "wave": "triangle"}},
+    "deck_clash_advantage": {"asset": "res://assets/audio/deck/clash_advantage.ogg", "gain_db": -8.0, "fallback": {"frequency": 420.0, "duration": 0.10, "wave": "sine"}},
+    "deck_clash_contested": {"asset": "res://assets/audio/deck/clash_contested.ogg", "gain_db": -9.0, "fallback": {"frequency": 270.0, "duration": 0.08, "wave": "triangle"}},
+    "deck_clash_counter": {"asset": "res://assets/audio/deck/clash_counter.ogg", "gain_db": -7.0, "fallback": {"frequency": 190.0, "duration": 0.12, "wave": "square"}},
+    "state_clinch": {"asset": "res://assets/audio/combat/state_clinch.ogg", "gain_db": -12.0, "fallback": {"frequency": 170.0, "duration": 0.05, "wave": "sine"}},
+    "state_ground": {"asset": "res://assets/audio/combat/state_ground.ogg", "gain_db": -12.0, "fallback": {"frequency": 135.0, "duration": 0.05, "wave": "sine"}},
+    "state_control": {"asset": "res://assets/audio/combat/state_control.ogg", "gain_db": -11.0, "fallback": {"frequency": 118.0, "duration": 0.06, "wave": "triangle"}},
+    "state_dominant": {"asset": "res://assets/audio/combat/state_dominant.ogg", "gain_db": -10.0, "fallback": {"frequency": 230.0, "duration": 0.08, "wave": "triangle"}},
+    "state_submission": {"asset": "res://assets/audio/combat/state_submission.ogg", "gain_db": -9.0, "fallback": {"frequency": 285.0, "duration": 0.09, "wave": "square"}},
+    "crowd_roar": {"asset": "res://assets/audio/crowd/crowd_roar.ogg", "gain_db": -8.0, "fallback": {"frequency": 116.0, "duration": 0.38, "wave": "triangle"}},
+    "cria_live": {"asset": "res://assets/audio/ui/cria_live.ogg", "gain_db": -9.0, "fallback": {"frequency": 520.0, "duration": 0.08, "wave": "sine"}}
+  },
+  "music": {
+    "terreiro": {"asset": "res://assets/audio/music/terreiro_loop.ogg", "gain_db": -9.0, "fallback_motif": [110.0, 146.0]},
+    "pratigi_festival": {"asset": "res://assets/audio/music/pratigi_festival_loop.ogg", "gain_db": -8.0, "fallback_motif": [82.0, 164.0, 246.0]},
+    "authority_warning": {"asset": "res://assets/audio/music/authority_warning.ogg", "gain_db": -7.0, "fallback_motif": [196.0, 147.0]},
+    "vitoria": {"asset": "res://assets/audio/music/victory_sting.ogg", "gain_db": -7.0, "fallback_motif": [220.0, 330.0]},
+    "derrota": {"asset": "res://assets/audio/music/defeat_sting.ogg", "gain_db": -8.0, "fallback_motif": [98.0]}
+  }
+}

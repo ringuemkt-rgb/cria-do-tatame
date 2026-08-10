@@ -3,6 +3,10 @@ extends SceneTree
 const CombatSimulationEngineScript = preload("res://src/combat/CombatManager.gd")
 const DaviAIControllerScript = preload("res://src/combat/DaviAIController.gd")
 const TechniqueClashResolverScript = preload("res://src/combat/TechniqueClashResolver.gd")
+const GroundGraphRulesScript = preload("res://src/combat/GroundGraphRules.gd")
+const SubmissionExchangeScript = preload("res://src/combat/SubmissionExchange.gd")
+const GroundStaminaRulesScript = preload("res://src/combat/GroundStaminaRules.gd")
+const FighterStyleSystemScript = preload("res://src/career/FighterStyleSystem.gd")
 
 const REQUIRED_SCENES := [
 	"res://scenes/main_menu/MainMenu.tscn",
@@ -11,7 +15,9 @@ const REQUIRED_SCENES := [
 	"res://scenes/result/ResultScreen.tscn",
 	"res://scenes/ui/CriaLiveUI.tscn",
 	"res://scenes/ui/DeckBuilder.tscn",
-	"res://scenes/ui/CombatDeckHUD.tscn"
+	"res://scenes/ui/CombatDeckHUD.tscn",
+	"res://scenes/ui/StyleProgressionScreen.tscn",
+	"res://scenes/ui/SubmissionHUD.tscn"
 ]
 
 var failures: Array[String] = []
@@ -50,6 +56,9 @@ func _run() -> void:
 	_test_autoloads()
 	_test_data_registry()
 	_test_combat_deck()
+	_test_fighter_style_runtime()
+	_test_ground_submission_data()
+	_test_ground_stamina_data()
 	await _test_local_ai_fallback()
 	await _test_scene_loading()
 	_test_save_roundtrip()
@@ -103,6 +112,11 @@ func _test_data_registry() -> void:
 	var animation_catalog: Dictionary = data_registry.get("character_animation_catalog")
 	var arena_animation_flow: Dictionary = data_registry.get("arena_animation_flow")
 	var combat_deck: Dictionary = data_registry.get("combat_deck")
+	var fighter_styles: Dictionary = data_registry.get("fighter_styles")
+	var skill_tree_v2: Dictionary = data_registry.get("skill_tree_v2")
+	var ground_graph: Dictionary = data_registry.get("ground_graph")
+	var submissions_anatomy: Dictionary = data_registry.get("submissions_anatomy")
+	var submission_exchange: Dictionary = data_registry.get("submission_exchange")
 	_assert(not ruan.is_empty(), "Ruan Macacao nao foi carregado")
 	_assert(not arena.is_empty(), "Terreiro da Luta nao foi carregado")
 	_assert(techniques.size() >= 10, "Catalogo principal possui menos de 10 tecnicas")
@@ -111,6 +125,11 @@ func _test_data_registry() -> void:
 	_assert(animation_catalog.get("entries", []).size() >= 31, "Catalogo de animacoes nao foi carregado")
 	_assert(arena_animation_flow.get("fight_flow", []).size() >= 10, "Fluxo animado das arenas nao foi carregado")
 	_assert(combat_deck.get("cards", []).size() == 10, "Deck inicial nao possui 10 cartas")
+	_assert(fighter_styles.get("styles", []).size() == 8, "Roda de estilos nao possui oito estilos")
+	_assert(skill_tree_v2.get("branches", []).size() == 4, "Arvore V2 nao possui quatro ramos")
+	_assert(ground_graph.get("edges", []).size() == techniques.size(), "Grafo de solo nao cobre todas as tecnicas")
+	_assert(submissions_anatomy.get("records", []).size() == 12, "Catalogo anatomico nao possui 12 registros")
+	_assert(submission_exchange.get("simulation", "") == "turn_based_deterministic", "Troca de finalizacao nao e deterministica")
 	var ruan_idle: Dictionary = data_registry.call("get_character_animation", "ruan_macacao", "idle")
 	_assert(not ruan_idle.is_empty(), "Animacao idle de Ruan nao foi registrada")
 	_assert(ResourceLoader.exists("res://" + str(ruan_idle.get("manifest", "")).get_base_dir().path_join("sprite_sheet.png")), "Atlas idle de Ruan nao existe")
@@ -147,6 +166,78 @@ func _test_combat_deck() -> void:
 	_assert(not bool(clash.get("instant_finish", true)), "Clash permitiu finalizacao automatica insegura")
 	_assert(float(clash.get("chance_modifier", 1.0)) <= 0.35, "Clash excedeu teto de bonus")
 	resolver.queue_free()
+
+func _test_fighter_style_runtime() -> void:
+	if world_state == null or data_registry == null:
+		return
+	var before: Dictionary = world_state.call("to_dict").duplicate(true)
+	world_state.set("skill_points", 2)
+	world_state.set("story_flags", {})
+	world_state.call("_sync_aliases")
+	var styles: RefCounted = FighterStyleSystemScript.new()
+	_assert(str(styles.call("get_active_style_id")) == "pressao", "Estilo inicial nao preservou a identidade Pressao")
+	var purchase: Dictionary = styles.call("purchase_node", "guarda_inteligente")
+	_assert(bool(purchase.get("ok", false)), "Compra de habilidade falhou")
+	_assert(int(styles.call("get_node_level", "guarda_inteligente")) == 1, "Nivel da habilidade nao foi persistido no estado")
+	var modifiers: Dictionary = styles.call("get_combat_modifiers")
+	_assert(float(modifiers.get("starting_resources", {}).get("guard", 0.0)) >= 1.0, "Arvore nao alimentou modificadores de combate")
+	world_state.call("load_from_dict", before)
+
+func _test_ground_submission_data() -> void:
+	if data_registry == null:
+		return
+	var graph: RefCounted = GroundGraphRulesScript.new()
+	graph.call("configure", data_registry.get("ground_graph"))
+	var edge: Dictionary = graph.call("get_edge", "chave_braco")
+	_assert(str(edge.get("from", "")) == "PLAYER_TOP_MOUNT", "Grafo perdeu a entrada da chave de braco")
+	var validation: Dictionary = graph.call(
+		"validate_technique_transition",
+		data_registry.call("get_technique", "chave_braco"),
+		"PLAYER_TOP_MOUNT"
+	)
+	_assert(bool(validation.get("ok", false)), "Grafo recusou uma transicao canonica")
+
+	var exchange: Node = SubmissionExchangeScript.new()
+	root.add_child(exchange)
+	exchange.call("configure", data_registry.get("submission_exchange"), data_registry.get("submissions_anatomy"))
+	var started: Dictionary = exchange.call(
+		"start_exchange",
+		"chave_braco",
+		"ruan_macacao",
+		"davi_relampago",
+		"PLAYER_TOP_MOUNT",
+		0.5,
+		{"arena_id": "terreiro_da_luta", "uniform": "gi", "age_division": "adult", "belt": "branca"}
+	)
+	_assert(bool(started.get("ok", false)), "Troca de finalizacao nao iniciou")
+	var defense_actions: Array = exchange.call("get_available_actions", "davi_relampago")
+	var has_tap := false
+	for action_value in defense_actions:
+		if typeof(action_value) == TYPE_DICTIONARY and str(action_value.get("id", "")) == "submission_tap":
+			has_tap = true
+	_assert(has_tap, "Defensor nao recebeu tap prioritario")
+	var tap: Dictionary = exchange.call("apply_action", "davi_relampago", "submission_tap")
+	_assert(str(tap.get("outcome", "")) == "tap", "Tap nao encerrou a troca imediatamente")
+	_assert(not bool(exchange.get("active")), "Troca continuou ativa depois do tap")
+	exchange.queue_free()
+
+func _test_ground_stamina_data() -> void:
+	if data_registry == null:
+		return
+	var rules: RefCounted = GroundStaminaRulesScript.new()
+	rules.call("configure", data_registry.get("ground_stamina"))
+	var technique: Dictionary = data_registry.call("get_technique", "chave_braco")
+	var decorated: Dictionary = rules.call("decorate_technique", technique, "PLAYER_TOP_MOUNT")
+	var original_cost: Dictionary = technique.get("cost", {})
+	var decorated_cost: Dictionary = decorated.get("cost", {})
+	_assert(
+		float(decorated_cost.get("gas", 0.0)) > float(original_cost.get("gas", 0.0)),
+		"Stamina de solo nao adicionou sobretaxa posicional"
+	)
+	var fresh: Dictionary = rules.call("get_fatigue_profile", 100.0)
+	var exhausted: Dictionary = rules.call("get_fatigue_profile", 10.0)
+	_assert(str(fresh.get("id", "")) == "fresh", "Gas cheio nao retornou faixa fresh")
+	_assert(float(exhausted.get("submission_effectiveness", 1.0)) == 0.60, "Fadiga extrema nao aplicou o limite seguro")
 
 func _test_local_ai_fallback() -> void:
 	if local_ai_manager == null:
@@ -260,7 +351,44 @@ func _test_combat_domain() -> void:
 	_assert(is_equal_approx(float(defender.get("grip_integrity", 100)), 92.0), "Reducao de grip foi aplicada com sinal incorreto")
 	engine.queue_free()
 
+	# Setup de finalizacao abre a troca controle x escape sem reduzir vida.
+	var submission_state_machine: Node = combat_manager.get("state_machine")
+	submission_state_machine.call("forcar_estado", submission_state_machine.call("estado_por_nome", "PLAYER_TOP_MOUNT"))
+	var submission_fighters: Dictionary = combat_manager.get("fighters")
+	submission_fighters["ruan_macacao"]["gas"] = 100.0
+	submission_fighters["ruan_macacao"]["focus"] = 100.0
+	submission_fighters["ruan_macacao"]["grip"] = 100.0
+	submission_fighters["ruan_macacao"]["control"] = 100.0
+	submission_fighters["davi_relampago"]["focus"] = 0.0
+	submission_fighters["davi_relampago"]["guard"] = 0.0
+	submission_fighters["davi_relampago"]["health"] = 100.0
+	combat_manager.set("fighters", submission_fighters)
+	var setup: Dictionary = data_registry.call("get_technique", "chave_braco").duplicate(true)
+	setup["base_chance"] = 0.95
+	setup["chance_sucesso"] = 0.95
+	_seed_runtime_resolver_for_success(0.95)
+	var setup_result: Dictionary = combat_manager.call("execute_technique", "ruan_macacao", "davi_relampago", setup)
+	_assert(bool(setup_result.get("success", false)), "Setup de finalizacao falhou no smoke deterministico")
+	_assert(bool(combat_manager.get("submission_exchange").get("active")), "Setup nao abriu SubmissionExchange")
+	var after_setup: Dictionary = combat_manager.get("fighters")
+	_assert(is_equal_approx(float(after_setup["davi_relampago"].get("health", 0.0)), 100.0), "Setup de finalizacao aplicou dano direto")
+	var release: Dictionary = combat_manager.call("apply_player_action", "submission_release")
+	_assert(str(release.get("outcome", "")) == "release", "Soltura segura nao resolveu a troca")
+	_assert(str(combat_manager.call("get_current_state_name")) == "PLAYER_TOP_MOUNT", "Soltura nao recuperou a posicao de origem")
+
+	# Tap integrado tem prioridade, encerra a troca e registra o vencedor sem dano.
+	_seed_runtime_resolver_for_success(0.95)
+	var second_setup: Dictionary = combat_manager.call("execute_technique", "ruan_macacao", "davi_relampago", setup)
+	_assert(bool(second_setup.get("success", false)), "Segundo setup de finalizacao falhou")
+	var integrated_tap: Dictionary = combat_manager.call("apply_opponent_action", "submission_tap")
+	_assert(str(integrated_tap.get("outcome", "")) == "tap", "Tap integrado nao teve prioridade")
+	_assert(not bool(combat_manager.get("is_running")), "Combate continuou ativo depois do tap")
+	var tap_result: Dictionary = world_state.get("last_combat_result")
+	_assert(str(tap_result.get("winner", "")) == "ruan_macacao", "Tap nao registrou o atacante como vencedor")
+	_assert(str(tap_result.get("submission_outcome", "")) == "tap", "Resultado final perdeu o outcome de tap")
+
 	# Regressao P0: uma finalizacao bem-sucedida precisa encerrar antes do RESET.
+	combat_manager.call("start_combat", "terreiro_da_luta", "ruan_macacao", "davi_relampago")
 	var state_machine: Node = combat_manager.get("state_machine")
 	state_machine.call("forcar_estado", state_machine.call("estado_por_nome", "PLAYER_SUBMISSION_ATTACK"))
 	var fighters: Dictionary = combat_manager.get("fighters")

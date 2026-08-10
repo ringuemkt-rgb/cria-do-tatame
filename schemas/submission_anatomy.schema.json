@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://criadotatame.local/schemas/submission_anatomy.schema.json",
+  "title": "Cria do Tatame Submission Anatomy",
+  "type": "object",
+  "required": ["$schema", "safety_contract", "rules_snapshot", "records"],
+  "properties": {
+    "$schema": {"const": "submissions_anatomy_v1"},
+    "records": {
+      "type": "array",
+      "minItems": 12,
+      "maxItems": 12,
+      "items": {
+        "type": "object",
+        "required": ["id", "display_name", "technique_ids", "runtime_enabled", "uniforms", "target_region", "mechanism_summary", "gameplay_response_family"]
+      }
+    }
+  }
+}

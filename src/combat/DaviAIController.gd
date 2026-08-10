@@ -83,6 +83,7 @@ func _score_technique(
 	var technique_id: String = str(technique.get("id", ""))
 	var base_chance: float = float(technique.get("base_chance", technique.get("chance_sucesso", 0.5)))
 	var score: float = base_chance * 100.0
+	score += float(technique.get("ai_priority", 0.0))
 	var cost: Dictionary = technique.get("cost", technique.get("custo", {}))
 	var gas_cost: float = float(cost.get("gas", technique.get("gas_cost", 0)))
 	var focus_cost: float = float(cost.get("focus", cost.get("foco", technique.get("focus_cost", 0))))

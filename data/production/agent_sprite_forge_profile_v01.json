@@ -1,0 +1,99 @@
+{
+  "$schema": "agent_sprite_forge_profile_v1",
+  "version": "1.0.0",
+  "status": "approved_candidate_postprocessor",
+  "verified_on": "2026-08-10",
+  "source": {
+    "repository": "https://github.com/0x0funky/agent-sprite-forge",
+    "pinned_commit": "64fd0b57d3f2ae117ef0a95e4c2decc25b4c9dd2",
+    "license": "MIT",
+    "license_sha256": "d63ddc781bf0d15753fe0ba22c7cd5828dabb7776465ea4d4939558d4909b0fa",
+    "requirements_sha256": "998f65ea99cae41f8b76758926f297d656988e2f45221a3dee50eebb3cc5c951",
+    "entrypoint": "skills/generate2dsprite/scripts/generate2dsprite.py",
+    "entrypoint_sha256": "7b7451a711f9dbf806db1586567920dbe2a487d481b7f016e14db66d8050997b"
+  },
+  "dependency_policy": {
+    "runtime_dependency": false,
+    "runtime_network_required": false,
+    "vendored_into_game": false,
+    "installation": "external_checkout_only",
+    "python": ">=3.10",
+    "packages": ["numpy>=1.26", "Pillow>=10.0"],
+    "automatic_global_skill_install": false
+  },
+  "adoption": {
+    "approved": [
+      "deterministic_magenta_to_alpha_cleanup",
+      "fixed_grid_frame_extraction",
+      "shared_scale_normalization",
+      "feet_or_center_anchor_alignment",
+      "candidate_png_and_gif_preview_export",
+      "single_character_idle_and_walk_candidates",
+      "isolated_fx_candidates"
+    ],
+    "conditional": [
+      "paired_composite_preview_candidate",
+      "arena_prop_candidate",
+      "video_frame_postprocessing_from_authorized_source"
+    ],
+    "blocked": [
+      "shipping_asset_auto_promotion",
+      "paired_grappling_shipping_export",
+      "automatic_sync_map_generation",
+      "automatic_biomechanics_approval",
+      "default_prompt_builder_for_cria_canon",
+      "video_generation_in_codex",
+      "runtime_integration_or_network_calls"
+    ]
+  },
+  "compatibility": {
+    "default_prompt_builder_used": false,
+    "reason": "Os prompts padrao do upstream usam criatura inspirada em IP e personagem top-down generico; o Cria usa briefs e prompts canonicos proprios.",
+    "paired_grappling": {
+      "shipping_supported": false,
+      "composite_preview_supported": true,
+      "missing_contracts": [
+        "separate_attacker_sheet",
+        "separate_defender_sheet",
+        "shared_pivot",
+        "sync_map",
+        "mechanical_event_markers",
+        "human_bjj_review"
+      ]
+    },
+    "godot": {
+      "secondary_runtime_created": false,
+      "generated_sprite3d_metadata_is_authoritative": false,
+      "cria_manifest_adapter_required": true
+    }
+  },
+  "execution": {
+    "adapter": "tools/visual/agent_sprite_forge_adapter.py",
+    "candidate_output_root": "production/candidates/agent_sprite_forge",
+    "required_processor_flags": [
+      "--shared-scale",
+      "--scale-strategy=preserve",
+      "--strict-qc",
+      "--reject-edge-touch"
+    ],
+    "candidate_state": "candidate",
+    "promotion_allowed": false,
+    "raw_source_rights_required": true
+  },
+  "promotion_gates": [
+    "provenance_and_license",
+    "visual_review_against_reference",
+    "manual_pixel_cleanup",
+    "cria_manifest_and_source_notes",
+    "godot_runtime_integration",
+    "mobile_readability_review",
+    "human_approval",
+    "human_bjj_review_for_grappling"
+  ],
+  "upstream_test_snapshot": {
+    "command": "python3 -m unittest discover -s tests -v",
+    "tests_run": 15,
+    "result": "pass",
+    "notes": "Um ResourceWarning de arquivo PIL aberto foi observado no teste de mapa; nao afeta o processador de sprites, mas deve ser acompanhado em upgrades."
+  }
+}

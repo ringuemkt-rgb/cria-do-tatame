@@ -1,0 +1,89 @@
+{
+  "$schema": "combat_presentation_v1",
+  "version": "1.0.0",
+  "runtime_policy": {
+    "simulation_independent": true,
+    "offline_required": true,
+    "presentation_may_not_change_outcome": true,
+    "safe_submission_language": true
+  },
+  "android_budgets": {
+    "max_concurrent_impacts": 5,
+    "max_concurrent_sfx": 8,
+    "max_hit_stop_ms": 100,
+    "max_shake_px": 8.0,
+    "max_shake_ms": 140,
+    "max_flash_alpha": 0.16,
+    "max_haptic_ms": 45,
+    "max_strobe_hz": 2.0
+  },
+  "accessibility": {
+    "default": {"motion_scale": 1.0, "shake_scale": 1.0, "flash_scale": 1.0, "haptics": true},
+    "reduced_motion": {"motion_scale": 0.25, "shake_scale": 0.0, "flash_scale": 0.0, "haptics": true}
+  },
+  "defaults": {
+    "success": {
+      "hit_stop_ms": 28,
+      "time_scale": 0.30,
+      "shake_px": 2.0,
+      "shake_ms": 55,
+      "vfx": "impact_control",
+      "vfx_color": "4cc9d8",
+      "flash_alpha": 0.04,
+      "audio_cue": "technique_success",
+      "haptic_ms": 16,
+      "haptic_amplitude": 0.25
+    },
+    "failure": {
+      "hit_stop_ms": 0,
+      "time_scale": 1.0,
+      "shake_px": 0.0,
+      "shake_ms": 0,
+      "vfx": "defense_read",
+      "vfx_color": "a8b7c9",
+      "flash_alpha": 0.0,
+      "audio_cue": "technique_defended",
+      "haptic_ms": 8,
+      "haptic_amplitude": 0.12
+    }
+  },
+  "families": {
+    "pegada": {"hit_stop_ms": 22, "shake_px": 1.0, "vfx": "grip_lock", "vfx_color": "f2c230", "audio_cue": "grip_lock"},
+    "preparacao": {"hit_stop_ms": 16, "shake_px": 0.0, "vfx": "setup_read", "vfx_color": "a8b7c9", "audio_cue": "state_clinch"},
+    "desequilibrio": {"hit_stop_ms": 30, "shake_px": 2.0, "vfx": "balance_break", "vfx_color": "20a9c9", "audio_cue": "grip_lock"},
+    "pressao": {"hit_stop_ms": 30, "shake_px": 2.0, "vfx": "pressure_wave", "vfx_color": "b8860b", "audio_cue": "pressure_settle"},
+    "queda": {"hit_stop_ms": 72, "shake_px": 7.0, "shake_ms": 110, "vfx": "mat_impact", "vfx_color": "f2c230", "flash_alpha": 0.10, "audio_cue": "takedown_land", "haptic_ms": 35, "haptic_amplitude": 0.65},
+    "defesa_queda": {"hit_stop_ms": 32, "shake_px": 2.0, "vfx": "defense_read", "vfx_color": "20a9c9", "audio_cue": "sprawl"},
+    "puxada_guarda": {"hit_stop_ms": 36, "shake_px": 2.0, "vfx": "guard_pull_arc", "vfx_color": "20a9c9", "audio_cue": "sweep_land"},
+    "raspagem": {"hit_stop_ms": 58, "shake_px": 5.0, "shake_ms": 90, "vfx": "sweep_arc", "vfx_color": "20a9c9", "flash_alpha": 0.07, "audio_cue": "sweep_land", "haptic_ms": 28},
+    "passagem": {"hit_stop_ms": 42, "shake_px": 3.0, "vfx": "pass_line", "vfx_color": "20a9c9", "audio_cue": "pass_settle"},
+    "escape": {"hit_stop_ms": 28, "shake_px": 1.0, "vfx": "escape_window", "vfx_color": "a8b7c9", "audio_cue": "technique_defended"},
+    "controle": {"hit_stop_ms": 34, "shake_px": 2.0, "vfx": "pressure_wave", "vfx_color": "b8860b", "audio_cue": "pressure_settle"},
+    "dominante": {"hit_stop_ms": 48, "shake_px": 4.0, "vfx": "dominance_ring", "vfx_color": "f2c230", "audio_cue": "dominance_settle"},
+    "finalizacao": {"hit_stop_ms": 90, "shake_px": 5.0, "shake_ms": 120, "vfx": "technical_finish", "vfx_color": "d92323", "flash_alpha": 0.14, "audio_cue": "technical_control", "haptic_ms": 42, "haptic_amplitude": 0.72},
+    "ultimate": {"hit_stop_ms": 88, "shake_px": 7.0, "shake_ms": 125, "vfx": "silverback_pressure", "vfx_color": "f2c230", "flash_alpha": 0.14, "audio_cue": "silverback_grip", "haptic_ms": 42, "haptic_amplitude": 0.78}
+  },
+  "techniques": {
+    "grip_de_ferro": {"audio_cue": "grip_de_ferro"},
+    "baiana": {"audio_cue": "baiana"},
+    "corte_joelho": {"audio_cue": "corte_joelho"},
+    "sprawl": {"audio_cue": "sprawl"},
+    "encerramento_tecnico": {"audio_cue": "encerramento_tecnico", "vfx": "technical_finish"},
+    "silverback_grip": {"audio_cue": "silverback_grip", "vfx": "silverback_pressure"}
+  },
+  "deck_clash": {
+    "critical_advantage": {"hit_stop_ms": 90, "time_scale": 0.72, "vfx": "deck_clash_gold", "vfx_color": "f2c230", "audio_cue": "deck_clash_dominant", "flash_alpha": 0.12},
+    "advantage": {"hit_stop_ms": 45, "time_scale": 0.88, "vfx": "deck_clash_advantage", "vfx_color": "20a9c9", "audio_cue": "deck_clash_advantage", "flash_alpha": 0.06},
+    "contested": {"vfx": "deck_clash_even", "vfx_color": "a8b7c9", "audio_cue": "deck_clash_contested"},
+    "counter_window": {"vfx": "deck_clash_counter", "vfx_color": "d92323", "audio_cue": "deck_clash_counter", "flash_alpha": 0.05}
+  },
+  "state_audio": {
+    "PLAYER_TOP_CLINCH": "state_clinch",
+    "PLAYER_TOP_GUARD": "state_ground",
+    "PLAYER_BOTTOM_GUARD": "state_ground",
+    "PLAYER_TOP_SIDE": "state_control",
+    "PLAYER_TOP_MOUNT": "state_dominant",
+    "PLAYER_BACK_ATTACK": "state_dominant",
+    "PLAYER_SUBMISSION_ATTACK": "state_submission"
+  }
+}

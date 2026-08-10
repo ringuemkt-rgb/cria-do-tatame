@@ -1,0 +1,78 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scenes/ui/SubmissionHUD.gd" id="1_submission_hud"]
+
+[node name="SubmissionHUD" type="CanvasLayer"]
+layer = 5
+script = ExtResource("1_submission_hud")
+
+[node name="Panel" type="Panel" parent="."]
+anchors_preset = 0
+anchor_left = 0.785
+anchor_top = 0.275
+anchor_right = 0.985
+anchor_bottom = 0.69
+mouse_filter = 2
+
+[node name="Layout" type="VBoxContainer" parent="Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 12.0
+offset_top = 10.0
+offset_right = -12.0
+offset_bottom = -10.0
+theme_override_constants/separation = 6
+
+[node name="Title" type="Label" parent="Panel/Layout"]
+layout_mode = 2
+text = "TROCA DE FINALIZACAO"
+
+[node name="Technique" type="Label" parent="Panel/Layout"]
+layout_mode = 2
+text = "CONTROLE TECNICO"
+autowrap_mode = 3
+
+[node name="Phase" type="Label" parent="Panel/Layout"]
+layout_mode = 2
+text = "FASE: PREPARACAO"
+
+[node name="Target" type="Label" parent="Panel/Layout"]
+layout_mode = 2
+text = "FOCO TECNICO: ALINHAMENTO"
+autowrap_mode = 3
+
+[node name="Divider" type="HSeparator" parent="Panel/Layout"]
+layout_mode = 2
+
+[node name="ControlTitle" type="Label" parent="Panel/Layout"]
+layout_mode = 2
+text = "CONTROLE TECNICO  0%"
+
+[node name="Control" type="ProgressBar" parent="Panel/Layout"]
+custom_minimum_size = Vector2(0, 20)
+layout_mode = 2
+max_value = 100.0
+show_percentage = false
+
+[node name="EscapeTitle" type="Label" parent="Panel/Layout"]
+layout_mode = 2
+text = "PROGRESSO DE ESCAPE  0%"
+
+[node name="Escape" type="ProgressBar" parent="Panel/Layout"]
+custom_minimum_size = Vector2(0, 20)
+layout_mode = 2
+max_value = 100.0
+show_percentage = false
+
+[node name="Mediator" type="Label" parent="Panel/Layout"]
+layout_mode = 2
+text = "SEGURANCA: MEDIACAO ATIVA"
+autowrap_mode = 3
+
+[node name="Safety" type="Label" parent="Panel/Layout"]
+layout_mode = 2
+size_flags_vertical = 3
+text = "Simulacao esportiva. Respeite o tap."
+autowrap_mode = 3

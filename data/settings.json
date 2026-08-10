@@ -16,6 +16,7 @@
     "large_touch_targets": true,
     "high_contrast_ui": true,
     "reduced_motion": false,
+    "haptics": true,
     "subtitles": true
   },
   "gameplay": {

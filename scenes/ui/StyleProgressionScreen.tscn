@@ -1,0 +1,172 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scenes/ui/StyleProgressionScreen.gd" id="1_style"]
+
+[node name="StyleProgressionScreen" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_style")
+
+[node name="Background" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.018, 0.022, 0.027, 1)
+mouse_filter = 2
+
+[node name="Margin" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 24.0
+offset_top = 20.0
+offset_right = -24.0
+offset_bottom = -20.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Layout" type="VBoxContainer" parent="Margin"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="TopBar" type="HBoxContainer" parent="Margin/Layout"]
+layout_mode = 2
+theme_override_constants/separation = 14
+
+[node name="Title" type="Label" parent="Margin/Layout/TopBar"]
+layout_mode = 2
+text = "ESTILOS E PROGRESSAO"
+
+[node name="Spacer" type="Control" parent="Margin/Layout/TopBar"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Points" type="Label" parent="Margin/Layout/TopBar"]
+layout_mode = 2
+text = "PONTOS: 0"
+vertical_alignment = 1
+
+[node name="Active" type="Label" parent="Margin/Layout/TopBar"]
+layout_mode = 2
+text = "ATIVO: PRESSAO"
+vertical_alignment = 1
+
+[node name="Back" type="Button" parent="Margin/Layout/TopBar"]
+custom_minimum_size = Vector2(150, 52)
+layout_mode = 2
+text = "VOLTAR"
+
+[node name="Body" type="HBoxContainer" parent="Margin/Layout"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 12
+
+[node name="StylesPanel" type="PanelContainer" parent="Margin/Layout/Body"]
+custom_minimum_size = Vector2(280, 0)
+layout_mode = 2
+
+[node name="Layout" type="VBoxContainer" parent="Margin/Layout/Body/StylesPanel"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="Title" type="Label" parent="Margin/Layout/Body/StylesPanel/Layout"]
+layout_mode = 2
+text = "OITO VIAS DO TATAME"
+horizontal_alignment = 1
+
+[node name="Hint" type="Label" parent="Margin/Layout/Body/StylesPanel/Layout"]
+layout_mode = 2
+text = "Afinidade nao muda sua faccao."
+horizontal_alignment = 1
+autowrap_mode = 3
+
+[node name="StyleGrid" type="GridContainer" parent="Margin/Layout/Body/StylesPanel/Layout"]
+layout_mode = 2
+size_flags_vertical = 3
+columns = 2
+theme_override_constants/h_separation = 8
+theme_override_constants/v_separation = 8
+
+[node name="TreePanel" type="PanelContainer" parent="Margin/Layout/Body"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Layout" type="VBoxContainer" parent="Margin/Layout/Body/TreePanel"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="Title" type="Label" parent="Margin/Layout/Body/TreePanel/Layout"]
+layout_mode = 2
+text = "ARVORE DE HABILIDADES V2"
+horizontal_alignment = 1
+
+[node name="Scroll" type="ScrollContainer" parent="Margin/Layout/Body/TreePanel/Layout"]
+layout_mode = 2
+size_flags_vertical = 3
+horizontal_scroll_mode = 0
+
+[node name="Branches" type="HBoxContainer" parent="Margin/Layout/Body/TreePanel/Layout/Scroll"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 8
+
+[node name="DetailPanel" type="PanelContainer" parent="Margin/Layout/Body"]
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 2
+
+[node name="Layout" type="VBoxContainer" parent="Margin/Layout/Body/DetailPanel"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="StyleName" type="Label" parent="Margin/Layout/Body/DetailPanel/Layout"]
+layout_mode = 2
+text = "PRESSAO"
+
+[node name="Archetype" type="Label" parent="Margin/Layout/Body/DetailPanel/Layout"]
+layout_mode = 2
+text = "O Demolidor Controlado"
+
+[node name="Affinity" type="Label" parent="Margin/Layout/Body/DetailPanel/Layout"]
+layout_mode = 2
+text = "AFINIDADE NARRATIVA: NTM"
+
+[node name="Requirements" type="Label" parent="Margin/Layout/Body/DetailPanel/Layout"]
+layout_mode = 2
+text = "REQUISITOS"
+autowrap_mode = 3
+
+[node name="Signatures" type="Label" parent="Margin/Layout/Body/DetailPanel/Layout"]
+layout_mode = 2
+text = "ASSINATURAS"
+autowrap_mode = 3
+
+[node name="Status" type="Label" parent="Margin/Layout/Body/DetailPanel/Layout"]
+layout_mode = 2
+text = "ESTILO BASE"
+autowrap_mode = 3
+
+[node name="Activate" type="Button" parent="Margin/Layout/Body/DetailPanel/Layout"]
+custom_minimum_size = Vector2(0, 54)
+layout_mode = 2
+text = "ATIVAR ESTILO"
+
+[node name="Feedback" type="Label" parent="Margin/Layout/Body/DetailPanel/Layout"]
+layout_mode = 2
+size_flags_vertical = 3
+text = "Ser forte e ser gentil."
+vertical_alignment = 2
+autowrap_mode = 3
+
+[node name="Footer" type="Label" parent="Margin/Layout"]
+layout_mode = 2
+text = "A arvore altera recursos e probabilidades com limites auditados. O resultado continua na simulacao deterministica."
+horizontal_alignment = 1
+autowrap_mode = 3

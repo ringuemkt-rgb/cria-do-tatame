@@ -1,0 +1,131 @@
+{
+  "$schema": "fighter_styles_v1",
+  "version": "1.0.0",
+  "status": "implemented_vertical_slice",
+  "default_style_id": "pressao",
+  "progression_currency": "skill_points",
+  "faction_affinity_policy": {
+    "narrative_reaction_only": true,
+    "does_not_change_membership": true
+  },
+  "runtime_limits": {
+    "starting_resource_bonus_cap": 20.0,
+    "family_chance_bonus_cap": 0.12,
+    "win_money_multiplier_cap": 1.2,
+    "reputation_bonus_cap": 3.0
+  },
+  "styles": [
+    {
+      "id": "fluxo",
+      "name": "Fluxo",
+      "color": "#C77BFF",
+      "archetype": "O Instintivo",
+      "faction_affinity": "ALE",
+      "primary_branch": "mental",
+      "requirements": {"mental": 7, "tecnica": 5},
+      "starting_resources": {"focus": 5.0},
+      "family_chance_bonus": {"escape": 0.03, "defesa_queda": 0.03},
+      "post_combat": {"money_multiplier": 1.0, "honor_win_bonus": 1.0, "hype_win_bonus": 0.0},
+      "signature_techniques": ["sprawl", "saida_montada", "raspagem_borboleta"],
+      "cria_live": {"recommended_tone": "humilde", "reach_bonus": 10.0, "hype_bonus": 0.0}
+    },
+    {
+      "id": "anaconda",
+      "name": "Anaconda",
+      "color": "#34343A",
+      "archetype": "O Estrangulador",
+      "faction_affinity": "NTM",
+      "primary_branch": "controle",
+      "requirements": {"controle": 7, "mental": 4},
+      "starting_resources": {"grip": 5.0, "control": 3.0},
+      "family_chance_bonus": {"finalizacao": 0.04},
+      "post_combat": {"money_multiplier": 1.0, "honor_win_bonus": 0.0, "hype_win_bonus": 1.0},
+      "signature_techniques": ["mata_leao", "triangulo"],
+      "cria_live": {"recommended_tone": "intenso", "reach_bonus": 12.0, "hype_bonus": 2.0}
+    },
+    {
+      "id": "magnata",
+      "name": "Magnata",
+      "color": "#2E8FE2",
+      "archetype": "O Estrategista de Carreira",
+      "faction_affinity": "ALE",
+      "primary_branch": "mental",
+      "requirements": {"mental": 6, "controle": 4},
+      "starting_resources": {"focus": 4.0},
+      "family_chance_bonus": {"preparacao": 0.03},
+      "post_combat": {"money_multiplier": 1.15, "honor_win_bonus": 0.0, "hype_win_bonus": 1.0},
+      "signature_techniques": ["arm_drag", "torreando"],
+      "cria_live": {"recommended_tone": "estrategico", "reach_bonus": 15.0, "hype_bonus": 1.0}
+    },
+    {
+      "id": "comunidade",
+      "name": "Comunidade",
+      "color": "#3FBF3F",
+      "archetype": "O Cria do Povo",
+      "faction_affinity": "LEM",
+      "primary_branch": "fisico",
+      "requirements": {"fisico": 6, "mental": 4},
+      "starting_resources": {"moral": 7.0, "guard": 3.0},
+      "family_chance_bonus": {"defesa_queda": 0.02, "escape": 0.02},
+      "post_combat": {"money_multiplier": 1.0, "honor_win_bonus": 3.0, "hype_win_bonus": 0.0},
+      "signature_techniques": ["baiana", "saida_cem_quilos"],
+      "cria_live": {"recommended_tone": "humilde", "reach_bonus": 18.0, "hype_bonus": 0.0}
+    },
+    {
+      "id": "professor",
+      "name": "Professor",
+      "color": "#E2892E",
+      "archetype": "O Tecnico",
+      "faction_affinity": "LEM",
+      "primary_branch": "tecnica",
+      "requirements": {"tecnica": 7, "mental": 4},
+      "starting_resources": {"focus": 7.0, "control": 2.0},
+      "family_chance_bonus": {"raspagem": 0.03, "passagem": 0.03},
+      "post_combat": {"money_multiplier": 1.0, "honor_win_bonus": 2.0, "hype_win_bonus": 0.0},
+      "signature_techniques": ["raspagem_tesoura", "saida_montada", "chave_braco"],
+      "cria_live": {"recommended_tone": "didatico", "reach_bonus": 8.0, "hype_bonus": 0.0}
+    },
+    {
+      "id": "idolo",
+      "name": "Idolo",
+      "color": "#8A4BE2",
+      "archetype": "O Showman",
+      "faction_affinity": "NTM",
+      "primary_branch": "mental",
+      "requirements": {"mental": 6, "fisico": 4},
+      "starting_resources": {"moral": 6.0, "focus": 2.0},
+      "family_chance_bonus": {"raspagem": 0.02},
+      "post_combat": {"money_multiplier": 1.0, "honor_win_bonus": 0.0, "hype_win_bonus": 3.0},
+      "signature_techniques": ["raspagem_borboleta", "triangulo"],
+      "cria_live": {"recommended_tone": "provocativo", "reach_bonus": 25.0, "hype_bonus": 3.0}
+    },
+    {
+      "id": "pressao",
+      "name": "Pressao",
+      "color": "#D93A2B",
+      "archetype": "O Demolidor Controlado",
+      "faction_affinity": "NTM",
+      "primary_branch": "fisico",
+      "requirements": {"fisico": 7, "controle": 5},
+      "starting_resources": {"control": 6.0, "grip": 4.0},
+      "family_chance_bonus": {"passagem": 0.03, "controle": 0.03, "pressao": 0.03},
+      "post_combat": {"money_multiplier": 1.0, "honor_win_bonus": 1.0, "hype_win_bonus": 1.0},
+      "signature_techniques": ["corte_joelho", "torreando", "cem_quilos"],
+      "cria_live": {"recommended_tone": "firme", "reach_bonus": 15.0, "hype_bonus": 1.0}
+    },
+    {
+      "id": "alfa",
+      "name": "Alfa",
+      "color": "#F5C542",
+      "archetype": "O Macacao",
+      "faction_affinity": "LEM",
+      "primary_branch": "controle",
+      "requirements": {"controle": 7, "fisico": 5},
+      "starting_resources": {"moral": 10.0, "grip": 5.0},
+      "family_chance_bonus": {"ultimate": 0.04, "dominante": 0.02},
+      "post_combat": {"money_multiplier": 1.0, "honor_win_bonus": 2.0, "hype_win_bonus": 1.0},
+      "signature_techniques": ["silverback_grip", "montada_pesada", "chave_braco"],
+      "cria_live": {"recommended_tone": "firme", "reach_bonus": 20.0, "hype_bonus": 1.0}
+    }
+  ]
+}

@@ -23,17 +23,19 @@ func execute_activity(activity_id):
 	match str(activity_id):
 		"treino_tecnico":
 			WorldState.energy = max(WorldState.energy - 20.0, 0.0)
+			WorldState.skill_points += 1
 			WorldState.modify_reputation("legado", 1.0)
 			WorldState.advance_day()
-			return {"message": "Treino tecnico completado. Base fortalecida."}
+			return {"message": "Treino tecnico completado. Base fortalecida e +1 ponto de habilidade."}
 		"sparring_fisico":
 			WorldState.energy = max(WorldState.energy - 35.0, 0.0)
 			if randf() < 0.15:
 				WorldState.strain_level += 1
 				WorldState.advance_day()
 				return {"message": "Sparring pesado. Recuperacao marcada."}
+			WorldState.skill_points += 1
 			WorldState.advance_day()
-			return {"message": "Sparring completado. Cardio em dia."}
+			return {"message": "Sparring completado. Cardio em dia e +1 ponto de habilidade."}
 		"treino_cria_live":
 			WorldState.energy = max(WorldState.energy - 25.0, 0.0)
 			WorldState.modify_reputation("hype", 4.0)
