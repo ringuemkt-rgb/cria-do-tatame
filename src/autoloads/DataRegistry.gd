@@ -41,6 +41,8 @@ var character_animation_catalog := {}
 var apixel_production_briefs := {}
 var arena_animation_flow := {}
 var combat_deck := {}
+var combat_presentation := {}
+var audio_cues := {}
 var validation_report := {}
 
 const DATA_FILES := {
@@ -84,7 +86,9 @@ const DATA_FILES := {
 	"character_animation_catalog": "res://data/visual/character_animation_catalog_v01.json",
 	"apixel_production_briefs": "res://data/visual/apixel_production_briefs_v01.json",
 	"arena_animation_flow": "res://data/visual/arena_animation_flow_v01.json",
-	"combat_deck": "res://data/ruan_deck_inicial.json"
+	"combat_deck": "res://data/ruan_deck_inicial.json",
+	"combat_presentation": "res://data/combat/combat_presentation_v01.json",
+	"audio_cues": "res://data/audio/audio_cues_v01.json"
 }
 
 func _ready():
@@ -132,6 +136,8 @@ func load_all():
 	apixel_production_briefs = _load_raw("apixel_production_briefs")
 	arena_animation_flow = _load_raw("arena_animation_flow")
 	combat_deck = _load_raw("combat_deck")
+	combat_presentation = _load_raw("combat_presentation")
+	audio_cues = _load_raw("audio_cues")
 	validation_report = validate_core_data()
 	SignalBus.data_validation_finished.emit(validation_report)
 	SignalBus.data_loaded.emit()
@@ -211,6 +217,10 @@ func validate_core_data():
 		errors.append("deck de combate inicial possui menos de 10 cartas")
 	if combat_deck.get("owner_id", "") != "ruan_macacao":
 		errors.append("deck de combate inicial nao pertence a ruan_macacao")
+	if combat_presentation.get("$schema", "") != "combat_presentation_v1":
+		errors.append("contrato de apresentacao do combate nao carregado")
+	if audio_cues.get("$schema", "") != "audio_cues_v1":
+		errors.append("catalogo de audio nao carregado")
 	return {"ok": errors.is_empty(), "errors": errors, "characters": characters.size(), "arenas": arenas.size(), "techniques": techniques.size(), "factions": factions.size()}
 
 func get_character_animation(character_id: String, action_id: String) -> Dictionary:
