@@ -61,7 +61,10 @@ func apply_presentation(presentation: Dictionary, success: bool = true, screen_p
 		var max_haptic := int(budgets.get("max_haptic_ms", 45))
 		var haptic_ms := mini(int(presentation.get("haptic_ms", 0)), max_haptic)
 		if haptic_ms > 0:
-			Input.vibrate_handheld(haptic_ms, clampf(float(presentation.get("haptic_amplitude", 0.25)), 0.0, 1.0))
+			# Godot 4.2.2 (versao minima auditada pelo CI) aceita apenas a duracao.
+			# A amplitude permanece no contrato para plataformas/versoes que a suportem,
+			# mas nao pode quebrar o parser do runtime minimo.
+			Input.vibrate_handheld(haptic_ms)
 
 
 func apply_for_technique(technique_id: String, success: bool) -> void:

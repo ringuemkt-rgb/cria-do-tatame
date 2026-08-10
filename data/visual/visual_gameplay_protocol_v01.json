@@ -1,0 +1,295 @@
+{
+  "$schema": "visual_gameplay_protocol_v1",
+  "version": "1.0.0",
+  "status": "active_production_contract",
+  "scope": "vertical_slice_gold_ruan_vs_davi",
+  "authorities": {
+    "canon": "data/production/canon_contract_v4_1.json",
+    "supreme_build": "data/production/supreme_build_contract_v01.json",
+    "asset_manifest": "data/visual/production_manifest_v02.json",
+    "arena_animation": "data/visual/arena_animation_flow_v01.json",
+    "combat_presentation": "data/combat/combat_presentation_v01.json",
+    "audio": "data/audio/audio_cues_v01.json"
+  },
+  "reference_policy": {
+    "references_are_shipping_assets": false,
+    "copy_pixels_into_shipping": false,
+    "copy_embedded_text_or_logos": false,
+    "derive_composition_palette_density_only": true,
+    "human_art_direction_required": true
+  },
+  "reference_board": [
+    {
+      "id": "regional_world_map",
+      "original_filename": "1000352514.png",
+      "detected_container": "JPEG",
+      "dimensions": [1536, 864],
+      "sha256": "b1941c188e2f10ef8ecac084d06e7fa056896b139fecc119aa988ef47fe02e56",
+      "role": "world_map_and_destination_inspector",
+      "orientation": "landscape_16_9",
+      "shipping_ready": false
+    },
+    {
+      "id": "official_arena_live_combat",
+      "original_filename": "1000352509.png",
+      "detected_container": "JPEG",
+      "dimensions": [1536, 864],
+      "sha256": "c7fae097de546f597671cfe621aac1766b7251bb1c9d1671ac508a45c1837c3f",
+      "role": "official_arena_and_compact_hud",
+      "orientation": "landscape_16_9",
+      "shipping_ready": false
+    },
+    {
+      "id": "terreiro_hub",
+      "original_filename": "1000339426.png",
+      "detected_container": "JPEG",
+      "dimensions": [1536, 864],
+      "sha256": "07192f2e392c26065583b475e65ca706ce0bf3981d55c97945604b1ff1ceecc7",
+      "role": "hub_character_and_mission_shell",
+      "orientation": "landscape_16_9",
+      "shipping_ready": false
+    },
+    {
+      "id": "main_menu",
+      "original_filename": "1000339427.png",
+      "detected_container": "JPEG",
+      "dimensions": [1536, 864],
+      "sha256": "fc211310f9e1fcd518cccdf2aaf3bd911eb372c8e57ff87ef2af28c637a847be",
+      "role": "brand_first_main_menu",
+      "orientation": "landscape_16_9",
+      "shipping_ready": false
+    },
+    {
+      "id": "zambiapunga_arena_briefing",
+      "original_filename": "1000339419.png",
+      "detected_container": "JPEG",
+      "dimensions": [1229, 1536],
+      "sha256": "0d444bd75661850e3bf8fc91b0fcd60feb52eeb91bb78459dd77f20854a06235",
+      "role": "cultural_arena_briefing_board",
+      "orientation": "portrait_presentation_board",
+      "shipping_ready": false
+    },
+    {
+      "id": "cria_live_skill_tree",
+      "original_filename": "1000339420.png",
+      "detected_container": "JPEG",
+      "dimensions": [1536, 864],
+      "sha256": "2101c2a34a10552d4b702e242dbcf9dfd63004c200edf3a74a63b11260d34fd8",
+      "role": "social_feed_progression_and_crises",
+      "orientation": "landscape_16_9",
+      "shipping_ready": false
+    },
+    {
+      "id": "combat_tactical_flow",
+      "original_filename": "1000339422.png",
+      "detected_container": "JPEG",
+      "dimensions": [1536, 864],
+      "sha256": "032a4222030a4f0cb8dca8fe66a1bfbce8af7d9dfda45eed1d776e41d9fe293e",
+      "role": "combat_objective_actions_and_sequence",
+      "orientation": "landscape_16_9",
+      "shipping_ready": false
+    },
+    {
+      "id": "social_career_dashboard",
+      "original_filename": "1000339409.png",
+      "detected_container": "JPEG",
+      "dimensions": [1536, 864],
+      "sha256": "39b525179806469ead32e4379416b69d57f72fc8c10f3be3c435332d775cb34f",
+      "role": "social_sponsors_reputation_and_territory",
+      "orientation": "landscape_16_9",
+      "shipping_ready": false
+    },
+    {
+      "id": "pancada_grande_briefing",
+      "original_filename": "1000339410.png",
+      "detected_container": "JPEG",
+      "dimensions": [1229, 1536],
+      "sha256": "1b6ef8a15fcaf19f943b9c7cab27d4cdd04075bc6ff6775eb8b44fefdeab94d7",
+      "role": "environmental_arena_mechanics_board",
+      "orientation": "portrait_presentation_board",
+      "shipping_ready": false
+    },
+    {
+      "id": "progression_skill_tree",
+      "original_filename": "1000339416.png",
+      "detected_container": "JPEG",
+      "dimensions": [1536, 864],
+      "sha256": "f1935084a474cf835aaeee8e19de7caaaa05e380f948507528785056a8e17b7c",
+      "role": "progression_belt_and_skill_inspector",
+      "orientation": "landscape_16_9",
+      "shipping_ready": false
+    }
+  ],
+  "house_style": {
+    "name": "HD Pixel Art 2.5D Regional Premium",
+    "runtime_viewport": [1280, 720],
+    "pixel_filter": "nearest",
+    "grid_px": 8,
+    "palette": {
+      "ink": "0A0A0A",
+      "charcoal": "171615",
+      "panel": "1A1A1A",
+      "weathered_brown": "4D3018",
+      "frame_gold": "B8860B",
+      "honor_gold": "F2C230",
+      "off_white": "F2F2F2",
+      "tatame_blue": "102B5E",
+      "river_cyan": "20A9C9",
+      "conflict_red": "D92323",
+      "focus_violet": "8D54C7",
+      "respect_green": "4C8F5A"
+    },
+    "typography": {
+      "logo": "brush_lettering_as_separate_approved_asset",
+      "display": "condensed_pixel_or_bitmap_heading",
+      "body": "high_legibility_sans_or_bitmap",
+      "numbers": "tabular_condensed",
+      "generated_image_text_forbidden": true,
+      "runtime_text_nodes_required": true
+    },
+    "metrics": {
+      "safe_margin_px": 24,
+      "panel_padding_px": 16,
+      "panel_gap_px": 8,
+      "border_px": 2,
+      "touch_target_min_px": 48,
+      "touch_target_preferred_px": 64,
+      "body_clear_zone_width_ratio": 0.52,
+      "hud_top_height_ratio": 0.25,
+      "action_bottom_height_ratio": 0.18
+    },
+    "composition_rules": [
+      "highest_detail_in_background_and_portraits_not_under_live_controls",
+      "fighters_remain_readable_against_a_quieter_playfield",
+      "critical_state_lives_on_screen_edges",
+      "gold_frames_signal_structure_not_reward_rarity_alone",
+      "color_is_never_the_only_state_indicator",
+      "no_long_text_baked_into_background_art"
+    ]
+  },
+  "canonical_filters": {
+    "protagonist_id": "ruan_macacao",
+    "active_factions": ["LEM", "NTM", "ALE"],
+    "offline_critical_gameplay": true,
+    "real_money_betting": false,
+    "mandatory_online_progression": false,
+    "fourth_active_faction": false,
+    "graphic_injury": false,
+    "submission_outcomes": ["tap", "escape", "referee_intervention", "time_or_points"]
+  },
+  "screen_contracts": {
+    "main_menu": {
+      "runtime_scene": "scenes/main_menu/MainMenu.tscn",
+      "status": "integrated_foundation",
+      "reference_ids": ["main_menu"],
+      "hierarchy": ["brand_key_art", "primary_menu", "save_summary", "event_preview", "footer_controls"],
+      "primary_task": "start_or_continue_the_career"
+    },
+    "terreiro_hub": {
+      "runtime_scene": "scenes/hubs/TerreiroDaLuta.tscn",
+      "status": "integrated_foundation",
+      "reference_ids": ["terreiro_hub"],
+      "hierarchy": ["ruan_full_body", "academy_activity", "primary_mission", "weekly_actions", "persistent_nav"],
+      "primary_task": "choose_the_next_career_action"
+    },
+    "world_map": {
+      "runtime_scene": "scenes/world/WorldMapScreen.tscn",
+      "status": "integrated_foundation",
+      "reference_ids": ["regional_world_map"],
+      "hierarchy": ["regional_map", "route_state", "current_objective", "destination_inspector", "reputation"],
+      "primary_task": "understand_cost_risk_and_destination_before_travel"
+    },
+    "combat": {
+      "runtime_scene": "scenes/combat/CombatArenaBase.tscn",
+      "status": "integrated_vertical_slice",
+      "reference_ids": ["official_arena_live_combat", "combat_tactical_flow"],
+      "hierarchy": ["fighter_resources", "round_state", "clear_body_stage", "tactical_side_rails", "sequence_and_deck", "context_actions"],
+      "primary_task": "read_position_build_control_and_finish_safely"
+    },
+    "cria_live": {
+      "runtime_scene": "scenes/ui/CriaLiveUI.tscn",
+      "status": "integrated_foundation",
+      "reference_ids": ["cria_live_skill_tree", "social_career_dashboard"],
+      "hierarchy": ["feed", "sponsors", "career_growth", "active_crises", "faction_reputation"],
+      "primary_task": "understand_the_social_consequence_of_actions"
+    },
+    "deck_builder": {
+      "runtime_scene": "scenes/ui/DeckBuilder.tscn",
+      "status": "integrated_foundation",
+      "reference_ids": ["progression_skill_tree"],
+      "hierarchy": ["collection", "gi_slots", "belt_limit", "upgrade_cost", "save_action"],
+      "primary_task": "prepare_a_legal_readable_combat_hand"
+    },
+    "arena_briefing": {
+      "runtime_scene": "",
+      "status": "specified_not_integrated",
+      "reference_ids": ["zambiapunga_arena_briefing", "pancada_grande_briefing"],
+      "hierarchy": ["arena_identity", "opponent_preview", "mechanic_cards", "safety_rule", "start_action"],
+      "primary_task": "learn_the_arena_rule_before_accepting_the_fight"
+    }
+  },
+  "combat_visual_flow": {
+    "tactical_steps": [
+      {"id": "grip", "label": "PEGADA", "states": ["PLAYER_STANDING_NEUTRAL"]},
+      {"id": "base", "label": "BASE", "states": ["PLAYER_TOP_CLINCH", "PLAYER_BOTTOM_CLINCH"]},
+      {"id": "takedown", "label": "QUEDA", "states": ["PLAYER_TOP_GUARD", "PLAYER_BOTTOM_GUARD"]},
+      {"id": "control", "label": "CONTROLE", "states": ["PLAYER_TOP_SIDE", "PLAYER_BOTTOM_SIDE", "PLAYER_TOP_MOUNT", "PLAYER_BOTTOM_MOUNT", "PLAYER_BACK_ATTACK", "PLAYER_BACK_DEFENSE"]},
+      {"id": "finish", "label": "FINALIZACAO", "states": ["PLAYER_SUBMISSION_ATTACK", "PLAYER_SUBMISSION_DEFENSE"]}
+    ],
+    "resource_priority": ["health", "gas", "focus", "guard", "grip", "positional_control", "moral"],
+    "defense_language": ["cedo", "perfeito", "tarde"],
+    "submission_phases": ["setup", "lock", "technical_pressure", "tap_or_escape", "referee_or_recovery"],
+    "feedback_authority": "data/combat/combat_presentation_v01.json",
+    "simulation_may_read_presentation": false
+  },
+  "image_creation_protocol": {
+    "steps": [
+      "canon_and_license_brief",
+      "grayscale_composition_blockout",
+      "palette_and_light_key",
+      "layered_environment_master",
+      "character_or_prop_model_sheet",
+      "pixel_cleanup_and_palette_lock",
+      "runtime_crop_and_safe_area",
+      "godot_integration",
+      "reference_side_by_side_and_human_approval"
+    ],
+    "arena_layer_order": ["sky", "far_landscape", "architecture", "crowd", "playfield", "foreground", "weather_and_light"],
+    "required_outputs": ["source_master", "runtime_layers", "palette", "metadata", "preview", "license", "qa_report"],
+    "generation_rules": [
+      "generate_art_without_ui_text_or_logos",
+      "one_lighting_direction_per_scene",
+      "stable_character_proportions_and_costume",
+      "separate_subject_from_background_before_pixel_cleanup",
+      "nearest_neighbor_only_after_master_cleanup",
+      "candidate_assets_never_enter_shipping_automatically"
+    ]
+  },
+  "paired_animation_protocol": {
+    "roles": ["attacker", "defender", "referee_optional"],
+    "phases": ["anticipation", "entry", "establish", "stabilize", "response", "recovery"],
+    "submission_phases": ["setup", "lock", "technical_pressure", "tap_or_escape", "referee_or_recovery"],
+    "sprite_clip_fps": {"idle": 8, "movement": 12, "combat": 16, "impact": 20},
+    "mandatory_sync": ["shared_root", "contact_anchor", "facing", "attacker_frame", "defender_frame", "event_markers"],
+    "mandatory_events": ["grip_contact", "base_break", "position_established", "defense_window", "tap_or_escape", "respect_reset"],
+    "required_outputs": ["attacker_spritesheet.png", "defender_spritesheet.png", "sync_markers.json", "preview.gif", "metadata.json", "qa_report.md"],
+    "qa_gates": [
+      "no_teleporting_grips",
+      "no_joint_discontinuity",
+      "stable_scale_and_pivot",
+      "clear_silhouette_at_combat_size",
+      "safe_tap_escape_or_referee_outcome",
+      "bjj_human_review",
+      "android_visual_test"
+    ]
+  },
+  "audio_protocol": {
+    "runtime_authority": "AudioManager",
+    "catalog": "data/audio/audio_cues_v01.json",
+    "layers": ["arena_ambience", "crowd_intensity", "music_base", "music_tension", "cloth_and_grip", "mat_or_surface", "breathing", "ui"],
+    "combat_sequence": ["anticipation_cloth", "grip_contact", "base_break", "surface_impact", "control_settle", "tap_or_referee", "crowd_response"],
+    "critical_information_requires_visual_pair": true,
+    "streaming_dependency": false
+  },
+  "production_states": ["specified", "implemented", "integrated", "validated_automatically", "human_or_device_tested", "release_ready"]
+}

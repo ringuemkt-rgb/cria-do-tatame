@@ -126,8 +126,8 @@ func _draw_crowd_ring(w: float, h: float) -> void:
 		var row := i % 3
 		var bounce := sin(_time * (1.2 + (i % 5) * 0.08) + i) * (2.0 + 5.0 * _crowd_intensity)
 		var y := h * 0.57 + row * 32.0 + bounce
-		var skin := [Color("6f4d37"), Color("8e6248"), Color("4d352b"), Color("b27b57")][i % 4]
-		var shirt := [Color("202938"), Color("6f2338"), Color("164b58"), Color("8a5b19")][i % 4]
+		var skin: Color = [Color("6f4d37"), Color("8e6248"), Color("4d352b"), Color("b27b57")][i % 4]
+		var shirt: Color = [Color("202938"), Color("6f2338"), Color("164b58"), Color("8a5b19")][i % 4]
 		draw_circle(Vector2(x_base, y), 7.0, skin)
 		draw_rect(Rect2(x_base - 8.0, y + 7.0, 16.0, 20.0), shirt)
 		if i % 5 == 0:

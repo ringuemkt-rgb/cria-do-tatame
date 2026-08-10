@@ -121,7 +121,7 @@ func _on_combat_finished(result: Dictionary) -> void:
 	if bool(result.get("interrupted", false)):
 		return
 	if result_arena_id == "praia_de_pratigi_festival":
-		var player_won_pratigi := result.get("winner", "") in [WorldState.player_id, "ruan_macacao"]
+		var player_won_pratigi: bool = result.get("winner", "") in [WorldState.player_id, "ruan_macacao"]
 		var pratigi_text := "Macacão dominou a areia sob o grave do Festival Maré Alta. A praia gritou; agora ele terá de responder pelo alcance." if player_won_pratigi else "A areia cobrou a base de Macacão no Festival Maré Alta. O vídeo correu mais rápido que a desculpa."
 		create_post(pratigi_text, "pratigi_festival", "cria_live", {
 			"source_event": "pratigi_festival_combat",
