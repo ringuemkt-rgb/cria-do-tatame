@@ -13,6 +13,7 @@
     "validate:motion-pipeline": "python tools/audit/validate_motion_pipeline.py",
     "validate:ai-production-sop": "python tools/audit/validate_ai_production_sop.py",
     "validate:agent-sprite-forge": "python tools/audit/validate_agent_sprite_forge_adapter.py",
+    "validate:neplex-vectorizer": "python tools/audit/validate_neplex_vectorizer_adapter.py",
     "validate:visual-gameplay": "python tools/audit/validate_visual_gameplay_protocol.py",
     "validate:fighter-styles": "python tools/audit/validate_fighter_styles.py",
     "validate:ground-submission": "python tools/audit/validate_ground_submission.py",
@@ -30,7 +31,7 @@
     "animations:generate": "python tools/animation/generate_character_animation_pack.py",
     "validate:animations": "python tools/animation/generate_character_animation_pack.py --validate-only",
     "smoke:pratigi": "godot --headless --path . --script res://tests/pratigi_festival_smoke.gd",
-    "quality": "npm run validate:governance && npm run validate:canon && npm run validate:factions-v4 && npm run validate:pratigi && npm run validate:combat-presentation && npm run validate:motion-pipeline && npm run validate:ai-production-sop && npm run validate:agent-sprite-forge && npm run validate:visual-gameplay && npm run validate:fighter-styles && npm run validate:ground-submission && npm run validate:ground-stamina && npm run validate:python && npm run validate:node && npm run validate:data && npm run validate:animations && npm run validate:repository && npm run validate:runtime && npm run validate:release && npm run validate:supreme && npm run validate:deck",
+    "quality": "npm run validate:governance && npm run validate:canon && npm run validate:factions-v4 && npm run validate:pratigi && npm run validate:combat-presentation && npm run validate:motion-pipeline && npm run validate:ai-production-sop && npm run validate:agent-sprite-forge && npm run validate:neplex-vectorizer && npm run validate:visual-gameplay && npm run validate:fighter-styles && npm run validate:ground-submission && npm run validate:ground-stamina && npm run validate:python && npm run validate:node && npm run validate:data && npm run validate:animations && npm run validate:repository && npm run validate:runtime && npm run validate:release && npm run validate:supreme && npm run validate:deck",
     "build:android:windows": "powershell -ExecutionPolicy Bypass -File tools/build/build_android_debug.ps1",
     "build:android:linux": "bash tools/build/build_android_debug.sh",
     "build:windows": "powershell -ExecutionPolicy Bypass -File tools/build/build_windows_debug.ps1"

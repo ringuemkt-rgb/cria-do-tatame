@@ -98,6 +98,18 @@
       "notes": "Aprovado somente como checkout externo fixado para limpeza, recorte, escala, ancora e preview de candidatos. Prompt builder generico, geracao de video no Codex, promocao automatica e export pareado de grappling para shipping permanecem bloqueados."
     },
     {
+      "id": "neplex_vectorizer",
+      "url": "https://github.com/neplextech/vectorizer",
+      "license": "MIT",
+      "package": "@neplex/vectorizer",
+      "package_version": "0.1.0",
+      "package_git_head": "dd96eea07d1eb6c0c796801a385efbf53d512591",
+      "decision": "approved_vector_source_candidate_tool",
+      "runtime_dependency": false,
+      "profile": "data/production/neplex_vectorizer_profile_v01.json",
+      "notes": "Aprovado via CLI local fixada somente para emblemas, icones, marcas e diagramas. Lutadores, sprites pareados, tiles, arenas e demais pixel art permanecem PNG. O SVG e fonte candidata, exige auditoria de conteudo ativo, bake PNG por tamanho, revisao Godot/Android e aprovacao humana."
+    },
+    {
       "id": "penpot",
       "url": "https://github.com/penpot/penpot",
       "license": "MPL-2.0",

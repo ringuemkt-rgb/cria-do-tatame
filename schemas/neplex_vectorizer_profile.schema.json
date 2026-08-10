@@ -1,0 +1,140 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "neplex_vectorizer_profile.schema.json",
+  "title": "Cria do Tatame Neplex Vectorizer profile",
+  "type": "object",
+  "required": [
+    "$schema",
+    "version",
+    "status",
+    "source",
+    "dependency_policy",
+    "adoption",
+    "execution",
+    "godot_policy",
+    "playground_audit",
+    "promotion_gates",
+    "audit_snapshot"
+  ],
+  "properties": {
+    "$schema": {"const": "neplex_vectorizer_profile_v1"},
+    "version": {"const": "1.0.0"},
+    "status": {"const": "approved_vector_source_candidate_tool"},
+    "verified_on": {"type": "string", "format": "date"},
+    "source": {
+      "type": "object",
+      "required": [
+        "repository",
+        "playground_repository",
+        "playground",
+        "package",
+        "package_version",
+        "package_git_head",
+        "reviewed_repository_head",
+        "license",
+        "license_sha256",
+        "npm_integrity",
+        "tarball_sha256",
+        "package_json_sha256",
+        "cli_sha256",
+        "index_sha256",
+        "bindings_sha256"
+      ],
+      "properties": {
+        "repository": {"const": "https://github.com/neplextech/vectorizer"},
+        "playground_repository": {"const": "https://github.com/twlite/vectorizer-playground"},
+        "playground": {"const": "https://vectorizer.neplex.dev/"},
+        "package": {"const": "@neplex/vectorizer"},
+        "package_version": {"const": "0.1.0"},
+        "package_git_head": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
+        "reviewed_repository_head": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
+        "license": {"const": "MIT"},
+        "license_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+        "npm_integrity": {"type": "string", "pattern": "^sha512-.+$"},
+        "tarball_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+        "package_json_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+        "cli_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+        "index_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+        "bindings_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}
+      },
+      "additionalProperties": false
+    },
+    "dependency_policy": {
+      "type": "object",
+      "required": [
+        "runtime_dependency",
+        "runtime_network_required",
+        "vendored_into_game",
+        "installation",
+        "cli_resolution",
+        "global_install_allowed",
+        "package_scripts_allowed",
+        "online_playground_for_project_assets",
+        "self_hosted_playground_for_public_tests"
+      ],
+      "properties": {
+        "runtime_dependency": {"const": false},
+        "runtime_network_required": {"const": false},
+        "vendored_into_game": {"const": false},
+        "installation": {"const": "isolated_external_npm_package_exact_version"},
+        "cli_resolution": {"const": "explicit_verified_path_only"},
+        "global_install_allowed": {"const": false},
+        "package_scripts_allowed": {"const": false},
+        "online_playground_for_project_assets": {"const": false},
+        "self_hosted_playground_for_public_tests": {"const": true}
+      },
+      "additionalProperties": false
+    },
+    "adoption": {
+      "type": "object",
+      "required": ["approved_asset_classes", "blocked_asset_classes", "reason"],
+      "properties": {
+        "approved_asset_classes": {"type": "array", "minItems": 5, "items": {"type": "string"}},
+        "blocked_asset_classes": {"type": "array", "minItems": 8, "items": {"type": "string"}},
+        "reason": {"type": "string", "minLength": 20}
+      },
+      "additionalProperties": false
+    },
+    "execution": {
+      "type": "object",
+      "required": [
+        "adapter",
+        "candidate_output_root",
+        "input_extensions",
+        "output_extension",
+        "required_cli_flags",
+        "candidate_state",
+        "promotion_allowed",
+        "source_rights_required",
+        "local_execution_required",
+        "max_input_bytes",
+        "max_dimension",
+        "max_output_bytes",
+        "allowed_svg_elements",
+        "active_svg_constructs_allowed"
+      ],
+      "properties": {
+        "adapter": {"const": "tools/visual/neplex_vectorizer_adapter.py"},
+        "candidate_output_root": {"const": "production/candidates/neplex_vectorizer"},
+        "input_extensions": {"const": [".png"]},
+        "output_extension": {"const": ".svg"},
+        "required_cli_flags": {"type": "array", "minItems": 5, "items": {"type": "string"}},
+        "candidate_state": {"const": "candidate_vector_source"},
+        "promotion_allowed": {"const": false},
+        "source_rights_required": {"const": true},
+        "local_execution_required": {"const": true},
+        "max_input_bytes": {"type": "integer", "minimum": 1},
+        "max_dimension": {"type": "integer", "minimum": 1},
+        "max_output_bytes": {"type": "integer", "minimum": 1},
+        "allowed_svg_elements": {"const": ["svg", "g", "path"]},
+        "active_svg_constructs_allowed": {"const": false}
+      },
+      "additionalProperties": false
+    },
+    "godot_policy": {"type": "object"},
+    "playground_audit": {"type": "object"},
+    "promotion_gates": {"type": "array", "minItems": 10, "items": {"type": "string"}},
+    "audit_snapshot": {"type": "object"}
+  },
+  "additionalProperties": false
+}

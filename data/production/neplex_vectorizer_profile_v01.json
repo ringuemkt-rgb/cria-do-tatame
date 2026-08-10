@@ -1,0 +1,123 @@
+{
+  "$schema": "neplex_vectorizer_profile_v1",
+  "version": "1.0.0",
+  "status": "approved_vector_source_candidate_tool",
+  "verified_on": "2026-08-10",
+  "source": {
+    "repository": "https://github.com/neplextech/vectorizer",
+    "playground_repository": "https://github.com/twlite/vectorizer-playground",
+    "playground": "https://vectorizer.neplex.dev/",
+    "package": "@neplex/vectorizer",
+    "package_version": "0.1.0",
+    "package_git_head": "dd96eea07d1eb6c0c796801a385efbf53d512591",
+    "reviewed_repository_head": "880a9e443051e518c256146e9c7d61109584a85c",
+    "license": "MIT",
+    "license_sha256": "c79ce7643a491517f9992855fa5fe6b7d2d8d3e9d12f364c69e6ab714919e190",
+    "npm_integrity": "sha512-J2cfkJG0hmOsC+QiPfkNSe8U68vW5SdaM8PjLMVgacmKfOtZKbU5syz3BqlfYoMlPjJlfzYdxwfH4GiAz5vLUQ==",
+    "tarball_sha256": "59f2ed520e885bbca4fc72709bc8a2418776c670e1e3d642e9c14ff5cd515c03",
+    "package_json_sha256": "f97a0d46a50f5441e79116ec63bc19659e1efdfd25d58ab76e2da505793b0dee",
+    "cli_sha256": "7e2d47f2977b14bcd53c42dd738e9b6eaab3683e8ca2d59616c2c823bfc283e7",
+    "index_sha256": "eea64dce2ab8ca7091140568bd7ede6fa0306b9156c5a70258681fe4b3d7ac0d",
+    "bindings_sha256": "b6249e3f8d6e8ec6afecd9ed590d7c4a18c9cf8d27f50cb7c38801e8aeb3e0c1"
+  },
+  "dependency_policy": {
+    "runtime_dependency": false,
+    "runtime_network_required": false,
+    "vendored_into_game": false,
+    "installation": "isolated_external_npm_package_exact_version",
+    "cli_resolution": "explicit_verified_path_only",
+    "global_install_allowed": false,
+    "package_scripts_allowed": false,
+    "online_playground_for_project_assets": false,
+    "self_hosted_playground_for_public_tests": true
+  },
+  "adoption": {
+    "approved_asset_classes": [
+      "faction_emblem",
+      "style_emblem",
+      "ui_icon",
+      "logo_mark",
+      "accessibility_diagram"
+    ],
+    "blocked_asset_classes": [
+      "fighter_sprite",
+      "paired_grappling_frame",
+      "animation_sheet",
+      "tileset",
+      "arena_background",
+      "crowd_sprite",
+      "card_illustration",
+      "pixel_font"
+    ],
+    "reason": "Vetor e apropriado para marcas e pictogramas escalaveis. Lutadores, cenarios, tiles e animacao dependem de clusters de pixel, dithering e nearest-neighbor e permanecem PNG raster."
+  },
+  "execution": {
+    "adapter": "tools/visual/neplex_vectorizer_adapter.py",
+    "candidate_output_root": "production/candidates/neplex_vectorizer",
+    "input_extensions": [".png"],
+    "output_extension": ".svg",
+    "required_cli_flags": [
+      "--preset=poster",
+      "--optimize",
+      "--optimize-preset=safe",
+      "--multipass",
+      "--multipass-iterations=3"
+    ],
+    "candidate_state": "candidate_vector_source",
+    "promotion_allowed": false,
+    "source_rights_required": true,
+    "local_execution_required": true,
+    "max_input_bytes": 16777216,
+    "max_dimension": 4096,
+    "max_output_bytes": 2097152,
+    "allowed_svg_elements": ["svg", "g", "path"],
+    "active_svg_constructs_allowed": false
+  },
+  "godot_policy": {
+    "source_svg_retained": true,
+    "svg_runtime_authority": false,
+    "size_specific_png_bake_required": true,
+    "runtime_plugin_added": false,
+    "pixel_assets_may_be_vectorized": false
+  },
+  "playground_audit": {
+    "client_side_worker_processing": true,
+    "image_upload_request_observed": false,
+    "vercel_analytics_present": true,
+    "policy": "Nao usar o playground hospedado com arte confidencial. Preferir CLI local; self-host somente para testes publicos."
+  },
+  "promotion_gates": [
+    "provenance_and_license",
+    "source_png_rights",
+    "svg_active_content_audit",
+    "path_and_color_budget",
+    "silhouette_review",
+    "palette_review",
+    "small_size_readability",
+    "size_specific_png_bake",
+    "godot_import_review",
+    "android_physical_device_review",
+    "human_approval"
+  ],
+  "audit_snapshot": {
+    "published_package_smoke": {
+      "command": "vectorizer emblem.png emblem.svg --preset poster --mode polygon --color-precision 6 --filter-speckle 2 --path-precision 2 --optimize --optimize-preset safe --multipass --multipass-iterations 3",
+      "runs": 2,
+      "result": "pass",
+      "deterministic_sha256": "2cf35a364524e9c00740845fe297f1aa3c340286a6d7a1688be72c4646d4b20e",
+      "input_bytes": 736,
+      "output_bytes": 187,
+      "active_construct_scan": "pass"
+    },
+    "adapter_smoke": {
+      "result": "pass",
+      "artifact_state": "candidate_vector_source",
+      "intake_written": true,
+      "paths": 1,
+      "colors": 1,
+      "output_bytes": 187,
+      "active_constructs": false
+    },
+    "source_test_note": "O checkout-fonte exige build N-API local antes da suite. A verificacao adotada executou o pacote npm publicado, fixado e com binario de plataforma, em vez de alegar uma suite-fonte nao executada."
+  }
+}

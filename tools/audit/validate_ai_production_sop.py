@@ -86,6 +86,22 @@ def main() -> int:
         sprite_forge.get("profile") == "data/production/agent_sprite_forge_profile_v01.json",
         "Agent Sprite Forge profile path changed",
     )
+    vectorizer = tools.get("neplex_vectorizer", {})
+    require(vectorizer.get("license") == "MIT", "Neplex Vectorizer license changed")
+    require(
+        vectorizer.get("decision") == "approved_vector_source_candidate_tool",
+        "Neplex Vectorizer cannot be promoted beyond candidate vector sources",
+    )
+    require(vectorizer.get("package_version") == "0.1.0", "Neplex Vectorizer package is not pinned")
+    require(
+        vectorizer.get("package_git_head") == "dd96eea07d1eb6c0c796801a385efbf53d512591",
+        "Neplex Vectorizer package commit changed",
+    )
+    require(vectorizer.get("runtime_dependency") is False, "Neplex Vectorizer cannot enter runtime")
+    require(
+        vectorizer.get("profile") == "data/production/neplex_vectorizer_profile_v01.json",
+        "Neplex Vectorizer profile path changed",
+    )
     require(tools.get("penpot", {}).get("license") == "MPL-2.0", "Penpot license changed")
     require(tools.get("tiled", {}).get("native_godot4_tmx_import_assumed") is False, "native TMX import must not be assumed")
     require(tools.get("yarn_spinner_godot_gdscript", {}).get("decision") == "blocked_current_runtime", "alpha Godot 4.6 Yarn integration cannot enter current runtime")
