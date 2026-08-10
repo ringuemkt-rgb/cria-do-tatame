@@ -43,6 +43,11 @@ var arena_animation_flow := {}
 var combat_deck := {}
 var combat_presentation := {}
 var audio_cues := {}
+var fighter_styles := {}
+var skill_tree_v2 := {}
+var ground_graph := {}
+var submissions_anatomy := {}
+var submission_exchange := {}
 var validation_report := {}
 
 const DATA_FILES := {
@@ -88,7 +93,12 @@ const DATA_FILES := {
 	"arena_animation_flow": "res://data/visual/arena_animation_flow_v01.json",
 	"combat_deck": "res://data/ruan_deck_inicial.json",
 	"combat_presentation": "res://data/combat/combat_presentation_v01.json",
-	"audio_cues": "res://data/audio/audio_cues_v01.json"
+	"audio_cues": "res://data/audio/audio_cues_v01.json",
+	"fighter_styles": "res://data/player/fighter_styles_v01.json",
+	"skill_tree_v2": "res://data/player/skill_tree_v02.json",
+	"ground_graph": "res://data/combat/ground_graph_v01.json",
+	"submissions_anatomy": "res://data/combat/submissions_anatomy_v01.json",
+	"submission_exchange": "res://data/combat/submission_exchange_v01.json"
 }
 
 func _ready():
@@ -138,6 +148,11 @@ func load_all():
 	combat_deck = _load_raw("combat_deck")
 	combat_presentation = _load_raw("combat_presentation")
 	audio_cues = _load_raw("audio_cues")
+	fighter_styles = _load_raw("fighter_styles")
+	skill_tree_v2 = _load_raw("skill_tree_v2")
+	ground_graph = _load_raw("ground_graph")
+	submissions_anatomy = _load_raw("submissions_anatomy")
+	submission_exchange = _load_raw("submission_exchange")
 	validation_report = validate_core_data()
 	SignalBus.data_validation_finished.emit(validation_report)
 	SignalBus.data_loaded.emit()
@@ -221,6 +236,16 @@ func validate_core_data():
 		errors.append("contrato de apresentacao do combate nao carregado")
 	if audio_cues.get("$schema", "") != "audio_cues_v1":
 		errors.append("catalogo de audio nao carregado")
+	if fighter_styles.get("$schema", "") != "fighter_styles_v1" or fighter_styles.get("styles", []).size() != 8:
+		errors.append("catalogo de oito estilos nao carregado")
+	if skill_tree_v2.get("$schema", "") != "skill_tree_v2" or skill_tree_v2.get("branches", []).size() != 4:
+		errors.append("arvore de habilidades v2 nao carregada")
+	if ground_graph.get("$schema", "") != "ground_graph_v1" or ground_graph.get("edges", []).size() != techniques.size():
+		errors.append("grafo posicional de combate nao carregado ou incompleto")
+	if submissions_anatomy.get("$schema", "") != "submissions_anatomy_v1" or submissions_anatomy.get("records", []).size() != 12:
+		errors.append("catalogo anatomico seguro de finalizacoes nao carregado")
+	if submission_exchange.get("$schema", "") != "submission_exchange_v1" or submission_exchange.get("actions", []).size() < 7:
+		errors.append("contrato de troca de finalizacao nao carregado")
 	return {"ok": errors.is_empty(), "errors": errors, "characters": characters.size(), "arenas": arenas.size(), "techniques": techniques.size(), "factions": factions.size()}
 
 func get_character_animation(character_id: String, action_id: String) -> Dictionary:
@@ -238,6 +263,35 @@ func get_arena(id):
 
 func get_technique(id):
 	return techniques.get(str(id), {})
+
+func get_fighter_style(id) -> Dictionary:
+	for style_value in fighter_styles.get("styles", []):
+		if typeof(style_value) == TYPE_DICTIONARY and str(style_value.get("id", "")) == str(id):
+			return style_value
+	return {}
+
+func get_skill_tree_node(id) -> Dictionary:
+	for branch_value in skill_tree_v2.get("branches", []):
+		if typeof(branch_value) != TYPE_DICTIONARY:
+			continue
+		for node_value in branch_value.get("nodes", []):
+			if typeof(node_value) == TYPE_DICTIONARY and str(node_value.get("id", "")) == str(id):
+				var node: Dictionary = node_value.duplicate(true)
+				node["branch_id"] = str(branch_value.get("id", ""))
+				return node
+	return {}
+
+func get_ground_edge(technique_id: String) -> Dictionary:
+	for edge_value in ground_graph.get("edges", []):
+		if typeof(edge_value) == TYPE_DICTIONARY and str(edge_value.get("technique_id", "")) == technique_id:
+			return edge_value.duplicate(true)
+	return {}
+
+func get_submission_anatomy_for_technique(technique_id: String) -> Dictionary:
+	for record_value in submissions_anatomy.get("records", []):
+		if typeof(record_value) == TYPE_DICTIONARY and record_value.get("technique_ids", []).has(technique_id):
+			return record_value.duplicate(true)
+	return {}
 
 func get_lore_character(id):
 	return character_bible.get("characters", {}).get(str(id), {})

@@ -94,6 +94,14 @@ func _efeitos(technique: Dictionary, success: bool) -> Dictionary:
 	if not success:
 		return normalized
 	var raw: Dictionary = technique.get("effects", technique.get("efeitos", {}))
+	var family := str(technique.get("family", technique.get("familia", "")))
+	var entry_state := str(technique.get("entry_state", technique.get("estado_entrada", "")))
+	var exit_state := str(technique.get("exit_state", technique.get("estado_saida", "")))
+	var starts_submission_exchange := (
+		family == "finalizacao"
+		and exit_state == "PLAYER_SUBMISSION_ATTACK"
+		and entry_state != "PLAYER_SUBMISSION_ATTACK"
+	)
 	for key_value in raw.keys():
 		var key: String = str(key_value)
 		var value: float = float(raw[key_value])
@@ -111,7 +119,10 @@ func _efeitos(technique: Dictionary, success: bool) -> Dictionary:
 			"opponent_guarda", "opponent_guard_reduction":
 				normalized["defender_guard"] -= absf(value)
 			"opponent_hp", "opponent_hp_reduction":
-				normalized["defender_health"] -= absf(value)
+				# O setup abre a troca de controle x escape. Dano direto so pode
+				# existir no encerramento legado, nunca na entrada da finalizacao.
+				if not starts_submission_exchange:
+					normalized["defender_health"] -= absf(value)
 			"opponent_control_meter", "opponent_control_reduction":
 				normalized["defender_control"] -= absf(value)
 	if is_zero_approx(float(normalized["defender_grip_integrity"])) and technique.has("grip_damage"):

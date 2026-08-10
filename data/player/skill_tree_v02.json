@@ -1,0 +1,54 @@
+{
+  "$schema": "skill_tree_v2",
+  "version": "2.0.0",
+  "status": "implemented_vertical_slice",
+  "currency": "skill_points",
+  "state_key": "skill_tree_v2_levels",
+  "active_style_state_key": "active_fighter_style_v1",
+  "branches": [
+    {
+      "id": "tecnica",
+      "name": "Tecnica",
+      "color": "#2E8FE2",
+      "nodes": [
+        {"id": "guarda_inteligente", "name": "Guarda Inteligente", "max_level": 10, "cost_per_level": 1, "effects_per_level": {"starting_resources": {"guard": 1.0}}},
+        {"id": "raspagens_precisas", "name": "Raspagens Precisas", "max_level": 10, "cost_per_level": 1, "effects_per_level": {"family_chance_bonus": {"raspagem": 0.003}}},
+        {"id": "finalizacoes_cirurgicas", "name": "Finalizacoes Cirurgicas", "max_level": 10, "cost_per_level": 1, "effects_per_level": {"family_chance_bonus": {"finalizacao": 0.003}}},
+        {"id": "transicoes_fluidas", "name": "Transicoes Fluidas", "max_level": 10, "cost_per_level": 1, "effects_per_level": {"family_chance_bonus": {"passagem": 0.003, "preparacao": 0.002}}}
+      ]
+    },
+    {
+      "id": "controle",
+      "name": "Controle",
+      "color": "#D9A441",
+      "nodes": [
+        {"id": "controle_posicional", "name": "Controle Posicional", "max_level": 10, "cost_per_level": 1, "effects_per_level": {"starting_resources": {"control": 1.0}}},
+        {"id": "pressao_de_topo", "name": "Pressao de Topo", "max_level": 10, "cost_per_level": 1, "effects_per_level": {"family_chance_bonus": {"pressao": 0.003, "controle": 0.003}}},
+        {"id": "pegadas_dominantes", "name": "Pegadas Dominantes", "max_level": 10, "cost_per_level": 1, "effects_per_level": {"starting_resources": {"grip": 1.0}}},
+        {"id": "quebra_de_postura", "name": "Quebra de Postura", "max_level": 10, "cost_per_level": 1, "effects_per_level": {"family_chance_bonus": {"desequilibrio": 0.003}}}
+      ]
+    },
+    {
+      "id": "mental",
+      "name": "Mental",
+      "color": "#B44BE2",
+      "nodes": [
+        {"id": "foco_de_competicao", "name": "Foco de Competicao", "max_level": 10, "cost_per_level": 1, "effects_per_level": {"starting_resources": {"focus": 1.0}}},
+        {"id": "leitura_de_jogo", "name": "Leitura de Jogo", "max_level": 10, "cost_per_level": 1, "effects_per_level": {"family_chance_bonus": {"defesa_queda": 0.003, "escape": 0.003}}},
+        {"id": "resiliencia", "name": "Resiliencia", "max_level": 10, "cost_per_level": 1, "effects_per_level": {"starting_resources": {"moral": 1.0}}},
+        {"id": "malicia_de_rua", "name": "Malicia de Rua", "max_level": 10, "cost_per_level": 1, "effects_per_level": {"family_chance_bonus": {"preparacao": 0.003, "puxada_guarda": 0.002}}}
+      ]
+    },
+    {
+      "id": "fisico",
+      "name": "Fisico",
+      "color": "#3FBF3F",
+      "nodes": [
+        {"id": "gas_de_lutador", "name": "Gas de Lutador", "max_level": 10, "cost_per_level": 1, "effects_per_level": {"starting_resources": {"gas": 1.5}}},
+        {"id": "explosao", "name": "Explosao", "max_level": 10, "cost_per_level": 1, "effects_per_level": {"family_chance_bonus": {"queda": 0.003}}},
+        {"id": "resistencia", "name": "Resistencia", "max_level": 10, "cost_per_level": 1, "effects_per_level": {"starting_resources": {"guard": 0.8}}},
+        {"id": "recuperacao", "name": "Recuperacao", "max_level": 10, "cost_per_level": 1, "effects_per_level": {"starting_resources": {"gas": 0.5, "focus": 0.3}}}
+      ]
+    }
+  ]
+}

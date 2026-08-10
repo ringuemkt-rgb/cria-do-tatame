@@ -119,7 +119,10 @@ func _on_state_changed(_old_state, new_state) -> void:
 	current_step = int(state_to_step.get(state, current_step))
 	furthest_step = maxi(furthest_step, current_step)
 	position_label.text = _readable_state(state)
-	phase_label.text = "FASE: %s" % str(tactical_steps[current_step].get("label", "LEITURA")) if current_step < tactical_steps.size() else "FASE: LEITURA"
+	if current_step < tactical_steps.size():
+		phase_label.text = "FASE: %s" % str(tactical_steps[current_step].get("label", "LEITURA"))
+	else:
+		phase_label.text = "FASE: LEITURA"
 	_refresh_steps()
 
 
@@ -176,6 +179,8 @@ func _on_combat_finished(result) -> void:
 	phase_label.text = "FASE: RESPEITO E RECUPERACAO"
 	defense_label.text = "TAP • ARBITRO • TEMPO/PONTOS"
 	outcome_label.text = "A LUTA TERMINA; A INTEGRIDADE DOS DOIS CONTINUA."
+	if tactical_steps.is_empty():
+		return
 	current_step = mini(4, tactical_steps.size() - 1)
 	furthest_step = current_step
 	_refresh_steps()

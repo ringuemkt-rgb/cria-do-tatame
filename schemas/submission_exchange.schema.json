@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://criadotatame.local/schemas/submission_exchange.schema.json",
+  "title": "Cria do Tatame Submission Exchange",
+  "type": "object",
+  "required": ["$schema", "simulation", "phases", "rules", "actions", "approved_outcomes"],
+  "properties": {
+    "$schema": {"const": "submission_exchange_v1"},
+    "simulation": {"const": "turn_based_deterministic"},
+    "phases": {"type": "array", "minItems": 5},
+    "actions": {"type": "array", "minItems": 7},
+    "approved_outcomes": {
+      "type": "array",
+      "contains": {"const": "tap"}
+    }
+  }
+}

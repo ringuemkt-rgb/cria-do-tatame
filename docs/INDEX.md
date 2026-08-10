@@ -30,6 +30,8 @@ Este arquivo é a porta de entrada da documentação ativa. Antes de criar um do
 
 - [`CRIA_DO_TATAME_SUPREME_BUILD_SPEC_V1.md`](CRIA_DO_TATAME_SUPREME_BUILD_SPEC_V1.md) — escopo de produto;
 - [`gameplay/COMBAT_DECK_SYSTEM_V01.md`](gameplay/COMBAT_DECK_SYSTEM_V01.md) — deck atual integrado à `main`;
+- [`gameplay/FIGHTER_STYLES_SKILL_TREE_V01.md`](gameplay/FIGHTER_STYLES_SKILL_TREE_V01.md) — oito estilos, quatro ramos, save e consumidores reais de combate/Cria Live;
+- [`gameplay/GROUND_SUBMISSION_SYSTEM_V01.md`](gameplay/GROUND_SUBMISSION_SYSTEM_V01.md) — grafo posicional sobre a FSM existente, anatomia segura e troca determinística de controle/escape;
 - `canon/` — personagens, facções, mundo e narrativa aprovados;
 - `gameplay/` — combate, progressão, regras e economia.
 - [`implementation/PRATIGI_FESTIVAL_ARENA_V01.md`](implementation/PRATIGI_FESTIVAL_ARENA_V01.md) — arena paralela de Pratigi, aposta interna, heat, interdição e limites de escopo.

@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://criadotatame.local/schemas/ground_graph.schema.json",
+  "title": "Cria do Tatame Ground Graph",
+  "type": "object",
+  "required": ["$schema", "runtime_owner", "states", "edges"],
+  "properties": {
+    "$schema": {"const": "ground_graph_v1"},
+    "runtime_owner": {"const": "CombatStateMachine"},
+    "states": {"type": "array", "minItems": 14},
+    "edges": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["technique_id", "from", "to", "intent"]
+      }
+    }
+  }
+}

@@ -251,7 +251,7 @@ func _on_technique_resolved(result) -> void:
 	if has_node("Panel/Message"):
 		var technique_id: String = str(result.get("technique_id", result.get("action_id", "")))
 		var technique: Dictionary = DataRegistry.get_technique(technique_id)
-		var name_text: String = str(technique.get("nome", technique.get("name", technique_id)))
+		var name_text: String = str(result.get("name", technique.get("nome", technique.get("name", technique_id))))
 		var message: String = str(result.get("message", "sucesso" if result.get("success", false) else "defendido"))
 		var actor_id := str(result.get("actor_id", "ruan_macacao"))
 		var actor_name := "Ruan" if actor_id == CombatManager.player_id else "Davi"

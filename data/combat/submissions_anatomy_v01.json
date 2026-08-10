@@ -1,0 +1,169 @@
+{
+  "$schema": "submissions_anatomy_v1",
+  "version": "1.0.0",
+  "purpose": "Referencia abstrata para simulacao, animacao e revisao humana; nao e material de instrucao pratica.",
+  "safety_contract": {
+    "tap_has_priority": true,
+    "release_on_tap": true,
+    "graphic_injury": false,
+    "injury_reward": false,
+    "real_world_instruction": false,
+    "human_bjj_review_required": true,
+    "approved_outcomes": ["tap", "escape", "release", "technical_stop", "time_or_points"],
+    "hud_copy": "Simulacao esportiva. Respeite o tap; treino real somente com instrucao qualificada."
+  },
+  "rules_snapshot": {
+    "authority": "IBJJF",
+    "rulebook_version_reviewed": "6.0",
+    "review_date": "2026-08-10",
+    "heel_hook_gate": {
+      "official_competition": true,
+      "uniform": "no_gi",
+      "age_division": "adult",
+      "belts": ["brown", "black"],
+      "runtime_enabled": false,
+      "note": "Permissao depende do ruleset carregado; nunca e uma liberacao global."
+    }
+  },
+  "sources": [
+    {"id": "ibjjf_rules", "url": "https://ibjjf.com/books-videos", "role": "official_rules"},
+    {"id": "ibjjf_2021_update", "url": "https://ibjjf.com/news/new-rules-updates", "role": "heel_hook_rule_update"},
+    {"id": "bjj_injury_survey", "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC8721390/", "role": "safety_context"},
+    {"id": "sportive_choke_review", "url": "https://pubmed.ncbi.nlm.nih.gov/35934648/", "role": "rare_vascular_risk_context"}
+  ],
+  "records": [
+    {
+      "id": "armbar",
+      "display_name": "Chave de braco",
+      "technique_ids": ["chave_braco"],
+      "runtime_enabled": true,
+      "uniforms": ["gi", "no_gi"],
+      "target_region": "elbow_and_shoulder_chain",
+      "mechanism_summary": "joint_extension_lever",
+      "gameplay_response_family": "alignment_and_grip_protection",
+      "animation_cues": ["control_established", "defense_window", "tap_or_release"]
+    },
+    {
+      "id": "triangle_choke",
+      "display_name": "Triangulo",
+      "technique_ids": ["triangulo"],
+      "runtime_enabled": true,
+      "uniforms": ["gi", "no_gi"],
+      "target_region": "neck_and_posture_chain",
+      "mechanism_summary": "vascular_compression_pattern",
+      "gameplay_response_family": "posture_and_space_recovery",
+      "animation_cues": ["posture_break", "angle_established", "tap_or_escape"]
+    },
+    {
+      "id": "kimura",
+      "display_name": "Kimura",
+      "technique_ids": [],
+      "runtime_enabled": false,
+      "uniforms": ["gi", "no_gi"],
+      "target_region": "shoulder_chain",
+      "mechanism_summary": "internal_rotation_lever",
+      "gameplay_response_family": "grip_denial_and_alignment",
+      "animation_cues": ["grip_isolated", "shoulder_line_visible", "tap_or_release"]
+    },
+    {
+      "id": "americana",
+      "display_name": "Americana",
+      "technique_ids": [],
+      "runtime_enabled": false,
+      "uniforms": ["gi", "no_gi"],
+      "target_region": "shoulder_chain",
+      "mechanism_summary": "external_rotation_lever",
+      "gameplay_response_family": "frame_and_alignment_recovery",
+      "animation_cues": ["arm_control", "defense_window", "tap_or_release"]
+    },
+    {
+      "id": "rear_naked_choke",
+      "display_name": "Mata-leao",
+      "technique_ids": ["mata_leao"],
+      "runtime_enabled": true,
+      "uniforms": ["gi", "no_gi"],
+      "target_region": "neck_and_upper_torso",
+      "mechanism_summary": "vascular_compression_pattern",
+      "gameplay_response_family": "hand_fighting_and_position_recovery",
+      "animation_cues": ["back_control", "hand_fight", "tap_or_escape"]
+    },
+    {
+      "id": "bow_and_arrow",
+      "display_name": "Arco e flecha",
+      "technique_ids": [],
+      "runtime_enabled": false,
+      "uniforms": ["gi"],
+      "target_region": "neck_and_lapel_control",
+      "mechanism_summary": "lapel_assisted_compression",
+      "gameplay_response_family": "grip_denial_and_rotation_space",
+      "animation_cues": ["lapel_control", "body_alignment", "tap_or_release"]
+    },
+    {
+      "id": "guillotine",
+      "display_name": "Guilhotina",
+      "technique_ids": [],
+      "runtime_enabled": false,
+      "uniforms": ["gi", "no_gi"],
+      "target_region": "neck_and_posture_chain",
+      "mechanism_summary": "front_head_control_compression",
+      "gameplay_response_family": "posture_and_hand_fighting",
+      "animation_cues": ["front_head_control", "posture_contest", "tap_or_escape"]
+    },
+    {
+      "id": "ezekiel",
+      "display_name": "Ezekiel",
+      "technique_ids": [],
+      "runtime_enabled": false,
+      "uniforms": ["gi"],
+      "target_region": "neck_and_sleeve_control",
+      "mechanism_summary": "sleeve_assisted_compression",
+      "gameplay_response_family": "frame_and_space_recovery",
+      "animation_cues": ["sleeve_control", "frame_visible", "tap_or_release"]
+    },
+    {
+      "id": "straight_ankle_lock",
+      "display_name": "Chave de tornozelo reta",
+      "technique_ids": [],
+      "runtime_enabled": false,
+      "uniforms": ["gi", "no_gi"],
+      "target_region": "ankle_and_knee_chain",
+      "mechanism_summary": "plantar_flexion_lever",
+      "gameplay_response_family": "leg_line_clearance",
+      "animation_cues": ["leg_entanglement", "defense_window", "tap_or_release"]
+    },
+    {
+      "id": "toe_hold",
+      "display_name": "Mata-pe",
+      "technique_ids": [],
+      "runtime_enabled": false,
+      "uniforms": ["gi", "no_gi"],
+      "target_region": "ankle_and_knee_chain",
+      "mechanism_summary": "rotational_foot_control",
+      "gameplay_response_family": "rotation_awareness_and_leg_clearance",
+      "animation_cues": ["foot_control", "rotation_warning", "tap_or_release"]
+    },
+    {
+      "id": "kneebar",
+      "display_name": "Chave de joelho reta",
+      "technique_ids": [],
+      "runtime_enabled": false,
+      "uniforms": ["gi", "no_gi"],
+      "target_region": "knee_and_hip_chain",
+      "mechanism_summary": "knee_extension_lever",
+      "gameplay_response_family": "hip_alignment_and_leg_clearance",
+      "animation_cues": ["leg_isolation", "hip_line_visible", "tap_or_release"]
+    },
+    {
+      "id": "heel_hook",
+      "display_name": "Heel hook",
+      "technique_ids": [],
+      "runtime_enabled": false,
+      "uniforms": ["no_gi"],
+      "target_region": "knee_and_lower_leg_chain",
+      "mechanism_summary": "rotational_lower_leg_control",
+      "gameplay_response_family": "rules_gate_and_immediate_safety_response",
+      "competition_gate": "adult_brown_black_no_gi_only",
+      "animation_cues": ["rules_gate", "early_safety_window", "tap_or_release"]
+    }
+  ]
+}

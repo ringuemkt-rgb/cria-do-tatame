@@ -1,9 +1,10 @@
-[gd_scene load_steps=5 format=3]
+[gd_scene load_steps=6 format=3]
 
 [ext_resource type="Script" path="res://scenes/combat/CombatArenaBase.gd" id="1_combat"]
 [ext_resource type="PackedScene" path="res://scenes/ui/CombatHUD.tscn" id="2_hud"]
 [ext_resource type="PackedScene" path="res://scenes/ui/CombatDeckHUD.tscn" id="3_deck_hud"]
 [ext_resource type="PackedScene" path="res://scenes/ui/CombatTacticalHUD.tscn" id="4_tactical_hud"]
+[ext_resource type="PackedScene" path="res://scenes/ui/SubmissionHUD.tscn" id="5_submission_hud"]
 
 [node name="CombatArenaBase" type="Control"]
 layout_mode = 3
@@ -17,6 +18,8 @@ script = ExtResource("1_combat")
 [node name="CombatDeckHUD" parent="." instance=ExtResource("3_deck_hud")]
 
 [node name="CombatTacticalHUD" parent="." instance=ExtResource("4_tactical_hud")]
+
+[node name="SubmissionHUD" parent="." instance=ExtResource("5_submission_hud")]
 
 [node name="Panel" type="VBoxContainer" parent="."]
 layout_mode = 2
