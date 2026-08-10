@@ -109,7 +109,8 @@ func _draw_impact(impact: Dictionary) -> void:
 	if reduced_motion:
 		return
 	var diagonal := radius * 0.72
-	for direction in [Vector2(1, 0), Vector2(0, 1), Vector2(0.707, 0.707), Vector2(0.707, -0.707)]:
-		var inner := center + direction * diagonal * 0.72
-		var outer := center + direction * diagonal
+	for direction_value in [Vector2(1, 0), Vector2(0, 1), Vector2(0.707, 0.707), Vector2(0.707, -0.707)]:
+		var direction: Vector2 = direction_value
+		var inner: Vector2 = center + direction * diagonal * 0.72
+		var outer: Vector2 = center + direction * diagonal
 		draw_line(inner, outer, color, width, true)

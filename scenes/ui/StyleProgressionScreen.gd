@@ -85,7 +85,6 @@ func _build_skill_tree() -> void:
 			var node_id := str(node.get("id", ""))
 			var button := Button.new()
 			button.custom_minimum_size = Vector2(0, 72)
-			button.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 			VisualTheme.apply_action_button(button, accent)
 			button.pressed.connect(_purchase_node.bind(node_id))
 			column.add_child(button)

@@ -371,7 +371,6 @@ func _build_card_context(
 	context["deck_clash"] = clash
 	context["chance_modifier"] = float(clash.get("chance_modifier", 0.0))
 	if actor_id == player_id and fighter_style_system != null:
-		var family := str(technique.get("family", technique.get("familia", "geral")))
 		context["chance_modifier"] = float(context["chance_modifier"]) + float(
 			fighter_style_system.call("get_family_chance_bonus", family)
 		)
