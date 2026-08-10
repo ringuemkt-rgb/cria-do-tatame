@@ -12,7 +12,10 @@ func reset() -> void:
 	unlocked_hubs = ["itubera", "salvador", "zambiapunga", "camamu_manguezal", "pratigi_festival"]
 
 func get_hub_data(hub_id: String) -> Dictionary:
-	return DataRegistry.hubs_dense.get("hubs", {}).get(hub_id, {})
+	var canonical_hub: Dictionary = DataRegistry.hubs_dense.get("hubs", {}).get(hub_id, {})
+	if not canonical_hub.is_empty():
+		return canonical_hub
+	return DataRegistry.hubs_dense.get("event_destinations", {}).get(hub_id, {})
 
 func can_travel_to(hub_id: String) -> bool:
 	var hub: Dictionary = get_hub_data(hub_id)

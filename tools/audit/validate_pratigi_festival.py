@@ -37,7 +37,7 @@ def main() -> int:
     arenas = load_json(ARENAS_PATH).get("arenas", [])
     by_id = {str(item.get("id", "")): item for item in arenas}
     config = load_json(CONFIG_PATH)
-    hubs = load_json(HUBS_PATH).get("hubs", {})
+    event_destinations = load_json(HUBS_PATH).get("event_destinations", {})
 
     require("praia_de_pratigi" in by_id, "canonical Pratigi base arena is missing")
     require("praia_de_pratigi_festival" in by_id, "festival arena variant is missing")
@@ -72,9 +72,13 @@ def main() -> int:
         "heat thresholds must be ordered inside 0..100",
     )
 
-    hub = hubs.get("pratigi_festival", {})
-    require(hub.get("entry_scene") == "res://scenes/combat/arenas/PratigiFestivalArena.tscn", "Pratigi hub must consume the scene")
-    require(int(hub.get("unlock_act", 0)) == 2, "Pratigi parallel route must remain an Act 2 unlock")
+    destination = event_destinations.get("pratigi_festival", {})
+    require(
+        destination.get("entry_scene") == "res://scenes/combat/arenas/PratigiFestivalArena.tscn",
+        "Pratigi event destination must consume the scene",
+    )
+    require(int(destination.get("unlock_act", 0)) == 2, "Pratigi parallel route must remain an Act 2 unlock")
+    require("activities" not in destination, "event destination cannot advertise unimplemented hub activities")
 
     for path in [SCENE_PATH, SCENE_SCRIPT_PATH, DIRECTOR_PATH]:
         require(path.is_file(), f"missing runtime file: {path.relative_to(ROOT)}")

@@ -2,7 +2,7 @@
 
 **Status:** IMPLEMENTED — vertical slice de runtime; arte e áudio finais ainda pendentes de produção humana.
 **Versão:** 1.0.0
-**Escopo:** arena jogável de Pratigi, aposta interna opcional, heat, interdição, maré visual, Cria Live e acesso pelo mapa.
+**Escopo:** arena jogável de Pratigi, aposta interna opcional, heat, interdição, maré visual, Cria Live e acesso pelo mapa como destino de evento.
 
 ## Decisão de produto
 
@@ -38,7 +38,7 @@ Terreiro → Mapa do Baixo Sul → Pratigi (Ato 2)
 
 ## Rollback
 
-Remover o hub `pratigi_festival`, o botão do mapa, a variante em `arenas.json` e os arquivos listados acima. As alterações aditivas de `CombatArenaBase`, `CombatManager`, `AudioManager` e `CriaLiveManager` podem ser revertidas separadamente sem migração de save; os dados persistidos vivem em `story_flags` e são ignorados por versões anteriores.
+Remover o destino de evento `pratigi_festival`, o botão do mapa, a variante em `arenas.json` e os arquivos listados acima. As alterações aditivas de `CombatArenaBase`, `CombatManager`, `AudioManager` e `CriaLiveManager` podem ser revertidas separadamente sem migração de save; os dados persistidos vivem em `story_flags` e são ignorados por versões anteriores.
 
 ## Limitações reais
 
