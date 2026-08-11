@@ -1,0 +1,41 @@
+{
+  "schema_version": "2.0.0",
+  "contract_id": "cria_visual_constitution_v2",
+  "status": "qa_contract",
+  "internal_resolution": [480, 270],
+  "upscale_filter": "nearest",
+  "anti_aliasing": false,
+  "outline_px": 1,
+  "generated_text_allowed": false,
+  "label_policy": {
+    "locale": "pt-BR",
+    "uppercase": true,
+    "deterministic_injection": true,
+    "font_file_and_license_required": true,
+    "anti_aliased_glyph_mask": false
+  },
+  "palettes": {
+    "pratigi": ["#1A0F3C", "#FF8C42", "#FFD166", "#2B6F8F", "#E8D8B0"],
+    "dique": ["#3D2817", "#4A90E2", "#F5A623", "#7ED321", "#FFFFFF"],
+    "lapa": ["#0D0714", "#3B1F5E", "#FF2E88", "#B3FFF2", "#5A4632"],
+    "terreiro": ["#5A4632", "#7ED321", "#87CEEB", "#D9A441"],
+    "mapa": ["#1E5E3A", "#2B6F8F", "#D9A441", "#D93A2B"],
+    "crialive": ["#0B0B0F", "#E24B8F", "#D9A441", "#7A3BE2"]
+  },
+  "qa_defaults": {
+    "max_unique_colors": 900,
+    "palette_delta_e_mean_max": 8.0,
+    "palette_delta_e_p95_max": 12.0,
+    "aa_candidate_ratio_max": 0.0025,
+    "unapproved_dither_blocks_max": 0,
+    "max_palette_samples": 20000,
+    "outline": {
+      "measurement_requires_mask": true,
+      "color": "#000000",
+      "delta_e_max": 4.0,
+      "coverage_min": 0.9,
+      "inner_spill_max": 0.15,
+      "thickness_px": 1
+    }
+  }
+}

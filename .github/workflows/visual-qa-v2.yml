@@ -1,0 +1,36 @@
+name: Visual QA V2
+
+on:
+  pull_request:
+    paths:
+      - "data/visual/visual_constitution_v2.json"
+      - "tools/audit/visual_qa_v2.py"
+      - "tools/audit/validate_visual_qa_v2_contract.py"
+      - "tests/visual/**"
+      - ".github/workflows/visual-qa-v2.yml"
+  push:
+    branches: [main]
+    paths:
+      - "data/visual/visual_constitution_v2.json"
+      - "tools/audit/visual_qa_v2.py"
+      - "tools/audit/validate_visual_qa_v2_contract.py"
+      - "tests/visual/**"
+
+permissions:
+  contents: read
+
+jobs:
+  audit-contract-and-fixtures:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install bounded image dependency
+        run: python -m pip install "Pillow>=10.2,<13"
+      - name: Validate the dependency-free contract
+        run: python tools/audit/validate_visual_qa_v2_contract.py
+      - name: Exercise exact-size, CIEDE2000, AA, dither, outline and labels
+        run: python -m unittest discover -s tests/visual -p "test_*.py"
