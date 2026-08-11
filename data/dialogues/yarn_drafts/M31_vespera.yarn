@@ -1,0 +1,13 @@
+// STATUS: DRAFT. Fonte narrativa; sem consumidor Yarn no runtime atual.
+title: M31
+tags: canon_v5_proposal mission_M31
+---
+DENDÊ: Oni era cria desta casa antes do fogo. Meu irmão de criação, meu espelho na queda.
+DENDÊ: Quando o banqueiro morreu, Oni herdou o ledger e a minha vergonha.
+-> Ele ainda te respeita?
+    DENDÊ: Respeito é a única moeda que ele ainda aceita. Gaste isso lá dentro.
+    <<set $oni_respeito = true>>
+-> A operação entra depois da final.
+    DENDÊ: Então vença antes da lei. Ou vença com ela. Só não vença sem você.
+    <<set $foco += 5>>
+===

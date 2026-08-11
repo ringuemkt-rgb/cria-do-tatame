@@ -1,0 +1,142 @@
+{
+  "schema_version": "3.0.0",
+  "status": "proposal_pending_canon_migration",
+  "runtime_active": false,
+  "ruleset_ids": [
+    "training_controlled",
+    "gi_official_points",
+    "nogi_clandestine_submission_only",
+    "festival_exhibition"
+  ],
+  "safety_contract": {
+    "automatic_submission": false,
+    "tap_and_escape_sovereign": true,
+    "level_padded_mat_required": true,
+    "gameplay_telegraphs_always_visible": true,
+    "environmental_hazards_may_not_damage_fighters": true
+  },
+  "arenas": [
+    {
+      "id": "terreiro_da_luta",
+      "name": "Terreiro da Luta",
+      "municipality_node": "itubera",
+      "ruleset_id": "training_controlled",
+      "biome": "terreiro",
+      "atmosphere": "madeira e plateia de familia",
+      "modifier": {"honor_reward_bonus": 0.05},
+      "safety": {"level_padded_mat": true, "protected_boundary": true, "telegraphs_preserved": true}
+    },
+    {
+      "id": "arena_do_dique_valenca",
+      "legacy_aliases": ["arena_do_dique"],
+      "name": "Arena do Dique — Filial Valenca",
+      "municipality_node": "valenca",
+      "ruleset_id": "gi_official_points",
+      "biome": "dique",
+      "atmosphere": "cais e vento cenografico",
+      "modifier": {"crowd_focus_pressure": 0.05},
+      "safety": {"level_padded_mat": true, "protected_boundary": true, "telegraphs_preserved": true}
+    },
+    {
+      "id": "manguezal_profundo",
+      "name": "Manguezal Profundo",
+      "municipality_node": "cairu_mangue",
+      "ruleset_id": "nogi_clandestine_submission_only",
+      "biome": "lapa",
+      "atmosphere": "mangue e lama somente fora da plataforma",
+      "modifier": {"ambient_pressure": 0.05},
+      "safety": {"level_padded_mat": true, "protected_boundary": true, "telegraphs_preserved": true, "raised_dry_platform": true}
+    },
+    {
+      "id": "pancada_grande",
+      "name": "Pancada Grande",
+      "municipality_node": "itubera",
+      "ruleset_id": "gi_official_points",
+      "biome": "terreiro",
+      "atmosphere": "cachoeira em plano de fundo",
+      "modifier": {"audio_mix_profile": "waterfall_accessible"},
+      "safety": {"level_padded_mat": true, "protected_boundary": true, "telegraphs_preserved": true, "visual_cues_replace_masked_audio": true}
+    },
+    {
+      "id": "ponte_da_saici",
+      "name": "Ponte da Saici",
+      "municipality_node": "itubera",
+      "ruleset_id": "gi_official_points",
+      "biome": "mapa",
+      "atmosphere": "ponte historica ao fundo; tatame em area segura adjacente",
+      "modifier": {"focus_reward_bonus": 0.03},
+      "safety": {"level_padded_mat": true, "protected_boundary": true, "telegraphs_preserved": true, "combat_not_on_bridge_deck": true}
+    },
+    {
+      "id": "praia_de_pratigi",
+      "name": "Praia de Pratigi",
+      "municipality_node": "itubera",
+      "ruleset_id": "festival_exhibition",
+      "biome": "pratigi",
+      "atmosphere": "areia e por do sol fora do tatame",
+      "modifier": {"hype_reward_bonus": 0.05},
+      "safety": {"level_padded_mat": true, "protected_boundary": true, "telegraphs_preserved": true, "sand_outside_combat_surface": true}
+    },
+    {
+      "id": "itacare_noturna",
+      "name": "Itacare Noturna",
+      "municipality_node": "itacare",
+      "ruleset_id": "nogi_clandestine_submission_only",
+      "biome": "pratigi",
+      "atmosphere": "mare como progressao visual de fundo",
+      "modifier": {"shadow_reputation_pressure": 0.05},
+      "safety": {"level_padded_mat": true, "protected_boundary": true, "telegraphs_preserved": true, "tide_never_reaches_mat": true}
+    },
+    {
+      "id": "ferro_velho_da_lapa",
+      "name": "Ferro Velho da Lapa",
+      "municipality_node": "ferro_velho_lapa",
+      "ruleset_id": "nogi_clandestine_submission_only",
+      "biome": "lapa",
+      "atmosphere": "sucata cenografica fora da area delimitada",
+      "modifier": {"cover_risk_multiplier": 1.1},
+      "safety": {"level_padded_mat": true, "protected_boundary": true, "telegraphs_preserved": true, "scrap_outside_combat_surface": true}
+    },
+    {
+      "id": "mirante_da_gamboa",
+      "name": "Mirante da Gamboa",
+      "municipality_node": "cairu_mangue",
+      "ruleset_id": "gi_official_points",
+      "biome": "pratigi",
+      "atmosphere": "mirante com plateia pequena",
+      "modifier": {"focus_regeneration_bonus": 0.05},
+      "safety": {"level_padded_mat": true, "protected_boundary": true, "telegraphs_preserved": true, "guardrail_and_setback": true}
+    },
+    {
+      "id": "zambiapunga",
+      "name": "Roda da Zambiapunga",
+      "municipality_node": "nilo_pecanha",
+      "ruleset_id": "festival_exhibition",
+      "biome": "mapa",
+      "atmosphere": "celebracao cultural no entorno, com consultoria local obrigatoria",
+      "modifier": {"moral_reward_bonus": 0.05},
+      "cultural_review_required": true,
+      "safety": {"level_padded_mat": true, "protected_boundary": true, "telegraphs_preserved": true, "masks_never_hide_gameplay_cues": true}
+    },
+    {
+      "id": "budokan_das_aguas",
+      "name": "Budokan das Aguas",
+      "municipality_node": "taperoa",
+      "ruleset_id": "gi_official_points",
+      "biome": "dique",
+      "atmosphere": "pavilhao ficcional sobre estrutura protegida",
+      "modifier": {"precision_reward_bonus": 0.05},
+      "safety": {"level_padded_mat": true, "protected_boundary": true, "telegraphs_preserved": true, "water_visual_only": true}
+    },
+    {
+      "id": "sede_circuito_final",
+      "name": "Sede do Circuito Final",
+      "municipality_node": "salvador",
+      "ruleset_id": "gi_official_points",
+      "biome": "dique",
+      "atmosphere": "tres rounds e pressao de midia ficcional",
+      "modifier": {"crowd_focus_pressure": 0.1},
+      "safety": {"level_padded_mat": true, "protected_boundary": true, "telegraphs_preserved": true, "referee_required": true}
+    }
+  ]
+}

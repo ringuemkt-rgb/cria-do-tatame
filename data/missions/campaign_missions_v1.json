@@ -1,0 +1,434 @@
+{
+  "schema_version": "1.0.0",
+  "directive": "/ctt.narrativa.missoes.v1",
+  "status": "proposal_pending_canon_migration",
+  "runtime_active": false,
+  "runtime_consumer": null,
+  "language": "pt-BR",
+  "campaign": {
+    "acts": 5,
+    "missions": 40,
+    "endings": 5,
+    "premise": "Ruan protege o Terreiro enquanto decide quanto de si aceita comprometer para expor a rede financeira das lutas clandestinas.",
+    "motto": "Ser forte e ser gentil."
+  },
+  "systems": {
+    "cover_exposure": {"alias":"cover","min":0,"max":100,"initial":0,"lower_is_safer":true,"hidden":true},
+    "ledger": {"states":["unknown","located","key_route","secured","delivered","destroyed","community_accountability"]},
+    "double_briefing": {"tinker":"public_tactics","helena":"optional_hidden_objective"},
+    "ferro_tokens": {"symbol":"F","real_money":false,"ntm_only":true},
+    "betting": {"currency":"criacoin","third_party_only":true,"cap":200,"real_money":false},
+    "submission_safety": {"automatic_submission":false,"tap_and_escape_sovereign":true,"tap_honor_penalty_forbidden":true}
+  },
+  "canon_migration_blockers": [
+    "NEW_STORY_ACTS_AND_HELENA",
+    "TINKER_ROLE",
+    "ONI_ID_AND_BACKSTORY",
+    "REAL_INSTITUTION_REVIEW"
+  ],
+  "threads": [
+    {"id":"F1_dende_past","plants":["M06"],"harvests":["M19","M31"]},
+    {"id":"F2_valenca_ambush","plants":["M04"],"harvests":["M08"]},
+    {"id":"F3_note","plants":["M16"],"harvests":["M17"]},
+    {"id":"F4_ledger_debt","plants":["M06","M11"],"harvests":["M24","M36","M39"]},
+    {"id":"F5_tinker_secret","plants":["M11"],"harvests":["M21","M23"]},
+    {"id":"F6_davi_rivalry","plants":["M05"],"harvests":["M13","M30","M37"]},
+    {"id":"F7_first_belt","plants":["M29"],"harvests":["M34","M38","M40"]},
+    {"id":"F8_gentleness","plants":["M01"],"harvests":["M40"]}
+  ],
+  "endings": [
+    {"id":"root","name":"Raiz","ledger_choices":["deliver_with_testimony"],"evaluation_axes":["honor","legacy","tinker_bond"]},
+    {"id":"idol","name":"Idolo","ledger_choices":["deliver_with_testimony","protect_community_names"],"evaluation_axes":["hype","tinker_bond"]},
+    {"id":"shadow","name":"Sombra","ledger_choices":["destroy"],"evaluation_axes":["shadow"]},
+    {"id":"double_face","name":"Dupla Face","ledger_choices":["protect_community_names"],"evaluation_axes":["honor","shadow","cover_exposure"]},
+    {"id":"cria","name":"Cria","ledger_choices":["community_accountability"],"evaluation_axes":["honor","legacy","community","tinker_bond"]}
+  ],
+  "missions": [
+    {
+      "id":"M01","act":1,"name":"Tatame ao Amanhecer","type":"tutorial","location_node":"itubera",
+      "public_objective":"Aprender movimento, pegada segura e raspagem basica.","hidden_objective":null,
+      "briefing":{"tinker":"Hoje e base. O resto vem depois.","helena":null},
+      "choices":[
+        {"id":"help_marizete","label":"Ajudar Marizete","effects":{"honor":5,"community":2}},
+        {"id":"watch_davi_live","label":"Ver a live de Davi","effects":{"hype":3}}
+      ],
+      "rewards":{"xp":100,"criacoin":50,"systems":["base_deck"]},
+      "gates":{"requires_missions":[],"conditions":[]},"flags":{"plants":["F8_gentleness"]}
+    },
+    {
+      "id":"M02","act":1,"name":"Primeira Queda","type":"training","location_node":"itubera",
+      "public_objective":"Superar Nado por controle posicional, sem finalizacao.","hidden_objective":null,
+      "briefing":{"tinker":"Nao caca pescoco. Primeiro mostra controle.","helena":null},"choices":[],
+      "rewards":{"xp":100,"techniques":["q01"]},"gates":{"requires_missions":["M01"],"conditions":[]},"flags":{}
+    },
+    {
+      "id":"M03","act":1,"name":"O Convite","type":"narrative","location_node":"itubera",
+      "public_objective":"Definir o primeiro acordo profissional com Tinker.","hidden_objective":null,
+      "briefing":{"tinker":"Eu negocio. Voce decide ate onde vai.","helena":null},
+      "choices":[
+        {"id":"accept_manager","label":"Aceitar Tinker como empresario","effects":{"tinker_bond":8,"ale_access":1}},
+        {"id":"keep_informal","label":"Manter parceria informal","effects":{"lem_reputation":5,"tinker_bond":3}}
+      ],
+      "rewards":{"systems":["tinker_briefing"]},"gates":{"requires_missions":["M02"],"conditions":[]},"flags":{}
+    },
+    {
+      "id":"M04","act":1,"name":"Valenca em Transito","type":"nogi_survival","location_node":"valenca",
+      "public_objective":"Sair de uma emboscada ficcional sem escalar a violencia.",
+      "hidden_objective":{"source":"unrevealed_monitoring","objective":"Notar o veiculo sem placa e preservar a rota de saida.","required":false},
+      "briefing":{"tinker":"Sai inteiro. Nao transforma armadilha em palco.","helena":null},
+      "choices":[
+        {"id":"fight_clean","label":"Lutar com controle e sair","effects":{"honor":6,"shadow":-2}},
+        {"id":"humiliate_attackers","label":"Humilhar os atacantes na live","effects":{"hype":6,"shadow":5,"cover_exposure":5}}
+      ],
+      "rewards":{"systems":["nogi_ruleset"]},"gates":{"requires_missions":["M03"],"conditions":[]},"flags":{"plants":["F2_valenca_ambush"]}
+    },
+    {
+      "id":"M05","act":1,"name":"Qualificatoria do Baixo Sul","type":"boss","location_node":"valenca",
+      "public_objective":"Demonstrar defesa e controle contra Caveira de Aco.","hidden_objective":null,
+      "briefing":{"tinker":"Tap e inteligencia. Sair inteiro tambem e vencer.","helena":null},
+      "choices":[
+        {"id":"tap_responsibly","label":"Bater quando a defesa acabar","effects":{"honor":5,"injury_avoided":true}},
+        {"id":"request_referee_stop","label":"Pedir intervencao segura","effects":{"focus":3,"injury_avoided":true}}
+      ],
+      "rewards":{"xp":300,"systems":["repechage"]},"gates":{"requires_missions":["M04"],"conditions":[]},"flags":{"plants":["F6_davi_rivalry"]}
+    },
+    {
+      "id":"M06","act":1,"name":"A Faixa e a Duvida","type":"dialogue","location_node":"itubera",
+      "public_objective":"Ouvir Dende e decidir se pergunta sobre o incendio de 2019.","hidden_objective":null,
+      "dialogue_source":"data/dialogues/yarn_drafts/M06_a_faixa_e_a_duvida.yarn",
+      "briefing":{"tinker":"Tem pergunta que pesa. Escolhe se hoje e o dia.","helena":null},
+      "choices":[
+        {"id":"ask_about_fire","label":"Perguntar sobre o fogo","effects":{"honor":5,"thread_F4":1}},
+        {"id":"wait_to_ask","label":"Esperar","effects":{"focus":2}}
+      ],
+      "rewards":{"cria_points":50,"systems":["skill_tree_access"]},"gates":{"requires_missions":["M05"],"conditions":[]},"flags":{"plants":["F1_dende_past","F4_ledger_debt"]}
+    },
+    {
+      "id":"M07","act":1,"name":"Cria Live ao Vivo","type":"social","location_node":"itubera",
+      "public_objective":"Realizar a primeira transmissao e escolher o tom publico.","hidden_objective":null,
+      "briefing":{"tinker":"Fala do que voce fez, nao do que quer parecer.","helena":null},
+      "choices":[
+        {"id":"humble_live","label":"Agradecer ao Terreiro","effects":{"honor":5,"legacy":3}},
+        {"id":"hype_live","label":"Provocar a proxima luta","effects":{"hype":7,"shadow":2}}
+      ],
+      "rewards":{"criacoin":100,"systems":["cria_live"]},"gates":{"requires_missions":["M06"],"conditions":[]},"flags":{}
+    },
+    {
+      "id":"M08","act":1,"name":"Rumo a Salvador","type":"boss","location_node":"valenca",
+      "public_objective":"Vencer a repescagem e obter a credencial do circuito.",
+      "hidden_objective":{"source":"helena_prado","objective":"Ouvir a proposta de cooperacao sem aceitar automaticamente.","required":false},
+      "dialogue_source":"data/dialogues/yarn_drafts/M08_helena_recruta.yarn",
+      "briefing":{"tinker":"Deck curto, jogo simples.","helena":"A emboscada estava sob observacao. Quero a rede financeira, nao os lutadores."},
+      "choices":[
+        {"id":"hear_helena","label":"Ouvir Helena","effects":{"cover_exposure":0,"helena_contact":1}},
+        {"id":"defer_helena","label":"Adiar a resposta","effects":{"honor":2,"helena_contact":0}}
+      ],
+      "rewards":{"criacoin":200,"systems":["act2","hidden_briefing"]},"gates":{"requires_missions":["M07"],"conditions":[{"deck_min":10}]},"flags":{"harvests":["F2_valenca_ambush"]}
+    },
+    {
+      "id":"M09","act":2,"name":"Festival Mare Alta","type":"festival_combat","location_node":"itubera",
+      "public_objective":"Vencer a luta de festival em Pratigi.",
+      "hidden_objective":{"source":"helena_prado","objective":"Registrar de forma abstrata o financiador ficcional de Oni.","required":false,"failure_effect":{"cover_exposure":8}},
+      "briefing":{"tinker":"A areia fica fora do tatame. Joga pelo centro.","helena":"Observe quem financia o evento; nao confronte ninguem."},
+      "choices":[
+        {"id":"third_party_bet_tutorial","label":"Fazer aposta tutorial em luta de terceiros","effects":{"criacoin_wager_cap":200}},
+        {"id":"skip_bet","label":"Nao apostar","effects":{"honor":2}}
+      ],
+      "rewards":{"criacoin":150,"systems":["third_party_betting"]},"gates":{"requires_missions":["M08"],"conditions":[]},"flags":{}
+    },
+    {
+      "id":"M10","act":2,"name":"Heat","type":"escape","location_node":"itubera",
+      "public_objective":"Sair de uma interdicao sem iniciar combate.",
+      "hidden_objective":{"source":"helena_prado","objective":"Preservar a identidade da operacao.","required":false},
+      "briefing":{"tinker":"Hoje nao tem luta. Tem saida.","helena":"Nao exponha o contato."},
+      "choices":[
+        {"id":"save_dj","label":"Ajudar o DJ a sair","effects":{"honor":6,"cover_exposure":3}},
+        {"id":"leave_quietly","label":"Sair sem chamar atencao","effects":{"cover_exposure":-3}}
+      ],
+      "rewards":{"techniques":["e07"]},"gates":{"requires_missions":["M09"],"conditions":[]},"flags":{}
+    },
+    {
+      "id":"M11","act":2,"name":"Molho no Camarote","type":"negotiation","location_node":"taperoa",
+      "public_objective":"Negociar uma oferta de Cassio sem perder autonomia.","hidden_objective":null,
+      "briefing":{"tinker":"Contrato bom e o que deixa voce dizer nao.","helena":null},
+      "choices":[
+        {"id":"accept_ale_contract","label":"Aceitar exclusividade limitada","effects":{"criacoin":300,"hype":5,"crisis_risk":3}},
+        {"id":"decline_contract","label":"Recusar","effects":{"honor":5,"freedom":1}}
+      ],
+      "rewards":{"systems":["sponsorship_choice"]},"gates":{"requires_missions":["M10"],"conditions":[]},"flags":{"plants":["F4_ledger_debt","F5_tinker_secret"]}
+    },
+    {
+      "id":"M12","act":2,"name":"Aposta do Povo","type":"third_party_event","location_node":"itubera",
+      "public_objective":"Acompanhar Leoa contra Piranha sem interferir no resultado.","hidden_objective":null,
+      "briefing":{"tinker":"Aposta tem teto e nao compra luta.","helena":null},
+      "choices":[
+        {"id":"cheer_publicly","label":"Torcer com o povo","effects":{"hype":5}},
+        {"id":"offer_pre_fight_advice","label":"Dar conselho antes da luta","effects":{"honor":4}}
+      ],
+      "rewards":{"territory_influence":5},"gates":{"requires_missions":["M11"],"conditions":[]},"flags":{}
+    },
+    {
+      "id":"M13","act":2,"name":"Ressaca","type":"training","location_node":"itubera",
+      "public_objective":"Treinar com Davi e resolver uma troca tecnica.","hidden_objective":null,
+      "briefing":{"tinker":"Rival que aprende com voce tambem ensina.","helena":null},
+      "choices":[
+        {"id":"teach_sweep","label":"Ensinar a raspagem","effects":{"honor":5,"davi_bond":5}},
+        {"id":"keep_detail","label":"Guardar o detalhe competitivo","effects":{"technique_mastery":3}}
+      ],
+      "rewards":{"techniques":["r01"]},"gates":{"requires_missions":["M12"],"conditions":[]},"flags":{"harvests":["F6_davi_rivalry"]}
+    },
+    {
+      "id":"M14","act":2,"name":"Budokan — Abertura","type":"official_match","location_node":"taperoa",
+      "public_objective":"Vencer sob o ruleset gi oficial por pontos.","hidden_objective":null,
+      "briefing":{"tinker":"Pontua, estabiliza e nao entrega vantagem.","helena":null},
+      "choices":[
+        {"id":"secure_points","label":"Priorizar estabilizacao","effects":{"honor":3,"focus":3}},
+        {"id":"chase_advantage","label":"Buscar vantagem sem abandonar defesa","effects":{"hype":3}}
+      ],
+      "rewards":{"systems":["full_official_scoreboard"]},"gates":{"requires_missions":["M13"],"conditions":[]},"flags":{}
+    },
+    {
+      "id":"M15","act":2,"name":"Final do Festival","type":"boss","location_node":"taperoa",
+      "public_objective":"Vencer Nina Vendaval com controle tecnico.","hidden_objective":null,
+      "briefing":{"tinker":"Ela troca de angulo antes do segundo apoio.","helena":null},
+      "choices":[
+        {"id":"dedicate_to_community","label":"Dedicar a comunidade","effects":{"honor":6,"community":5}},
+        {"id":"dedicate_to_live","label":"Dedicar a Cria Live","effects":{"hype":7}}
+      ],
+      "rewards":{"style_charges":{"idolo":1}},"gates":{"requires_missions":["M14"],"conditions":[]},"flags":{}
+    },
+    {
+      "id":"M16","act":2,"name":"O Bilhete","type":"debrief","location_node":"taperoa",
+      "public_objective":"Decidir o que fazer com o bilhete de acesso ao NTM.",
+      "hidden_objective":{"source":"helena_prado","objective":"Definir a rota de entrada sem criar bloqueio de campanha.","required":false},
+      "briefing":{"tinker":"Papel nenhum decide por voce.","helena":"Guardar facilita a rota monitorada; destruir preserva sua distancia."},
+      "choices":[
+        {"id":"tear_note","label":"Rasgar o bilhete","effects":{"honor":5,"cover_exposure":-3,"entry_variant":"monitored_convoy"}},
+        {"id":"keep_note","label":"Guardar o bilhete","effects":{"shadow":4,"cover_exposure":5,"entry_variant":"ntm_toll"}}
+      ],
+      "rewards":{"systems":["cover_exposure_ui_hint"]},"gates":{"requires_missions":["M15"],"conditions":[]},"flags":{"plants":["F3_note"]}
+    },
+    {
+      "id":"M17","act":3,"name":"Porteira","type":"infiltration_entry","location_node":"cairu_mangue",
+      "public_objective":"Entrar no circuito NTM pela variante definida em M16.",
+      "hidden_objective":{"source":"helena_prado","objective":"Manter a capa durante a entrada.","required":false},
+      "briefing":{"tinker":"Fala pouco e lembra por que entrou.","helena":"As duas rotas chegam ao mesmo ponto; a diferenca e a exposicao."},
+      "choices":[],"rewards":{"access":["ntm_mangrove"]},"gates":{"requires_missions":["M16"],"conditions":[]},"flags":{"harvests":["F3_note"]}
+    },
+    {
+      "id":"M18","act":3,"name":"So Sobrevive Quem Merece","type":"clandestine_match","location_node":"cairu_mangue",
+      "public_objective":"Vencer por finalizacao tecnica ou tap do adversario, sem pontuacao.",
+      "hidden_objective":{"source":"helena_prado","objective":"Memorizar apenas os identificadores ficcionais dos financiadores.","required":false},
+      "briefing":{"tinker":"Sem pontos nao significa sem limite. Tap encerra tudo.","helena":"Observe. Nao provoque nem siga ninguem."},
+      "choices":[
+        {"id":"clean_grappling","label":"Manter grappling limpo","effects":{"honor":5,"cover_exposure":-2}},
+        {"id":"accept_showmanship","label":"Aceitar encenacao do evento","effects":{"hype":5,"shadow":3,"cover_exposure":3}}
+      ],
+      "rewards":{"ferro_tokens":3,"systems":["ferro_token_wallet"]},"gates":{"requires_missions":["M17"],"conditions":[]},"flags":{}
+    },
+    {
+      "id":"M19","act":3,"name":"O Demolidor","type":"dialogue","location_node":"ferro_velho_lapa",
+      "public_objective":"Conversar com Oni e testar a historia de Dende.",
+      "hidden_objective":{"source":"helena_prado","objective":"Confirmar apenas a existencia do cofre, sem tentar abri-lo.","required":false},
+      "briefing":{"tinker":"Oni mede respeito antes de medir forca.","helena":"Nao toque no cofre."},
+      "choices":[
+        {"id":"ask_about_dende","label":"Perguntar de Dende","effects":{"thread_F1":1,"vault_hint":1}},
+        {"id":"stay_silent","label":"Escutar","effects":{"focus":3,"oni_respect":2}}
+      ],
+      "rewards":{"information":["vault_hint"]},"gates":{"requires_missions":["M18"],"conditions":[]},"flags":{"harvests":["F1_dende_past"]}
+    },
+    {
+      "id":"M20","act":3,"name":"Lesao","type":"agenda","location_node":"itubera",
+      "public_objective":"Escolher recuperacao segura depois do desgaste.","hidden_objective":null,
+      "briefing":{"tinker":"Dor nao e prova de coragem.","helena":null},
+      "choices":[
+        {"id":"rest_and_recover","label":"Descansar e tratar","effects":{"honor":4,"injury_recovery":10}},
+        {"id":"ignore_recovery_plan","label":"Ignorar a recuperacao","effects":{"injury_state":"worse","focus":-3}}
+      ],
+      "rewards":{"systems":["injury_week"]},"gates":{"requires_missions":["M19"],"conditions":[]},"flags":{}
+    },
+    {
+      "id":"M21","act":3,"name":"Leoa no Mangue","type":"rescue_by_choice","location_node":"cairu_mangue",
+      "public_objective":"Resolver a retencao de Leoa sem apostar na propria luta.",
+      "hidden_objective":{"source":"helena_prado","objective":"Evitar que o resgate exponha a operacao.","required":false},
+      "briefing":{"tinker":"Eu descobri a operacao. Daqui em diante, nenhum briefing vem pela metade.","helena":"Leoa nao e moeda nem isca."},
+      "choices":[
+        {"id":"pay_with_criacoin","label":"Pagar taxa ficcional em Criacoin","effects":{"criacoin":-200,"cover_exposure":-2}},
+        {"id":"win_third_party_bet","label":"Vencer aposta limitada em luta de terceiros","effects":{"honor":2,"cover_exposure":3}}
+      ],
+      "rewards":{"systems":["tinker_mission_control"]},"gates":{"requires_missions":["M20"],"conditions":[]},"flags":{"harvests":["F5_tinker_secret"]}
+    },
+    {
+      "id":"M22","act":3,"name":"Treino Proibido","type":"optional_training","location_node":"ferro_velho_lapa",
+      "public_objective":"Decidir se aprende entradas de perna com protocolo de tap e escape.",
+      "hidden_objective":{"source":"helena_prado","objective":"Nao transformar treino em coleta de prova.","required":false},
+      "briefing":{"tinker":"Tecnica sem tap soberano nao entra no deck.","helena":"Treino e treino. Nao use ninguem como alvo."},
+      "choices":[
+        {"id":"learn_with_safety","label":"Aprender com protocolo seguro","effects":{"cover_exposure":5,"technique_access":1}},
+        {"id":"decline_training","label":"Recusar","effects":{"honor":5}}
+      ],
+      "rewards":{"techniques":["f10","f11","f12"],"conditional_on_choice":"learn_with_safety"},"gates":{"requires_missions":["M21"],"conditions":[]},"flags":{}
+    },
+    {
+      "id":"M23","act":3,"name":"Racha","type":"dialogue","location_node":"itubera",
+      "public_objective":"Confrontar a origem dos pagamentos feitos por Tinker.",
+      "hidden_objective":{"source":"helena_prado","objective":"Escolher se Dende entra no circulo de confianca.","required":false},
+      "dialogue_source":"data/dialogues/yarn_drafts/M23_racha.yarn",
+      "briefing":{"tinker":"Eu paguei a divida para manter o Terreiro de pe.","helena":"Contar reduz o segredo, mas pode proteger a familia."},
+      "choices":[
+        {"id":"tell_dende","label":"Contar a operacao a Dende","effects":{"honor":10,"cover_exposure":-10}},
+        {"id":"keep_pf_secret","label":"Manter o segredo por enquanto","effects":{"shadow":5,"cover_exposure":5,"tinker_bond":3}}
+      ],
+      "rewards":{"systems":["cria_live_crisis"]},"gates":{"requires_missions":["M22"],"conditions":[]},"flags":{"harvests":["F5_tinker_secret"]}
+    },
+    {
+      "id":"M24","act":3,"name":"A Saida","type":"boss_variant","location_node":"ferro_velho_lapa",
+      "public_objective":"Vencer Oni ou Piranha conforme as escolhas do ato.",
+      "hidden_objective":{"source":"helena_prado","objective":"Localizar o cofre sem retirar nada.","required":false},
+      "briefing":{"tinker":"O adversario muda; a saida continua sendo controle.","helena":"Localize e saia."},
+      "choices":[],"rewards":{"world_state":["zone_influence_changed"],"ledger_state":"located"},"gates":{"requires_missions":["M23"],"conditions":[]},"flags":{"harvests":["F4_ledger_debt"]}
+    },
+    {
+      "id":"M25","act":4,"name":"Circuito Oficial","type":"official_match_media","location_node":"salvador",
+      "public_objective":"Competir no circuito e responder a oferta de exclusividade.",
+      "hidden_objective":{"source":"helena_prado","objective":"Nao expor a ligacao com o mangue durante a entrevista.","required":false},
+      "briefing":{"tinker":"Contrato nao entra no tatame.","helena":"A midia aumenta a exposicao da capa."},
+      "choices":[
+        {"id":"ale_exclusivity","label":"Aceitar exclusividade ALE","effects":{"hype":8,"cover_exposure":8}},
+        {"id":"retain_freedom","label":"Manter liberdade","effects":{"honor":5,"cover_exposure":-2}}
+      ],
+      "rewards":{"systems":["sponsor_offers"]},"gates":{"requires_missions":["M24"],"conditions":[]},"flags":{}
+    },
+    {
+      "id":"M26","act":4,"name":"Caveira de Aco","type":"rival_match","location_node":"salvador",
+      "public_objective":"Vencer Lucas ou Caveira conforme o perfil de rivalidade.","hidden_objective":null,
+      "briefing":{"tinker":"Le o passe antes de buscar a resposta.","helena":null},"choices":[],
+      "rewards":{"scouting":["pass_reading"]},"gates":{"requires_missions":["M25"],"conditions":[]},"flags":{}
+    },
+    {
+      "id":"M27","act":4,"name":"Kimura do Silencio","type":"precision_match","location_node":"taperoa",
+      "public_objective":"Superar Kenzo por leitura posicional; tap encerra a tentativa.","hidden_objective":null,
+      "briefing":{"tinker":"Nao forca a chave. Forca o erro de posicao.","helena":null},"choices":[],
+      "rewards":{"systems":["flow_state"]},"gates":{"requires_missions":["M26"],"conditions":[]},"flags":{}
+    },
+    {
+      "id":"M28","act":4,"name":"Escandalo","type":"public_crisis","location_node":"salvador",
+      "public_objective":"Responder a um vazamento politico sem acusar pessoa real.",
+      "hidden_objective":{"source":"helena_prado","objective":"Preservar a investigacao enquanto Helena pede saida.","required":false},
+      "briefing":{"tinker":"Verdade curta vale mais que desculpa longa.","helena":"Saia agora e eu preservo o caso."},
+      "choices":[
+        {"id":"admit_publicly","label":"Assumir a parte verdadeira","effects":{"honor":10,"hype":-3,"cover_exposure":5}},
+        {"id":"deny_and_continue","label":"Negar e continuar","effects":{"hype":6,"shadow":6,"cover_exposure":12}}
+      ],
+      "rewards":{"world_state":["helena_exit_request_refused"]},"gates":{"requires_missions":["M27"],"conditions":[]},"flags":{}
+    },
+    {
+      "id":"M29","act":4,"name":"O Povo no Dique","type":"official_match","location_node":"valenca",
+      "public_objective":"Lutar diante da caravana LEM sem transformar torcida em hostilidade.","hidden_objective":null,
+      "briefing":{"tinker":"Tua gente veio ver voce inteiro.","helena":null},"choices":[],
+      "rewards":{"items":["dende_first_belt_letter"]},"gates":{"requires_missions":["M28"],"conditions":[]},"flags":{"plants":["F7_first_belt"]}
+    },
+    {
+      "id":"M30","act":4,"name":"Semifinal","type":"profile_boss","location_node":"salvador",
+      "public_objective":"Vencer Davi ou Kenzo conforme o perfil de campanha.","hidden_objective":null,
+      "briefing":{"tinker":"Historia muda o adversario, nao a regra.","helena":null},"choices":[],
+      "rewards":{"items":["final_credential"]},"gates":{"requires_missions":["M29"],"conditions":[]},"flags":{"harvests":["F6_davi_rivalry"]}
+    },
+    {
+      "id":"M31","act":4,"name":"Vespera","type":"dialogue","location_node":"itubera",
+      "public_objective":"Ouvir Dende explicar Oni, o fogo e a divida.","hidden_objective":null,
+      "dialogue_source":"data/dialogues/yarn_drafts/M31_vespera.yarn",
+      "briefing":{"tinker":"Hoje nao tem estrategia. Tem verdade.","helena":null},
+      "choices":[
+        {"id":"ask_respect","label":"Perguntar se Oni ainda respeita Dende","effects":{"oni_respect":5}},
+        {"id":"warn_operation","label":"Avisar sobre a operacao final","effects":{"focus":5,"honor":3}}
+      ],
+      "rewards":{"information":["full_debt_truth"]},"gates":{"requires_missions":["M30"],"conditions":[]},"flags":{"harvests":["F1_dende_past"]}
+    },
+    {
+      "id":"M32","act":4,"name":"A Credencial","type":"qualifier_final","location_node":"salvador",
+      "public_objective":"Concluir a qualificatoria sob regras oficiais.",
+      "hidden_objective":{"source":"helena_prado","objective":"Confirmar a janela da operacao posterior a final.","required":false},
+      "briefing":{"tinker":"Uma luta por vez.","helena":"Depois da final, a operacao entra."},"choices":[],
+      "rewards":{"systems":["act5"]},"gates":{"requires_missions":["M31"],"conditions":[]},"flags":{}
+    },
+    {
+      "id":"M33","act":5,"name":"Semana da Verdade","type":"free_agenda","location_node":"itubera",
+      "public_objective":"Distribuir treino, descanso, familia e investigacao na semana final.",
+      "hidden_objective":{"source":"helena_prado","objective":"Escolher no maximo uma acao de investigacao para evitar exposicao excessiva.","required":false},
+      "briefing":{"tinker":"Agenda e escolha moral com relogio.","helena":"Quanto mais voce procura, mais aparece."},
+      "choices":[],"rewards":{"systems":["final_week_buffs"]},"gates":{"requires_missions":["M32"],"conditions":[]},"flags":{}
+    },
+    {
+      "id":"M34","act":5,"name":"O Tatame Vazio","type":"quiet_scene","location_node":"itubera",
+      "public_objective":"Devolver a primeira faixa a Dende e escolher o significado do gesto.","hidden_objective":null,
+      "briefing":{"tinker":"Nao e a cor que volta. E a promessa.","helena":null},
+      "choices":[
+        {"id":"return_with_gratitude","label":"Devolver com gratidao","effects":{"honor":7,"legacy":5}},
+        {"id":"keep_as_memory","label":"Pedir para guardar como memoria do Terreiro","effects":{"community":7}}
+      ],
+      "rewards":{"world_state":["first_belt_resolved"]},"gates":{"requires_missions":["M33"],"conditions":[]},"flags":{"harvests":["F7_first_belt"]}
+    },
+    {
+      "id":"M35","act":5,"name":"A Multidao","type":"social_final","location_node":"salvador",
+      "public_objective":"Fazer a ultima live antes da final.","hidden_objective":null,
+      "briefing":{"tinker":"Diz quem voce e sem prometer quem vai cair.","helena":null},
+      "choices":[
+        {"id":"community_tone","label":"Falar da comunidade","effects":{"honor":5,"community":5}},
+        {"id":"idol_tone","label":"Falar da propria jornada","effects":{"hype":6}},
+        {"id":"quiet_tone","label":"Encerrar cedo","effects":{"focus":5}}
+      ],
+      "rewards":{"systems":["final_crowd_buff"]},"gates":{"requires_missions":["M34"],"conditions":[]},"flags":{}
+    },
+    {
+      "id":"M36","act":5,"name":"Ultima Ordem","type":"layered_objective","location_node":"salvador",
+      "public_objective":"Vencer o primeiro round e decidir o destino da chave do cofre.",
+      "hidden_objective":{"source":"helena_prado","objective":"Usar uma janela narrativa de clinch para recuperar a chave, sem alterar a simulacao biomecanica.","required":false,"availability":{"cover_exposure_max":70},"fallback":"Tinker aciona uma rota documental alternativa para que M39 nunca fique bloqueada."},
+      "dialogue_source":"data/dialogues/yarn_drafts/M36_ultima_ordem.yarn",
+      "briefing":{"tinker":"A janela e narrativa; o clinch continua obedecendo a simulacao.","helena":"Sem a chave, seguimos pela rota documental. Nao arrisque a seguranca da luta."},
+      "choices":[
+        {"id":"secure_key","label":"Recuperar a chave na janela narrativa","effects":{"cover_exposure":10,"ledger_route":"key"}},
+        {"id":"warn_oni","label":"Avisar Oni","effects":{"cover_exposure":20,"shadow":8,"ledger_route":"oni"}},
+        {"id":"use_document_route","label":"Usar a rota documental de Tinker","effects":{"honor":5,"ledger_route":"documents"}}
+      ],
+      "rewards":{"ledger_state":"key_route"},"gates":{"requires_missions":["M35"],"conditions":[]},"flags":{"harvests":["F4_ledger_debt"]}
+    },
+    {
+      "id":"M37","act":5,"name":"A Final","type":"three_round_boss","location_node":"salvador",
+      "public_objective":"Concluir tres rounds, com variante final de ruleset definida pelo historico.","hidden_objective":null,
+      "briefing":{"tinker":"Pivo, tempo e tap continuam soberanos em todo round.","helena":null},"choices":[],
+      "rewards":{"world_state":["final_completed"]},"gates":{"requires_missions":["M36"],"conditions":[]},"flags":{"harvests":["F6_davi_rivalry"]}
+    },
+    {
+      "id":"M38","act":5,"name":"O Tap","type":"public_gesture","location_node":"salvador",
+      "public_objective":"Escolher o gesto publico depois da luta.","hidden_objective":null,
+      "briefing":{"tinker":"O que voce faz depois do tap tambem fica.","helena":null},
+      "choices":[
+        {"id":"shake_hands","label":"Cumprimentar","effects":{"honor":7}},
+        {"id":"provoke","label":"Provocar sem ameaca","effects":{"hype":7,"shadow":2}},
+        {"id":"dedicate","label":"Dedicar ao Terreiro","effects":{"community":7,"legacy":5}}
+      ],
+      "rewards":{"world_state":["final_tone_set"]},"gates":{"requires_missions":["M37"],"conditions":[]},"flags":{"harvests":["F7_first_belt"]}
+    },
+    {
+      "id":"M39","act":5,"name":"O Ledger","type":"moral_choice","location_node":"ferro_velho_lapa",
+      "public_objective":"Definir o destino do ledger e de seus nomes.",
+      "hidden_objective":{"source":"helena_prado","objective":"Escolher sem promocao automatica de final; os eixos ainda avaliam a consequencia.","required":false},
+      "dialogue_source":"data/dialogues/yarn_drafts/M39_o_ledger.yarn",
+      "briefing":{"tinker":"Nenhum papel vale mais que as pessoas, mas esconder tudo tambem cobra preco.","helena":"O caso precisa de verdade verificavel."},
+      "choices":[
+        {"id":"deliver_with_testimony","label":"Entregar com depoimento de Dende","effects":{"ledger_state":"delivered","honor":8}},
+        {"id":"destroy","label":"Destruir o ledger","effects":{"ledger_state":"destroyed","shadow":12}},
+        {"id":"protect_community_names","label":"Entregar protegendo os nomes das crias","effects":{"ledger_state":"delivered","double_face":8}},
+        {"id":"community_accountability","label":"Submeter a verdade a acordo comunitario","effects":{"ledger_state":"community_accountability","community":12,"honor":5}}
+      ],
+      "rewards":{"systems":["ending_evaluation"]},"gates":{"requires_missions":["M38"],"conditions":[]},"flags":{"harvests":["F4_ledger_debt"]}
+    },
+    {
+      "id":"M40","act":5,"name":"De Cria pra Cria","type":"playable_epilogue","location_node":"itubera",
+      "public_objective":"Caminhar pelo Terreiro transformado e iniciar o novo ciclo.","hidden_objective":null,
+      "briefing":{"tinker":"A luta acabou. Agora ve quem ficou.","helena":null},"choices":[],
+      "rewards":{"systems":["ending","new_game_plus"],"motto_resolution":"Gentileza"},"gates":{"requires_missions":["M39"],"conditions":[]},"flags":{"harvests":["F7_first_belt","F8_gentleness"]}
+    }
+  ]
+}

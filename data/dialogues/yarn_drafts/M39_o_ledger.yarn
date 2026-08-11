@@ -1,0 +1,19 @@
+// STATUS: DRAFT. Fonte narrativa; sem consumidor Yarn no runtime atual.
+title: M39
+tags: canon_v5_proposal mission_M39
+---
+HELENA: O caderno, Ruan. Nomes, rotas, lavagem. E a dívida do seu mestre.
+ONI: Lê meu nome lá e vê quem carregou o peso por quem.
+-> Entregar com depoimento de Dendê
+    <<set $ledger_choice = "deliver_with_testimony">>
+    <<set $ending_candidate = "root">>
+-> Destruir o ledger
+    <<set $ledger_choice = "destroy">>
+    <<set $ending_candidate = "shadow">>
+-> Entregar protegendo os nomes das crias
+    <<set $ledger_choice = "protect_community_names">>
+    <<set $ending_candidate = "double_face">>
+-> Submeter a verdade a um acordo comunitário
+    <<set $ledger_choice = "community_accountability">>
+    <<set $ending_candidate = "cria">>
+===

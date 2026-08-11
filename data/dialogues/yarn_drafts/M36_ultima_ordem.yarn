@@ -1,0 +1,16 @@
+// STATUS: DRAFT. Fonte narrativa; sem consumidor Yarn no runtime atual.
+title: M36
+tags: canon_v5_proposal mission_M36
+---
+TINKER: A chave está com Oni. Só toca nela se a janela narrativa aparecer e a luta continuar segura.
+HELENA: Sem a chave existe uma rota documental. O caso não vale um risco biomecânico.
+-> Recuperar a chave na janela narrativa
+    <<set $cover += 10>>
+    <<set $ledger_route = "key">>
+-> Avisar Oni
+    <<set $cover += 20>>
+    <<set $ledger_route = "oni">>
+-> Usar a rota documental de Tinker
+    <<set $honra += 5>>
+    <<set $ledger_route = "documents">>
+===

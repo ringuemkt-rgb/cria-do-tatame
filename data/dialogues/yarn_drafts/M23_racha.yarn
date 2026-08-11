@@ -1,0 +1,22 @@
+// STATUS: DRAFT. Fonte narrativa; sem consumidor Yarn no runtime atual.
+title: M23
+tags: canon_v5_proposal mission_M23
+---
+DENDÊ: Negociando com o NTM às minhas costas, Joaquim?
+TINKER: Pagando a sua dívida, mestre. Parcela por parcela, luta por luta.
+<<if $cover <= 70>>
+    RUAN: Eu sei do ledger. E sei quem segura.
+<<else>>
+    RUAN: Eu sei que tem coisa escondida. Ainda não sei até onde vai.
+<<endif>>
+-> Contar a verdade da operação a Dendê
+    DENDÊ: Então o tatame é isca. Que seja, mas nenhum cria vira prova descartável.
+    <<set $honra += 10>>
+    <<set $cover -= 10>>
+    <<set $pf_revealed_to_dende = true>>
+-> Manter o segredo por enquanto
+    TINKER: Irmão, eu seguro a ponte. Mas não para sempre.
+    <<set $sombra += 5>>
+    <<set $cover += 5>>
+    <<set $tinker_irmao = true>>
+===
