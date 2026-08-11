@@ -54,6 +54,7 @@ Este arquivo é a porta de entrada da documentação ativa. Antes de criar um do
 - [`../tools/audit/validate_faction_migration_v4_2.py`](../tools/audit/validate_faction_migration_v4_2.py) — gate das três facções, aliases e save v5;
 - [`../tools/ai_asset_pipeline/cloud/validate_cloud_pipeline.py`](../tools/ai_asset_pipeline/cloud/validate_cloud_pipeline.py) — gate offline do adaptador de nuvem.
 - [`../tools/mobile/validate_mobile_packs.py`](../tools/mobile/validate_mobile_packs.py) — gate offline de budgets, catálogo e loader mobile.
+- [`qa/VISUAL_QA_V2.md`](qa/VISUAL_QA_V2.md) — contrato e uso do auditor pixel art: resolução exata, CIEDE2000, AA, dithering, outline mascarado e rótulos determinísticos.
 
 ## Status dos documentos
 
