@@ -1,0 +1,55 @@
+{
+  "schema_version": "1.0.0",
+  "backend_id": "minimax_h3_comfyui",
+  "enabled": false,
+  "role": "animation_candidate_generator",
+  "model_repo": "Comfy-Org/MiniMax-H3",
+  "base_model": "MiniMaxAI/MiniMax-H3",
+  "comfyui_url": "http://127.0.0.1:8188",
+  "workflows": {
+    "image_to_video": "video_minimax_h3_i2v.json",
+    "text_to_video": "video_minimax_h3_t2v.json",
+    "reference_to_video": "video_minimax_h3_r2v.json"
+  },
+  "preferred_diffusion_model": "minimax_h3_ref2va_int8_convrot.safetensors",
+  "preferred_text_encoder": "qwen3vl_32b_minimax_h3_nvfp4_awq.safetensors",
+  "video_vae": "minimax_h3_video_vae_fp16.safetensors",
+  "visual_canon": {
+    "style": "Cria do Tatame 2.5D Pixel Art Premium",
+    "reference_first": true,
+    "allow_style_drift": false,
+    "allow_character_redesign": false,
+    "allow_biomechanics_guessing": false
+  },
+  "allowed_jobs": [
+    "animate_approved_character_keyframes",
+    "animate_approved_bjj_pair_keyframes",
+    "arena_ambient_loops",
+    "combat_vfx_previews",
+    "cutscene_previsualization",
+    "promotional_motion"
+  ],
+  "blocked_jobs": [
+    "canonical_static_card_master",
+    "canonical_sprite_final",
+    "automatic_hitbox_generation",
+    "automatic_grappling_truth",
+    "direct_runtime_promotion"
+  ],
+  "qa_gates": [
+    "canon_gate",
+    "biomechanics_gate",
+    "silhouette_gate",
+    "temporal_consistency_gate",
+    "pixel_canon_gate",
+    "godot_runtime_gate",
+    "android_device_gate"
+  ],
+  "notes": [
+    "MiniMax-H3 is a ComfyUI video backend, not the canonical static-art generator.",
+    "Every animation starts from an approved Cria do Tatame keyframe/reference whenever possible.",
+    "Generated video is candidate material only and must be converted/cleaned into game-ready frames before runtime use.",
+    "Model weights stay outside the Git repository.",
+    "License terms must be reviewed before commercial distribution of generated outputs."
+  ]
+}

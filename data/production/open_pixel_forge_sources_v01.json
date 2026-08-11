@@ -1,0 +1,107 @@
+{
+  "schema_version": "1.0.0",
+  "reviewed_at": "2026-07-21",
+  "policy": {
+    "vendor_code": false,
+    "vendor_model_weights": false,
+    "local_runtime_only": true,
+    "generated_assets_require_manual_qa": true,
+    "paired_grappling_requires_biomechanical_qa": true
+  },
+  "approved": [
+    {
+      "id": "comfyui",
+      "project": "Comfy-Org/ComfyUI",
+      "version": "v0.28.0",
+      "license": "GPL-3.0",
+      "role": "local image generation graph and HTTP API",
+      "integration": "external local service at COMFYUI_URL",
+      "redistribution": "do not vendor in the game repository"
+    },
+    {
+      "id": "pixelorama",
+      "project": "Orama-Interactive/Pixelorama",
+      "version": "v1.1.10",
+      "license": "MIT",
+      "role": "pixel cleanup, animation timeline, palettes and tiles",
+      "integration": "external editor; source files may be referenced but binaries are not vendored"
+    },
+    {
+      "id": "libresprite",
+      "project": "LibreSprite/LibreSprite",
+      "version": "1.1",
+      "license": "GPL-2.0",
+      "role": "alternative sprite cleanup and animation editor",
+      "integration": "external editor only"
+    },
+    {
+      "id": "controlnet",
+      "project": "lllyasviel/ControlNet",
+      "version": "1.1 architecture",
+      "license": "Apache-2.0",
+      "role": "pose, edge, depth and composition conditioning",
+      "integration": "optional ComfyUI workflow; model license must be audited separately"
+    },
+    {
+      "id": "ip_adapter",
+      "project": "tencent-ailab/IP-Adapter",
+      "version": "repository main; pin an audited commit before production",
+      "license": "Apache-2.0",
+      "role": "character identity and style consistency",
+      "integration": "optional ComfyUI workflow; not installed automatically"
+    },
+    {
+      "id": "practical_rife",
+      "project": "hzwer/Practical-RIFE",
+      "version": "model 4.25 recommended by upstream",
+      "license": "MIT",
+      "role": "candidate frame interpolation only",
+      "integration": "offline post-process; interpolated grappling frames require manual cleanup"
+    },
+    {
+      "id": "rembg",
+      "project": "danielgatis/rembg",
+      "version": "v2.0.75",
+      "license": "MIT",
+      "role": "optional background removal",
+      "integration": "optional Python dependency; disabled by default"
+    }
+  ],
+  "open_weight_models": [
+    {
+      "id": "pixel_art_xl",
+      "source": "nerijs/pixel-art-xl",
+      "license": "CreativeML OpenRAIL-M",
+      "classification": "open weights, not OSI open-source software",
+      "usage": "local SDXL LoRA; do not commit weights; record exact revision and hash"
+    },
+    {
+      "id": "pixel_party_xl",
+      "source": "pixelparty/pixel-party-xl",
+      "license": "CreativeML OpenRAIL-M plus upstream no-hosting request",
+      "classification": "open weights with redistribution restriction",
+      "usage": "local evaluation only; do not mirror, host or commit weights"
+    },
+    {
+      "id": "pixel_art_slider",
+      "source": "ntc-ai/SDXL-LoRA-slider.pixel-art",
+      "license": "MIT for LoRA files; SDXL base model license still applies",
+      "classification": "open LoRA layered over separately licensed base model",
+      "usage": "preferred low-risk style adapter after base-model license audit"
+    }
+  ],
+  "rejected_or_restricted": [
+    {
+      "id": "cmu_openpose",
+      "reason": "official software license is limited to noncommercial research; do not use in a commercial game pipeline without a commercial license"
+    },
+    {
+      "id": "aseprite_binary",
+      "reason": "source-available under a proprietary EULA; use Pixelorama or LibreSprite when a fully free tool is required"
+    },
+    {
+      "id": "fal_ai_sprite_sheet_creator",
+      "reason": "repository code may be visible, but generation depends on a metered external fal.ai service and does not satisfy local unlimited production"
+    }
+  ]
+}

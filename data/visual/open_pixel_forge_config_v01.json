@@ -1,0 +1,32 @@
+{
+  "schema_version": "1.0.0",
+  "provider": "plan",
+  "comfyui_url": "http://127.0.0.1:8188",
+  "checkpoint": "sd_xl_base_1.0.safetensors",
+  "lora_name": "pixel-art-xl.safetensors",
+  "lora_strength": 0.9,
+  "model_id": "stabilityai/stable-diffusion-xl-base-1.0",
+  "device": "auto",
+  "dtype": "float16",
+  "width": 1024,
+  "height": 1024,
+  "steps": 28,
+  "cfg": 6.5,
+  "sampler_name": "dpmpp_2m",
+  "scheduler": "karras",
+  "seed": 437042,
+  "batch_size": 1,
+  "poll_seconds": 1.0,
+  "timeout_seconds": 900,
+  "downscale_factor": 8,
+  "palette_colors": 48,
+  "remove_background": false,
+  "operating_mode": "candidate_only",
+  "shipping_promotion": "manual_qa_only",
+  "notes": [
+    "provider=plan is the safe default and performs no inference",
+    "set CRIA_FORGE_PROVIDER=comfyui to use a local ComfyUI server",
+    "model weights are installed outside the repository and must never be committed",
+    "paired grappling techniques always require manual biomechanical synchronization and QA"
+  ]
+}
