@@ -1,0 +1,23 @@
+{
+  "schema_version": "1.0.0",
+  "corrida": "lote3_arranque_20260811_01",
+  "lote": 3,
+  "status": "blocked_pre_generation",
+  "ativos": [],
+  "auto_promovidos": [],
+  "pausas_humanas": [
+    {"codigo":"COLAB_AUTH_REQUIRED","escopo":"corrida","evidencia":"Colab abriu com Fazer login; nenhuma GPU foi iniciada."},
+    {"codigo":"HF_GATED_MODEL_ACCEPTANCE_REQUIRED","escopo":"FLUX.1-schnell","evidencia":"O repositório oficial é gated; termos/autenticação não podem ir para o Git."},
+    {"codigo":"CANON_BELT_MIGRATION_REQUIRED","escopo":"ruan_macacao","evidencia":"Direção blue_2_stripes versus dado executável belt_start=white."},
+    {"codigo":"CANON_CHARACTER_ID_MISSING","escopo":"nado_pending_canon_id","evidencia":"Nenhuma ficha canônica de Nado foi localizada."},
+    {"codigo":"PLAYABLE_ROSTER_CONTRACT_MIGRATION_REQUIRED","escopo":"bia_pimenta_souza","evidencia":"Bia existe no domínio NTM, mas não em data/characters.json."},
+    {"codigo":"FACTION_ROLE_AND_GEOGRAPHY_MIGRATION_REQUIRED","escopo":"oni_da_lapa_and_factions","evidencia":"Papel de Oni e territórios divergem dos contratos ativos."},
+    {"codigo":"DELEGATED_PROMOTION_GOVERNANCE_MIGRATION_REQUIRED","escopo":"gate_l1_b","evidencia":"O regime foi solicitado, mas a governança ativa ainda proíbe promoção automática de saída de IA."}
+  ],
+  "fila": {"specs":5,"ativos_planejados":20,"prontos":4,"hold":16,"em_processo":0,"candidatos":0},
+  "quota_h": 0,
+  "custo_brl": 0,
+  "heartbeat": "ok",
+  "prox_spec": "lote3_leoa_quilombola_v1",
+  "tracking_issue": 60
+}

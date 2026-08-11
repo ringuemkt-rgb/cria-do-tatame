@@ -1,0 +1,44 @@
+{
+  "schema_version": "1.0.0",
+  "batch_id": "lote3_arranque_20260811_01",
+  "lote": 3,
+  "asset_count": 20,
+  "promotion": "human_only",
+  "shared_render_contract": {
+    "canvas": [480, 270], "fps": 12, "preview_frame_ms": 83,
+    "outline_px": 1, "anti_aliasing": false, "pixel_grid_snap": true,
+    "generated_text": false,
+    "required_outputs": ["spritesheet.png", "preview.gif", "contact_sheet.png", "metadata.json", "asset.license.json"]
+  },
+  "specs": [
+    {
+      "id": "lote3_ruan_macacao_v1", "character_id": "ruan_macacao", "display_name": "Ruan \"Macacão\" Silva",
+      "biome": "terreiro", "uniform": "white_gi_official", "status": "entrada_hold",
+      "hold_codes": ["CANON_BELT_MIGRATION_REQUIRED"],
+      "assets": ["portrait:48x48:1", "idle:48x64:4", "victory:48x64:2", "defeat:48x64:2"]
+    },
+    {
+      "id": "lote3_leoa_quilombola_v1", "character_id": "leoa_quilombola", "display_name": "Leoa Quilombola",
+      "biome": "terreiro", "uniform": "white_gi_official", "status": "entrada_pronta", "hold_codes": [],
+      "assets": ["portrait:48x48:1", "idle:48x64:4", "victory:48x64:2", "defeat:48x64:2"]
+    },
+    {
+      "id": "lote3_nado_v1", "character_id": "nado_pending_canon_id", "display_name": "Nado",
+      "biome": "pending", "uniform": "pending", "status": "entrada_hold",
+      "hold_codes": ["CANON_CHARACTER_ID_MISSING", "IDENTITY_REFERENCE_MISSING"],
+      "assets": ["portrait:48x48:1", "idle:48x64:4", "victory:48x64:2", "defeat:48x64:2"]
+    },
+    {
+      "id": "lote3_bia_pimenta_souza_v1", "character_id": "bia_pimenta_souza", "display_name": "Bia Pimenta Souza",
+      "biome": "lapa", "uniform": "black_gi_ntm", "status": "entrada_hold",
+      "hold_codes": ["PLAYABLE_ROSTER_CONTRACT_MIGRATION_REQUIRED", "FACTION_GEOGRAPHY_MIGRATION_REQUIRED"],
+      "assets": ["portrait:48x48:1", "idle:48x64:4", "victory:48x64:2", "defeat:48x64:2"]
+    },
+    {
+      "id": "lote3_oni_da_lapa_v1", "character_id": "oni_da_lapa", "display_name": "Oni da Lapa",
+      "biome": "lapa", "uniform": "black_gi_ntm", "status": "entrada_hold",
+      "hold_codes": ["CHARACTER_ROLE_MIGRATION_REQUIRED", "FACTION_HIERARCHY_MIGRATION_REQUIRED", "FACTION_GEOGRAPHY_MIGRATION_REQUIRED"],
+      "assets": ["portrait:48x48:1", "idle:48x64:4", "victory:48x64:2", "defeat:48x64:2"]
+    }
+  ]
+}

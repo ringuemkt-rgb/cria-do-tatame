@@ -1,0 +1,32 @@
+{
+  "schema_version": "2.0.0",
+  "contract_id": "cria_do_tatame_private_drive_layout_v02",
+  "root_folder_name": "CriaDoTatame",
+  "visibility": "private",
+  "folders": [
+    "fila", "fila/entradas", "fila/em_processo", "fila/saidas", "fila/mortos",
+    "assets", "assets/candidatos", "assets/aprovados", "assets/reprovados", "assets/quarentena_licenca",
+    "audio", "audio/sfx", "audio/vozes", "audio/musica",
+    "models", "models/staging", "cache",
+    "data", "data/specs", "data/motions", "data/refs",
+    "qa", "qa/relatorios",
+    "ops", "ops/apps_script", "ops/backups", "ops/dvc_remote",
+    "builds", "colab_logs", "docs", "manifest"
+  ],
+  "required_files": [
+    "models/registry.json", "cache/index.json", "qa/gate_l1_promocoes.json",
+    "ops/heartbeat.json", "ops/quota_ledger.json", "manifest/private_state.json"
+  ],
+  "queue": {
+    "claim": "entradas_to_em_processo_with_exclusive_lock_and_rename",
+    "success": "em_processo_to_saidas_plus_manifest",
+    "failure": "em_processo_to_mortos_plus_error_log",
+    "heartbeat_seconds": 300,
+    "max_attempts": 3
+  },
+  "upload_destinations": ["assets/candidatos", "assets/quarentena_licenca"],
+  "automatic_promotion_to_approved": false,
+  "provider_ids_versioned": false,
+  "private_state_location": "outside_repository_and_private_drive_manifest",
+  "dvc": {"remote_folder": "ops/dvc_remote", "url_scheme": "gdrive://", "remote_config_scope": "local_only"}
+}
