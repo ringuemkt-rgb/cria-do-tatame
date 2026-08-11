@@ -1,0 +1,31 @@
+{
+  "schema_version": "1.0.0",
+  "contract_id": "cria_do_tatame_private_drive_layout_v01",
+  "root_folder_name": "CriaDoTatame",
+  "visibility": "private",
+  "folders": [
+    "models",
+    "cache",
+    "refs",
+    "motions",
+    "assets",
+    "assets/candidatos",
+    "assets/aprovados",
+    "audio",
+    "audio/sfx",
+    "audio/vozes",
+    "colab_logs",
+    "manifest"
+  ],
+  "upload_destinations": [
+    "assets/candidatos"
+  ],
+  "automatic_promotion_to_approved": false,
+  "provider_ids_versioned": false,
+  "private_state_location": "outside_repository",
+  "notes": [
+    "Binary candidates stay private until human QA.",
+    "Approved assets are synchronized locally and remain optional to the offline runtime.",
+    "OAuth tokens, Drive IDs and rclone configuration are never committed."
+  ]
+}

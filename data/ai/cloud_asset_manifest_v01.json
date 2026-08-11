@@ -1,0 +1,17 @@
+{
+  "schema_version": "1.0.0",
+  "contract_id": "cria_do_tatame_cloud_asset_manifest_v01",
+  "source_repository": "ringuemkt-rgb/cria-do-tatame",
+  "storage_provider": "google_drive",
+  "storage_visibility": "private",
+  "provider_ids_versioned": false,
+  "provider_locator": "private_local_state",
+  "integrity_algorithm": "sha256",
+  "promotion_policy": {
+    "candidate_destination": "assets/candidatos",
+    "approved_destination": "assets/aprovados",
+    "human_qa_required": true,
+    "automatic_promotion_forbidden": true
+  },
+  "assets": {}
+}

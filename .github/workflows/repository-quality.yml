@@ -40,6 +40,12 @@ jobs:
       - name: Validate game-data references
         run: node tools/node/validate_game_data.mjs
 
+      - name: Validate optional cloud adapter
+        run: python tools/ai_asset_pipeline/cloud/validate_cloud_pipeline.py
+
+      - name: Test optional cloud adapter
+        run: python -m unittest discover -s tests/cloud -p 'test_*.py'
+
       - name: Validate complete repository
         run: python tools/validate_complete_game.py
 

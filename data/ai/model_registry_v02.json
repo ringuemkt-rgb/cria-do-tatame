@@ -1,0 +1,110 @@
+{
+  "schema_version": "2.0.0",
+  "contract_id": "cria_do_tatame_hugging_face_model_registry_v02",
+  "status": "research_registry",
+  "audited_at": "2026-08-10",
+  "revision_policy": "resolve_ref_to_immutable_sha_per_batch",
+  "runtime_policy": "offline_candidate_research_only",
+  "shipping_policy": "human_license_quality_and_canon_approval_required",
+  "models": [
+    {
+      "id": "Onodofthenorth/SD_PixelArt_SpriteSheet_Generator",
+      "role": "sprite sheet research baseline",
+      "requested_ref": "main",
+      "license": "apache-2.0",
+      "adoption_status": "research_only",
+      "source_url": "https://huggingface.co/Onodofthenorth/SD_PixelArt_SpriteSheet_Generator",
+      "notes": "Model-card metadata is permissive, but output still requires original-art, anatomy, canon and mobile-readability QA."
+    },
+    {
+      "id": "nerijs/pixel-art-xl",
+      "role": "pixel-art style adapter research",
+      "requested_ref": "main",
+      "license": "creativeml-openrail-m",
+      "adoption_status": "research_only",
+      "source_url": "https://huggingface.co/nerijs/pixel-art-xl",
+      "notes": "LoRA/adapter; base-model license and full dependency chain remain part of the adoption review."
+    },
+    {
+      "id": "pixelparty/pixel-party-xl",
+      "role": "arena concept research",
+      "requested_ref": "main",
+      "license": "creativeml-openrail-m",
+      "adoption_status": "research_only",
+      "source_url": "https://huggingface.co/pixelparty/pixel-party-xl",
+      "notes": "Concept generation only; no direct promotion to game backgrounds."
+    },
+    {
+      "id": "artificialguybr/PixelArtRedmond",
+      "role": "visual-consistency adapter research",
+      "requested_ref": "main",
+      "license": "creativeml-openrail-m",
+      "adoption_status": "research_only",
+      "source_url": "https://huggingface.co/artificialguybr/PixelArtRedmond",
+      "notes": "Adapter research only; resolve and record an immutable revision for every batch."
+    },
+    {
+      "id": "xinsir/controlnet-openpose-sdxl-1.0",
+      "role": "pose-control research",
+      "requested_ref": "main",
+      "license": "apache-2.0",
+      "adoption_status": "research_only",
+      "source_url": "https://huggingface.co/xinsir/controlnet-openpose-sdxl-1.0",
+      "notes": "Pose control is not biomechanical validation; paired BJJ motion still requires expert review."
+    },
+    {
+      "id": "ByteDance/AnimateDiff-Lightning",
+      "role": "short reference-motion research",
+      "requested_ref": "main",
+      "license": "creativeml-openrail-m",
+      "adoption_status": "research_only",
+      "source_url": "https://huggingface.co/ByteDance/AnimateDiff-Lightning",
+      "notes": "Reference motion only; output is not a final paired technique or shipping animation."
+    },
+    {
+      "id": "Wan-AI/Wan2.2-T2V-A14B",
+      "role": "large text-to-video research",
+      "requested_ref": "main",
+      "license": "apache-2.0",
+      "adoption_status": "research_only",
+      "source_url": "https://huggingface.co/Wan-AI/Wan2.2-T2V-A14B",
+      "notes": "Large hardware footprint; never cached persistently on Drive by default."
+    },
+    {
+      "id": "Wan-AI/Wan2.2-I2V-A14B",
+      "role": "large image-to-video research",
+      "requested_ref": "main",
+      "license": "apache-2.0",
+      "adoption_status": "research_only",
+      "source_url": "https://huggingface.co/Wan-AI/Wan2.2-I2V-A14B",
+      "notes": "Large hardware footprint; use only when the available Colab GPU and session quota are sufficient."
+    },
+    {
+      "id": "Comfy-Org/MiniMax-H3",
+      "role": "experimental ComfyUI video research",
+      "requested_ref": "main",
+      "license": "other",
+      "adoption_status": "blocked_license_review",
+      "source_url": "https://huggingface.co/Comfy-Org/MiniMax-H3",
+      "notes": "Not approved for the pipeline until the exact license, base-model terms, hardware profile and ComfyUI workflow are reviewed."
+    },
+    {
+      "id": "facebook/musicgen-large",
+      "role": "music generation research",
+      "requested_ref": "main",
+      "license": "cc-by-nc-4.0",
+      "adoption_status": "blocked_commercial_use",
+      "source_url": "https://huggingface.co/facebook/musicgen-large",
+      "notes": "Non-commercial license is incompatible with commercial shipping without separate permission."
+    },
+    {
+      "id": "stabilityai/stable-audio-open-1.0",
+      "role": "audio generation research",
+      "requested_ref": "main",
+      "license": "other",
+      "adoption_status": "blocked_license_and_access_review",
+      "source_url": "https://huggingface.co/stabilityai/stable-audio-open-1.0",
+      "notes": "Gated model with custom terms; no commercial pipeline adoption without explicit review."
+    }
+  ]
+}
