@@ -1,0 +1,53 @@
+{
+  "schema_version": "3.0.0",
+  "status": "proposal_pending_canon_migration",
+  "runtime_active": false,
+  "roster_count": 23,
+  "playable_proposed_count": 18,
+  "style_ids": ["pressao", "alfa", "professor", "fluxo", "comunidade", "anaconda", "idolo", "magnata"],
+  "migration_notes": [
+    "IDs existentes de Ruan, Davi, Dende, Tinker, Cassio, Kenzo, Leoa e Oni sao preservados.",
+    "oni_do_sul e somente alias proposto; oni_da_lapa permanece o ID estavel.",
+    "Tinker jogavel, Helena e o parentesco Dende/Oni exigem aprovacao humana.",
+    "Os 23 combatentes incluem 18 jogaveis propostos e cinco oponentes/treinadores nao jogaveis."
+  ],
+  "combatants": [
+    {"id":"ruan_macacao","name":"Ruan \"Macacao\" Silva","faction_id":"LEM","style_id":"alfa","role":"protagonist","playable_proposed":true,"canon_migration":"belt_and_roster_review"},
+    {"id":"tinker_bell","name":"Joaquim \"Tinker Bell\"","faction_id":"ALE","style_id":"professor","role":"brother_manager_mission_control","playable_proposed":true,"canon_migration":"role_expansion_required"},
+    {"id":"davi_relampago","name":"Davi Relampago","faction_id":"ALE","style_id":"idolo","role":"rival","playable_proposed":true},
+    {"id":"cassio_molho","name":"Cassio Molho","faction_id":"ALE","style_id":"magnata","role":"media_power_broker","playable_proposed":true},
+    {"id":"kenzo_kuroi","name":"Kenzo Kuroi","faction_id":"ALE","style_id":"professor","role":"precision_rival","playable_proposed":true},
+    {"id":"leoa_quilombola","name":"Leoa Quilombola","faction_id":"LEM","style_id":"comunidade","role":"root_champion","playable_proposed":true,"cultural_review_required":true},
+    {"id":"oni_da_lapa","aliases":["oni_do_sul"],"name":"Oni da Lapa","faction_id":"NTM","style_id":"anaconda","role":"ntm_boss","playable_proposed":true,"canon_migration":"identity_and_backstory_review"},
+    {"id":"jacare_do_mangue","name":"Jacare do Mangue","faction_id":"NTM","style_id":"pressao","role":"act3_boss","playable_proposed":true},
+    {"id":"nado","name":"Nado","faction_id":"LEM","style_id":"fluxo","role":"act1_opponent","playable_proposed":true,"canon_migration":"identity_sheet_required"},
+    {"id":"nina_vendaval","name":"Nina Vendaval","faction_id":"ALE","style_id":"fluxo","role":"act2_boss","playable_proposed":true},
+    {"id":"piranha","name":"Piranha","faction_id":"NTM","style_id":"anaconda","role":"clean_exit_opponent","playable_proposed":true},
+    {"id":"indio_da_praia","name":"Indio da Praia","faction_id":"ALE","style_id":"fluxo","role":"coastal_opponent","playable_proposed":true,"cultural_review_required":true},
+    {"id":"samurai_da_noite","name":"Samurai da Noite","faction_id":"NTM","style_id":"fluxo","role":"high_shadow_boss","playable_proposed":true,"name_review_required":true},
+    {"id":"rastafari_do_caja","name":"Rastafari do Caja","faction_id":"ALE","style_id":"comunidade","role":"community_fighter","playable_proposed":true,"cultural_review_required":true},
+    {"id":"magrelo_da_ponte","name":"Magrelo da Ponte","faction_id":"NTM","style_id":"fluxo","role":"bridge_fighter","playable_proposed":true},
+    {"id":"pitbull_da_lapa","name":"Pitbull da Lapa","faction_id":"NTM","style_id":"pressao","role":"act3_enforcer","playable_proposed":true},
+    {"id":"marreta_da_gamboa","name":"Marreta da Gamboa","faction_id":"NTM","style_id":"alfa","role":"act3_enforcer","playable_proposed":true},
+    {"id":"sombra_zambiapunga","name":"Sombra Zambiapunga","faction_id":"NTM","style_id":"anaconda","role":"ritual_event_boss","playable_proposed":true,"cultural_review_required":true},
+    {"id":"mestre_dende","name":"Mestre Milson Dende","faction_id":"LEM","style_id":"professor","role":"mentor_trainer","playable_proposed":false},
+    {"id":"caveira_de_aco","name":"Caveira de Aco","faction_id":"NEUTRAL","style_id":"pressao","role":"qualifier_boss","playable_proposed":false},
+    {"id":"lucas_tempero_mendes","name":"Lucas Tempero Mendes","faction_id":"NTM","style_id":"magnata","role":"image_rival","playable_proposed":false},
+    {"id":"mestre_pedrinho","name":"Mestre Pedrinho","faction_id":"ALE","style_id":"professor","role":"budokan_boss","playable_proposed":false},
+    {"id":"kalunga_do_budokan","name":"Kalunga do Budokan","faction_id":"ALE","style_id":"anaconda","role":"budokan_guardian","playable_proposed":false,"cultural_review_required":true}
+  ],
+  "service_npcs": [
+    {"id":"helena_prado","name":"Agente Helena Prado","role":"hidden_mission_briefing","institution":"federal_law_enforcement_fictionalized","canon_review_required":true},
+    {"id":"montenegro","name":"Montenegro","role":"local_political_pressure","playable":false},
+    {"id":"nina_jornalista","name":"Nina Jornalista","role":"reputation_interviews","playable":false},
+    {"id":"boca_do_dique","name":"Boca do Dique","role":"third_party_odds_and_rumors","playable":false},
+    {"id":"seu_berto","name":"Seu Berto","role":"boat_service","playable":false},
+    {"id":"marizete","name":"Marizete","role":"recovery_and_community","playable":false},
+    {"id":"loja_nina","name":"Loja Nina","role":"gi_nogi_shop","playable":false},
+    {"id":"olho_de_vidro","name":"Olho de Vidro","role":"mangrove_informant","playable":false},
+    {"id":"porteira_lucia","name":"Porteira Lucia","role":"ntm_access_gate","playable":false},
+    {"id":"juiz_nildo","name":"Juiz Nildo","role":"official_rules","playable":false},
+    {"id":"dj_mare_baixa","name":"DJ Mare Baixa","role":"festival_event","playable":false},
+    {"id":"juiz_circuito_final","name":"Juiz do Circuito Final","role":"final_rules","playable":false}
+  ]
+}

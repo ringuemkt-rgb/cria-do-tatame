@@ -1,0 +1,101 @@
+{
+  "schema_version": "3.0.0",
+  "status": "proposal_pending_canon_and_save_migration",
+  "runtime_active": false,
+  "currency": "criacoin",
+  "respec_cost": 500,
+  "fixed_seed_required_for_ai_builds": true,
+  "migration": {
+    "replaces_requested_tree": "four_branches_by_four_nodes_v2",
+    "save_schema_required": true,
+    "automatic_migration_forbidden": true,
+    "human_balance_review_required": true
+  },
+  "global_passives": {
+    "health_max": 120,
+    "gas_max": 20,
+    "focus_max": 15,
+    "gas_recovery_pct": 0.10,
+    "submission_control_efficiency_pct": 0.08,
+    "submission_escape_resistance_pct": 0.05,
+    "transition_speed_pct": 0.07
+  },
+  "branches": [
+    {
+      "id": "pressure",
+      "name": "Pressao",
+      "affinity_style_ids": ["pressao", "alfa"],
+      "nodes": [
+        {"id":"strong_grips","name":"Pegadas Fortes","max_rank":3,"effect_per_rank":{"grip_integrity_pct":0.03}},
+        {"id":"clinch_domain","name":"Dominio do Clinch","max_rank":3,"effect_per_rank":{"clinch_control_pct":0.03}},
+        {"id":"posture_break","name":"Quebra de Postura","max_rank":3,"effect_per_rank":{"posture_control_pct":0.03}},
+        {"id":"assertive_pass","name":"Passagem Assertiva","max_rank":3,"effect_per_rank":{"pass_stabilization_pct":0.03}},
+        {"id":"stable_mount","name":"Montada Estavel","max_rank":3,"effect_per_rank":{"mount_control_pct":0.03}},
+        {"id":"heavy_control","name":"Controle Pesado","max_rank":3,"effect_per_rank":{"positional_control_pct":0.03}}
+      ],
+      "ultimate": {"id":"total_control","name":"Controle Total","effect":{"stabilization_window_bonus_frames":2},"automatic_submission":false}
+    },
+    {
+      "id": "tactical",
+      "name": "Tatico",
+      "affinity_style_ids": ["professor", "fluxo"],
+      "nodes": [
+        {"id":"grip_reading","name":"Leitura de Pegadas","max_rank":3,"effect_per_rank":{"grip_read_window_pct":0.03}},
+        {"id":"distance_control","name":"Controle de Distancia","max_rank":3,"effect_per_rank":{"distance_focus_pct":0.03}},
+        {"id":"smart_transitions","name":"Transicoes Inteligentes","max_rank":3,"effect_per_rank":{"transition_focus_cost_pct":-0.03}},
+        {"id":"angles","name":"Angulos","max_rank":3,"effect_per_rank":{"angle_entry_pct":0.03}},
+        {"id":"feints","name":"Fintas","max_rank":3,"effect_per_rank":{"feint_focus_pct":0.03}},
+        {"id":"active_defense","name":"Defesa Ativa","max_rank":3,"effect_per_rank":{"defense_response_window_pct":0.03}},
+        {"id":"counter_attack","name":"Contra-Ataque","max_rank":3,"effect_per_rank":{"counter_position_pct":0.03}}
+      ],
+      "ultimate": {"id":"master_of_angles","name":"Mestre dos Angulos","effect":{"first_angle_read_bonus":0.15},"automatic_submission":false}
+    },
+    {
+      "id": "guard_sweep",
+      "name": "Guarda e Raspagem",
+      "affinity_style_ids": ["fluxo", "comunidade"],
+      "nodes": [
+        {"id":"solid_guard","name":"Guarda Solida","max_rank":3,"effect_per_rank":{"guard_integrity_pct":0.03}},
+        {"id":"defensive_frames","name":"Frames de Defesa","max_rank":3,"effect_per_rank":{"frame_recovery_pct":0.03}},
+        {"id":"basic_sweeps","name":"Raspagens Basicas","max_rank":3,"effect_per_rank":{"sweep_entry_pct":0.03}},
+        {"id":"advanced_sweeps","name":"Raspagens Avancadas","max_rank":3,"effect_per_rank":{"sweep_stabilization_pct":0.03}},
+        {"id":"inversions","name":"Inversoes","max_rank":3,"effect_per_rank":{"inversion_focus_cost_pct":-0.03}},
+        {"id":"lasso_guard","name":"Guarda de Laco","max_rank":3,"effect_per_rank":{"guard_distance_control_pct":0.03}}
+      ],
+      "ultimate": {"id":"supreme_inversion","name":"Inversao Suprema","effect":{"escape_response_window_bonus_frames":2},"automatic_submission":false}
+    },
+    {
+      "id": "conditioning",
+      "name": "Condicionamento",
+      "affinity_style_ids": ["alfa", "pressao"],
+      "nodes": [
+        {"id":"functional_strength","name":"Forca Funcional","max_rank":3,"effect_per_rank":{"grip_capacity_pct":0.02}},
+        {"id":"cardio","name":"Cardio","max_rank":3,"effect_per_rank":{"gas_capacity_pct":0.03}},
+        {"id":"explosion","name":"Explosao","max_rank":3,"effect_per_rank":{"entry_burst_pct":0.02}},
+        {"id":"active_recovery","name":"Recuperacao Ativa","max_rank":3,"effect_per_rank":{"gas_recovery_pct":0.03}},
+        {"id":"flexibility","name":"Flexibilidade","max_rank":3,"effect_per_rank":{"escape_mobility_pct":0.02}},
+        {"id":"breathing","name":"Respiracao","max_rank":3,"effect_per_rank":{"focus_recovery_pct":0.03}}
+      ],
+      "ultimate": {"id":"unshakable_body","name":"Corpo Inabalavel","effect":{"fatigue_spike_reduction_pct":0.20},"automatic_submission":false}
+    },
+    {
+      "id": "mindset",
+      "name": "Mentalidade",
+      "affinity_style_ids": ["anaconda", "idolo"],
+      "nodes": [
+        {"id":"absolute_focus","name":"Foco Absoluto","max_rank":3,"effect_per_rank":{"focus_capacity_pct":0.03}},
+        {"id":"iron_discipline","name":"Disciplina de Ferro","max_rank":3,"effect_per_rank":{"error_focus_recovery_pct":0.03}},
+        {"id":"emotional_control","name":"Controle Emocional","max_rank":3,"effect_per_rank":{"crowd_pressure_resistance_pct":0.03}},
+        {"id":"fighter_spirit","name":"Espirito de Lutador","max_rank":3,"effect_per_rank":{"moral_floor_pct":0.02}},
+        {"id":"confidence","name":"Confianca","max_rank":3,"effect_per_rank":{"initiative_focus_pct":0.02}},
+        {"id":"resilience","name":"Resiliencia","max_rank":3,"effect_per_rank":{"recovery_focus_pct":0.03}}
+      ],
+      "ultimate": {"id":"fighter_essence","name":"Essencia do Lutador","effect":{"tap_decision_penalty":0,"post_loss_learning_bonus_pct":0.20},"automatic_submission":false}
+    }
+  ],
+  "combos": [
+    {"id":"domain","branches":["pressure","tactical"],"effect":{"positional_read_pct":0.05}},
+    {"id":"resistance","branches":["guard_sweep","conditioning"],"effect":{"escape_gas_efficiency_pct":0.05}},
+    {"id":"essence","branches":["mindset"],"requires_any_other_branch_rank":6,"effect":{"post_setback_focus_recovery_pct":0.05}}
+  ]
+}

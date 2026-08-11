@@ -1,0 +1,97 @@
+{
+  "schema_version": "1.0.0",
+  "proposal_id": "cria_do_tatame_canon_v5_world_narrative_proposal",
+  "status": "draft_pending_human_canon_migration",
+  "effective": false,
+  "tracking_issue": 62,
+  "stacked_on_pull_request": 61,
+  "base_contract": "data/production/canon_contract_v4_1.json",
+  "directives": [
+    "/ctt.narrativa.missoes.v1",
+    "/ctt.narrativa.dialogos.v1",
+    "consolidacao_mundial_v3"
+  ],
+  "runtime_policy": {
+    "runtime_activation": false,
+    "save_migration": false,
+    "autoload_changes": false,
+    "existing_data_replacement": false,
+    "reason": "O contrato v4.1 proibe novos atos neste lote e exige migracao revisada para IDs persistiveis, personagens, mundo e arvore."
+  },
+  "human_decisions_required": [
+    {
+      "id": "NEW_STORY_ACTS_AND_HELENA",
+      "conflict": "A campanha de 40 missoes e a personagem Helena ampliam atos e elenco enquanto canon_contract_v4_1.forbidden_in_this_batch bloqueia novos atos/personagens."
+    },
+    {
+      "id": "TINKER_ROLE",
+      "conflict": "Tinker passa de suporte/testemunha para irmao de criacao, empresario, mission control e jogavel."
+    },
+    {
+      "id": "ONI_ID_AND_BACKSTORY",
+      "conflict": "A direcao alterna Oni da Lapa/Oni do Sul e propoe parentesco de criacao com Dende; o ID ativo oni_da_lapa e preservado nesta proposta."
+    },
+    {
+      "id": "ROSTER_SCOPE",
+      "conflict": "A proposta cataloga 23 combatentes, mantendo somente 18 como jogaveis propostos; o contrato supremo conta 18 personagens totais."
+    },
+    {
+      "id": "SKILL_TREE_SCHEMA",
+      "conflict": "A arvore de cinco arquetipos substitui a direcao anterior 4x4 e requer schema, balanceamento e migracao de save."
+    },
+    {
+      "id": "WORLD_AND_ARENA_MIGRATION",
+      "conflict": "Arena do Dique, Ferro Velho e territorios divergem dos dados ativos e exigem aliases/migracao."
+    },
+    {
+      "id": "REAL_INSTITUTION_REVIEW",
+      "conflict": "A representacao ficcional da Policia Federal requer revisao narrativa/juridica; nenhuma pessoa real e usada."
+    },
+    {
+      "id": "RULESET_NAMING",
+      "conflict": "Marcas de federacoes reais nao entram nos dados propostos; o runtime usa gi_oficial_pontos e nogi_clandestino_finalizacao."
+    }
+  ],
+  "safety_corrections": [
+    "Tap e escape nunca reduzem honra nem sao tratados como fracasso moral.",
+    "Finalizacao automatica e dano por finalizacao permanecem proibidos.",
+    "Hazards de arena sao cenografia ou pressao ambiental; o combate ocorre em tatame nivelado, delimitado e seguro.",
+    "Telegraphs de gameplay nunca sao ocultados; acessibilidade prevalece sobre atmosfera.",
+    "Apostas usam somente Criacoin, em lutas de terceiros e com limite."
+  ],
+  "geography_evidence": [
+    {
+      "source": "https://www.ba.gov.br/inema/gestao-2/unidades-de-conservacao/apa/apa-do-pratigi",
+      "supports": "A APA do Pratigi abrange Igrapiuna, Itubera, Nilo Pecanha, Ibirapitanga e Pirai do Norte."
+    },
+    {
+      "source": "https://www.itubera.ba.gov.br/site/dadosmunicipais",
+      "supports": "A Prefeitura de Itubera lista Praia do Pratigi, Pancada Grande e Ponte da Saici entre seus referenciais locais."
+    },
+    {
+      "source": "https://www.ba.gov.br/ipac/zambiapunga",
+      "supports": "Zambiapunga e patrimonio cultural de matriz banto e requer representacao respeitosa e revisao cultural."
+    },
+    {
+      "source": "https://ftp.sei.ba.gov.br/Geoinformacao/mapas/munic/vigente/mapa_com_descritivo_atual_2914901.pdf",
+      "supports": "Itacare pertence ao Territorio de Identidade Litoral Sul."
+    },
+    {
+      "source": "https://ftp.sei.ba.gov.br/Geoinformacao/mapas/munic/vigente/mapa_com_descritivo_atual_2920700.pdf",
+      "supports": "Marau pertence ao Territorio de Identidade Litoral Sul."
+    }
+  ],
+  "proposal_files": [
+    "data/missions/campaign_missions_v1.json",
+    "data/dialogues/yarn_drafts/M06_a_faixa_e_a_duvida.yarn",
+    "data/dialogues/yarn_drafts/M08_helena_recruta.yarn",
+    "data/dialogues/yarn_drafts/M23_racha.yarn",
+    "data/dialogues/yarn_drafts/M31_vespera.yarn",
+    "data/dialogues/yarn_drafts/M36_ultima_ordem.yarn",
+    "data/dialogues/yarn_drafts/M39_o_ledger.yarn",
+    "data/world/mapa_v3.json",
+    "data/skill_tree/skill_tree_v3.json",
+    "data/arenas/arenas_12_v3.json",
+    "data/characters/elenco_23_v3.json"
+  ]
+}

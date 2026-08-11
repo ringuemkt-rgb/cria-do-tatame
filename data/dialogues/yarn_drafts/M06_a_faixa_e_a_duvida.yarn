@@ -1,0 +1,19 @@
+// STATUS: DRAFT. Fonte narrativa; sem consumidor Yarn no runtime atual.
+title: M06
+tags: canon_v5_proposal mission_M06
+---
+DENDÊ: Varre o tatame antes de pensar em vencer, cria.
+RUAN: O senhor já lutou onde eu não devo ir, mestre?
+-> Sim. E isso me custou tudo.
+    DENDÊ: Em 2019 o fogo levou o telhado. O dinheiro do mangue ergueu de novo.
+    <<set $f4 = true>>
+    -> Por que nunca contou?
+        DENDÊ: Dívida de quem carrega uma casa se paga em silêncio.
+        <<set $honra += 5>>
+    -> Quem cobrou essa dívida?
+        DENDÊ: Um banqueiro. Hoje o nome dele é uma cicatriz na cara do Oni.
+        <<set $f4_oni = true>>
+-> Não, mestre.
+    DENDÊ: Melhor guardar a pergunta até ter chão para ouvir a resposta.
+    <<set $foco += 2>>
+===

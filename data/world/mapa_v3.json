@@ -1,0 +1,135 @@
+{
+  "schema_version": "3.0.0",
+  "status": "proposal_pending_canon_migration",
+  "runtime_active": false,
+  "currency": "criacoin",
+  "costs_are_gameplay_balance_not_real_fares": true,
+  "geography_scope": {
+    "core": "Territorio de Identidade Baixo Sul",
+    "regional_expansion": ["Itacare", "Marau", "Salvador"],
+    "note": "Itacare e Marau sao expansao do Litoral Sul; Salvador e destino institucional neutro."
+  },
+  "nodes": [
+    {
+      "id": "itubera",
+      "municipality": "Itubera",
+      "biome": "rio_mangue_mata",
+      "faction_influence": "LEM",
+      "arenas": ["terreiro_da_luta", "pancada_grande", "ponte_da_saici", "praia_de_pratigi"],
+      "npcs": ["mestre_dende", "marizete", "seu_berto", "loja_nina"],
+      "secrets": ["cachoeira_treino"],
+      "geo_evidence": "https://www.itubera.ba.gov.br/site/dadosmunicipais"
+    },
+    {
+      "id": "valenca",
+      "municipality": "Valenca",
+      "biome": "rio_una_cais",
+      "faction_influence": "LEM",
+      "arenas": ["arena_do_dique_valenca"],
+      "npcs": ["juiz_nildo", "boca_do_dique"],
+      "secrets": ["armazem_ledger_anexo"]
+    },
+    {
+      "id": "cairu_mangue",
+      "municipality": "Cairu",
+      "biome": "arquipelago_manguezal",
+      "faction_influence": "NTM",
+      "arenas": ["manguezal_profundo", "mirante_da_gamboa"],
+      "npcs": ["olho_de_vidro", "porteira_lucia"],
+      "secrets": ["pista_cofre_mar"]
+    },
+    {
+      "id": "taperoa",
+      "municipality": "Taperoa",
+      "biome": "costeira",
+      "faction_influence": "ALE",
+      "arenas": ["budokan_das_aguas"],
+      "npcs": ["mestre_pedrinho", "kalunga_do_budokan"],
+      "secrets": ["dojo_mare_baixa"]
+    },
+    {
+      "id": "nilo_pecanha",
+      "municipality": "Nilo Pecanha",
+      "biome": "mangue_piacava",
+      "faction_influence": "ALE",
+      "arenas": ["zambiapunga"],
+      "npcs": ["dj_mare_baixa"],
+      "secrets": ["memoria_zambiapunga"],
+      "cultural_review_required": true,
+      "geo_evidence": "https://www.ba.gov.br/ipac/zambiapunga"
+    },
+    {
+      "id": "camamu",
+      "municipality": "Camamu",
+      "biome": "baia_ilhas",
+      "faction_influence": "ALE",
+      "arenas": [],
+      "npcs": ["barqueira_camamu"],
+      "secrets": ["treino_baia"]
+    },
+    {
+      "id": "marau",
+      "municipality": "Marau",
+      "biome": "peninsula",
+      "faction_influence": "ALE",
+      "arenas": [],
+      "npcs": [],
+      "secrets": ["expedicao_pos_jogo"],
+      "gate": "post_game",
+      "regional_expansion": true
+    },
+    {
+      "id": "itacare",
+      "municipality": "Itacare",
+      "biome": "costa_praia",
+      "faction_influence": "ALE",
+      "arenas": ["itacare_noturna"],
+      "npcs": ["samurai_da_noite"],
+      "secrets": ["pier_noturno"],
+      "regional_expansion": true
+    },
+    {
+      "id": "salvador",
+      "municipality": "Salvador",
+      "biome": "capital",
+      "faction_influence": "NEUTRAL",
+      "arenas": ["sede_circuito_final"],
+      "npcs": ["montenegro", "helena_prado", "juiz_circuito_final"],
+      "secrets": ["arquivo_institucional"],
+      "regional_expansion": true
+    },
+    {
+      "id": "ferro_velho_lapa",
+      "municipality": "Salvador",
+      "biome": "capital_industrial_ficcional",
+      "faction_influence": "NTM",
+      "arenas": ["ferro_velho_da_lapa"],
+      "npcs": ["oni_da_lapa"],
+      "secrets": ["sala_cofre_lapa"],
+      "gate": "convite_ntm",
+      "fictional_sub_location": true
+    }
+  ],
+  "edges": [
+    {"from": "itubera", "to": "valenca", "mode": "road", "cost_criacoin": 40, "time_hours": 2},
+    {"from": "itubera", "to": "nilo_pecanha", "mode": "road", "cost_criacoin": 30, "time_hours": 1},
+    {"from": "itubera", "to": "taperoa", "mode": "road", "cost_criacoin": 35, "time_hours": 2},
+    {"from": "valenca", "to": "cairu_mangue", "mode": "sea", "cost_criacoin": 60, "time_hours": 2, "service": "seu_berto"},
+    {"from": "taperoa", "to": "camamu", "mode": "road", "cost_criacoin": 50, "time_hours": 1},
+    {"from": "camamu", "to": "marau", "mode": "regional_transition", "cost_criacoin": 80, "time_hours": 3, "gate": "post_game"},
+    {"from": "camamu", "to": "itacare", "mode": "regional_transition", "cost_criacoin": 85, "time_hours": 3},
+    {"from": "valenca", "to": "salvador", "mode": "regional_transition", "cost_criacoin": 90, "time_hours": 4},
+    {"from": "salvador", "to": "ferro_velho_lapa", "mode": "local", "cost_criacoin": 15, "time_hours": 1, "gate": "convite_ntm"},
+    {"from": "cairu_mangue", "to": "ferro_velho_lapa", "mode": "narrative_route", "cost_criacoin": 0, "time_hours": 0, "gate": "mission_M24"}
+  ],
+  "exploration_loop": [
+    "walk_tile_collision",
+    "approach_npc",
+    "interact",
+    "choose",
+    "receive_consequence",
+    "discover_secret",
+    "train_or_fight",
+    "advance_agenda"
+  ]
+}

@@ -1,0 +1,14 @@
+// STATUS: DRAFT. Fonte narrativa; sem consumidor Yarn no runtime atual.
+title: M08
+tags: canon_v5_proposal mission_M08
+---
+HELENA: A emboscada de Valença estava sob observação. Não foi criada por nós.
+RUAN: E o que uma operação federal quer com um lutador do Terreiro?
+HELENA: O ledger do Oni. A rede financeira por trás das clandestinas. Você luta; nós não controlamos o tatame.
+-> Ouvir os termos sem prometer
+    HELENA: Sua decisão continua sendo sua. A capa começa quando você aceitar.
+    <<set $helena_contact = true>>
+-> Recusar por enquanto
+    HELENA: Então leva esta pergunta: quem pagou a reconstrução depois do fogo de 2019?
+    <<set $f4_fogo = true>>
+===

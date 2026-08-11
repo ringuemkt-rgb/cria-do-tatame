@@ -34,6 +34,12 @@ Este arquivo é a porta de entrada da documentação ativa. Antes de criar um do
 
 - [`migrations/V4_2_FACTIONS_SAVE.md`](migrations/V4_2_FACTIONS_SAVE.md) — explicação simples da migração para `ALE`, `LEM`, `NTM` e save v5.
 
+## Propostas bloqueadas para revisão humana
+
+- [`../data/production/canon_v5_migration_proposal.json`](../data/production/canon_v5_migration_proposal.json) — diferenças e gates da proposta de campanha/mundo v5; não é contrato efetivo.
+- [`narrative/NARRATIVA_ROTEIRO_V2.md`](narrative/NARRATIVA_ROTEIRO_V2.md) — 40 missões, fios, finais e diálogos-fonte, ainda sem consumidor runtime.
+- [`world/MUNDO_V3_PROPOSAL.md`](world/MUNDO_V3_PROPOSAL.md) — mapa, 12 arenas, elenco e árvore V3 como proposta inativa.
+
 ## Arte e produção
 
 - `art_bible/` — identidade visual e contratos de qualidade ativos;
