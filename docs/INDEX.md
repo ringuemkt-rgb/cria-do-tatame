@@ -19,7 +19,9 @@ Este arquivo é a porta de entrada da documentação ativa. Antes de criar um do
 - [`../data/production/release_gate_status_v01.json`](../data/production/release_gate_status_v01.json) — ledger único com evidências e pendências de release;
 - [`../data/visual/production_manifest_v02.json`](../data/visual/production_manifest_v02.json) — inventário audiovisual;
 - [`../data/production/repository_governance_v01.json`](../data/production/repository_governance_v01.json) — governança validável por máquina;
-- [`../data/ai/cloud_drive_layout_v01.json`](../data/ai/cloud_drive_layout_v01.json) — árvore privada e política de promoção do adaptador Drive.
+- [`../data/ai/cloud_drive_layout_v02.json`](../data/ai/cloud_drive_layout_v02.json) — árvore privada, fila, QA, DVC e política de promoção do adaptador Drive.
+- [`../data/production/gpt_work_production_gate_v1.json`](../data/production/gpt_work_production_gate_v1.json) — direção STYLE-LOCK/GATE-L1 e bloqueios de migração do produtor.
+- [`../data/mobile/asset_packs_v1.json`](../data/mobile/asset_packs_v1.json) — catálogo e budgets dos packs mobile.
 
 ## Produto e gameplay
 
@@ -38,6 +40,7 @@ Este arquivo é a porta de entrada da documentação ativa. Antes de criar um do
 - `production/` — planos de lote, pipeline e metas;
 - [`production/APK_VISUAL_COMPLETION_PLAN_V09.md`](production/APK_VISUAL_COMPLETION_PLAN_V09.md) — gates de vertical slice e Android;
 - [`production/DRIVE_CLOUD_V1.md`](production/DRIVE_CLOUD_V1.md) — adaptador privado Google Drive, Colab, rclone e provenance Hugging Face;
+- [`production/GPT_WORK_PRODUCTION_GATE_V1.md`](production/GPT_WORK_PRODUCTION_GATE_V1.md) — arranque do Lote 3, ferramentas homologadas e pausas canônicas;
 - [`../data/visual/production_manifest_v02.json`](../data/visual/production_manifest_v02.json) — entregáveis mínimos por asset;
 - [`../data/ai/model_registry_v02.json`](../data/ai/model_registry_v02.json) — auditoria e gates atuais de modelos Hugging Face.
 
@@ -50,6 +53,7 @@ Este arquivo é a porta de entrada da documentação ativa. Antes de criar um do
 - [`../tools/audit/validate_canon_contract_v4_1.py`](../tools/audit/validate_canon_contract_v4_1.py) — gate do cânone e da D10;
 - [`../tools/audit/validate_faction_migration_v4_2.py`](../tools/audit/validate_faction_migration_v4_2.py) — gate das três facções, aliases e save v5;
 - [`../tools/ai_asset_pipeline/cloud/validate_cloud_pipeline.py`](../tools/ai_asset_pipeline/cloud/validate_cloud_pipeline.py) — gate offline do adaptador de nuvem.
+- [`../tools/mobile/validate_mobile_packs.py`](../tools/mobile/validate_mobile_packs.py) — gate offline de budgets, catálogo e loader mobile.
 
 ## Status dos documentos
 

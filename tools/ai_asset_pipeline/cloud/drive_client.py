@@ -20,7 +20,7 @@ from pathlib import Path, PurePosixPath
 from typing import Any, Iterable
 
 ROOT = Path(__file__).resolve().parents[3]
-DEFAULT_LAYOUT = ROOT / "data" / "ai" / "cloud_drive_layout_v01.json"
+DEFAULT_LAYOUT = ROOT / "data" / "ai" / "cloud_drive_layout_v02.json"
 DEFAULT_PUBLIC_MANIFEST = ROOT / "data" / "ai" / "cloud_asset_manifest_v01.json"
 FOLDER_MIME = "application/vnd.google-apps.folder"
 DRIVE_SCOPE = "https://www.googleapis.com/auth/drive"

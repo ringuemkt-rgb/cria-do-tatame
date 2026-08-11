@@ -1,0 +1,75 @@
+{
+  "schema_version": "1.1.0",
+  "contract_id": "cria_do_tatame_gpt_work_production_gate_v1",
+  "status": "direction_issued_pending_canon_migration",
+  "effective_date": "2026-08-11",
+  "tracking_issue": 60,
+  "canon": {
+    "active_factions": {
+      "LEM": {"display_name": "Lá Ele Mil Vezes", "color": "#3FBF3F", "territories": ["Ituberá", "Valença"]},
+      "NTM": {"display_name": "Nós Tem Um Molho", "color": "#D93A2B", "territories": ["Manguezal", "Ferro Velho da Lapa"]},
+      "ALE": {"display_name": "Os Aleluiados", "color": "#2E8FE2", "territories": ["Nilo Peçanha", "Itacaré", "Pratigi"]}
+    },
+    "institutional_neutral_zones": ["Salvador", "Dique"],
+    "fourth_faction_forbidden": true,
+    "protagonist": {"id": "ruan_macacao", "belt": "blue", "stripes": 2, "black_belt_only_at_career_end": true},
+    "playable_roster_size": 18,
+    "motto": "Ser forte é ser gentil."
+  },
+  "style_lock": {
+    "render_mode": "native_2d_pixel_art",
+    "internal_resolution": [480, 270],
+    "upscale_filter": "nearest",
+    "outline_px": 1,
+    "anti_aliasing": false,
+    "blur": false,
+    "watermark": false,
+    "pixel_grid_snap": true,
+    "animation_fps": 12,
+    "preview_frame_ms": 83,
+    "generated_text_allowed": false,
+    "runtime_text_locale": "pt-BR",
+    "runtime_text_case": "UPPERCASE"
+  },
+  "gate_l1": {
+    "default_status": "candidate",
+    "human_promotion_required": true,
+    "automatic_promotion_forbidden": true,
+    "delegated_auto_promotion": {
+      "requested": true,
+      "active": false,
+      "activation_blocker": "repository governance currently forbids automatic AI promotion; requires reviewed contract migration",
+      "conditions": {
+        "visual_qa_pass": true,
+        "biomechanical_confidence_min": 0.75,
+        "license_status": "LIBERADO",
+        "max_generation_attempts": 3
+      },
+      "reserved_human_only": [
+        "ruan_final", "faction_emblem_LEM", "faction_emblem_NTM", "faction_emblem_ALE",
+        "roda_dos_8_estilos", "mapa_baixo_sul", "logo_cria_live"
+      ]
+    },
+    "sidecar_suffix": ".license.json",
+    "hash": "sha256",
+    "allowed": [
+      "llama-3.1", "llama-3.3", "qwen-2.5", "skeleton_to_pixel",
+      "prompt_builder", "grapplemap-public-domain", "yolo-nas-pose-tool-only",
+      "bark-mit", "sfxr-procedural", "lmms-authorial-output", "dvc-gdrive",
+      "comfyui", "controlnet", "dwpose", "flux.1-schnell-safetensors",
+      "wan2.2-safetensors", "limboai-mit-offline-fixed-seed"
+    ],
+    "research_only": ["animatediff"],
+    "blocked_commercial": ["minimax-h3", "stable-audio", "musicgen-large"],
+    "weights_extension_allowlist": [".safetensors"]
+  },
+  "hitbox_phase_order": ["antecipacao", "entrada", "contato", "estabilizacao", "resposta", "recuperacao"],
+  "cloud": {
+    "drive_root": "CriaDoTatame",
+    "batch_runtime_limit_hours": 12,
+    "base_models_persisted_to_drive": false,
+    "binary_batch_format": "zip",
+    "dvc_remote_scheme": "gdrive://",
+    "provider_ids_versioned": false
+  }
+}
