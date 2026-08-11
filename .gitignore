@@ -14,7 +14,16 @@ ai_lore_guardian/.env
 tools/ai_asset_pipeline/.env
 tools/ai_asset_pipeline/generated_queue/
 tools/ai_asset_pipeline/generated_outputs/
+tools/ai_asset_pipeline/cloud/.state/
+tools/ai_asset_pipeline/cloud/*.lock
+tools/ai_asset_pipeline/cloud/client_secret*.json
+tools/ai_asset_pipeline/cloud/token*.json
 assets/generated_metadata/local_run_*.json
+assets/cloud_approved/
+models/*.pth
+models/*.pt
+models/*.ckpt
+models/*.safetensors
 export/builds/*.apk
 export/builds/*.exe
 export/builds/*.zip
