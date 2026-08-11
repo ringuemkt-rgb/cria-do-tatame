@@ -101,6 +101,7 @@ class DeterministicBatchTest(unittest.TestCase):
                     {"SHA256SUMS", "batch.json", "model_registry.json", "tasks.jsonl"},
                 )
                 metadata = json.loads(archive.read("batch.json"))
+                self.assertTrue(all(info.compress_type == zipfile.ZIP_STORED for info in archive.infolist()))
                 self.assertTrue(metadata["human_approval_required"])
                 self.assertTrue(metadata["automatic_promotion_forbidden"])
                 self.assertEqual(metadata["identity"]["task_ids"], ["technique::baiana_single_leg"])

@@ -17,6 +17,16 @@ die() {
   exit 2
 }
 
+validate_mirror_target() {
+  local target="${APPROVED_LOCAL%/}"
+  [[ -n "${target}" ]] || die "approved local target is empty"
+  [[ "${target}" != "/" ]] || die "refusing to mirror into filesystem root"
+  [[ "${target}" != "${REPO_ROOT}" ]] || die "refusing to mirror into repository root"
+  if [[ -n "${HOME:-}" && "${target}" == "${HOME%/}" ]]; then
+    die "refusing to mirror into the user home directory"
+  fi
+}
+
 DRY_RUN=()
 if [[ "${1:-}" == "--dry-run" ]]; then
   DRY_RUN=(--dry-run)
@@ -51,8 +61,10 @@ case "${COMMAND}" in
       "${DRY_RUN[@]}"
     ;;
   mirror-approved)
-    [[ "${CRIA_ALLOW_RCLONE_DELETE:-}" == "YES" ]] || die \
-      "mirror-approved can delete local files; set CRIA_ALLOW_RCLONE_DELETE=YES after reviewing --dry-run"
+    validate_mirror_target
+    if [[ ${#DRY_RUN[@]} -eq 0 && "${CRIA_ALLOW_RCLONE_DELETE:-}" != "YES" ]]; then
+      die "mirror-approved can delete local files; review --dry-run, then set CRIA_ALLOW_RCLONE_DELETE=YES"
+    fi
     mkdir -p -- "${APPROVED_LOCAL}"
     rclone sync \
       "${RCLONE_REMOTE}:${DRIVE_ROOT_PATH}/assets/aprovados" \

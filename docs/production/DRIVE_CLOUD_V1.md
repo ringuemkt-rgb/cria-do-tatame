@@ -83,9 +83,10 @@ python -m pip install -r tools/ai_asset_pipeline/cloud/requirements-drive.txt
 Recommended private paths:
 
 ```bash
-export CRIA_DRIVE_CLIENT_SECRET="$XDG_CONFIG_HOME/cria-do-tatame/drive/client_secret.json"
-export CRIA_DRIVE_TOKEN="$XDG_CONFIG_HOME/cria-do-tatame/drive/token.json"
-export CRIA_DRIVE_STATE="$XDG_CONFIG_HOME/cria-do-tatame/drive/state.json"
+CRIA_CONFIG_ROOT="${XDG_CONFIG_HOME:-$HOME/.config}/cria-do-tatame/drive"
+export CRIA_DRIVE_CLIENT_SECRET="$CRIA_CONFIG_ROOT/client_secret.json"
+export CRIA_DRIVE_TOKEN="$CRIA_CONFIG_ROOT/token.json"
+export CRIA_DRIVE_STATE="$CRIA_CONFIG_ROOT/state.json"
 ```
 
 If `XDG_CONFIG_HOME` is not defined, use a private operating-system configuration folder. Never copy these files into the checkout.

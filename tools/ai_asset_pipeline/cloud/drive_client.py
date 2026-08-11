@@ -88,10 +88,12 @@ def build_drive_service(client_secrets: Path, token_path: Path) -> Any:
         ) from exc
 
     credentials = None
+    token_changed = False
     if token_path.exists():
         credentials = Credentials.from_authorized_user_file(str(token_path), [DRIVE_SCOPE])
     if credentials and credentials.expired and credentials.refresh_token:
         credentials.refresh(Request())
+        token_changed = True
     if not credentials or not credentials.valid:
         if not client_secrets.is_file():
             raise DrivePipelineError(
@@ -99,8 +101,10 @@ def build_drive_service(client_secrets: Path, token_path: Path) -> Any:
             )
         flow = InstalledAppFlow.from_client_secrets_file(str(client_secrets), [DRIVE_SCOPE])
         credentials = flow.run_local_server(port=0, open_browser=True)
+        token_changed = True
+    if token_changed:
         token_path.parent.mkdir(parents=True, exist_ok=True)
-        token_path.write_text(credentials.to_json(), encoding="utf-8")
+        atomic_write_json(token_path, json.loads(credentials.to_json()))
         try:
             token_path.chmod(0o600)
         except OSError:
@@ -147,17 +151,24 @@ class DriveClient:
         ]
         if mime_type:
             clauses.append(f"mimeType = '{_escape_drive_query(mime_type)}'")
-        response = (
-            self.service.files()
-            .list(
-                q=" and ".join(clauses),
-                spaces="drive",
-                fields="nextPageToken,files(id,name,mimeType,size,md5Checksum,parents)",
-                pageSize=100,
+        matches: list[dict[str, Any]] = []
+        page_token = None
+        while True:
+            response = (
+                self.service.files()
+                .list(
+                    q=" and ".join(clauses),
+                    spaces="drive",
+                    fields="nextPageToken,files(id,name,mimeType,size,md5Checksum,parents)",
+                    pageSize=100,
+                    pageToken=page_token,
+                )
+                .execute()
             )
-            .execute()
-        )
-        return list(response.get("files", []))
+            matches.extend(response.get("files", []))
+            page_token = response.get("nextPageToken")
+            if not page_token:
+                return matches
 
     @staticmethod
     def _unique(matches: list[dict[str, Any]], description: str) -> dict[str, Any] | None:
@@ -427,6 +438,8 @@ def run(argv: Iterable[str] | None = None) -> int:
     elif args.command == "verify-tree":
         _print_result({"ok": True, "folders": client.verify_tree()})
     elif args.command == "upload-batch":
+        if args.source.suffix.lower() != ".zip":
+            raise DrivePipelineError("upload-batch accepts only ZIP bundles")
         destination = str(_validate_logical_path(args.destination))
         allowed = set(layout["upload_destinations"])
         if destination not in allowed:

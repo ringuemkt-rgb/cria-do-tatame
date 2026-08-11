@@ -126,6 +126,10 @@ def run(argv: Iterable[str] | None = None) -> int:
     """Resolve models and persist a session snapshot."""
 
     args = build_parser().parse_args(list(argv) if argv is not None else None)
+    if args.output.exists():
+        raise ModelResolutionError(
+            f"Snapshot already exists and will not be overwritten: {args.output}"
+        )
     registry = load_registry(args.registry)
     models = resolve_models(registry, args.model, args.allow_research)
     snapshot = {
