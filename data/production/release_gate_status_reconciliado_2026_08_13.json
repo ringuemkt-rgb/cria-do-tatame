@@ -1,0 +1,56 @@
+{
+  "schema_version": "1.1.0",
+  "snapshot_date": "2026-08-13",
+  "head": {
+    "branch": "main",
+    "commit_sha": "d99780ffb42aff4f66e71a62f9e24f6f8f8d0a2e",
+    "commit_subject": "feat(forge): integrar Drive, Colab e provenance Hugging Face (#59)",
+    "branch_protected": false
+  },
+  "source_ledger": {
+    "path": "data/production/release_gate_status_v01.json",
+    "updated_at": "2026-08-01",
+    "source_commit": "246201e6319915652476b27da7334229b26d67fd",
+    "classification": "HISTORICAL_EVIDENCE_NOT_HEAD_CERTIFICATION"
+  },
+  "policy": {
+    "no_historical_pass_is_silently_rebased": true,
+    "passed_on_old_commit_requires_revalidation_for_release": true,
+    "automated_export_is_not_physical_playtest": true,
+    "human_gate_l4_required_for_shipping_assets": true,
+    "merge_not_authorized_by_this_snapshot": true
+  },
+  "historical_passes": [
+    "npm_run_quality",
+    "godot_headless_import",
+    "godot_parser_check",
+    "save_load_roundtrip",
+    "android_arm64_export"
+  ],
+  "pending_release_gates": [
+    "vertical_slice_smoke",
+    "android_physical_device_playtest",
+    "windows_export_smoke",
+    "asset_license_audit",
+    "audio_loudness_audit",
+    "accessibility_review",
+    "canon_review",
+    "web_export_smoke"
+  ],
+  "head_observations": {
+    "github_actions_runs_observed_for_head": 7,
+    "validate_cria_data": "SUCCESS_OBSERVED",
+    "full_release_gate_revalidation": "PENDING",
+    "main_protection": "MISSING"
+  },
+  "structural_blockers": [
+    "main branch is not protected",
+    "23 pull requests are open as of snapshot",
+    "PR #61 remains the production-stack base blocker",
+    "PR #63 and PR #65 are siblings stacked on PR #61",
+    "canon v5 reconciliation is not frozen",
+    "PC+Web+Android release matrix is not certified",
+    "physical Android playtest is not certified"
+  ],
+  "decision": "FREEZE_NO_MERGE"
+}
