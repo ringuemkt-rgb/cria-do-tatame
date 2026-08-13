@@ -1,0 +1,34 @@
+name: Mocap Prototype QA
+
+on:
+  pull_request:
+    paths:
+      - 'data/manifest/mocap_stack_v1.json'
+      - 'data/schemas/ctt_paired_motion_v1.schema.json'
+      - 'production/mocap/**'
+      - 'tools/mocap/**'
+      - 'tests/mocap/**'
+      - 'tests/fixtures/mocap/**'
+  push:
+    paths:
+      - 'data/manifest/mocap_stack_v1.json'
+      - 'data/schemas/ctt_paired_motion_v1.schema.json'
+      - 'production/mocap/**'
+      - 'tools/mocap/**'
+      - 'tests/mocap/**'
+      - 'tests/fixtures/mocap/**'
+
+jobs:
+  validate-mocap-prototype:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Validate synthetic paired-motion fixture
+        run: python tools/mocap/validate_paired_motion.py tests/fixtures/mocap/armlock_montada_synthetic.json
+      - name: Run mocap unit tests
+        run: python -m unittest discover -s tests/mocap -p 'test_*.py'
+      - name: Run automated geometry QA
+        run: python tools/mocap/biomechanics_qa.py tests/fixtures/mocap/armlock_montada_synthetic.json --report /tmp/biomechanics_report.json
