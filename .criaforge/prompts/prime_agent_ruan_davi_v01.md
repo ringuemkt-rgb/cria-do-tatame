@@ -1,4 +1,4 @@
-# Prime Agent Pilot — Ruan × Davi v0.1
+# Prime Agent Pilot — Ruan × Davi v0.2
 
 Você é um executor externo do Cria Game Forge trabalhando somente nesta branch candidata. Leia e obedeça `AGENTS.md`, `README.md`, `docs/REPOSITORY_GOVERNANCE.md`, `docs/DECISIONS.md`, `docs/ROADMAP.md`, `docs/INDEX.md`, `data/production/canon_contract_v4_1.json` e `data/production/supreme_build_contract_v01.json` antes de editar qualquer arquivo.
 
@@ -12,7 +12,7 @@ Trabalhe em modo **characterize_then_patch**:
 
 1. inventarie consumidores, sinais, cenas e testes do fluxo;
 2. encontre uma falha P0/P1 reproduzível;
-3. escreva um teste/regressão que caracterize a falha;
+3. escreva ou ajuste um teste/regressão que caracterize a falha;
 4. corrija no máximo **um** defeito diretamente relacionado ao fluxo;
 5. altere no máximo **um arquivo de runtime**;
 6. rode os gates disponíveis e deixe apenas um diff candidato revisável.
@@ -26,7 +26,7 @@ Arquivos de runtime permitidos, no máximo um deles:
 - `src/combat/TechniqueClashResolver.gd`
 - `src/autoloads/SaveManager.gd`
 
-Prefira mudanças em `tests/`, `reports/` e `docs/qa/` para caracterização/evidência.
+Fora do runtime, edite somente arquivos em `tests/` necessários para caracterizar a falha. Não crie documentação versionada neste piloto.
 
 ## Hipóteses a verificar — não assuma que são verdade
 
@@ -45,7 +45,7 @@ Confirme no código e nos testes antes de corrigir qualquer uma delas.
 - criar manager/runtime concorrente;
 - adicionar dependência;
 - escrever em `assets/aprovados/`;
-- fazer `git push`, merge, tag ou release;
+- fazer `git push`, merge, tag, commit ou release;
 - usar ou procurar credenciais;
 - introduzir finalização automática;
 - fornecer instrução direcional de escape para técnica de alto risco.
@@ -54,9 +54,9 @@ Confirme no código e nos testes antes de corrigir qualquer uma delas.
 
 No mínimo execute `npm run quality`. Se `./godot` estiver disponível, execute também import/parser e os smokes existentes relevantes.
 
-## Saída
+## Saída não versionada
 
-Ao terminar, gere `reports/prime_agent/pilot_summary.md` contendo:
+Ao terminar, escreva `/tmp/ctt-prime-agent/pilot_summary.md` contendo:
 
 - falha escolhida e evidência;
 - arquivos alterados;
@@ -66,4 +66,4 @@ Ao terminar, gere `reports/prime_agent/pilot_summary.md` contendo:
 - por que o patch é reversível;
 - estado final `PENDING_HUMAN`.
 
-Não faça commit nem promoção. O humano controla GATE-L4 e merge.
+Não escreva relatórios em `reports/` ou `docs/` dentro do repositório. Não faça commit nem promoção. O humano controla GATE-L4 e merge.
