@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://ringuemkt-rgb.github.io/cria-do-tatame/sitemap.xml

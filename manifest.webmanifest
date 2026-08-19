@@ -1,5 +1,7 @@
 {
-  "name": "Cria do Tatame - Pressão",
+  "lang": "pt-BR",
+  "dir": "ltr",
+  "name": "CRIA DO TATAME — Pressão",
   "short_name": "Cria Tatame",
   "start_url": "./index.html",
   "scope": "./",
@@ -7,7 +9,9 @@
   "orientation": "landscape",
   "background_color": "#0a0a0a",
   "theme_color": "#0a0a0a",
-  "description": "Sala oficial de produção e prévia visual de Cria do Tatame.",
+  "description": "RPG de luta BJJ em pixel art premium com combate posicional e carreira no tatame.",
+  "categories": ["games", "entertainment"],
+  "prefer_related_applications": false,
   "icons": [
     {"src":"./assets/cosmetics/nft/patch_terreiro_raiz.png","sizes":"512x512","type":"image/png","purpose":"any maskable"}
   ]
