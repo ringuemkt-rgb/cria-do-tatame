@@ -21,11 +21,14 @@ on:
 jobs:
   validate-mocap-prototype:
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
           python-version: '3.11'
+      - name: Validate P0 eight-technique capture plan
+        run: python tools/mocap/validate_capture_plan.py
       - name: Validate synthetic paired-motion fixture
         run: python tools/mocap/validate_paired_motion.py tests/fixtures/mocap/armlock_montada_synthetic.json
       - name: Run mocap unit tests
