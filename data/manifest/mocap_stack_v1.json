@@ -1,0 +1,56 @@
+{
+  "schema_version": "1.0.0",
+  "stack_id": "ctt_mocap_stack_v1",
+  "status": "prototype_offline_only",
+  "principle": "Biomechanically validated with measurable tolerances; never claim perfect motion.",
+  "shipping_rule": "No research-only or non-commercial component may contribute restricted code, weights, datasets, body-model assets, or derivative artifacts to shipping without an explicit compatible commercial license recorded in provenance.",
+  "canonical_intermediate": "ctt_paired_motion_v1",
+  "production_path": [
+    "owned_consented_video",
+    "rtmpose_mmpose",
+    "pose2sim",
+    "opensim",
+    "ctt_paired_motion_v1",
+    "blender_gltf",
+    "godot_authoring_preview",
+    "skeleton_to_pixel",
+    "visual_qa_v2",
+    "biomechanics_qa",
+    "human_shipping_gate"
+  ],
+  "components": [
+    {"id":"godot","role":"preview_and_runtime_import","gate":"APPROVED","license":"MIT","shipping":true},
+    {"id":"rtmpose_mmpose","role":"2d_pose_and_qa","gate":"APPROVED_BY_CHECKPOINT","license":"Apache-2.0_repo","shipping":false,"notes":"Pin exact model weights and dataset provenance."},
+    {"id":"pose2sim","role":"multi_camera_3d_reconstruction","gate":"APPROVED","license":"BSD-3-Clause","shipping":false},
+    {"id":"opensim","role":"kinematics_qa","gate":"APPROVED","license":"Apache-2.0","shipping":false},
+    {"id":"blender","role":"retarget_authoring","gate":"APPROVED","license":"GPL-3.0-or-later_tool","shipping":false},
+    {"id":"limboai","role":"optional_ai_authoring_reference","gate":"APPROVED_BY_PIN","license":"MIT","shipping":true,"notes":"Must not replace CombatManager authority."},
+    {"id":"castagne","role":"frame_data_reference_only","gate":"APPROVED_REFERENCE","license":"MPL-2.0","shipping":false,"notes":"No second fighting runtime; concepts may be adapted to existing CombatManager."},
+    {"id":"freemocap","role":"optional_internal_capture_research","gate":"INTERNAL_LICENSE_GATE","license":"AGPL-3.0","shipping":false},
+    {"id":"opencap_core","role":"secondary_kinematics_reference","gate":"CONDITIONAL","license":"Apache-2.0_core","shipping":false,"notes":"Hosted service terms are separate from local core."},
+    {"id":"mamma","role":"two_person_research_reference","gate":"RESEARCH_ONLY","license":"non-commercial research","shipping":false},
+    {"id":"easymocap","role":"smpl_research_reference","gate":"RESEARCH_ONLY","license":"non-commercial research","shipping":false},
+    {"id":"wham","role":"research_reference","gate":"RESEARCH_ONLY","license":"code-permissive_model-dependent","shipping":false},
+    {"id":"4dhumans","role":"research_reference","gate":"RESEARCH_ONLY","license":"code-permissive_SMPL-dependent","shipping":false},
+    {"id":"smpl_smplx","role":"body_model","gate":"BLOCKED_FOR_COMMERCIAL_PIPELINE_WITHOUT_SEPARATE_LICENSE","license":"restricted","shipping":false},
+    {"id":"chi3d","role":"interaction_dataset_reference","gate":"RESEARCH_ONLY","shipping":false},
+    {"id":"interact","role":"interaction_dataset_reference","gate":"RESEARCH_ONLY","shipping":false},
+    {"id":"sbu","role":"interaction_dataset_reference","gate":"RESEARCH_ONLY","shipping":false},
+    {"id":"amass","role":"motion_prior_reference","gate":"RESEARCH_ONLY","shipping":false},
+    {"id":"grapplemap","role":"positional_graph_reference","gate":"APPROVED_REFERENCE","license":"public-domain","shipping":false},
+    {"id":"skeleton_to_pixel","role":"paired_motion_to_pixel","gate":"PROJECT_INTERNAL","license":"project-owned","shipping":false},
+    {"id":"visual_qa_v2","role":"pixel_quality_gate","gate":"PROJECT_INTERNAL_PENDING_PR65","shipping":false}
+  ],
+  "prototype": {
+    "technique_id": "armlock_montada_v1",
+    "actors": ["ruan_macacao", "davi_relampago"],
+    "target_fps": 60,
+    "required_takes": ["slow_demo", "technical_speed", "defense", "escape"],
+    "qa_thresholds": {
+      "paired_contact_sync_error_frames_max": 1,
+      "key_joint_median_angular_error_deg_max": 10.0,
+      "pixel_pivot_drift_px_max": 1.0,
+      "teleport_distance_normalized_max": 0.18
+    }
+  }
+}
