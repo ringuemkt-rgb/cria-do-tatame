@@ -1,8 +1,8 @@
 # Google Drive + Colab Cloud Adapter v1
 
-**Status:** ACTIVE — optional production tooling  
-**Updated:** 2026-08-10  
-**Scope:** binary transport, immutable provenance and candidate-batch packaging.  
+**Status:** ACTIVE — optional production tooling
+**Updated:** 2026-08-11
+**Scope:** binary transport, immutable provenance and candidate-batch packaging.
 **Out of scope:** automatic final-art generation, automatic approval and runtime networking.
 
 ## 1. Decision
@@ -34,25 +34,26 @@ No external service controls combat, save or the frame loop. After approved asse
 
 ## 2. Executable Drive layout
 
-The canonical contract is `data/ai/cloud_drive_layout_v01.json`.
+The active layout contract is `data/ai/cloud_drive_layout_v02.json`.
 
 ```text
 CriaDoTatame/
-├── models/
-├── cache/
-├── refs/
-├── motions/
+├── fila/{entradas,em_processo,saidas,mortos}/
 ├── assets/
-│   ├── candidatos/
-│   └── aprovados/
-├── audio/
-│   ├── sfx/
-│   └── vozes/
+│   └── {candidatos,aprovados,reprovados,quarentena_licenca}/
+├── audio/{sfx,vozes,musica}/
+├── models/{registry.json,staging}/
+├── cache/index.json
+├── data/{specs,motions,refs}/
+├── qa/{relatorios,gate_l1_promocoes.json}/
+├── ops/{heartbeat.json,quota_ledger.json,apps_script,backups,dvc_remote}/
+├── builds/
 ├── colab_logs/
-└── manifest/
+├── docs/
+└── manifest/private_state.json
 ```
 
-The root and all twelve required logical paths were created and verified in the private Drive on 2026-08-10. Older folders with similar names remain untouched.
+The v2 required tree was created and connector-verified in the private Drive on 2026-08-11. Older folders with similar names remain untouched.
 
 ## 3. What changed from the first draft
 
@@ -143,7 +144,7 @@ python tools/ai_asset_pipeline/cloud/drive_client.py upload-batch \
   tools/ai_asset_pipeline/generated_outputs/candidate_batches/candidate_batch_<id>.zip
 ```
 
-The automated destination allowlist contains only `assets/candidatos`.
+The automated destination allowlist contains only `assets/candidatos` and `assets/quarentena_licenca`.
 
 ## 6. Colab workflow
 
@@ -167,10 +168,11 @@ The audited registry is `data/ai/model_registry_v02.json`. Every execution resol
 
 | Model | Observed license metadata | Decision |
 |---|---|---|
+| `black-forest-labs/FLUX.1-schnell` | Apache-2.0, gated, safetensors | Candidate concepts after terms acceptance and immutable SHA capture |
 | `Onodofthenorth/SD_PixelArt_SpriteSheet_Generator` | Apache-2.0 | Research only; candidate output still requires full QA |
-| `xinsir/controlnet-openpose-sdxl-1.0` | Apache-2.0 | Research only; not biomechanical validation |
+| `xinsir/controlnet-openpose-sdxl-1.0` / `yzd-v/DWPose` | Apache-2.0 | Candidate tooling; never biomechanical approval |
 | `ByteDance/AnimateDiff-Lightning` | CreativeML Open RAIL-M | Short motion reference research only |
-| `Wan-AI/Wan2.2-T2V-A14B` / `I2V-A14B` | Apache-2.0 | Research only; large hardware requirement |
+| `Wan-AI/Wan2.2-T2V-A14B` / `I2V-A14B` | Apache-2.0, safetensors | Candidate generation only when free-session VRAM fits |
 | `Comfy-Org/MiniMax-H3` | Custom/other | Blocked pending exact license and workflow review |
 | `facebook/musicgen-large` | CC BY-NC 4.0 | Blocked for commercial shipping |
 | `stabilityai/stable-audio-open-1.0` | Custom/other, gated | Blocked pending license and access review |
@@ -213,7 +215,7 @@ bash tools/ai_asset_pipeline/cloud/drive_sync.sh push-candidates /path/to/batch-
 
 `mirror-approved` uses `rclone sync` and can delete local files. It requires both a reviewed `--dry-run` and `CRIA_ALLOW_RCLONE_DELETE=YES`. Routine operations use `copy`.
 
-## 9. Human promotion gate
+## 9. Promotion gate
 
 Moving a package from `candidatos` to `aprovados` requires evidence for:
 
@@ -226,7 +228,7 @@ Moving a package from `candidatos` to `aprovados` requires evidence for:
 - required files from `data/visual/production_manifest_v02.json`;
 - human QA sign-off and a real Godot consumer plan.
 
-Promotion remains a manual Drive operation in v1. A future approval command must require a signed QA receipt and cannot be added silently.
+Promotion remains manual in the active adapter. The delegated GATE-L1-B regime is recorded in `gpt_work_production_gate_v1.json`, but is inactive until governance migration; reserved assets always require a human decision. The mobile pack builder accepts only sidecars already marked `LIBERADO` and approved, and rejects delegated promotion for reserved assets.
 
 ## 10. Cost and availability reality
 

@@ -11,7 +11,7 @@ from pathlib import Path
 from typing import Any
 
 ROOT = Path(__file__).resolve().parents[3]
-LAYOUT_PATH = ROOT / "data" / "ai" / "cloud_drive_layout_v01.json"
+LAYOUT_PATH = ROOT / "data" / "ai" / "cloud_drive_layout_v02.json"
 MANIFEST_PATH = ROOT / "data" / "ai" / "cloud_asset_manifest_v01.json"
 MODEL_REGISTRY_PATH = ROOT / "data" / "ai" / "model_registry_v02.json"
 NOTEBOOK_PATH = ROOT / "tools" / "ai_asset_pipeline" / "colab_pipeline.ipynb"
@@ -31,17 +31,36 @@ REQUIRED_FILES = [
 ]
 
 EXPECTED_FOLDERS = {
-    "models",
-    "cache",
-    "refs",
-    "motions",
+    "fila",
+    "fila/entradas",
+    "fila/em_processo",
+    "fila/saidas",
+    "fila/mortos",
     "assets",
     "assets/candidatos",
     "assets/aprovados",
+    "assets/reprovados",
+    "assets/quarentena_licenca",
     "audio",
     "audio/sfx",
     "audio/vozes",
+    "audio/musica",
+    "models",
+    "models/staging",
+    "cache",
+    "data",
+    "data/specs",
+    "data/motions",
+    "data/refs",
+    "qa",
+    "qa/relatorios",
+    "ops",
+    "ops/apps_script",
+    "ops/backups",
+    "ops/dvc_remote",
+    "builds",
     "colab_logs",
+    "docs",
     "manifest",
 }
 
@@ -76,8 +95,8 @@ def validate_layout(errors: list[str]) -> None:
         errors.append("Drive folder contract differs from the canonical v1 hierarchy")
     elif len(folders) != len(set(folders)):
         errors.append("Drive folder contract contains duplicates")
-    if layout.get("upload_destinations") != ["assets/candidatos"]:
-        errors.append("Automated upload must be restricted to assets/candidatos")
+    if layout.get("upload_destinations") != ["assets/candidatos", "assets/quarentena_licenca"]:
+        errors.append("Automated upload must be restricted to candidates or license quarantine")
     if layout.get("automatic_promotion_to_approved") is not False:
         errors.append("Automatic promotion to approved assets must remain disabled")
 
@@ -135,9 +154,11 @@ def validate_models(errors: list[str]) -> None:
         ):
             errors.append(f"Commercially blocked/unclear model marked allowed: {model_id}")
     required = {
+        "black-forest-labs/FLUX.1-schnell",
         "Comfy-Org/MiniMax-H3",
         "ByteDance/AnimateDiff-Lightning",
         "Onodofthenorth/SD_PixelArt_SpriteSheet_Generator",
+        "yzd-v/DWPose",
     }
     missing = required - ids
     if missing:
@@ -188,6 +209,8 @@ def validate_notebook(errors: list[str]) -> None:
         "prepare_batch.py",
         "resolve_hf_models.py",
         "assets/candidatos",
+        "fila/entradas",
+        "qa/relatorios",
     ]
     for fragment in required_fragments:
         if fragment not in code:
@@ -208,6 +231,8 @@ def validate_repo_wiring(errors: list[str]) -> None:
     scripts = package.get("scripts", {}) if isinstance(package, dict) else {}
     if scripts.get("validate:cloud") != "python tools/ai_asset_pipeline/cloud/validate_cloud_pipeline.py":
         errors.append("package.json does not expose validate:cloud")
+    if scripts.get("validate:production-gate") != "python tools/ai_asset_pipeline/cloud/validate_production_gate_v1.py":
+        errors.append("package.json does not expose validate:production-gate")
     quality = scripts.get("quality", "")
     if "validate:cloud" not in quality:
         errors.append("npm run quality does not include validate:cloud")

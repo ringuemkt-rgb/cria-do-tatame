@@ -1,0 +1,27 @@
+{
+  "versao": "1.0",
+  "base_max_mb": 100,
+  "pack_max_mb": 50,
+  "max_unpacked_ratio": 8,
+  "distribuicao": "github_releases",
+  "release_tag": "packs-v1",
+  "fonte_verdade": "dvc+drive",
+  "approval_sidecar_required": true,
+  "packs": [
+    {"id":"base","obrigatorio":true,"conteudo":["ui_core","hud_gi","hud_nogi","menu","terreiro_fundo"],"selectors":[{"mode":"contains","values":["ui_core","hud_gi","hud_nogi","menu","terreiro_fundo"]}]},
+    {"id":"personagens_lem","deps":["base"],"selectors":[{"mode":"prefix","values":["lem_"]}]},
+    {"id":"personagens_ntm","deps":["base"],"selectors":[{"mode":"prefix","values":["ntm_"]}]},
+    {"id":"personagens_ale","deps":["base"],"selectors":[{"mode":"prefix","values":["ale_"]}]},
+    {"id":"arenas_pratigi","deps":["base"],"selectors":[{"mode":"prefix","values":["pratigi_"]}]},
+    {"id":"arenas_dique","deps":["base"],"selectors":[{"mode":"prefix","values":["dique_"]}]},
+    {"id":"arenas_lapa","deps":["base"],"selectors":[{"mode":"prefix","values":["lapa_"]}]},
+    {"id":"arenas_terreiro_mapa","deps":["base"],"selectors":[{"mode":"prefix","values":["terreiro_","mapa_"]}]},
+    {"id":"tecnicas_quedas_raspagens","deps":["base"],"selectors":[{"mode":"prefix","values":["q0","r0"]}]},
+    {"id":"tecnicas_passagens_transicoes","deps":["base"],"selectors":[{"mode":"prefix","values":["p0","t0"]}]},
+    {"id":"tecnicas_finalizacoes_escapes","deps":["base"],"selectors":[{"mode":"prefix","values":["f0","e0"]}]},
+    {"id":"audio_sfx","deps":["base"],"selectors":[{"mode":"path_prefix","values":["audio/sfx/"]}]},
+    {"id":"audio_vozes","deps":["base"],"selectors":[{"mode":"path_prefix","values":["audio/vozes/"]}]},
+    {"id":"audio_musica","deps":["base"],"selectors":[{"mode":"path_prefix","values":["audio/musica/"]}]},
+    {"id":"crialive_mapa_ui","deps":["base"],"selectors":[{"mode":"prefix","values":["crialive_","mapa_ui_"]}]}
+  ]
+}

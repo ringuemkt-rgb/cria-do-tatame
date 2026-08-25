@@ -18,6 +18,7 @@ tools/ai_asset_pipeline/cloud/.state/
 tools/ai_asset_pipeline/cloud/*.lock
 tools/ai_asset_pipeline/cloud/client_secret*.json
 tools/ai_asset_pipeline/cloud/token*.json
+.dvc/config.local
 assets/generated_metadata/local_run_*.json
 assets/cloud_approved/
 models/*.pth
@@ -30,6 +31,7 @@ export/builds/*.zip
 builds/android/*.apk
 builds/android/*.idsig
 builds/android/*.sha256.txt
+builds/packs/
 reports/build/
 reports/runtime_audit/
 *.translation

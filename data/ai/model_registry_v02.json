@@ -8,6 +8,17 @@
   "shipping_policy": "human_license_quality_and_canon_approval_required",
   "models": [
     {
+      "id": "black-forest-labs/FLUX.1-schnell",
+      "role": "licensed candidate concept generation",
+      "requested_ref": "main",
+      "license": "apache-2.0",
+      "adoption_status": "candidate_generation_allowed",
+      "source_url": "https://huggingface.co/black-forest-labs/FLUX.1-schnell",
+      "weight_format_policy": "safetensors_only",
+      "access": "gated_manual_terms_acceptance_required",
+      "notes": "Candidate concepts only; resolve an immutable revision and record every selected .safetensors file before generation."
+    },
+    {
       "id": "Onodofthenorth/SD_PixelArt_SpriteSheet_Generator",
       "role": "sprite sheet research baseline",
       "requested_ref": "main",
@@ -48,9 +59,20 @@
       "role": "pose-control research",
       "requested_ref": "main",
       "license": "apache-2.0",
-      "adoption_status": "research_only",
+      "adoption_status": "candidate_generation_allowed",
       "source_url": "https://huggingface.co/xinsir/controlnet-openpose-sdxl-1.0",
+      "weight_format_policy": "safetensors_only",
       "notes": "Pose control is not biomechanical validation; paired BJJ motion still requires expert review."
+    },
+    {
+      "id": "yzd-v/DWPose",
+      "role": "pose extraction tool",
+      "requested_ref": "main",
+      "license": "apache-2.0",
+      "adoption_status": "candidate_generation_tool",
+      "source_url": "https://huggingface.co/yzd-v/DWPose",
+      "weight_format_policy": "tool_model_exception_no_shipping_weights",
+      "notes": "Tool-only pose extraction; output keypoints are not biomechanical approval and no DWPose weights ship with the game."
     },
     {
       "id": "ByteDance/AnimateDiff-Lightning",
@@ -66,8 +88,10 @@
       "role": "large text-to-video research",
       "requested_ref": "main",
       "license": "apache-2.0",
-      "adoption_status": "research_only",
+      "adoption_status": "candidate_generation_allowed",
       "source_url": "https://huggingface.co/Wan-AI/Wan2.2-T2V-A14B",
+      "weight_format_policy": "safetensors_only",
+      "hardware_gate": "runtime_must_confirm_sufficient_vram_and_free_session_quota",
       "notes": "Large hardware footprint; never cached persistently on Drive by default."
     },
     {
@@ -75,8 +99,10 @@
       "role": "large image-to-video research",
       "requested_ref": "main",
       "license": "apache-2.0",
-      "adoption_status": "research_only",
+      "adoption_status": "candidate_generation_allowed",
       "source_url": "https://huggingface.co/Wan-AI/Wan2.2-I2V-A14B",
+      "weight_format_policy": "safetensors_only",
+      "hardware_gate": "runtime_must_confirm_sufficient_vram_and_free_session_quota",
       "notes": "Large hardware footprint; use only when the available Colab GPU and session quota are sufficient."
     },
     {
