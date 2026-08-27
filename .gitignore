@@ -4,6 +4,8 @@
 *.import
 *.tmp
 *.log
+!reports/gdscript_delivery/
+!reports/gdscript_delivery/*.log
 .DS_Store
 __pycache__/
 *.pyc
@@ -34,3 +36,5 @@ reports/build/
 reports/runtime_audit/
 *.translation
 .android/
+/apk
+/*.zip

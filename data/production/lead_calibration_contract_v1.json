@@ -1,0 +1,57 @@
+{
+  "schema_version": "1.0.0",
+  "contract_id": "ctt_lead_calibration_v1",
+  "status": "active_branch_contract",
+  "effective_date": "2026-08-27",
+  "repository": "ringuemkt-rgb/cria-do-tatame",
+  "branch": "lead/calibracao-v1",
+  "base_sha": "749fe5d493e38761701430e225fa536f5a4904e8",
+  "valid_until": "merge_or_documented_discard",
+  "merge_authorized": false,
+  "prompt": "CTT.VISUAL.GRAPPLING.MASTER.V1",
+  "prompt_addendum": "LEAD_V1_CLAUSES_23_30",
+  "decision_range": {"first": 12, "last": 47},
+  "one_lot": true,
+  "truth_paths": ["data", "docs", "src"],
+  "state_order": [
+    "created",
+    "automated_validated",
+    "human_approved",
+    "integrated",
+    "device_validated",
+    "shipping_ready"
+  ],
+  "gdscript_gate": {
+    "required": true,
+    "commands": [
+      "godot --headless --editor --path . --import",
+      "godot --headless --path . --script res://tests/runtime_smoke.gd"
+    ],
+    "ci_workflow": ".github/workflows/godot-gd-delivery-gate.yml"
+  },
+  "human_gates": {
+    "authorized_signer": "Mestre Satoshi",
+    "gates": {
+      "01": "BJJ",
+      "02": "Animacao",
+      "03": "Arte",
+      "04": "Gameplay",
+      "05": "Acessibilidade",
+      "06": "Direitos"
+    },
+    "agent_signature_forbidden": true
+  },
+  "promotion": {
+    "automatic": false,
+    "maximum_state_in_this_lot": "automated_validated"
+  },
+  "required_evidence": ["paths", "sha256", "command", "exit_code", "log_path"],
+  "required_outputs": [
+    "docs/DECISIONS.md",
+    "docs/production/CRIA_VISUAL_GRAPPLING_MASTER_PROMPT_V1.md",
+    "data/story/infiltration_canon_v1.json",
+    "data/visual/tokens.json",
+    "tools/audit/visual_lab.html",
+    "reports/ledger/lead_calibracao_v1.md"
+  ]
+}

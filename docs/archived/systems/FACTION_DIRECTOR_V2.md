@@ -1,5 +1,7 @@
 # Faction Director v2 — Cria do Tatame
 
+> **ARCHIVED — D20.** Preservado para compatibilidade e pesquisa histórica; não orienta features novas.
+
 ## Visão
 
 O Faction Director transforma as facções do jogo em organizações persistentes que continuam agindo mesmo quando Ruan está em outro hub. O sistema foi construído sobre o World Director existente e mantém compatibilidade com missões que usam apenas `FactionManager.relations` e `FactionManager.heat`.

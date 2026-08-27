@@ -1,5 +1,7 @@
 # Cria World Director — arquitetura do mundo vivo
 
+> **ARCHIVED — D20.** Preservado para compatibilidade e pesquisa histórica; não orienta features novas.
+
 ## Objetivo
 
 O **Cria World Director** coordena a simulação do mundo semiaberto de *Cria do Tatame* sem tornar o APK dependente de internet. O sistema combina regras determinísticas em GDScript com um diretor generativo opcional executado fora do jogo.

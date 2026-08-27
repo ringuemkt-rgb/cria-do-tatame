@@ -1,5 +1,5 @@
 {
-  "version": "0.1.0",
+  "version": "0.2.0",
   "characters": [
     {
       "id": "ruan_macacao",
@@ -11,7 +11,14 @@
       "symbol": "Gorila Silverback",
       "style": "pressao_pesada_top_game",
       "belt_start": "white",
+      "campaign_belt": "white",
+      "gold_slice_belt": {"color": "blue", "stripes": 2},
       "belt_end": "black",
+      "visual_constraints": {
+        "tattoos": false,
+        "back_patch": false,
+        "wear_max_percent": 30
+      },
       "stats": {
         "health": 100,
         "gas": 70,
@@ -38,6 +45,7 @@
       "role": "initial_rival",
       "origin": "Circuito regional",
       "style": "speed_scramble_counter",
+      "belt": "blue",
       "stats": {
         "health": 90,
         "gas": 85,
@@ -96,6 +104,44 @@
       "name": "Oni da Lapa",
       "role": "arena_rival",
       "style": "intimidacao_pressao_psicologica",
+      "canon": true
+    },
+    {
+      "id": "lucas_caveira",
+      "name": "Lucas \"Caveira\"",
+      "role": "infiltration_arc_character",
+      "production_status": "defined_not_produced",
+      "canon": true
+    },
+    {
+      "id": "montenegro_die",
+      "name": "Montenegro",
+      "role": "die_fictional_agency_character",
+      "affiliation": "DIE",
+      "production_status": "defined_not_produced",
+      "real_institution_likeness_forbidden": true,
+      "canon": true
+    },
+    {
+      "id": "nado",
+      "name": "Nado",
+      "role": "infiltration_arc_character",
+      "production_status": "defined_not_produced",
+      "canon": true
+    },
+    {
+      "id": "helena_vaz",
+      "name": "Helena Vaz",
+      "role": "journalist",
+      "affiliation": "a_mare",
+      "production_status": "defined_not_produced",
+      "canon": true
+    },
+    {
+      "id": "patrono",
+      "name": "Patrono",
+      "role": "consorcio_character",
+      "production_status": "defined_not_produced",
       "canon": true
     }
   ]

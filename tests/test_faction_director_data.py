@@ -75,6 +75,7 @@ def test_territories_reference_only_active_factions() -> None:
             assert territory["legacy_owner"] in {
                 "terreiro",
                 "raiz",
+                "cria_live",
                 "dragao_vermelho",
                 "fantasma",
             }

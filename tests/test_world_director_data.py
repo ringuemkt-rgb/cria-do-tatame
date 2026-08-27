@@ -53,8 +53,9 @@ def test_npc_routines_cover_all_time_blocks() -> None:
         assert set(profile["schedule"]) == expected
 
 
-def test_nft_catalog_is_optional_and_cosmetic_only() -> None:
-    catalog = load("data/nft/nft_catalog_v01.json")
+def test_archived_nft_catalog_is_optional_and_cosmetic_only() -> None:
+    catalog = load("docs/archived/data/nft/nft_catalog_v01.json")
+    assert catalog["archive_notice"].startswith("D20")
     policy = catalog["policy"]
     assert policy["optional"] is True
     assert policy["pay_to_win_forbidden"] is True

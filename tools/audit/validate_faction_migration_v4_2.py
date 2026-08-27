@@ -13,6 +13,17 @@ ALIASES = {
     "la_ele_mil_vezes": "LEM",
     "nos_tem_um_molho": "NTM",
 }
+PRIMARY_COLORS = {"ALE": "#2E8FE2", "LEM": "#3FBF3F", "NTM": "#D93A2B"}
+STARTING_TERRITORIES = {
+    "ALE": ["arena_do_dique", "budokan_das_aguas"],
+    "LEM": ["colonia_nishimura", "beco_do_engenho"],
+    "NTM": ["camamu_manguezal", "ferro_velho_da_lapa"],
+}
+CATALOG_TERRITORIES = {
+    "ALE": ["arena_do_dique", "budokan_das_aguas", "igreja_central_ficcional"],
+    "LEM": ["colonia_nishimura", "beco_do_engenho"],
+    "NTM": ["camamu_manguezal", "ferro_velho_da_lapa"],
+}
 NON_FACTION = {
     "terreiro",
     "raiz",
@@ -51,6 +62,9 @@ def validate_contract() -> None:
         for legacy in data["legacy_ids"]
     }
     assert flattened_aliases == ALIASES
+    for faction_id in ACTIVE:
+        assert factions[faction_id]["primary_color"] == PRIMARY_COLORS[faction_id]
+        assert factions[faction_id]["starting_territories"] == STARTING_TERRITORIES[faction_id]
 
 
 def validate_runtime_sources() -> None:
@@ -94,6 +108,8 @@ def validate_director_data() -> None:
         assert data["leader"]
         assert data["combat_doctrine"]["preferred_actions"]
         assert data["operation_weights"]
+        assert data["primary_color"] == PRIMARY_COLORS[faction_id]
+        assert data["starting_territories"] == STARTING_TERRITORIES[faction_id]
 
 
 def validate_territories() -> None:
@@ -114,6 +130,9 @@ def validate_territories() -> None:
         assert pair not in pairs
         pairs.add(pair)
     assert pairs == {("ALE", "LEM"), ("ALE", "NTM"), ("LEM", "NTM")}
+    for faction_id, territory_ids in STARTING_TERRITORIES.items():
+        for territory_id in territory_ids:
+            assert world["territories"][territory_id]["owner"] == faction_id
 
 
 def validate_catalog_classification() -> None:
@@ -123,6 +142,10 @@ def validate_catalog_classification() -> None:
     assert {item["id"] for item in active} == set(ALIASES)
     ale = next(item for item in active if item["canonical_id"] == "ALE")
     assert ale["name"] == "Os Aleluiado"
+    for entry in active:
+        faction_id = entry["canonical_id"]
+        assert entry["primary_color"] == PRIMARY_COLORS[faction_id]
+        assert entry["territories"] == CATALOG_TERRITORIES[faction_id]
     classified_non_factions = {
         item["id"]
         for item in catalog["factions"]

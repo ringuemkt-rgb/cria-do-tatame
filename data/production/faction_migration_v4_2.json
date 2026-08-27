@@ -7,14 +7,20 @@
   "active_factions": {
     "ALE": {
       "display_name": "Os Aleluiado",
+      "primary_color": "#2E8FE2",
+      "starting_territories": ["arena_do_dique", "budokan_das_aguas"],
       "legacy_ids": ["os_aleluia"]
     },
     "LEM": {
       "display_name": "Lá Ele Mil Vezes",
+      "primary_color": "#3FBF3F",
+      "starting_territories": ["colonia_nishimura", "beco_do_engenho"],
       "legacy_ids": ["la_ele_mil_vezes"]
     },
     "NTM": {
       "display_name": "Nós Tem Um Molho",
+      "primary_color": "#D93A2B",
+      "starting_territories": ["camamu_manguezal", "ferro_velho_da_lapa"],
       "legacy_ids": ["nos_tem_um_molho"]
     }
   },

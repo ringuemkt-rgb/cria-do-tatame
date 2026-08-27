@@ -1,5 +1,7 @@
 extends Node
 
+const EndingsCalculatorScript = preload("res://src/narrative/EndingsCalculator.gd")
+
 var current_scene_id := ""
 var current_scene := {}
 var beat_index := 0
@@ -40,19 +42,5 @@ func _find_scene(scene_id: String) -> Dictionary:
 	return {}
 
 func get_final_id() -> String:
-	var honra := WorldState.get_reputation("honra")
-	var hype := WorldState.get_reputation("hype")
-	var sombra := WorldState.get_reputation("sombra")
-	var legado := WorldState.get_reputation("legado")
-	var tinker_present := TinkerBondManager.is_tinker_present()
-	if honra >= 70.0 and legado >= 70.0 and sombra < 30.0 and tinker_present:
-		return "heroi_duas_aguas"
-	if hype >= 70.0 and honra < 50.0 and not tinker_present:
-		return "estrela_vazia"
-	if sombra >= 70.0 and WorldState.get_reputation("moral") < 40.0 and not tinker_present:
-		return "rei_dos_atalhos"
-	if hype >= 60.0 and sombra >= 60.0:
-		return "traidor_silencioso"
-	if honra >= 70.0 and legado >= 70.0 and tinker_present:
-		return "raiz_eterna"
-	return "heroi_duas_aguas"
+	var tinker_state := TinkerBondManager.get_state()
+	return EndingsCalculatorScript.calculate(WorldState.reputation, tinker_state, DataRegistry.finais_adultos)

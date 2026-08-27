@@ -1,0 +1,5 @@
+Godot Engine v4.2.2.stable.official.15073afe3 - https://godotengine.org
+
+WARNING: [CriaLive] Post de facção ignorado para domínio não ativo: terreiro
+     at: push_warning (core/variant/variant_utility.cpp:1111)
+[FullGameSmoke] PASS — 156 verificações; 14 cenas carregadas.

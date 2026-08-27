@@ -81,12 +81,20 @@ As coordenadas em `data/world_map_geo.json` são âncoras iniciais para posicion
 
 | Tipo | Cor sugerida | Gameplay |
 |---|---|---|
-| oficial | azul | regras, ranking, baixo risco |
-| híbrida | amarelo | meio oficial/meio rua |
-| clandestina | vermelho | risco alto, hype/sombra |
-| costeira | verde | turismo, cultura, litoral |
-| marítima | ciano | ilhas, barcos, travessias |
-| bloqueada | cinza | requisito narrativo |
+| terrestre | amarela + linha sólida | deslocamento rodoviário/urbano |
+| marítima | ciano + linha dupla | ilhas, barcos, travessias |
+| perigosa | vermelha + tracejado | risco narrativo alto |
+| bloqueada | cinza + pontilhado | requisito narrativo |
+
+Cor nunca é o único sinal; tipo de linha e ícone repetem o significado.
+
+### Territórios de facção aprovados
+
+| Facção | Cor | Territórios iniciais |
+|---|---|---|
+| ALE | `#2E8FE2` | Arena do Dique + Budokan das Águas |
+| LEM | `#3FBF3F` | Colônia Nishimura + Beco do Engenho |
+| NTM | `#D93A2B` | Manguezal de Camamu + Ferro Velho da Lapa |
 
 ---
 

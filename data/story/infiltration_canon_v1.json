@@ -1,0 +1,49 @@
+{
+  "schema_version": "1.0.0",
+  "status": "canonical_defined_not_produced",
+  "decision_refs": ["D18", "D21", "D22", "D23", "D24", "D25", "D26", "D27", "D28", "D32", "D35"],
+  "arc_id": "infiltracao_adulta_discreta",
+  "institutions": {
+    "consorcio": {
+      "display_name": "Consórcio",
+      "fictional": true,
+      "real_likeness_forbidden": true
+    },
+    "die": {
+      "display_name": "DIE",
+      "fictional": true,
+      "real_badges_uniforms_and_seals_forbidden": true
+    },
+    "a_mare": {
+      "display_name": "A Maré",
+      "type": "fictional_newsroom",
+      "fictional": true
+    }
+  },
+  "characters": ["lucas_caveira", "montenegro_die", "nado", "helena_vaz", "patrono"],
+  "capa": {
+    "range": [0, 100],
+    "meaning": "narrative_exposure_only",
+    "thresholds": "deferred_to_story_data_lot",
+    "real_world_instruction": false
+  },
+  "events": {
+    "fogo_2019": {
+      "fictional": true,
+      "status": "past_event",
+      "operational_detail_forbidden": true
+    }
+  },
+  "circuits": {
+    "official_gi": {"points": true, "safe_sport_rules": true},
+    "official_nogi": {"points": true, "style_reference": "abstract_adcc_like_without_brand"},
+    "clandestine_nogi": {"points": false, "safe_tatame_required": true, "hazards": "scenographic_only"}
+  },
+  "safeguards": {
+    "real_people_organizations_and_institutions": false,
+    "criminal_method_instruction": false,
+    "minors_in_risk_scenes": false,
+    "injury_glorification": false,
+    "tap_escape_or_referee_required": true
+  }
+}

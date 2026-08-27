@@ -7,7 +7,7 @@ Este arquivo é a porta de entrada da documentação ativa. Antes de criar um do
 - [`../README.md`](../README.md) — visão do produto, instalação e comandos principais;
 - [`../AGENTS.md`](../AGENTS.md) — regras obrigatórias para agentes;
 - [`../CONTRIBUTING.md`](../CONTRIBUTING.md) — fluxo de contribuição;
-- [`DECISIONS.md`](DECISIONS.md) — decisões arquiteturais e canônicas D1–D11;
+- [`DECISIONS.md`](DECISIONS.md) — decisões arquiteturais e canônicas D1–D47;
 - [`REPOSITORY_GOVERNANCE.md`](REPOSITORY_GOVERNANCE.md) — fonte única, branches, PRs e gates;
 - [`ROADMAP.md`](ROADMAP.md) — sequência oficial de construção.
 
@@ -19,6 +19,8 @@ Este arquivo é a porta de entrada da documentação ativa. Antes de criar um do
 - [`../data/production/release_gate_status_v01.json`](../data/production/release_gate_status_v01.json) — ledger único com evidências e pendências de release;
 - [`../data/visual/production_manifest_v02.json`](../data/visual/production_manifest_v02.json) — inventário audiovisual;
 - [`../data/production/repository_governance_v01.json`](../data/production/repository_governance_v01.json) — governança validável por máquina;
+- [`../data/production/lead_calibration_contract_v1.json`](../data/production/lead_calibration_contract_v1.json) — Adendo Lead v1, Cláusulas 23–30 e gates humanos;
+- [`../data/production/archived_systems_v1.json`](../data/production/archived_systems_v1.json) — política D20 para NFT e Directors;
 - [`../data/ai/cloud_drive_layout_v01.json`](../data/ai/cloud_drive_layout_v01.json) — árvore privada e política de promoção do adaptador Drive.
 
 ## Produto e gameplay
@@ -40,6 +42,20 @@ Este arquivo é a porta de entrada da documentação ativa. Antes de criar um do
 - [`production/DRIVE_CLOUD_V1.md`](production/DRIVE_CLOUD_V1.md) — adaptador privado Google Drive, Colab, rclone e provenance Hugging Face;
 - [`../data/visual/production_manifest_v02.json`](../data/visual/production_manifest_v02.json) — entregáveis mínimos por asset;
 - [`../data/ai/model_registry_v02.json`](../data/ai/model_registry_v02.json) — auditoria e gates atuais de modelos Hugging Face.
+- [`production/CRIA_VISUAL_GRAPPLING_MASTER_PROMPT_V1.md`](production/CRIA_VISUAL_GRAPPLING_MASTER_PROMPT_V1.md) — prompt visual canônico com Adendo Lead;
+- [`../data/visual/tokens.json`](../data/visual/tokens.json) — tokens únicos ARENA/RUA, HUD e budgets mobile;
+- [`../tools/audit/visual_lab.html`](../tools/audit/visual_lab.html) — laboratório offline de auditoria, sem runtime concorrente.
+
+## Narrativa calibrada
+
+- [`../data/story/infiltration_canon_v1.json`](../data/story/infiltration_canon_v1.json) — arco ficcional de infiltração e salvaguardas;
+- [`research/INSTITUTIONAL_REFERENCE_BOUNDARY.md`](research/INSTITUTIONAL_REFERENCE_BOUNDARY.md) — fronteira para instituições reais;
+- [`architecture/ADR_GODOT_4_7_2_MIGRATION.md`](architecture/ADR_GODOT_4_7_2_MIGRATION.md) — ADR proposto, lote separado.
+
+## Arquivo e binários
+
+- [`archived/README.md`](archived/README.md) — conteúdo histórico sem autoridade ativa;
+- [`releases/README.md`](releases/README.md) — hashes e ponteiros dos binários legados removidos.
 
 ## Engenharia e QA
 

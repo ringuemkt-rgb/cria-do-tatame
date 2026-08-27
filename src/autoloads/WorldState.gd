@@ -1,5 +1,7 @@
 extends Node
 
+const EndingsCalculatorScript = preload("res://src/narrative/EndingsCalculator.gd")
+
 var week := 1
 var current_week := 1
 var day_index := 0
@@ -154,24 +156,8 @@ func obter_reputacao(eixo) -> float:
 	return get_reputation(eixo)
 
 func determine_final():
-	var honra = get_reputation("honra")
-	var hype = get_reputation("hype")
-	var sombra = get_reputation("sombra")
-	var legado = get_reputation("legado")
-	var moral = get_reputation("moral")
-	var raiz = get_reputation("raiz")
-	var tinker_state = TinkerBondManager.get_state() if has_node("/root/TinkerBondManager") else "IRMANDADE"
-	if honra >= 70.0 and legado >= 70.0 and raiz >= 70.0 and tinker_state == "LEGADO":
-		return "raiz_eterna"
-	if sombra >= 70.0 and moral < 40.0 and tinker_state == "RUPTURA":
-		return "rei_dos_atalhos"
-	if hype >= 60.0 and sombra >= 60.0 and tinker_state == "RETORNO_DIFICIL":
-		return "traidor_silencioso"
-	if hype >= 70.0 and honra < 50.0 and tinker_state in ["AFASTAMENTO", "RUPTURA"]:
-		return "estrela_vazia"
-	if honra >= 70.0 and legado >= 70.0 and sombra < 30.0 and tinker_state in ["IRMANDADE", "LEGADO", "ALERTA"]:
-		return "heroi_duas_aguas"
-	return "heroi_duas_aguas"
+	var tinker_state := TinkerBondManager.get_state() if has_node("/root/TinkerBondManager") else "IRMANDADE"
+	return EndingsCalculatorScript.calculate(reputation, tinker_state, DataRegistry.finais_adultos)
 
 func determinar_final():
 	return determine_final()

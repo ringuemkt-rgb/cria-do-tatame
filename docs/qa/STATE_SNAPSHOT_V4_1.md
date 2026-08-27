@@ -172,7 +172,7 @@ Divergência resolvida por autoridade superior deste lote:
 
 A busca na `main` encontrou referências em:
 
-- `docs/FACTION_DIRECTOR_V2.md`;
+- `docs/archived/systems/FACTION_DIRECTOR_V2.md`;
 - `docs/narrative/MASTER_CANON_BIBLE_V01.md`;
 - `data/factions/faction_director_v02.json`;
 - `data/factions/faction_drama_bible_v01.json`;

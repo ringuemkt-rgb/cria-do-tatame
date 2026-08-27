@@ -1,6 +1,21 @@
 {
-  "version": "0.1.0",
+  "version": "0.2.0",
   "language": "pt-BR",
+  "runtime_ids": {
+    "CRIA": "heroi_duas_aguas",
+    "IDOLO": "estrela_vazia",
+    "SOMBRA": "rei_dos_atalhos",
+    "DUPLA_FACE": "traidor_silencioso",
+    "RAIZ": "raiz_eterna"
+  },
+  "evaluation_order": [
+    "final_5_raiz_eterna",
+    "final_3_rei_atalhos",
+    "final_4_traidor_silencioso",
+    "final_2_estrela_vazia",
+    "final_1_heroi_duas_aguas"
+  ],
+  "fallback": "final_1_heroi_duas_aguas",
   "finals": {
     "final_1_heroi_duas_aguas": {
       "id": "final_1_heroi_duas_aguas",

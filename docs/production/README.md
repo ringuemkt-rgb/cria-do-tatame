@@ -1,5 +1,8 @@
 # Production Docs
 
+O prompt visual ativo e suas Cláusulas 23–30 estão em
+[`CRIA_VISUAL_GRAPPLING_MASTER_PROMPT_V1.md`](CRIA_VISUAL_GRAPPLING_MASTER_PROMPT_V1.md).
+
 ## Principais arquivos
 
 - CRIA_GAME_FORGE_SYSTEM_V06.md
