@@ -4,7 +4,7 @@ on:
   push:
     paths:
       - "data/world/**"
-      - "data/nft/**"
+      - "docs/archived/data/nft/**"
       - "src/autoloads/WorldDirectorManager.gd"
       - "src/autoloads/NFTManager.gd"
       - "tools/world_director_server/**"
@@ -12,7 +12,7 @@ on:
   pull_request:
     paths:
       - "data/world/**"
-      - "data/nft/**"
+      - "docs/archived/data/nft/**"
       - "src/autoloads/WorldDirectorManager.gd"
       - "src/autoloads/NFTManager.gd"
       - "tools/world_director_server/**"

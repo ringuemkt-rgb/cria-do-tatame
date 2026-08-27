@@ -1,0 +1,72 @@
+name: GDScript Delivery Gate
+
+on:
+  pull_request:
+    paths:
+      - "**/*.gd"
+      - "**/*.tscn"
+      - "project.godot"
+      - "data/**/*.json"
+      - ".github/workflows/godot-gd-delivery-gate.yml"
+  push:
+    branches:
+      - main
+    paths:
+      - "**/*.gd"
+      - "**/*.tscn"
+      - "project.godot"
+      - "data/**/*.json"
+      - ".github/workflows/godot-gd-delivery-gate.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: gdscript-delivery-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  godot-headless-and-runtime-smoke:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - name: Download audited Godot 4.2.2
+        run: |
+          curl -L --fail --retry 3 \
+            -o godot.zip \
+            https://github.com/godotengine/godot/releases/download/4.2.2-stable/Godot_v4.2.2-stable_linux.x86_64.zip
+          unzip -q godot.zip
+          mv Godot_v4.2.2-stable_linux.x86_64 godot
+          chmod +x godot
+          ./godot --version
+      - name: Prepare evidence directory
+        run: mkdir -p reports/gdscript_delivery
+      - name: Import and parse
+        shell: bash
+        run: |
+          set -o pipefail
+          timeout 180 ./godot --headless --editor --path . --import \
+            2>&1 | tee reports/gdscript_delivery/godot_import.log
+      - name: Runtime smoke
+        shell: bash
+        run: |
+          set -o pipefail
+          ./godot --headless --path . --script res://tests/runtime_smoke.gd \
+            2>&1 | tee reports/gdscript_delivery/runtime_smoke.log
+      - name: Reject hidden parser or runtime errors
+        if: always()
+        shell: bash
+        run: |
+          if grep -RInE "SCRIPT ERROR|Parse Error|Invalid call|Failed loading resource|Cannot get class" reports/gdscript_delivery/*.log; then
+            echo "Godot emitted a parser/runtime error"
+            exit 1
+          fi
+      - name: Upload Clause 28 evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: gdscript-delivery-logs
+          path: reports/gdscript_delivery/
+          if-no-files-found: error

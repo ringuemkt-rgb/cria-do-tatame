@@ -1,0 +1,26 @@
+{
+  "schema_version": "1.0.0",
+  "status": "canonical_archive_policy",
+  "decision": "D20",
+  "systems": {
+    "nft": {
+      "status": "archived",
+      "active_catalog_path": null,
+      "archive_path": "docs/archived/data/nft/nft_catalog_v01.json",
+      "new_dependencies_forbidden": true,
+      "runtime_compatibility": "legacy_read_only_until_removal_adr"
+    },
+    "world_director": {
+      "status": "archived_for_new_development",
+      "documentation_path": "docs/archived/systems/WORLD_DIRECTOR_ARCHITECTURE.md",
+      "runtime_compatibility": "autoload_retained_until_separate_removal_adr",
+      "new_features_forbidden": true
+    },
+    "faction_director": {
+      "status": "archived_for_new_development",
+      "documentation_path": "docs/archived/systems/FACTION_DIRECTOR_V2.md",
+      "runtime_compatibility": "autoload_and_v4_2_data_retained_until_separate_removal_adr",
+      "new_features_forbidden": true
+    }
+  }
+}

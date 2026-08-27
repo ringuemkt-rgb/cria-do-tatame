@@ -4,7 +4,7 @@ signal catalog_loaded(item_count: int)
 signal entitlements_synced(entitlements: Array, source: String)
 signal entitlement_sync_failed(reason: String)
 
-const CATALOG_PATH := "res://data/nft/nft_catalog_v01.json"
+const CATALOG_PATH := "res://docs/archived/data/nft/nft_catalog_v01.json"
 
 var catalog: Dictionary = {}
 var state: Dictionary = {"wallet_address": "", "entitlements": [], "verified_at": "", "source": "offline_empty"}

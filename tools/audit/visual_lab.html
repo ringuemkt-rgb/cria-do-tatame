@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Cria do Tatame — Visual Lab</title>
+  <style>
+    :root{color-scheme:dark;--bg:#0b0b0d;--card:#17181d;--line:#34363f;--gold:#f2c230;--text:#f3f0ea;--muted:#b6b7bd}
+    *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font:16px/1.5 system-ui,sans-serif}
+    main{max-width:980px;margin:auto;padding:32px 20px}h1{margin:0 0 8px;color:var(--gold)}p{color:var(--muted)}
+    table{width:100%;border-collapse:collapse;background:var(--card)}th,td{padding:12px;text-align:left;border:1px solid var(--line)}
+    code{color:var(--gold);overflow-wrap:anywhere}.pill{display:inline-block;border:1px solid var(--gold);border-radius:999px;padding:3px 9px}
+  </style>
+</head>
+<body>
+<main>
+  <span class="pill">AUDITORIA — NÃO É RUNTIME</span>
+  <h1>Visual Lab</h1>
+  <p>Ponto único para revisão offline. O launcher Web ativo continua em <code>/index.html</code>.</p>
+  <table>
+    <thead><tr><th>Contrato</th><th>Caminho</th><th>Estado máximo</th></tr></thead>
+    <tbody>
+      <tr><td>Prompt Mestre</td><td><code>docs/production/CRIA_VISUAL_GRAPPLING_MASTER_PROMPT_V1.md</code></td><td>ACTIVE</td></tr>
+      <tr><td>Governança Lead</td><td><code>data/production/lead_calibration_contract_v1.json</code></td><td>automated_validated</td></tr>
+      <tr><td>Tokens HUD</td><td><code>data/visual/tokens.json</code></td><td>specified</td></tr>
+      <tr><td>Trama</td><td><code>data/story/infiltration_canon_v1.json</code></td><td>defined_not_produced</td></tr>
+      <tr><td>Gates humanos</td><td><code>qa/relatorios/</code></td><td>unsigned</td></tr>
+    </tbody>
+  </table>
+  <p>Este painel não promove assets, não assina gates e não duplica o jogo Godot.</p>
+</main>
+</body>
+</html>

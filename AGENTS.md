@@ -111,6 +111,8 @@ Use somente prefixos aprovados:
 
 - `fix/`, `feat/`, `content/`, `visual/`, `build/`, `docs/`, `chore/`, `release/`.
 
+Exceção governada: `lead/` e `lead-manus/` só podem ser usados quando Mestre Satoshi autorizar explicitamente um lote delegado com validade, gates e condição de encerramento registrados em `docs/DECISIONS.md`.
+
 Use Conventional Commits. Não trabalhe diretamente em `main` sem autorização explícita e checks verdes.
 
 PR empilhado deve declarar dependência, ordem de merge e base ativa. Se a base for abandonada, porte ou encerre o PR.
@@ -122,6 +124,7 @@ PR empilhado deve declarar dependência, ordem de merge e base ativa. Se a base 
 - Técnica pareada exige atacante, defensor, pivô compartilhado, timing e `sync_map`.
 - Não copiar pessoa, marca, frame, aula, logo ou áudio de terceiro sem licença.
 - Não promover automaticamente saída de IA para caminhos de shipping.
+- Gates humanos de BJJ, animação, arte, gameplay, acessibilidade e direitos só podem ser assinados por Mestre Satoshi.
 
 ## Segurança
 

@@ -313,6 +313,10 @@ def audit_hubs_and_activities(audit: Audit, parsed: dict[str, Any]) -> None:
 
 def audit_nft_catalog(audit: Audit, parsed: dict[str, Any]) -> None:
     catalog = parsed.get("data/nft/nft_catalog_v01.json", {})
+    if not catalog:
+        archived = ROOT / "docs" / "archived" / "data" / "nft" / "nft_catalog_v01.json"
+        if archived.is_file():
+            catalog = json.loads(archived.read_text(encoding="utf-8"))
     if not isinstance(catalog, dict):
         audit.error("catálogo NFT inválido")
         return

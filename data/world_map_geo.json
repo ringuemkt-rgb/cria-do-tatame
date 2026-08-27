@@ -2,6 +2,12 @@
   "version": "0.2.0",
   "coordinate_system": "WGS84",
   "note": "Geo anchors for faithful map layout. Validate final art against IBGE municipal mesh/QGIS before final production.",
+  "route_legend": {
+    "terrestre": {"color": "#F2C230", "line_style": "solid", "label": "terrestre"},
+    "maritima": {"color": "#31C7D9", "line_style": "double", "label": "marítima"},
+    "perigosa": {"color": "#D93A2B", "line_style": "dashed", "label": "perigosa"},
+    "bloqueada": {"color": "#73777F", "line_style": "dotted", "label": "bloqueada"}
+  },
   "regions": [
     {
       "id": "baixo_sul_bahia",

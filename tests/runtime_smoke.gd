@@ -3,6 +3,7 @@ extends SceneTree
 const CombatSimulationEngineScript = preload("res://src/combat/CombatManager.gd")
 const DaviAIControllerScript = preload("res://src/combat/DaviAIController.gd")
 const TechniqueClashResolverScript = preload("res://src/combat/TechniqueClashResolver.gd")
+const EndingsCalculatorScript = preload("res://src/narrative/EndingsCalculator.gd")
 
 const REQUIRED_SCENES := [
 	"res://scenes/main_menu/MainMenu.tscn",
@@ -49,6 +50,7 @@ func _run() -> void:
 		audio_manager.set("enabled", false)
 	_test_autoloads()
 	_test_data_registry()
+	_test_endings_calculator()
 	_test_combat_deck()
 	await _test_local_ai_fallback()
 	await _test_scene_loading()
@@ -119,6 +121,22 @@ func _test_data_registry() -> void:
 		_assert(not rival_idle.is_empty(), "Animacao idle ausente para %s" % character_id)
 	_assert(not bool(local_ai_config.get("runtime_policy", {}).get("combat_llm_allowed", true)), "LLM foi permitido no combate por engano")
 	_assert(bool(local_ai_config.get("runtime_policy", {}).get("fallback_required", false)), "Fallback offline nao esta marcado como obrigatorio")
+
+func _test_endings_calculator() -> void:
+	if data_registry == null:
+		return
+	var endings_data: Dictionary = data_registry.get("finais_adultos")
+	var cases := [
+		{"reputation": {"honra": 80, "legado": 80, "raiz": 80, "sombra": 10}, "tinker": "LEGADO", "expected": "raiz_eterna"},
+		{"reputation": {"sombra": 80, "moral": 30}, "tinker": "RUPTURA", "expected": "rei_dos_atalhos"},
+		{"reputation": {"hype": 70, "sombra": 70}, "tinker": "RETORNO_DIFICIL", "expected": "traidor_silencioso"},
+		{"reputation": {"hype": 80, "honra": 40}, "tinker": "AFASTAMENTO", "expected": "estrela_vazia"},
+		{"reputation": {"honra": 80, "legado": 80, "sombra": 20}, "tinker": "IRMANDADE", "expected": "heroi_duas_aguas"}
+	]
+	for case_value in cases:
+		var case: Dictionary = case_value
+		var actual := EndingsCalculatorScript.calculate(case["reputation"], str(case["tinker"]), endings_data)
+		_assert(actual == case["expected"], "Final data-driven incorreto: esperado %s, recebido %s" % [case["expected"], actual])
 
 func _test_combat_deck() -> void:
 	if deck_manager == null or data_registry == null:

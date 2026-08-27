@@ -1,0 +1,19 @@
+{
+  "schema_version": "1.0.0",
+  "tool": "agent-sprite-forge",
+  "repository": "https://github.com/0x0funky/agent-sprite-forge",
+  "commit": "64fd0b57d3f2ae117ef0a95e4c2decc25b4c9dd2",
+  "license": "MIT",
+  "integration": "external_offline_tool",
+  "vendored_code": false,
+  "allowed": ["sprite_cleanup", "alpha_cleanup", "atlas_layout", "props", "map_slicing"],
+  "forbidden": [
+    "canon_decision",
+    "human_gate_signature",
+    "automatic_promotion",
+    "paired_bjj_final_generation",
+    "runtime_dependency"
+  ],
+  "default_chroma": "#FF00FF",
+  "magenta_fringe_is_qa_failure": true
+}

@@ -16,7 +16,7 @@ APP_TITLE = "Cria World Director Service"
 OPENROUTER_URL = "https://openrouter.ai/api/v1/chat/completions"
 HF_ROUTER_URL = "https://router.huggingface.co/v1/chat/completions"
 ROOT = Path(__file__).resolve().parents[2]
-CATALOG_PATH = ROOT / "data" / "nft" / "nft_catalog_v01.json"
+CATALOG_PATH = ROOT / "docs" / "archived" / "data" / "nft" / "nft_catalog_v01.json"
 EVENTS_PATH = ROOT / "data" / "world" / "dynamic_events_v01.json"
 
 app = FastAPI(title=APP_TITLE, version="1.0.0")

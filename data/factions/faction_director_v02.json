@@ -54,6 +54,7 @@
   "factions": {
     "ALE": {
       "id": "ALE",
+      "primary_color": "#2E8FE2",
       "legacy_id": "os_aleluia",
       "name": "Os Aleluiado",
       "short_name": "Aleluiado",
@@ -98,6 +99,7 @@
     },
     "LEM": {
       "id": "LEM",
+      "primary_color": "#3FBF3F",
       "legacy_id": "la_ele_mil_vezes",
       "name": "Lá Ele Mil Vezes",
       "short_name": "Lá Ele",
@@ -142,10 +144,11 @@
     },
     "NTM": {
       "id": "NTM",
+      "primary_color": "#D93A2B",
       "legacy_id": "nos_tem_um_molho",
       "name": "Nós Tem Um Molho",
       "short_name": "Molho",
-      "headquarters": "zambiapunga",
+      "headquarters": "camamu_manguezal",
       "public_face": "Coletivo cultural de música, moda, festas, eventos e atletas carismáticos.",
       "hidden_face": "Máquina de dependência de imagem, contratos oportunistas e pressão social.",
       "desire": "Dominar a cultura popular e transformar atenção em poder econômico.",
@@ -181,7 +184,7 @@
         "encobrir_crise": 0.85,
         "negociar_tregua": 0.55
       },
-      "starting_territories": ["zambiapunga", "palco_cultural"],
+      "starting_territories": ["camamu_manguezal", "ferro_velho_da_lapa"],
       "preferred_debts": ["financeira", "imagem", "contrato"]
     }
   }
