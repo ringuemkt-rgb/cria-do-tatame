@@ -34,7 +34,7 @@
       "id": "scene_laele_olho_que_tudo_ve",
       "mission_id": "laele_olho_que_tudo_ve",
       "faction": "la_ele_mil_vezes",
-      "location": "colonia_nishimura",
+      "location": "colonia_nishiuchi",
       "camera": "dojo vazio de madrugada; Kenzo no centro; Marina nas sombras; lua entrando por fresta",
       "beats": [
         {"speaker": "kenzo_oraculo_kuroi", "line": "Enquanto voce treina, alguem observa."},

@@ -30,7 +30,7 @@
       "motto": "O Olho Tudo Ve, O Tatame Tudo Sabe",
       "axis": ["sombra", "foco", "dupla_face"],
       "leader": "kenzo_oraculo_kuroi",
-      "territories": ["colonia_nishimura", "ferro_velho_da_lapa", "beco_do_engenho"],
+      "territories": ["colonia_nishiuchi", "ferro_velho_da_lapa", "beco_do_engenho"],
       "colors": ["roxo", "vermelho", "dourado"],
       "symbol": "olho_ficcional_e_mao_abstrata",
       "origin": "Nasceu como dojo de precisao e silencio. Depois virou rede de leitura de bastidores, observacao de rivais e vantagem psicologica.",
@@ -44,7 +44,7 @@
         {"id": "akira_linha_tanaka", "role": "discipulo", "age": 24, "quote": "Arte ou negocio? E se os dois cobrarem alma?", "gameplay": "rival tecnico em conflito"},
         {"id": "hiro_estrategista_nakamura", "role": "calculo", "age": 31, "quote": "Nao existe sorte. Existe padrao.", "gameplay": "dilemas de previsao e escolha"}
       ],
-      "arenas": ["colonia_nishimura", "ferro_velho_da_lapa", "beco_do_engenho"],
+      "arenas": ["colonia_nishiuchi", "ferro_velho_da_lapa", "beco_do_engenho"],
       "key_missions": ["laele_olho_que_tudo_ve", "laele_previsao_garantida"]
     },
     "nos_tem_um_molho": {

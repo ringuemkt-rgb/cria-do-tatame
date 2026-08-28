@@ -43,7 +43,7 @@
     "ferro_velho_da_lapa": ["bg_far_neon_chuva", "bg_mid_metal", "play_area_concreto", "foreground_correntes", "particles_chuva_faiscas"],
     "manguezal_profundo": ["bg_far_mangue_noite", "bg_mid_arvores", "play_area_lama", "foreground_raizes", "particles_umidade"],
     "praia_de_pratigi": ["bg_far_mar", "bg_mid_barracas", "play_area_areia", "foreground_celulares", "particles_spray_mar"],
-    "colonia_nishimura": ["bg_far_colonia", "bg_mid_portao", "play_area_tatame_silencioso", "foreground_lanternas", "particles_poeira_luz"],
+    "colonia_nishiuchi": ["bg_far_colonia", "bg_mid_portao", "play_area_tatame_silencioso", "foreground_lanternas", "particles_poeira_luz"],
     "budokan_das_aguas": ["bg_far_agua", "bg_mid_arcos", "play_area_tatame_elite", "foreground_reflexos", "particles_neblina"]
   }
 }

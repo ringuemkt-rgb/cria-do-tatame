@@ -93,7 +93,7 @@ Cor nunca é o único sinal; tipo de linha e ícone repetem o significado.
 | Facção | Cor | Territórios iniciais |
 |---|---|---|
 | ALE | `#2E8FE2` | Arena do Dique + Budokan das Águas |
-| LEM | `#3FBF3F` | Colônia Nishimura + Beco do Engenho |
+| LEM | `#3FBF3F` | Colônia Nishiuchi + Beco do Engenho |
 | NTM | `#D93A2B` | Manguezal de Camamu + Ferro Velho da Lapa |
 
 ---

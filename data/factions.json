@@ -75,7 +75,7 @@
       "colors": ["verde", "preto", "dourado"],
       "primary_color": "#3FBF3F",
       "symbol": "olho_ficcional_e_mao_abstrata",
-      "territories": ["colonia_nishimura", "beco_do_engenho"],
+      "territories": ["colonia_nishiuchi", "beco_do_engenho"],
       "description": "Informação, observação de luta, arquivos, rumores e poder oculto.",
       "system_role": "inteligencia_e_previsao"
     },

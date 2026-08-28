@@ -103,7 +103,7 @@
       "legacy_id": "la_ele_mil_vezes",
       "name": "Lá Ele Mil Vezes",
       "short_name": "Lá Ele",
-      "headquarters": "colonia_nishimura",
+      "headquarters": "colonia_nishiuchi",
       "public_face": "Dojo técnico, análise de luta, memória histórica e estudo de padrões.",
       "hidden_face": "Rede de observadores, dossiês, rumores e vantagens informacionais.",
       "desire": "Saber antes dos outros e tornar toda imprevisibilidade calculável.",
@@ -139,7 +139,7 @@
         "encobrir_crise": 1.0,
         "negociar_tregua": 0.65
       },
-      "starting_territories": ["colonia_nishimura", "beco_do_engenho"],
+      "starting_territories": ["colonia_nishiuchi", "beco_do_engenho"],
       "preferred_debts": ["segredo", "informacao", "honra"]
     },
     "NTM": {
