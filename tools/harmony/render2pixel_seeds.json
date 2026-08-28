@@ -1,0 +1,12 @@
+{
+  "schema_version": "1.0.0",
+  "seed_policy": "fixed_per_gold_technique",
+  "seeds": {
+    "grip_de_ferro": 22923801,
+    "baiana": 22923802,
+    "sprawl": 22923803,
+    "corte_joelho": 22923804,
+    "cem_quilos": 22923805,
+    "encerramento_tecnico": 22923806
+  }
+}

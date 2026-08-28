@@ -1,0 +1,223 @@
+#!/usr/bin/env python3
+"""Materialize a fixed-seed ComfyUI request and immutable derivation sidecar."""
+
+from __future__ import annotations
+
+import argparse
+import hashlib
+import json
+import sys
+import tempfile
+import urllib.error
+import urllib.parse
+import urllib.request
+from pathlib import Path
+from typing import Any
+
+
+HERE = Path(__file__).resolve().parent
+WORKFLOW_PATH = HERE / "render2pixel_api.json"
+SEEDS_PATH = HERE / "render2pixel_seeds.json"
+SIDECAR_TEMPLATE_PATH = HERE / "render2pixel.sidecar.json"
+
+
+def _read(path: Path) -> dict[str, Any]:
+    value = json.loads(path.read_text(encoding="utf-8"))
+    if not isinstance(value, dict):
+        raise ValueError(f"{path}: root must be an object")
+    return value
+
+
+def _sha256_bytes(raw: bytes) -> str:
+    return hashlib.sha256(raw).hexdigest()
+
+
+def _sha256_file(path: Path) -> str:
+    digest = hashlib.sha256()
+    with path.open("rb") as handle:
+        for block in iter(lambda: handle.read(1024 * 1024), b""):
+            digest.update(block)
+    return digest.hexdigest()
+
+
+def _json_bytes(value: Any) -> bytes:
+    return (json.dumps(value, ensure_ascii=False, indent=2, sort_keys=True) + "\n").encode("utf-8")
+
+
+def _replace(value: Any, replacements: dict[str, Any]) -> Any:
+    if isinstance(value, dict):
+        return {key: _replace(item, replacements) for key, item in value.items()}
+    if isinstance(value, list):
+        return [_replace(item, replacements) for item in value]
+    if isinstance(value, str):
+        if value in replacements:
+            return replacements[value]
+        for token, replacement in replacements.items():
+            value = value.replace(token, str(replacement))
+    return value
+
+
+def _local_server(server: str) -> str:
+    parsed = urllib.parse.urlparse(server)
+    if parsed.scheme not in {"http", "https"} or parsed.hostname not in {"127.0.0.1", "localhost", "::1"}:
+        raise ValueError("ComfyUI submission is restricted to an explicit local server")
+    return server.rstrip("/")
+
+
+def build_request(
+    technique_id: str,
+    input_path: Path,
+    checkpoint: str,
+    checkpoint_license: str,
+) -> tuple[dict[str, Any], dict[str, Any]]:
+    workflow = _read(WORKFLOW_PATH)
+    seeds = _read(SEEDS_PATH).get("seeds", {})
+    if technique_id not in seeds:
+        raise ValueError("technique must be one of the six fixed-seed gold IDs")
+    if not input_path.is_file():
+        raise ValueError("input evidence image does not exist")
+    seed = seeds[technique_id]
+    request = {
+        "client_id": f"cria-harmony-{technique_id}-{seed}",
+        "prompt": _replace(
+            workflow["prompt"],
+            {
+                "{{INPUT_IMAGE}}": input_path.name,
+                "{{CHECKPOINT}}": checkpoint,
+                "{{SEED}}": seed,
+                "{{TECHNIQUE_ID}}": technique_id,
+            },
+        ),
+    }
+    request_raw = _json_bytes(request)
+    sidecar = {
+        "schema_version": "1.0.0",
+        "state": "ai_derived_request",
+        "shipping": False,
+        "promotion": "forbidden",
+        "technique_id": technique_id,
+        "source_file": input_path.name,
+        "source_sha256": _sha256_file(input_path),
+        "workflow_sha256": _sha256_file(WORKFLOW_PATH),
+        "seed": seed,
+        "checkpoint": checkpoint,
+        "checkpoint_license": checkpoint_license,
+        "request_sha256": _sha256_bytes(request_raw),
+        "capture_is_evidence": True,
+        "ai_is_derivative": True,
+        "runtime_authority": False,
+        "human_gates": {"01_BJJ": "pending", "02_ANIMATION": "pending", "03_ART": "pending"},
+        "quarantine": {"SMPL": "blocked", "SCAIL": "blocked"},
+    }
+    return request, sidecar
+
+
+def _write_bundle(output_dir: Path, request: dict[str, Any], sidecar: dict[str, Any]) -> tuple[Path, Path]:
+    output_dir.mkdir(parents=True, exist_ok=True)
+    technique_id = sidecar["technique_id"]
+    request_path = output_dir / f"{technique_id}.comfy_request.json"
+    sidecar_path = output_dir / f"{technique_id}.license.json"
+    request_path.write_bytes(_json_bytes(request))
+    sidecar_path.write_bytes(_json_bytes(sidecar))
+    return request_path, sidecar_path
+
+
+def _submit(server: str, request: dict[str, Any]) -> dict[str, Any]:
+    endpoint = _local_server(server) + "/prompt"
+    http_request = urllib.request.Request(
+        endpoint,
+        data=_json_bytes(request),
+        headers={"Content-Type": "application/json"},
+        method="POST",
+    )
+    try:
+        with urllib.request.urlopen(http_request, timeout=30) as response:
+            value = json.loads(response.read().decode("utf-8"))
+    except (urllib.error.URLError, TimeoutError, json.JSONDecodeError) as exc:
+        raise ValueError(f"ComfyUI request failed: {exc}") from exc
+    if not isinstance(value, dict):
+        raise ValueError("ComfyUI response is not an object")
+    return value
+
+
+def _self_test() -> None:
+    seeds = _read(SEEDS_PATH).get("seeds", {})
+    if len(seeds) != 6 or len(set(seeds.values())) != 6 or not all(isinstance(value, int) for value in seeds.values()):
+        raise AssertionError("six unique integer seeds are required")
+    workflow = _read(WORKFLOW_PATH)
+    if workflow.get("status") != "template_checkpoint_unresolved":
+        raise AssertionError("workflow must remain blocked until a checkpoint license is recorded")
+    template = _read(SIDECAR_TEMPLATE_PATH)
+    if template.get("promotion") != "forbidden" or template.get("shipping") is not False:
+        raise AssertionError("sidecar template permits promotion or shipping")
+    with tempfile.TemporaryDirectory(prefix="harmony-render2pixel-") as temp:
+        source = Path(temp) / "evidence.png"
+        source.write_bytes(b"not-an-image-self-test")
+        request, sidecar = build_request("baiana", source, "__UNRESOLVED_CHECKPOINT__", "UNRESOLVED")
+        if request["prompt"]["6"]["inputs"]["seed"] != seeds["baiana"]:
+            raise AssertionError("fixed seed was not applied")
+        if sidecar["shipping"] is not False or sidecar["runtime_authority"] is not False:
+            raise AssertionError("derived request claims shipping or runtime authority")
+    try:
+        _local_server("https://example.com")
+    except ValueError:
+        return
+    raise AssertionError("non-local ComfyUI server was accepted")
+
+
+def main() -> int:
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--technique")
+    parser.add_argument("--input", type=Path)
+    parser.add_argument("--output-dir", type=Path)
+    parser.add_argument("--checkpoint", default="__UNRESOLVED_CHECKPOINT__")
+    parser.add_argument("--checkpoint-license", default="UNRESOLVED")
+    parser.add_argument("--submit", action="store_true")
+    parser.add_argument("--server")
+    parser.add_argument("--self-test", action="store_true")
+    args = parser.parse_args()
+    if args.self_test:
+        try:
+            _self_test()
+        except (OSError, ValueError, AssertionError, json.JSONDecodeError) as exc:
+            print(json.dumps({"tool": "render2pixel", "self_test": "FAIL", "error": str(exc)}))
+            return 1
+        print(json.dumps({"tool": "render2pixel", "self_test": "PASS"}))
+        return 0
+    if not args.technique or args.input is None or args.output_dir is None:
+        parser.error("--technique, --input and --output-dir are required")
+    if args.submit and (args.checkpoint.startswith("__UNRESOLVED") or args.checkpoint_license == "UNRESOLVED"):
+        parser.error("--submit requires an identified checkpoint and resolved --checkpoint-license")
+    if args.submit and not args.server:
+        parser.error("--submit requires --server pointing to a local ComfyUI")
+    try:
+        request, sidecar = build_request(
+            args.technique, args.input, args.checkpoint, args.checkpoint_license
+        )
+        request_path, sidecar_path = _write_bundle(args.output_dir, request, sidecar)
+        response = None
+        if args.submit:
+            response = _submit(args.server, request)
+            sidecar["state"] = "ai_derived_candidate_pending_output_reconciliation"
+            sidecar["comfy_prompt_id"] = response.get("prompt_id")
+            sidecar_path.write_bytes(_json_bytes(sidecar))
+    except (OSError, ValueError, json.JSONDecodeError) as exc:
+        print(json.dumps({"tool": "render2pixel", "status": "FAIL", "error": str(exc)}))
+        return 1
+    print(
+        json.dumps(
+            {
+                "tool": "render2pixel",
+                "status": "SUBMITTED" if args.submit else "DRY_RUN",
+                "request": str(request_path),
+                "sidecar": str(sidecar_path),
+                "response": response,
+            },
+            ensure_ascii=False,
+        )
+    )
+    return 0
+
+
+if __name__ == "__main__":
+    sys.exit(main())

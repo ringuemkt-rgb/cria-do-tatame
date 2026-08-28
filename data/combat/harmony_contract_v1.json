@@ -1,0 +1,489 @@
+{
+  "schema_version": "1.0.0",
+  "contract_id": "harmony_slice_gold_v1",
+  "status": "specified_not_integrated",
+  "base": {
+    "branch": "lead/calibracao-v1",
+    "commit": "cfbc5723f2f2f2c03fb9c7ef82cfd7dde65d58a9"
+  },
+  "authority": {
+    "runtime": "CombatManager_and_active_resolvers",
+    "presentation": "harmony_sync_map",
+    "human_gate_signer": "Mestre Satoshi",
+    "principles": [
+      "captura=evidencia_ia=derivado",
+      "runtime_decide_animacao_apresenta",
+      "no_automatic_promotion"
+    ]
+  },
+  "decision_register": {
+    "D229": {
+      "status": "known_from_authorized_M_MASTER_order",
+      "canonical_unit": "ms",
+      "input_buffer_ms": 100,
+      "training_adjustment_ms": 67,
+      "master_adjustment_ms": -33,
+      "device_hz_conversion_owner": "runtime"
+    },
+    "D230": {
+      "status": "known_from_authorized_M_MASTER_order",
+      "gamepad": {
+        "contextual": ["A", "B", "X", "Y", "RB"],
+        "defense": "RT",
+        "special": "LB",
+        "tap": "HOLD_B_when_submission_defense_true"
+      }
+    },
+    "D231": {
+      "status": "known_from_authorized_M_MASTER_order",
+      "priority": ["tap", "pause_menu", "defense", "contextual"]
+    },
+    "D232": {
+      "status": "known_from_authorized_M_MASTER_order",
+      "scale_destination": "docs/future/harmony_scale_v1.md"
+    },
+    "D233": {
+      "status": "known_from_authorized_M_MASTER_order",
+      "governing_question": "needed_to_prove_slice_now"
+    },
+    "D234": {"status": "missing_body_blocked"},
+    "D235": {"status": "missing_body_blocked"},
+    "D236": {"status": "missing_body_blocked"},
+    "D237": {"status": "missing_body_blocked"},
+    "D238": {
+      "status": "known_from_authorized_M30_order",
+      "identity_rule": "card_runtime_sync_map_hud_mastery_1_to_1_by_technique_id"
+    },
+    "D239": {"status": "missing_body_blocked"}
+  },
+  "timing_policy": {
+    "canonical_unit": "ms",
+    "input_buffer_ms": 100,
+    "difficulty_adjustments_ms": {
+      "training": 67,
+      "standard": 0,
+      "master": -33
+    },
+    "active_runtime_observation": {
+      "base_defense_window_ms": 250,
+      "source": "src/combat/DefenseTimingResolver.gd default defense_window 0.25 seconds",
+      "migration_status": "contract_ms_not_integrated"
+    },
+    "preview": {
+      "fps": 12,
+      "frame_count": 48,
+      "duration_ms": 4000,
+      "authority": false
+    }
+  },
+  "identity_layers": ["card", "runtime_ms", "sync_map", "hud", "mastery"],
+  "gold_technique_order": [
+    "grip_de_ferro",
+    "baiana",
+    "sprawl",
+    "corte_joelho",
+    "cem_quilos",
+    "encerramento_tecnico"
+  ],
+  "techniques": [
+    {
+      "technique_id": "grip_de_ferro",
+      "display_name": "Grip de Ferro",
+      "source": "data/techniques.json",
+      "card": {
+        "technique_id": "grip_de_ferro",
+        "runtime_card_id": "card_grip_de_ferro_01",
+        "binding_status": "existing",
+        "kind": "active",
+        "category": "pegada",
+        "valid_states": ["PLAYER_STANDING_NEUTRAL"],
+        "activation_cost": {"focus": 1}
+      },
+      "runtime_ms": {
+        "technique_id": "grip_de_ferro",
+        "entry_state": "PLAYER_STANDING_NEUTRAL",
+        "success_state": "PLAYER_TOP_CLINCH",
+        "base_defense_window_ms": 250,
+        "input_buffer_ms": 100,
+        "cost": {"gas": 4, "focus": 1},
+        "runtime_authority": true
+      },
+      "sync_map": {
+        "technique_id": "grip_de_ferro",
+        "sequence_id": "harmony_grip_de_ferro_pair_v1",
+        "profile": "positional",
+        "attacker_id": "ruan_macacao",
+        "defender_id": "davi_relampago",
+        "shared_origin": {"x": 128, "y": 220},
+        "entry_state": "PLAYER_STANDING_NEUTRAL",
+        "success_state": "PLAYER_TOP_CLINCH",
+        "runtime_authority": false,
+        "phases": [
+          {"id": "anticipation", "start_ms": 0, "end_ms": 500},
+          {"id": "entry", "start_ms": 500, "end_ms": 1167},
+          {"id": "establish_contact", "start_ms": 1167, "end_ms": 1833},
+          {"id": "stabilize_control", "start_ms": 1833, "end_ms": 2500},
+          {"id": "response", "start_ms": 2500, "end_ms": 3333},
+          {"id": "recovery", "start_ms": 3333, "end_ms": 4000}
+        ],
+        "contacts": [
+          {"id": "primary_grip", "a": "ruan.right_hand", "b": "davi.left_sleeve", "start_ms": 1167, "end_ms": 2500, "review": "pending_human_BJJ"}
+        ],
+        "branches": ["success", "defended", "safe_recovery"],
+        "fallback_animation": "paired_neutral_clinch"
+      },
+      "hud": {
+        "technique_id": "grip_de_ferro",
+        "slot_policy": "eligible_contextual_pool",
+        "label": "GRIP DE FERRO",
+        "eligible_feedback": "Pegada disponível",
+        "disabled_reason_keys": ["wrong_position", "resource_missing", "card_not_in_hand"]
+      },
+      "mastery": {
+        "technique_id": "grip_de_ferro",
+        "runtime_card_id": "card_grip_de_ferro_01",
+        "status": "existing_runtime_card",
+        "level_range": [1, 5],
+        "progress_source": "DeckManager"
+      }
+    },
+    {
+      "technique_id": "baiana",
+      "display_name": "Baiana",
+      "source": "data/techniques.json",
+      "card": {
+        "technique_id": "baiana",
+        "runtime_card_id": "card_baiana_01",
+        "binding_status": "existing",
+        "kind": "active",
+        "category": "queda",
+        "valid_states": ["PLAYER_STANDING_NEUTRAL"],
+        "activation_cost": {"focus": 2, "gas": 1}
+      },
+      "runtime_ms": {
+        "technique_id": "baiana",
+        "entry_state": "PLAYER_STANDING_NEUTRAL",
+        "success_state": "PLAYER_TOP_GUARD",
+        "base_defense_window_ms": 250,
+        "input_buffer_ms": 100,
+        "cost": {"gas": 10, "focus": 4},
+        "runtime_authority": true
+      },
+      "sync_map": {
+        "technique_id": "baiana",
+        "sequence_id": "harmony_baiana_pair_v1",
+        "profile": "positional",
+        "attacker_id": "ruan_macacao",
+        "defender_id": "davi_relampago",
+        "shared_origin": {"x": 128, "y": 220},
+        "entry_state": "PLAYER_STANDING_NEUTRAL",
+        "success_state": "PLAYER_TOP_GUARD",
+        "runtime_authority": false,
+        "phases": [
+          {"id": "anticipation", "start_ms": 0, "end_ms": 500},
+          {"id": "entry", "start_ms": 500, "end_ms": 1167},
+          {"id": "establish_contact", "start_ms": 1167, "end_ms": 1833},
+          {"id": "stabilize_control", "start_ms": 1833, "end_ms": 2500},
+          {"id": "response", "start_ms": 2500, "end_ms": 3333},
+          {"id": "recovery", "start_ms": 3333, "end_ms": 4000}
+        ],
+        "contacts": [
+          {"id": "primary_grip", "a": "ruan.right_hand", "b": "davi.gi_torso", "start_ms": 900, "end_ms": 2500, "review": "pending_human_BJJ"},
+          {"id": "leg_control_contact", "a": "ruan.left_arm", "b": "davi.right_leg", "start_ms": 1167, "end_ms": 2500, "review": "pending_human_BJJ"},
+          {"id": "tatame_contact", "a": "davi.support_chain", "b": "tatame", "start_ms": 2500, "end_ms": 4000, "review": "pending_human_BJJ"}
+        ],
+        "branches": ["success", "sprawl_defense", "safe_recovery"],
+        "fallback_animation": "paired_takedown_blocking"
+      },
+      "hud": {
+        "technique_id": "baiana",
+        "slot_policy": "eligible_contextual_pool",
+        "label": "BAIANA",
+        "eligible_feedback": "Entrada de queda disponível",
+        "disabled_reason_keys": ["wrong_position", "resource_missing", "card_not_in_hand"]
+      },
+      "mastery": {
+        "technique_id": "baiana",
+        "runtime_card_id": "card_baiana_01",
+        "status": "existing_runtime_card",
+        "level_range": [1, 5],
+        "progress_source": "DeckManager"
+      }
+    },
+    {
+      "technique_id": "sprawl",
+      "display_name": "Sprawl",
+      "source": "data/techniques.json",
+      "card": {
+        "technique_id": "sprawl",
+        "runtime_card_id": "card_sprawl_02",
+        "binding_status": "existing",
+        "kind": "active",
+        "category": "defesa",
+        "valid_states": ["PLAYER_STANDING_NEUTRAL"],
+        "activation_cost": {"focus": 1}
+      },
+      "runtime_ms": {
+        "technique_id": "sprawl",
+        "entry_state": "PLAYER_STANDING_NEUTRAL",
+        "success_state": "PLAYER_STANDING_NEUTRAL",
+        "base_defense_window_ms": 250,
+        "input_buffer_ms": 100,
+        "cost": {"gas": 4, "focus": 2},
+        "runtime_authority": true
+      },
+      "sync_map": {
+        "technique_id": "sprawl",
+        "sequence_id": "harmony_sprawl_pair_v1",
+        "profile": "positional",
+        "attacker_id": "davi_relampago",
+        "defender_id": "ruan_macacao",
+        "shared_origin": {"x": 128, "y": 220},
+        "entry_state": "PLAYER_STANDING_NEUTRAL",
+        "success_state": "PLAYER_STANDING_NEUTRAL",
+        "runtime_authority": false,
+        "phases": [
+          {"id": "anticipation", "start_ms": 0, "end_ms": 500},
+          {"id": "entry", "start_ms": 500, "end_ms": 1167},
+          {"id": "establish_contact", "start_ms": 1167, "end_ms": 1833},
+          {"id": "stabilize_control", "start_ms": 1833, "end_ms": 2500},
+          {"id": "response", "start_ms": 2500, "end_ms": 3333},
+          {"id": "recovery", "start_ms": 3333, "end_ms": 4000}
+        ],
+        "contacts": [
+          {"id": "defensive_frame", "a": "davi.forearm", "b": "ruan.shoulder", "start_ms": 1167, "end_ms": 2500, "review": "pending_human_BJJ"},
+          {"id": "leg_control_contact", "a": "davi.hip_line", "b": "ruan.shoulder_line", "start_ms": 1833, "end_ms": 3333, "review": "pending_human_BJJ"},
+          {"id": "tatame_contact", "a": "davi.feet", "b": "tatame", "start_ms": 0, "end_ms": 4000, "review": "pending_human_BJJ"}
+        ],
+        "branches": ["success", "reattack", "safe_recovery"],
+        "fallback_animation": "paired_sprawl_blocking"
+      },
+      "hud": {
+        "technique_id": "sprawl",
+        "slot_policy": "defense_RT_when_eligible",
+        "label": "SPRAWL",
+        "eligible_feedback": "Defesa de queda disponível",
+        "disabled_reason_keys": ["no_attack_window", "resource_missing", "card_not_in_hand"]
+      },
+      "mastery": {
+        "technique_id": "sprawl",
+        "runtime_card_id": "card_sprawl_02",
+        "status": "existing_runtime_card",
+        "level_range": [1, 5],
+        "progress_source": "DeckManager"
+      }
+    },
+    {
+      "technique_id": "corte_joelho",
+      "display_name": "Corte de Joelho",
+      "source": "data/techniques.json",
+      "card": {
+        "technique_id": "corte_joelho",
+        "runtime_card_id": null,
+        "binding_status": "missing_runtime_card_blocked",
+        "kind": "active",
+        "category": "passagem",
+        "valid_states": ["PLAYER_TOP_GUARD"],
+        "activation_cost": {},
+        "activation_cost_policy": "runtime_technique_cost_only_until_card_decision"
+      },
+      "runtime_ms": {
+        "technique_id": "corte_joelho",
+        "entry_state": "PLAYER_TOP_GUARD",
+        "success_state": "PLAYER_TOP_SIDE",
+        "base_defense_window_ms": 250,
+        "input_buffer_ms": 100,
+        "cost": {"gas": 8, "focus": 3},
+        "runtime_authority": true
+      },
+      "sync_map": {
+        "technique_id": "corte_joelho",
+        "sequence_id": "harmony_corte_joelho_pair_v1",
+        "profile": "positional",
+        "attacker_id": "ruan_macacao",
+        "defender_id": "davi_relampago",
+        "shared_origin": {"x": 128, "y": 220},
+        "entry_state": "PLAYER_TOP_GUARD",
+        "success_state": "PLAYER_TOP_SIDE",
+        "runtime_authority": false,
+        "phases": [
+          {"id": "anticipation", "start_ms": 0, "end_ms": 500},
+          {"id": "entry", "start_ms": 500, "end_ms": 1167},
+          {"id": "establish_contact", "start_ms": 1167, "end_ms": 1833},
+          {"id": "stabilize_control", "start_ms": 1833, "end_ms": 2500},
+          {"id": "response", "start_ms": 2500, "end_ms": 3333},
+          {"id": "recovery", "start_ms": 3333, "end_ms": 4000}
+        ],
+        "contacts": [
+          {"id": "primary_grip", "a": "ruan.upper_body_frame", "b": "davi.shoulder_line", "start_ms": 500, "end_ms": 2500, "review": "pending_human_BJJ"},
+          {"id": "leg_control_contact", "a": "ruan.knee_line", "b": "davi.thigh_line", "start_ms": 1167, "end_ms": 2500, "review": "pending_human_BJJ"},
+          {"id": "tatame_contact", "a": "davi.support_chain", "b": "tatame", "start_ms": 0, "end_ms": 4000, "review": "pending_human_BJJ"}
+        ],
+        "branches": ["success", "guard_recovery", "safe_recovery"],
+        "fallback_animation": "paired_guard_pass_blocking"
+      },
+      "hud": {
+        "technique_id": "corte_joelho",
+        "slot_policy": "eligible_contextual_pool",
+        "label": "CORTE DE JOELHO",
+        "eligible_feedback": "Passagem disponível",
+        "disabled_reason_keys": ["wrong_position", "resource_missing", "runtime_card_missing"]
+      },
+      "mastery": {
+        "technique_id": "corte_joelho",
+        "runtime_card_id": null,
+        "status": "blocked_until_runtime_card_exists",
+        "level_range": [1, 5],
+        "progress_source": "DeckManager"
+      }
+    },
+    {
+      "technique_id": "cem_quilos",
+      "display_name": "Cem Quilos",
+      "source": "data/techniques.json",
+      "card": {
+        "technique_id": "cem_quilos",
+        "runtime_card_id": "card_cem_quilos_01",
+        "binding_status": "existing",
+        "kind": "active",
+        "category": "controle",
+        "valid_states": ["PLAYER_TOP_SIDE"],
+        "activation_cost": {"gas": 2}
+      },
+      "runtime_ms": {
+        "technique_id": "cem_quilos",
+        "entry_state": "PLAYER_TOP_SIDE",
+        "success_state": "PLAYER_TOP_SIDE",
+        "base_defense_window_ms": 250,
+        "input_buffer_ms": 100,
+        "cost": {"gas": 3, "focus": 0},
+        "runtime_authority": true
+      },
+      "sync_map": {
+        "technique_id": "cem_quilos",
+        "sequence_id": "harmony_cem_quilos_pair_v1",
+        "profile": "positional",
+        "attacker_id": "ruan_macacao",
+        "defender_id": "davi_relampago",
+        "shared_origin": {"x": 128, "y": 220},
+        "entry_state": "PLAYER_TOP_SIDE",
+        "success_state": "PLAYER_TOP_SIDE",
+        "runtime_authority": false,
+        "phases": [
+          {"id": "anticipation", "start_ms": 0, "end_ms": 500},
+          {"id": "entry", "start_ms": 500, "end_ms": 1167},
+          {"id": "establish_contact", "start_ms": 1167, "end_ms": 1833},
+          {"id": "stabilize_control", "start_ms": 1833, "end_ms": 2500},
+          {"id": "response", "start_ms": 2500, "end_ms": 3333},
+          {"id": "recovery", "start_ms": 3333, "end_ms": 4000}
+        ],
+        "contacts": [
+          {"id": "primary_grip", "a": "ruan.near_arm", "b": "davi.far_shoulder", "start_ms": 1167, "end_ms": 3333, "review": "pending_human_BJJ"},
+          {"id": "tatame_contact", "a": "ruan.support_chain", "b": "tatame", "start_ms": 0, "end_ms": 4000, "review": "pending_human_BJJ"},
+          {"id": "tatame_contact_defender", "a": "davi.support_chain", "b": "tatame", "start_ms": 0, "end_ms": 4000, "review": "pending_human_BJJ"}
+        ],
+        "branches": ["stabilized", "frame_escape", "safe_recovery"],
+        "fallback_animation": "paired_side_control_blocking"
+      },
+      "hud": {
+        "technique_id": "cem_quilos",
+        "slot_policy": "eligible_contextual_pool",
+        "label": "CEM QUILOS",
+        "eligible_feedback": "Estabilização disponível",
+        "disabled_reason_keys": ["wrong_position", "resource_missing", "card_not_in_hand"]
+      },
+      "mastery": {
+        "technique_id": "cem_quilos",
+        "runtime_card_id": "card_cem_quilos_01",
+        "status": "existing_runtime_card",
+        "level_range": [1, 5],
+        "progress_source": "DeckManager"
+      }
+    },
+    {
+      "technique_id": "encerramento_tecnico",
+      "display_name": "Encerramento Técnico",
+      "source": "data/techniques.json",
+      "card": {
+        "technique_id": "encerramento_tecnico",
+        "runtime_card_id": null,
+        "binding_status": "missing_runtime_card_blocked",
+        "kind": "active",
+        "category": "finalizacao",
+        "valid_states": ["PLAYER_SUBMISSION_ATTACK"],
+        "activation_cost": {},
+        "activation_cost_policy": "runtime_technique_cost_only_until_card_decision"
+      },
+      "runtime_ms": {
+        "technique_id": "encerramento_tecnico",
+        "entry_state": "PLAYER_SUBMISSION_ATTACK",
+        "success_state": "RESET",
+        "base_defense_window_ms": 250,
+        "input_buffer_ms": 100,
+        "cost": {"gas": 14, "focus": 8},
+        "submission_defense": true,
+        "tap_priority": 1,
+        "runtime_authority": true
+      },
+      "sync_map": {
+        "technique_id": "encerramento_tecnico",
+        "sequence_id": "harmony_encerramento_tecnico_pair_v1",
+        "profile": "submission",
+        "attacker_id": "ruan_macacao",
+        "defender_id": "davi_relampago",
+        "shared_origin": {"x": 128, "y": 220},
+        "entry_state": "PLAYER_SUBMISSION_ATTACK",
+        "success_state": "RESET",
+        "runtime_authority": false,
+        "phases": [
+          {"id": "setup", "start_ms": 0, "end_ms": 500},
+          {"id": "isolation", "start_ms": 500, "end_ms": 1000},
+          {"id": "alignment", "start_ms": 1000, "end_ms": 1500},
+          {"id": "control", "start_ms": 1500, "end_ms": 2200},
+          {"id": "technical_pressure", "start_ms": 2200, "end_ms": 2800},
+          {"id": "tap_or_escape", "start_ms": 2800, "end_ms": 3300},
+          {"id": "release_recovery", "start_ms": 3300, "end_ms": 4000}
+        ],
+        "contacts": [
+          {"id": "control_contact", "a": "ruan.control_chain", "b": "davi.defense_chain", "start_ms": 1000, "end_ms": 3300, "review": "pending_human_BJJ"},
+          {"id": "tap_signal", "a": "davi.free_hand", "b": "ruan_or_tatame", "start_ms": 2800, "end_ms": 3300, "review": "pending_human_BJJ"},
+          {"id": "release_visible", "a": "ruan.control_chain", "b": "davi.defense_chain", "start_ms": 3300, "end_ms": 4000, "review": "pending_human_BJJ"}
+        ],
+        "branches": ["tap_release", "escape_release", "referee_release"],
+        "interrupt_windows": [
+          {"id": "tap_sovereign", "start_ms": 1500, "end_ms": 3300, "priority": 1, "result": "immediate_release"}
+        ],
+        "fallback_animation": "paired_submission_safe_release"
+      },
+      "hud": {
+        "technique_id": "encerramento_tecnico",
+        "slot_policy": "eligible_contextual_pool",
+        "label": "ENCERRAMENTO",
+        "submission_context_swap": {"control": "HOLD_B", "label": "TAP", "visible": true},
+        "eligible_feedback": "Pressão técnica — TAP sempre disponível",
+        "disabled_reason_keys": ["wrong_position", "resource_missing", "runtime_card_missing"]
+      },
+      "mastery": {
+        "technique_id": "encerramento_tecnico",
+        "runtime_card_id": null,
+        "status": "blocked_until_runtime_card_exists",
+        "level_range": [1, 5],
+        "progress_source": "DeckManager"
+      }
+    }
+  ],
+  "safety": {
+    "tap_sovereign": true,
+    "tap_priority": 1,
+    "release_required": true,
+    "head_impact_forbidden": true,
+    "strikes_forbidden": true,
+    "dead_input_forbidden": true
+  },
+  "quarantine": {
+    "blocked_toolchains": ["SMPL", "SCAIL"],
+    "imports_allowed": false,
+    "downloads_allowed": false,
+    "runtime_allowed": false
+  }
+}

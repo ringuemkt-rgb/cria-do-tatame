@@ -1,0 +1,28 @@
+{
+  "schema_version": "1.0.0",
+  "sidecar_template": true,
+  "state": "ai_derived_candidate",
+  "shipping": false,
+  "promotion": "forbidden",
+  "capture_is_evidence": true,
+  "ai_is_derivative": true,
+  "required_fields": [
+    "technique_id",
+    "source_sha256",
+    "workflow_sha256",
+    "seed",
+    "checkpoint",
+    "checkpoint_license",
+    "request_sha256",
+    "human_gates"
+  ],
+  "human_gates": {
+    "01_BJJ": "pending",
+    "02_ANIMATION": "pending",
+    "03_ART": "pending"
+  },
+  "quarantine": {
+    "SMPL": "blocked",
+    "SCAIL": "blocked"
+  }
+}
