@@ -37,7 +37,7 @@
       "mission_links": ["ato3_comunicado_ou_silencio"],
       "visual_mood": "areia, mar, celulares, crowd leve"
     },
-    "colonia_nishimura": {
+    "colonia_nishiuchi": {
       "role": "disciplina fria",
       "story_function": "Lugar de silencio, precisao e custo do erro.",
       "gameplay_modifiers": {"focus_bonus": 0.12, "error_cost_bonus": 0.15, "legado_on_win": 2},

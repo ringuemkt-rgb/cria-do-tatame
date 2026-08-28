@@ -106,7 +106,7 @@ Os cinco finais e seus IDs de runtime são:
 ## D13 — Territórios e cores das três facções
 
 - NTM: Manguezal + Ferro Velho, cor primária `#D93A2B`;
-- LEM: Colônia Nishimura + Beco do Engenho, cor primária `#3FBF3F`;
+- LEM: Colônia Nishiuchi + Beco do Engenho, cor primária `#3FBF3F`;
 - ALE: domínio atual preservado, cor primária `#2E8FE2`.
 
 As três facções permanecem integralmente ficcionais. `data/factions.json`, o contrato v4.2 e o geo canon devem permanecer coerentes.
@@ -221,7 +221,7 @@ Q-REF 01–10 é a régua de comparação visual. Referência orienta composiç�
 
 ## D41 — Bíblia v1 de stages
 
-A Bíblia v1 usa nove pacotes de produção: `Terreiro Vivo` (Dia + Pôr do Sol), `Terreiro Noite-do-Fogo`, Dique, Nishimura, Ponte do Saci, Pratigi, Ferro Velho, Manguezal e Budokan. Assim, as dez variantes nomeadas não inventam um décimo local.
+A Bíblia v1 usa nove pacotes de produção: `Terreiro Vivo` (Dia + Pôr do Sol), `Terreiro Noite-do-Fogo`, Dique, Nishiuchi, Ponte do Saci, Pratigi, Ferro Velho, Manguezal e Budokan. Assim, as dez variantes nomeadas não inventam um décimo local.
 
 ## D42 — Set dressing religioso
 
@@ -246,6 +246,10 @@ O hub Terreiro apresenta seis ações contextuais, desafios, progresso, Cria Liv
 ## D47 — Pipeline e orçamento de stages
 
 Cada stage nasce com low-end desde o primeiro commit. Orçamento por stage: no máximo dois atlas de 2048², 24 draw calls, 64 partículas simultâneas e crowd conforme D36.
+
+## D86 — Nome canônico corrigido
+
+Colônia Nishiuchi (não Nishimura). Todas as referências anteriores são erro.
 
 ## Resoluções operacionais do Lote 00
 

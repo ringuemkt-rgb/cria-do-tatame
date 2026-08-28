@@ -31,12 +31,12 @@
     "ferro_velho_da_lapa": {"priority": 2, "layers": ["bg_far", "bg_mid", "play_area", "debris", "neon"], "mood": "metal, chuva, luz baixa"},
     "manguezal_profundo": {"priority": 2, "layers": ["bg_far", "bg_mid", "play_area_mud", "water", "nature"], "mood": "lama, agua, silencio"},
     "praia_de_pratigi": {"priority": 2, "layers": ["bg_far", "bg_mid", "play_area_sand", "crowd", "ocean"], "mood": "mar, areia, crowd filmando"},
-    "colonia_nishimura": {"priority": 2, "layers": ["bg_far", "bg_mid", "play_area", "silence", "dojo"], "mood": "dojo silencioso ficcional"},
+    "colonia_nishiuchi": {"priority": 2, "layers": ["bg_far", "bg_mid", "play_area", "silence", "dojo"], "mood": "dojo silencioso ficcional"},
     "budokan_das_aguas": {"priority": 3, "layers": ["bg_far", "bg_mid", "play_area", "water_feature", "elite"], "mood": "agua, julgamento, elite tecnica"},
     "zambiapunga": {"priority": 2, "layers": ["bg_far", "bg_mid", "ringue", "crowd", "festa"], "mood": "cultura, tambor, cor, tensao social"}
   },
   "audio": {
-    "music_tracks": ["terreiro_da_luta", "arena_do_dique", "ferro_velho_da_lapa", "manguezal_profundo", "praia_de_pratigi", "colonia_nishimura", "budokan_das_aguas", "zambiapunga", "menu", "vitoria", "derrota", "crise"],
+    "music_tracks": ["terreiro_da_luta", "arena_do_dique", "ferro_velho_da_lapa", "manguezal_profundo", "praia_de_pratigi", "colonia_nishiuchi", "budokan_das_aguas", "zambiapunga", "menu", "vitoria", "derrota", "crise"],
     "sfx": ["grip_tecido", "queda_tatame", "respiracao", "crowd_aplauso", "crowd_silencio", "ui_click", "notificacao_cria_live", "save_game", "cerimonia_faixa"]
   },
   "cutscenes": ["intro_terreiro", "primeira_derrota", "cerimonia_faixa_azul", "crise_publica", "contrato_cassio", "faixa_preta_julgamento", "final_heroi_duas_aguas", "final_estrela_vazia", "final_rei_atalhos", "final_raiz_eterna"]
