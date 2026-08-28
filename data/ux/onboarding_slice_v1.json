@@ -1,0 +1,70 @@
+{
+  "schema_version": "1.0.0",
+  "id": "onboarding_slice_v1",
+  "status": "slice_canon",
+  "mentor": "dende",
+  "scope_rule": "one_mechanic_per_drill_until_drill_06",
+  "drills": [
+    {
+      "id": "drill_01_movement",
+      "order": 1,
+      "mechanic": "movement",
+      "objective": "Mover Ruan mantendo distância e alcançando três marcas de posição sem usar ações de combate.",
+      "pass_condition": "reach_all_three_position_markers_without_leaving_play_area",
+      "dende_line": "Primeiro aprende onde pisa. Força sem base vira pressa."
+    },
+    {
+      "id": "drill_02_contextual_eligibility",
+      "order": 2,
+      "mechanic": "contextual_action_eligibility",
+      "objective": "Usar apenas ações contextuais elegíveis no estado atual e reconhecer quando uma pílula muda.",
+      "pass_condition": "execute_three_eligible_contextual_actions_with_zero_dead_input",
+      "dende_line": "Não força golpe que a posição não deu. Lê primeiro, age depois."
+    },
+    {
+      "id": "drill_03_defense_timing",
+      "order": 3,
+      "mechanic": "defense_timing",
+      "objective": "Responder ao telegraph com defesa e experimentar cedo, perfeito e tarde usando janelas em milissegundos.",
+      "pass_condition": "achieve_one_perfect_defense_after_registering_early_and_late_feedback",
+      "dende_line": "Defesa boa não é desespero. É chegar na hora certa."
+    },
+    {
+      "id": "drill_04_submission_tap",
+      "order": 4,
+      "mechanic": "submission_and_tap",
+      "objective": "Reconhecer uma submission sofrida, tentar a defesa prevista e usar TAP soberano por segurar quando desejar sair.",
+      "pass_condition": "perform_one_safe_escape_or_hold_tap_until_immediate_release",
+      "dende_line": "Saber bater é saber treinar amanhã. Orgulho nenhum vale uma articulação."
+    },
+    {
+      "id": "drill_05_scramble",
+      "order": 5,
+      "mechanic": "scramble_direction",
+      "objective": "Vencer ou neutralizar um scramble lendo a direção indicada e respondendo no tempo correto.",
+      "pass_condition": "complete_three_scramble_windows_with_at_least_two_successful_reads",
+      "dende_line": "No aperto, calma. Quem enxerga a saída antes não precisa correr mais."
+    },
+    {
+      "id": "drill_06_integrated_short_fight",
+      "order": 6,
+      "mechanic": "integrated_combat_loop",
+      "objective": "Completar uma luta curta usando movimento, elegibilidade, defesa, uma das seis técnicas-ouro, scramble e TAP quando necessário.",
+      "pass_condition": "finish_short_fight_and_reach_result_screen_without_dead_input_or_unsafe_submission_state",
+      "dende_line": "Agora junta tudo. Técnica, cabeça e respeito — é aí que começa a luta de verdade."
+    }
+  ],
+  "unlock_policy": {
+    "sequential": true,
+    "failed_drill_repeats_without_penalty": true,
+    "feedback_required_on_failure": true,
+    "no_silent_failure": true
+  },
+  "acceptance": {
+    "drill_count": 6,
+    "each_drill_has_single_primary_mechanic": true,
+    "each_drill_has_objective": true,
+    "each_drill_has_pass_condition": true,
+    "each_drill_has_exactly_one_dende_line": true
+  }
+}
