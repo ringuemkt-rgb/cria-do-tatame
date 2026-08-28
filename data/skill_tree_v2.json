@@ -1,0 +1,36 @@
+{
+  "schema_version":"2.0.0",
+  "decision_refs":["D45","D51","D53","D58"],
+  "rules":{"branches":4,"tiers_per_branch":5,"legado_gameplay_bonus":false},
+  "branches":[
+    {"id":"controle","tiers":[
+      {"tier":1,"modifier":{"window_bonus_ms":20}},
+      {"tier":2,"modifier":{"resource_cost_mult":0.97}},
+      {"tier":3,"modifier":{"recovery_ms_delta":-20}},
+      {"tier":4,"modifier":{"window_bonus_ms":35}},
+      {"tier":5,"modifier":{"resource_cost_mult":0.94}}
+    ]},
+    {"id":"mobilidade","tiers":[
+      {"tier":1,"modifier":{"buffer_ms_bonus":15}},
+      {"tier":2,"modifier":{"recovery_ms_delta":-15}},
+      {"tier":3,"modifier":{"resource_cost_mult":0.97}},
+      {"tier":4,"modifier":{"buffer_ms_bonus":25}},
+      {"tier":5,"modifier":{"recovery_ms_delta":-30}}
+    ]},
+    {"id":"defesa","tiers":[
+      {"tier":1,"modifier":{"escape_window_bonus_ms":20}},
+      {"tier":2,"modifier":{"resource_cost_mult":0.98}},
+      {"tier":3,"modifier":{"escape_window_bonus_ms":30}},
+      {"tier":4,"modifier":{"recovery_ms_delta":-20}},
+      {"tier":5,"modifier":{"escape_window_bonus_ms":45}}
+    ]},
+    {"id":"ritmo","tiers":[
+      {"tier":1,"modifier":{"resource_regen_mult":1.02}},
+      {"tier":2,"modifier":{"window_bonus_ms":15}},
+      {"tier":3,"modifier":{"resource_regen_mult":1.04}},
+      {"tier":4,"modifier":{"resource_cost_mult":0.96}},
+      {"tier":5,"modifier":{"window_bonus_ms":30}}
+    ]}
+  ],
+  "legado":{"kind":"narrative_only","gameplay_modifier":null}
+}
