@@ -1,0 +1,28 @@
+{
+  "schema_version":"2.0.0",
+  "decision_refs":["D52","D60","D63","D64","D67"],
+  "styles":[
+    {"id":"pressao","label":"Pressão","axes":{"pace":0.8,"control":0.8,"mobility":0.4,"risk":0.6}},
+    {"id":"contragolpe","label":"Contra-jogo","axes":{"pace":0.4,"control":0.6,"mobility":0.7,"risk":0.4}},
+    {"id":"guarda","label":"Guarda","axes":{"pace":0.5,"control":0.7,"mobility":0.6,"risk":0.5}},
+    {"id":"passador","label":"Passador","axes":{"pace":0.7,"control":0.8,"mobility":0.5,"risk":0.5}},
+    {"id":"raspador","label":"Raspador","axes":{"pace":0.6,"control":0.6,"mobility":0.8,"risk":0.6}},
+    {"id":"finalizador","label":"Finalizador","axes":{"pace":0.7,"control":0.6,"mobility":0.5,"risk":0.8}},
+    {"id":"scrambler","label":"Scrambler","axes":{"pace":0.9,"control":0.3,"mobility":0.9,"risk":0.8}},
+    {"id":"estrategista","label":"Estrategista","axes":{"pace":0.4,"control":0.8,"mobility":0.6,"risk":0.3}}
+  ],
+  "matchup":{
+    "scale":{"min":-2,"max":2,"meaning":"pressao relativa, nunca hard-counter"},
+    "matrix":{
+      "pressao":{"pressao":0,"contragolpe":-1,"guarda":0,"passador":0,"raspador":-1,"finalizador":0,"scrambler":1,"estrategista":-1},
+      "contragolpe":{"pressao":1,"contragolpe":0,"guarda":0,"passador":-1,"raspador":0,"finalizador":0,"scrambler":1,"estrategista":0},
+      "guarda":{"pressao":0,"contragolpe":0,"guarda":0,"passador":-1,"raspador":1,"finalizador":0,"scrambler":0,"estrategista":0},
+      "passador":{"pressao":0,"contragolpe":1,"guarda":1,"passador":0,"raspador":0,"finalizador":0,"scrambler":-1,"estrategista":0},
+      "raspador":{"pressao":1,"contragolpe":0,"guarda":-1,"passador":0,"raspador":0,"finalizador":0,"scrambler":0,"estrategista":0},
+      "finalizador":{"pressao":0,"contragolpe":0,"guarda":0,"passador":0,"raspador":0,"finalizador":0,"scrambler":-1,"estrategista":1},
+      "scrambler":{"pressao":-1,"contragolpe":-1,"guarda":0,"passador":1,"raspador":0,"finalizador":1,"scrambler":0,"estrategista":-1},
+      "estrategista":{"pressao":1,"contragolpe":0,"guarda":0,"passador":0,"raspador":0,"finalizador":-1,"scrambler":1,"estrategista":0}
+    }
+  },
+  "rule":"position+ruleset+belt+resources+execution override style pressure"
+}
