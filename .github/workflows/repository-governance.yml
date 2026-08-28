@@ -1,6 +1,7 @@
 name: Repository Governance
 
 on:
+  workflow_call:
   pull_request:
     paths:
       - '.github/**'
@@ -38,7 +39,7 @@ permissions:
   contents: read
 
 concurrency:
-  group: repository-governance-${{ github.ref }}
+  group: repository-governance-${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:

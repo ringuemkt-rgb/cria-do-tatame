@@ -1,6 +1,7 @@
 name: Validate Cria Data
 
 on:
+  workflow_call:
   push:
   pull_request:
 

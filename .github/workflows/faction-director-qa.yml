@@ -1,6 +1,7 @@
 name: Faction Director QA
 
 on:
+  workflow_call:
   push:
     paths:
       - "data/factions/**"

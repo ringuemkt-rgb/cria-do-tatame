@@ -281,11 +281,16 @@
         "technique_id": "corte_joelho",
         "runtime_card_id": null,
         "binding_status": "missing_runtime_card_blocked",
+        "data_card_id": "harmony_card_corte_joelho_v1",
+        "data_definition_status": "complete_data_only_not_integrated",
         "kind": "active",
         "category": "passagem",
         "valid_states": ["PLAYER_TOP_GUARD"],
         "activation_cost": {},
-        "activation_cost_policy": "runtime_technique_cost_only_until_card_decision"
+        "activation_cost_policy": "runtime_technique_cost_only_until_card_decision",
+        "equippable": false,
+        "runtime_binding_forbidden_in_M31": true,
+        "missing_values_policy": "missing_body_blocked"
       },
       "runtime_ms": {
         "technique_id": "corte_joelho",
@@ -333,8 +338,18 @@
         "technique_id": "corte_joelho",
         "runtime_card_id": null,
         "status": "blocked_until_runtime_card_exists",
+        "data_mastery_id": "harmony_mastery_corte_joelho_v1",
+        "data_definition_status": "complete_data_only_not_integrated",
         "level_range": [1, 5],
-        "progress_source": "DeckManager"
+        "progress_source": "DeckManager",
+        "progress_events": {
+          "valid_attempt_xp": 3,
+          "success_xp": 10,
+          "source": "src/autoloads/DeckManager.gd::consume_used_card"
+        },
+        "level_effect_values": [],
+        "level_effect_status": "missing_body_blocked",
+        "runtime_binding_forbidden_in_M31": true
       }
     },
     {
@@ -408,11 +423,16 @@
         "technique_id": "encerramento_tecnico",
         "runtime_card_id": null,
         "binding_status": "missing_runtime_card_blocked",
+        "data_card_id": "harmony_card_encerramento_tecnico_v1",
+        "data_definition_status": "complete_data_only_not_integrated",
         "kind": "active",
         "category": "finalizacao",
         "valid_states": ["PLAYER_SUBMISSION_ATTACK"],
         "activation_cost": {},
-        "activation_cost_policy": "runtime_technique_cost_only_until_card_decision"
+        "activation_cost_policy": "runtime_technique_cost_only_until_card_decision",
+        "equippable": false,
+        "runtime_binding_forbidden_in_M31": true,
+        "missing_values_policy": "missing_body_blocked"
       },
       "runtime_ms": {
         "technique_id": "encerramento_tecnico",
@@ -467,8 +487,18 @@
         "technique_id": "encerramento_tecnico",
         "runtime_card_id": null,
         "status": "blocked_until_runtime_card_exists",
+        "data_mastery_id": "harmony_mastery_encerramento_tecnico_v1",
+        "data_definition_status": "complete_data_only_not_integrated",
         "level_range": [1, 5],
-        "progress_source": "DeckManager"
+        "progress_source": "DeckManager",
+        "progress_events": {
+          "valid_attempt_xp": 3,
+          "success_xp": 10,
+          "source": "src/autoloads/DeckManager.gd::consume_used_card"
+        },
+        "level_effect_values": [],
+        "level_effect_status": "missing_body_blocked",
+        "runtime_binding_forbidden_in_M31": true
       }
     }
   ],

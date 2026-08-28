@@ -1,6 +1,7 @@
 name: GDScript Delivery Gate
 
 on:
+  workflow_call:
   pull_request:
     paths:
       - "**/*.gd"
@@ -23,7 +24,7 @@ permissions:
   contents: read
 
 concurrency:
-  group: gdscript-delivery-${{ github.ref }}
+  group: gdscript-delivery-${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
