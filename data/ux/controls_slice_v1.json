@@ -1,0 +1,154 @@
+{
+  "schema_version": "1.0.0",
+  "id": "controls_slice_v1",
+  "status": "slice_canon",
+  "decision_refs": ["D229", "D230", "D231", "D232", "D233"],
+  "principles": {
+    "context_controls_visibility": true,
+    "no_dead_input": true,
+    "timing_unit": "milliseconds",
+    "player_sovereignty": true,
+    "pause_always_available": true
+  },
+  "runtime": {
+    "input_buffer_ms": 100,
+    "timing_windows_are_data_driven": true,
+    "timing_labels": ["early", "perfect", "late"],
+    "frame_count_is_not_canonical": true,
+    "remap_required": ["touch", "gamepad", "keyboard"],
+    "action_priority": ["tap", "pause_or_menu", "defense", "contextual_action"],
+    "dead_input_policy": "forbidden",
+    "dead_input_resolution": "hide_or_disable_with_reason_before_input_is_possible"
+  },
+  "layers": {
+    "world_map": {
+      "actions": [
+        {
+          "id": "select_node",
+          "touch": "tap_node",
+          "gamepad": "dpad_or_left_stick_then_A",
+          "keyboard": "arrows_then_enter",
+          "feedback": ["visual_node_focus", "ui_click"]
+        },
+        {
+          "id": "confirm_travel",
+          "touch": "travel_button",
+          "gamepad": "A",
+          "keyboard": "enter",
+          "feedback": ["route_preview", "cost_time_risk_card", "confirm_sound"]
+        },
+        {
+          "id": "cancel",
+          "touch": "cancel_button",
+          "gamepad": "B",
+          "keyboard": "escape",
+          "feedback": ["card_close", "cancel_sound"]
+        },
+        {
+          "id": "back",
+          "touch": "back_gesture_or_button",
+          "gamepad": "B",
+          "keyboard": "escape",
+          "feedback": ["layer_return_animation", "cancel_sound"]
+        }
+      ]
+    },
+    "street": {
+      "actions": [
+        {
+          "id": "move",
+          "touch": "virtual_left_stick",
+          "gamepad": "left_stick",
+          "keyboard": "WASD",
+          "feedback": ["character_motion", "footstep_audio_optional", "camera_follow"]
+        },
+        {
+          "id": "interact",
+          "touch": "context_interact_button",
+          "gamepad": "A",
+          "keyboard": "E",
+          "feedback": ["interaction_icon_state", "ui_click", "interaction_result"]
+        },
+        {
+          "id": "open_map",
+          "touch": "map_button",
+          "gamepad": "Y",
+          "keyboard": "M",
+          "feedback": ["map_open_animation", "ui_open_sound"]
+        },
+        {
+          "id": "pause",
+          "touch": "pause_button",
+          "gamepad": "Start",
+          "keyboard": "Escape",
+          "feedback": ["pause_overlay", "audio_duck"]
+        }
+      ]
+    },
+    "combat": {
+      "touch_layout": {
+        "movement": "virtual_left_stick",
+        "contextual_actions": "five_pills_min_48dp",
+        "defense": "shield_button_min_48dp",
+        "special": "star_button_min_48dp",
+        "tap": "hold_hand_button_always_visible_during_submission",
+        "pause": "pause_button"
+      },
+      "gamepad_layout": {
+        "movement": "left_stick",
+        "contextual_1": "A",
+        "contextual_2": "B",
+        "contextual_3": "X",
+        "contextual_4": "Y",
+        "contextual_5": "RB",
+        "defense": "RT",
+        "special": "LB",
+        "tap_during_submission": "hold_B",
+        "pause": "Start"
+      },
+      "keyboard_default_layout": {
+        "movement": "WASD",
+        "contextual_1": "J",
+        "contextual_2": "K",
+        "contextual_3": "U",
+        "contextual_4": "I",
+        "contextual_5": "O",
+        "defense": "L",
+        "special": "Space",
+        "tap_during_submission": "hold_K",
+        "pause": "Escape"
+      },
+      "context_override": {
+        "when": "submission_suffered",
+        "hold_B_or_touch_TAP": "tap",
+        "tap_priority": "absolute_over_contextual_B",
+        "release_effect": "immediate_safe_release_and_reset",
+        "cannot_be_blocked_by": ["animation_lock", "input_buffer", "combo", "interrupt_lock"]
+      },
+      "feedback_contract": {
+        "movement": ["sprite_motion", "position_chip_update"],
+        "contextual_action": ["eligible_pill_highlight", "press_state", "action_audio", "optional_haptic", "state_result"],
+        "defense": ["telegraph", "timing_bar", "early_perfect_late_result", "audio_marker", "optional_haptic"],
+        "special": ["focus_ready_state", "press_state", "action_audio", "optional_haptic"],
+        "tap": ["hold_progress", "immediate_release_visual", "release_audio", "optional_haptic"],
+        "pause": ["pause_overlay", "audio_duck"]
+      }
+    }
+  },
+  "remap": {
+    "touch": true,
+    "gamepad": true,
+    "keyboard": true,
+    "reserved_semantics": {
+      "tap_must_remain_reachable": true,
+      "pause_must_remain_reachable": true
+    }
+  },
+  "acceptance": {
+    "every_action_has_visual_feedback": true,
+    "every_action_has_audio_or_explicit_silent_reason": true,
+    "haptics_optional_and_disableable": true,
+    "no_lock_without_reason": true,
+    "no_dead_input": true
+  }
+}
