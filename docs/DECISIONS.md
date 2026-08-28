@@ -264,3 +264,173 @@ A lista explícita contém dez variantes, mas oito locais-base. A D41 resolve o 
 ### R00-04 — Trama PF real
 
 Nenhum arquivo versionado na `main` atual contém Polícia Federal/PF. Referências externas desse rascunho são pesquisa não canônica e ficam governadas por `docs/research/INSTITUTIONAL_REFERENCE_BOUNDARY.md`; a história ativa usa DIE e A Maré.
+
+## D48 — Deck como filtro
+
+O deck não cria técnica nem altera cânone: ele filtra o catálogo ativo por contexto, posição, ruleset, faixa e recursos. A fonte mestre continua sendo o catálogo de técnicas conforme D6.
+
+## D49 — Tags Gi/No-Gi
+
+Técnicas e modificadores usam tags explícitas `gi`, `nogi` ou ambas. O runtime não infere ruleset por nome, roupa ou stage.
+
+## D50 — Clash por frame em dados
+
+Janelas de clash, prioridade, contato e resolução são data-driven por frame/evento. Arte e animação não codificam regra de combate.
+
+## D51 — Árvore modifica janelas
+
+A árvore de progressão modifica apenas janelas, custos, recuperação ou recursos já definidos. Ela não cria técnica implícita e não altera o grafo posicional canônico.
+
+## D52 — Afinidades
+
+Afinidades são modificadores transparentes e limitados, definidos em dados por estilo/personagem. Não substituem skill, faixa, posição, ruleset ou matchup.
+
+## D53 — Maestria
+
+Maestria é progressão por uso válido de técnicas e famílias, com tetos e thresholds em dados. Não concede vitória automática nem ignora requisitos posicionais.
+
+## D54 — Clandestino cobra Sombra
+
+A participação no circuito clandestino pode cobrar recurso narrativo `SOMBRA` conforme dados ativos. O custo é consequência ficcional, não instrução operacional.
+
+## D55 — Feedback
+
+Feedback de combate deve ser imediato, multimodal e proporcional: visual, sonoro e háptico quando disponível, sempre com fallback não sensorial e sem depender só de cor.
+
+## D56 — Dendê tutor
+
+`Dendê` é tutor ficcional diegético. Explica controles, leitura de posição e segurança; não adiciona regra, técnica ou cânone fora dos dados aprovados.
+
+## D57 — Gameplans
+
+Gameplans são presets de intenção tática construídos sobre técnicas e posições existentes. O jogador pode inspecionar seus filtros e custos; nenhum preset contorna requisitos.
+
+## D58 — Legado narrativo
+
+`Legado` é eixo exclusivamente narrativo/reputacional no slice. Não concede bônus direto de dano, hitbox, prioridade ou probabilidade de finalização.
+
+## D59 — Repetição punida
+
+Repetição imediata e previsível da mesma ação pode receber penalidade data-driven de eficiência, leitura adversária ou recurso. A regra deve ser limitada, inspecionável e reversível.
+
+## D60 — Assinatura por uso
+
+A assinatura de estilo emerge de uso consistente registrado em telemetria/save e não de escolha cosmética isolada. Ela não bloqueia mudança futura de gameplan.
+
+## D61 — Ledger de cinco assinaturas
+
+Cada promoção relevante registra cinco assinaturas independentes quando aplicáveis: técnica/BJJ, arte/animação, gameplay, acessibilidade e direitos/proveniência. Automação coleta evidência; somente humano autorizado assina gate humano.
+
+## D62 — Fidelity diff
+
+Assets derivados devem registrar comparação de fidelidade contra o candidato aprovado: identidade, paleta, escala, baseline, contatos e leitura. Divergência fora do orçamento reprova promoção sem apagar o candidato fonte.
+
+## D63 — Roda de oito estilos
+
+A taxonomia de combate usa oito estilos parametrizados em `style_wheel_v2.json`. A roda é ferramenta de leitura e balanceamento, não classe rígida de personagem.
+
+## D64 — Matchup
+
+Matchup é matriz explícita de pressões e respostas entre estilos, sempre subordinada a posição, faixa, ruleset, recursos e execução. Não há hard-counter absoluto.
+
+## D65 — Source notes
+
+Pesquisa externa que informa design técnico, histórico ou cultural usa `source_notes` separado do produto shipping. O produto não expõe nomes de pesquisadores, atletas ou marcas por padrão.
+
+## D66 — Legalidade e direitos
+
+Nenhum asset, áudio, texto, regra proprietária, marca, pessoa real ou material de terceiro entra em shipping sem licença/proveniência compatível. Inspiração deve permanecer abstrata e transformativa.
+
+## D67 — Counter-pick
+
+Counter-pick é recomendação transparente baseada em estado do jogo e matchup; nunca altera secretamente atributos do adversário nem cria vantagem paga.
+
+## D68 — Identidade narrativa
+
+Identidade narrativa deriva de escolhas, relações e consequências registradas em dados. Aparência cosmética sozinha não redefine facção, Legado, SOMBRA ou final.
+
+## D69 — OpenCap/OpenSim
+
+OpenCap e OpenSim são ferramentas opcionais de pesquisa/validação biomecânica offline. Resultados não aprovam técnica, hitbox ou segurança automaticamente e não são dependências de runtime.
+
+## D70 — Rigify
+
+Rigify pode auxiliar rigging/prototipagem offline quando licença e pipeline forem compatíveis. O rig final deve obedecer aos contratos de pivô, escala, exportação e QA do projeto.
+
+## D71 — GUT
+
+GUT é o framework preferencial para testes unitários de GDScript quando aplicável. Adoção é incremental e não substitui smokes, parser/import ou gates de dispositivo.
+
+## D72 — Rollback exige ADR
+
+Netcode rollback permanece fora do vertical slice. Qualquer adoção futura exige ADR própria, protótipo isolado, orçamento mobile, determinismo medido e rollback claro.
+
+## D73 — DVC
+
+DVC pode versionar binários/datasets fora do Git somente quando o remote e a política de hashes estiverem definidos. Git conserva manifests/pointers; binário grande não é duplicado no repositório.
+
+## D74 — Hugging Face pinado
+
+Modelo ou dataset Hugging Face usado na produção deve ser fixado por revisão/commit/hash verificável, com licença registrada. `latest`, remote code não auditado e download mutável são proibidos.
+
+## D75 — Doutrina mobile
+
+Mobile é baseline de produto: budgets de CPU/GPU/memória, atlas, draw calls, partículas, input e legibilidade são definidos antes da expansão. Low-end nasce no primeiro commit conforme D47.
+
+## D76 — Ledger de release
+
+Todo candidato de release registra commit, artefatos, hashes, gates, origem, licenças, CI, device baseline, estado e decisão humana. Release sem ledger completo é inválido.
+
+## D77 — Manus bloqueado
+
+Manus não possui autoridade de escrita, promoção, gate ou execução no pipeline canônico. Qualquer uso futuro depende de decisão explícita nova e ambiente de capacidade auditável.
+
+## D78 — CTX versionado
+
+Todo lote delegado referencia `CTX=<doutrina>@<commit>`. IDs de decisão são interpretados na revisão fixada, evitando drift semântico entre lotes e réplicas.
+
+## D79 — Gates por fase
+
+Gates são vinculados à fase e ao teto de estado: geração, clean candidate, human approved, runtime ready, integrated, device validated e release candidate não podem ser colapsados por automação.
+
+## D80 — Higiene de fallback
+
+Fallback deve ser explícito, simples, reversível e menos ambicioso que o caminho principal. Nunca pode introduzir novo cânone, segunda fonte de verdade ou dependência oculta.
+
+## D81 — ComfyUI
+
+ComfyUI é ferramenta opcional de geração/edição offline, com workflows pinados quando usados. Saída permanece candidata até proveniência, rights gate, QA visual e aprovação humana aplicáveis.
+
+## D82 — Grafo posicional de 19 nós
+
+O grafo canônico v2 contém 19 posições identificadas e transições data-driven. Toda transição declara requisitos posicionais, de pegada, ruleset e faixa mínima quando aplicáveis.
+
+## D83 — GEEvo
+
+GEEvo ou otimização evolutiva equivalente pode explorar parâmetros somente em sandbox/dados derivados. Não altera cânone, dificuldade shipping ou balanceamento sem benchmark e revisão humana.
+
+## D84 — Hitbox adaptada ao estado
+
+Hitbox/hurtbox pode variar por frame e estado corporal mediante dados versionados, limites visuais e teste de regressão. Nunca é inferida silenciosamente da transparência do sprite.
+
+## D85 — Input buffer
+
+Input buffer mobile é explícito e limitado por ação/estado. Deve melhorar responsividade sem executar comandos inválidos, atravessar locks, antecipar posições inexistentes ou esconder latência crítica.
+
+## Addendum de toolchain
+
+- Runtime canônico: Godot único, versão governada por D19.
+- Teste: CI + GUT quando aplicável; smokes e device gates continuam obrigatórios.
+- Arte offline permitida sob gates: Sprite Forge, Pixelorama/scripts, Rigify e ComfyUI.
+- Biomecânica offline opcional: OpenCap/OpenSim; evidência auxilia, não assina gate.
+- Dados/binários grandes: DVC/Drive/Releases por pointer + SHA; Git/MCP recebe somente texto e binários dentro do limite autorizado.
+- Dependências/modelos externos: pin por revisão/hash + licença; remote code não auditado é fail-closed.
+
+## Quarentena
+
+- `Manus`: BLOCKED conforme D77.
+- Netcode rollback (`dsnopek`, Klotho ou equivalente): RESEARCH_ONLY até ADR D72.
+- GEEvo/otimizadores: SANDBOX_ONLY conforme D83.
+- Modelos HF sem pin/licença: QUARANTINE conforme D74.
+- Conteúdo/asset sem proveniência ou rights gate: QUARANTINE conforme D66.
+- Saída generativa sem fidelity diff/QA/assinatura aplicável: CANDIDATE_ONLY conforme D61/D62/D79.
