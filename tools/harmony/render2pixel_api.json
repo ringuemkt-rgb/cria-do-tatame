@@ -1,0 +1,57 @@
+{
+  "schema_version": "1.0.0",
+  "workflow_id": "cria_harmony_render2pixel_v1",
+  "status": "template_checkpoint_unresolved",
+  "license_status": "blocked_until_checkpoint_license_is_recorded",
+  "prompt": {
+    "1": {
+      "class_type": "LoadImage",
+      "inputs": {"image": "{{INPUT_IMAGE}}"}
+    },
+    "2": {
+      "class_type": "CheckpointLoaderSimple",
+      "inputs": {"ckpt_name": "{{CHECKPOINT}}"}
+    },
+    "3": {
+      "class_type": "CLIPTextEncode",
+      "inputs": {
+        "clip": ["2", 1],
+        "text": "HD pixel art 2.5D paired Brazilian jiu-jitsu presentation, exact captured pose evidence, readable silhouette at 72px, one-pixel outline, nearest-neighbor discipline, fictional people only, no logo, no text"
+      }
+    },
+    "4": {
+      "class_type": "CLIPTextEncode",
+      "inputs": {
+        "clip": ["2", 1],
+        "text": "extra limbs, missing limbs, broken grips, impossible spine, floating support, body interpenetration, head impact, strike, injury, text, watermark, real athlete, real brand"
+      }
+    },
+    "5": {
+      "class_type": "VAEEncode",
+      "inputs": {"pixels": ["1", 0], "vae": ["2", 2]}
+    },
+    "6": {
+      "class_type": "KSampler",
+      "inputs": {
+        "model": ["2", 0],
+        "positive": ["3", 0],
+        "negative": ["4", 0],
+        "latent_image": ["5", 0],
+        "seed": "{{SEED}}",
+        "steps": 20,
+        "cfg": 6.5,
+        "sampler_name": "euler_ancestral",
+        "scheduler": "normal",
+        "denoise": 0.35
+      }
+    },
+    "7": {
+      "class_type": "VAEDecode",
+      "inputs": {"samples": ["6", 0], "vae": ["2", 2]}
+    },
+    "8": {
+      "class_type": "SaveImage",
+      "inputs": {"filename_prefix": "harmony_{{TECHNIQUE_ID}}", "images": ["7", 0]}
+    }
+  }
+}

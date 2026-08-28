@@ -1,0 +1,147 @@
+{
+  "schema_version": "1.0.0",
+  "hub_id": "combat_hub_slice_v1",
+  "status": "specified_not_integrated",
+  "source_contract": "data/combat/harmony_contract_v1.json",
+  "principles": [
+    "runtime_decide_animacao_apresenta",
+    "tap_sovereign",
+    "no_dead_input"
+  ],
+  "pre_fight": {
+    "screen_id": "deck_builder_slice",
+    "runtime_owner": "DeckManager",
+    "gold_technique_ids": [
+      "grip_de_ferro",
+      "baiana",
+      "sprawl",
+      "corte_joelho",
+      "cem_quilos",
+      "encerramento_tecnico"
+    ],
+    "deck_limits_source": "DeckManager",
+    "sections": ["collection", "equipped", "counter_pick", "style", "modifiers"],
+    "illegal_cards": {
+      "visible": true,
+      "selectable": false,
+      "reason_required": true,
+      "reason_codes": {
+        "card_locked_or_missing": "Carta ainda não desbloqueada.",
+        "belt_level_limit": "Sua faixa ainda não permite este nível.",
+        "slot_kind_mismatch": "Este card não cabe neste tipo de slot.",
+        "deck_full": "Todos os slots desse tipo estão ocupados.",
+        "technique_missing": "A técnica não existe no catálogo ativo.",
+        "ruleset_illegal": "O ruleset desta luta não permite a técnica.",
+        "missing_runtime_card": "Técnica definida, mas card do runtime ainda não existe."
+      }
+    },
+    "counter_pick": {
+      "source": "TechniqueClashResolver_and_technique_response_data",
+      "shows": ["opponent_family", "eligible_responses", "level_gap", "counter_opening"],
+      "never_shows": ["hidden_rng", "guaranteed_win"],
+      "gold_relationships": [
+        {"attack_id": "baiana", "response_id": "sprawl", "status": "catalogued"},
+        {"attack_id": "corte_joelho", "response_id": null, "status": "runtime_response_not_defined"},
+        {"attack_id": "encerramento_tecnico", "response_id": null, "status": "tap_escape_or_referee_only"}
+      ]
+    },
+    "style": {
+      "source": "fighter_and_deck_runtime_data",
+      "display_fields": ["preferred_family", "resource_profile", "positional_plan"],
+      "effect_policy": "display_only_unless_runtime_supplies_modifier"
+    },
+    "modifiers": {
+      "source": "ruleset_arena_fighter_deck",
+      "display_fields": ["name", "value", "source", "applies_to", "reason"],
+      "unknown_policy": "omit_not_guess"
+    },
+    "confirm": {
+      "checks": ["deck_valid", "all_illegal_reasons_visible", "no_unknown_technique_id"],
+      "failure_feedback_required": true
+    }
+  },
+  "in_fight": {
+    "screen_id": "combat_hud_slice",
+    "runtime_owner": "CombatManager",
+    "technique_identity_rule": "D238_1_to_1",
+    "resources": ["VIDA", "GAS", "GUARDA", "FOCO", "MORAL"],
+    "position_chip": "POSICAO",
+    "master_tip": "DICA_DE_MESTRE",
+    "input_priority": [
+      {"priority": 1, "action": "tap", "consume_policy": "always_handle_first"},
+      {"priority": 2, "action": "pause_menu", "consume_policy": "handle_unless_tap_active"},
+      {"priority": 3, "action": "defense", "consume_policy": "handle_if_eligible"},
+      {"priority": 4, "action": "contextual", "consume_policy": "handle_or_explain"}
+    ],
+    "gamepad": {
+      "A": {"action": "contextual_1", "feedback": ["visual", "audio", "haptic"]},
+      "B": {
+        "default_action": "contextual_2",
+        "submission_defense_action": "tap",
+        "submission_gesture": "hold",
+        "context_swap_condition": "submission_defense=true",
+        "context_swap_label": "TAP",
+        "feedback": ["visual", "audio", "haptic"]
+      },
+      "X": {"action": "contextual_3", "feedback": ["visual", "audio", "haptic"]},
+      "Y": {"action": "contextual_4", "feedback": ["visual", "audio", "haptic"]},
+      "RB": {"action": "contextual_5", "feedback": ["visual", "audio", "haptic"]},
+      "RT": {"action": "defense", "feedback": ["visual", "audio", "haptic"]},
+      "LB": {"action": "special", "feedback": ["visual", "audio", "haptic"]},
+      "START": {"action": "pause_menu", "feedback": ["visual", "audio"]}
+    },
+    "remap_parity": {
+      "touch": ["contextual_1", "contextual_2_or_tap", "contextual_3", "contextual_4", "contextual_5", "defense", "special", "pause_menu"],
+      "gamepad": ["contextual_1", "contextual_2_or_tap", "contextual_3", "contextual_4", "contextual_5", "defense", "special", "pause_menu"],
+      "keyboard": ["contextual_1", "contextual_2_or_tap", "contextual_3", "contextual_4", "contextual_5", "defense", "special", "pause_menu"]
+    },
+    "timing": {
+      "canonical_unit": "ms",
+      "input_buffer_ms": 100,
+      "difficulty_adjustments_ms": {"training": 67, "standard": 0, "master": -33},
+      "device_hz_conversion_owner": "runtime"
+    },
+    "no_dead_input": {
+      "required": true,
+      "outcomes": ["action_accepted", "context_changed", "disabled_reason", "input_buffered"],
+      "silent_discard_forbidden": true
+    },
+    "tap": {
+      "sovereign": true,
+      "condition": "submission_defense=true AND B_hold_detected",
+      "effects": ["stop_technical_pressure", "schedule_visible_release", "block_reentry_until_recovery"],
+      "cannot_be_consumed_by": ["pause_menu", "defense", "contextual", "animation_event"]
+    }
+  },
+  "post_fight": {
+    "screen_id": "combat_result_harmony_slice",
+    "sections": ["result", "whys", "replay", "studio"],
+    "whys": {
+      "source": "deterministic_runtime_event_ledger",
+      "required_fields": ["technique_id", "entry_state", "eligibility", "cost", "defense_window_ms", "branch", "resource_delta", "result"],
+      "plain_language": true,
+      "hidden_rng_exposure": "show_resolved_factors_not_seed"
+    },
+    "replay": {
+      "source": "runtime_event_ledger_plus_sync_map",
+      "controls": ["play_pause", "previous_event", "next_event", "speed", "exit"],
+      "authority": "presentation_only",
+      "missing_clip_policy": "show_event_card_and_fallback_animation"
+    },
+    "studio": {
+      "name": "Studio",
+      "purpose": "review_technique_timing_and_position",
+      "shows": ["gold_technique_id", "phase_timeline_ms", "confirmed_contacts", "resource_changes", "mastery_progress"],
+      "does_not": ["change_result", "approve_animation", "train_classifier", "publish_asset"]
+    },
+    "actions": ["rematch", "return_to_terreiro", "open_studio"],
+    "save_owner": "SaveManager"
+  },
+  "safety": {
+    "tap_sovereign": true,
+    "dead_input_forbidden": true,
+    "real_brands_orgs_athletes_forbidden": true,
+    "baked_text_policy": "whitelist_only",
+    "human_gate_signer": "Mestre Satoshi"
+  }
+}
