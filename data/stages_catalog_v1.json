@@ -1,0 +1,16 @@
+{
+  "schema_version":"1.0.0",
+  "decision_refs":["D36","D41","D42","D47","D75"],
+  "budget":{"atlas_2048_max":2,"draw_calls_max":24,"particles_max":64,"animated_crowd_max":4},
+  "stages":[
+    {"id":"terreiro_vivo","label":"Terreiro Vivo","bioma":"terreiro_costeiro","paleta":["#D5A84B","#7A4F2A","#3D6B3D","#E8DFC8"],"luz":["dia","por_do_sol"],"props":["tatame","madeira","plantas","bancos"],"crowd":{"mode":"baked","animated_max":4},"ato_rota":{"ato":1,"rota":"terreiro"}},
+    {"id":"terreiro_noite_fogo","label":"Terreiro Noite-do-Fogo","bioma":"terreiro_memoria","paleta":["#17171B","#6A2E24","#D06A2B","#B7A487"],"luz":["noite","fogo_cenografico"],"props":["tatame","madeira_escura","cinzas_cenograficas"],"crowd":{"mode":"baked","animated_max":2},"ato_rota":{"ato":3,"rota":"memoria"}},
+    {"id":"dique","label":"Dique","bioma":"agua_urbana","paleta":["#2B5968","#7C8B78","#C7A55A","#20262A"],"luz":["fim_de_tarde"],"props":["mureta","agua","vegetacao","postes"],"crowd":{"mode":"baked","animated_max":3},"ato_rota":{"ato":1,"rota":"dique"}},
+    {"id":"nishimura","label":"Nishimura","bioma":"colonia_rural","paleta":["#52633C","#A88D62","#D7D0B7","#37424A"],"luz":["manha_difusa"],"props":["galpao","caminho","vegetacao","caixas"],"crowd":{"mode":"baked","animated_max":3},"ato_rota":{"ato":2,"rota":"nishimura"}},
+    {"id":"ponte_do_saci","label":"Ponte do Saci","bioma":"ponte_mata","paleta":["#284C3A","#6E5A43","#A98A55","#1B2621"],"luz":["nublado"],"props":["ponte","mata","rio","placas_ficcionais"],"crowd":{"mode":"baked","animated_max":2},"ato_rota":{"ato":2,"rota":"ponte"}},
+    {"id":"pratigi","label":"Pratigi","bioma":"litoral_mata","paleta":["#1E6C74","#6D8A4C","#D8C08A","#F1E6CF"],"luz":["dia_aberto"],"props":["areia","vegetacao","madeira","agua"],"crowd":{"mode":"baked","animated_max":2},"ato_rota":{"ato":2,"rota":"pratigi"}},
+    {"id":"ferro_velho","label":"Ferro Velho","bioma":"industrial_reciclado","paleta":["#4C4B47","#8B5A3C","#B88943","#232326"],"luz":["lateral_dura"],"props":["sucata_cenografica","chapas","pneus","grades"],"crowd":{"mode":"baked","animated_max":3},"ato_rota":{"ato":2,"rota":"ntm"}},
+    {"id":"manguezal","label":"Manguezal","bioma":"mangue","paleta":["#324E42","#657052","#8E7654","#9AB0A0"],"luz":["difusa_umida"],"props":["raizes","passarela","lama_cenografica","agua"],"crowd":{"mode":"baked","animated_max":2},"ato_rota":{"ato":2,"rota":"ntm"}},
+    {"id":"budokan","label":"Budokan","bioma":"arena_ficcional","paleta":["#1B1C20","#C5A45C","#E8E4DB","#6A2525"],"luz":["arena_controlada"],"props":["tatame","placar_ficcional","grades","banners_originais"],"crowd":{"mode":"baked","animated_max":4},"ato_rota":{"ato":3,"rota":"final"}}
+  ]
+}

@@ -1,0 +1,43 @@
+{
+  "schema_version": "2.0.0",
+  "decision_refs": ["D49", "D50", "D82", "D84"],
+  "positions": [
+    {"id":"em_pe_neutro","label":"Em pé neutro","layer":"standing"},
+    {"id":"clinch","label":"Clinch","layer":"standing"},
+    {"id":"guarda_fechada_bottom","label":"Guarda fechada — baixo","layer":"ground"},
+    {"id":"guarda_fechada_top","label":"Guarda fechada — cima","layer":"ground"},
+    {"id":"guarda_aberta_bottom","label":"Guarda aberta — baixo","layer":"ground"},
+    {"id":"guarda_aberta_top","label":"Guarda aberta — cima","layer":"ground"},
+    {"id":"meia_guarda_bottom","label":"Meia-guarda — baixo","layer":"ground"},
+    {"id":"meia_guarda_top","label":"Meia-guarda — cima","layer":"ground"},
+    {"id":"cem_quilos_bottom","label":"Controle lateral — baixo","layer":"ground"},
+    {"id":"cem_quilos_top","label":"Controle lateral — cima","layer":"ground"},
+    {"id":"montada_bottom","label":"Montada — baixo","layer":"ground"},
+    {"id":"montada_top","label":"Montada — cima","layer":"ground"},
+    {"id":"costas_defensor","label":"Costas — defensor","layer":"ground"},
+    {"id":"costas_atacante","label":"Costas — atacante","layer":"ground"},
+    {"id":"tartaruga_bottom","label":"Tartaruga — baixo","layer":"ground"},
+    {"id":"tartaruga_top","label":"Tartaruga — cima","layer":"ground"},
+    {"id":"norte_sul_bottom","label":"Norte-sul — baixo","layer":"ground"},
+    {"id":"norte_sul_top","label":"Norte-sul — cima","layer":"ground"},
+    {"id":"sprawl_top","label":"Sprawl — cima","layer":"transition"}
+  ],
+  "transitions": [
+    {"id":"t01","from":"em_pe_neutro","to":"clinch","technique_id":"entrada_clinch","pos_req":["em_pe_neutro"],"grip_req":[],"ruleset":["gi","nogi"],"faixa_min":"branca"},
+    {"id":"t02","from":"clinch","to":"guarda_fechada_top","technique_id":"queda_controle","pos_req":["clinch"],"grip_req":["controle_superior"],"ruleset":["gi","nogi"],"faixa_min":"branca"},
+    {"id":"t03","from":"clinch","to":"sprawl_top","technique_id":"defesa_queda_sprawl","pos_req":["clinch"],"grip_req":[],"ruleset":["gi","nogi"],"faixa_min":"branca"},
+    {"id":"t04","from":"sprawl_top","to":"tartaruga_top","technique_id":"controle_sprawl","pos_req":["sprawl_top"],"grip_req":["controle_tronco"],"ruleset":["gi","nogi"],"faixa_min":"branca"},
+    {"id":"t05","from":"guarda_fechada_top","to":"guarda_aberta_top","technique_id":"abrir_guarda","pos_req":["guarda_fechada_top"],"grip_req":["base_estavel"],"ruleset":["gi","nogi"],"faixa_min":"branca"},
+    {"id":"t06","from":"guarda_aberta_top","to":"meia_guarda_top","technique_id":"passagem_meia_guarda","pos_req":["guarda_aberta_top"],"grip_req":["controle_perna"],"ruleset":["gi","nogi"],"faixa_min":"branca"},
+    {"id":"t07","from":"meia_guarda_top","to":"cem_quilos_top","technique_id":"passagem_meia_guarda","pos_req":["meia_guarda_top"],"grip_req":["underhook_ou_controle_quadril"],"ruleset":["gi","nogi"],"faixa_min":"branca"},
+    {"id":"t08","from":"cem_quilos_top","to":"montada_top","technique_id":"transicao_montada","pos_req":["cem_quilos_top"],"grip_req":["controle_tronco"],"ruleset":["gi","nogi"],"faixa_min":"branca"},
+    {"id":"t09","from":"cem_quilos_top","to":"norte_sul_top","technique_id":"transicao_norte_sul","pos_req":["cem_quilos_top"],"grip_req":["controle_tronco"],"ruleset":["gi","nogi"],"faixa_min":"branca"},
+    {"id":"t10","from":"tartaruga_top","to":"costas_atacante","technique_id":"pegar_costas","pos_req":["tartaruga_top"],"grip_req":["controle_cintura"],"ruleset":["gi","nogi"],"faixa_min":"branca"},
+    {"id":"t11","from":"montada_bottom","to":"guarda_fechada_bottom","technique_id":"reposicao_guarda","pos_req":["montada_bottom"],"grip_req":["frame"],"ruleset":["gi","nogi"],"faixa_min":"branca"},
+    {"id":"t12","from":"cem_quilos_bottom","to":"meia_guarda_bottom","technique_id":"recuperar_meia_guarda","pos_req":["cem_quilos_bottom"],"grip_req":["frame"],"ruleset":["gi","nogi"],"faixa_min":"branca"},
+    {"id":"t13","from":"meia_guarda_bottom","to":"guarda_aberta_bottom","technique_id":"recuperar_guarda_aberta","pos_req":["meia_guarda_bottom"],"grip_req":["frame"],"ruleset":["gi","nogi"],"faixa_min":"branca"},
+    {"id":"t14","from":"guarda_aberta_bottom","to":"em_pe_neutro","technique_id":"technical_standup","pos_req":["guarda_aberta_bottom"],"grip_req":[],"ruleset":["gi","nogi"],"faixa_min":"branca"},
+    {"id":"t15","from":"costas_defensor","to":"tartaruga_bottom","technique_id":"escape_costas_tartaruga","pos_req":["costas_defensor"],"grip_req":["hand_fight"],"ruleset":["gi","nogi"],"faixa_min":"branca"},
+    {"id":"t16","from":"norte_sul_bottom","to":"cem_quilos_bottom","technique_id":"escape_norte_sul","pos_req":["norte_sul_bottom"],"grip_req":["frame"],"ruleset":["gi","nogi"],"faixa_min":"azul"}
+  ]
+}
