@@ -1,0 +1,18 @@
+{
+  "$schema":"https://json-schema.org/draft/2020-12/schema",
+  "$id":"https://cria-do-tatame.local/schema/combat_deck_schema_v2.json",
+  "title":"Combat Deck v2",
+  "type":"object",
+  "required":["schema_version","deck_id","ruleset","slots"],
+  "properties":{
+    "schema_version":{"const":"2.0.0"},
+    "deck_id":{"type":"string","minLength":1},
+    "ruleset":{"enum":["gi","nogi"]},
+    "style_id":{"type":"string"},
+    "gameplan_id":{"type":"string"},
+    "slots":{"type":"array","minItems":1,"maxItems":12,"items":{"type":"object","required":["slot","technique_id","tags"],"properties":{"slot":{"type":"integer","minimum":1,"maximum":12},"technique_id":{"type":"string","minLength":1},"tags":{"type":"array","items":{"enum":["gi","nogi"]},"minItems":1,"uniqueItems":true},"position_allow":{"type":"array","items":{"type":"string"}},"faixa_min":{"enum":["branca","azul","roxa","marrom","preta"]},"resource_cost":{"type":"object","additionalProperties":{"type":"number","minimum":0}}},"additionalProperties":false}},
+    "filters":{"type":"object","properties":{"position":{"type":"array","items":{"type":"string"}},"ruleset":{"type":"array","items":{"enum":["gi","nogi"]}},"faixa":{"type":"array","items":{"enum":["branca","azul","roxa","marrom","preta"]}}},"additionalProperties":false}
+  },
+  "additionalProperties":false,
+  "decision_refs":["D5","D6","D48","D49","D57"]
+}
