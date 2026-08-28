@@ -1,6 +1,7 @@
 name: World Director QA
 
 on:
+  workflow_call:
   push:
     paths:
       - "data/world/**"

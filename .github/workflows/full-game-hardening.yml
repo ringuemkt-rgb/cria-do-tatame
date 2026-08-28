@@ -1,6 +1,7 @@
 name: Full Game Hardening
 
 on:
+  workflow_call:
   push:
     branches:
       - audit/full-game-hardening-2026-07

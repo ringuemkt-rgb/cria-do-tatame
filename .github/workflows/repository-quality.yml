@@ -1,6 +1,7 @@
 name: Repository Quality
 
 on:
+  workflow_call:
   push:
     branches: [main]
   pull_request:
@@ -10,7 +11,7 @@ permissions:
   contents: read
 
 concurrency:
-  group: repository-quality-${{ github.ref }}
+  group: repository-quality-${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:

@@ -1,6 +1,7 @@
 name: Cria Runtime Audit
 
 on:
+  workflow_call:
   push:
     branches:
       - main

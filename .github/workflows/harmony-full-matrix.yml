@@ -1,0 +1,35 @@
+name: Harmony Full Matrix
+
+on:
+  pull_request:
+    branches:
+      - lead/harmony-v1
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  faction-director-qa:
+    uses: ./.github/workflows/faction-director-qa.yml
+
+  full-game-hardening:
+    uses: ./.github/workflows/full-game-hardening.yml
+
+  gdscript-delivery-gate:
+    uses: ./.github/workflows/godot-gd-delivery-gate.yml
+
+  repository-governance:
+    uses: ./.github/workflows/repository-governance.yml
+
+  repository-quality:
+    uses: ./.github/workflows/repository-quality.yml
+
+  runtime-audit:
+    uses: ./.github/workflows/runtime-audit.yml
+
+  validate-data:
+    uses: ./.github/workflows/validate-data.yml
+
+  world-director-qa:
+    uses: ./.github/workflows/world-director-qa.yml
