@@ -1,0 +1,28 @@
+{
+  "schema_version": "1.0.0",
+  "rubric_id": "cria_slice_gate_calibration_v1",
+  "status": "calibration_locked",
+  "decision_refs": ["D240", "D241", "D242", "D243"],
+  "promotion_forbidden": true,
+  "minimum_consecutive_agreements": 20,
+  "human_sample_rate": 0.1,
+  "relock_on_any_sample_disagreement": true,
+  "allowed_outcomes": ["PASS", "FAIL", "NA", "BLOCKED"],
+  "automatic_scope": "reversible_review_recommendation_only",
+  "irreducible_human_gates": [
+    "consent",
+    "new_bjj_category_veto",
+    "physical_device_test",
+    "final_shipping"
+  ],
+  "dimensions": [
+    {"id": "evidence_integrity", "owner": "human_reviewer", "criteria": ["path", "sha256", "source", "state_separation"]},
+    {"id": "bjj_safety", "owner": "gate_01_bjj", "criteria": ["support", "contact", "tap_release", "no_head_impact"]},
+    {"id": "animation_continuity", "owner": "gate_02_animation", "criteria": ["shared_origin", "persistent_contact", "recovery"]},
+    {"id": "art_readability", "owner": "gate_03_art", "criteria": ["identity", "silhouette_72px", "palette", "alpha"]},
+    {"id": "gameplay", "owner": "gate_04_gameplay", "criteria": ["runtime_authority", "eligibility", "no_dead_input", "tap_sovereign"]},
+    {"id": "accessibility", "owner": "gate_05_accessibility", "criteria": ["multimodal_feedback", "remap", "reduced_motion", "no_color_only"]},
+    {"id": "rights", "owner": "gate_06_rights", "criteria": ["consent", "license", "fictional_identity", "derivative_label"]},
+    {"id": "lore_v4", "owner": "oiia_reviewer", "criteria": ["whitelist_id", "blacklist_absent", "scale_label", "visual_derivative_label"]}
+  ]
+}

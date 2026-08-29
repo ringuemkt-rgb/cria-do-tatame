@@ -4,6 +4,7 @@ on:
   pull_request:
     branches:
       - lead/harmony-v1
+      - lead/harmony-gates-v1
   workflow_dispatch:
 
 permissions:

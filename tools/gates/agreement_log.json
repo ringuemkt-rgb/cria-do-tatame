@@ -1,0 +1,14 @@
+{
+  "schema_version": "1.0.0",
+  "log_id": "cria_gate_agreements_v1",
+  "status": "locked_no_agreements",
+  "promotion_forbidden": true,
+  "policy": {
+    "minimum_consecutive_agreements": 20,
+    "human_sample_rate": 0.1,
+    "relock_on_any_sample_disagreement": true
+  },
+  "agreements": [],
+  "sample_audits": [],
+  "relock_events": []
+}

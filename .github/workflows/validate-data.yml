@@ -15,3 +15,13 @@ jobs:
           python-version: '3.11'
       - name: Validate data
         run: python tools/cria_forge/cria_forge.py validate
+      - name: Validate V4 OIIA lore
+        run: python tools/gates/validate_lore_v4.py
+      - name: Validate slice gate tools
+        run: |
+          python tools/gates/validate_lore_v4.py --self-test
+          python tools/gates/accessibility_checks.py --self-test
+          python tools/gates/accessibility_checks.py
+          python tools/gates/license_scanner.py --self-test
+          python tools/gates/evidence_pack.py --self-test
+          python tools/gates/auto_promote.py --self-test
