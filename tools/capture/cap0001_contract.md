@@ -1,9 +1,26 @@
 # CAP_0001 — contrato de captura pareada
 
-**Status:** `SCHEDULED_IN_REPOSITORY_PENDING_EXTERNAL_CONFIRMATION`
+**Status:** `BLOCKED`
 
 **Janela proposta:** 30/08/2026, 08:00–11:00 (`America/Bahia`)
 **Promoção:** proibida; captura produz evidência, não animação aprovada.
+
+## Registro da janela — 30/08/2026
+
+**Gate avaliado em:** 30/08/2026, 08:10:38 (`America/Bahia`)
+**Resultado:** `BLOCKED`
+**Sessão executada:** não
+
+| Pré-condição obrigatória | Estado | Evidência disponível no gate |
+|---|---|---|
+| dois performers adultos | `NOT_CONFIRMED` | nenhum roster ou ateste de presença |
+| responsável de segurança | `NOT_CONFIRMED` | nenhuma designação e aceite registrados |
+| tatame íntegro | `NOT_CONFIRMED` | nenhuma inspeção pré-sessão registrada |
+| celular A em 60 fps | `NOT_CONFIRMED` | nenhum teste de gravação registrado |
+| celular B em 60 fps | `NOT_CONFIRMED` | nenhum teste de gravação registrado |
+| dois consentimentos assinados | `NOT_CONFIRMED` | nenhum termo assinado e nenhum SHA-256 registrados |
+
+Aplicado o regime fail-closed: ausência de confirmação não foi convertida em ausência física, mas impede a captura. Nenhuma tomada foi iniciada, nenhum vídeo bruto foi ingerido, nenhum derivado foi produzido e nenhuma promoção foi realizada. O registro legível por máquina está em `tools/capture/cap0001_ledger.json`.
 
 ## Equipe e segurança
 

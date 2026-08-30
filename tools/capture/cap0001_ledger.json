@@ -1,0 +1,57 @@
+{
+  "schema_version": "1.0.0",
+  "capture_id": "CAP_0001",
+  "recorded_at": "2026-08-30T08:10:38-03:00",
+  "timezone": "America/Bahia",
+  "status": "BLOCKED",
+  "session_executed": false,
+  "policy": "FAIL_CLOSED",
+  "prerequisites": [
+    {
+      "id": "adult_performers",
+      "required_count": 2,
+      "state": "NOT_CONFIRMED",
+      "evidence": []
+    },
+    {
+      "id": "safety_responsible",
+      "required_count": 1,
+      "state": "NOT_CONFIRMED",
+      "evidence": []
+    },
+    {
+      "id": "intact_mat",
+      "required_count": 1,
+      "state": "NOT_CONFIRMED",
+      "evidence": []
+    },
+    {
+      "id": "phone_a_60_fps",
+      "required_count": 1,
+      "state": "NOT_CONFIRMED",
+      "evidence": []
+    },
+    {
+      "id": "phone_b_60_fps",
+      "required_count": 1,
+      "state": "NOT_CONFIRMED",
+      "evidence": []
+    },
+    {
+      "id": "signed_performer_consents",
+      "required_count": 2,
+      "state": "NOT_CONFIRMED",
+      "evidence": [],
+      "sha256": []
+    }
+  ],
+  "blocking_rule": "Any prerequisite other than CONFIRMED blocks the entire session.",
+  "effects": {
+    "takes_started": 0,
+    "raw_media_ingested": false,
+    "derivatives_created": false,
+    "runtime_integration": false,
+    "promotion": "PROHIBITED"
+  },
+  "resume_condition": "Create a new capture window only after all six prerequisites have positive, reviewable evidence before the first take."
+}
