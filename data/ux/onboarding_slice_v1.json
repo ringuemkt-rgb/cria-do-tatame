@@ -1,0 +1,16 @@
+{
+  "schema_version": "1.0.0",
+  "contract_id": "onboarding_slice_v1",
+  "status": "specified_not_integrated",
+  "decision_refs": ["D229", "D230", "D231", "D233"],
+  "mentor_id": "mestre_dende",
+  "one_mechanic_per_drill": true,
+  "drills": [
+    {"id": "drill_01_movement", "order": 1, "mechanic": "movement", "objective": "Mover e retornar à base neutra.", "pass_condition": {"movement_inputs_registered_min": 4, "neutral_recovery_reached": true, "dead_inputs": 0}, "dende_line": "Força sem direção só cansa, Ruan. Primeiro aprende a pisar."},
+    {"id": "drill_02_contextual_eligibility", "order": 2, "mechanic": "contextual_eligibility", "objective": "Executar uma ação elegível e reconhecer uma ação bloqueada pelo motivo mostrado.", "pass_condition": {"eligible_action_executed": true, "blocked_reason_acknowledged": true, "dead_inputs": 0}, "dende_line": "O chão sempre diz o que cabe agora; escuta antes de apertar."},
+    {"id": "drill_03_defense_timing", "order": 3, "mechanic": "defense_timing_ms", "objective": "Defender dentro da janela mostrada em milissegundos.", "pass_condition": {"defense_registered": true, "timing_unit": "ms", "result_feedback_emitted": true}, "dende_line": "Defesa boa não adivinha: lê, espera e chega na hora."},
+    {"id": "drill_04_submission_tap", "order": 4, "mechanic": "tap_sovereign", "objective": "Segurar TAP durante submission_defense e obter soltura imediata.", "pass_condition": {"submission_defense_seen": true, "tap_hold_completed": true, "release_immediate": true, "tap_swallowed": false}, "dende_line": "Bateu, soltou. Técnica sem respeito não entra neste Terreiro."},
+    {"id": "drill_05_scramble", "order": 5, "mechanic": "scramble_recovery", "objective": "Sair do scramble e alcançar uma posição estável.", "pass_condition": {"scramble_entered": true, "stable_recovery_reached": true}, "dende_line": "No aperto, não corre do caos; encontra a base dentro dele."},
+    {"id": "drill_06_short_fight", "order": 6, "mechanic": "short_fight_completion", "objective": "Concluir uma luta curta e chegar ao resultado.", "pass_condition": {"short_fight_completed": true, "result_screen_reached": true, "dead_inputs": 0}, "dende_line": "Ser forte é ser gentil. Agora prova isso quando vale resultado."}
+  ]
+}

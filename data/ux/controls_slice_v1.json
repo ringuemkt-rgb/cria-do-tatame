@@ -1,0 +1,50 @@
+{
+  "schema_version": "1.0.0",
+  "contract_id": "controls_slice_v1",
+  "status": "specified_not_integrated",
+  "decision_refs": ["D229", "D230", "D231", "D233", "D243"],
+  "runtime_authority": "existing_input_and_combat_runtime",
+  "secondary_runtime_forbidden": true,
+  "timing": {
+    "canonical_unit": "ms",
+    "input_buffer_ms": 100,
+    "difficulty_window_delta_ms": {"training": 67, "standard": 0, "master": -33},
+    "conversion_owner": "runtime",
+    "frame_count_is_authority": false
+  },
+  "priority": ["tap", "pause_or_menu", "defensive_input", "contextual_action"],
+  "rules": {
+    "no_dead_input": true,
+    "tap_sovereign": true,
+    "ineligible_input_result": "feedback_with_reason",
+    "remappable_devices": ["touch", "gamepad", "keyboard"],
+    "feedback_channels": ["visual", "audio", "haptic_when_available"],
+    "haptics_respect_accessibility": true
+  },
+  "layers": {
+    "mapa": [
+      {"id": "select", "touch": "tap_node", "gamepad": "dpad_or_left_stick", "keyboard": "arrows_or_wasd", "feedback": {"visual": "node_focus", "audio": "ui_focus", "haptic": "selection_tick"}},
+      {"id": "confirm_travel", "touch": "tap_confirm", "gamepad": "A", "keyboard": "Enter", "feedback": {"visual": "route_confirm", "audio": "ui_confirm", "haptic": "confirm_pulse"}},
+      {"id": "cancel", "touch": "tap_cancel", "gamepad": "B", "keyboard": "Backspace", "feedback": {"visual": "selection_cancel", "audio": "ui_cancel", "haptic": "cancel_tick"}},
+      {"id": "back", "touch": "tap_back", "gamepad": "B", "keyboard": "Escape", "feedback": {"visual": "panel_close", "audio": "ui_back", "haptic": "back_tick"}}
+    ],
+    "rua": [
+      {"id": "move", "touch": "left_virtual_stick", "gamepad": "left_stick", "keyboard": "WASD", "feedback": {"visual": "locomotion", "audio": "footstep_surface", "haptic": "none"}},
+      {"id": "interact", "touch": "context_interact", "gamepad": "A", "keyboard": "E", "feedback": {"visual": "interaction_ack", "audio": "ui_confirm", "haptic": "interaction_tick"}},
+      {"id": "map", "touch": "map_button", "gamepad": "Y", "keyboard": "M", "feedback": {"visual": "map_open", "audio": "ui_open", "haptic": "panel_tick"}},
+      {"id": "pause", "touch": "pause_button", "gamepad": "Start", "keyboard": "Escape", "feedback": {"visual": "pause_overlay", "audio": "ui_pause", "haptic": "pause_tick"}}
+    ],
+    "combate": [
+      {"id": "move", "priority": "contextual_action", "touch": "left_virtual_stick", "gamepad": "left_stick", "keyboard": "WASD", "feedback": {"visual": "footwork_direction", "audio": "tatame_step", "haptic": "none"}},
+      {"id": "context_1", "priority": "contextual_action", "touch": "context_slot_1", "gamepad": "A", "keyboard": "1", "feedback": {"visual": "eligibility_or_reason", "audio": "action_or_blocked", "haptic": "action_tick"}},
+      {"id": "context_2", "priority": "contextual_action", "touch": "context_slot_2", "gamepad": "B", "keyboard": "2", "enabled_when": "submission_defense=false", "feedback": {"visual": "eligibility_or_reason", "audio": "action_or_blocked", "haptic": "action_tick"}},
+      {"id": "context_3", "priority": "contextual_action", "touch": "context_slot_3", "gamepad": "X", "keyboard": "3", "feedback": {"visual": "eligibility_or_reason", "audio": "action_or_blocked", "haptic": "action_tick"}},
+      {"id": "context_4", "priority": "contextual_action", "touch": "context_slot_4", "gamepad": "Y", "keyboard": "4", "feedback": {"visual": "eligibility_or_reason", "audio": "action_or_blocked", "haptic": "action_tick"}},
+      {"id": "context_5", "priority": "contextual_action", "touch": "context_slot_5", "gamepad": "RB", "keyboard": "5", "feedback": {"visual": "eligibility_or_reason", "audio": "action_or_blocked", "haptic": "action_tick"}},
+      {"id": "defense", "priority": "defensive_input", "touch": "defense_button", "gamepad": "RT", "keyboard": "F", "feedback": {"visual": "defense_timing_ms", "audio": "defense_cue", "haptic": "defense_window_pulse"}},
+      {"id": "special", "priority": "contextual_action", "touch": "special_button", "gamepad": "LB", "keyboard": "Q", "feedback": {"visual": "eligibility_or_reason", "audio": "special_or_blocked", "haptic": "special_pulse"}},
+      {"id": "tap", "priority": "tap", "touch": "hold_tap", "gamepad": "hold_B", "keyboard": "hold_T", "enabled_when": "submission_defense=true", "ui_context_swap": "replace_context_2_label_before_input", "result": "immediate_release", "feedback": {"visual": "tap_hold_and_release", "audio": "tap_release", "haptic": "tap_release_pulse"}},
+      {"id": "pause", "priority": "pause_or_menu", "touch": "pause_button", "gamepad": "Start", "keyboard": "Escape", "feedback": {"visual": "pause_overlay", "audio": "ui_pause", "haptic": "pause_tick"}}
+    ]
+  }
+}
