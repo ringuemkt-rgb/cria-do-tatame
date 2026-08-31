@@ -1,5 +1,7 @@
 extends Node
 
+signal post_published(post: Dictionary)
+
 var posts: Array = []
 var pending_crises: Array = []
 var faction_metrics: Dictionary = {}
@@ -55,6 +57,7 @@ func create_post(text: String, tone: String, author := "cria_live", metadata: Di
 	while posts.size() > 120:
 		posts.pop_front()
 	_update_faction_metrics(post)
+	post_published.emit(post.duplicate(true))
 	SignalBus.cria_live_post_created.emit(post)
 	SignalBus.cria_live_post_generated.emit(post)
 	if SignalBus.has_signal("cria_live_metrics_changed"):

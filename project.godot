@@ -41,6 +41,9 @@ window/handheld/orientation=0
 window/stretch/mode="canvas_items"
 window/stretch/aspect="expand"
 
+[editor_plugins]
+enabled=PackedStringArray("res://addons/AsepriteWizard/plugin.cfg")
+
 [physics]
 common/physics_ticks_per_second=60
 common/physics_interpolation=true

@@ -71,6 +71,11 @@ custom_minimum_size = Vector2(0, 54)
 layout_mode = 2
 text = "MONTAR GI DE COMBATE"
 
+[node name="SkillTreeBtn" type="Button" parent="Panel"]
+custom_minimum_size = Vector2(0, 54)
+layout_mode = 2
+text = "ÁRVORE DE HABILIDADES"
+
 [node name="FightDaviBtn" type="Button" parent="Panel"]
 custom_minimum_size = Vector2(0, 54)
 layout_mode = 2
