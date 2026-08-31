@@ -1,0 +1,301 @@
+[gd_scene load_steps=9 format=3]
+
+[ext_resource type="Script" path="res://src/combat/combat_hud_v2.gd" id="1_hud"]
+
+[sub_resource type="StyleBoxFlat" id="StyleRoot"]
+bg_color = Color(0.043, 0.043, 0.051, 0.96)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.949, 0.761, 0.188, 0.88)
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
+
+[sub_resource type="StyleBoxFlat" id="StylePanel"]
+bg_color = Color(0.071, 0.075, 0.09, 0.96)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.18, 0.561, 0.886, 0.72)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxFlat" id="StyleCardGold"]
+bg_color = Color(0.102, 0.11, 0.133, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.949, 0.761, 0.188, 0.9)
+corner_radius_top_left = 7
+corner_radius_top_right = 7
+corner_radius_bottom_right = 7
+corner_radius_bottom_left = 7
+
+[sub_resource type="StyleBoxFlat" id="StyleCardBlue"]
+bg_color = Color(0.055, 0.102, 0.157, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.243, 0.89, 0.961, 0.9)
+corner_radius_top_left = 7
+corner_radius_top_right = 7
+corner_radius_bottom_right = 7
+corner_radius_bottom_left = 7
+
+[sub_resource type="StyleBoxFlat" id="StyleProgressBg"]
+bg_color = Color(0.035, 0.035, 0.043, 1)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+
+[sub_resource type="StyleBoxFlat" id="StyleProgressGold"]
+bg_color = Color(0.949, 0.761, 0.188, 1)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+
+[sub_resource type="StyleBoxFlat" id="StyleProgressRed"]
+bg_color = Color(0.851, 0.227, 0.169, 1)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+
+[node name="CombatHUDv2" type="CanvasLayer"]
+script = ExtResource("1_hud")
+
+[node name="StandPhaseHUD" type="Control" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Frame" type="PanelContainer" parent="StandPhaseHUD"]
+anchors_preset = 10
+anchor_right = 1.0
+offset_left = 28.0
+offset_top = 20.0
+offset_right = -28.0
+offset_bottom = 238.0
+theme_override_styles/panel = SubResource("StyleRoot")
+
+[node name="Layout" type="VBoxContainer" parent="StandPhaseHUD/Frame"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="PhaseLabel" type="Label" parent="StandPhaseHUD/Frame/Layout"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.949, 0.761, 0.188, 1)
+theme_override_font_sizes/font_size = 15
+text = "FASE EM PÉ  •  BAIXO SUL DA BAHIA"
+horizontal_alignment = 1
+
+[node name="ScoreRow" type="HBoxContainer" parent="StandPhaseHUD/Frame/Layout"]
+layout_mode = 2
+theme_override_constants/separation = 18
+
+[node name="PlayerBlock" type="VBoxContainer" parent="StandPhaseHUD/Frame/Layout/ScoreRow"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="PlayerName" type="Label" parent="StandPhaseHUD/Frame/Layout/ScoreRow/PlayerBlock"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 17
+text = "Ruan \"Macacão\" Silva"
+
+[node name="PlayerBar" type="ProgressBar" parent="StandPhaseHUD/Frame/Layout/ScoreRow/PlayerBlock"]
+custom_minimum_size = Vector2(300, 28)
+layout_mode = 2
+value = 82.0
+show_percentage = false
+theme_override_styles/background = SubResource("StyleProgressBg")
+theme_override_styles/fill = SubResource("StyleProgressGold")
+
+[node name="PlayerStats" type="Label" parent="StandPhaseHUD/Frame/Layout/ScoreRow/PlayerBlock"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.72, 0.75, 0.8, 1)
+text = "VIDA 82  •  GÁS 74  •  FOCO 68"
+
+[node name="CenterBlock" type="VBoxContainer" parent="StandPhaseHUD/Frame/Layout/ScoreRow"]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+
+[node name="Timer" type="Label" parent="StandPhaseHUD/Frame/Layout/ScoreRow/CenterBlock"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.949, 0.761, 0.188, 1)
+theme_override_font_sizes/font_size = 28
+text = "03:45"
+horizontal_alignment = 1
+
+[node name="PhaseChip" type="Label" parent="StandPhaseHUD/Frame/Layout/ScoreRow/CenterBlock"]
+layout_mode = 2
+text = "EM PÉ"
+horizontal_alignment = 1
+
+[node name="EnemyBlock" type="VBoxContainer" parent="StandPhaseHUD/Frame/Layout/ScoreRow"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="EnemyName" type="Label" parent="StandPhaseHUD/Frame/Layout/ScoreRow/EnemyBlock"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 17
+text = "Davi Relâmpago"
+horizontal_alignment = 2
+
+[node name="EnemyBar" type="ProgressBar" parent="StandPhaseHUD/Frame/Layout/ScoreRow/EnemyBlock"]
+custom_minimum_size = Vector2(300, 28)
+layout_mode = 2
+value = 67.0
+show_percentage = false
+theme_override_styles/background = SubResource("StyleProgressBg")
+theme_override_styles/fill = SubResource("StyleProgressRed")
+
+[node name="EnemyStats" type="Label" parent="StandPhaseHUD/Frame/Layout/ScoreRow/EnemyBlock"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.72, 0.75, 0.8, 1)
+text = "VIDA 67  •  GÁS 81  •  FOCO 76"
+horizontal_alignment = 2
+
+[node name="EnvironmentHand" type="HBoxContainer" parent="StandPhaseHUD/Frame/Layout"]
+layout_mode = 2
+alignment = 1
+theme_override_constants/separation = 12
+
+[node name="EnvironmentCard1" type="PanelContainer" parent="StandPhaseHUD/Frame/Layout/EnvironmentHand"]
+custom_minimum_size = Vector2(210, 64)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleCardGold")
+
+[node name="Text" type="Label" parent="StandPhaseHUD/Frame/Layout/EnvironmentHand/EnvironmentCard1"]
+layout_mode = 2
+text = "AREIA FOFA\nVelocidade ×0,85"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="EnvironmentCard2" type="PanelContainer" parent="StandPhaseHUD/Frame/Layout/EnvironmentHand"]
+custom_minimum_size = Vector2(210, 64)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleCardBlue")
+
+[node name="Text" type="Label" parent="StandPhaseHUD/Frame/Layout/EnvironmentHand/EnvironmentCard2"]
+layout_mode = 2
+text = "MARÉ ALTA\nArena ×0,62"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="EnvironmentCard3" type="PanelContainer" parent="StandPhaseHUD/Frame/Layout/EnvironmentHand"]
+custom_minimum_size = Vector2(210, 64)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleCardGold")
+
+[node name="Text" type="Label" parent="StandPhaseHUD/Frame/Layout/EnvironmentHand/EnvironmentCard3"]
+layout_mode = 2
+text = "PRESSÃO DA PLATEIA\nHype ×1,20"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="GroundPhaseHUD" type="Control" parent="."]
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="GroundFrame" type="PanelContainer" parent="GroundPhaseHUD"]
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 28.0
+offset_top = -292.0
+offset_right = -28.0
+offset_bottom = -20.0
+theme_override_styles/panel = SubResource("StyleRoot")
+
+[node name="GroundLayout" type="VBoxContainer" parent="GroundPhaseHUD/GroundFrame"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="PositionRow" type="HBoxContainer" parent="GroundPhaseHUD/GroundFrame/GroundLayout"]
+layout_mode = 2
+
+[node name="PhaseLabel" type="Label" parent="GroundPhaseHUD/GroundFrame/GroundLayout/PositionRow"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0.243, 0.89, 0.961, 1)
+text = "FASE SOLO  •  POSIÇÃO"
+
+[node name="PositionLabel" type="Label" parent="GroundPhaseHUD/GroundFrame/GroundLayout/PositionRow"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 20
+text = "CEM QUILOS — TOP"
+horizontal_alignment = 2
+
+[node name="DominanceLabel" type="Label" parent="GroundPhaseHUD/GroundFrame/GroundLayout"]
+layout_mode = 2
+text = "DOMÍNIO POSICIONAL"
+
+[node name="DominanceMeter" type="ProgressBar" parent="GroundPhaseHUD/GroundFrame/GroundLayout"]
+custom_minimum_size = Vector2(0, 26)
+layout_mode = 2
+value = 72.0
+show_percentage = false
+theme_override_styles/background = SubResource("StyleProgressBg")
+theme_override_styles/fill = SubResource("StyleProgressGold")
+
+[node name="TechniqueHand" type="HBoxContainer" parent="GroundPhaseHUD/GroundFrame/GroundLayout"]
+layout_mode = 2
+alignment = 1
+theme_override_constants/separation = 12
+
+[node name="TechniqueCard1" type="Button" parent="GroundPhaseHUD/GroundFrame/GroundLayout/TechniqueHand"]
+custom_minimum_size = Vector2(210, 72)
+layout_mode = 2
+text = "GRIP DE FERRO\nGÁS 12"
+
+[node name="TechniqueCard2" type="Button" parent="GroundPhaseHUD/GroundFrame/GroundLayout/TechniqueHand"]
+custom_minimum_size = Vector2(210, 72)
+layout_mode = 2
+text = "CORTE DE JOELHO\nGÁS 18"
+
+[node name="TechniqueCard3" type="Button" parent="GroundPhaseHUD/GroundFrame/GroundLayout/TechniqueHand"]
+custom_minimum_size = Vector2(210, 72)
+layout_mode = 2
+text = "CEM QUILOS\nGÁS 14"
+
+[node name="ResourceRow" type="HBoxContainer" parent="GroundPhaseHUD/GroundFrame/GroundLayout"]
+layout_mode = 2
+theme_override_constants/separation = 18
+
+[node name="GasLabel" type="Label" parent="GroundPhaseHUD/GroundFrame/GroundLayout/ResourceRow"]
+layout_mode = 2
+text = "GÁS"
+
+[node name="GasBar" type="ProgressBar" parent="GroundPhaseHUD/GroundFrame/GroundLayout/ResourceRow"]
+custom_minimum_size = Vector2(320, 24)
+layout_mode = 2
+value = 74.0
+show_percentage = false
+theme_override_styles/background = SubResource("StyleProgressBg")
+theme_override_styles/fill = SubResource("StyleProgressGold")
+
+[node name="GripLabel" type="Label" parent="GroundPhaseHUD/GroundFrame/GroundLayout/ResourceRow"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "PEGADA: FIRME"
+horizontal_alignment = 2

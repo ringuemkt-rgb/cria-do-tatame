@@ -1,0 +1,77 @@
+{
+  "$schema": "cria_visual_canon_lock_v1",
+  "schema_version": "1.0.0",
+  "status": "canonical_visual_presentation_contract",
+  "scope": "EPIC_16_VOLUME_II",
+  "runtime_policy": "runtime_decide_ui_presents",
+  "slice_policy": {
+    "presentation_only_expansions": true,
+    "gameplay_binding": "specified_not_integrated",
+    "decision_refs": ["D15", "D16", "D17", "D44", "D232", "D233", "D241"]
+  },
+  "identity": {
+    "protagonist_id": "ruan_macacao",
+    "protagonist_display": "Ruan \"Macacão\" Silva",
+    "rival_id": "davi_relampago",
+    "rival_display": "Davi Relâmpago",
+    "setting_id": "baixo_sul_bahia",
+    "setting_display": "Baixo Sul da Bahia",
+    "home_hub": "Ituberá",
+    "core_phrase": "Ser forte é ser gentil."
+  },
+  "factions": {
+    "ALE": {"display": "Os Aleluiado", "color": "#FF9408", "symbol": "fachada"},
+    "LEM": {"display": "Lá Ele Mil Vezes", "color": "#4A6741", "symbol": "rota"},
+    "NTM": {"display": "Nós Tem Um Molho", "color": "#3FE3F5", "symbol": "palco"}
+  },
+  "sponsors": {
+    "cacau_bahia": {"display": "Cacau Bahia", "category": "cacau", "fictional": true},
+    "pratigi_surf": {"display": "Pratigi Surf", "category": "surf", "fictional": true},
+    "camamu_ostras": {"display": "Camamu Ostras", "category": "maricultura", "fictional": true},
+    "dende_oil": {"display": "Dendê Oil", "category": "dende", "fictional": true}
+  },
+  "stats": {
+    "health": "VIDA",
+    "gas": "GÁS",
+    "guard": "GUARDA",
+    "focus": "FOCO",
+    "grip": "PEGADA",
+    "positional_control": "DOMÍNIO",
+    "honor": "HONRA",
+    "hype": "HYPE",
+    "shadow": "SOMBRA",
+    "legacy": "LEGADO"
+  },
+  "combat_phases": {
+    "standing": "EM PÉ",
+    "ground": "SOLO",
+    "position": "POSIÇÃO",
+    "timer": "TEMPO"
+  },
+  "skill_branches": {
+    "tecnica": "TÉCNICA",
+    "pressao": "PRESSÃO",
+    "frieza": "FRIEZA",
+    "legado": "LEGADO"
+  },
+  "palette": {
+    "charcoal": "#0B0B0D",
+    "graphite": "#121317",
+    "panel": "#1A1C22",
+    "off_white": "#F3F0EA",
+    "honor_gold": "#F2C230",
+    "river_blue": "#2E8FE2",
+    "mangrove_green": "#4A6741",
+    "conflict_red": "#D93A2B",
+    "faction_ale": "#FF9408",
+    "faction_lem": "#4A6741",
+    "faction_ntm": "#3FE3F5"
+  },
+  "forbidden_ui_sequences": [
+    ["Rio de ", "Janeiro"],
+    ["Alli", "ance"],
+    ["Cria ", "Silva"],
+    ["facção ", "genérica"],
+    ["faccao ", "generica"]
+  ]
+}
