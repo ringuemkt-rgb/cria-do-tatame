@@ -14,7 +14,7 @@ layout_mode = 2
 
 [node name="Title" type="Label" parent="Panel"]
 layout_mode = 2
-text = "MAPA DO BAIXO SUL"
+text = "MAPA DO BAIXO SUL DA BAHIA"
 
 [node name="Status" type="Label" parent="Panel"]
 layout_mode = 2
@@ -26,7 +26,7 @@ text = "Escolha um destino"
 
 [node name="Itubera" type="Button" parent="Panel"]
 layout_mode = 2
-text = "ITUBERA"
+text = "ITUBERÁ"
 
 [node name="Salvador" type="Button" parent="Panel"]
 layout_mode = 2

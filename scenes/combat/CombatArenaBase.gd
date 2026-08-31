@@ -99,12 +99,12 @@ func _connect_runtime_signals() -> void:
 func _build_placeholder_fighters() -> void:
 	ruan_placeholder = FighterPlaceholderScript.new()
 	ruan_placeholder.fighter_id = "ruan_macacao"
-	ruan_placeholder.display_name = "Ruan Macacao"
+	ruan_placeholder.display_name = "Ruan \"Macacão\" Silva"
 	ruan_placeholder.position = Vector2(430, 385)
 	add_child(ruan_placeholder)
 	davi_placeholder = FighterPlaceholderScript.new()
 	davi_placeholder.fighter_id = "davi_relampago"
-	davi_placeholder.display_name = "Davi Relampago"
+	davi_placeholder.display_name = "Davi Relâmpago"
 	davi_placeholder.primary_color = Color(0.22, 0.28, 0.34)
 	davi_placeholder.accent_color = Color(0.55, 0.75, 1.0)
 	davi_placeholder.position = Vector2(850, 385)
@@ -115,7 +115,7 @@ func _ensure_ai_hint() -> void:
 	if has_node("Panel") and not has_node("Panel/AIHint"):
 		var label := Label.new()
 		label.name = "AIHint"
-		label.text = "Davi esta lendo seu ritmo. Varie as entradas."
+		label.text = "Davi está lendo seu ritmo. Varie as entradas."
 		get_node("Panel").add_child(label)
 
 func _set_ai_hint(text: String) -> void:
@@ -148,7 +148,7 @@ func _refresh_action_buttons() -> void:
 			button.set_meta("action_id", technique_id)
 			button.set_meta("affordable", affordable)
 			button.disabled = not affordable
-			button.tooltip_text = "Gas %d • Foco %d" % [gas_cost, focus_cost]
+			button.tooltip_text = "GÁS %d • FOCO %d" % [gas_cost, focus_cost]
 		else:
 			var is_reset: bool = index == 0 and available.is_empty()
 			button.text = "REINICIAR POSICAO" if is_reset else "—"
@@ -181,13 +181,13 @@ func _on_action_button_pressed(button: Button) -> void:
 		_set_actions_enabled(true)
 
 func _run_davi_turn() -> void:
-	_set_ai_hint("%s Davi esta escolhendo a resposta..." % str(davi_ai.call("pressure_message")))
+	_set_ai_hint("%s Davi está escolhendo a resposta..." % str(davi_ai.call("pressure_message")))
 	await get_tree().create_timer(ai_turn_delay).timeout
 	if not is_inside_tree() or not CombatManager.is_running:
 		return
 	var technique: Dictionary = davi_ai.call("choose_technique", CombatManager)
 	if technique.is_empty():
-		_set_ai_hint("Davi nao encontrou uma acao segura e preservou a base.")
+		_set_ai_hint("Davi não encontrou uma ação segura e preservou a base.")
 		return
 	var technique_id := str(technique.get("id", ""))
 	var technique_name := str(technique.get("nome", technique.get("name", technique_id)))
@@ -211,7 +211,7 @@ func _on_resources_changed(fighter_id, resources) -> void:
 	if str(fighter_id) != CombatManager.player_id or typeof(resources) != TYPE_DICTIONARY:
 		return
 	if has_node("Panel/Resources"):
-		$Panel/Resources.text = "Gas %d • Foco %d • Grip %d • Controle %d" % [
+		$Panel/Resources.text = "GÁS %d • FOCO %d • PEGADA %d • DOMÍNIO %d" % [
 			int(resources.get("gas", 0)),
 			int(resources.get("focus", 0)),
 			int(resources.get("grip_integrity", 0)),
@@ -242,7 +242,7 @@ func _on_technique_resolved(result) -> void:
 func _humanize_message(message: String) -> String:
 	match message:
 		"estado_posicional_incorreto": return "essa tecnica nao esta disponivel nesta posicao"
-		"recurso_insuficiente": return "gas ou foco insuficiente"
+		"recurso_insuficiente": return "GÁS ou FOCO insuficiente"
 		"technique_not_found": return "tecnica nao encontrada"
 	return message.replace("_", " ")
 

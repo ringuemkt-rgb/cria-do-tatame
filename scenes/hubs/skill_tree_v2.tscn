@@ -1,0 +1,260 @@
+[gd_scene load_steps=6 format=3]
+
+[sub_resource type="StyleBoxFlat" id="RootPanel"]
+bg_color = Color(0.043, 0.043, 0.051, 0.98)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.949, 0.761, 0.188, 0.82)
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
+
+[sub_resource type="StyleBoxFlat" id="TechniquePanel"]
+bg_color = Color(0.055, 0.102, 0.157, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.18, 0.561, 0.886, 0.9)
+corner_radius_top_left = 9
+corner_radius_top_right = 9
+corner_radius_bottom_right = 9
+corner_radius_bottom_left = 9
+
+[sub_resource type="StyleBoxFlat" id="PressurePanel"]
+bg_color = Color(0.157, 0.112, 0.035, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.949, 0.761, 0.188, 0.9)
+corner_radius_top_left = 9
+corner_radius_top_right = 9
+corner_radius_bottom_right = 9
+corner_radius_bottom_left = 9
+
+[sub_resource type="StyleBoxFlat" id="ColdPanel"]
+bg_color = Color(0.055, 0.13, 0.13, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.243, 0.89, 0.961, 0.9)
+corner_radius_top_left = 9
+corner_radius_top_right = 9
+corner_radius_bottom_right = 9
+corner_radius_bottom_left = 9
+
+[sub_resource type="StyleBoxFlat" id="LegacyPanel"]
+bg_color = Color(0.122, 0.078, 0.153, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.65, 0.42, 0.82, 0.9)
+corner_radius_top_left = 9
+corner_radius_top_right = 9
+corner_radius_bottom_right = 9
+corner_radius_bottom_left = 9
+
+[node name="SkillTreeV2" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Background" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.025, 0.029, 0.039, 1)
+
+[node name="Header" type="HBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_left = 36.0
+offset_top = 22.0
+offset_right = -36.0
+offset_bottom = 92.0
+
+[node name="Title" type="Label" parent="Header"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0.949, 0.761, 0.188, 1)
+theme_override_font_sizes/font_size = 28
+text = "CAMINHOS DE RUAN \"MACACÃO\" SILVA"
+
+[node name="Points" type="Label" parent="Header"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.243, 0.89, 0.961, 1)
+theme_override_font_sizes/font_size = 18
+text = "PONTOS DE TÉCNICA  •  03"
+vertical_alignment = 1
+
+[node name="TreeFrame" type="PanelContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 36.0
+offset_top = 98.0
+offset_right = -36.0
+offset_bottom = -32.0
+theme_override_styles/panel = SubResource("RootPanel")
+
+[node name="Branches" type="HBoxContainer" parent="TreeFrame"]
+layout_mode = 2
+theme_override_constants/separation = 14
+
+[node name="TecnicaBranch" type="PanelContainer" parent="TreeFrame/Branches"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/panel = SubResource("TechniquePanel")
+
+[node name="Layout" type="VBoxContainer" parent="TreeFrame/Branches/TecnicaBranch"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="Title" type="Label" parent="TreeFrame/Branches/TecnicaBranch/Layout"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 22
+text = "TÉCNICA"
+horizontal_alignment = 1
+
+[node name="Mentors" type="Label" parent="TreeFrame/Branches/TecnicaBranch/Layout"]
+layout_mode = 2
+text = "DENDÊ  •  BYAKU"
+horizontal_alignment = 1
+
+[node name="TecnicaTier1" type="Button" parent="TreeFrame/Branches/TecnicaBranch/Layout"]
+layout_mode = 2
+text = "I  •  BASE E PEGADA"
+[node name="TecnicaTier2" type="Button" parent="TreeFrame/Branches/TecnicaBranch/Layout"]
+layout_mode = 2
+text = "II  •  ENTRADA LIMPA"
+[node name="TecnicaTier3" type="Button" parent="TreeFrame/Branches/TecnicaBranch/Layout"]
+layout_mode = 2
+text = "III  •  TRANSIÇÃO"
+[node name="TecnicaTier4" type="Button" parent="TreeFrame/Branches/TecnicaBranch/Layout"]
+layout_mode = 2
+text = "IV  •  CONTROLE"
+[node name="TecnicaTier5" type="Button" parent="TreeFrame/Branches/TecnicaBranch/Layout"]
+layout_mode = 2
+text = "V  •  CÓDIGO DO TIGRE"
+
+[node name="PressaoBranch" type="PanelContainer" parent="TreeFrame/Branches"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/panel = SubResource("PressurePanel")
+
+[node name="Layout" type="VBoxContainer" parent="TreeFrame/Branches/PressaoBranch"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="Title" type="Label" parent="TreeFrame/Branches/PressaoBranch/Layout"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 22
+text = "PRESSÃO"
+horizontal_alignment = 1
+
+[node name="Mentors" type="Label" parent="TreeFrame/Branches/PressaoBranch/Layout"]
+layout_mode = 2
+text = "RAIMUNDO  •  UBIRÁ"
+horizontal_alignment = 1
+
+[node name="PressaoTier1" type="Button" parent="TreeFrame/Branches/PressaoBranch/Layout"]
+layout_mode = 2
+text = "I  •  BASE PESADA"
+[node name="PressaoTier2" type="Button" parent="TreeFrame/Branches/PressaoBranch/Layout"]
+layout_mode = 2
+text = "II  •  QUEBRA DE POSTURA"
+[node name="PressaoTier3" type="Button" parent="TreeFrame/Branches/PressaoBranch/Layout"]
+layout_mode = 2
+text = "III  •  PRESSÃO DE OMBRO"
+[node name="PressaoTier4" type="Button" parent="TreeFrame/Branches/PressaoBranch/Layout"]
+layout_mode = 2
+text = "IV  •  DOMÍNIO"
+[node name="PressaoTier5" type="Button" parent="TreeFrame/Branches/PressaoBranch/Layout"]
+layout_mode = 2
+text = "V  •  SILVERBACK GRIP"
+
+[node name="FriezaBranch" type="PanelContainer" parent="TreeFrame/Branches"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/panel = SubResource("ColdPanel")
+
+[node name="Layout" type="VBoxContainer" parent="TreeFrame/Branches/FriezaBranch"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="Title" type="Label" parent="TreeFrame/Branches/FriezaBranch/Layout"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 22
+text = "FRIEZA"
+horizontal_alignment = 1
+
+[node name="Mentors" type="Label" parent="TreeFrame/Branches/FriezaBranch/Layout"]
+layout_mode = 2
+text = "VERA  •  LEOA"
+horizontal_alignment = 1
+
+[node name="FriezaTier1" type="Button" parent="TreeFrame/Branches/FriezaBranch/Layout"]
+layout_mode = 2
+text = "I  •  RESPIRAÇÃO"
+[node name="FriezaTier2" type="Button" parent="TreeFrame/Branches/FriezaBranch/Layout"]
+layout_mode = 2
+text = "II  •  LEITURA"
+[node name="FriezaTier3" type="Button" parent="TreeFrame/Branches/FriezaBranch/Layout"]
+layout_mode = 2
+text = "III  •  CONTRA-TEMPO"
+[node name="FriezaTier4" type="Button" parent="TreeFrame/Branches/FriezaBranch/Layout"]
+layout_mode = 2
+text = "IV  •  MENTE QUIETA"
+[node name="FriezaTier5" type="Button" parent="TreeFrame/Branches/FriezaBranch/Layout"]
+layout_mode = 2
+text = "V  •  VERDADE SOB PRESSÃO"
+
+[node name="LegadoBranch" type="PanelContainer" parent="TreeFrame/Branches"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/panel = SubResource("LegacyPanel")
+
+[node name="Layout" type="VBoxContainer" parent="TreeFrame/Branches/LegadoBranch"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="Title" type="Label" parent="TreeFrame/Branches/LegadoBranch/Layout"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 22
+text = "LEGADO"
+horizontal_alignment = 1
+
+[node name="Mentors" type="Label" parent="TreeFrame/Branches/LegadoBranch/Layout"]
+layout_mode = 2
+text = "TINKER"
+horizontal_alignment = 1
+
+[node name="LegadoTier1" type="Button" parent="TreeFrame/Branches/LegadoBranch/Layout"]
+layout_mode = 2
+text = "I  •  VOZ DA CRIA"
+[node name="LegadoTier2" type="Button" parent="TreeFrame/Branches/LegadoBranch/Layout"]
+layout_mode = 2
+text = "II  •  HONRA PÚBLICA"
+[node name="LegadoTier3" type="Button" parent="TreeFrame/Branches/LegadoBranch/Layout"]
+layout_mode = 2
+text = "III  •  REDE DE APOIO"
+[node name="LegadoTier4" type="Button" parent="TreeFrame/Branches/LegadoBranch/Layout"]
+layout_mode = 2
+text = "IV  •  MEMÓRIA VIVA"
+[node name="LegadoTier5" type="Button" parent="TreeFrame/Branches/LegadoBranch/Layout"]
+layout_mode = 2
+text = "V  •  FORÇA QUE CUIDA"

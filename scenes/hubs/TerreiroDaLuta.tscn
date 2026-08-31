@@ -74,7 +74,7 @@ text = "MONTAR GI DE COMBATE"
 [node name="FightDaviBtn" type="Button" parent="Panel"]
 custom_minimum_size = Vector2(0, 54)
 layout_mode = 2
-text = "LUTAR CONTRA DAVI RELAMPAGO"
+text = "LUTAR CONTRA DAVI RELÂMPAGO"
 
 [node name="RestBtn" type="Button" parent="Panel"]
 custom_minimum_size = Vector2(0, 54)

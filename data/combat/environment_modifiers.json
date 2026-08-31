@@ -1,0 +1,31 @@
+{
+  "$schema": "environment_modifiers_v1",
+  "schema_version": "1.1.0",
+  "status": "specified_not_integrated",
+  "authority": "CombatManager",
+  "presentation_scene": "res://scenes/combat/combat_hud_v2.tscn",
+  "deterministic": true,
+  "stat_channels": ["gas", "foco", "moral", "controle", "grip", "speed"],
+  "safety_policy": "Ambiente altera recursos e janelas; nunca aumenta dano, lesão ou impacto de cabeça.",
+  "stacking": {
+    "mode": "multiplicative_then_additive_ms",
+    "max_active_cards": 3,
+    "minimum_window_ms": 100,
+    "maximum_window_ms": 900,
+    "randomness_source": "seeded_match_rng_only"
+  },
+  "cards": [
+    {"id":"areia_fofa","name":"Areia Fofa","icon":"praia","desc":"Reduz velocidade e aumenta o custo de movimento.","short_desc":"Velocidade ×0,85","effects":{"speed_mult":0.85,"gas_move_cost_mult":1.20,"controle_mult":0.96},"arenas":["taipu_de_fora","praia_pratigi","ilha_grande"]},
+    {"id":"mobilidade","name":"Mobilidade","icon":"movimento","desc":"Dash e corridas consomem mais fôlego.","short_desc":"Dash GÁS ×1,30","effects":{"gas_dash_cost_mult":1.30,"speed_mult":1.05},"arenas":["praia_pratigi","taipu_de_fora","ilha_grande"]},
+    {"id":"plateia","name":"Pressão da Plateia","icon":"plateia","desc":"A reação pública altera moral e recompensa de hype com RNG semeado.","short_desc":"Hype ×1,20","effects":{"moral_bonus_min":0,"moral_bonus_max":3,"hype_mult":1.20,"foco_mult":0.98},"arenas":["praia_pratigi","morro_sao_paulo","arena_dique","galpao_piacava"]},
+    {"id":"por_do_sol","name":"Pôr do Sol","icon":"sol_baixo","desc":"A luz baixa exige mais atenção durante a janela de transição.","short_desc":"FOCO ×0,90","effects":{"foco_mult":0.90,"defense_cue_lead_ms":33,"moral_mult":1.02},"arenas":["praia_pratigi","taipu_de_fora","terreiro_da_luta"],"condition":"time_band==dusk"},
+    {"id":"mare_alta","name":"Maré Alta","icon":"mare_alta","desc":"Arena encolhe 38% e favorece pressão posicional.","short_desc":"Arena ×0,62","effects":{"arena_width_mult":0.62,"controle_mult":1.10,"speed_mult":0.94,"edge_warning_lead_ms":200},"flags":{"pools_heal":false},"arenas":["taipu_de_fora"],"condition":"tide==alta","slice_policy":"preview_only_d232"},
+    {"id":"mare_baixa","name":"Maré Baixa","icon":"mare_baixa","desc":"Arena ampla e apoio estável nas áreas rasas sinalizadas.","short_desc":"PEGADA ×1,05","effects":{"arena_width_mult":1.00,"gas_regen_mult":1.05,"grip_mult":1.05,"controle_mult":1.00},"flags":{"pools_heal":true},"arenas":["taipu_de_fora"],"condition":"tide==baixa","slice_policy":"preview_only_d232"},
+    {"id":"chuva","name":"Chuva","icon":"chuva","desc":"Grip, foco e tração caem; qualquer perda de base é determinística.","short_desc":"PEGADA ×0,90","effects":{"grip_mult":0.90,"foco_mult":0.95,"speed_mult":0.92,"traction_mult":0.86},"arenas":["all"],"condition":"weather==rain"},
+    {"id":"neblina","name":"Neblina","icon":"neblina","desc":"Reduz a antecedência visual dos telegraphs durante a noite.","short_desc":"Leitura −1","effects":{"read_level_add":-1,"telegraph_lead_ms":-67,"foco_mult":0.94},"arenas":["ponte_do_saci"],"condition":"time_band==night"},
+    {"id":"fogo","name":"Fogo & Tambores","icon":"fogo_tambor","desc":"O pulso do tambor altera a apresentação do timing sem decidir o resultado.","short_desc":"Pulso 500 ms","effects":{"timing_pulse_ms":500,"moral_mult":1.08,"foco_mult":1.02},"arenas":["zambiapunga"]},
+    {"id":"poeira","name":"Poeira de Piaçava","icon":"poeira","desc":"Pó suspenso reduz foco e encurta a margem de escape.","short_desc":"FOCO ×0,90","effects":{"foco_mult":0.90,"escape_window_mult":0.80,"speed_mult":0.95},"arenas":["galpao_piacava"]},
+    {"id":"cimento","name":"Cimento Protegido","icon":"piso_duro","desc":"Piso duro exige controle: sem dano extra, recuperação custa mais gás.","short_desc":"Recuperação GÁS ×1,10","effects":{"recovery_gas_cost_mult":1.10,"controle_mult":1.04,"impact_mult":1.00},"arenas":["galpao_piacava","quartel_ficcional","patio_cacaueira_ficcional"]},
+    {"id":"silencio","name":"Silêncio do Budokan","icon":"silencio","desc":"Sem plateia: leitura melhora, mas o erro cobra mais foco.","short_desc":"Leitura +1","effects":{"read_level_add":1,"error_focus_cost_mult":1.10,"moral_mult":1.00},"arenas":["dojo_tigre_branco"]}
+  ]
+}

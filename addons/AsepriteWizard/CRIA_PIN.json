@@ -1,0 +1,11 @@
+{
+  "name": "godot-aseprite-wizard",
+  "upstream": "https://github.com/viniciusgerevini/godot-aseprite-wizard",
+  "tag": "v8.2.0-4",
+  "commit": "1dc9a1ef0b3c2112d5ac26eec8e1f5197ec83eb1",
+  "license": "MIT",
+  "godot_compatibility": "4.2.x",
+  "local_patches": ["clear_upstream_demo_source_path"],
+  "runtime_requirement": false,
+  "shipping_policy": "editor_only_exclude_from_export_when_not_required"
+}

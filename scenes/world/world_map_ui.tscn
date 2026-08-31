@@ -1,0 +1,347 @@
+[gd_scene load_steps=5 format=3]
+
+[sub_resource type="StyleBoxFlat" id="MapPanel"]
+bg_color = Color(0.035, 0.047, 0.063, 0.97)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.122, 0.49, 0.69, 0.9)
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
+
+[sub_resource type="StyleBoxFlat" id="OverlayPanel"]
+bg_color = Color(0.071, 0.075, 0.09, 0.98)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.949, 0.761, 0.188, 0.85)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxFlat" id="NodeButton"]
+bg_color = Color(0.102, 0.11, 0.133, 0.98)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.243, 0.89, 0.961, 0.9)
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
+
+[sub_resource type="StyleBoxFlat" id="NodeHub"]
+bg_color = Color(0.18, 0.13, 0.035, 1)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0.949, 0.761, 0.188, 1)
+corner_radius_top_left = 14
+corner_radius_top_right = 14
+corner_radius_bottom_right = 14
+corner_radius_bottom_left = 14
+
+[node name="WorldMapUI" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Background" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.025, 0.032, 0.043, 1)
+mouse_filter = 2
+
+[node name="Header" type="HBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_left = 38.0
+offset_top = 24.0
+offset_right = -38.0
+offset_bottom = 92.0
+
+[node name="Title" type="Label" parent="Header"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0.949, 0.761, 0.188, 1)
+theme_override_font_sizes/font_size = 28
+text = "BAIXO SUL DA BAHIA  •  MAPA DE INFLUÊNCIA"
+
+[node name="Status" type="Label" parent="Header"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.75, 0.8, 0.86, 1)
+text = "SEMANA 01  •  MARÉ ALTA EM 01:42"
+vertical_alignment = 1
+
+[node name="MapPanel" type="PanelContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 0.73
+anchor_bottom = 1.0
+offset_left = 38.0
+offset_top = 98.0
+offset_right = -12.0
+offset_bottom = -34.0
+theme_override_styles/panel = SubResource("MapPanel")
+
+[node name="MapCanvas" type="Control" parent="MapPanel"]
+custom_minimum_size = Vector2(980, 700)
+layout_mode = 2
+
+[node name="Ocean" type="ColorRect" parent="MapPanel/MapCanvas"]
+layout_mode = 0
+offset_left = 690.0
+offset_top = 0.0
+offset_right = 980.0
+offset_bottom = 700.0
+color = Color(0.035, 0.18, 0.27, 0.72)
+mouse_filter = 2
+
+[node name="OceanLabel" type="Label" parent="MapPanel/MapCanvas/Ocean"]
+layout_mode = 0
+offset_left = 74.0
+offset_top = 320.0
+offset_right = 228.0
+offset_bottom = 350.0
+theme_override_colors/font_color = Color(0.243, 0.89, 0.961, 0.72)
+text = "OCEANO ATLÂNTICO"
+rotation = 1.5708
+
+[node name="Routes" type="Node2D" parent="MapPanel/MapCanvas"]
+
+[node name="RouteNorth" type="Line2D" parent="MapPanel/MapCanvas/Routes"]
+points = PackedVector2Array(190, 120, 350, 185, 485, 160, 620, 230)
+width = 5.0
+default_color = Color(0.949, 0.761, 0.188, 0.72)
+
+[node name="RouteCenter" type="Line2D" parent="MapPanel/MapCanvas/Routes"]
+points = PackedVector2Array(350, 185, 335, 330, 475, 370, 610, 315)
+width = 5.0
+default_color = Color(0.243, 0.89, 0.961, 0.72)
+
+[node name="RouteSouth" type="Line2D" parent="MapPanel/MapCanvas/Routes"]
+points = PackedVector2Array(335, 330, 240, 470, 370, 560, 535, 545, 610, 450)
+width = 5.0
+default_color = Color(0.29, 0.404, 0.255, 0.9)
+
+[node name="RouteSea" type="Line2D" parent="MapPanel/MapCanvas/Routes"]
+points = PackedVector2Array(610, 315, 720, 250, 805, 350, 710, 470)
+width = 8.0
+default_color = Color(0.243, 0.89, 0.961, 0.5)
+
+[node name="MapNodes" type="Control" parent="MapPanel/MapCanvas"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Valenca" type="Button" parent="MapPanel/MapCanvas/MapNodes"]
+offset_left = 120.0
+offset_top = 84.0
+offset_right = 262.0
+offset_bottom = 132.0
+text = "VALENÇA\nALE 55"
+theme_override_styles/normal = SubResource("NodeButton")
+
+[node name="Taperoa" type="Button" parent="MapPanel/MapCanvas/MapNodes"]
+offset_left = 282.0
+offset_top = 150.0
+offset_right = 424.0
+offset_bottom = 198.0
+text = "TAPEROÁ\nNTM 45"
+theme_override_styles/normal = SubResource("NodeButton")
+
+[node name="Itubera" type="Button" parent="MapPanel/MapCanvas/MapNodes"]
+offset_left = 268.0
+offset_top = 294.0
+offset_right = 430.0
+offset_bottom = 350.0
+text = "ITUBERÁ  •  HUB\nRESISTÊNCIA"
+theme_override_styles/normal = SubResource("NodeHub")
+
+[node name="NiloPecanha" type="Button" parent="MapPanel/MapCanvas/MapNodes"]
+offset_left = 430.0
+offset_top = 214.0
+offset_right = 586.0
+offset_bottom = 262.0
+text = "NILO PEÇANHA\nRESISTÊNCIA"
+theme_override_styles/normal = SubResource("NodeButton")
+
+[node name="Cairu" type="Button" parent="MapPanel/MapCanvas/MapNodes"]
+offset_left = 648.0
+offset_top = 194.0
+offset_right = 786.0
+offset_bottom = 242.0
+text = "CAIRU\nNTM 50"
+theme_override_styles/normal = SubResource("NodeButton")
+
+[node name="Igrapiuna" type="Button" parent="MapPanel/MapCanvas/MapNodes"]
+offset_left = 414.0
+offset_top = 344.0
+offset_right = 566.0
+offset_bottom = 392.0
+text = "IGRAPIÚNA\nDISPUTA"
+theme_override_styles/normal = SubResource("NodeButton")
+
+[node name="Camamu" type="Button" parent="MapPanel/MapCanvas/MapNodes"]
+offset_left = 556.0
+offset_top = 286.0
+offset_right = 698.0
+offset_bottom = 334.0
+text = "CAMAMU\nLEM 55"
+theme_override_styles/normal = SubResource("NodeButton")
+
+[node name="Marau" type="Button" parent="MapPanel/MapCanvas/MapNodes"]
+offset_left = 738.0
+offset_top = 324.0
+offset_right = 876.0
+offset_bottom = 372.0
+text = "MARAÚ\nALE 50"
+theme_override_styles/normal = SubResource("NodeButton")
+
+[node name="Pirai" type="Button" parent="MapPanel/MapCanvas/MapNodes"]
+offset_left = 170.0
+offset_top = 438.0
+offset_right = 328.0
+offset_bottom = 486.0
+text = "PIRAÍ DO NORTE\nDISPUTA"
+theme_override_styles/normal = SubResource("NodeButton")
+
+[node name="Ibirapitanga" type="Button" parent="MapPanel/MapCanvas/MapNodes"]
+offset_left = 304.0
+offset_top = 532.0
+offset_right = 462.0
+offset_bottom = 580.0
+text = "IBIRAPITANGA\nNEUTRO"
+theme_override_styles/normal = SubResource("NodeButton")
+
+[node name="Teolandia" type="Button" parent="MapPanel/MapCanvas/MapNodes"]
+offset_left = 474.0
+offset_top = 514.0
+offset_right = 622.0
+offset_bottom = 562.0
+text = "TEOLÂNDIA\nNEUTRO"
+theme_override_styles/normal = SubResource("NodeButton")
+
+[node name="TancredoNeves" type="Button" parent="MapPanel/MapCanvas/MapNodes"]
+offset_left = 548.0
+offset_top = 420.0
+offset_right = 726.0
+offset_bottom = 468.0
+text = "P. TANCREDO NEVES\nLEM 40"
+theme_override_styles/normal = SubResource("NodeButton")
+
+[node name="DominoOverlay" type="PanelContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_left = 0.74
+anchor_right = 1.0
+anchor_bottom = 0.62
+offset_left = 0.0
+offset_top = 98.0
+offset_right = -38.0
+offset_bottom = -10.0
+theme_override_styles/panel = SubResource("OverlayPanel")
+
+[node name="Layout" type="VBoxContainer" parent="DominoOverlay"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="Title" type="Label" parent="DominoOverlay/Layout"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.949, 0.761, 0.188, 1)
+theme_override_font_sizes/font_size = 20
+text = "TERRITÓRIO DOMINÓ"
+
+[node name="Rule" type="Label" parent="DominoOverlay/Layout"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.72, 0.75, 0.8, 1)
+text = "QUEDA EM 60  •  PRESSÃO +15"
+
+[node name="ALE" type="ProgressBar" parent="DominoOverlay/Layout"]
+custom_minimum_size = Vector2(0, 28)
+layout_mode = 2
+value = 55.0
+show_percentage = false
+
+[node name="ALELabel" type="Label" parent="DominoOverlay/Layout"]
+layout_mode = 2
+text = "ALE  •  OS ALELUIADO  •  55"
+
+[node name="LEM" type="ProgressBar" parent="DominoOverlay/Layout"]
+custom_minimum_size = Vector2(0, 28)
+layout_mode = 2
+value = 55.0
+show_percentage = false
+
+[node name="LEMLabel" type="Label" parent="DominoOverlay/Layout"]
+layout_mode = 2
+text = "LEM  •  LÁ ELE MIL VEZES  •  55"
+
+[node name="NTM" type="ProgressBar" parent="DominoOverlay/Layout"]
+custom_minimum_size = Vector2(0, 28)
+layout_mode = 2
+value = 50.0
+show_percentage = false
+
+[node name="NTMLabel" type="Label" parent="DominoOverlay/Layout"]
+layout_mode = 2
+text = "NTM  •  NÓS TEM UM MOLHO  •  50"
+
+[node name="TideOverlay" type="PanelContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_left = 0.74
+anchor_top = 0.64
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 0.0
+offset_top = 0.0
+offset_right = -38.0
+offset_bottom = -34.0
+theme_override_styles/panel = SubResource("OverlayPanel")
+
+[node name="Layout" type="VBoxContainer" parent="TideOverlay"]
+layout_mode = 2
+theme_override_constants/separation = 9
+
+[node name="Title" type="Label" parent="TideOverlay/Layout"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.243, 0.89, 0.961, 1)
+theme_override_font_sizes/font_size = 20
+text = "MARÉ  •  PREVIEW D232"
+
+[node name="TideMeter" type="ProgressBar" parent="TideOverlay/Layout"]
+custom_minimum_size = Vector2(0, 28)
+layout_mode = 2
+value = 78.0
+
+[node name="TideState" type="Label" parent="TideOverlay/Layout"]
+layout_mode = 2
+text = "ALTA  •  TAIPU: ARENA ×0,62"
+
+[node name="LegendTitle" type="Label" parent="TideOverlay/Layout"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.949, 0.761, 0.188, 1)
+text = "ROTAS"
+
+[node name="Legend" type="Label" parent="TideOverlay/Layout"]
+layout_mode = 2
+text = "—  TERRESTRE\n═  MARÍTIMA\n- -  PERIGOSA\n···  BLOQUEADA"

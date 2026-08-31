@@ -1,0 +1,223 @@
+[gd_scene load_steps=4 format=3]
+
+[sub_resource type="StyleBoxFlat" id="MainPanel"]
+bg_color = Color(0.043, 0.043, 0.051, 0.98)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.243, 0.89, 0.961, 0.72)
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
+
+[sub_resource type="StyleBoxFlat" id="GoldPanel"]
+bg_color = Color(0.102, 0.11, 0.133, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.949, 0.761, 0.188, 0.85)
+corner_radius_top_left = 9
+corner_radius_top_right = 9
+corner_radius_bottom_right = 9
+corner_radius_bottom_left = 9
+
+[sub_resource type="StyleBoxFlat" id="RedPanel"]
+bg_color = Color(0.145, 0.055, 0.055, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.851, 0.227, 0.169, 0.9)
+corner_radius_top_left = 9
+corner_radius_top_right = 9
+corner_radius_bottom_right = 9
+corner_radius_bottom_left = 9
+
+[node name="CriaLiveV2" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Background" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.025, 0.029, 0.039, 1)
+
+[node name="Header" type="HBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_left = 36.0
+offset_top = 22.0
+offset_right = -36.0
+offset_bottom = 92.0
+
+[node name="Brand" type="Label" parent="Header"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0.243, 0.89, 0.961, 1)
+theme_override_font_sizes/font_size = 30
+text = "CRIA LIVE  •  BAIXO SUL DA BAHIA"
+
+[node name="Profile" type="Label" parent="Header"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.949, 0.761, 0.188, 1)
+text = "Ruan \"Macacão\" Silva  •  120 SEGUIDORES  •  HYPE 18"
+vertical_alignment = 1
+
+[node name="Columns" type="HBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 36.0
+offset_top = 98.0
+offset_right = -36.0
+offset_bottom = -32.0
+theme_override_constants/separation = 16
+
+[node name="FeedPanel" type="PanelContainer" parent="Columns"]
+custom_minimum_size = Vector2(620, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/panel = SubResource("MainPanel")
+
+[node name="Layout" type="VBoxContainer" parent="Columns/FeedPanel"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="Title" type="Label" parent="Columns/FeedPanel/Layout"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.949, 0.761, 0.188, 1)
+theme_override_font_sizes/font_size = 21
+text = "FEED  •  HUMOR: APOIO"
+
+[node name="Post1" type="PanelContainer" parent="Columns/FeedPanel/Layout"]
+custom_minimum_size = Vector2(0, 150)
+layout_mode = 2
+theme_override_styles/panel = SubResource("GoldPanel")
+
+[node name="Text" type="Label" parent="Columns/FeedPanel/Layout/Post1"]
+layout_mode = 2
+text = "TINKER  •  AGORA\n\nRuan treinou cedo no Terreiro. Sem promessa vazia: trabalho, suor e constância.\n\nHONRA +2  •  84 APOIOS"
+autowrap_mode = 3
+
+[node name="Post2" type="PanelContainer" parent="Columns/FeedPanel/Layout"]
+custom_minimum_size = Vector2(0, 150)
+layout_mode = 2
+theme_override_styles/panel = SubResource("MainPanel")
+
+[node name="Text" type="Label" parent="Columns/FeedPanel/Layout/Post2"]
+layout_mode = 2
+text = "DAVI RELÂMPAGO  •  12 MIN\n\nDesafio aceito. No Terreiro, conversa termina quando a técnica começa.\n\nHYPE +5  •  43 COMENTÁRIOS"
+autowrap_mode = 3
+
+[node name="Compose" type="Button" parent="Columns/FeedPanel/Layout"]
+custom_minimum_size = Vector2(0, 52)
+layout_mode = 2
+text = "PUBLICAR COM TINKER"
+
+[node name="CrisisPanel" type="PanelContainer" parent="Columns"]
+custom_minimum_size = Vector2(430, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/panel = SubResource("RedPanel")
+
+[node name="Layout" type="VBoxContainer" parent="Columns/CrisisPanel"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="Title" type="Label" parent="Columns/CrisisPanel/Layout"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.38, 0.32, 1)
+theme_override_font_sizes/font_size = 21
+text = "CRISES ATIVAS"
+
+[node name="Crisis1" type="Label" parent="Columns/CrisisPanel/Layout"]
+layout_mode = 2
+text = "VALENÇA EM ALERTA\nALE chegou a 55 de influência.\nQueda territorial em 60."
+autowrap_mode = 3
+
+[node name="Divider" type="HSeparator" parent="Columns/CrisisPanel/Layout"]
+layout_mode = 2
+
+[node name="Crisis2" type="Label" parent="Columns/CrisisPanel/Layout"]
+layout_mode = 2
+text = "MARÉ ALTA\nTaipu de Fora entra em janela restrita.\nPreview visual — D232."
+autowrap_mode = 3
+
+[node name="Divider2" type="HSeparator" parent="Columns/CrisisPanel/Layout"]
+layout_mode = 2
+
+[node name="Crisis3" type="Label" parent="Columns/CrisisPanel/Layout"]
+layout_mode = 2
+text = "DESAFIO PÚBLICO\nA resposta muda HONRA, HYPE e SOMBRA.\nO runtime decide a consequência."
+autowrap_mode = 3
+
+[node name="SponsorsPanel" type="PanelContainer" parent="Columns"]
+custom_minimum_size = Vector2(430, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/panel = SubResource("MainPanel")
+
+[node name="Layout" type="VBoxContainer" parent="Columns/SponsorsPanel"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="Title" type="Label" parent="Columns/SponsorsPanel/Layout"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.949, 0.761, 0.188, 1)
+theme_override_font_sizes/font_size = 21
+text = "PATROCINADORES LOCAIS"
+
+[node name="Sponsor1" type="Button" parent="Columns/SponsorsPanel/Layout"]
+layout_mode = 2
+text = "CACAU BAHIA  •  CACAU"
+
+[node name="Sponsor2" type="Button" parent="Columns/SponsorsPanel/Layout"]
+layout_mode = 2
+text = "PRATIGI SURF  •  SURF"
+
+[node name="Sponsor3" type="Button" parent="Columns/SponsorsPanel/Layout"]
+layout_mode = 2
+text = "CAMAMU OSTRAS  •  MARICULTURA"
+
+[node name="Sponsor4" type="Button" parent="Columns/SponsorsPanel/Layout"]
+layout_mode = 2
+text = "DENDÊ OIL  •  DENDÊ"
+
+[node name="FactionReputation" type="VBoxContainer" parent="Columns/SponsorsPanel/Layout"]
+layout_mode = 2
+theme_override_constants/separation = 5
+
+[node name="Title" type="Label" parent="Columns/SponsorsPanel/Layout/FactionReputation"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.243, 0.89, 0.961, 1)
+text = "REPUTAÇÃO DAS FACÇÕES"
+
+[node name="ALE" type="Label" parent="Columns/SponsorsPanel/Layout/FactionReputation"]
+layout_mode = 2
+text = "ALE  •  OS ALELUIADO       −12"
+
+[node name="LEM" type="Label" parent="Columns/SponsorsPanel/Layout/FactionReputation"]
+layout_mode = 2
+text = "LEM  •  LÁ ELE MIL VEZES    +04"
+
+[node name="NTM" type="Label" parent="Columns/SponsorsPanel/Layout/FactionReputation"]
+layout_mode = 2
+text = "NTM  •  NÓS TEM UM MOLHO    +09"
+
+[node name="PublicStats" type="Label" parent="Columns/SponsorsPanel/Layout"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.72, 0.75, 0.8, 1)
+text = "HONRA 31  •  HYPE 18\nSOMBRA 04  •  LEGADO 07"
