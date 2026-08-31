@@ -4,12 +4,14 @@ const COMBAT_SCENE := "res://scenes/combat/CombatArenaBase.tscn"
 const CRIA_LIVE_SCENE := "res://scenes/ui/CriaLiveUI.tscn"
 const MAIN_MENU_SCENE := "res://scenes/main_menu/MainMenu.tscn"
 const DECK_SCENE := "res://scenes/ui/DeckBuilder.tscn"
+const SKILL_TREE_SCENE := "res://scenes/hubs/skill_tree_v2.tscn"
 
 var _transitioning := false
 
 func _ready() -> void:
 	_connect_if_exists("Panel/TrainBtn", _on_train)
 	_connect_if_exists("Panel/DeckBtn", _on_deck_builder)
+	_connect_if_exists("Panel/SkillTreeBtn", _on_skill_tree)
 	_connect_if_exists("Panel/FightDaviBtn", _on_fight_davi)
 	_connect_if_exists("Panel/RestBtn", _on_rest)
 	_connect_if_exists("Panel/SaveBtn", _on_save)
@@ -77,6 +79,9 @@ func _on_fight_davi() -> void:
 
 func _on_deck_builder() -> void:
 	_change_scene(DECK_SCENE)
+
+func _on_skill_tree() -> void:
+	_change_scene(SKILL_TREE_SCENE)
 
 func _on_rest() -> void:
 	WorldState.energy = min(100.0, WorldState.energy + 40.0)

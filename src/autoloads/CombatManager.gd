@@ -37,6 +37,8 @@ var state_machine: Node
 var technique_resolver: Node
 var clash_resolver: Node
 var frame_data_system: Node
+var combat_hud_v2: Node
+var combat_context: Dictionary = {}
 
 func _ready() -> void:
 	_ensure_runtime_components()
@@ -59,11 +61,17 @@ func _ensure_runtime_components() -> void:
 		frame_data_system.name = "FrameDataSystemRuntime"
 		add_child(frame_data_system)
 
-func start_combat(new_arena_id: String, new_player_id: String, new_opponent_id: String) -> Dictionary:
+func start_combat(
+	new_arena_id: String,
+	new_player_id: String,
+	new_opponent_id: String,
+	context: Dictionary = {}
+) -> Dictionary:
 	_ensure_runtime_components()
 	arena_id = new_arena_id if new_arena_id != "" else "terreiro_da_luta"
 	player_id = new_player_id if new_player_id != "" else DEFAULT_PLAYER_ID
 	opponent_id = new_opponent_id if new_opponent_id != "" else DEFAULT_OPPONENT_ID
+	combat_context = context.duplicate(true)
 	phase = CombatPhase.DISTANCE
 	is_running = true
 	last_result = {}
@@ -72,6 +80,7 @@ func start_combat(new_arena_id: String, new_player_id: String, new_opponent_id: 
 		opponent_id: _create_runtime_stats(opponent_id)
 	}
 	state_machine.call("reiniciar_em_pe")
+	_on_stand_up()
 	if has_node("/root/DeckManager"):
 		DeckManager.start_combat_hand()
 	SignalBus.combat_started.emit(arena_id, player_id, opponent_id)
@@ -86,6 +95,29 @@ func start_combat(new_arena_id: String, new_player_id: String, new_opponent_id: 
 		"state": get_current_state_name(),
 		"fighters": fighters
 	}
+
+func bind_visual_hud(hud: Node) -> void:
+	combat_hud_v2 = hud
+	if not _has_bound_visual_hud():
+		return
+	if _is_ground_state(get_current_state_name()):
+		_on_takedown_resolved(true, _position_label(get_current_state_name()), _player_dominance())
+	else:
+		_on_stand_up()
+
+func unbind_visual_hud(hud: Node) -> void:
+	if combat_hud_v2 == hud:
+		combat_hud_v2 = null
+
+func _on_takedown_resolved(success: bool, position_name: String, dominance: float = -1.0) -> void:
+	if not success or not _has_bound_visual_hud():
+		return
+	var resolved_dominance := _player_dominance() if dominance < 0.0 else dominance
+	combat_hud_v2.call("enter_solo", position_name, resolved_dominance)
+
+func _on_stand_up() -> void:
+	if _has_bound_visual_hud():
+		combat_hud_v2.call("exit_to_standing")
 
 func iniciar_combate(id_jogador: String, id_oponente: String, arena: String) -> void:
 	start_combat(arena, id_jogador, id_oponente)
@@ -168,6 +200,7 @@ func apply_player_action(action_id: String) -> Dictionary:
 		return {"success": false, "error": "combat_not_running", "action_id": action_id}
 	if action_id == "reset_position":
 		state_machine.call("reiniciar_em_pe")
+		_on_stand_up()
 		_change_phase(CombatPhase.RESET)
 		_adjust(player_id, "gas", -3.0)
 		var reset_result: Dictionary = {
@@ -355,6 +388,7 @@ func _resolve_finisher_before_transition(
 	return float(actor.get("control", 0)) >= 55.0 or float(defender.get("health", 100)) <= 70.0
 
 func _apply_state_transition(state_name: String) -> void:
+	var was_grounded := _is_ground_state(get_current_state_name())
 	var target_state: int = int(state_machine.call("estado_por_nome", state_name))
 	var current_state: int = int(state_machine.get("current_state"))
 	if target_state == current_state:
@@ -363,6 +397,12 @@ func _apply_state_transition(state_name: String) -> void:
 	if not transitioned:
 		push_warning("[CombatManager] Transicao nao catalogada: %s -> %s" % [get_current_state_name(), state_name])
 		state_machine.call("forcar_estado", target_state)
+	var current_name := get_current_state_name()
+	var is_grounded := _is_ground_state(current_name)
+	if is_grounded:
+		_on_takedown_resolved(true, _position_label(current_name), _player_dominance())
+	elif was_grounded:
+		_on_stand_up()
 
 func _check_end(actor_id: String, defender_id: String, technique: Dictionary = {}, result: Dictionary = {}) -> void:
 	if not is_running:
@@ -420,6 +460,13 @@ func finish_combat(result: Dictionary) -> void:
 	is_running = false
 	phase = CombatPhase.RESET
 	last_result = result.duplicate(true)
+	last_result["arena_id"] = arena_id
+	last_result["player_id"] = player_id
+	last_result["opponent_id"] = opponent_id
+	last_result["combat_context"] = combat_context.duplicate(true)
+	for context_key in ["clandestine", "territory_id", "municipality_id"]:
+		if combat_context.has(context_key):
+			last_result[context_key] = combat_context[context_key]
 	last_result["fighters"] = fighters.duplicate(true)
 	last_result["final_state"] = get_current_state_name()
 	_apply_post_combat_effects(last_result)
@@ -428,6 +475,36 @@ func finish_combat(result: Dictionary) -> void:
 	SignalBus.combat_ended.emit(last_result)
 	if SignalBus.has_signal("combate_finalizado"):
 		SignalBus.combate_finalizado.emit(last_result)
+
+func _has_bound_visual_hud() -> bool:
+	return is_instance_valid(combat_hud_v2) and combat_hud_v2.has_method("enter_solo") and combat_hud_v2.has_method("exit_to_standing")
+
+func _is_ground_state(state_name: String) -> bool:
+	return state_name in [
+		"PLAYER_TOP_GUARD", "PLAYER_BOTTOM_GUARD",
+		"PLAYER_TOP_SIDE", "PLAYER_BOTTOM_SIDE",
+		"PLAYER_TOP_MOUNT", "PLAYER_BOTTOM_MOUNT",
+		"PLAYER_BACK_ATTACK", "PLAYER_BACK_DEFENSE",
+		"PLAYER_SUBMISSION_ATTACK", "PLAYER_SUBMISSION_DEFENSE"
+	]
+
+func _position_label(state_name: String) -> String:
+	var labels := {
+		"PLAYER_TOP_GUARD": "POR CIMA DA GUARDA",
+		"PLAYER_BOTTOM_GUARD": "GUARDA POR BAIXO",
+		"PLAYER_TOP_SIDE": "CONTROLE LATERAL POR CIMA",
+		"PLAYER_BOTTOM_SIDE": "CONTROLE LATERAL POR BAIXO",
+		"PLAYER_TOP_MOUNT": "MONTADA POR CIMA",
+		"PLAYER_BOTTOM_MOUNT": "MONTADA POR BAIXO",
+		"PLAYER_BACK_ATTACK": "ATACANDO AS COSTAS",
+		"PLAYER_BACK_DEFENSE": "DEFENDENDO AS COSTAS",
+		"PLAYER_SUBMISSION_ATTACK": "CONTROLE DE FINALIZAÇÃO",
+		"PLAYER_SUBMISSION_DEFENSE": "DEFESA DE FINALIZAÇÃO"
+	}
+	return str(labels.get(state_name, state_name.replace("_", " ")))
+
+func _player_dominance() -> float:
+	return clampf(float(fighters.get(player_id, {}).get("control", 0.0)), 0.0, 100.0)
 
 func finalizar_combate(result: Dictionary) -> void:
 	finish_combat(result)

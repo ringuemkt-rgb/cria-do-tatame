@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3]
+[gd_scene load_steps=3 format=3]
 
 [ext_resource type="Script" path="res://scenes/world/WorldMapScreen.gd" id="1_map"]
+[ext_resource type="PackedScene" path="res://scenes/world/world_map_ui.tscn" id="2_map_v2"]
 
 [node name="WorldMapScreen" type="Control"]
 layout_mode = 3
@@ -9,37 +10,49 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 script = ExtResource("1_map")
 
-[node name="Panel" type="VBoxContainer" parent="."]
-layout_mode = 2
+[node name="WorldMapV2" parent="." instance=ExtResource("2_map_v2")]
 
-[node name="Title" type="Label" parent="Panel"]
-layout_mode = 2
-text = "MAPA DO BAIXO SUL DA BAHIA"
+[node name="Navigation" type="HBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 38.0
+offset_top = -88.0
+offset_right = -38.0
+offset_bottom = -28.0
+theme_override_constants/separation = 8
 
-[node name="Status" type="Label" parent="Panel"]
+[node name="Itubera" type="Button" parent="Navigation"]
 layout_mode = 2
-text = "Hub atual"
-
-[node name="Message" type="Label" parent="Panel"]
-layout_mode = 2
-text = "Escolha um destino"
-
-[node name="Itubera" type="Button" parent="Panel"]
-layout_mode = 2
+size_flags_horizontal = 3
 text = "ITUBERÁ"
 
-[node name="Salvador" type="Button" parent="Panel"]
+[node name="Salvador" type="Button" parent="Navigation"]
 layout_mode = 2
+size_flags_horizontal = 3
 text = "SALVADOR"
 
-[node name="Zambiapunga" type="Button" parent="Panel"]
+[node name="Zambiapunga" type="Button" parent="Navigation"]
 layout_mode = 2
+size_flags_horizontal = 3
 text = "ZAMBIAPUNGA"
 
-[node name="Camamu" type="Button" parent="Panel"]
+[node name="Camamu" type="Button" parent="Navigation"]
 layout_mode = 2
+size_flags_horizontal = 3
 text = "CAMAMU E MANGUEZAL"
 
-[node name="Back" type="Button" parent="Panel"]
+[node name="Back" type="Button" parent="Navigation"]
 layout_mode = 2
+size_flags_horizontal = 3
 text = "VOLTAR"
+
+[node name="Message" type="Label" parent="."]
+layout_mode = 0
+offset_left = 44.0
+offset_top = 96.0
+offset_right = 580.0
+offset_bottom = 128.0
+text = "Escolha um destino do Baixo Sul da Bahia"

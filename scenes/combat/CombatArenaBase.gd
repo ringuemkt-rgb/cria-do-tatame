@@ -49,11 +49,15 @@ func _ready() -> void:
 	_build_placeholder_fighters()
 	_connect_buttons()
 	_connect_runtime_signals()
+	CombatManager.bind_visual_hud($CombatHUDv2)
 	CombatManager.start_combat("terreiro_da_luta", "ruan_macacao", "davi_relampago")
 	_ensure_ai_hint()
 	_update_state_label(CombatManager.get_current_state_name())
 	_refresh_action_buttons()
 	AudioManager.play_music_cue("terreiro")
+
+func _exit_tree() -> void:
+	CombatManager.unbind_visual_hud($CombatHUDv2)
 
 func _build_arena_visuals() -> void:
 	var backdrop := ArenaBackdropScript.new()

@@ -1,5 +1,7 @@
 extends Node
 
+signal technique_leveled_up(technique_id: String, level: int)
+
 var mastery: Dictionary = {}
 var physical_xp: Dictionary = {"gas": 0.0, "pressure": 0.0, "guard": 0.0, "focus": 0.0, "grip": 0.0}
 var fatigue: float = 0.0
@@ -45,12 +47,16 @@ func run_technical_training(technique_id: String, executions: int = 0) -> Dictio
 	if WorldState.energy < energy_cost:
 		return {"ok": false, "message": "Energia insuficiente."}
 	WorldState.energy = max(0.0, WorldState.energy - energy_cost)
+	var old_level := get_mastery_level(technique_id)
 	var xp: float = float(base.get("mastery_xp", 20)) * clamp(float(executions) / 3.0, 0.25, 1.25)
 	mastery[technique_id] = float(mastery.get(technique_id, 0.0)) + xp
+	var new_level := get_mastery_level(technique_id)
 	if float(mastery[technique_id]) >= 100.0 and not WorldState.techniques_learned.has(technique_id):
 		WorldState.techniques_learned.append(technique_id)
+	if new_level > old_level:
+		technique_leveled_up.emit(technique_id, new_level)
 	SaveManager.save_game(1)
-	return {"ok": true, "message": "Maestria de " + technique_id + " aumentou.", "xp": xp, "total": mastery[technique_id]}
+	return {"ok": true, "message": "Maestria de " + technique_id + " aumentou.", "xp": xp, "total": mastery[technique_id], "level": new_level}
 
 func get_mastery_level(technique_id: String) -> int:
 	return clampi(int(float(mastery.get(technique_id, 0.0)) / 100.0) + 1, 1, 5)

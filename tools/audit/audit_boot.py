@@ -24,9 +24,13 @@ def main() -> int:
         "data/visual/canon_lock.json",
         "data/combat/environment_modifiers.json",
         "scenes/combat/combat_hud_v2.tscn",
+        "src/combat/combat_hud_v2.gd",
         "scenes/world/world_map_ui.tscn",
+        "scenes/world/world_map_ui.gd",
         "scenes/social/crialive_v2.tscn",
+        "scenes/social/crialive_v2.gd",
         "scenes/hubs/skill_tree_v2.tscn",
+        "scenes/hubs/skill_tree_v2.gd",
         "addons/AsepriteWizard/plugin.cfg",
         "addons/AsepriteWizard/LICENSE",
         "addons/AsepriteWizard/CRIA_PIN.json",
@@ -95,6 +99,30 @@ def main() -> int:
                 errors.append(f"skill_tree:{branch}:tier_{tier}")
     checks.append("scene_structure")
 
+    runtime_contracts = {
+        "src/autoloads/CombatManager.gd": [
+            "func _on_takedown_resolved", "enter_solo", "func _on_stand_up", "exit_to_standing",
+        ],
+        "src/autoloads/FactionDirectorManager.gd": [
+            "_apply_clandestine_player_victory", "territory_changed.emit",
+        ],
+        "src/autoloads/CriaLiveManager.gd": ["signal post_published", "post_published.emit"],
+        "src/autoloads/TrainingManager.gd": ["signal technique_leveled_up", "technique_leveled_up.emit"],
+        "src/autoloads/WorldDirectorManager.gd": [
+            "signal time_advanced", "time_advanced.emit", "signal tide_changed", "tide_changed.emit",
+        ],
+        "scenes/combat/CombatArenaBase.tscn": ["combat_hud_v2.tscn", "CombatHUDv2"],
+        "scenes/ui/CriaLiveUI.tscn": ["crialive_v2.tscn", "CriaLiveV2"],
+        "scenes/world/WorldMapScreen.tscn": ["world_map_ui.tscn", "WorldMapV2"],
+        "scenes/hubs/TerreiroDaLuta.gd": ["SKILL_TREE_SCENE", "_on_skill_tree"],
+    }
+    for rel, needles in runtime_contracts.items():
+        text = (ROOT / rel).read_text(encoding="utf-8")
+        for needle in needles:
+            if needle not in text:
+                errors.append(f"runtime_binding:{rel}:{needle}")
+    checks.append("runtime_bindings")
+
     existing_ui_contracts = {
         "scenes/combat/CombatArenaBase.tscn": ['RUAN \\"MACACÃO\\" SILVA', "DAVI RELÂMPAGO"],
         "scenes/ui/CombatHUD.tscn": ['RUAN \\"MACACÃO\\" SILVA', "DAVI RELÂMPAGO"],
@@ -119,6 +147,8 @@ def main() -> int:
     project = (ROOT / "project.godot").read_text(encoding="utf-8")
     if 'run/main_scene="res://scenes/main_menu/MainMenu.tscn"' not in project:
         errors.append("main_scene")
+    if 'enabled=PackedStringArray("res://addons/AsepriteWizard/plugin.cfg")' not in project:
+        errors.append("aseprite_plugin_disabled")
     plugin_cfg = (ROOT / "addons/AsepriteWizard/plugin.cfg").read_text(encoding="utf-8")
     plugin_license = (ROOT / "addons/AsepriteWizard/LICENSE").read_text(encoding="utf-8")
     if 'version="8.2.0"' not in plugin_cfg or pin.get("commit") != "1dc9a1ef0b3c2112d5ac26eec8e1f5197ec83eb1":

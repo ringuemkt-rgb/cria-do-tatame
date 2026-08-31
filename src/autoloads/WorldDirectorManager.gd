@@ -3,6 +3,8 @@ extends Node
 signal tick_completed(snapshot: Dictionary)
 signal ai_plan_ready(plan: Dictionary)
 signal ai_plan_failed(reason: String)
+signal time_advanced(time_block: String, is_night: bool)
+signal tide_changed(tide_state: String, tide_level: float)
 
 const CONFIG_PATH := "res://data/world/world_director_config_v01.json"
 const CLIMATE_PATH := "res://data/world/climate_regions_v01.json"
@@ -76,12 +78,37 @@ func advance_time_block() -> Dictionary:
 	state["time_block_index"] = (int(state.get("time_block_index", 0)) + 1) % _time_blocks.size()
 	state["time_block"] = str(_time_blocks[int(state["time_block_index"])])
 	_run_world_tick("time_block")
+	_emit_visual_environment()
 	return get_snapshot()
 
 func _on_day_advanced(_day_name, _week_number) -> void:
 	state["time_block_index"] = 0
 	state["time_block"] = str(_time_blocks[0] if not _time_blocks.is_empty() else "manha")
 	_run_world_tick("day_advanced")
+	_emit_visual_environment()
+
+func get_visual_environment_snapshot() -> Dictionary:
+	var block := str(state.get("time_block", "manha"))
+	var cycle_index := posmod(int(state.get("tick", 0)) + int(WorldState.day_index), 4)
+	var tide_states := [
+		{"state": "baixa", "level": 0.18},
+		{"state": "subindo", "level": 0.52},
+		{"state": "alta", "level": 0.86},
+		{"state": "baixando", "level": 0.48}
+	]
+	var tide: Dictionary = tide_states[cycle_index]
+	return {
+		"time_block": block,
+		"is_night": block in ["noite", "madrugada"],
+		"tide_state": str(tide["state"]),
+		"tide_level": float(tide["level"]),
+		"presentation_only": true
+	}
+
+func _emit_visual_environment() -> void:
+	var visual := get_visual_environment_snapshot()
+	time_advanced.emit(str(visual["time_block"]), bool(visual["is_night"]))
+	tide_changed.emit(str(visual["tide_state"]), float(visual["tide_level"]))
 
 func _on_combat_finished(result) -> void:
 	if typeof(result) == TYPE_DICTIONARY:

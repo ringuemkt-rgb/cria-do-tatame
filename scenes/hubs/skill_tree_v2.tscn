@@ -1,4 +1,6 @@
-[gd_scene load_steps=6 format=3]
+[gd_scene load_steps=7 format=3]
+
+[ext_resource type="Script" path="res://scenes/hubs/skill_tree_v2.gd" id="1_skill_tree"]
 
 [sub_resource type="StyleBoxFlat" id="RootPanel"]
 bg_color = Color(0.043, 0.043, 0.051, 0.98)
@@ -67,6 +69,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_skill_tree")
 
 [node name="Background" type="ColorRect" parent="."]
 layout_mode = 1
@@ -92,6 +95,11 @@ size_flags_horizontal = 3
 theme_override_colors/font_color = Color(0.949, 0.761, 0.188, 1)
 theme_override_font_sizes/font_size = 28
 text = "CAMINHOS DE RUAN \"MACACÃO\" SILVA"
+
+[node name="Back" type="Button" parent="Header"]
+custom_minimum_size = Vector2(120, 48)
+layout_mode = 2
+text = "VOLTAR"
 
 [node name="Points" type="Label" parent="Header"]
 layout_mode = 2

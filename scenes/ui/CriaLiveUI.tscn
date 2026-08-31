@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3]
+[gd_scene load_steps=3 format=3]
 
 [ext_resource type="Script" path="res://scenes/ui/CriaLiveUI.gd" id="1_crialive"]
+[ext_resource type="PackedScene" path="res://scenes/social/crialive_v2.tscn" id="2_crialive_v2"]
 
 [node name="CriaLiveUI" type="Control"]
 layout_mode = 3
@@ -9,17 +10,9 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 script = ExtResource("1_crialive")
 
-[node name="Panel" type="VBoxContainer" parent="."]
-layout_mode = 2
+[node name="CriaLiveV2" parent="." instance=ExtResource("2_crialive_v2")]
 
-[node name="Title" type="Label" parent="Panel"]
-layout_mode = 2
-text = "CRIA LIVE"
-
-[node name="Feed" type="Label" parent="Panel"]
-layout_mode = 2
-text = "Feed vazio"
-
-[node name="Back" type="Button" parent="Panel"]
+[node name="Back" type="Button" parent="CriaLiveV2/Header"]
+custom_minimum_size = Vector2(180, 48)
 layout_mode = 2
 text = "VOLTAR AO TERREIRO"

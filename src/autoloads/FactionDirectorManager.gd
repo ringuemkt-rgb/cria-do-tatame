@@ -205,6 +205,7 @@ func _on_day_advanced(_day_name, _week_number) -> void:
 func _on_combat_finished(result) -> void:
 	if typeof(result) != TYPE_DICTIONARY:
 		return
+	_apply_clandestine_player_victory(result)
 	var opponent_id := str(result.get("opponent_id", result.get("rival_id", "")))
 	var winner_id := str(result.get("winner", result.get("winner_id", "")))
 	for faction_id_value in state.get("champions", {}).keys():
@@ -229,6 +230,30 @@ func _on_combat_finished(result) -> void:
 			"winner_id": winner_id,
 			"method": str(result.get("method", result.get("finish", "")))
 		})
+
+func _apply_clandestine_player_victory(result: Dictionary) -> void:
+	if not bool(result.get("clandestine", false)):
+		return
+	var winner_id := str(result.get("winner", result.get("winner_id", "")))
+	if winner_id != WorldState.player_id and winner_id != "ruan_macacao":
+		return
+	var territory_id := str(result.get("territory_id", ""))
+	if territory_id == "" or not state.get("territories", {}).has(territory_id):
+		return
+	var territory: Dictionary = state["territories"][territory_id]
+	var owner := str(territory.get("owner", "neutral"))
+	territory["control"] = clampf(float(territory.get("control", 50.0)) - 10.0, 0.0, 100.0)
+	var influence: Dictionary = territory.get("influence_by_faction", {})
+	if owner != "neutral" and influence.has(owner):
+		influence[owner] = clampf(float(influence[owner]) - 10.0, 0.0, 100.0)
+	territory["influence_by_faction"] = influence
+	territory["municipality_id"] = str(result.get("municipality_id", territory.get("hub", "")))
+	territory["last_changed_week"] = int(state.get("week", 1))
+	territory["last_change_reason"] = "clandestine_player_victory"
+	state["territories"][territory_id] = territory
+	territory_changed.emit(territory_id, territory.duplicate(true))
+	if SignalBus.has_signal("faction_territory_changed"):
+		SignalBus.faction_territory_changed.emit(territory_id, territory.duplicate(true))
 
 func advance_faction_week(week_number: int = -1) -> Dictionary:
 	var resolved_week := week_number if week_number > 0 else int(WorldState.week)
