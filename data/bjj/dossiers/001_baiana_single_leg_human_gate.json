@@ -1,0 +1,22 @@
+{
+  "$schema": "bjj_human_gate_session_v1",
+  "dossier_id": "001",
+  "technique_id": "baiana_single_leg",
+  "parent_skill": "cria-bjj-fight-intelligence@1.0.0",
+  "decision_owner": "human_bjj_reviewer",
+  "assistant_may_recommend_but_not_sign": true,
+  "human_decision": "PENDING",
+  "shipping": false,
+  "blocks": [
+    {"id":"G1_READ","frames":[0,3],"recommendation":"APROVA","human_decision":"PENDING"},
+    {"id":"G2_CONNECT","frames":[4,6],"recommendation":"REWORK(2)","reason":"head position ambiguous in candidate A f5-f6","human_decision":"PENDING"},
+    {"id":"G3_KUZUSHI","frames":[7,9],"recommendation":"APROVA","human_decision":"PENDING"},
+    {"id":"G4_COMMIT","frames":[10,14],"recommendation":"APROVA_CONDICIONAL","condition":"head of attacker never under defender pelvis; penetration/leg connection requires evidence","human_decision":"PENDING"},
+    {"id":"G5_TRANSITION","frames":[15,19],"recommendation":"APROVA","condition":"spike gate remains blocking","human_decision":"PENDING"},
+    {"id":"G6_STABILIZE","frames":[20,23],"recommendation":"APROVA","human_decision":"PENDING"},
+    {"id":"G7_IDENTIDADE","frames":[0,23],"recommendation":"APROVA","human_decision":"PENDING"},
+    {"id":"G8_EVIDENCIA","frames":null,"recommendation":"BLOCKED","reason":"exact licensed source/mocap not materialized","human_decision":"PENDING"}
+  ],
+  "maximum_status_without_G8":"CANDIDATE_APPROVED_BY_HUMAN",
+  "current_status":"HUMAN_GATE_PENDING_AND_SHIPPING_BLOCKED"
+}

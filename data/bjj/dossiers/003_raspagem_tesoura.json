@@ -1,0 +1,56 @@
+{
+  "$schema": "bjj_dossier_v1",
+  "dossier_id": "003",
+  "technique_id": "raspagem_tesoura",
+  "parent_skill": "cria-bjj-fight-intelligence@1.0.0",
+  "status": "DRAFT_CONFLICT_PENDING_RESOLUTION",
+  "shipping": false,
+  "human_bjj_gate": "REQUIRED",
+  "authority_snapshot": {
+    "source": "data/visual/production_manifest_v02.json@cfb1afa18b0b4bdc5c3eb567276ea1d83823ce98",
+    "entry": "player_bottom_guard",
+    "exit": "player_top_guard",
+    "frames_target": 28
+  },
+  "proposal": {
+    "modes": ["GI", "NO_GI"],
+    "grammar": "transition",
+    "frame_spec": {"size": [128,128], "pivot": [64,96], "fps": 12, "frames_total": 24, "nearest": true, "anti_aliasing": false},
+    "entry": "guard.closed_bottom",
+    "success_states": ["mount_top", "side_control_top"],
+    "phases": [
+      {"id":"READ","frames":[0,3],"bottom":"closed guard; grip/posture control","top":"posture pressured"},
+      {"id":"CONNECT","frames":[4,6],"bottom":"open guard; hip post + shin frame","top":"base adjusts forward"},
+      {"id":"KUZUSHI","frames":[7,9],"bottom":"diagonal pull and hip angle","top":"COM displaced toward swept side"},
+      {"id":"COMMIT","frames":[10,14],"bottom":"scissor lever/wedge action","top":"post attempt available"},
+      {"id":"TRANSITION","frames":[15,19],"bottom":"follow grips and rise","top":"protected lateral fall"},
+      {"id":"STABILIZE","frames":[20,23],"bottom":"top control candidate","top":"defensive breakdown"}
+    ],
+    "branches": [
+      {"id":"B1_post_hand","diverge_at":10,"result":"closed_guard_or_hip_bump_setup"},
+      {"id":"B2_stack","diverge_at":10,"result":"open_guard_recovery","risk":"stack_pass"},
+      {"id":"B3_knee_race","diverge_at":4,"result":"timing_dependent_knee_cut_race"}
+    ],
+    "biomech_qa": {
+      "neck_B":"posture pull only; no lateral cervical torque",
+      "knee_B":"lever at thigh/knee line; no reaping claim",
+      "wrist_B":"grip within ordinary control ROM; not wrist lock",
+      "spine_A":"neutral trunk preference; no forced lumbar hyperextension",
+      "fall_B":"protected lateral fall; head impact forbidden"
+    },
+    "gi_nogi_adapter": {
+      "GI":"collar+sleeve candidate grip family; cloth tension is presentation only",
+      "NO_GI":"wrist/tie candidate connection; reconnection timing requires mocap/corpus validation"
+    },
+    "evidence_status":"CANDIDATE_PENDING_RULEBOOK_AND_MOCAP_VALIDATION"
+  },
+  "conflicts": [
+    {"field":"frames_target","authority":28,"proposal":24,"resolution":"BLOCKED_PENDING_EXPLICIT_CANON_DECISION"},
+    {"field":"entry_state","authority":"player_bottom_guard","proposal":"guard.closed_bottom","resolution":"BLOCKED_PENDING_STATE_MAPPING"},
+    {"field":"success_state","authority":"player_top_guard","proposal":["mount_top","side_control_top"],"resolution":"BLOCKED_PENDING_TECHNIQUE_GRAPH_REVIEW"}
+  ],
+  "rule_claims": [
+    {"claim":"IBJJF sweep scoring/stabilization semantics","status":"UNVERIFIED_PENDING_CURRENT_RULEBOOK_SOURCE"},
+    {"claim":"ADCC adapter semantics","status":"UNVERIFIED_PENDING_CURRENT_RULESET_SOURCE"}
+  ]
+}

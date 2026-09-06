@@ -1,0 +1,24 @@
+{
+  "$schema": "bjj_corpus_entry_v1",
+  "technique_id": "baiana_single_leg",
+  "pipeline": "cria-video-intelligence@0.1.0",
+  "shipping": false,
+  "custody": {
+    "source_id": null,
+    "source_url": null,
+    "license_status": "UNKNOWN",
+    "sha256": null,
+    "status": "CUSTODY_BLOCKED",
+    "reason": "Prompt references a BJJ Data clip but does not provide an exact source identifier, license record, or materialized bytes."
+  },
+  "stages": {
+    "V1_ingestion_custody": {"status":"BLOCKED","missing":["exact_source_id","source_url_or_locator","license_or_authorization","materialized_bytes","sha256"]},
+    "V2_event_annotation": {"status":"NOT_STARTED_BLOCKED_BY_V1","schema_fields":["t","actor","state_before","action","state_after","grip_family","side","result","score_event"]},
+    "V3_pose_keypoints": {"status":"NOT_STARTED_BLOCKED_BY_V1","candidate_backends":["MediaPipe","MMPose_RTMPose"],"actor_identity_lock":true},
+    "V4_3d_recovery": {"status":"OUT_OF_SCOPE_THIS_EPIC"},
+    "V5_biomechanics": {"status":"OUT_OF_SCOPE_THIS_EPIC"},
+    "V6_statistics": {"status":"OUT_OF_SCOPE_THIS_EPIC"}
+  },
+  "expected_technique_phases": ["READ","CONNECT","KUZUSHI","COMMIT","TRANSITION","STABILIZE"],
+  "evidence_claim":"NO_VIDEO_ANALYSIS_PERFORMED"
+}
