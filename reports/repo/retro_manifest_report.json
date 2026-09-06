@@ -1,0 +1,12 @@
+{
+  "schema": "phase0_5_retro_manifest_report_v1",
+  "discovered_binary_count": 66,
+  "indexed_binary_count": 66,
+  "manifest_entry_count": 66,
+  "coverage_percent": 100.0,
+  "created_provenance_sidecars": 66,
+  "created_license_sidecars": 66,
+  "missing_from_manifest": [],
+  "stale_manifest_entries": [],
+  "shipping_true_count": 0
+}
