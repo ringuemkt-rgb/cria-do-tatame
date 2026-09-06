@@ -1,0 +1,113 @@
+{
+  "$schema": "skill_tree_visual_manifest_v1",
+  "version": "1.0.0",
+  "status": "reference_candidate",
+  "shipping": false,
+  "visual_authority": true,
+  "text_authority": false,
+  "numeric_balance_authority": false,
+  "repo_binary_status": "pending_phase2_ingestion",
+  "source_archive": {
+    "surface": "chatgpt_library",
+    "folder": "/CRIA DO TATAME/Visual Bible/Skill Tree v1"
+  },
+  "rules": [
+    "Use these images as layout, art-direction, hierarchy and presentation ground truth.",
+    "Never promote baked text, costs, levels, belt labels or generated faction spellings into gameplay authority.",
+    "canon_lock.json, factions_v2.json, roster_v3.json and reducer-owned rules override visual text.",
+    "Runtime UI must reconstruct labels and values from data; reference images are never loaded as interactive screens.",
+    "All binary assets remain shipping=false until Phase 2 ingestion, provenance and human QA."
+  ],
+  "pages": [
+    {
+      "order": 1,
+      "id": "skill_tree_overview",
+      "role": "overview",
+      "library_path": "/CRIA DO TATAME/Visual Bible/Skill Tree v1/01_skill_tree_overview.png",
+      "library_file_id": "libfile_3e9d4cda205c8191959915c5b51fd8b6",
+      "source_sha256": "2e2989732fca0cf8b4b27cf003d571d051105faaea2cd6632d95277a4b891b20",
+      "dimensions": [1672, 941]
+    },
+    {
+      "order": 2,
+      "id": "pressure_silverback",
+      "role": "path_pressure",
+      "library_path": "/CRIA DO TATAME/Visual Bible/Skill Tree v1/02_pressure_silverback.png",
+      "library_file_id": "libfile_4b794ea22e0c8191ab5ec05f346ede98",
+      "source_sha256": "1ce37b164daf29d36b5432a3eaf4763d541c9bccc5b4637c60d3fd6b34853359",
+      "dimensions": [1672, 941]
+    },
+    {
+      "order": 3,
+      "id": "technique_zanshin",
+      "role": "path_technique",
+      "library_path": "/CRIA DO TATAME/Visual Bible/Skill Tree v1/03_technique_zanshin.png",
+      "library_file_id": "libfile_f63e2d9c571481918a2a55eaddc62754",
+      "source_sha256": "5c07d2f57cb650564c759baf50d97ec664cc05e370b6df0047f54c88d3b0ff11",
+      "dimensions": [1672, 941]
+    },
+    {
+      "order": 4,
+      "id": "mobility_scramble",
+      "role": "path_mobility",
+      "library_path": "/CRIA DO TATAME/Visual Bible/Skill Tree v1/04_mobility_scramble.png",
+      "library_file_id": "libfile_8fe967a1321881919982ec30fbc8ee42",
+      "source_sha256": "fce1ea20e35d54118f6775a724a182dd0e2800d4d33a699cffc62189fc2eb423",
+      "dimensions": [1672, 941]
+    },
+    {
+      "order": 5,
+      "id": "finalization",
+      "role": "path_finalization",
+      "library_path": "/CRIA DO TATAME/Visual Bible/Skill Tree v1/05_finalization.png",
+      "library_file_id": "libfile_f094421051b0819183d163ecaa5eed62",
+      "source_sha256": "3809b2cf75eada90b40b41e0a1f0fb35da29a5367f8509dfa3faf507cd1d753a",
+      "dimensions": [1672, 941]
+    },
+    {
+      "order": 6,
+      "id": "resilience",
+      "role": "path_resilience",
+      "library_path": "/CRIA DO TATAME/Visual Bible/Skill Tree v1/06_resilience.png",
+      "library_file_id": "libfile_71a224f9ad6481919bf7b4f061960d85",
+      "source_sha256": "77c4232d8ff12db531fa8f1954d7a8fec1cf5ee4f0bba11e575a1603759e4632",
+      "dimensions": [1672, 941]
+    },
+    {
+      "order": 7,
+      "id": "arena_perks",
+      "role": "cross_system_arena_perks",
+      "library_path": "/CRIA DO TATAME/Visual Bible/Skill Tree v1/07_arena_perks.png",
+      "library_file_id": "libfile_bab4a43b76188191bc310da2177dc44b",
+      "source_sha256": "819b9e6d14a263f24bdcfea7856a780c290a9a007f2872300055f412136fbdc0",
+      "dimensions": [1672, 941]
+    },
+    {
+      "order": 8,
+      "id": "factions_reputation",
+      "role": "cross_system_faction_reputation",
+      "library_path": "/CRIA DO TATAME/Visual Bible/Skill Tree v1/08_factions_reputation.png",
+      "library_file_id": "libfile_a5084c6ca774819198aa29cdf9154b1c",
+      "source_sha256": "7e8fdec411e3d79d6726eb66221d18da8d3f30146b3cbb94548abdc47c9d2832",
+      "dimensions": [1672, 941]
+    },
+    {
+      "order": 9,
+      "id": "meta_progression",
+      "role": "cross_system_meta_progression",
+      "library_path": "/CRIA DO TATAME/Visual Bible/Skill Tree v1/09_meta_progression.png",
+      "library_file_id": "libfile_8d8e072f46688191bd91347767d576d4",
+      "source_sha256": "ef32f6477ef1450928194aaa03f8630837920929743100dfed6fd51e1789c0d9",
+      "dimensions": [1672, 941]
+    },
+    {
+      "order": 10,
+      "id": "jiujitsu_skill_tree",
+      "role": "system_summary",
+      "library_path": "/CRIA DO TATAME/Visual Bible/Skill Tree v1/10_jiujitsu_skill_tree.png",
+      "library_file_id": "libfile_f601649643b081919b87636a063a95b8",
+      "source_sha256": "4ef146ed4d8849dc486c2a46d8e3404d4c3a6a3ca9bdbd3823bce4536be51ffc",
+      "dimensions": [1672, 941]
+    }
+  ]
+}
