@@ -31,6 +31,9 @@ jobs:
         with:
           python-version: "3.12"
 
+      - name: Validate Phase 1 data backbone and canon diff
+        run: python tools/data/validate_phase1_data.py
+
       - name: Validate JSON syntax with Python
         run: python tools/validate_json.py
 
