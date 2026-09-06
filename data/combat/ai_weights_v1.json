@@ -1,0 +1,30 @@
+{
+  "$schema": "ai_weights_v1",
+  "version": "1.0.0",
+  "model": "utility_ai",
+  "numeric_calibration_status": "pending_epic55",
+  "policy": {
+    "invent_numeric_weights": false,
+    "deterministic_tie_break": "seeded_rng",
+    "runtime_authority_target": "combat_reducer_epic55"
+  },
+  "profiles": [
+    {"fighter_id":"ruan_macacao","signature_trigger":"silverback_grip","weights":null},
+    {"fighter_id":"davi_relampago","signature_trigger":"counter_whiff","weights":null},
+    {"fighter_id":"jacare_do_mangue","signature_trigger":"heavy_top","weights":null},
+    {"fighter_id":"oni_da_lapa","signature_trigger":"rush","weights":null},
+    {"fighter_id":"oni_do_sul","signature_trigger":"drain","weights":null},
+    {"fighter_id":"mateus_predador","signature_trigger":"fero","weights":null},
+    {"fighter_id":"verao_velho","signature_trigger":"read","weights":null},
+    {"fighter_id":"leoa","signature_trigger":"rhythm","weights":null},
+    {"fighter_id":"byaku","signature_trigger":"punish","weights":null},
+    {"fighter_id":"kenzo_kuroi","signature_trigger":"zanshin","weights":null},
+    {"fighter_id":"ubira","signature_trigger":"takedown","weights":null},
+    {"fighter_id":"cassio_molho","signature_trigger":"dirty","weights":null},
+    {"fighter_id":"montenegro","signature_trigger":"backup","weights":null},
+    {"fighter_id":"ruan_do_avesso","signature_trigger":"feed","weights":null},
+    {"fighter_id":"viera","signature_trigger":"pressure","weights":null},
+    {"fighter_id":"miyao","signature_trigger":"berimbolo","weights":null},
+    {"fighter_id":"galvao","signature_trigger":"finish","weights":null}
+  ]
+}
