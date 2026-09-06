@@ -1,8 +1,10 @@
 {
-  "version": "0.1.0",
+  "version": "0.2.0",
+  "authority_note": "Localização de mapa é regida por data/world/world_map_v4.json. IDs legados permanecem por compatibilidade.",
   "arenas": [
     {
       "id": "terreiro_da_luta",
+      "canonical_map_id": "terreiro",
       "name": "Terreiro da Luta",
       "region": "Ituberá - Baixo Sul da Bahia",
       "type": "hub_arena",
@@ -13,33 +15,37 @@
     },
     {
       "id": "arena_do_dique",
+      "canonical_map_id": "arena_do_dique",
       "name": "Arena do Dique",
-      "region": "Salvador - Bahia",
+      "region": "Ituberá - Bahia",
       "type": "official_circuit",
-      "visual_identity": "ginásio oficial, arquibancada, telões, tatame azul e dourado, placas Salvador",
+      "visual_identity": "arena urbana junto ao dique e água de Ituberá, arquibancada, tatame azul e dourado",
       "music_theme": "arena_oficial_bass_percussion",
       "modifiers": {"rule_pressure": 0.1, "focus_penalty_on_error": 0.05, "hype_bonus": 3},
       "asset_requirements": ["crowd", "score_tables", "main_screen", "side_banners", "official_mats"]
     },
     {
       "id": "ferro_velho_da_lapa",
+      "canonical_map_id": "ferro_velho_lapa",
       "name": "Ferro Velho da Lapa",
-      "region": "Interior da Bahia",
+      "region": "Salvador - Bahia",
       "type": "hard_arena",
-      "visual_identity": "metal, sombra, faísca, chão pesado, iluminação baixa",
+      "visual_identity": "metal, sombra, faísca, correntes, chuva e skyline de Salvador",
       "modifiers": {"risk_bonus": 0.15, "moral_pressure": 2}
     },
     {
       "id": "manguezal_profundo",
+      "canonical_map_id": "manguezal_profundo",
       "name": "Manguezal Profundo",
-      "region": "Baixo Sul da Bahia",
+      "region": "Igrapiúna - Bahia",
       "type": "root_arena",
       "visual_identity": "lama, água, raízes, barcos, vegetação fechada",
       "modifiers": {"traction_penalty": 0.15, "sweep_bonus": 0.1, "speed_penalty": 0.05}
     },
     {
       "id": "praia_de_pratigi",
-      "name": "Praia de Pratigi",
+      "canonical_map_id": "praia_do_pratigi",
+      "name": "Praia do Pratigi",
       "region": "Ituberá - Bahia",
       "type": "hype_arena",
       "visual_identity": "areia, sol, crowd regional, barracas e mar",
@@ -47,16 +53,18 @@
     },
     {
       "id": "colonia_nishimura",
-      "name": "Colônia Nishimura",
-      "region": "Baixo Sul da Bahia",
+      "canonical_map_id": "colonia_nishiuchi",
+      "name": "Colônia Nishiuchi",
+      "region": "Ibirapitanga - Bahia",
       "type": "discipline_arena",
-      "visual_identity": "templo, silêncio, água, madeira, símbolo ancestral",
+      "visual_identity": "jardim, silêncio, água, madeira, camélia e memória ancestral ficcional",
       "modifiers": {"focus_bonus": 0.12, "error_cost_bonus": 0.05}
     },
     {
       "id": "budokan_das_aguas",
+      "canonical_map_id": "budokan",
       "name": "Budokan das Águas",
-      "region": "Bahia",
+      "region": "Valença - Bahia",
       "type": "precision_arena",
       "visual_identity": "azul profundo, silêncio, tatame limpo, geometria rígida",
       "modifiers": {"precision_bonus": 0.1, "mistake_penalty": 0.1}

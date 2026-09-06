@@ -1,0 +1,30 @@
+{
+  "version": "1.0.0",
+  "status": "reference_candidate",
+  "shipping": false,
+  "binary_ingestion": "pending",
+  "note": "As bases 1920x1080 e folhas de ícones foram preservadas fora do repo com SHA-256. Este manifesto impede falso PASS até os binários serem ingeridos com proveniência/sidecars.",
+  "maps": [
+    {"path":"assets/arenas/base/baixo_sul.png","size":[1920,1080],"sha256":"dcfe1907f5e43a86889cfc6931906e6148b8d5fa375fd56409e91f81d941b484","library_path":"/CRIA DO TATAME/Visual Canon v2/EPIC69 Maps/baixo_sul.png","status":"pending_binary_ingestion","shipping":false},
+    {"path":"assets/arenas/base/itubera.png","size":[1920,1080],"sha256":"70cd46bc815f687941c3a26bf434e5eaf2ec9f2859f1f24d73aac5292e2b532c","library_path":"/CRIA DO TATAME/Visual Canon v2/EPIC69 Maps/itubera.png","status":"pending_binary_ingestion","shipping":false},
+    {"path":"assets/arenas/base/nilo_pecanha.png","size":[1920,1080],"sha256":"5466d816f7552adc01129e3246d955c25337c852c0c44e9c23b5a7faac607840","library_path":"/CRIA DO TATAME/Visual Canon v2/EPIC69 Maps/nilo_pecanha.png","status":"pending_binary_ingestion","shipping":false},
+    {"path":"assets/arenas/base/valenca.png","size":[1920,1080],"sha256":"1cb237af06182b6e3c7fece9f2c2fef7f8fa0270d5892a1bdecc4faf120c82cc","library_path":"/CRIA DO TATAME/Visual Canon v2/EPIC69 Maps/valenca.png","status":"pending_binary_ingestion","shipping":false},
+    {"path":"assets/arenas/base/camamu.png","size":[1920,1080],"sha256":"5b4b503e6afc4672d217106b79aad94b2bb6bf31ff168990b55037b098876307","library_path":"/CRIA DO TATAME/Visual Canon v2/EPIC69 Maps/camamu.png","status":"pending_binary_ingestion","shipping":false},
+    {"path":"assets/arenas/base/cairu.png","size":[1920,1080],"sha256":"d4a8c69a05d25eab98f5df6ff46bb95e65799b0ac87fdb9bc00a207c34747d44","library_path":"/CRIA DO TATAME/Visual Canon v2/EPIC69 Maps/cairu.png","status":"pending_binary_ingestion","shipping":false},
+    {"path":"assets/arenas/base/itacare_marau.png","size":[1920,1080],"sha256":"e43b1af1c84245aa4f919cbbff9fe68463b0c507f19086dda6dd8f7d79952e69","library_path":"/CRIA DO TATAME/Visual Canon v2/EPIC69 Maps/itacare_marau.png","status":"pending_binary_ingestion","shipping":false},
+    {"path":"assets/arenas/base/interior_norte.png","size":[1920,1080],"sha256":"5fd78626a35e160761349fc2c89f3c6b5b29fbf3bea1d3c4f5dd7823bab66005","library_path":"/CRIA DO TATAME/Visual Canon v2/EPIC69 Maps/interior_norte.png","status":"pending_binary_ingestion","shipping":false},
+    {"path":"assets/arenas/base/interior_sul.png","size":[1920,1080],"sha256":"1917a32fc18dbc8317d8eb9b4644c4d55f311613bfe7aeb125ab0a4ea14eed73","library_path":"/CRIA DO TATAME/Visual Canon v2/EPIC69 Maps/interior_sul.png","status":"pending_binary_ingestion","shipping":false},
+    {"path":"assets/arenas/base/salvador.png","size":[1920,1080],"sha256":"82cc3cd74dbd54c43357d9138cb36a8af6960d4daa15faab0f7dcf38a072e21a","library_path":"/CRIA DO TATAME/Visual Canon v2/EPIC69 Maps/salvador.png","status":"pending_binary_ingestion","shipping":false}
+  ],
+  "icon_sheets": [
+    {"id":"A1","sha256":"80dd3e555cc2e42b408c77545bc686aaa66751a1ec46275bacaea821c94fdaa9","library_path":"/CRIA DO TATAME/Visual Canon v1/Icons/arena_icon_A1_terreiro_dique_saici_pancada_pratigi.png","status":"pending_slice"},
+    {"id":"A2","sha256":"a968608495769519d270349053ffe0b589602b6bed611edfc8b95b047e1b8f58","library_path":"/CRIA DO TATAME/Visual Canon v1/Icons/arena_icon_A2_festival_avesso_zambiapunga_concha_tigre.png","status":"pending_slice"},
+    {"id":"A3","sha256":"649dabf2648b9435178291230919cd1ea4d9895f7db659e386e954df8878b79d","library_path":"/CRIA DO TATAME/Visual Canon v1/Icons/arena_icon_A3_pf_cacaueira_budokan_nishiuchi_valenca.png","status":"pending_slice"},
+    {"id":"A4","sha256":"acda0b79ae59c9c476f243e6e16ef6722f7440c16e516346d0d01b1cd4d337ef","library_path":"/CRIA DO TATAME/Visual Canon v1/Icons/arena_icon_A4_palco_manguezal_piacava_taipu_ilha_ferro.png","status":"pending_slice"},
+    {"id":"G1","sha256":"fc45fe2c6052bf5306e6fc572d168c2a443154b6e2b6fc90c579288d64792839","library_path":"/CRIA DO TATAME/Visual Canon v1/Icons/ui_icon_G1_stats_recursos.png","status":"pending_slice"},
+    {"id":"G2","sha256":"33280ff5343c384fd02ea231eae07d4c3b3c2447090c575fdbad770e5d14f2f3","library_path":"/CRIA DO TATAME/Visual Canon v1/Icons/ui_icon_G2_cartas_raridade.png","status":"pending_slice"},
+    {"id":"G3","sha256":"af098b7eb9bf3dccc447b5fd4df141b108096e371a2e8aa3a58f91c3263c3d54","library_path":"/CRIA DO TATAME/Visual Canon v1/Icons/ui_icon_G3_economia_reputacao.png","status":"pending_slice"},
+    {"id":"G4","sha256":"427a43e4321ea9da01cdd29760ba0ba443dcf494248f9a907d093fa178e8078a","library_path":"/CRIA DO TATAME/Visual Canon v1/Icons/ui_icon_G4_faccoes_mundo.png","status":"pending_slice"},
+    {"id":"G5","sha256":"02be3e48900f77861e594aadedc23bf66798ccd3674c7dfd165fa690ad115190","library_path":"/CRIA DO TATAME/Visual Canon v1/Icons/ui_icon_G5_debuffs_servicos_acoes.png","status":"pending_slice"}
+  ]
+}

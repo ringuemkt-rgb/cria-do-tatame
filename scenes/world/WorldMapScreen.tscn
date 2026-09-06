@@ -1,45 +1,113 @@
-[gd_scene load_steps=2 format=3]
+[gd_scene load_steps=4 format=3]
 
-[ext_resource type="Script" path="res://scenes/world/WorldMapScreen.gd" id="1_map"]
+[ext_resource type="Script" path="res://scenes/world/WorldMapScreen.gd" id="1_screen"]
+[ext_resource type="Script" path="res://src/world/MapPage.gd" id="2_page"]
+[ext_resource type="Script" path="res://src/ui/HubPanel.gd" id="3_panel"]
 
 [node name="WorldMapScreen" type="Control"]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-script = ExtResource("1_map")
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_screen")
 
-[node name="Panel" type="VBoxContainer" parent="."]
+[node name="Background" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.043, 0.043, 0.051, 1)
+
+[node name="Root" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 16.0
+offset_top = 16.0
+offset_right = -16.0
+offset_bottom = -16.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 8
+
+[node name="TopBar" type="HBoxContainer" parent="Root"]
 layout_mode = 2
 
-[node name="Title" type="Label" parent="Panel"]
+[node name="Title" type="Label" parent="Root/TopBar"]
 layout_mode = 2
+size_flags_horizontal = 3
 text = "MAPA DO BAIXO SUL"
 
-[node name="Status" type="Label" parent="Panel"]
+[node name="Status" type="Label" parent="Root/TopBar"]
 layout_mode = 2
 text = "Hub atual"
 
-[node name="Message" type="Label" parent="Panel"]
-layout_mode = 2
-text = "Escolha um destino"
-
-[node name="Itubera" type="Button" parent="Panel"]
-layout_mode = 2
-text = "ITUBERA"
-
-[node name="Salvador" type="Button" parent="Panel"]
-layout_mode = 2
-text = "SALVADOR"
-
-[node name="Zambiapunga" type="Button" parent="Panel"]
-layout_mode = 2
-text = "ZAMBIAPUNGA"
-
-[node name="Camamu" type="Button" parent="Panel"]
-layout_mode = 2
-text = "CAMAMU E MANGUEZAL"
-
-[node name="Back" type="Button" parent="Panel"]
+[node name="Back" type="Button" parent="Root/TopBar"]
 layout_mode = 2
 text = "VOLTAR"
+
+[node name="PageBar" type="HBoxContainer" parent="Root"]
+layout_mode = 2
+
+[node name="Main" type="HBoxContainer" parent="Root"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 12
+
+[node name="MapPage" type="Control" parent="Root/Main"]
+custom_minimum_size = Vector2(900, 560)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource("2_page")
+
+[node name="BaseTexture" type="TextureRect" parent="Root/Main/MapPage"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+expand_mode = 1
+stretch_mode = 6
+
+[node name="NodeLayer" type="Control" parent="Root/Main/MapPage"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="PendingLabel" type="Label" parent="Root/Main/MapPage"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -180.0
+offset_top = -30.0
+offset_right = 180.0
+offset_bottom = 30.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "BASE VISUAL PENDENTE"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HubPanel" type="VBoxContainer" parent="Root/Main"]
+custom_minimum_size = Vector2(340, 0)
+layout_mode = 2
+size_flags_vertical = 3
+script = ExtResource("3_panel")
+
+[node name="Message" type="Label" parent="Root"]
+layout_mode = 2
+text = "Selecione um destino"
+autowrap_mode = 2
