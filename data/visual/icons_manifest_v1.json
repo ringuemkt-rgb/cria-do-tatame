@@ -1,0 +1,10 @@
+{"$schema":"icons_manifest_v1","status":"reference_candidate","shipping":false,
+ "arena_icons":{"A1":["terreiro","dique","saici","pancada","pratigi"],
+  "A2":["festival_lua","avesso","zambiapunga","concha","dojo"],
+  "A3":["quartel_pf","quartel_cacaueira","budokan","colonia","ginasio_valenca"],
+  "A4":["palco_morro","manguezal","galpao","taipu","ilha_grande","ferro_velho"]},
+ "ui_icons":{"G1":["forca","resistencia","tecnica","pressao","foco","moral","vida","gas","grip","vantagem","momentum","timing"],
+  "G2":["finalizacao","raspagem","passagem","queda","controle","especial","rar_comum","rar_incomum","rar_rara","rar_epica","rar_lendaria"],
+  "G3":["criacoin","dinheiro","honra","hype","sombra","dupla_face","maos_sujas","disciplina","patrocinio"],
+  "G4":["ale","lem","ntm","lei","mare","sol","lua","chuva","hub","torneio","evento","treino","perigo","rota_bloqueada","faixa"],
+  "G5":["cela_fria","maos_tremendo","exausto","furia","procurado","academia","mercado","doca","missoes","mover","ataque","defesa","parry","cartas"]}}
