@@ -1,0 +1,36 @@
+{
+  "$schema": "factions_v2",
+  "version": "2.0.0",
+  "stable_ids": ["ALE", "LEM", "NTM"],
+  "factions": [
+    {
+      "id": "ALE",
+      "display_name": "Os Aleluiados",
+      "color": "#FF9408",
+      "world_overlay_pages": ["07", "08", "09", "10"],
+      "identity_tags": ["pressao", "estrutura", "influencia"],
+      "runtime_balance_status": "pending_epic67"
+    },
+    {
+      "id": "LEM",
+      "display_name": "Lá Ele Mil Vezes",
+      "color": "#4A6741",
+      "world_overlay_pages": ["05", "06", "08", "09"],
+      "identity_tags": ["mar", "rota", "raiz"],
+      "runtime_balance_status": "pending_epic67"
+    },
+    {
+      "id": "NTM",
+      "display_name": "Nós Tem o Molho",
+      "color": "#3FE3F5",
+      "world_overlay_pages": ["02", "03"],
+      "identity_tags": ["ritmo", "hype", "rede"],
+      "runtime_balance_status": "pending_epic67"
+    }
+  ],
+  "guardrails": {
+    "exactly_three_active_factions": true,
+    "display_names_are_current_canon": true,
+    "real_organizations_are_not_factions": true
+  }
+}

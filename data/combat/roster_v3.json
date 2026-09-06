@@ -1,0 +1,29 @@
+{
+  "$schema": "roster_v3",
+  "version": "3.0.0",
+  "count": 17,
+  "fighters": [
+    {"id":"ruan_macacao","display_name":"Ruan Macacão Silva","role":"protagonist","signature_trigger":"silverback_grip"},
+    {"id":"davi_relampago","display_name":"Davi Relâmpago","role":"rival","signature_trigger":"counter_whiff"},
+    {"id":"jacare_do_mangue","display_name":"Jacaré","role":"opponent","signature_trigger":"heavy_top"},
+    {"id":"oni_da_lapa","display_name":"Oni da Lapa","role":"opponent","signature_trigger":"rush"},
+    {"id":"oni_do_sul","display_name":"Oni do Sul","role":"opponent","signature_trigger":"drain"},
+    {"id":"mateus_predador","display_name":"Mateus Predador","role":"opponent","signature_trigger":"fero"},
+    {"id":"verao_velho","display_name":"Verão Velho","role":"opponent","signature_trigger":"read"},
+    {"id":"leoa","display_name":"Leoa","role":"rival_ally","signature_trigger":"rhythm"},
+    {"id":"byaku","display_name":"Byaku","role":"opponent_ally_master","signature_trigger":"punish"},
+    {"id":"kenzo_kuroi","display_name":"Kenzo Kuroi","role":"opponent","signature_trigger":"zanshin"},
+    {"id":"ubira","display_name":"Ubirá","role":"opponent_ally","signature_trigger":"takedown"},
+    {"id":"cassio_molho","display_name":"Cássio Molho","role":"shadow_rival","signature_trigger":"dirty"},
+    {"id":"montenegro","display_name":"Montenegro","role":"opponent","signature_trigger":"backup"},
+    {"id":"ruan_do_avesso","display_name":"Ruan do Avesso","role":"mirror","signature_trigger":"feed"},
+    {"id":"viera","display_name":"Viera","role":"nogi_master_archetype","signature_trigger":"pressure"},
+    {"id":"miyao","display_name":"Miyao","role":"nogi_master_archetype","signature_trigger":"berimbolo"},
+    {"id":"galvao","display_name":"Galvão","role":"nogi_master_archetype","signature_trigger":"finish"}
+  ],
+  "guardrails": {
+    "fictional_archetypes_only": true,
+    "no_real_person_likeness": true,
+    "numeric_stats_authority": "pending_calibration"
+  }
+}

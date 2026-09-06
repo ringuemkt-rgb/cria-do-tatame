@@ -1,0 +1,55 @@
+{
+  "$schema": "training_exercises_v2",
+  "version": "2.0.0",
+  "conditioning_decay_per_day": -1,
+  "numeric_calibration_status": "pending_epic56",
+  "vector_axes": ["technique","pressure","gas","focus","strength","recovery","hype","income"],
+  "exercises": [
+    {
+      "id":"sparring",
+      "display_name":"Sparring",
+      "semantic_vector":{"pressure":"increase","gas":"increase","hype":"increase","recovery":"decrease"},
+      "risk_tags":["fatigue","controlled_injury_risk"]
+    },
+    {
+      "id":"drill",
+      "display_name":"Drill técnico",
+      "semantic_vector":{"technique":"increase","focus":"increase","recovery":"decrease_light"},
+      "risk_tags":[]
+    },
+    {
+      "id":"roda",
+      "display_name":"Roda / ritmo",
+      "semantic_vector":{"focus":"increase","technique":"increase","gas":"increase_light"},
+      "risk_tags":[]
+    },
+    {
+      "id":"weight",
+      "display_name":"Treino de força",
+      "semantic_vector":{"strength":"increase","pressure":"increase_light","recovery":"decrease"},
+      "risk_tags":["fatigue"]
+    },
+    {
+      "id":"running",
+      "display_name":"Corrida",
+      "semantic_vector":{"gas":"increase","recovery":"decrease_light"},
+      "risk_tags":["fatigue"]
+    },
+    {
+      "id":"work",
+      "display_name":"Trabalho",
+      "semantic_vector":{"income":"increase","recovery":"decrease_light"},
+      "risk_tags":["opportunity_cost"]
+    },
+    {
+      "id":"rest",
+      "display_name":"Descanso",
+      "semantic_vector":{"recovery":"increase","gas":"maintain","focus":"recover"},
+      "risk_tags":["hype_opportunity_cost"]
+    }
+  ],
+  "guardrails": {
+    "effects_are_semantic_until_epic56": true,
+    "no_hidden_numeric_balance_is_implied": true
+  }
+}
