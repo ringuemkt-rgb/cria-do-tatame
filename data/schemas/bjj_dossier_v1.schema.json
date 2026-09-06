@@ -1,0 +1,16 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "bjj_dossier_v1",
+  "type": "object",
+  "required": ["dossier_id", "technique_id", "status", "shipping", "authority_snapshot", "proposal", "conflicts"],
+  "properties": {
+    "dossier_id": {"type": "string"},
+    "technique_id": {"type": "string"},
+    "status": {"enum": ["DRAFT", "DRAFT_CONFLICT_PENDING_RESOLUTION", "CANDIDATE", "BLOCKED", "REWORK"]},
+    "shipping": {"const": false},
+    "authority_snapshot": {"type": "object"},
+    "proposal": {"type": "object"},
+    "conflicts": {"type": "array", "items": {"type": "object", "required": ["field", "authority", "proposal", "resolution"]}},
+    "human_bjj_gate": {"enum": ["PENDING", "REQUIRED", "PASS", "FAIL", "REWORK"]}
+  }
+}

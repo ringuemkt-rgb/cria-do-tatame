@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "bjj_corpus_entry_v1",
+  "type": "object",
+  "required": ["technique_id", "pipeline", "custody", "stages", "shipping"],
+  "properties": {
+    "technique_id": {"type": "string"},
+    "shipping": {"const": false},
+    "pipeline": {"const": "cria-video-intelligence@0.1.0"},
+    "custody": {
+      "type": "object",
+      "required": ["source_id", "source_url", "license_status", "sha256", "status"],
+      "properties": {
+        "source_id": {"type": ["string", "null"]},
+        "source_url": {"type": ["string", "null"]},
+        "license_status": {"enum": ["CLEARED", "UNKNOWN", "RESEARCH_ONLY", "BLOCKED"]},
+        "sha256": {"type": ["string", "null"]},
+        "status": {"enum": ["READY", "CUSTODY_BLOCKED"]}
+      }
+    },
+    "stages": {"type": "object"}
+  }
+}
