@@ -39,7 +39,7 @@ static func evaluate_node(node: Dictionary, context: Dictionary) -> Dictionary:
 		_:
 			return {"unlocked": false, "reason": "Requisito ainda não suportado: %s" % kind}
 
-static func route_state(route: Dictionary, context: Dictionary) -> Dictionary:
+static func route_state(route: Dictionary, _context: Dictionary) -> Dictionary:
 	if bool(route.get("bloqueada", false)):
 		return {"available": false, "reason": "Rota bloqueada por progressão."}
 	if bool(route.get("bloqueavel_por_mare", false)):
@@ -75,5 +75,12 @@ static func _contains(values, needle: String) -> bool:
 static func _reason(lock: Dictionary) -> String:
 	var kind := str(lock.get("tipo", ""))
 	if kind == "composto":
-		return "Requisitos: " + ", ".join(lock.get("req", []))
+		return "Requisitos: " + _join_values(lock.get("req", []))
 	return "Requisito: %s %s" % [kind, str(lock.get("req", ""))]
+
+static func _join_values(values) -> String:
+	var parts := PackedStringArray()
+	if values is Array:
+		for value in values:
+			parts.append(str(value))
+	return ", ".join(parts)
