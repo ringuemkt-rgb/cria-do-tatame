@@ -1,0 +1,7 @@
+{"$schema":"ui_theme_v2",
+ "brand":{"bg":"#0B0B0D","border":"#C9971C","text":"#EDE6D6","accent":"#C9971C","corner":"angular"},
+ "factions":{"ALE":"#FF9408","LEM":"#4A6741","NTM":"#3FE3F5","lei":"#1E3A5F"},
+ "feedback":{"vantagem":"#39FF14","neutro":"#D4A574","desvantagem":"#8B0000"},
+ "icons":{"sizes":[24,32,48],"outline":"#1A1A1A"},
+ "daltonico":{"troca":{"#8B0000":"#FF8C00","#39FF14":"#00BFFF"}},
+ "hud":{"barra_h":10,"painel_border":2}}
