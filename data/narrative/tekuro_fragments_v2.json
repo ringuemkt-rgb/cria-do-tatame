@@ -1,0 +1,40 @@
+{
+  "$schema": "cria_hidden_truth_fragments_v2",
+  "version": "2.0.0",
+  "authority": "data/narrative/canon_v3.json",
+  "public_label": "fragmentos_da_verdade",
+  "threshold": 8,
+  "total_fragments": 11,
+  "spoiler_policy": {
+    "teruko_nishiuchi": "data_only_until_truth_epilogue",
+    "tiago_pai": "data_only_hidden_truth",
+    "hidden_names_in_spoken_dialogue": false,
+    "fragment_text_must_be_ambiguous": true,
+    "mystery_label_never_spoken": true
+  },
+  "truth_map": {
+    "father": "Tiago, pescador, desapareceu apos recusar pressao ligada a ALE",
+    "land": "a terra da familia foi perdida por cadeia de especulacao ligada a Dr. Sombra/ALE",
+    "paternal_grandmother": "Teruko Nishiuchi",
+    "dende": "sabia parte relevante da verdade e escolheu proteger Ruan pelo silencio"
+  },
+  "fragments": [
+    {"id":"frag_01_foto_desfocada","order":1,"type":"foto","location":"dona_chie_caixa","diegetic_text":"Uma mulher ao lado de um pescador jovem. O verso esta manchado; so resta a letra T.","reveals":["linhagem_paterna","pescador"]},
+    {"id":"frag_02_registro_fundacao_t","order":2,"type":"registro","location":"arquivo_terreiro","diegetic_text":"Livro antigo de fundacao. Uma assinatura termina em T.; a pagina seguinte foi arrancada.","reveals":["terreiro_linhagem"]},
+    {"id":"frag_03_kimono_tn","order":3,"type":"objeto","location":"deposito_terreiro","diegetic_text":"Kimono antigo com iniciais T.N. bordadas por dentro, invisiveis quando vestido.","reveals":["iniciais_ocultas"]},
+    {"id":"frag_04_caligrafia_jujutsu","order":4,"type":"caligrafia","location":"colonia_nishiuchi","diegetic_text":"Folha de caligrafia 柔術 com o mesmo traco visto no registro antigo.","reveals":["elo_nipo_baiano"]},
+    {"id":"frag_05_nota_despejo","order":5,"type":"documento","location":"ze_de_barro_arquivo","diegetic_text":"Copia de notificacao de perda de posse; nomes principais estao apagados, mas a area coincide com a memoria de familia.","reveals":["terra_perdida","especulacao"]},
+    {"id":"frag_06_foto_nitida","order":6,"type":"foto","location":"dona_chie_pos_queda","diegetic_text":"A mesma mulher aparece nitida segurando uma camelia; o pescador usa o mesmo cordao visto em outra foto.","reveals":["mulher_camélia","pai_visual"]},
+    {"id":"frag_07_camelia","order":7,"type":"objeto_vivo","location":"quintal_chie","diegetic_text":"Camelia antiga cuidada por decadas. Chie diz apenas que algumas plantas sobrevivem porque alguem continuou regando.","reveals":["camelia_memoria"]},
+    {"id":"frag_08_apelido_t","order":8,"type":"fala_pista","location":"seu_neco","diegetic_text":"Seu Neco lembra que a familia chamava uma mulher por um apelido que comecava com T., mas se recusa a completar.","reveals":["limiar_verdade"]},
+    {"id":"frag_09_sussurro_vo","order":9,"type":"memoria","location":"ruan_sonho_pos_avesso","diegetic_text":"Ruan ouve a propria voz infantil dizendo apenas: 'vo...'. A cena corta antes de qualquer nome.","reveals":["parentesco_ancestral"]},
+    {"id":"frag_10_foto_pai","order":10,"type":"foto","location":"arquivo_operacao_raiz_forte","diegetic_text":"Fotografia do pescador em reuniao comunitaria, ao lado de documentos sobre a terra. Nenhum nome e lido em voz alta.","reveals":["pai_resistencia","terra"]},
+    {"id":"frag_11_camelia_floresce","order":11,"type":"evento","location":"epilogo","diegetic_text":"A camelia floresce depois da Operacao Raiz Forte. A imagem fecha o elo sem transformar a verdade em vinganca.","reveals":["continuidade","a_verdade"]}
+  ],
+  "assembly_rules": {
+    "story_complete_without_fragments": true,
+    "truth_epilogue_unlocked_at_or_above": 8,
+    "collecting_all_11_adds_context_not_new_final": true,
+    "revenge_interpretation_forbidden": true
+  }
+}
