@@ -1,0 +1,46 @@
+{
+  "$schema": "skill_tree_ui_contract_v1",
+  "version": "1.0.0",
+  "design_system": "CRIA_DO_TATAME_MAP_UI_PREMIUM",
+  "canvas": {"aspect_ratio":"16:9","reference_resolution":[1672,941]},
+  "palette": {
+    "background":"#0B0B0D",
+    "gold":"#C9971C",
+    "off_white":"#EDE6D6",
+    "pressure":"#C62828",
+    "technique":"#29A8FF",
+    "mobility":"#39FF14",
+    "finalization":"#B84DFF",
+    "resilience":"#C9971C"
+  },
+  "layout": {
+    "top_nav":"global navigation + currency + level",
+    "left_rail":"player card + path selector",
+    "center":"node graph and dependency connections",
+    "right_panel":"selected node preview + effects + requirements",
+    "bottom":"legend + belt requirements + page/status information"
+  },
+  "node_states": ["locked","available","owned","selected","capstone"],
+  "node_types": ["fundamental","advanced","hybrid","signature","arena_perk","faction_reward"],
+  "interaction": {
+    "hover_or_focus":"show tooltip generated from data",
+    "select":"populate right panel",
+    "unlock":"request rules service; UI cannot mutate progression directly",
+    "preview":"play short character animation or technique clip when available"
+  },
+  "accessibility": {
+    "color_only_signaling": false,
+    "text_scale": true,
+    "reduced_motion": true,
+    "focus_outline": true,
+    "colorblind_symbols_required": true
+  },
+  "runtime_rules": {
+    "no_baked_text_for_interactive_ui": true,
+    "no_reference_image_as_runtime_screen": true,
+    "labels_from_data": true,
+    "costs_from_reducer_owned_rules": true,
+    "belt_requirements_from_data": true,
+    "animations_are_presentation_only": true
+  }
+}
