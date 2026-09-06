@@ -54,8 +54,9 @@ func show_node(node: Dictionary, panel: Dictionary, evaluation: Dictionary) -> v
 	_type_line.text = "%s • %s" % [str(node.get("tipo", "")), str(node.get("mun", ""))]
 	_description.text = str(panel.get("descricao", ""))
 	_ecosystem.text = "ECOSSISTEMA: " + str(panel.get("ecossistema", ""))
-	_services.text = "SERVIÇOS: " + ", ".join(panel.get("servicos", []))
-	_characters.text = "PRESENTES: " + (", ".join(panel.get("personagens", [])) if not panel.get("personagens", []).is_empty() else "—")
+	_services.text = "SERVIÇOS: " + _join_values(panel.get("servicos", []))
+	var people = panel.get("personagens", [])
+	_characters.text = "PRESENTES: " + (_join_values(people) if people is Array and not people.is_empty() else "—")
 	var unlocked := bool(evaluation.get("unlocked", false))
 	_lock_line.text = "" if unlocked else str(evaluation.get("reason", panel.get("lock", "Bloqueado")))
 	_action.text = "SELECIONAR" if unlocked else "BLOQUEADO"
@@ -74,3 +75,10 @@ func clear_panel() -> void:
 	_lock_line.text = ""
 	_action.text = "SELECIONAR"
 	_action.disabled = true
+
+func _join_values(values) -> String:
+	var parts := PackedStringArray()
+	if values is Array:
+		for value in values:
+			parts.append(str(value))
+	return ", ".join(parts)
