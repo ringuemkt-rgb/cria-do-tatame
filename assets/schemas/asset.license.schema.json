@@ -1,0 +1,14 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "asset.license.schema.json",
+  "type": "object",
+  "required": ["asset", "license", "rights_status", "commercial", "shipping"],
+  "properties": {
+    "asset": {"type": "string"},
+    "license": {"type": "string"},
+    "rights_status": {"enum": ["pending", "cleared", "blocked"]},
+    "holder": {"type": ["string", "null"]},
+    "commercial": {"type": "boolean"},
+    "shipping": {"type": "boolean"}
+  }
+}
