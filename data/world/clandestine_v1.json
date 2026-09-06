@@ -1,0 +1,42 @@
+{
+  "$schema": "clandestine_v1",
+  "version": "1.0.0",
+  "authority": "data_contract",
+  "runtime_authority_target": "combat_reducer_epic55",
+  "currency_policy": {
+    "real_money": false,
+    "currency": "CriaCoin",
+    "odds_source": "hype",
+    "bet_return_multiplier": 2.0,
+    "loss_can_create_faction_debt": true
+  },
+  "heat": {
+    "range": [0, 100],
+    "arrest_threshold": 81,
+    "cold_cell": {
+      "duration_days": 3,
+      "stamina_multiplier": 0.8,
+      "grip_multiplier": 0.7,
+      "focus_multiplier": 0.85
+    }
+  },
+  "territory_domino": {
+    "flip_threshold": 60,
+    "runtime_status": "pending_epic66"
+  },
+  "arenas": [
+    {"id":"ponte_do_saici","faction":"NTM","perk":null},
+    {"id":"ilha_grande","faction":"LEM","perk":null,"sem_fuga":true},
+    {"id":"taipu_de_fora","faction":"LEM","perk":null,"tide_rule":"encolhe38"},
+    {"id":"tancredo_neves","faction":"LEM","perk":null},
+    {"id":"manguezal_profundo","faction":"LEM","perk":"passo_de_lama"},
+    {"id":"galpao_piacava","faction":"ALE","perk":null},
+    {"id":"ferro_velho_lapa","faction":"ALE","perk":null}
+  ],
+  "perk_calibration_status": "pending_epic66",
+  "guardrails": [
+    "no_real_money_gambling",
+    "ui_never_decides_rules",
+    "no_shipping_claim_from_data_only"
+  ]
+}
