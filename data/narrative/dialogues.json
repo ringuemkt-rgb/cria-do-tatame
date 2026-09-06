@@ -1,0 +1,142 @@
+{
+  "$schema": "cria_dialogues_v3",
+  "version": "3.0.0",
+  "authority": "data/narrative/canon_v3.json",
+  "rules": {
+    "language": "pt-BR",
+    "hidden_names_forbidden_in_spoken_dialogue": true,
+    "mystery_must_remain_assemblable_not_explicit": true,
+    "revenge_language_forbidden": true
+  },
+  "clue_dialogues": [
+    {
+      "id":"clue_seu_neco_01",
+      "speaker":"seu_neco",
+      "context":"margem do rio, depois do Ato 2",
+      "lines":["Teu pai conhecia correnteza que nao aparece no mapa.","Tem gente que some do papel antes de sumir da memoria."]
+    },
+    {
+      "id":"clue_iara_01",
+      "speaker":"cigana_iara",
+      "context":"feira, opcional",
+      "lines":["Tem nome que some do papel e continua crescendo na raiz.","Quando a flor volta, pergunta quem ficou regando."]
+    },
+    {
+      "id":"clue_chie_01",
+      "speaker":"dona_chie",
+      "context":"Ato 4, acolhimento",
+      "lines":["Tem coisa que a gente guarda ate a pessoa aprender a segurar.","Verdade na mao errada vira faca. Aprende primeiro a nao cortar ninguem com ela."]
+    },
+    {
+      "id":"clue_dende_01",
+      "speaker":"mestre_dende",
+      "context":"Ato 4, depois da morte de Biel",
+      "lines":["Eu sabia mais do que te contei.","Nao calei pra te fazer fraco. Calei porque achei que silencio era protecao. Talvez eu tenha errado."]
+    }
+  ],
+  "act_dialogues": [
+    {
+      "act":1,
+      "scene":"entrada_terreiro",
+      "beats":[
+        {"speaker":"mestre_dende","line":"Ser forte e ser gentil. Se uma coisa mata a outra, voce ainda nao entendeu nenhuma das duas."},
+        {"speaker":"ruan_macacao","line":"Eu vim aprender a vencer."},
+        {"speaker":"mestre_dende","line":"Entao aprende primeiro a cair sem procurar culpado."}
+      ]
+    },
+    {
+      "act":1,
+      "scene":"primeira_vitoria_mao_estendida",
+      "beats":[
+        {"speaker":"davi_relampago","line":"Vai comemorar ou vai me deixar levantar?"},
+        {"speaker":"ruan_macacao","line":"Levanta."}
+      ]
+    },
+    {
+      "act":2,
+      "scene":"cassio_primeira_oferta",
+      "beats":[
+        {"speaker":"cassio_molho","line":"Voce tem conta, familia e talento. Orgulho nao paga nenhum dos tres."},
+        {"speaker":"ruan_macacao","line":"Eu nao preciso de favor."},
+        {"speaker":"cassio_molho","line":"Esse e o problema. Voce acha que aceitar ajuda e o mesmo que dever a alma."}
+      ]
+    },
+    {
+      "act":3,
+      "scene":"o_barco_pos_consequencia",
+      "beats":[
+        {"speaker":"vera_salles","line":"A informacao era incompleta. Eu agi mesmo assim."},
+        {"speaker":"ruan_macacao","line":"E quem pagou nao fui eu nem voce."},
+        {"speaker":"vera_salles","line":"Entao para de contar essa historia como se alguem aqui tivesse a mao limpa."}
+      ]
+    },
+    {
+      "act":3,
+      "scene":"o_palco",
+      "beats":[
+        {"speaker":"leoa","line":"Hype vai embora. Quem mora aqui fica com o que sobrou."},
+        {"speaker":"ruan_macacao","line":"Eu achei que vencer ia proteger meu nome."},
+        {"speaker":"leoa","line":"Nome nao precisa de protecao. Gente precisa."}
+      ]
+    },
+    {
+      "act":4,
+      "scene":"dende_promete_merecer",
+      "beats":[
+        {"speaker":"mestre_dende","line":"Eu nao vou te pedir pra esquecer.","delivery":"quebrada"},
+        {"speaker":"mestre_dende","line":"Promete que vai merecer o que ainda da pra salvar.","delivery":"baixo"},
+        {"speaker":"ruan_macacao","line":"Eu prometo tentar sem transformar ele em desculpa."}
+      ]
+    },
+    {
+      "act":4,
+      "scene":"o_contrato",
+      "beats":[
+        {"speaker":"cassio_molho","line":"Eu nao inventei tua fome. So estou dizendo que sei vender o prato."},
+        {"speaker":"vera_salles","line":"Contrato tambem e escolha. E escolha deixa rastro."},
+        {"speaker":"tinker_bell","line":"Escolhe o que voce consegue sustentar quando nao tiver ninguem olhando."}
+      ]
+    },
+    {
+      "act":4,
+      "scene":"pratigi_do_avesso",
+      "beats":[
+        {"speaker":"ruan_do_avesso","line":"Eu sou o que sobra quando voce chama medo de necessidade."},
+        {"speaker":"ruan_macacao","line":"Voce nao e meu inimigo."},
+        {"speaker":"ruan_do_avesso","line":"Entao prova que consegue me carregar sem me obedecer."}
+      ]
+    },
+    {
+      "act":5,
+      "scene":"revanche_davi",
+      "beats":[
+        {"speaker":"davi_relampago","line":"Vai apertar?"},
+        {"speaker":"ruan_macacao","line":"Ja acabou."},
+        {"speaker":"davi_relampago","line":"Agora voce entendeu timing."}
+      ]
+    },
+    {
+      "act":5,
+      "scene":"tinker_revela",
+      "beats":[
+        {"speaker":"tinker_bell","line":"Eu sumi porque ficar perto de voce naquele momento colocava mais gente em risco."},
+        {"speaker":"ruan_macacao","line":"E voce esperava que eu entendesse sozinho?"},
+        {"speaker":"tinker_bell","line":"Nao. Eu esperava voltar vivo pra explicar."}
+      ]
+    },
+    {
+      "act":5,
+      "scene":"instituto_cria",
+      "beats":[
+        {"speaker":"dandara","line":"Agora vai ter timer?"},
+        {"speaker":"ruan_macacao","line":"So pra quem quiser."},
+        {"speaker":"dandara","line":"Entao eu fico."}
+      ]
+    }
+  ],
+  "ending_lines": {
+    "heroi_duas_aguas":["Ganhar foi a parte curta.","E a parte longa?","Ficar."],
+    "rei_dos_atalhos":["Todo mundo sabe teu nome.","E voce?","Ainda estou tentando lembrar."],
+    "a_verdade":["Vo... eu aprendi a plantar."]
+  }
+}

@@ -1,0 +1,79 @@
+{
+  "$schema": "cria_endings_v2",
+  "version": "2.0.0",
+  "authority": "data/narrative/canon_v3.json",
+  "main_endings": [
+    {
+      "id": "heroi_duas_aguas",
+      "title": "Heroi das Duas Aguas",
+      "conditions": {"contract_not": "cassio", "verdade_gte_faca": true, "honra_min": 25},
+      "resolution": "Ruan transforma a faixa preta em responsabilidade comunitaria e ajuda a erguer o Instituto CRIA.",
+      "tone": "esperancoso sem santificacao",
+      "core_image": "Ruan abre o Terreiro e divide o centro do quadro com outras crias, nao acima delas."
+    },
+    {
+      "id": "rei_dos_atalhos",
+      "title": "Rei dos Atalhos",
+      "conditions_any": [{"contract": "cassio"}, {"faca_gt_verdade": true}],
+      "resolution": "Ruan vence externamente, mas sua forca passa a depender de controle, medo e imagem.",
+      "tone": "vitoria externa, perda interna",
+      "core_image": "Ruan cercado de sinais de sucesso, com distancia humana crescente."
+    }
+  ],
+  "epilogues": [
+    {
+      "id":"casal_do_tatame",
+      "parent_ending":"heroi_duas_aguas",
+      "conditions":{"honra_min":55,"maos_sujas_max":45},
+      "resolution":"Ruan constrói uma vida afetiva sustentada por rotina, cuidado e tatame, sem transformar relacionamento em premio por vencer.",
+      "compatibility":"optional"
+    },
+    {
+      "id":"veterano_cicatriz",
+      "parent_ending":"heroi_duas_aguas",
+      "conditions":{"maos_sujas_ever_above":60,"restituicao_min":2},
+      "resolution":"Ruan ensina carregando a cicatriz de escolhas antigas. A reparacao melhora o futuro sem apagar o passado.",
+      "compatibility":"optional"
+    },
+    {
+      "id":"estrela_vazia",
+      "parent_ending":"rei_dos_atalhos",
+      "conditions":{"hype_min":70,"verdade_max":45},
+      "resolution":"Dinheiro, seguidores e contratos crescem enquanto intimidade e confianca desaparecem.",
+      "compatibility":"optional"
+    },
+    {
+      "id":"traidor_silencioso",
+      "parent_ending":"rei_dos_atalhos",
+      "conditions":{"dupla_face_min":25,"tinker_state":"RETORNO_DIFICIL"},
+      "resolution":"Tinker retorna, mas a relacao permanece fria; o futuro depende de prova continuada, nao de uma fala de perdao.",
+      "compatibility":"optional"
+    },
+    {
+      "id":"o_informante",
+      "parent_ending":"rei_dos_atalhos",
+      "conditions":{"faca_min":60,"truth_fragments_min":4},
+      "resolution":"Ruan aprende a negociar informacao como poder e termina preso a uma logica de utilidade que antes dizia combater.",
+      "compatibility":"optional"
+    }
+  ],
+  "truth_layer": {
+    "id":"a_verdade",
+    "independent":true,
+    "required_fragments":8,
+    "can_overlay":["heroi_duas_aguas","rei_dos_atalhos"],
+    "scene": {
+      "location":"terreiro_quintal",
+      "image":"Ruan planta uma camelia em silencio.",
+      "spoken_line":"Vo... eu aprendi a plantar.",
+      "rule":"nenhum nome oculto e pronunciado"
+    }
+  },
+  "selection_order": ["main_ending", "compatible_epilogues", "truth_layer"],
+  "design_rules": {
+    "truth_layer_is_not_a_third_main_ending": true,
+    "multiple_compatible_epilogues_allowed": true,
+    "maos_sujas_scar_is_never_erased": true,
+    "ending_must_reflect_choices_not_score_only": true
+  }
+}
