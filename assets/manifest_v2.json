@@ -5,8 +5,673 @@
     "default_status": "candidate",
     "default_shipping": false,
     "reference_is_runtime": false,
-    "required_sidecars": ["license", "provenance", "qa"],
+    "required_sidecars": [
+      "license",
+      "provenance",
+      "qa"
+    ],
     "audio_status": "audio_pending"
   },
-  "assets": []
+  "assets": [
+    {
+      "path": "assets/cosmetics/nft/mural_tinker_analista.png",
+      "sha256": "a493df94da077d999174719448b8a05f3ba5b55ba7681d24a34e9674dbb137b7",
+      "sidecars": [
+        ".provenance",
+        ".license"
+      ],
+      "status": "candidate",
+      "shipping": false
+    },
+    {
+      "path": "assets/cosmetics/nft/patch_terreiro_raiz.png",
+      "sha256": "ed3f7f59280935ab2fbefedc6d38ded4f08d315374de338e18ff75ac4c3c1987",
+      "sidecars": [
+        ".provenance",
+        ".license"
+      ],
+      "status": "candidate",
+      "shipping": false
+    },
+    {
+      "path": "assets/cosmetics/nft/poster_arena_dique.png",
+      "sha256": "70b72422c2c20399da91716ec0545f8f35e9f0d551eb32c44f87f5a0f9e0fe62",
+      "sidecars": [
+        ".provenance",
+        ".license"
+      ],
+      "status": "candidate",
+      "shipping": false
+    },
+    {
+      "path": "assets/cosmetics/nft/rashguard_gorila_prata.png",
+      "sha256": "5110fa7d2ddca2714d3945ef8a913ef63eec2db2aadd02cbdd1f846524582600",
+      "sidecars": [
+        ".provenance",
+        ".license"
+      ],
+      "status": "candidate",
+      "shipping": false
+    },
+    {
+      "path": "assets/sprites/cassio_molho/idle/preview.gif",
+      "sha256": "4218ae732b3e6f5304568ba434a4f87674f116add1b8dcf842eb18450dea61e9",
+      "sidecars": [
+        ".provenance",
+        ".license"
+      ],
+      "status": "candidate",
+      "shipping": false
+    },
+    {
+      "path": "assets/sprites/cassio_molho/idle/sprite_sheet.png",
+      "sha256": "e89928fdf3fcfc739348330eefddbd88e4d149708db10b7337b4507d43453cae",
+      "sidecars": [
+        ".provenance",
+        ".license"
+      ],
+      "status": "candidate",
+      "shipping": false
+    },
+    {
+      "path": "assets/sprites/cassio_molho/provocation/preview.gif",
+      "sha256": "e977a3e400e50ed7a61b18fda530ced6b861befa7079564a64e552f8571cea57",
+      "sidecars": [
+        ".provenance",
+        ".license"
+      ],
+      "status": "candidate",
+      "shipping": false
+    },
+    {
+      "path": "assets/sprites/cassio_molho/provocation/sprite_sheet.png",
+      "sha256": "93e86d8b9b72a09c458beeea524bd76f36fc3c1c695b514c250653d76ee6d036",
+      "sidecars": [
+        ".provenance",
+        ".license"
+      ],
+      "status": "candidate",
+      "shipping": false
+    },
+    {
+      "path": "assets/sprites/cassio_molho/stance/preview.gif",
+      "sha256": "45a8324d6ef95880a2cad0b5217c8ea6ade289fbef622ea4f7bb2829b0b90a65",
+      "sidecars": [
+        ".provenance",
+        ".license"
+      ],
+      "status": "candidate",
+      "shipping": false
+    },
+    {
+      "path": "assets/sprites/cassio_molho/stance/sprite_sheet.png",
+      "sha256": "48c326f03c6bafed64e9f9cc41e12fbeeb4d88aa0687df8bd64a3b86798de8e3",
+      "sidecars": [
+        ".provenance",
+        ".license"
+      ],
+      "status": "candidate",
+      "shipping": false
+    },
+    {
+      "path": "assets/sprites/cassio_molho/walk/preview.gif",
+      "sha256": "1a2139853cd18361429a4ac6c2ca2ca58cb90ecb16b12db1952eee0df0f2aa9c",
+      "sidecars": [
+        ".provenance",
+        ".license"
+      ],
+      "status": "candidate",
+      "shipping": false
+    },
+    {
+      "path": "assets/sprites/cassio_molho/walk/sprite_sheet.png",
+      "sha256": "30f49fb988c648e8592b5dde25a9b8736126ef8ef1c2e677707cba8f11bf7e8b",
+      "sidecars": [
+        ".provenance",
+        ".license"
+      ],
+      "status": "candidate",
+      "shipping": false
+    },
+    {
+      "path": "assets/sprites/davi_relampago/defense/preview.gif",
+      "sha256": "f6a2f8cd18f9df98717e28105fda8ea5744e7b12c523bc61795dd832f3171d9d",
+      "sidecars": [
+        ".provenance",
+        ".license"
+      ],
+      "status": "candidate",
+      "shipping": false
+    },
+    {
+      "path": "assets/sprites/davi_relampago/defense/sprite_sheet.png",
+      "sha256": "e4fe73be87f65235920901f3737e0a28908f8cd6ef3bf2f9b53ef8877380b68e",
+      "sidecars": [
+        ".provenance",
+        ".license"
+      ],
+      "status": "candidate",
+      "shipping": false
+    },
+    {
+      "path": "assets/sprites/davi_relampago/idle/preview.gif",
+      "sha256": "9f179bde89e53ad28ab44c27b2b9186b6423b033eae21658e2cdb8534eca491c",
+      "sidecars": [
+        ".provenance",
+        ".license"
+      ],
+      "status": "candidate",
+      "shipping": false
+    },
+    {
+      "path": "assets/sprites/davi_relampago/idle/sprite_sheet.png",
+      "sha256": "898c0a64da67ee81baca2df1330b99e2d813d26b8b2b8b1ffdaf5fb68cd72ebd",
+      "sidecars": [
+        ".provenance",
+        ".license"
+      ],
+      "status": "candidate",
+      "shipping": false
+    },
+    {
+      "path": "assets/sprites/davi_relampago/walk/preview.gif",
+      "sha256": "1da71a14bddfd52d1ffd03f7ce55c8028bb50cfa62abc06e33b615f7b487c288",
+      "sidecars": [
+        ".provenance",
+        ".license"
+      ],
+      "status": "candidate",
+      "shipping": false
+    },
+    {
+      "path": "assets/sprites/davi_relampago/walk/sprite_sheet.png",
+      "sha256": "3a3741ccbb7b619edf361eb2a8bb843359d8ca7aa3d418104fc51595fc67cc5a",
+      "sidecars": [
+        ".provenance",
+        ".license"
+      ],
+      "status": "candidate",
+      "shipping": false
+    },
+    {
+      "path": "assets/sprites/kenzo_kuroi/counter/preview.gif",
+      "sha256": "4d190f957a2cac1221fae8959f323514ea5ed150810de648f5e1e9b8dd3ec003",
+      "sidecars": [
+        ".provenance",
+        ".license"
+      ],
+      "status": "candidate",
+      "shipping": false
+    },
+    {
+      "path": "assets/sprites/kenzo_kuroi/counter/sprite_sheet.png",
+      "sha256": "b6d120b9e091e80bd6fd29256bea5f8fa28e1976b46d9e8f88c754e3580bdc4f",
+      "sidecars": [
+        ".provenance",
+        ".license"
+      ],
+      "status": "candidate",
+      "shipping": false
+    },
+    {
+      "path": "assets/sprites/kenzo_kuroi/idle/preview.gif",
+      "sha256": "eaa50f21d73a06d3d37ae76197151dbfbd0aeff5211f2b6956dbb17182b44fab",
+      "sidecars": [
+        ".provenance",
+        ".license"
+      ],
+      "status": "candidate",
+      "shipping": false
+    },
+    {
+      "path": "assets/sprites/kenzo_kuroi/idle/sprite_sheet.png",
+      "sha256": "bb9cfb862f8a5aa244961ad1e7ee4a0c6d4be65877d1969e8d939a3bac22e558",
+      "sidecars": [
+        ".provenance",
+        ".license"
+      ],
+      "status": "candidate",
+      "shipping": false
+    },
+    {
+      "path": "assets/sprites/kenzo_kuroi/stance/preview.gif",
+      "sha256": "4d190f957a2cac1221fae8959f323514ea5ed150810de648f5e1e9b8dd3ec003",
+      "sidecars": [
+        ".provenance",
+        ".license"
+      ],
+      "status": "candidate",
+      "shipping": false
+    },
+    {
+      "path": "assets/sprites/kenzo_kuroi/stance/sprite_sheet.png",
+      "sha256": "b6d120b9e091e80bd6fd29256bea5f8fa28e1976b46d9e8f88c754e3580bdc4f",
+      "sidecars": [
+        ".provenance",
+        ".license"
+      ],
+      "status": "candidate",
+      "shipping": false
+    },
+    {
+      "path": "assets/sprites/kenzo_kuroi/walk/preview.gif",
+      "sha256": "9de12ed0457359bf329db09c02ee5faf63d4f8b8c7ba8bb83b18bb6585cd43fb",
+      "sidecars": [
+        ".provenance",
+        ".license"
+      ],
+      "status": "candidate",
+      "shipping": false
+    },
+    {
+      "path": "assets/sprites/kenzo_kuroi/walk/sprite_sheet.png",
+      "sha256": "ea9d1938a24235992b3056dbf886f148a9cda8d2175168c13e376fd43e70c2b9",
+      "sidecars": [
+        ".provenance",
+        ".license"
+      ],
+      "status": "candidate",
+      "shipping": false
+    },
+    {
+      "path": "assets/sprites/leoa_quilombola/base/preview.gif",
+      "sha256": "86cb544b8b031a8cb22ef23cb39d03cbf034b97719c7910c09d0070a341b45a0",
+      "sidecars": [
+        ".provenance",
+        ".license"
+      ],
+      "status": "candidate",
+      "shipping": false
+    },
+    {
+      "path": "assets/sprites/leoa_quilombola/base/sprite_sheet.png",
+      "sha256": "88c2db6cadec9752e21a0b8078b43c072a7756b050f38b2f19eb405423ce5f35",
+      "sidecars": [
+        ".provenance",
+        ".license"
+      ],
+      "status": "candidate",
+      "shipping": false
+    },
+    {
+      "path": "assets/sprites/leoa_quilombola/idle/preview.gif",
+      "sha256": "09ce67f1e01d03b7e474cfa0d79a4817b8745cbdf5b40d3d0640e377a8c7e4b8",
+      "sidecars": [
+        ".provenance",
+        ".license"
+      ],
+      "status": "candidate",
+      "shipping": false
+    },
+    {
+      "path": "assets/sprites/leoa_quilombola/idle/sprite_sheet.png",
+      "sha256": "48ba48301b4dab1a78aef44517ef9db1184592c8bb20a413b601d235dbecbd12",
+      "sidecars": [
+        ".provenance",
+        ".license"
+      ],
+      "status": "candidate",
+      "shipping": false
+    },
+    {
+      "path": "assets/sprites/leoa_quilombola/sweep_setup/preview.gif",
+      "sha256": "86cb544b8b031a8cb22ef23cb39d03cbf034b97719c7910c09d0070a341b45a0",
+      "sidecars": [
+        ".provenance",
+        ".license"
+      ],
+      "status": "candidate",
+      "shipping": false
+    },
+    {
+      "path": "assets/sprites/leoa_quilombola/sweep_setup/sprite_sheet.png",
+      "sha256": "88c2db6cadec9752e21a0b8078b43c072a7756b050f38b2f19eb405423ce5f35",
+      "sidecars": [
+        ".provenance",
+        ".license"
+      ],
+      "status": "candidate",
+      "shipping": false
+    },
+    {
+      "path": "assets/sprites/leoa_quilombola/walk/preview.gif",
+      "sha256": "e5883be3ae4e57fcdb8a0fb3c02f3ae13e57b3abd2f08878c674c9d03422326b",
+      "sidecars": [
+        ".provenance",
+        ".license"
+      ],
+      "status": "candidate",
+      "shipping": false
+    },
+    {
+      "path": "assets/sprites/leoa_quilombola/walk/sprite_sheet.png",
+      "sha256": "3c08e1746fca59d8397335caaf2e7e64ddaebc59acac5b0cfbd5ca2be23feeb4",
+      "sidecars": [
+        ".provenance",
+        ".license"
+      ],
+      "status": "candidate",
+      "shipping": false
+    },
+    {
+      "path": "assets/sprites/mestre_dende/idle/preview.gif",
+      "sha256": "0a1c099920e507fddfccec1132fcffc957b399718fe433599513d5a740562c78",
+      "sidecars": [
+        ".provenance",
+        ".license"
+      ],
+      "status": "candidate",
+      "shipping": false
+    },
+    {
+      "path": "assets/sprites/mestre_dende/idle/sprite_sheet.png",
+      "sha256": "7af1c5d5bd364ed4c1d4d220cab07782e2ae08d9b2b90b35813fdab95cd3aded",
+      "sidecars": [
+        ".provenance",
+        ".license"
+      ],
+      "status": "candidate",
+      "shipping": false
+    },
+    {
+      "path": "assets/sprites/mestre_dende/teaching/preview.gif",
+      "sha256": "509206e5810d629606077b820f5c2177322f3c81a37bbdf9eb74ec30caf7038a",
+      "sidecars": [
+        ".provenance",
+        ".license"
+      ],
+      "status": "candidate",
+      "shipping": false
+    },
+    {
+      "path": "assets/sprites/mestre_dende/teaching/sprite_sheet.png",
+      "sha256": "c5183581d2c67bfa5bef06b95f0bb3881e15cb13028855f928285573d9c9fa08",
+      "sidecars": [
+        ".provenance",
+        ".license"
+      ],
+      "status": "candidate",
+      "shipping": false
+    },
+    {
+      "path": "assets/sprites/oni_da_lapa/idle/preview.gif",
+      "sha256": "ec01be9768bbaecaf9ddaf08075be0b3e72e1a575764ee716686fb6976e45b43",
+      "sidecars": [
+        ".provenance",
+        ".license"
+      ],
+      "status": "candidate",
+      "shipping": false
+    },
+    {
+      "path": "assets/sprites/oni_da_lapa/idle/sprite_sheet.png",
+      "sha256": "9e122decf6857b6f4a67a5e194a04c391b32844aa92c1327356f888895640639",
+      "sidecars": [
+        ".provenance",
+        ".license"
+      ],
+      "status": "candidate",
+      "shipping": false
+    },
+    {
+      "path": "assets/sprites/oni_da_lapa/pressure/preview.gif",
+      "sha256": "229eb5b4ea25824298a2b0d2df99c85b1195c56bfe49525ab2acd80d7e2229cd",
+      "sidecars": [
+        ".provenance",
+        ".license"
+      ],
+      "status": "candidate",
+      "shipping": false
+    },
+    {
+      "path": "assets/sprites/oni_da_lapa/pressure/sprite_sheet.png",
+      "sha256": "b7dca74049a135cbacf55aabc879ae13a56c6b85925940615f0c67ac2f16e43b",
+      "sidecars": [
+        ".provenance",
+        ".license"
+      ],
+      "status": "candidate",
+      "shipping": false
+    },
+    {
+      "path": "assets/sprites/oni_da_lapa/stance/preview.gif",
+      "sha256": "229eb5b4ea25824298a2b0d2df99c85b1195c56bfe49525ab2acd80d7e2229cd",
+      "sidecars": [
+        ".provenance",
+        ".license"
+      ],
+      "status": "candidate",
+      "shipping": false
+    },
+    {
+      "path": "assets/sprites/oni_da_lapa/stance/sprite_sheet.png",
+      "sha256": "b7dca74049a135cbacf55aabc879ae13a56c6b85925940615f0c67ac2f16e43b",
+      "sidecars": [
+        ".provenance",
+        ".license"
+      ],
+      "status": "candidate",
+      "shipping": false
+    },
+    {
+      "path": "assets/sprites/oni_da_lapa/walk/preview.gif",
+      "sha256": "c5e44e3019491e243d177ac5d6c173034ccf55247d094e8dd663e0b1bb90b690",
+      "sidecars": [
+        ".provenance",
+        ".license"
+      ],
+      "status": "candidate",
+      "shipping": false
+    },
+    {
+      "path": "assets/sprites/oni_da_lapa/walk/sprite_sheet.png",
+      "sha256": "759bdb81fc2dab2c47efa426252e6fbf7cb4f13d9a2f18dd6ed19cc4faebfcc8",
+      "sidecars": [
+        ".provenance",
+        ".license"
+      ],
+      "status": "candidate",
+      "shipping": false
+    },
+    {
+      "path": "assets/sprites/ruan_macacao/baiana_entry/preview.gif",
+      "sha256": "3ee13f73d42273926e2f0a91605d2b700fce01386a98e56e961e472a1101b095",
+      "sidecars": [
+        ".provenance",
+        ".license"
+      ],
+      "status": "candidate",
+      "shipping": false
+    },
+    {
+      "path": "assets/sprites/ruan_macacao/baiana_entry/sprite_sheet.png",
+      "sha256": "3796ccfc991de99a3757c50a8fac3be50f5403ff45e2123d96088b647bcd20e7",
+      "sidecars": [
+        ".provenance",
+        ".license"
+      ],
+      "status": "candidate",
+      "shipping": false
+    },
+    {
+      "path": "assets/sprites/ruan_macacao/cem_quilos_control/preview.gif",
+      "sha256": "1ef70568c82026d213156b72ed4ece35d5739372d2a16161b5a3346cc6f591d4",
+      "sidecars": [
+        ".provenance",
+        ".license"
+      ],
+      "status": "candidate",
+      "shipping": false
+    },
+    {
+      "path": "assets/sprites/ruan_macacao/cem_quilos_control/sprite_sheet.png",
+      "sha256": "9c4dee228e2bb3a7ba5727771688805a4873f9d7001c241bae2ba8eeda0aeec3",
+      "sidecars": [
+        ".provenance",
+        ".license"
+      ],
+      "status": "candidate",
+      "shipping": false
+    },
+    {
+      "path": "assets/sprites/ruan_macacao/grip/preview.gif",
+      "sha256": "77693e8ac1899dc3feabc12b5dce4f3a9a7a58395aeeccee3f3be9c0406b75d4",
+      "sidecars": [
+        ".provenance",
+        ".license"
+      ],
+      "status": "candidate",
+      "shipping": false
+    },
+    {
+      "path": "assets/sprites/ruan_macacao/grip/sprite_sheet.png",
+      "sha256": "d6a04832fbfdc5914ec7702de1a0ab2aed617254b3fca7a79f5836a7cc6dc6ca",
+      "sidecars": [
+        ".provenance",
+        ".license"
+      ],
+      "status": "candidate",
+      "shipping": false
+    },
+    {
+      "path": "assets/sprites/ruan_macacao/grip_fight/preview.gif",
+      "sha256": "dea3f0f06023a9746d09ef44463f04085e5d3f9c395083ee60fb2aff554289b3",
+      "sidecars": [
+        ".provenance",
+        ".license"
+      ],
+      "status": "candidate",
+      "shipping": false
+    },
+    {
+      "path": "assets/sprites/ruan_macacao/grip_fight/sprite_sheet.png",
+      "sha256": "61a293116daddfe88c07a3db6ad0cc64a8ae8ab0b3fbd82b6ace3b9011815272",
+      "sidecars": [
+        ".provenance",
+        ".license"
+      ],
+      "status": "candidate",
+      "shipping": false
+    },
+    {
+      "path": "assets/sprites/ruan_macacao/idle/preview.gif",
+      "sha256": "7c87db37b84129ba8a7ba7b2b79a0cbb5cf7286778b0dc9b905ea0b6b6fde643",
+      "sidecars": [
+        ".provenance",
+        ".license"
+      ],
+      "status": "candidate",
+      "shipping": false
+    },
+    {
+      "path": "assets/sprites/ruan_macacao/idle/sprite_sheet.png",
+      "sha256": "0c7a5de03912d235063dd5ac0946c4b03e3494311d5e7e3f59298c4fdcc93692",
+      "sidecars": [
+        ".provenance",
+        ".license"
+      ],
+      "status": "candidate",
+      "shipping": false
+    },
+    {
+      "path": "assets/sprites/ruan_macacao/stance/preview.gif",
+      "sha256": "77693e8ac1899dc3feabc12b5dce4f3a9a7a58395aeeccee3f3be9c0406b75d4",
+      "sidecars": [
+        ".provenance",
+        ".license"
+      ],
+      "status": "candidate",
+      "shipping": false
+    },
+    {
+      "path": "assets/sprites/ruan_macacao/stance/sprite_sheet.png",
+      "sha256": "d6a04832fbfdc5914ec7702de1a0ab2aed617254b3fca7a79f5836a7cc6dc6ca",
+      "sidecars": [
+        ".provenance",
+        ".license"
+      ],
+      "status": "candidate",
+      "shipping": false
+    },
+    {
+      "path": "assets/sprites/ruan_macacao/tap_reset/preview.gif",
+      "sha256": "a03010384b1165342a108504b841d7d00f5278e11cefa2222551c6949b54d29d",
+      "sidecars": [
+        ".provenance",
+        ".license"
+      ],
+      "status": "candidate",
+      "shipping": false
+    },
+    {
+      "path": "assets/sprites/ruan_macacao/tap_reset/sprite_sheet.png",
+      "sha256": "405e9a48f1ca3a95976d3cb882d140545fb6715caeffedea1326017e1cac6097",
+      "sidecars": [
+        ".provenance",
+        ".license"
+      ],
+      "status": "candidate",
+      "shipping": false
+    },
+    {
+      "path": "assets/sprites/ruan_macacao/walk/preview.gif",
+      "sha256": "bc7bb1e8ed47f62cb657a7f198e78c72ed23b6b2e8acac43251a313e7a5df479",
+      "sidecars": [
+        ".provenance",
+        ".license"
+      ],
+      "status": "candidate",
+      "shipping": false
+    },
+    {
+      "path": "assets/sprites/ruan_macacao/walk/sprite_sheet.png",
+      "sha256": "9fddd16db3b949de881a35b2d01aed4abb4079cd75ebe067a24376d54276c601",
+      "sidecars": [
+        ".provenance",
+        ".license"
+      ],
+      "status": "candidate",
+      "shipping": false
+    },
+    {
+      "path": "assets/sprites/tinker_bell/idle/preview.gif",
+      "sha256": "d553e04b4defe6b8db9b50828eafdf26e206fd1431300aafa52b7e484b54cb81",
+      "sidecars": [
+        ".provenance",
+        ".license"
+      ],
+      "status": "candidate",
+      "shipping": false
+    },
+    {
+      "path": "assets/sprites/tinker_bell/idle/sprite_sheet.png",
+      "sha256": "bb46fa26dbd090d951a928dd6363fff0137af5507e9fec5e3a57f145831d192f",
+      "sidecars": [
+        ".provenance",
+        ".license"
+      ],
+      "status": "candidate",
+      "shipping": false
+    },
+    {
+      "path": "assets/sprites/tinker_bell/recording/preview.gif",
+      "sha256": "3a776ef446063c3b14db13520a9c12805074300ef19760aacb45888a7418fd72",
+      "sidecars": [
+        ".provenance",
+        ".license"
+      ],
+      "status": "candidate",
+      "shipping": false
+    },
+    {
+      "path": "assets/sprites/tinker_bell/recording/sprite_sheet.png",
+      "sha256": "63c1cc62c9d70a58d652797e18b0955ee6dc216ceefd35739716e3fd7a7091bf",
+      "sidecars": [
+        ".provenance",
+        ".license"
+      ],
+      "status": "candidate",
+      "shipping": false
+    }
+  ]
 }
