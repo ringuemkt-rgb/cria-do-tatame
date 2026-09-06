@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "manifest_v2.schema.json",
+  "type": "object",
+  "required": ["version", "policy", "assets"],
+  "properties": {
+    "version": {"const": 2},
+    "policy": {"type": "object"},
+    "assets": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["path", "status", "shipping"],
+        "properties": {
+          "path": {"type": "string"},
+          "status": {"enum": ["reference_candidate", "candidate", "candidate_integrated", "approved"]},
+          "shipping": {"type": "boolean"}
+        }
+      }
+    }
+  }
+}

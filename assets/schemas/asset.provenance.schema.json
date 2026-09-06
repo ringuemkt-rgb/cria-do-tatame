@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "asset.provenance.schema.json",
+  "type": "object",
+  "required": ["asset", "sha256", "source", "creation_date", "human_gate", "shipping"],
+  "properties": {
+    "asset": {"type": "string"},
+    "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "source": {"enum": ["generated", "captured", "authored", "licensed", "derived"]},
+    "generator": {"type": ["string", "null"]},
+    "model": {"type": ["string", "null"]},
+    "prompt_ref": {"type": ["string", "null"]},
+    "creation_date": {"type": "string"},
+    "human_gate": {"enum": ["pending", "approved", "rejected"]},
+    "shipping": {"type": "boolean"}
+  }
+}

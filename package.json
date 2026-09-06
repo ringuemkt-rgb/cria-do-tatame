@@ -20,10 +20,12 @@
     "validate:deck": "python tools/validate_lore_output.py data/ruan_deck_inicial.json",
     "assets:manifest": "node tools/node/generate_asset_manifest.mjs",
     "assets:queue": "python tools/ai_asset_pipeline/build_production_queue_v02.py",
+    "assets:spriteframes": "python tools/art/build_spriteframes.py",
+    "validate:asset-protocol": "python tools/art/validate_asset_protocol.py",
     "cloud:batch": "python tools/ai_asset_pipeline/cloud/prepare_batch.py --output-dir tools/ai_asset_pipeline/generated_outputs/candidate_batches",
     "animations:generate": "python tools/animation/generate_character_animation_pack.py",
     "validate:animations": "python tools/animation/generate_character_animation_pack.py --validate-only",
-    "quality": "npm run validate:governance && npm run validate:canon && npm run validate:factions-v4 && npm run validate:python && npm run validate:node && npm run validate:data && npm run validate:cloud && npm run test:cloud && npm run validate:animations && npm run validate:repository && npm run validate:runtime && npm run validate:release && npm run validate:supreme && npm run validate:deck",
+    "quality": "npm run validate:governance && npm run validate:canon && npm run validate:factions-v4 && npm run validate:python && npm run validate:node && npm run validate:data && npm run validate:cloud && npm run test:cloud && npm run validate:animations && npm run validate:asset-protocol && npm run validate:repository && npm run validate:runtime && npm run validate:release && npm run validate:supreme && npm run validate:deck",
     "build:android:windows": "powershell -ExecutionPolicy Bypass -File tools/build/build_android_debug.ps1",
     "build:android:linux": "bash tools/build/build_android_debug.sh",
     "build:windows": "powershell -ExecutionPolicy Bypass -File tools/build/build_windows_debug.ps1"

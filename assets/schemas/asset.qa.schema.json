@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "asset.qa.schema.json",
+  "type": "object",
+  "required": ["asset", "size", "pivot", "palette_ok", "silhouette_ok", "no_aa", "m3_qa", "status", "shipping"],
+  "properties": {
+    "asset": {"type": "string"},
+    "size": {"type": "array", "prefixItems": [{"const": 128}, {"const": 128}], "minItems": 2, "maxItems": 2},
+    "pivot": {"type": "array", "prefixItems": [{"const": 64}, {"const": 96}], "minItems": 2, "maxItems": 2},
+    "palette_ok": {"type": "boolean"},
+    "silhouette_ok": {"type": "boolean"},
+    "no_aa": {"type": "boolean"},
+    "m3_qa": {"enum": ["pending", "approved", "rejected"]},
+    "status": {"enum": ["candidate", "candidate_integrated", "approved"]},
+    "shipping": {"type": "boolean"}
+  }
+}

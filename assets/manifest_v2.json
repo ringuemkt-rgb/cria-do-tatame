@@ -1,0 +1,12 @@
+{
+  "$schema": "schemas/manifest_v2.schema.json",
+  "version": 2,
+  "policy": {
+    "default_status": "candidate",
+    "default_shipping": false,
+    "reference_is_runtime": false,
+    "required_sidecars": ["license", "provenance", "qa"],
+    "audio_status": "audio_pending"
+  },
+  "assets": []
+}
