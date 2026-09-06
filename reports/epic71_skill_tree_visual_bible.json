@@ -1,0 +1,30 @@
+{
+  "schema": "epic71_skill_tree_visual_bible_report_v1",
+  "epic": 71,
+  "branch": "cmd/epic71-skill-tree-visual-bible",
+  "source_main": "b4c97e928e170867b6fa9bf510696d2d3ef06267",
+  "visual_pages": 10,
+  "source_archive": "/CRIA DO TATAME/Visual Bible/Skill Tree v1",
+  "source_archive_status": "persistent_library_saved",
+  "repo_binary_ingestion": "pending_phase2",
+  "visual_ground_truth": true,
+  "runtime_screen_ready": false,
+  "shipping": false,
+  "gameplay_authority": "data_and_reducer",
+  "files_added": [
+    "data/visual/skill_tree_visual_manifest_v1.json",
+    "data/progression/skill_graph_v1.json",
+    "data/visual/skill_tree_ui_contract_v1.json",
+    "docs/art/SKILL_TREE_VISUAL_BIBLE_v1.md",
+    "assets/ref/skill_tree/README.md",
+    "tools/data/validate_skill_tree_visual_bible.py"
+  ],
+  "package_quality_gate": "validate:skill-tree-visual",
+  "blocked": [
+    "Copy exact PNG binaries from persistent Library into repository during Phase 2 asset ingestion.",
+    "Generate per-binary license/provenance/qa sidecars after repository ingestion.",
+    "Register ingested binaries in assets/manifest_v2.json.",
+    "Implement runtime Godot UI from data instead of loading reference boards."
+  ],
+  "rollback": "Revert the eventual squash-merge commit for EPIC 71; Library archive remains intentionally preserved as source evidence."
+}
