@@ -34,6 +34,9 @@ jobs:
       - name: Validate Phase 1 data backbone and canon diff
         run: python tools/data/validate_phase1_data.py
 
+      - name: Validate skill-tree visual bible authority boundaries
+        run: python tools/data/validate_skill_tree_visual_bible.py
+
       - name: Validate JSON syntax with Python
         run: python tools/validate_json.py
 
