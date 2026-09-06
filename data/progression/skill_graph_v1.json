@@ -1,0 +1,91 @@
+{
+  "$schema": "skill_graph_v1",
+  "version": "1.0.0",
+  "status": "design_locked_data_pending_balance",
+  "runtime_authority_target": "combat_reducer_epic55",
+  "numeric_balance_status": "pending_epic55_epic56",
+  "belt_order": ["white", "blue", "purple", "brown", "black"],
+  "paths": [
+    {
+      "id": "pressure",
+      "display_name": "Pressão",
+      "color": "#C62828",
+      "theme": "avancar_dominar_cansar",
+      "capstone": "silverback_pressure",
+      "nodes": [
+        "postura_pesada", "controle_de_base", "quebra_de_postura", "pressao_de_ombro",
+        "controle_de_quadril", "passagem_forte", "amassar_espaco", "cadeia_de_ataques",
+        "knee_cut_brutal", "meia_guarda_de_peso", "silverback_pressure"
+      ]
+    },
+    {
+      "id": "technique",
+      "display_name": "Técnica",
+      "color": "#29A8FF",
+      "theme": "controle_leitura_timing",
+      "capstone": "zanshin_counter",
+      "nodes": [
+        "base_limpa", "ajuste_de_pegada", "kuzushi_fino", "timing_de_entrada",
+        "transicoes", "leitura_de_base", "defesa_e_contra", "fluxo_de_guarda",
+        "passagem_sistematica", "zanshin_counter"
+      ]
+    },
+    {
+      "id": "mobility",
+      "display_name": "Mobilidade",
+      "color": "#39FF14",
+      "theme": "fluxo_escape_scramble",
+      "capstone": "fantasma_do_mangue",
+      "nodes": [
+        "passo_curto", "deslocamento_lateral", "base_leve", "shrimp_rapido", "ponte_e_giro",
+        "sprawl_e_retorno", "esquiva_curta", "recuperacao_de_guarda", "scramble_reativo",
+        "fantasma_do_mangue"
+      ]
+    },
+    {
+      "id": "finalization",
+      "display_name": "Finalização",
+      "color": "#B84DFF",
+      "theme": "caca_oportunidade_controle",
+      "capstone": "cacador_de_finalizacoes",
+      "nodes": [
+        "controle_isolado", "quebra_de_postura_finalizacao", "caca_ao_pescoco", "ataque_de_braco",
+        "kimura_de_cria", "triangulo_vivo", "estrangulamentos", "alavancas_em_cadeia",
+        "armadilha_de_guarda", "cacador_de_finalizacoes"
+      ]
+    },
+    {
+      "id": "resilience",
+      "display_name": "Resiliência",
+      "color": "#C9971C",
+      "theme": "corpo_mente_recuperacao",
+      "capstone": "coracao_do_tatame",
+      "nodes": [
+        "condicionamento_fisico", "casca_dura", "controle_da_respiracao", "mente_fria",
+        "recuperacao_ativa", "gas_de_rua", "superacao", "ritmo_constante", "disciplina_de_aco",
+        "coracao_do_tatame"
+      ]
+    }
+  ],
+  "cross_systems": {
+    "arena_perks": {
+      "status": "visual_reference_only_until_epic66",
+      "known_ids": ["passo_de_lama", "ginga_de_ponte", "carga_pesada", "mare_viva", "cerco", "sucata_blindada"]
+    },
+    "faction_reputation": {
+      "status": "data_driven",
+      "factions": ["ALE", "LEM", "NTM"]
+    },
+    "meta_progression": {
+      "belts": ["white", "blue", "purple", "brown", "black"],
+      "meters": ["honra", "hype", "heat", "truth_fragments"]
+    }
+  },
+  "guardrails": {
+    "ui_decides_rules": false,
+    "visual_costs_are_authority": false,
+    "visual_belt_labels_are_authority": false,
+    "generated_text_is_authority": false,
+    "seeded_random_only": true
+  }
+}
