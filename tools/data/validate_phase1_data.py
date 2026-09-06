@@ -79,12 +79,24 @@ def main() -> int:
         if isinstance(node, dict) and isinstance(node.get("id"), str)
     }
     counts = wm.get("canonical_counts", {})
-    expect(len(wm.get("pages", [])) == 10, "world:pages!=10")
+    pages = wm.get("pages", [])
+    expect(len(pages) == 10, "world:pages!=10")
     expect(len(wm.get("municipalities", [])) == 14, "world:municipalities!=14")
     expect(len(nodes_list) == 40, "world:nodes!=40")
     expect(counts.get("pages") == 10, "world:canonical_counts.pages")
     expect(counts.get("municipalities") == 14, "world:canonical_counts.municipalities")
     expect(counts.get("nodes") == 40, "world:canonical_counts.nodes")
+
+    runtime = wm.get("runtime", {})
+    expect(runtime.get("shipping_bases") is False, "world:shipping_bases_must_be_false")
+    expect(runtime.get("base_path_scheme") == "candidate_until_ingested", "world:base_path_scheme")
+    for page in pages:
+        if not isinstance(page, dict):
+            ERRORS.append("world:page_not_object")
+            continue
+        base = page.get("base")
+        expect(isinstance(base, str) and base.startswith("candidate://assets/arenas/base/"), f"world:page_base_not_candidate:{page.get('id')}")
+        expect(not (isinstance(base, str) and base.startswith("res://")), f"world:page_base_false_runtime_ref:{page.get('id')}")
 
     expected_geo = {
         "arena_do_dique": "itubera",
@@ -195,6 +207,7 @@ def main() -> int:
     print("BACKBONES=10/10")
     print("CANON_DIFF=CLEAN")
     print("WORLD=10_pages/14_municipalities/40_nodes")
+    print("MAP_BASES=candidate_until_ingested")
     print("ROSTER=17")
     print("CLANDESTINE=7")
     print("AI_CALIBRATION=pending_epic55")
