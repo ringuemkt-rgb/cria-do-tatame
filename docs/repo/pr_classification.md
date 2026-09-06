@@ -25,6 +25,7 @@ Allowed classifications:
 
 | PR | Head | Classification | Action / rationale |
 |---:|---|---|---|
+| #82 | `cmd/phase0-cleanup` | **ACTIVE** | Phase 0/0.5 cleanup PR. Merge only after the repository CI gates are green. |
 | #81 | `cmd/epic69-world-map-v4` | **ACTIVE** | EPIC 69 / `world_map_v4` + MAP_UI_v2. Reopened because current owner state declares it active. Keep draft until its own gates are green. |
 | #71 | `lead-mcp/doctrine-v1` | **PORT_SELECTIVELY** | Unique doctrine/data/mobile/rollback work. Do not merge stacked branch directly. |
 | #70 | `lead/calibracao-v1` | **PORT_SELECTIVELY** | Contains calibration, gate and migration material; PR itself explicitly says not to merge without human gates. |
@@ -90,7 +91,7 @@ Every remote ref returned by the GitHub branch inventory is recognized below. `m
 | `cmd/epic63-world-map-v3` | CLOSE_SAFE | **ACKNOWLEDGED_ZERO_DIFF**: proven identical to `main` (`ahead=0`, `behind=0`, zero files). Connector cannot delete remote refs; recognized intentionally. |
 | `cmd/epic69-playable-map` | SUPERSEDED | Replaced by `cmd/epic69-world-map-v4`. |
 | `cmd/epic69-world-map-v4` | ACTIVE | PR #81 / EPIC69 current map line. |
-| `cmd/phase0-cleanup` | ACTIVE | Phase 0/0.5 cleanup branch. |
+| `cmd/phase0-cleanup` | ACTIVE | Phase 0/0.5 cleanup branch and PR #82. |
 | `codex/build-visao-de-cria-system` | CLOSE_SAFE | External/non-game product per historical repo cleanup issue. |
 | `codex/create-comprehensive-e-book-production-system` | CLOSE_SAFE | External/non-game product per historical repo cleanup issue. |
 | `codex/vertical-slice-system` | PORT_SELECTIVELY | Historical slice tooling/content; compare before reuse. |
@@ -178,13 +179,14 @@ No selective port or cherry-pick is authorized by this ledger alone.
 - Retro binary scan: `66` binaries discovered.
 - Manifest indexed: `66 / 66` binaries.
 - Coverage: `100.0%`.
-- Retro provenance sidecars created: `66`.
-- Retro license sidecars created: `66`.
+- Retro provenance sidecars created on the first pass: `66`.
+- Retro license sidecars created on the first pass: `66`.
+- Idempotency pass created: `0` new provenance and `0` new license sidecars.
 - `shipping=true`: `0`.
 - Missing manifest entries: `0`.
 - Stale manifest entries: `0`.
 - `cmd/epic63-world-map-v3`: `ACKNOWLEDGED_ZERO_DIFF`, compare status `identical`, `ahead_by=0`, `behind_by=0`.
-- Every currently open PR has a classification in section A.
+- Every currently open PR has a classification in section A, including Phase 0 cleanup PR #82.
 - Every currently enumerated remote branch has a classification in section B.
 
 ### Gate result
