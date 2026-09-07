@@ -1,0 +1,37 @@
+name: Visual Forge Quality
+on:
+  push:
+    paths:
+      - 'data/visual/**'
+      - 'tools/visual_forge_v10/**'
+      - 'src/tools/VisualAssetRegistry.gd'
+      - 'docs/production/CRIA_VISUAL_FORGE_V10.md'
+  workflow_dispatch:
+jobs:
+  build-queue:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Build canonical visual queue
+        run: python tools/visual_forge_v10/build_visual_queue.py
+      - name: Validate generated JSONL
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          path = Path('data/visual/generated/visual_jobs_v10.jsonl')
+          rows = [json.loads(line) for line in path.read_text(encoding='utf-8').splitlines() if line.strip()]
+          assert rows, 'visual queue is empty'
+          assert len({row['job_id'] for row in rows}) == len(rows), 'duplicate job_id'
+          required = {'job_id','asset_type','subject_id','variant','status','output','prompt_contract','qa_gates'}
+          for row in rows:
+              assert required.issubset(row), row
+          print(f'validated {len(rows)} visual jobs')
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: cria-visual-jobs-v10
+          path: data/visual/generated/visual_jobs_v10.jsonl

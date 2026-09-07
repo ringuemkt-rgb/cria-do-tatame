@@ -1,0 +1,59 @@
+{
+  "schema_version": 1,
+  "project": "cria_do_tatame_pressao",
+  "engine": "Godot 4.3+",
+  "platforms": ["android_arm64", "windows_x86_64", "web"],
+  "canon": {
+    "protagonist": "ruan_macacao",
+    "region": "Baixo Sul da Bahia",
+    "tagline": "De cria pra cria. Luta. Disciplina. Evolução.",
+    "faccoes": ["la_ele_mil_vezes", "nos_tem_um_molho", "os_aleluiados"]
+  },
+  "style": {
+    "name": "Pixel Art 16-bit 2.5D Regional Premium",
+    "rules": [
+      "contorno preto grosso e consistente",
+      "cel-shading legível",
+      "rim light dourado controlado",
+      "grade de pixel visível",
+      "sem fotografia, 3D ou cartoon infantil",
+      "silhueta legível em 2 segundos",
+      "sem texto incorporado salvo quando o job exigir",
+      "sem marcas reais ou pessoa real"
+    ],
+    "palette": {
+      "black": "#0A0A0A",
+      "charcoal": "#1A1A1A",
+      "burnished_gold": "#B8860B",
+      "honor_yellow": "#F2C230",
+      "dirty_white": "#F2F2F2",
+      "conflict_red": "#D92323",
+      "river_blue": "#1E3A5F",
+      "mangrove_green": "#2D5016",
+      "shadow_purple": "#4B0082"
+    }
+  },
+  "dimensions": {
+    "combat_frame": [256, 256],
+    "hub_frame": [128, 128],
+    "portrait": [1024, 1024],
+    "technique_icon": [256, 256],
+    "technique_card": [768, 1024],
+    "arena_layer": [1920, 1080],
+    "ui_reference": [1920, 1080],
+    "marketing_key_art": [3840, 2160]
+  },
+  "anchors": {
+    "combat": "bottom_center",
+    "hub": "bottom_center",
+    "portrait": "center"
+  },
+  "quality_gates": {
+    "required_character_files": ["spritesheet.png", "frames", "preview.gif", "contact_sheet.png", "metadata.json", "qa_report.json"],
+    "required_arena_files": ["bg_far.png", "bg_mid.png", "play_area.png", "foreground.png", "overlay_particles.png", "collision.json", "camera_bounds.json", "metadata.json"],
+    "min_alpha_coverage": 0.01,
+    "max_alpha_coverage": 0.85,
+    "forbid_generic_names": ["image1.png", "new_sprite.png", "final_final.png"],
+    "mobile_safe_area_percent": 7
+  }
+}
