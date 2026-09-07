@@ -8,7 +8,7 @@ func _init() -> void:
 	call_deferred("_run")
 
 func _run() -> void:
-	assert(has_node("/root/DeckManager"), "DeckManager autoload ausente")
+	assert(get_root().get_node_or_null("DeckManager") != null, "DeckManager autoload ausente")
 	assert(FileAccess.file_exists(SLOT_SCENE), "card_slot.tscn ausente")
 
 	var cards: Array = [
