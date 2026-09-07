@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 from __future__ import annotations
 
 import argparse
@@ -51,8 +50,8 @@ def validate_deck(path: Path) -> dict[str, Any]:
     max_level = BELT_LEVEL_LIMIT.get(belt, 0)
 
     limits = deck.get("limits", {})
-    if limits != {"active": 5, "passive": 3, "hand": 3}:
-        errors.append("limites devem ser 5 ativas, 3 passivas e mão de 3")
+    if limits != {"active": 5, "passive": 3, "hand": 4}:
+        errors.append("limites devem ser 5 ativas, 3 passivas e mão de 4")
 
     cards = deck.get("cards", [])
     card_ids = [str(card.get("id", "")) for card in cards]
@@ -77,6 +76,9 @@ def validate_deck(path: Path) -> dict[str, Any]:
             errors.append(f"{card_id}: nível {level} excede limite {max_level} da faixa {belt}")
         if float(card.get("base_power", -1)) < 0 or float(card.get("base_power", 31)) > 30:
             errors.append(f"{card_id}: base_power fora de 0..30")
+        formats = card.get("formats", ["GI", "NO-GI"])
+        if not isinstance(formats, list) or not formats or any(fmt not in {"GI", "NO-GI"} for fmt in formats):
+            errors.append(f"{card_id}: formats inválido")
         if technique_id in technique_names and str(card.get("name", "")) != technique_names[technique_id]:
             warnings.append(f"{card_id}: nome difere do catálogo ({technique_names[technique_id]})")
 
