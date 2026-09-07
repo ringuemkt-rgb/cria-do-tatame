@@ -14,7 +14,7 @@
       "properties": {
         "active": {"const": 5},
         "passive": {"const": 3},
-        "hand": {"const": 3}
+        "hand": {"const": 4}
       },
       "additionalProperties": false
     },
@@ -62,6 +62,13 @@
         "clash_effect": {"type": "object"},
         "response_to_families": {"type": "array", "items": {"type": "string"}},
         "valid_states": {"type": "array", "items": {"type": "string"}},
+        "formats": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {"enum": ["GI", "NO-GI"]}
+        },
+        "rarity": {"enum": ["comum", "incomum", "rara", "epica"]},
         "xp": {"type": "integer", "minimum": 0},
         "xp_to_next": {"type": "integer", "minimum": 1},
         "unlocked": {"type": "boolean"}
