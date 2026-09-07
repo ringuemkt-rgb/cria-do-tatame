@@ -2,7 +2,7 @@ extends Node
 
 const ACTIVE_LIMIT := 5
 const PASSIVE_LIMIT := 3
-const HAND_SIZE := 3
+const HAND_SIZE := 4
 const BELT_LEVEL_LIMIT := {
 	"branca": 2,
 	"azul": 3,
@@ -19,6 +19,7 @@ var passive_deck: Array[String] = []
 var hand: Array[String] = []
 var draw_cursor := 0
 var selected_card_id := ""
+var combat_format := "GI"
 
 func _ready() -> void:
 	_ensure_input_actions()
@@ -78,11 +79,27 @@ func get_collection() -> Array:
 	output.sort_custom(func(a: Dictionary, b: Dictionary) -> bool: return str(a.get("name", "")) < str(b.get("name", "")))
 	return output
 
+func set_combat_format(value: String) -> bool:
+	var normalized := value.strip_edges().to_upper()
+	if normalized not in ["GI", "NO-GI"]:
+		combat_format = ""
+		selected_card_id = ""
+		_emit_hand_changed()
+		return false
+	combat_format = normalized
+	if selected_card_id != "" and not _format_is_valid(cards.get(selected_card_id, {})):
+		selected_card_id = ""
+	_emit_hand_changed()
+	return true
+
 func select_card(card_id: String) -> bool:
 	if not hand.has(card_id) or not cards.has(card_id):
 		return false
+	var card: Dictionary = cards.get(card_id, {})
+	if not bool(card.get("unlocked", false)) or not _format_is_valid(card):
+		return false
 	selected_card_id = card_id
-	SignalBus.combat_card_selected.emit(cards[card_id].duplicate(true))
+	SignalBus.combat_card_selected.emit(card.duplicate(true))
 	_emit_hand_changed()
 	return true
 
@@ -97,7 +114,9 @@ func get_attack_card(technique_id: String, resources: Dictionary, current_state:
 		var card: Dictionary = cards.get(card_id, {})
 		if str(card.get("technique_id", "")) != technique_id:
 			continue
-		if not _state_is_valid(card, current_state) or not can_activate(card, resources):
+		if not bool(card.get("unlocked", false)):
+			continue
+		if not _format_is_valid(card) or not _state_is_valid(card, current_state) or not can_activate(card, resources):
 			continue
 		return card.duplicate(true)
 	return {}
@@ -107,6 +126,8 @@ func get_defense_card(attack_family: String, resources: Dictionary, current_stat
 	for card_id in passive_deck + hand:
 		var card: Dictionary = cards.get(card_id, {})
 		if not bool(card.get("unlocked", false)):
+			continue
+		if not _format_is_valid(card):
 			continue
 		var responses: Array = card.get("response_to_families", [])
 		if not responses.has(attack_family):
@@ -248,6 +269,12 @@ func _state_is_valid(card: Dictionary, current_state: String) -> bool:
 	var states: Array = card.get("valid_states", [])
 	return states.is_empty() or states.has(current_state)
 
+func _format_is_valid(card: Dictionary) -> bool:
+	if combat_format == "":
+		return false
+	var formats: Array = card.get("formats", ["GI", "NO-GI"])
+	return formats.has(combat_format)
+
 func _emit_hand_changed() -> void:
 	SignalBus.combat_deck_hand_changed.emit(get_hand(), selected_card_id)
 
@@ -261,7 +288,8 @@ func _ensure_input_actions() -> void:
 	var bindings := [
 		{"action": "deck_card_1", "key": KEY_1, "joy": JOY_BUTTON_DPAD_LEFT},
 		{"action": "deck_card_2", "key": KEY_2, "joy": JOY_BUTTON_DPAD_UP},
-		{"action": "deck_card_3", "key": KEY_3, "joy": JOY_BUTTON_DPAD_RIGHT}
+		{"action": "deck_card_3", "key": KEY_3, "joy": JOY_BUTTON_DPAD_RIGHT},
+		{"action": "deck_card_4", "key": KEY_4, "joy": JOY_BUTTON_DPAD_DOWN}
 	]
 	for binding in bindings:
 		var action := StringName(binding["action"])
