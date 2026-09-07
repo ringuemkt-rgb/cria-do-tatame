@@ -1,6 +1,6 @@
 {
   "$schema": "cria_narrative_canon_v3",
-  "version": "3.0.0",
+  "version": "3.1.0",
   "status": "canonical_authority",
   "project": "CRIA DO TATAME: PRESSAO",
   "authority": {
@@ -20,29 +20,74 @@
   "thesis": {
     "phrase": "Ser forte e ser gentil.",
     "dramatic_question": "Ruan consegue transformar forca em responsabilidade sem transformar dor em vinganca?",
-    "rating_tone": "16+ por peso moral, sem glamour da violencia",
+    "rating_tone": "18+ como alvo editorial adulto; classificação oficial pendente",
     "symbol": "Gorila Silverback"
   },
   "setting": {
     "region": "Baixo Sul da Bahia",
     "main_hub": "Itubera",
-    "forbidden_setting_drift": ["Rio de Janeiro"],
+    "forbidden_setting_drift": [
+      "Rio de Janeiro"
+    ],
     "cultural_rule": "referencias regionais com respeito, sem caricatura e sem retrato de pessoa real"
   },
   "timeline": {
-    "act_1": {"title": "O CHAO", "ages": [19, 20], "belt": "branca_para_azul"},
-    "act_2": {"title": "O MOLDE", "ages": [21, 22], "belt": "azul_para_roxa"},
-    "act_3": {"title": "O NOME", "ages": [23, 24], "belt": "roxa_para_marrom"},
-    "act_4": {"title": "A QUEDA", "ages": [25, 26], "belt": "marrom_para_preta"},
-    "act_5": {"title": "O LEGADO", "ages": [27, 28], "belt": "preta"}
+    "act_1": {
+      "title": "O CHAO",
+      "ages": [
+        19,
+        20
+      ],
+      "belt": "branca_para_azul"
+    },
+    "act_2": {
+      "title": "O MOLDE",
+      "ages": [
+        21,
+        22
+      ],
+      "belt": "azul_para_roxa"
+    },
+    "act_3": {
+      "title": "O NOME",
+      "ages": [
+        23,
+        24
+      ],
+      "belt": "roxa_para_marrom"
+    },
+    "act_4": {
+      "title": "A QUEDA",
+      "ages": [
+        25,
+        26
+      ],
+      "belt": "marrom_para_preta"
+    },
+    "act_5": {
+      "title": "O LEGADO",
+      "ages": [
+        27,
+        28
+      ],
+      "belt": "preta"
+    },
+    "part_zero": {
+      "ages": [
+        12,
+        12
+      ],
+      "title": "O Carro de Mão",
+      "authority": "data/narrative/acts_v3.json#prologue"
+    }
   },
   "acts": [
     {
       "id": "ato_1_o_chao",
       "theme": "base, gentileza, ferida de origem",
       "beats": [
-        "Ruan entra no Terreiro e Dende planta a tese.",
-        "Ruan conhece Biel, Dandara e Leoa.",
+        "Ruan retorna ao Terreiro que conhece desde os 12 anos; a continuidade da faixa exige ponte explícita.",
+        "Ruan reencontra Joaquim e amplia vínculos no Terreiro.",
         "A primeira vitoria termina com Ruan estendendo a mao.",
         "Ferida de origem: o pai pescador sumiu e a familia perdeu a terra para especulacao ligada a ALE.",
         "A ferida nunca autoriza vinganca; ela cria divida, inseguranca e fome de controle."
@@ -57,7 +102,8 @@
         "Na Concha, Davi vence de modo moralmente sujo, sem negar sua competencia tecnica.",
         "Ruan entra no primeiro clandestino e enfrenta Oni da Lapa.",
         "Cassio oferece dinheiro.",
-        "Ruan recusa nao por pureza, mas por orgulho."
+        "Ruan recusa nao por pureza, mas por orgulho.",
+        "Vera recruta Ruan; Joaquim participa da ponte e sabe da colaboração."
       ],
       "causes_next": "Ruan decide entrar pelas regras do submundo para sobreviver e entender a rede"
     },
@@ -67,10 +113,10 @@
       "beats": [
         "Ruan circula por ALE, LEM e NTM com duplo proposito: sobreviver e juntar fragmentos da verdade.",
         "Aprende o Codigo.",
-        "Vera pode recruta-lo opcionalmente.",
         "Byaku oferece a primeira aula NO-GI.",
         "Em O Barco, informacao fornecida por Ruan derruba uma operacao da faccao infiltrada e um inocente e preso.",
-        "Maos Sujas sobe e Biel comeca a escorregar."
+        "Maos Sujas sobe e Biel comeca a escorregar.",
+        "Joaquim percebe o peso psicológico do disfarce, não uma ligação com Vera que ele já conhece."
       ],
       "causes_next": "a culpa, a morte futura de Biel e o custo acumulado tornam inevitavel a queda"
     },
@@ -84,7 +130,8 @@
         "Dona Chie acolhe Ruan.",
         "Pratigi do Avesso materializa a sombra de Ruan a partir de Maos Sujas.",
         "Vencer sem Furia integra a sombra em vez de derrota-la por odio.",
-        "Montagem de perdas fecha o ato sem dialogo."
+        "Montagem de perdas fecha o ato sem dialogo.",
+        "Chupeta tenta comprar Joaquim para montar odds; Joaquim escolhe Ruan."
       ],
       "causes_next": "Ruan precisa restituir, revelar e decidir o que a faixa preta significara"
     },
@@ -98,29 +145,78 @@
         "Operacao Raiz Forte expoe Montenegro e Cassio.",
         "Tinker revela sua funcao e o motivo do desaparecimento no Ato 4.",
         "Dandara encerra o arco afetivo com um abraco.",
-        "O legado concreto e o Instituto CRIA."
+        "O legado concreto e o Instituto CRIA.",
+        "Ruan vence Chupeta de modo limpo; a PF intervém."
       ],
       "causes_next": "final e epilogos dependem de contrato, Verdade, Faca, honra e cicatrizes"
     }
   ],
   "meters": {
-    "honra": {"range": [0, 100], "meaning": "coerencia entre poder e responsabilidade"},
-    "hype": {"range": [0, 100], "meaning": "visibilidade e pressao publica"},
-    "sombra": {"alias": "Faca", "range": [0, 100], "meaning": "atalhos, frieza e disposicao para instrumentalizar pessoas"},
-    "verdade": {"range": [0, 100], "meaning": "compromisso com fatos, reparacao e revelacao"},
-    "dupla_face": {"formula": "max(0, Faca - Verdade)", "range": [0, 100]},
+    "honra": {
+      "range": [
+        0,
+        100
+      ],
+      "meaning": "coerencia entre poder e responsabilidade"
+    },
+    "hype": {
+      "range": [
+        0,
+        100
+      ],
+      "meaning": "visibilidade e pressao publica"
+    },
+    "sombra": {
+      "alias": "Faca",
+      "range": [
+        0,
+        100
+      ],
+      "meaning": "atalhos, frieza e disposicao para instrumentalizar pessoas"
+    },
+    "verdade": {
+      "range": [
+        0,
+        100
+      ],
+      "meaning": "compromisso com fatos, reparacao e revelacao"
+    },
+    "dupla_face": {
+      "formula": "max(0, Faca - Verdade)",
+      "range": [
+        0,
+        100
+      ]
+    },
     "maos_sujas": {
-      "range": [0, 100],
+      "range": [
+        0,
+        100
+      ],
       "persistent": true,
       "never_resets": true,
-      "scar_floor": {"if_ever_above": 60, "minimum_afterwards": 20},
+      "scar_floor": {
+        "if_ever_above": 60,
+        "minimum_afterwards": 20
+      },
       "avesso_multiplier": 0.3,
       "dende_refuses_training_above": 70
     }
   },
   "finals": {
-    "heroi_duas_aguas": {"requires": ["contrato != cassio", "Verdade >= Faca", "honra >= 25"]},
-    "rei_dos_atalhos": {"requires_any": ["contrato == cassio", "Faca > Verdade"]}
+    "heroi_duas_aguas": {
+      "requires": [
+        "contrato != cassio",
+        "Verdade >= Faca",
+        "honra >= 25"
+      ]
+    },
+    "rei_dos_atalhos": {
+      "requires_any": [
+        "contrato == cassio",
+        "Faca > Verdade"
+      ]
+    }
   },
   "truth_layer": {
     "id": "a_verdade",
@@ -135,5 +231,29 @@
     "hidden_mystery_never_named_in_dialogue": true,
     "violence_has_consequence": true,
     "revenge_arc_forbidden": true
-  }
+  },
+  "origin": {
+    "companions": [
+      "ruan_macacao",
+      "tinker_bell"
+    ],
+    "place": "feira de Ituberá",
+    "occupation": "carregadores de compras com carro de mão",
+    "delivery_brl": 2,
+    "ruan_inner_trait": "gentil e protetor; brutalidade como armadura",
+    "tinker_traits": [
+      "xadrez de tampinhas",
+      "consertos",
+      "leitura",
+      "guarda dinâmica"
+    ],
+    "recruitment": "Dendê convida os dois; Degodo participa da formação",
+    "age_belt_bridge": "pending"
+  },
+  "knowledge_timeline": {
+    "act_2": "Joaquim participa da ponte com Vera e sabe da colaboração de Ruan.",
+    "act_3": "Joaquim percebe o custo e as mudanças do disfarce; não descobre novamente a colaboração.",
+    "act_4": "Chupeta tenta comprá-lo para montar odds; Joaquim escolhe Ruan."
+  },
+  "latest_direction": "data/brand/canon_lock.json"
 }

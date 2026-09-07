@@ -82,6 +82,11 @@ jobs:
         run: |
           set -o pipefail
           ./godot --headless --path . --script res://tests/full_game_smoke.gd 2>&1 | tee reports/full_game_audit/full_game_smoke.log
+      - name: Street origin replay smoke
+        shell: bash
+        run: |
+          set -o pipefail
+          ./godot --headless --path . --script res://tests/street_prologue_smoke.gd 2>&1 | tee reports/full_game_audit/street_prologue_smoke.log
       - name: Reject hidden Godot runtime errors
         if: always()
         shell: bash

@@ -90,3 +90,9 @@ A ordem oficial de port é:
 7. terreno e acessibilidade.
 
 Cada lote deve partir da `main` mais recente, ter escopo vertical pequeno, rollback claro e checks verdes antes do próximo.
+
+## D12 — Origem de rua e direção adulta, 07/09/2026
+
+A direção expressa do autor adiciona Parte Zero (~12 anos), Joaquim empresário/ponte com Vera no A2, CriaLive diegético, CriaCoin + dinheiro de rua e chefões que estudam clipes. Alvo editorial 18+ não equivale a classificação oficial. Detalhes, pendências e limites em [ORIGEM_RUA_ADULTO_V1](production/ORIGEM_RUA_ADULTO_V1.md).
+
+A memória jogável entra como replay isolado no menu. Não modifica save, não duplica autoloads e não substitui o onboarding adulto antes da ponte idade/faixa. Conteúdo de chefões permanece planejado, fora do inventário de fighters ativos. Instituições e rede antagonista não criam quarta facção jogável. Grafias de ALE/NTM devem concordar com o contrato de produção.

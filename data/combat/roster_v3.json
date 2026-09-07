@@ -1,29 +1,318 @@
 {
   "$schema": "roster_v3",
-  "version": "3.0.0",
+  "version": "3.1.0",
   "count": 17,
   "fighters": [
-    {"id":"ruan_macacao","display_name":"Ruan Macacão Silva","role":"protagonist","signature_trigger":"silverback_grip"},
-    {"id":"davi_relampago","display_name":"Davi Relâmpago","role":"rival","signature_trigger":"counter_whiff"},
-    {"id":"jacare_do_mangue","display_name":"Jacaré","role":"opponent","signature_trigger":"heavy_top"},
-    {"id":"oni_da_lapa","display_name":"Oni da Lapa","role":"opponent","signature_trigger":"rush"},
-    {"id":"oni_do_sul","display_name":"Oni do Sul","role":"opponent","signature_trigger":"drain"},
-    {"id":"mateus_predador","display_name":"Mateus Predador","role":"opponent","signature_trigger":"fero"},
-    {"id":"verao_velho","display_name":"Verão Velho","role":"opponent","signature_trigger":"read"},
-    {"id":"leoa","display_name":"Leoa","role":"rival_ally","signature_trigger":"rhythm"},
-    {"id":"byaku","display_name":"Byaku","role":"opponent_ally_master","signature_trigger":"punish"},
-    {"id":"kenzo_kuroi","display_name":"Kenzo Kuroi","role":"opponent","signature_trigger":"zanshin"},
-    {"id":"ubira","display_name":"Ubirá","role":"opponent_ally","signature_trigger":"takedown"},
-    {"id":"cassio_molho","display_name":"Cássio Molho","role":"shadow_rival","signature_trigger":"dirty"},
-    {"id":"montenegro","display_name":"Montenegro","role":"opponent","signature_trigger":"backup"},
-    {"id":"ruan_do_avesso","display_name":"Ruan do Avesso","role":"mirror","signature_trigger":"feed"},
-    {"id":"viera","display_name":"Viera","role":"nogi_master_archetype","signature_trigger":"pressure"},
-    {"id":"miyao","display_name":"Miyao","role":"nogi_master_archetype","signature_trigger":"berimbolo"},
-    {"id":"galvao","display_name":"Galvão","role":"nogi_master_archetype","signature_trigger":"finish"}
+    {
+      "id": "ruan_macacao",
+      "display_name": "Ruan Macacão Silva",
+      "role": "protagonist",
+      "signature_trigger": "silverback_grip"
+    },
+    {
+      "id": "davi_relampago",
+      "display_name": "Davi Relâmpago",
+      "role": "rival",
+      "signature_trigger": "counter_whiff"
+    },
+    {
+      "id": "jacare_do_mangue",
+      "display_name": "Jacaré",
+      "role": "opponent",
+      "signature_trigger": "heavy_top"
+    },
+    {
+      "id": "oni_da_lapa",
+      "display_name": "Oni da Lapa",
+      "role": "opponent",
+      "signature_trigger": "rush"
+    },
+    {
+      "id": "oni_do_sul",
+      "display_name": "Oni do Sul",
+      "role": "opponent",
+      "signature_trigger": "drain"
+    },
+    {
+      "id": "mateus_predador",
+      "display_name": "Mateus Predador",
+      "role": "opponent",
+      "signature_trigger": "fero"
+    },
+    {
+      "id": "verao_velho",
+      "display_name": "Verão Velho",
+      "role": "opponent",
+      "signature_trigger": "read"
+    },
+    {
+      "id": "leoa",
+      "display_name": "Leoa",
+      "role": "rival_ally",
+      "signature_trigger": "rhythm"
+    },
+    {
+      "id": "byaku",
+      "display_name": "Byaku",
+      "role": "opponent_ally_master",
+      "signature_trigger": "punish"
+    },
+    {
+      "id": "kenzo_kuroi",
+      "display_name": "Kenzo Kuroi",
+      "role": "opponent",
+      "signature_trigger": "zanshin"
+    },
+    {
+      "id": "ubira",
+      "display_name": "Ubirá",
+      "role": "opponent_ally",
+      "signature_trigger": "takedown"
+    },
+    {
+      "id": "cassio_molho",
+      "display_name": "Cássio Molho",
+      "role": "shadow_rival",
+      "signature_trigger": "dirty"
+    },
+    {
+      "id": "montenegro",
+      "display_name": "Montenegro",
+      "role": "opponent",
+      "signature_trigger": "backup"
+    },
+    {
+      "id": "ruan_do_avesso",
+      "display_name": "Ruan do Avesso",
+      "role": "mirror",
+      "signature_trigger": "feed"
+    },
+    {
+      "id": "viera",
+      "display_name": "Viera",
+      "role": "nogi_master_archetype",
+      "signature_trigger": "pressure"
+    },
+    {
+      "id": "miyao",
+      "display_name": "Miyao",
+      "role": "nogi_master_archetype",
+      "signature_trigger": "berimbolo"
+    },
+    {
+      "id": "galvao",
+      "display_name": "Galvão",
+      "role": "nogi_master_archetype",
+      "signature_trigger": "finish"
+    }
   ],
   "guardrails": {
     "fictional_archetypes_only": true,
     "no_real_person_likeness": true,
     "numeric_stats_authority": "pending_calibration"
-  }
+  },
+  "territory_bosses": [
+    {
+      "content_id": "elias_oni_ferrugem",
+      "display_name": "Elias “Oni” Ferrugem",
+      "narrative_group": "ALE",
+      "territory_label": "Ferro Velho/Lapa",
+      "acts": [
+        3
+      ],
+      "possible_existing_id": "oni_da_lapa",
+      "identity_mapping_status": "requires_review",
+      "runtime_status": "planned",
+      "shipping": false,
+      "escalada": {
+        "estuda_clipes": true,
+        "max_new_counter_per_rematch": 1,
+        "technique_reward_once": true
+      }
+    },
+    {
+      "content_id": "firmino_feitor_piacava",
+      "display_name": "Firmino “Feitor” Piaçava",
+      "narrative_group": "ALE",
+      "territory_label": "Galpão/Taperoá",
+      "acts": [
+        3
+      ],
+      "possible_existing_id": null,
+      "identity_mapping_status": "new_content",
+      "runtime_status": "planned",
+      "shipping": false,
+      "escalada": {
+        "estuda_clipes": true,
+        "max_new_counter_per_rematch": 1,
+        "technique_reward_once": true
+      }
+    },
+    {
+      "content_id": "cel_montenegro",
+      "display_name": "Cel. Montenegro",
+      "narrative_group": "ALE",
+      "territory_label": "Ibirapitanga",
+      "acts": [
+        4
+      ],
+      "possible_existing_id": "montenegro",
+      "identity_mapping_status": "requires_review",
+      "runtime_status": "planned",
+      "shipping": false,
+      "escalada": {
+        "estuda_clipes": true,
+        "max_new_counter_per_rematch": 1,
+        "technique_reward_once": true
+      }
+    },
+    {
+      "content_id": "olheiro_fantasma",
+      "display_name": "Olheiro Fantasma",
+      "narrative_group": "ALE",
+      "territory_label": "Tancredo",
+      "acts": [
+        4
+      ],
+      "possible_existing_id": null,
+      "identity_mapping_status": "new_content",
+      "runtime_status": "planned",
+      "shipping": false,
+      "escalada": {
+        "estuda_clipes": true,
+        "max_new_counter_per_rematch": 1,
+        "technique_reward_once": true
+      }
+    },
+    {
+      "content_id": "joaquim_jacare_mangue",
+      "display_name": "Joaquim “Jacaré” do Mangue",
+      "narrative_group": "LEM",
+      "territory_label": "Manguezal",
+      "acts": [
+        3
+      ],
+      "possible_existing_id": "jacare_do_mangue",
+      "identity_mapping_status": "requires_review",
+      "runtime_status": "planned",
+      "shipping": false,
+      "escalada": {
+        "estuda_clipes": true,
+        "max_new_counter_per_rematch": 1,
+        "technique_reward_once": true
+      }
+    },
+    {
+      "content_id": "osvaldo_oni_mare",
+      "display_name": "Osvaldo “Oni” Maré",
+      "narrative_group": "LEM",
+      "territory_label": "Ilha Grande",
+      "acts": [
+        3
+      ],
+      "possible_existing_id": null,
+      "identity_mapping_status": "new_content",
+      "runtime_status": "planned",
+      "shipping": false,
+      "escalada": {
+        "estuda_clipes": true,
+        "max_new_counter_per_rematch": 1,
+        "technique_reward_once": true
+      }
+    },
+    {
+      "content_id": "nego_mateus_faro",
+      "display_name": "Nego Mateus “Faro”",
+      "narrative_group": "LEM",
+      "territory_label": "Taipu",
+      "acts": [
+        3
+      ],
+      "possible_existing_id": null,
+      "identity_mapping_status": "new_content",
+      "runtime_status": "planned",
+      "shipping": false,
+      "escalada": {
+        "estuda_clipes": true,
+        "max_new_counter_per_rematch": 1,
+        "technique_reward_once": true
+      }
+    },
+    {
+      "content_id": "nelson_rasteira_ginga",
+      "display_name": "Nélson “Rasteira” Ginga",
+      "narrative_group": "NTM",
+      "territory_label": "Ponte do Saici",
+      "acts": [
+        2,
+        3
+      ],
+      "possible_existing_id": null,
+      "identity_mapping_status": "new_content",
+      "runtime_status": "planned",
+      "shipping": false,
+      "escalada": {
+        "estuda_clipes": true,
+        "max_new_counter_per_rematch": 1,
+        "technique_reward_once": true
+      }
+    },
+    {
+      "content_id": "faisca",
+      "display_name": "Faísca",
+      "narrative_group": "NTM",
+      "territory_label": "Festival/Pratigi",
+      "acts": [
+        2
+      ],
+      "possible_existing_id": null,
+      "identity_mapping_status": "new_content",
+      "runtime_status": "planned",
+      "shipping": false,
+      "escalada": {
+        "estuda_clipes": true,
+        "max_new_counter_per_rematch": 1,
+        "technique_reward_once": true
+      }
+    },
+    {
+      "content_id": "grafiteiro_spray",
+      "display_name": "Grafiteiro Spray",
+      "narrative_group": "NTM",
+      "territory_label": "Gamboa",
+      "acts": [
+        4
+      ],
+      "possible_existing_id": null,
+      "identity_mapping_status": "new_content",
+      "runtime_status": "planned",
+      "shipping": false,
+      "escalada": {
+        "estuda_clipes": true,
+        "max_new_counter_per_rematch": 1,
+        "technique_reward_once": true
+      }
+    },
+    {
+      "content_id": "george_chupeta",
+      "display_name": "George “Chupeta”",
+      "narrative_group": "MILICIA",
+      "territory_label": "rede sobre territórios",
+      "acts": [
+        3,
+        4,
+        5
+      ],
+      "possible_existing_id": null,
+      "identity_mapping_status": "new_content",
+      "runtime_status": "planned",
+      "shipping": false,
+      "escalada": {
+        "estuda_clipes": true,
+        "max_new_counter_per_rematch": 1,
+        "technique_reward_once": true
+      }
+    }
+  ],
+  "territory_boss_policy": "Conteúdo planejado separado dos 17 fighters; possible_existing_id não é alias aprovado. Joaquim Jacaré não é Joaquim Tinker Bell."
 }

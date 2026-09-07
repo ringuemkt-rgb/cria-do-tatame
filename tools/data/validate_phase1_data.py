@@ -145,9 +145,9 @@ def main() -> int:
         if isinstance(row, dict)
     }
     expected_factions = {
-        "ALE": ("Os Aleluiados", "#FF9408"),
+        "ALE": ("Os Aleluiado", "#FF9408"),
         "LEM": ("Lá Ele Mil Vezes", "#4A6741"),
-        "NTM": ("Nós Tem o Molho", "#3FE3F5"),
+        "NTM": ("Nós Tem Um Molho", "#3FE3F5"),
     }
     expect(set(faction_map) == set(expected_factions), "factions:ids")
     for faction_id, (name, color) in expected_factions.items():
@@ -155,6 +155,13 @@ def main() -> int:
         expect(faction_colors.get(faction_id) == color, f"faction:{faction_id}:color")
         expect(lock_factions.get(faction_id, {}).get("nome") == name, f"canon_diff:{faction_id}:name")
         expect(lock_factions.get(faction_id, {}).get("cor") == color, f"canon_diff:{faction_id}:color")
+
+    contract = load("production/canon_contract_v4_1.json")
+    authoritative_names = {
+        row["id"]: row["display_name"]
+        for row in contract.get("active_factions_future_domain", [])
+    }
+    expect(faction_map == authoritative_names, "factions:production_authority_mismatch")
 
     # Current roster authority is 17 fighters. Do not synthesize missing fighters.
     fighters = roster.get("fighters", roster.get("roster", roster.get("lutadores", [])))
