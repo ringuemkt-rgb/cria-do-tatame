@@ -50,7 +50,8 @@ func setup(
 ) -> void:
 	_spec = spec.duplicate(true)
 	card_id = str(spec.get("id", ""))
-	name_lbl.text = str(spec.get("name", spec.get("pt", card_id if card_id != "" else "CARTA")))
+	var fallback_name := card_id if card_id != "" else "CARTA"
+	name_lbl.text = str(spec.get("name", spec.get("pt", fallback_name)))
 	var technique := _get_technique(spec)
 	var technique_gas := _technique_cost(technique, "gas")
 	var activation: Dictionary = spec.get("activation_cost", {})
@@ -59,9 +60,13 @@ func setup(
 	st_lbl.text = "⚡%d  F%d  ★%d" % [int(round(technique_gas)), extra_focus, level]
 	pos_lbl.text = _position_label(spec.get("valid_states", []))
 	var formats: Array = spec.get("formats", ["GI", "NO-GI"])
-	fmt_lbl.text = "+".join(formats)
+	var format_labels := PackedStringArray()
+	for format_value in formats:
+		format_labels.append(str(format_value))
+	fmt_lbl.text = "+".join(format_labels)
 	icon_lbl.text = _category_icon(str(spec.get("category", "transicao")))
-	var rarity := str(spec.get("rarity", "epica" if str(spec.get("category", "")) == "finalizacao" else "rara"))
+	var rarity_fallback := "epica" if str(spec.get("category", "")) == "finalizacao" else "rara"
+	var rarity := str(spec.get("rarity", rarity_fallback))
 	rarity_badge.text = "◆" if rarity == "epica" else "◇"
 	rarity_badge.modulate = Color("8b00ff") if rarity == "epica" else VisualTheme.GOLD
 
@@ -133,7 +138,7 @@ func _position_label(states_variant) -> String:
 	var states: Array = states_variant if typeof(states_variant) == TYPE_ARRAY else []
 	if states.is_empty():
 		return "QUALQUER POS."
-	var labels: Array[String] = []
+	var labels := PackedStringArray()
 	for state in states:
 		labels.append(str(STATE_LABELS.get(str(state), str(state))))
 	return " / ".join(labels)
