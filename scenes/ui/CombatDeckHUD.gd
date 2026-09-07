@@ -1,10 +1,11 @@
 extends CanvasLayer
 
 const VisualTheme = preload("res://src/ui/CriaVisualTheme.gd")
+const PHASE_NAMES := ["DISTANCE", "GRIP", "CLINCH", "TAKEDOWN", "GROUND", "TRANSITION", "TECHNICAL", "RESET"]
 
 @export_enum("GI", "NO-GI") var combat_format := "GI"
 
-var card_slots: Array[CardSlot] = []
+var card_slots: Array = []
 var current_state := "PLAYER_STANDING_NEUTRAL"
 var current_resources: Dictionary = {"gas": 0.0, "focus": 0.0, "moral": 0.0}
 
@@ -47,7 +48,7 @@ func _sync_from_runtime() -> void:
 
 func _on_hand_changed(hand: Array, selected_card_id: String) -> void:
 	for index in range(card_slots.size()):
-		var slot := card_slots[index]
+		var slot = card_slots[index]
 		if index >= hand.size():
 			slot.visible = false
 			continue
@@ -78,7 +79,7 @@ func _unhandled_input(event: InputEvent) -> void:
 func _press_slot(index: int) -> void:
 	if index < 0 or index >= card_slots.size():
 		return
-	var slot := card_slots[index]
+	var slot = card_slots[index]
 	if slot.visible and not slot.is_blocked():
 		_on_card_pressed(slot.card_id)
 
@@ -110,6 +111,8 @@ func _refresh_status() -> void:
 	$Panel/Layout/Status/PositionLabel.text = "POS • %s" % current_state.replace("PLAYER_", "").replace("_", " ")
 	if has_node("/root/CombatManager"):
 		var phase_index := int(CombatManager.phase)
-		var phase_names := CombatManager.CombatPhase.keys()
-		$Panel/Layout/Status/PhaseLabel.text = "FASE • %s" % str(phase_names[phase_index]) if phase_index >= 0 and phase_index < phase_names.size() else "FASE • —"
+		if phase_index >= 0 and phase_index < PHASE_NAMES.size():
+			$Panel/Layout/Status/PhaseLabel.text = "FASE • %s" % PHASE_NAMES[phase_index]
+		else:
+			$Panel/Layout/Status/PhaseLabel.text = "FASE • —"
 	$Panel/Layout/Status/DeckCount.text = "DECK %d · MÃO %d" % [DeckManager.active_deck.size(), DeckManager.hand.size()]
