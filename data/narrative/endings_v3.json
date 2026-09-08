@@ -1,0 +1,47 @@
+{
+  "$schema": "cria_endings_v3",
+  "version": "3.0.0-candidate.1",
+  "status": "CANON_V4_CANDIDATE",
+  "authority": "data/narrative/canon_v4.json",
+  "main_endings": [
+    {
+      "id": "heroi_duas_aguas",
+      "title": "Heroi das Duas Aguas",
+      "conditions": {"contract_not":"cassio","verdade_gte_faca":true,"honra_min":25},
+      "resolution": "Ruan fica, ensina e transforma o Terreiro em base concreta do Instituto CRIA.",
+      "core_sequence": ["terreiro_cheio","pipoca_faixa_primeira_crianca","carro_de_mao_retorna","filo_acaraje_amanhecer"],
+      "final_line": "Forca sem gentileza e so medo com musculo.",
+      "tone": "esperancoso_sem_santificacao"
+    },
+    {
+      "id": "rei_dos_atalhos",
+      "title": "Rei dos Atalhos",
+      "conditions_any": [{"contract":"cassio"},{"faca_gt_verdade":true}],
+      "resolution": "Ruan vence externamente, mas sua forca depende de controle, medo e imagem.",
+      "core_sequence": ["tatame_de_luxo","terreiro_materialmente_rico","dende_ausente","coro_ausente"],
+      "tone": "vitoria_externa_perda_interna"
+    }
+  ],
+  "truth_overlay": {
+    "id": "a_verdade",
+    "main_ending": false,
+    "independent": true,
+    "required_fragments": 8,
+    "can_overlay": ["heroi_duas_aguas","rei_dos_atalhos"],
+    "sequence": [
+      {"id":"placa_restaurada","text":"TERUKO NISHIUCHI — UMA DAS RAIZES DO TERREIRO.","requires_truth_fragments":8},
+      {"id":"coro_nomeia","spoken_name":"Teruko Nishiuchi","requires_truth_fragments":8},
+      {"id":"camelia","action":"Ruan planta uma camelia em silencio."},
+      {"id":"anos_depois","dialogue_ref":"truth_name_reveal"}
+    ],
+    "rule": "A verdade amplia o significado do final principal sem apagar escolhas, Maos Sujas ou cicatrizes."
+  },
+  "selection_order": ["main_ending","compatible_epilogues","truth_overlay"],
+  "design_rules": {
+    "truth_layer_is_not_a_third_main_ending": true,
+    "multiple_compatible_epilogues_allowed": true,
+    "maos_sujas_scar_is_never_erased": true,
+    "ending_must_reflect_choices_not_score_only": true,
+    "carro_de_mao_returns_only_in_hero_sequence": true
+  }
+}
