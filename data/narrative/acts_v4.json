@@ -1,0 +1,113 @@
+{
+  "$schema": "cria_narrative_acts_v4",
+  "version": "4.0.0-candidate.1",
+  "status": "CANON_V4_CANDIDATE",
+  "authority": "data/narrative/canon_v4.json",
+  "acts": [
+    {
+      "id": "ato_1_o_chao",
+      "legacy_title": "O CHAO",
+      "subtitle": "RAIZ",
+      "ages": [19, 20],
+      "belt_range": "branca_para_azul",
+      "player_question": "de onde eu sou?",
+      "required_beats": [
+        {"id":"entrada_terreiro","result":"tese_ser_forte_e_ser_gentil"},
+        {"id":"pertencimento_nucleo","characters":["biel","dandara","leoa"]},
+        {"id":"convite_arena_dique","arena":"arena_do_dique"},
+        {"id":"sparring_davi","opponent":"davi_relampago","result":"rivalidade_tecnica"},
+        {"id":"carro_preto_pratigi","result":"ferida_de_terra_sem_vinganca"},
+        {"id":"primeira_luta_oficial_dique","ruleset":"ibjjf","result":"vitoria_por_pressao_sem_humilhacao"},
+        {"id":"faixa_azul","result":"forca_como_responsabilidade"}
+      ],
+      "causal_exit": "hype + orgulho + necessidade abrem o circuito"
+    },
+    {
+      "id": "ato_2_o_molde",
+      "legacy_title": "O MOLDE",
+      "subtitle": "CIRCUITO",
+      "ages": [21, 22],
+      "belt_range": "azul_para_roxa",
+      "player_question": "quem eu sou para os outros?",
+      "required_beats": [
+        {"id":"circuito_cresce","locations":["ginasio_valenca","palco_do_morro"],"result":"crialive_e_tinker_broker_crescem"},
+        {"id":"tres_portas","factions":["ALE","LEM","NTM"],"result":"reputacao_inicial"},
+        {"id":"galpao_noite","result":"primeiro_testemunho_do_submundo"},
+        {"id":"concha_davi","opponent":"davi_relampago","choices":["revidar","respirar"],"persistent_consequence":true},
+        {"id":"vera_recruta","characters":["vera_salles","ruan_macacao","tinker_bell"],"mandatory":true,"result":"cobertura_inicia"},
+        {"id":"chamado_guardia_memoria","character_ref":"dona_chie","result":"gancho_fragmentos"}
+      ],
+      "causal_exit": "Ruan entra no submundo com dupla finalidade: sobreviver e investigar"
+    },
+    {
+      "id": "ato_3_o_nome",
+      "legacy_title": "O NOME",
+      "subtitle": "SOMBRA",
+      "ages": [23, 24],
+      "belt_range": "roxa_para_marrom",
+      "player_question": "o que eu aceito pagar?",
+      "required_beats": [
+        {"id":"primeiro_clandestino","location":"ferro_velho_da_lapa","opponent":"oni_da_lapa","result":"codigo_submundo_apresentado"},
+        {"id":"degodo_descobre_disfarce","result":"escudo_moral_e_tecnico"},
+        {"id":"infiltracao_tripla","factions":["ALE","LEM","NTM"],"double_purpose":["sobrevivencia","fragmentos_da_verdade"]},
+        {"id":"chefes_territorio","result":"nemesis_legivel"},
+        {"id":"fragmento_foto_antiga","truth_fragment_ref":"frag_01_foto_desfocada","spoken_hidden_name":false},
+        {"id":"o_barco","scene_ref":"3.3a_o_barco","result":"inocente_preso_maos_sujas_sobe"},
+        {"id":"rede_apostas","antagonist_function":"chupeta_candidate","status":"pending_character_registry"},
+        {"id":"pipoca_isca","pipoca_survives":true,"result":"custo_na_proxima_geracao"},
+        {"id":"biel_escorrega","result":"prenuncio_perda_ato4"},
+        {"id":"faixa_marrom","result":"lembrar_caminho_de_volta"}
+      ],
+      "causal_exit": "culpa + maos_sujas + Biel tornam inevitavel a queda"
+    },
+    {
+      "id": "ato_4_a_queda",
+      "legacy_title": "A QUEDA",
+      "subtitle": "TERRITORIO",
+      "ages": [25, 26],
+      "belt_range": "marrom_para_preta",
+      "player_question": "o que eu faco com o que sou?",
+      "required_beats": [
+        {"id":"guerra_territorio","result":"faccoes_e_protecao_de_chupeta_escalam"},
+        {"id":"morte_biel","presentation":"eliptica","silence_seconds":8,"irreversible":true,"revenge_payoff_forbidden":true},
+        {"id":"dende_colapsa","result":"promessa_de_merecer_o_que_ainda_da_para_salvar"},
+        {"id":"dende_admite_silencio","result":"perpetuou_apagamento_sem_ser_autor_unico"},
+        {"id":"o_contrato","branches":["cassio","vera","nenhum"]},
+        {"id":"chie_acolhe","characters":["dona_chie","ruan_macacao"]},
+        {"id":"pratigi_do_avesso","opponent":"ruan_do_avesso","integration_condition":"vencer_sem_furia_e_sem_finalizar"},
+        {"id":"cadeia_documental_sombra","result":"prova_preservada_antes_de_crialive"},
+        {"id":"cost_montage","scene_ref":"4.5_cost_montage"},
+        {"id":"faixa_preta","result":"colega_de_dende"}
+      ],
+      "causal_exit": "Ruan precisa restituir, revelar e devolver"
+    },
+    {
+      "id": "ato_5_o_legado",
+      "legacy_title": "O LEGADO",
+      "subtitle": "VERDADE",
+      "ages": [27, 28],
+      "belt_range": "preta",
+      "player_question": "o que eu deixo depois de mim?",
+      "required_beats": [
+        {"id":"armadilha_chupeta","status":"pending_character_registry","result":"climax_fisico"},
+        {"id":"ruan_vs_chupeta","ruleset":"clandestine_cria_v1","finish_rule":"release_submission_then_stabilize_control","result":"forca_sem_crueldade"},
+        {"id":"operacao_raiz_forte","result":["montenegro_exposto","cassio_exposto","sombra_exposto"]},
+        {"id":"restituicao","scene_ref":"5.4a_restituicao","optional_scenes":4},
+        {"id":"davi_revanche","opponent":"davi_relampago","resolution":["domina","solta","estende_a_mao"]},
+        {"id":"byaku_rematch","opponent":"byaku","condition":"vencer_sem_cortar_a_faixa","unlock":"NO-GI_completo"},
+        {"id":"tinker_revela_detalhe_final","result":"explica_afastamento_e_risco_operacional_sem_revelar_pf_pela_primeira_vez"},
+        {"id":"dandara_abraco","result":"fecho_afetivo"},
+        {"id":"instituto_cria","result":"legado_material"},
+        {"id":"truth_overlay","condition":"truth_fragments>=8","main_ending":false}
+      ],
+      "causal_exit": "calculo_final + epilogos + camada A Verdade"
+    }
+  ],
+  "continuity_rules": {
+    "biel_death_act": 4,
+    "vera_recruitment_act": 2,
+    "tinker_pf_known_before_act5": true,
+    "truth_overlay_not_main_ending": true,
+    "institute_cria_required": true
+  }
+}
