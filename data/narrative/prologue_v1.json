@@ -1,0 +1,61 @@
+{
+  "$schema": "cria_narrative_prologue_v1",
+  "version": "1.0.0",
+  "status": "CANON_V4_CANDIDATE",
+  "authority": "data/narrative/canon_v4.json",
+  "id": "parte_zero_o_carro_de_mao",
+  "title": "O CARRO DE MAO",
+  "timeline": {"age": 12, "before_act_1": true},
+  "motif": {"id": "carro_de_mao", "origin": "trabalho_na_feira", "returns_in": ["terreiro_origin", "ending_heroi"]},
+  "scenes": [
+    {
+      "id": "c0_1_feira_itubera",
+      "location": "feira",
+      "presentation": "gameplay",
+      "mechanic": "carro_de_mao_delivery",
+      "summary": "Ruan e Tinker carregam compras por R$2 por corrida e aprendem que cuidado tambem e trabalho.",
+      "dialogue_refs": ["p0_tinker_duas_corridas", "p0_ruan_carga_quebrada", "p0_coro_dois_meninos"]
+    },
+    {
+      "id": "c0_2_a_cobranca",
+      "location": "feira",
+      "presentation": "choice",
+      "summary": "Cobradores tentam tomar o carro e o dinheiro.",
+      "choices": [
+        {"id": "resistir", "effects": {"sombra_seed": 1, "dinheiro": -1}},
+        {"id": "recuar", "effects": {"honra_seed": 1, "dinheiro": -1}}
+      ],
+      "mandatory_exit": "dende_intervem"
+    },
+    {
+      "id": "c0_3_o_pulso",
+      "location": "feira",
+      "presentation": "cutscene",
+      "summary": "Dende desequilibra, controla e senta o cobrador sem lesioná-lo; convida os dois meninos ao Terreiro.",
+      "violence_rule": "control_without_injury",
+      "dialogue_refs": ["p0_dende_terceiro_jeito", "p0_dende_tabuleiro_anda"]
+    },
+    {
+      "id": "c0_4_primeira_roda",
+      "location": "terreiro",
+      "presentation": "gameplay",
+      "mechanic": "soft_sparring_ruan_tinker",
+      "summary": "O tatame remendado chega ao Terreiro em partes transportadas no carro de mao.",
+      "dialogue_refs": ["p0_degodo_corpo_nao_mente"]
+    },
+    {
+      "id": "c0_5_o_tabuleiro",
+      "location": "terreiro",
+      "presentation": "cutscene",
+      "summary": "Tinker reconstrói a luta como mate em tres e o carro de mao vira reliquia do Terreiro.",
+      "dialogue_refs": ["p0_tinker_pensa_nao_cansa", "p0_coro_um_so_lutador"],
+      "title_card_after": "CRIA DO TATAME"
+    }
+  ],
+  "guardrails": {
+    "no_child_graphic_violence": true,
+    "no_crime_glamor": true,
+    "regional_language_preserved": true,
+    "runtime_integration": "pending"
+  }
+}
