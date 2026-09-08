@@ -1,0 +1,92 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://criadotatame.local/schemas/ctt_reference_investigation_v1.schema.json",
+  "title": "CTT Reference Investigation V1",
+  "type": "object",
+  "required": ["schema", "technique_id", "name", "verification_status", "classification", "reference_layer", "observed_dynamics", "observed_timing", "animation_timing", "biomechanics", "defensive_response", "production"],
+  "properties": {
+    "schema": {"const": "ctt_reference_investigation_v1"},
+    "technique_id": {"type": "string", "minLength": 2},
+    "name": {"type": "string", "minLength": 2},
+    "verification_status": {"enum": ["DRAFT_AWAITING_SOURCE_CITATION", "VERIFIED_REFERENCE_ONLY"]},
+    "classification": {
+      "type": "object",
+      "required": ["family", "position_start", "position_end", "gi", "nogi", "safety_class"],
+      "properties": {
+        "family": {"enum": ["TAKEDOWNS", "SWEEPS", "GUARD_PASSES", "ARM_LOCKS", "CHOKES", "LEG_ENTANGLEMENTS", "ESCAPES"]},
+        "position_start": {"type": "string"},
+        "position_end": {"type": "string"},
+        "gi": {"type": "boolean"},
+        "nogi": {"type": "boolean"},
+        "safety_class": {"enum": ["STANDARD", "HIGH_RISK_JOINT_LOCK", "HIGH_RISK_CHOKE", "HIGH_RISK_ESCAPE"]}
+      }
+    },
+    "reference_layer": {
+      "type": "object",
+      "required": ["sources", "citation_only", "asset_ingestion"],
+      "properties": {
+        "sources": {"type": "array"},
+        "citation_only": {"const": true},
+        "asset_ingestion": {"const": false}
+      }
+    },
+    "observed_dynamics": {
+      "type": "object",
+      "required": ["anticipation", "entry", "contact", "stabilization", "response", "recovery"],
+      "properties": {
+        "anticipation": {"type": "array", "items": {"type": "string"}, "minItems": 1},
+        "entry": {"type": "array", "items": {"type": "string"}, "minItems": 1},
+        "contact": {"type": "array", "items": {"type": "string"}, "minItems": 1},
+        "stabilization": {"type": "array", "items": {"type": "string"}, "minItems": 1},
+        "response": {"type": "array", "items": {"type": "string"}, "minItems": 1},
+        "recovery": {"type": "array", "items": {"type": "string"}, "minItems": 1}
+      }
+    },
+    "observed_timing": {
+      "type": "object",
+      "required": ["measured", "samples"],
+      "properties": {"measured": {"type": "boolean"}, "samples": {"type": "array"}}
+    },
+    "animation_timing": {
+      "type": "object",
+      "required": ["fps", "target_frames", "authored_for_readability"],
+      "properties": {
+        "fps": {"type": "integer", "minimum": 1},
+        "target_frames": {"type": "array", "items": {"type": "integer", "minimum": 1}, "minItems": 2, "maxItems": 2},
+        "authored_for_readability": {"const": true}
+      }
+    },
+    "biomechanics": {
+      "type": "object",
+      "required": ["key_joints", "contact_pairs", "center_of_mass_notes", "prohibited_pose_errors"],
+      "properties": {
+        "key_joints": {"type": "array"},
+        "contact_pairs": {"type": "array"},
+        "center_of_mass_notes": {"type": "array"},
+        "prohibited_pose_errors": {"type": "array"}
+      }
+    },
+    "defensive_response": {
+      "type": "object",
+      "required": ["representation", "dangerous_directional_instruction"],
+      "properties": {
+        "representation": {"const": "high_level_only"},
+        "dangerous_directional_instruction": {"const": false}
+      }
+    },
+    "production": {
+      "type": "object",
+      "required": ["reference_video_shipping", "owned_capture_required", "paired_motion_required", "visual_qa_required", "biomechanics_qa_required", "human_review_required", "shipping"],
+      "properties": {
+        "reference_video_shipping": {"const": false},
+        "owned_capture_required": {"const": true},
+        "paired_motion_required": {"const": true},
+        "visual_qa_required": {"const": true},
+        "biomechanics_qa_required": {"const": true},
+        "human_review_required": {"const": true},
+        "shipping": {"const": false}
+      }
+    }
+  },
+  "additionalProperties": true
+}
