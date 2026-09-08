@@ -1,82 +1,251 @@
 {
   "$schema": "cria_narrative_acts_v3",
-  "version": "3.0.0",
+  "version": "3.1.0",
   "authority": "data/narrative/canon_v3.json",
   "acts": [
     {
       "id": "ato_1_o_chao",
       "title": "O CHAO",
-      "ages": [19, 20],
+      "ages": [
+        19,
+        20
+      ],
       "belt_range": "branca_para_azul",
-      "premise": "Ruan aprende que forca sem base vira queda e que gentileza e disciplina, nao fraqueza.",
+      "premise": "Ruan retoma os fundamentos e aprende a transformar proteção em disciplina; já conhece Joaquim e o Terreiro desde a infância.",
       "required_beats": [
-        {"id": "entrada_terreiro", "location": "terreiro_da_luta", "characters": ["ruan_macacao", "mestre_dende"], "result": "tese_ser_forte_e_ser_gentil"},
-        {"id": "conhecer_nucleo", "characters": ["biel", "dandara", "leoa"], "result": "pertencimento_inicial"},
-        {"id": "primeira_vitoria_mao_estendida", "result": "honra_como_acao"},
-        {"id": "ferida_origem", "duration_seconds": 5, "presentation": "eliptica", "result": "pai_desaparecido_terra_perdida_sem_vinganca"}
+        {
+          "id": "entrada_terreiro",
+          "location": "terreiro_da_luta",
+          "characters": [
+            "ruan_macacao",
+            "mestre_dende"
+          ],
+          "result": "retomar_terreiro_sem_recrutamento_duplicado"
+        },
+        {
+          "id": "conhecer_nucleo",
+          "characters": [
+            "biel",
+            "dandara",
+            "leoa"
+          ],
+          "result": "pertencimento_inicial"
+        },
+        {
+          "id": "primeira_vitoria_mao_estendida",
+          "result": "honra_como_acao"
+        },
+        {
+          "id": "ferida_origem",
+          "duration_seconds": 5,
+          "presentation": "eliptica",
+          "result": "pai_desaparecido_terra_perdida_sem_vinganca"
+        }
       ],
       "causal_exit": "dividas + orgulho -> oferta de Cassio no Ato 2"
     },
     {
       "id": "ato_2_o_molde",
       "title": "O MOLDE",
-      "ages": [21, 22],
+      "ages": [
+        21,
+        22
+      ],
       "belt_range": "azul_para_roxa",
       "premise": "Ruan cresce em publico e confunde autonomia com orgulho.",
       "required_beats": [
-        {"id": "pratigi_hype", "location": "praia_de_pratigi", "result": "hype_cresce"},
-        {"id": "concha_davi", "location": "praia_da_concha", "opponent": "davi_relampago", "result": "davi_vence_de_modo_moralmente_sujo"},
-        {"id": "primeiro_clandestino", "location": "ferro_velho_da_lapa", "opponent": "oni_da_lapa", "result": "codigo_submundo_apresentado"},
-        {"id": "cassio_oferta_dinheiro", "characters": ["cassio_molho", "ruan_macacao"], "result": "ruan_recusa_por_orgulho"}
+        {
+          "id": "pratigi_hype",
+          "location": "praia_de_pratigi",
+          "result": "hype_cresce"
+        },
+        {
+          "id": "concha_davi",
+          "location": "praia_da_concha",
+          "opponent": "davi_relampago",
+          "result": "davi_vence_de_modo_moralmente_sujo"
+        },
+        {
+          "id": "primeiro_clandestino",
+          "location": "ferro_velho_da_lapa",
+          "opponent": "oni_da_lapa",
+          "result": "codigo_submundo_apresentado"
+        },
+        {
+          "id": "cassio_oferta_dinheiro",
+          "characters": [
+            "cassio_molho",
+            "ruan_macacao"
+          ],
+          "result": "ruan_recusa_por_orgulho"
+        },
+        {
+          "id": "vera_recruta",
+          "characters": [
+            "vera_salles",
+            "ruan_macacao",
+            "tinker_bell"
+          ],
+          "result": "tinker_sabe_colaboracao_pf"
+        }
       ],
       "causal_exit": "orgulho + necessidade -> Ruan entra pelas regras do submundo no Ato 3"
     },
     {
       "id": "ato_3_o_nome",
       "title": "O NOME",
-      "ages": [23, 24],
+      "ages": [
+        23,
+        24
+      ],
       "belt_range": "roxa_para_marrom",
       "premise": "Sobreviver e buscar a verdade passam a produzir culpa real.",
       "required_beats": [
-        {"id": "infiltracao_tripla", "factions": ["ALE", "LEM", "NTM"], "double_purpose": ["sobrevivencia", "fragmentos_da_verdade"]},
-        {"id": "aprender_codigo", "result": "Ruan_entende_regras_morais_e_sociais_do_submundo"},
-        {"id": "vera_recruta", "optional": true, "characters": ["vera_salles", "ruan_macacao"]},
-        {"id": "byaku_primeira_aula", "characters": ["byaku", "ruan_macacao"], "style": "NO-GI"},
-        {"id": "o_barco", "scene_ref": "3.3a_o_barco", "result": "inocente_preso_maos_sujas_sobe"},
-        {"id": "biel_escorrega", "result": "prenuncio_da_queda"}
+        {
+          "id": "infiltracao_tripla",
+          "factions": [
+            "ALE",
+            "LEM",
+            "NTM"
+          ],
+          "double_purpose": [
+            "sobrevivencia",
+            "fragmentos_da_verdade"
+          ]
+        },
+        {
+          "id": "aprender_codigo",
+          "result": "Ruan_entende_regras_morais_e_sociais_do_submundo"
+        },
+        {
+          "id": "byaku_primeira_aula",
+          "characters": [
+            "byaku",
+            "ruan_macacao"
+          ],
+          "style": "NO-GI"
+        },
+        {
+          "id": "o_barco",
+          "scene_ref": "3.3a_o_barco",
+          "result": "inocente_preso_maos_sujas_sobe"
+        },
+        {
+          "id": "biel_escorrega",
+          "result": "prenuncio_da_queda"
+        },
+        {
+          "id": "tinker_le_armadura",
+          "result": "percebe_custo_psicologico_nao_descoberta_pf"
+        }
       ],
       "causal_exit": "culpa + Biel + Maos Sujas -> A Queda"
     },
     {
       "id": "ato_4_a_queda",
       "title": "A QUEDA",
-      "ages": [25, 26],
+      "ages": [
+        25,
+        26
+      ],
       "belt_range": "marrom_para_preta",
       "premise": "Ruan precisa atravessar luto e culpa sem transformar ambos em licenca para crueldade.",
       "required_beats": [
-        {"id": "morte_biel", "presentation": "eliptica", "silence_seconds": 8, "revenge_payoff_forbidden": true},
-        {"id": "dende_colapsa", "key_line_id": "dende_promete_merecer"},
-        {"id": "o_contrato", "branches": ["cassio", "vera", "nenhum"]},
-        {"id": "chie_acolhe", "characters": ["dona_chie", "ruan_macacao"]},
-        {"id": "pratigi_do_avesso", "opponent": "ruan_do_avesso", "scaling": "save_stats + maos_sujas*0.3", "integration_condition": "vencer_sem_furia"},
-        {"id": "cost_montage", "scene_ref": "4.5_cost_montage"}
+        {
+          "id": "morte_biel",
+          "presentation": "eliptica",
+          "silence_seconds": 8,
+          "revenge_payoff_forbidden": true
+        },
+        {
+          "id": "dende_colapsa",
+          "key_line_id": "dende_promete_merecer"
+        },
+        {
+          "id": "o_contrato",
+          "branches": [
+            "cassio",
+            "vera",
+            "nenhum"
+          ]
+        },
+        {
+          "id": "chie_acolhe",
+          "characters": [
+            "dona_chie",
+            "ruan_macacao"
+          ]
+        },
+        {
+          "id": "pratigi_do_avesso",
+          "opponent": "ruan_do_avesso",
+          "scaling": "save_stats + maos_sujas*0.3",
+          "integration_condition": "vencer_sem_furia"
+        },
+        {
+          "id": "cost_montage",
+          "scene_ref": "4.5_cost_montage"
+        },
+        {
+          "id": "chupeta_tenta_comprar_tinker",
+          "result": "tinker_escolhe_ruan"
+        }
       ],
       "causal_exit": "luto integrado + responsabilidade -> restituicao e legado"
     },
     {
       "id": "ato_5_o_legado",
       "title": "O LEGADO",
-      "ages": [27, 28],
+      "ages": [
+        27,
+        28
+      ],
       "belt_range": "preta",
       "premise": "A faixa preta mede o que Ruan devolve ao mundo, nao o que consegue arrancar dele.",
       "required_beats": [
-        {"id": "restituicao", "scene_ref": "5.4a_restituicao", "optional_scenes": 4},
-        {"id": "davi_revanche", "opponent": "davi_relampago", "resolution": ["domina", "solta", "estende_a_mao"]},
-        {"id": "byaku_rematch", "opponent": "byaku", "condition": "vencer_sem_cortar_a_faixa", "unlock": "NO-GI_completo"},
-        {"id": "operacao_raiz_forte", "result": ["montenegro_exposto", "cassio_exposto"]},
-        {"id": "tinker_revela", "result": "revelacao_PF_e_motivo_do_sumiço_Ato4"},
-        {"id": "dandara_abraco", "result": "fecho_afetivo"},
-        {"id": "instituto_cria", "result": "legado_material"}
+        {
+          "id": "restituicao",
+          "scene_ref": "5.4a_restituicao",
+          "optional_scenes": 4
+        },
+        {
+          "id": "davi_revanche",
+          "opponent": "davi_relampago",
+          "resolution": [
+            "domina",
+            "solta",
+            "estende_a_mao"
+          ]
+        },
+        {
+          "id": "byaku_rematch",
+          "opponent": "byaku",
+          "condition": "vencer_sem_cortar_a_faixa",
+          "unlock": "NO-GI_completo"
+        },
+        {
+          "id": "operacao_raiz_forte",
+          "result": [
+            "montenegro_exposto",
+            "cassio_exposto"
+          ]
+        },
+        {
+          "id": "tinker_revela",
+          "result": "revela_ao_grupo_detalhes_antes_compartimentados_nao_descoberta_para_ruan"
+        },
+        {
+          "id": "dandara_abraco",
+          "result": "fecho_afetivo"
+        },
+        {
+          "id": "instituto_cria",
+          "result": "legado_material"
+        },
+        {
+          "id": "ruan_chupeta",
+          "result": "vitoria_limpa_e_intervencao_pf"
+        }
       ],
       "causal_exit": "calculo_final + epilogos + camada A Verdade"
     }
@@ -88,9 +257,28 @@
       "title": "A Cobranca",
       "purpose": "mostrar que sobreviver pode empurrar Ruan a instrumentalizar gente sem transformar o jogo em manual de crime",
       "choices": [
-        {"id": "limpa", "effects": {"honra": 3, "maos_sujas": -2}},
-        {"id": "ambigua", "effects": {"hype": 2, "maos_sujas": 4}},
-        {"id": "suja", "effects": {"criacoin": 1, "maos_sujas": 12, "sombra": 5}}
+        {
+          "id": "limpa",
+          "effects": {
+            "honra": 3,
+            "maos_sujas": -2
+          }
+        },
+        {
+          "id": "ambigua",
+          "effects": {
+            "hype": 2,
+            "maos_sujas": 4
+          }
+        },
+        {
+          "id": "suja",
+          "effects": {
+            "criacoin": 1,
+            "maos_sujas": 12,
+            "sombra": 5
+          }
+        }
       ]
     },
     {
@@ -106,9 +294,28 @@
         "O silencio de Ruan pesa mais que qualquer celebracao."
       ],
       "confrontation_choices": [
-        {"id": "assumir_parte", "effects": {"verdade": 8, "honra": 4, "maos_sujas": 6}},
-        {"id": "culpar_terceiros", "effects": {"faca": 8, "maos_sujas": 14}},
-        {"id": "reparar_em_silencio", "effects": {"verdade": 4, "maos_sujas": 8}}
+        {
+          "id": "assumir_parte",
+          "effects": {
+            "verdade": 8,
+            "honra": 4,
+            "maos_sujas": 6
+          }
+        },
+        {
+          "id": "culpar_terceiros",
+          "effects": {
+            "faca": 8,
+            "maos_sujas": 14
+          }
+        },
+        {
+          "id": "reparar_em_silencio",
+          "effects": {
+            "verdade": 4,
+            "maos_sujas": 8
+          }
+        }
       ]
     },
     {
@@ -116,13 +323,19 @@
       "act": 3,
       "title": "O Palco",
       "result": "luta_suja_viraliza_e_comunidade_rejeita",
-      "effects": {"hype": 12, "maos_sujas": 10}
+      "effects": {
+        "hype": 12,
+        "maos_sujas": 10
+      }
     },
     {
       "id": "4.0a_maos_tremem",
       "act": 4,
       "title": "Maos Tremem",
-      "mechanic": {"temporary_grip_penalty": true, "recurring_silence": true},
+      "mechanic": {
+        "temporary_grip_penalty": true,
+        "recurring_silence": true
+      },
       "meaning": "culpa aparece no corpo sem diagnostico romantizado"
     },
     {
@@ -130,15 +343,28 @@
       "act": 4,
       "title": "Cost Montage",
       "dialogue": false,
-      "images": ["tatame_vazio", "mensagem_nao_respondida", "gi_remendado", "cadeira_vazia", "chuva_no_metal"]
+      "images": [
+        "tatame_vazio",
+        "mensagem_nao_respondida",
+        "gi_remendado",
+        "cadeira_vazia",
+        "chuva_no_metal"
+      ]
     },
     {
       "id": "5.4a_restituicao",
       "act": 5,
       "title": "Restituicao",
-      "optional_scenes": ["familia_do_inocente", "terreiro", "comunidade_pratigi", "pessoa_traida"],
+      "optional_scenes": [
+        "familia_do_inocente",
+        "terreiro",
+        "comunidade_pratigi",
+        "pessoa_traida"
+      ],
       "effect_rule": "atenua Maos Sujas sem apagar cicatriz",
-      "unlocks": ["epilogos_de_responsabilidade"]
+      "unlocks": [
+        "epilogos_de_responsabilidade"
+      ]
     }
   ],
   "compliance": {
@@ -147,5 +373,94 @@
     "no_real_org_defamation": true,
     "graphic_death_forbidden": true,
     "dialogue_language": "pt-BR"
-  }
+  },
+  "prologue": {
+    "id": "parte_zero_carro_de_mao",
+    "ages": [
+      12,
+      12
+    ],
+    "target_duration_minutes": [
+      8,
+      12
+    ],
+    "duration_status": "target_not_playtested",
+    "stages": [
+      {
+        "id": "Z1",
+        "title": "A Feira",
+        "text": "Ituberá. Ruan e Joaquim, cerca de 12 anos. Duas moedas por corrida. O carro pesa; o amigo pequeno conta com você.",
+        "mode": "delivery",
+        "objective": "Leve três compras ao cais. Desvie das bancas e respire para recuperar o gás.",
+        "reward_brl_per_delivery": 2
+      },
+      {
+        "id": "Z2",
+        "title": "A Cobrança",
+        "text": "Os cobradores cercam os dois e exigem o dinheiro. Ruan adianta o ombro para proteger Joaquim.",
+        "mode": "choice",
+        "choices": [
+          {
+            "id": "brigar",
+            "label": "Armar o ombro para brigar",
+            "consequence": "Joaquim recua assustado. A ameaça cresce; Dendê intervém antes do soco."
+          },
+          {
+            "id": "recuar",
+            "label": "Recuar junto com Joaquim",
+            "consequence": "Vocês protegem um ao outro. Os cobradores avançam; Dendê intervém."
+          }
+        ]
+      },
+      {
+        "id": "Z3",
+        "title": "O Pulso",
+        "text": "Uma mão velha segura o pulso de Ruan sem apertar. Dendê desloca o cobrador, que senta sem se machucar. “Menino, tu é grande p/ brigar e pequeno p/ se esconder. Vem cá que eu te ensino um terceiro jeito.”",
+        "mode": "dialogue"
+      },
+      {
+        "id": "Z4",
+        "title": "O Terreiro",
+        "text": "Os dois ajudam a varrer e consertar o tatame. Dendê e Degodo acompanham a primeira roda. Aqui, proteger também é saber soltar.",
+        "mode": "training",
+        "steps": [
+          "Varrer o Terreiro",
+          "Consertar o tatame",
+          "Estabelecer a pegada",
+          "Conquistar posição",
+          "Respeitar o tap de Joaquim"
+        ]
+      },
+      {
+        "id": "Z5",
+        "title": "O Tabuleiro",
+        "text": "Joaquim abre o tabuleiro de papelão e ajeita as tampinhas. “O tatame é um tabuleiro que anda.” A força de Ruan e a leitura de Joaquim começam a trabalhar juntas.",
+        "mode": "reading",
+        "question": "Joaquim fechou o caminho. Qual é o próximo lance?",
+        "choices": [
+          {
+            "id": "forcar",
+            "label": "Gastar todo o gás insistindo",
+            "correct": false
+          },
+          {
+            "id": "ler",
+            "label": "Respirar e procurar outro ângulo",
+            "correct": true
+          }
+        ]
+      }
+    ],
+    "replayable": true,
+    "runtime_delivery": "menu_memory_prototype",
+    "campaign_integration": "pending_age_belt_bridge",
+    "motif": "carro de mão: trabalho, relíquia, legado",
+    "exit": "Coro e título; Parte I aos 19–20"
+  },
+  "open_continuity_questions": [
+    "Explicar treino aos 12 e faixa branca aos 19–20, sem apagar aprendizado.",
+    "Reconciliar Biel/Pipoca sem presumir que são a mesma pessoa.",
+    "Mapear finais existentes para 3 finais + camada Verdade antes de alterar cálculo.",
+    "Mapear Vado/Concha, Sombra/Ramiro e Montanha sem renomear Davi ou outros IDs por inferência."
+  ]
 }

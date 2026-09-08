@@ -1,15 +1,131 @@
-{"$schema":"canon_lock_v1","tese":"Ser forte é ser gentil.",
- "classificacao":"16+ por peso moral, não por choque",
- "setting":{"regiao":"Baixo Sul da Bahia","hub":"Ituberá",
-  "proibido":["Rio de Janeiro","Chapada Diamantina (p/ Pancada Grande)"]},
- "simbolo":"Gorila Silverback",
- "faccoes":[{"sigla":"ALE","nome":"Os Aleluiados","cor":"#FF9408","emblema":"pomba_auréola"},
-  {"sigla":"LEM","nome":"Lá Ele Mil Vezes","cor":"#4A6741","emblema":"olho_raízes"},
-  {"sigla":"NTM","nome":"Nós Tem o Molho","cor":"#3FE3F5","emblema":"pimenta_chama"}],
- "geografia":[{"id":"arena_do_dique","mun":"itubera"},{"id":"quartel_pf","mun":"valenca"},
-  {"id":"quartel_cacaueira","mun":"itubera"},{"id":"ferro_velho_lapa","mun":"salvador"},
-  {"id":"pancada_grande","mun":"itubera"},{"id":"ponte_canon","valor":"ponte_do_saici","alias":["ponte_do_saci"]}],
- "etica_m10":["Teruko SOMENTE em fotos/memória","Nenhuma marca real (Festival Lua de Pratigi é fictício)",
-  "Não transformar arco em vingança","Gramática popular preservada (Nós Tem, não Nós Temos)"],
- "paleta_canon":["#1E3A5F","#2D5016","#D4A574","#B85C38","#E8DFD0","#1A1A1A","#B8860B","#8B0000","#39FF14","#4B0082","#0B0B0D","#C9971C","#EDE6D6"],
- "brand":{"logo":"gorila frontal+óculos dourados+coroa+gi preto","cores":["#0B0B0D","#C9971C","#EDE6D6"]}}
+{
+  "$schema": "canon_lock_v1",
+  "tese": "Ser forte é ser gentil.",
+  "classificacao": "18+ como alvo editorial adulto; classificação oficial pendente",
+  "setting": {
+    "regiao": "Baixo Sul da Bahia",
+    "hub": "Ituberá",
+    "proibido": [
+      "Rio de Janeiro",
+      "Chapada Diamantina (p/ Pancada Grande)"
+    ]
+  },
+  "simbolo": "Gorila Silverback",
+  "faccoes": [
+    {
+      "sigla": "ALE",
+      "nome": "Os Aleluiado",
+      "cor": "#FF9408",
+      "emblema": "pomba_auréola"
+    },
+    {
+      "sigla": "LEM",
+      "nome": "Lá Ele Mil Vezes",
+      "cor": "#4A6741",
+      "emblema": "olho_raízes"
+    },
+    {
+      "sigla": "NTM",
+      "nome": "Nós Tem Um Molho",
+      "cor": "#3FE3F5",
+      "emblema": "pimenta_chama"
+    }
+  ],
+  "geografia": [
+    {
+      "id": "arena_do_dique",
+      "mun": "itubera"
+    },
+    {
+      "id": "quartel_pf",
+      "mun": "valenca"
+    },
+    {
+      "id": "quartel_cacaueira",
+      "mun": "itubera"
+    },
+    {
+      "id": "ferro_velho_lapa",
+      "mun": "salvador"
+    },
+    {
+      "id": "pancada_grande",
+      "mun": "itubera"
+    },
+    {
+      "id": "ponte_canon",
+      "valor": "ponte_do_saici",
+      "alias": [
+        "ponte_do_saci"
+      ]
+    }
+  ],
+  "etica_m10": [
+    "Teruko SOMENTE em fotos/memória",
+    "Nenhuma marca real (Festival Lua de Pratigi é fictício)",
+    "Não transformar arco em vingança",
+    "Gramática popular preservada (Nós Tem, não Nós Temos)"
+  ],
+  "paleta_canon": [
+    "#1E3A5F",
+    "#2D5016",
+    "#D4A574",
+    "#B85C38",
+    "#E8DFD0",
+    "#1A1A1A",
+    "#B8860B",
+    "#8B0000",
+    "#39FF14",
+    "#4B0082",
+    "#0B0B0D",
+    "#C9971C",
+    "#EDE6D6"
+  ],
+  "brand": {
+    "logo": "gorila frontal+óculos dourados+coroa+gi preto",
+    "cores": [
+      "#0B0B0D",
+      "#C9971C",
+      "#EDE6D6"
+    ]
+  },
+  "crialive": {
+    "definition": "rede social diegética offline",
+    "features": [
+      "publicidade",
+      "desafios",
+      "patrocínio",
+      "lives ficcionais",
+      "hype",
+      "clipes",
+      "comentários do Coro"
+    ]
+  },
+  "economia": {
+    "principal": "criacoin",
+    "rua": "BRL",
+    "prologue_delivery_brl": 2,
+    "conversion_rate": null,
+    "blockchain": false
+  },
+  "tinker_papel": "empresário/agente de Ruan; articula chefões, Vera e Ubirá",
+  "knowledge_timeline": {
+    "act_2": "Joaquim participa da ponte com Vera e sabe da colaboração de Ruan.",
+    "act_3": "Joaquim percebe o custo e as mudanças do disfarce; não descobre novamente a colaboração.",
+    "act_4": "Chupeta tenta comprá-lo para montar odds; Joaquim escolhe Ruan."
+  },
+  "non_faction_roles": {
+    "PF": "instituição narrativa — Vera",
+    "PM Cacaueira": "instituição ficcional — Ubirá",
+    "MILICIA": "rede antagonista — George Chupeta; não é quarta facção jogável"
+  },
+  "boss_adaptation": {
+    "status": "specified_not_runtime",
+    "trigger": "published_fight_clip",
+    "per_rematch_new_counter_max": 1,
+    "requires_visible_telegraph": true,
+    "reads_private_input": false,
+    "defeat_reward": "aprendizado de técnica elegível, concedido uma vez",
+    "assist_mode_must_limit_escalation": true
+  }
+}

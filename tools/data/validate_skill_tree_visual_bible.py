@@ -76,11 +76,12 @@ def main() -> int:
         fail("color-only node signaling is forbidden")
 
     official = {f["id"]: f["display_name"] for f in factions.get("factions", [])}
+    contract = load("data/production/canon_contract_v4_1.json")
     expected_factions = {
-        "ALE": "Os Aleluiados",
-        "LEM": "Lá Ele Mil Vezes",
-        "NTM": "Nós Tem o Molho",
+        f["id"]: f["display_name"] for f in contract["active_factions_future_domain"]
     }
+    if {f["sigla"]: f["nome"] for f in canon["faccoes"]} != expected_factions:
+        fail("brand lock differs from production authority")
     if official != expected_factions:
         fail(f"faction canon drift: {official}")
 

@@ -67,3 +67,7 @@ Use um destes estados no início de documentos novos quando o contexto não for 
 - `ARCHIVED` — histórico, não orienta implementação.
 
 Prompts, relatórios antigos, concept arts e branches não são automaticamente fontes canônicas.
+
+## Origem e direção adulta
+
+- [Origem de rua e construção adulta v1](production/ORIGEM_RUA_ADULTO_V1.md) — protótipo Z1–Z5, confirmações do autor, integração planejada e conflitos ainda abertos.

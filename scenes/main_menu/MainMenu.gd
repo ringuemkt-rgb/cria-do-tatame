@@ -23,6 +23,12 @@ func _ready() -> void:
 	_connect_once(audio_toggle_button, _on_audio_toggle_pressed)
 	_connect_once(options_back_button, _on_options_back_pressed)
 	_update_audio_label()
+	var memory_button := Button.new()
+	memory_button.text = "MEMÓRIA: O CARRO DE MÃO"
+	memory_button.custom_minimum_size.y = 58
+	menu_buttons.add_child(memory_button)
+	VisualTheme.apply_primary_button(memory_button)
+	memory_button.pressed.connect(func(): _change_scene("res://scenes/prologue/StreetPrologue.tscn"))
 
 func _build_premium_shell() -> void:
 	var arena_backdrop := ArenaBackdropScript.new()
