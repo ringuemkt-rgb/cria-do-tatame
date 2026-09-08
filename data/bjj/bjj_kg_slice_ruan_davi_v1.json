@@ -1,0 +1,91 @@
+{
+  "$schema": "cria.bjj_kg.slice_fixture.v1",
+  "version": "1.0.0",
+  "status": "SLICE_FIXTURE_NONCANONICAL",
+  "purpose": "Executable Ruan x Davi fixture for reducer-v2 validation while the full 40/120/10 F1 payload remains incomplete in chat.",
+  "runtime_authority": false,
+  "full_graph_claim": false,
+  "rules_authority": "data/combat/bjj_rulesets_verified_v1.json",
+  "positions": [
+    {"id":"standing_neutral","pt":"Em Pé Neutro","cat":"standing","side":"neutral"},
+    {"id":"front_headlock","pt":"Front Headlock","cat":"clinch","side":"top"},
+    {"id":"closed_guard","pt":"Guarda Fechada","cat":"guard","side":"bottom"},
+    {"id":"half_guard_top","pt":"Meia-Guarda (Topo)","cat":"half","side":"top"},
+    {"id":"knee_shield_half","pt":"Meia-Guarda Knee-Shield","cat":"half","side":"bottom"},
+    {"id":"side_control","pt":"Cem Quilos / Side","cat":"dominant","side":"top"},
+    {"id":"mount_high","pt":"Montada Alta","cat":"dominant","side":"top"},
+    {"id":"back_mount_seatbelt","pt":"Costas c/ Seatbelt","cat":"dominant","side":"top"},
+    {"id":"inside_ashi_garami","pt":"Ashi Garami Interno","cat":"leglock","side":"top"},
+    {"id":"submission","pt":"Finalização","cat":"terminal","side":"neutral"}
+  ],
+  "techniques": [
+    {
+      "id":"t001","pt":"Baiana Double-Leg","type":"takedown","from":"standing_neutral","to":"half_guard_top",
+      "actor_role_from":"neutral","actor_role_to":"top","authoring_prior":0.55,"prior_status":"UNCALIBRATED_EXPERT_HEURISTIC","empirical_success":null,
+      "gas":20,"availability":{"gi":true,"nogi":true},
+      "legality":{"ibjjf_v6":{"allowed":true,"belt_or_skill_division":["slice_any"],"age_division":["adult"]},"adcc_championship_current":{"allowed":true,"belt_or_skill_division":["slice_any"],"age_division":["adult"]},"clandestine_cria_v1":{"allowed":true,"belt_or_skill_division":["slice_any"],"age_division":["adult"]}},
+      "counters":[{"technique_id":"slice_sprawl","outcome":"redirect_to_front_headlock"}],
+      "scoring_event":"takedown","stabilization_seconds":3.0
+    },
+    {
+      "id":"slice_sprawl","pt":"Sprawl + Front Headlock","type":"defense","from":"standing_neutral","to":"front_headlock",
+      "actor_role_from":"neutral","actor_role_to":"top","authoring_prior":1.0,"prior_status":"UNCALIBRATED_EXPERT_HEURISTIC","empirical_success":null,
+      "gas":8,"availability":{"gi":true,"nogi":true},
+      "legality":{"ibjjf_v6":{"allowed":true,"belt_or_skill_division":["slice_any"],"age_division":["adult"]},"adcc_championship_current":{"allowed":true,"belt_or_skill_division":["slice_any"],"age_division":["adult"]},"clandestine_cria_v1":{"allowed":true,"belt_or_skill_division":["slice_any"],"age_division":["adult"]}},
+      "counters":[]
+    },
+    {
+      "id":"t005","pt":"Puxada de Guarda","type":"transition","from":"standing_neutral","to":"closed_guard",
+      "actor_role_from":"neutral","actor_role_to":"bottom","authoring_prior":0.90,"prior_status":"UNCALIBRATED_EXPERT_HEURISTIC","empirical_success":null,
+      "gas":5,"availability":{"gi":true,"nogi":true},
+      "legality":{"ibjjf_v6":{"allowed":true,"belt_or_skill_division":["slice_any"],"age_division":["adult"]},"adcc_championship_current":{"allowed":true,"belt_or_skill_division":["slice_any"],"age_division":["adult"]},"clandestine_cria_v1":{"allowed":true,"belt_or_skill_division":["slice_any"],"age_division":["adult"]}},
+      "counters":[]
+    },
+    {
+      "id":"t025","pt":"Body-Lock Pass","type":"pass","from":"half_guard_top","to":"side_control",
+      "actor_role_from":"top","actor_role_to":"top","authoring_prior":0.55,"prior_status":"UNCALIBRATED_EXPERT_HEURISTIC","empirical_success":null,
+      "gas":18,"availability":{"gi":true,"nogi":true},
+      "legality":{"ibjjf_v6":{"allowed":true,"belt_or_skill_division":["slice_any"],"age_division":["adult"]},"adcc_championship_current":{"allowed":true,"belt_or_skill_division":["slice_any"],"age_division":["adult"]},"clandestine_cria_v1":{"allowed":true,"belt_or_skill_division":["slice_any"],"age_division":["adult"]}},
+      "counters":[{"technique_id":"t049","outcome":"redirect_to_knee_shield"}],
+      "scoring_event":"guard_pass","stabilization_seconds":3.0
+    },
+    {
+      "id":"t049","pt":"Knee-Shield Frame","type":"defense","from":"half_guard_top","to":"knee_shield_half",
+      "actor_role_from":"bottom","actor_role_to":"bottom","authoring_prior":0.60,"prior_status":"UNCALIBRATED_EXPERT_HEURISTIC","empirical_success":null,
+      "gas":6,"availability":{"gi":true,"nogi":true},
+      "legality":{"ibjjf_v6":{"allowed":true,"belt_or_skill_division":["slice_any"],"age_division":["adult"]},"adcc_championship_current":{"allowed":true,"belt_or_skill_division":["slice_any"],"age_division":["adult"]},"clandestine_cria_v1":{"allowed":true,"belt_or_skill_division":["slice_any"],"age_division":["adult"]}},
+      "counters":[]
+    },
+    {
+      "id":"slice_side_to_mount","pt":"Side Control → Montada Alta","type":"transition","from":"side_control","to":"mount_high",
+      "actor_role_from":"top","actor_role_to":"top","authoring_prior":1.0,"prior_status":"UNCALIBRATED_EXPERT_HEURISTIC","empirical_success":null,
+      "gas":8,"availability":{"gi":true,"nogi":true},
+      "legality":{"ibjjf_v6":{"allowed":true,"belt_or_skill_division":["slice_any"],"age_division":["adult"]},"adcc_championship_current":{"allowed":true,"belt_or_skill_division":["slice_any"],"age_division":["adult"]},"clandestine_cria_v1":{"allowed":true,"belt_or_skill_division":["slice_any"],"age_division":["adult"]}},
+      "counters":[],"scoring_event":"mount","stabilization_seconds":3.0
+    },
+    {
+      "id":"t057","pt":"Chave de Braço (Mount)","type":"submission","from":"mount_high","to":"submission",
+      "actor_role_from":"top","actor_role_to":"neutral","authoring_prior":1.0,"prior_status":"UNCALIBRATED_EXPERT_HEURISTIC","empirical_success":null,
+      "gas":16,"availability":{"gi":true,"nogi":true},
+      "legality":{"ibjjf_v6":{"allowed":true,"belt_or_skill_division":["slice_any"],"age_division":["adult"]},"adcc_championship_current":{"allowed":true,"belt_or_skill_division":["slice_any"],"age_division":["adult"]},"clandestine_cria_v1":{"allowed":true,"belt_or_skill_division":["slice_any"],"age_division":["adult"]}},
+      "counters":[]
+    },
+    {
+      "id":"slice_heel_hook","pt":"Heel Hook Interno — slice legality gate","type":"submission","from":"inside_ashi_garami","to":"submission",
+      "actor_role_from":"top","actor_role_to":"neutral","authoring_prior":1.0,"prior_status":"UNCALIBRATED_EXPERT_HEURISTIC","empirical_success":null,
+      "gas":14,"availability":{"gi":false,"nogi":true},
+      "restricted_leglock":true,
+      "legality":{"ibjjf_v6":{"allowed":false,"belt_or_skill_division":["slice_any"],"age_division":["adult"]},"adcc_championship_current":{"allowed":true,"belt_or_skill_division":["slice_any"],"age_division":["adult"]},"clandestine_cria_v1":{"allowed":true,"belt_or_skill_division":["slice_any"],"age_division":["adult"]}},
+      "counters":[]
+    }
+  ],
+  "chains": [],
+  "source_status": {
+    "received_complete_positions": true,
+    "received_complete_techniques": false,
+    "last_complete_received_technique_id": "t092",
+    "next_received_fragment_started_at": "t093",
+    "received_complete_chains": false,
+    "promotion_blocked": true
+  }
+}

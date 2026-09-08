@@ -26,6 +26,7 @@ Este arquivo é a porta de entrada da documentação ativa. Antes de criar um do
 
 - [`CRIA_DO_TATAME_SUPREME_BUILD_SPEC_V1.md`](CRIA_DO_TATAME_SUPREME_BUILD_SPEC_V1.md) — escopo de produto;
 - [`gameplay/COMBAT_DECK_SYSTEM_V01.md`](gameplay/COMBAT_DECK_SYSTEM_V01.md) — deck atual integrado à `main`;
+- [`gameplay/BJJ_REDUCER_V2_SLICE.md`](gameplay/BJJ_REDUCER_V2_SLICE.md) — contrato draft do reducer orientado a grafo para o vertical slice Ruan × Davi;
 - `canon/` — personagens, facções, mundo e narrativa aprovados;
 - `gameplay/` — combate, progressão, regras e economia.
 
@@ -52,6 +53,7 @@ Este arquivo é a porta de entrada da documentação ativa. Antes de criar um do
 - [`../tools/audit/validate_canon_contract_v4_1.py`](../tools/audit/validate_canon_contract_v4_1.py) — gate do cânone e da D10;
 - [`../tools/audit/validate_faction_migration_v4_2.py`](../tools/audit/validate_faction_migration_v4_2.py) — gate das três facções, aliases e save v5;
 - [`../tools/art/validate_sprite_forge.py`](../tools/art/validate_sprite_forge.py) — gate de consistência entre ações de personagens;
+- [`../tools/data/validate_bjj_reducer_v2_slice.py`](../tools/data/validate_bjj_reducer_v2_slice.py) — gate fail-closed do reducer v2 e do fixture Ruan × Davi;
 - [`../tools/ai_asset_pipeline/cloud/validate_cloud_pipeline.py`](../tools/ai_asset_pipeline/cloud/validate_cloud_pipeline.py) — gate offline do adaptador de nuvem.
 
 ## Status dos documentos
@@ -61,7 +63,7 @@ Use um destes estados no início de documentos novos quando o contexto não for 
 - `CANONICAL` — fonte ativa e autoritativa;
 - `ACTIVE` — documento de trabalho vigente;
 - `DRAFT` — proposta ainda não integrada;
-- `SUPERSEDED` — substituído; deve apontar para o sucessor;
+- `SUPERSEDED` — substituído; deve apontar para seu sucessor;
 - `ARCHIVED` — histórico, não orienta implementação.
 
 Prompts, relatórios antigos, concept arts e branches não são automaticamente fontes canônicas.
