@@ -1,0 +1,61 @@
+{
+  "$schema": "cria.bjj_rulesets_verified.v1",
+  "version": "1.0.0",
+  "verified_at": "2026-09-07",
+  "authority_policy": {
+    "ruleset_scoring_must_not_be_embedded_as_unversioned_strings": true,
+    "position_points_require_ruleset_context_and_stabilization": true,
+    "technique_edges_may_reference_scoring_events_but_do_not_own_rules": true
+  },
+  "rulesets": {
+    "ibjjf_v6": {
+      "organization": "IBJJF",
+      "rules_version": "6.0",
+      "source_url": "https://ibjjf.com/books-videos",
+      "points": {
+        "takedown": 2,
+        "sweep": 2,
+        "knee_on_belly": 2,
+        "guard_pass": 3,
+        "mount": 4,
+        "back_control": 4
+      },
+      "notes": [
+        "Back-control scoring depends on the rulebook-defined scoring configuration and stabilization; seatbelt alone is not a four-point state.",
+        "Technique legality is belt/division/ruleset dependent and must not be represented only by gi/nogi booleans."
+      ]
+    },
+    "adcc_championship_current": {
+      "organization": "ADCC",
+      "source_url": "https://adcombat.com/adcc-rules-regulations/",
+      "stabilization_seconds": 3,
+      "points": {
+        "takedown_to_guard_or_half": 2,
+        "clean_takedown_past_guard": 4,
+        "sweep_to_guard_or_half": 2,
+        "clean_sweep_past_guard": 4,
+        "knee_on_stomach": 2,
+        "guard_pass": 3,
+        "mount": 2,
+        "back_mount_hooks_or_body_triangle": 3
+      },
+      "notes": [
+        "Back seatbelt without hooks/body triangle does not score as ADCC back mount.",
+        "Positive-point windows and negative points are match-phase dependent and must be modeled outside static edge point tuples.",
+        "No striking is allowed under the official ADCC championship rules."
+      ]
+    },
+    "clandestine_cria_v1": {
+      "organization": "fictional",
+      "source_url": null,
+      "authority": "game_design_only",
+      "points_enabled": false,
+      "submission_win": true,
+      "referee_stoppage": true,
+      "striking_or_ko_runtime_authority": false,
+      "notes": [
+        "The current Cria combat authority is positional grappling; KO/striking remains blocked until a gameplay canon change explicitly authorizes it."
+      ]
+    }
+  }
+}

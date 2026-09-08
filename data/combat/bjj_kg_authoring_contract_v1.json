@@ -1,0 +1,58 @@
+{
+  "$schema": "cria.bjj_kg_authoring_contract.v1",
+  "version": "1.0.0",
+  "status": "ACTIVE_AUTHORING_CONTRACT",
+  "purpose": "Define evidence, perspective and calibration rules for the BJJ knowledge graph before reducer integration.",
+  "runtime_authority": false,
+  "calibration_authority": false,
+  "minimum_targets": {
+    "positions": 40,
+    "techniques": 120,
+    "chains": 10
+  },
+  "perspective_model": {
+    "required": true,
+    "model": "actor_relative",
+    "rule": "Every edge must state the actor role before and after the transition. A sweep cannot teleport from bottom guard to mount unless the authored technique explicitly includes and justifies that additional positional transition.",
+    "required_edge_fields": ["actor_role_from", "actor_role_to"]
+  },
+  "success_model": {
+    "authoring_prior_allowed": true,
+    "authoring_prior_field": "authoring_prior",
+    "authoring_prior_range": [0.0, 1.0],
+    "authoring_prior_status": "UNCALIBRATED_EXPERT_HEURISTIC",
+    "empirical_success_field": "empirical_success",
+    "empirical_success_default": null,
+    "empirical_success_requires": ["curated_video_dataset_id", "sample_n", "annotation_protocol", "calibration_version"],
+    "rl_output_is_empirical_frequency": false,
+    "rule": "Numeric authoring priors may seed design review but must never be presented as observed success rates. F3 may populate empirical_success; F4 may tune gameplay utility separately."
+  },
+  "scoring_model": {
+    "authority_file": "data/combat/bjj_rulesets_verified_v1.json",
+    "forbid_unversioned_pts_tuple_as_authority": true,
+    "required_events": ["position_established", "stabilization_met", "match_phase_allows_positive_points"],
+    "rule": "Scoring belongs to the rules engine and match state, not to a static technique tuple alone."
+  },
+  "legality_model": {
+    "gi_nogi_flags_are_sufficient": false,
+    "required_dimensions": ["ruleset", "gi_or_nogi", "belt_or_skill_division", "age_division"],
+    "rule": "Heel hooks, kneebars, toe holds and other restricted techniques require a legality matrix; gi/nogi booleans alone are not enough."
+  },
+  "counter_model": {
+    "counter_ids_must_exist": true,
+    "counter_outcome_required": true,
+    "rule": "A counter reference must specify whether it denies, redirects, reverses, submits or returns to scramble; an ID list alone is not executable semantics."
+  },
+  "chain_model": {
+    "continuity_required": true,
+    "rule": "For adjacent steps A and B, A.to must be compatible with B.from after actor-role normalization."
+  },
+  "review_gates": {
+    "graph_integrity": "automated",
+    "ruleset_integrity": "automated_against_versioned_authority",
+    "domain_plausibility": "human_expert_review",
+    "empirical_calibration": "F3",
+    "game_balance": "F4",
+    "runtime_promotion": "F2_or_later"
+  }
+}
