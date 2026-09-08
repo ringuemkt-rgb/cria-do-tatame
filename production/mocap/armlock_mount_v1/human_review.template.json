@@ -1,0 +1,21 @@
+{
+  "schema": "ctt_human_motion_review_v1",
+  "status": "PENDING_HUMAN",
+  "candidate_sha256": null,
+  "biomechanics": {
+    "position_plausible": null,
+    "control_precedes_submission": null,
+    "defensive_response_plausible": null,
+    "impossible_pose_detected": null,
+    "notes": ""
+  },
+  "visual": {
+    "silhouette_readable": null,
+    "paired_contact_readable": null,
+    "pixel_pivot_drift_acceptable": null,
+    "notes": ""
+  },
+  "decision": null,
+  "reason": "",
+  "shipping_approval": false
+}

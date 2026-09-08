@@ -1,0 +1,62 @@
+{
+  "prototype_id": "armlock_mount_v1",
+  "technique_id": "armlock_montada_v1",
+  "status": "AWAITING_OWNED_CAPTURE",
+  "shipping": false,
+  "actors": {
+    "attacker_character": "ruan_macacao",
+    "defender_character": "davi_relampago",
+    "performers": "TBD_WITH_SIGNED_CONSENT"
+  },
+  "capture": {
+    "preferred_cameras": 4,
+    "minimum_cameras": 2,
+    "preferred_fps": 60,
+    "takes": [
+      {"id":"slow_demo","required":true},
+      {"id":"technical_speed","required":true},
+      {"id":"defense","required":true},
+      {"id":"escape","required":true}
+    ],
+    "requirements": [
+      "fixed_camera_positions",
+      "locked_exposure_when_possible",
+      "stable_lighting",
+      "calibration_recorded",
+      "performer_consent_recorded",
+      "no_third_party_video_without_license"
+    ]
+  },
+  "pipeline": [
+    {"stage":"capture","tool":"owned_video","required":true},
+    {"stage":"pose_2d","tool":"rtmpose_mmpose","required":true},
+    {"stage":"reconstruct_3d","tool":"pose2sim","required":true},
+    {"stage":"kinematics","tool":"opensim","required":true},
+    {"stage":"normalize","tool":"ctt_paired_motion_v1","required":true},
+    {"stage":"research_crosscheck","tools":["freemocap","opencap_core","mamma","easymocap","wham","4dhumans"],"required":false,"shipping_output_forbidden":true},
+    {"stage":"retarget","tool":"blender_gltf","required":true},
+    {"stage":"pixel","tool":"skeleton_to_pixel","required":true},
+    {"stage":"visual_qa","tool":"visual_qa_v2","required":true},
+    {"stage":"biomechanics_qa","tool":"tools/mocap/biomechanics_qa.py","required":true},
+    {"stage":"human_review","tool":"signed_review_record","required":true}
+  ],
+  "required_outputs": [
+    "sources/capture_manifest.json",
+    "sources/consent_manifest.json",
+    "reconstructed/paired_motion.json",
+    "reconstructed/kinematics_report.json",
+    "retarget/motion.glb",
+    "retarget/retarget_report.json",
+    "pixel/attacker_spritesheet.png",
+    "pixel/defender_spritesheet.png",
+    "pixel/sync_map.json",
+    "pixel/preview.gif",
+    "qa/pose_reprojection_report.json",
+    "qa/contact_report.json",
+    "qa/biomechanics_report.json",
+    "qa/visual_qa_report.json",
+    "qa/human_review.json",
+    "provenance.json"
+  ],
+  "promotion_rule": "No automated process may set this prototype or any generated asset to approved/shipping. Human review and repository asset gates remain mandatory."
+}

@@ -1,0 +1,82 @@
+{
+  "schema_version": "1.0.0",
+  "plan_id": "ctt_vertical_slice_capture_plan_v1",
+  "status": "CAPTURE_PLANNING_ONLY",
+  "source": {
+    "vertical_slice_contract": "data/production/vertical_slice_gold_v1.json",
+    "source_pr": 54,
+    "contract_optional_until_merged": true,
+    "note": "The eight technique IDs are derived from the P0 vertical-slice contract in PR #54. Until that contract is present in the active base, this file is a capture plan, not a replacement source of canon."
+  },
+  "actors": {
+    "attacker_default": "ruan_macacao",
+    "defender_default": "davi_relampago"
+  },
+  "global_rules": {
+    "owned_or_explicitly_licensed_capture_required": true,
+    "consent_recorded_required": true,
+    "automatic_asset_promotion_forbidden": true,
+    "synthetic_fixture_shipping_forbidden": true,
+    "runtime_ml_forbidden": true,
+    "human_biomechanical_review_required": true,
+    "required_outputs": [
+      "capture_manifest.json",
+      "paired_motion.ctt.json",
+      "biomechanics_qa.json",
+      "human_review.json",
+      "visual_qa_v2.json",
+      "sync_map.json",
+      "preview.gif"
+    ]
+  },
+  "techniques": [
+    {
+      "technique_id": "grip_de_ferro",
+      "capture_profile": "grip_to_clinch",
+      "status": "AWAITING_OWNED_CAPTURE",
+      "required_takes": ["slow_demo", "technical_speed", "defender_response", "recovery"]
+    },
+    {
+      "technique_id": "baiana",
+      "capture_profile": "takedown",
+      "status": "AWAITING_OWNED_CAPTURE",
+      "required_takes": ["slow_demo", "technical_speed", "defense", "safe_landing_and_recovery"]
+    },
+    {
+      "technique_id": "sprawl",
+      "capture_profile": "takedown_defense",
+      "status": "AWAITING_OWNED_CAPTURE",
+      "required_takes": ["slow_demo", "technical_speed", "attack_trigger", "recovery"]
+    },
+    {
+      "technique_id": "puxada_guarda",
+      "capture_profile": "guard_pull",
+      "status": "AWAITING_OWNED_CAPTURE",
+      "required_takes": ["slow_demo", "technical_speed", "defender_response", "stabilization"]
+    },
+    {
+      "technique_id": "corte_joelho",
+      "capture_profile": "guard_pass",
+      "status": "AWAITING_OWNED_CAPTURE",
+      "required_takes": ["slow_demo", "technical_speed", "defense", "side_control_stabilization"]
+    },
+    {
+      "technique_id": "montada_pesada",
+      "capture_profile": "mount_transition",
+      "status": "AWAITING_OWNED_CAPTURE",
+      "required_takes": ["slow_demo", "technical_speed", "defender_response", "mount_stabilization"]
+    },
+    {
+      "technique_id": "saida_montada",
+      "capture_profile": "mount_escape",
+      "status": "AWAITING_OWNED_CAPTURE",
+      "required_takes": ["slow_demo", "technical_speed", "attacker_resistance", "recovery"]
+    },
+    {
+      "technique_id": "mata_leao",
+      "capture_profile": "submission_back_control",
+      "status": "AWAITING_OWNED_CAPTURE",
+      "required_takes": ["slow_demo", "technical_speed", "tap", "escape", "release_and_recovery"]
+    }
+  ]
+}
