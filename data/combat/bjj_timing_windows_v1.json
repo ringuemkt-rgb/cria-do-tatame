@@ -1,0 +1,25 @@
+{
+  "$schema": "cria.bjj.timing_windows.v1",
+  "version": "1.0.0",
+  "status": "AUTHORING_INITIAL",
+  "authority_scope": "counter_input_windows_and_telegraph_metadata",
+  "empirical_status": "UNCALIBRATED_AUTHORING",
+  "source": "Revisao Geral v2 / V.9",
+  "default_tier": "standard",
+  "input_profiles": {
+    "touch": {
+      "minimum_counter_window_ms": 250,
+      "reason": "product_accessibility_floor"
+    }
+  },
+  "tiers": {
+    "tight": {"window_ms":250,"telegraph":"short","playtest_required":true},
+    "standard": {"window_ms":350,"telegraph":"medium","playtest_required":true},
+    "generous": {"window_ms":450,"telegraph":"long","playtest_required":true}
+  },
+  "rules": {
+    "late_counter_spends_gas": false,
+    "negative_elapsed_ms_invalid": true,
+    "touch_floor_applies_to_every_tier": true
+  }
+}
