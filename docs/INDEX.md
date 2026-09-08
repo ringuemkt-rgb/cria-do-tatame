@@ -30,6 +30,13 @@ Este arquivo é a porta de entrada da documentação ativa. Antes de criar um do
 - `canon/` — personagens, facções, mundo e narrativa aprovados;
 - `gameplay/` — combate, progressão, regras e economia.
 
+## Narrativa
+
+- [`../data/narrative/canon_v3.json`](../data/narrative/canon_v3.json) — autoridade narrativa ativa;
+- [`narrative/NARRATIVE_V3_TO_V4_MIGRATION.md`](narrative/NARRATIVE_V3_TO_V4_MIGRATION.md) — migração candidata Parte Zero + atos v4; **não é autoridade runtime**;
+- [`../data/narrative/canon_v4.json`](../data/narrative/canon_v4.json) — candidato v4 explicitamente subordinado ao canon v3 até promoção;
+- [`../tools/data/validate_narrative_v4_candidate.py`](../tools/data/validate_narrative_v4_candidate.py) — gate fail-closed do candidato v4.
+
 ## Migrações ativas
 
 - [`migrations/V4_2_FACTIONS_SAVE.md`](migrations/V4_2_FACTIONS_SAVE.md) — explicação simples da migração para `ALE`, `LEM`, `NTM` e save v5.
@@ -54,6 +61,7 @@ Este arquivo é a porta de entrada da documentação ativa. Antes de criar um do
 - [`../tools/audit/validate_faction_migration_v4_2.py`](../tools/audit/validate_faction_migration_v4_2.py) — gate das três facções, aliases e save v5;
 - [`../tools/art/validate_sprite_forge.py`](../tools/art/validate_sprite_forge.py) — gate de consistência entre ações de personagens;
 - [`../tools/data/validate_bjj_reducer_v2_slice.py`](../tools/data/validate_bjj_reducer_v2_slice.py) — gate fail-closed do reducer v2 e do fixture Ruan × Davi;
+- [`../tools/data/validate_narrative_v4_candidate.py`](../tools/data/validate_narrative_v4_candidate.py) — gate de continuidade da migração narrativa v4;
 - [`../tools/ai_asset_pipeline/cloud/validate_cloud_pipeline.py`](../tools/ai_asset_pipeline/cloud/validate_cloud_pipeline.py) — gate offline do adaptador de nuvem.
 
 ## Status dos documentos
