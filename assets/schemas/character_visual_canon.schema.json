@@ -1,0 +1,72 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "character_visual_canon.schema.json",
+  "title": "CRIA character visual canon",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "version",
+    "status",
+    "character_id",
+    "display_name",
+    "source_authority",
+    "identity",
+    "visual_language",
+    "frame_contract",
+    "reference_contract",
+    "action_sets",
+    "fx_policy",
+    "shipping"
+  ],
+  "properties": {
+    "$schema": {"type": "string"},
+    "version": {"const": "1.0.0"},
+    "status": {"enum": ["canonical_visual_contract", "draft_visual_contract"]},
+    "character_id": {"type": "string", "pattern": "^[a-z0-9][a-z0-9_-]*$"},
+    "display_name": {"type": "string", "minLength": 1},
+    "source_authority": {"type": "object", "minProperties": 1},
+    "identity": {
+      "type": "object",
+      "required": ["origin", "symbol", "combat_style", "mechanical_signature", "real_person_likeness_forbidden", "third_party_brand_marks_forbidden"]
+    },
+    "visual_language": {
+      "type": "object",
+      "required": ["style", "mobile_readability_required", "clear_silhouette_required", "coherent_anatomy_required", "resampling", "integer_scale_only", "anti_alias_policy"]
+    },
+    "frame_contract": {
+      "type": "object",
+      "required": ["size_px", "pivot_px", "grounded_anchor"],
+      "properties": {
+        "size_px": {"const": [128, 128]},
+        "pivot_px": {"const": [64, 96]},
+        "grounded_anchor": {"const": "feet"}
+      }
+    },
+    "reference_contract": {
+      "type": "object",
+      "required": ["master_reference", "master_reference_status", "required_views", "combat_pose_required", "reference_sha256_required", "identity_regions", "region_bboxes_require_human_authoring"],
+      "properties": {
+        "master_reference": {"type": "string", "pattern": "^assets/chars/ref/"},
+        "master_reference_status": {"enum": ["pending_ingestion_and_human_approval", "approved"]},
+        "required_views": {"type": "array", "minItems": 3},
+        "combat_pose_required": {"type": "boolean"},
+        "reference_sha256_required": {"type": "boolean"},
+        "identity_regions": {"type": "array", "minItems": 1},
+        "region_bboxes_require_human_authoring": {"type": "boolean"}
+      }
+    },
+    "action_sets": {
+      "type": "object",
+      "required": ["common", "bjj_positional", "signature", "striking_candidates", "striking_candidates_authority"]
+    },
+    "fx_policy": {
+      "type": "object",
+      "required": ["body_sheet_contains_detached_fx", "separate_fx_classes"],
+      "properties": {
+        "body_sheet_contains_detached_fx": {"const": false},
+        "separate_fx_classes": {"type": "array", "minItems": 1}
+      }
+    },
+    "shipping": {"const": false}
+  }
+}

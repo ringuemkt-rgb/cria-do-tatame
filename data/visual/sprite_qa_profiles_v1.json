@@ -1,0 +1,118 @@
+{
+  "$schema": "cria.sprite_qa_profiles.v1",
+  "version": "1.0.0",
+  "status": "active_tooling_contract",
+  "promotion_gate_count": 16,
+  "gate_classes": {
+    "technical_automatic": [
+      "identity_match",
+      "scale_cv",
+      "anchor_drift",
+      "edge_touch",
+      "frame_empty",
+      "bbox_consistency",
+      "palette_drift",
+      "silhouette_drift",
+      "feet_alignment",
+      "body_height_drift",
+      "frame_count",
+      "alpha_cleanliness",
+      "animation_loop",
+      "canon_match"
+    ],
+    "authority": ["human_approval", "rights_status"]
+  },
+  "gate_semantics": {
+    "identity_match": "automatic evidence gate; blocked until an approved identity lock and comparator evidence exist",
+    "human_approval": "human-authored authority gate; never inferred by automation",
+    "rights_status": "automation validates metadata/evidence presence but cannot originate legal clearance"
+  },
+  "profiles": {
+    "upright_grounded": {
+      "anchor_policy": "feet",
+      "body_scale_cv_max": 0.05,
+      "anchor_y_std_px_max": 2.0,
+      "bbox_area_drift_max": 0.10,
+      "silhouette_iou_min": 0.82,
+      "body_height_drift_max": 0.03,
+      "palette_off_canon_ratio_max": 0.02,
+      "edge_touch_frames_max": 0,
+      "empty_frames_max": 0,
+      "alpha_fringe_pixels_max": 0,
+      "feet_alignment_tolerance_px": 2.0
+    },
+    "dynamic_upright": {
+      "anchor_policy": "feet",
+      "body_scale_cv_max": 0.08,
+      "anchor_y_std_px_max": 3.0,
+      "bbox_area_drift_max": 0.20,
+      "silhouette_iou_min": 0.65,
+      "body_height_drift_max": 0.08,
+      "palette_off_canon_ratio_max": 0.02,
+      "edge_touch_frames_max": 0,
+      "empty_frames_max": 0,
+      "alpha_fringe_pixels_max": 0,
+      "feet_alignment_tolerance_px": 3.0
+    },
+    "evasive": {
+      "anchor_policy": "contact_or_feet",
+      "body_scale_cv_max": 0.12,
+      "anchor_y_std_px_max": 4.0,
+      "bbox_area_drift_max": 0.30,
+      "silhouette_iou_min": 0.50,
+      "body_height_drift_max": 0.15,
+      "palette_off_canon_ratio_max": 0.02,
+      "edge_touch_frames_max": 0,
+      "empty_frames_max": 0,
+      "alpha_fringe_pixels_max": 0,
+      "feet_alignment_tolerance_px": 4.0
+    },
+    "ground_transition": {
+      "anchor_policy": "ground_contact",
+      "body_scale_cv_max": 0.35,
+      "anchor_y_std_px_max": 8.0,
+      "bbox_area_drift_max": 0.65,
+      "silhouette_iou_min": 0.20,
+      "body_height_drift_max": 0.60,
+      "palette_off_canon_ratio_max": 0.02,
+      "edge_touch_frames_max": 0,
+      "empty_frames_max": 0,
+      "alpha_fringe_pixels_max": 0,
+      "feet_alignment_tolerance_px": null
+    },
+    "signature_custom": {
+      "anchor_policy": "per_action_contract",
+      "requires_explicit_threshold_override": true
+    }
+  },
+  "action_profile_registry": {
+    "idle": "upright_grounded",
+    "walk": "upright_grounded",
+    "guard": "upright_grounded",
+    "grip": "upright_grounded",
+    "grip_fight": "dynamic_upright",
+    "hurt": "dynamic_upright",
+    "victory": "dynamic_upright",
+    "defeat": "ground_transition",
+    "knockdown": "ground_transition",
+    "baiana_entry": "ground_transition",
+    "cem_quilos_control": "ground_transition",
+    "tap_reset": "ground_transition",
+    "jab": "dynamic_upright",
+    "cross": "dynamic_upright",
+    "hook": "dynamic_upright",
+    "uppercut": "dynamic_upright",
+    "slip": "evasive",
+    "dodge": "evasive",
+    "block": "dynamic_upright",
+    "clinch": "ground_transition",
+    "silverback_grip": "signature_custom"
+  },
+  "authority_guards": {
+    "striking_actions_are_gameplay_authority": false,
+    "striking_actions_status": "tooling_capability_only_until_gameplay_contract_reconciled",
+    "shipping_requires_all_16_gates": true,
+    "automatic_gate_may_set_human_approval": false,
+    "automatic_gate_may_set_rights_status": false
+  }
+}
