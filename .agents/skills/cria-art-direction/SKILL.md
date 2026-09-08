@@ -26,7 +26,7 @@ Regras invariáveis:
 - asset gerado começa como candidato, com `shipping=false`;
 - aprovação humana, direitos/proveniência, QA e integração real continuam obrigatórios;
 - em conflito, a âncora visual só vence se também estiver aprovada pela hierarquia acima;
-- nome canônico de ALE: **Os Aleluiado**; `Os Aleluiados` é forma superseded e não deve ser reintroduzida;
+- nome canônico de ALE: **Os Aleluiado**; a forma plural superseded não deve ser reintroduzida;
 - ID/alias de facção nunca é renomeado por estética.
 
 ## 1. Identidade visual
