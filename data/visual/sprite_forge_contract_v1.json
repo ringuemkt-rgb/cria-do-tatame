@@ -1,0 +1,77 @@
+{
+  "$schema": "cria.sprite_forge.contract.v1",
+  "version": "1.0.0",
+  "status": "active_tooling_contract",
+  "purpose": "Deterministic sprite consistency and QA layer on top of Asset Pipeline v2.",
+  "authority": {
+    "runtime": "Godot",
+    "asset_pipeline": "assets/README.md + assets/manifest_v2.json + tools/art/validate_asset_protocol.py",
+    "visual_canon": "docs/art_bible/ + canonical visual data in data/visual/",
+    "gameplay_rules": "data/production/ and reducer-owned gameplay data",
+    "this_contract_may_override_gameplay": false
+  },
+  "upstream_research": {
+    "repository": "https://github.com/0x0funky/agent-sprite-forge",
+    "pinned_commit": "64fd0b57d3f2ae117ef0a95e4c2decc25b4c9dd2",
+    "license": "MIT",
+    "integration_mode": "adapted_concepts_no_vendored_runtime",
+    "adopted_concepts": [
+      "per_action_generation_before_atlas_assembly",
+      "grounded_feet_anchor",
+      "master_scale_profile",
+      "body_fx_separation",
+      "quantitative_scale_and_anchor_qc",
+      "layered_map_separation"
+    ]
+  },
+  "scope": {
+    "execution": "offline_authoring_and_validation_only",
+    "runtime_dependency": false,
+    "network_required_by_game": false,
+    "binary_asset_changes_in_contract_batch": false,
+    "automatic_asset_promotion": false
+  },
+  "frame_contract": {
+    "size_px": [128, 128],
+    "pivot_px": [64, 96],
+    "default_fps": 12.0,
+    "alpha_policy": "binary_after_normalization",
+    "resampling": "nearest",
+    "integer_scale_only": true,
+    "grounded_anchor": "feet"
+  },
+  "generation_contract": {
+    "raw_output_status": "reference_candidate",
+    "raw_never_runtime": true,
+    "one_action_family_per_raw_sheet": true,
+    "main_character_mixed_action_raw_atlas_forbidden": true,
+    "body_and_detached_fx_separate_by_default": true,
+    "approved_master_action_preference": ["idle", "walk", "run"],
+    "paired_techniques_require_sync_map": true,
+    "reference_identity_must_be_human_reviewed": true
+  },
+  "qc_thresholds": {
+    "body_scale_cv_max": 0.08,
+    "anchor_y_std_max": 0.05,
+    "profile_body_scale_drift_max": 0.08,
+    "edge_touch_frames_max": 0,
+    "empty_frames_max": 0,
+    "paste_clamped_frames_max": 0
+  },
+  "promotion": {
+    "default_shipping": false,
+    "human_gate_required": true,
+    "rights_gate_required": true,
+    "m3_qa_required": true,
+    "godot_integration_required": true,
+    "android_physical_test_required_for_release_claim": true,
+    "this_contract_may_set_shipping_true": false
+  },
+  "package": {
+    "manifest_filename": "sprite_forge_manifest.json",
+    "location_pattern": "assets/chars/frames/<character_id>/sprite_forge_manifest.json",
+    "master_profile_required": true,
+    "per_action_metrics_required": true,
+    "production_package_count_is_release_evidence": false
+  }
+}

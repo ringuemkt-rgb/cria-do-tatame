@@ -1,0 +1,90 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "sprite_forge.manifest.schema.json",
+  "title": "Cria Sprite Forge animation package manifest",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "version",
+    "protocol_version",
+    "character_id",
+    "master_action",
+    "scale_profile",
+    "actions",
+    "human_gate",
+    "rights_gate",
+    "m3_qa",
+    "shipping"
+  ],
+  "properties": {
+    "version": {"const": 1},
+    "protocol_version": {"type": "string", "pattern": "^1\\.0\\.0$"},
+    "character_id": {"type": "string", "pattern": "^[a-z0-9][a-z0-9_-]*$"},
+    "master_action": {"type": "string", "pattern": "^[a-z0-9][a-z0-9_-]*$"},
+    "scale_profile": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["source_action", "frame_size", "pivot", "align", "body_scale_mean", "anchor_y_mean"],
+      "properties": {
+        "source_action": {"type": "string"},
+        "frame_size": {
+          "type": "array",
+          "prefixItems": [{"const": 128}, {"const": 128}],
+          "minItems": 2,
+          "maxItems": 2
+        },
+        "pivot": {
+          "type": "array",
+          "prefixItems": [{"const": 64}, {"const": 96}],
+          "minItems": 2,
+          "maxItems": 2
+        },
+        "align": {"const": "feet"},
+        "body_scale_mean": {"type": "number", "exclusiveMinimum": 0, "maximum": 1},
+        "anchor_y_mean": {"type": "number", "minimum": 0, "maximum": 1}
+      }
+    },
+    "actions": {
+      "type": "object",
+      "minProperties": 1,
+      "additionalProperties": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["frames_dir", "frame_count", "loop", "qc"],
+        "properties": {
+          "frames_dir": {"type": "string", "pattern": "^assets/chars/frames/"},
+          "frame_count": {"type": "integer", "minimum": 1},
+          "loop": {"type": "boolean"},
+          "qc": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "body_scale_mean",
+              "body_scale_cv",
+              "anchor_y_mean",
+              "anchor_y_std",
+              "profile_body_scale_drift",
+              "edge_touch_frames",
+              "empty_frames",
+              "paste_clamped_frames"
+            ],
+            "properties": {
+              "body_scale_mean": {"type": "number", "exclusiveMinimum": 0, "maximum": 1},
+              "body_scale_cv": {"type": "number", "minimum": 0},
+              "anchor_y_mean": {"type": "number", "minimum": 0, "maximum": 1},
+              "anchor_y_std": {"type": "number", "minimum": 0},
+              "profile_body_scale_drift": {"type": "number", "minimum": 0},
+              "edge_touch_frames": {"type": "integer", "minimum": 0},
+              "empty_frames": {"type": "integer", "minimum": 0},
+              "paste_clamped_frames": {"type": "integer", "minimum": 0}
+            }
+          }
+        }
+      }
+    },
+    "human_gate": {"enum": ["pending", "approved", "rejected"]},
+    "rights_gate": {"enum": ["pending", "cleared", "blocked"]},
+    "m3_qa": {"enum": ["pending", "approved", "rejected"]},
+    "shipping": {"const": false}
+  }
+}
