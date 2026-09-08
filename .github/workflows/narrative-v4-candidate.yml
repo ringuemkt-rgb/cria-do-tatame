@@ -1,0 +1,48 @@
+name: Narrative V4 Candidate
+
+on:
+  pull_request:
+    paths:
+      - 'data/narrative/**'
+      - 'docs/narrative/**'
+      - 'tools/data/validate_narrative_v4_candidate.py'
+      - 'tests/test_narrative_v4_candidate.py'
+      - 'package.json'
+      - '.github/workflows/narrative-v4-candidate.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'data/narrative/**'
+      - 'docs/narrative/**'
+      - 'tools/data/validate_narrative_v4_candidate.py'
+      - 'tests/test_narrative_v4_candidate.py'
+      - 'package.json'
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Validate narrative v4 candidate
+        run: python tools/data/validate_narrative_v4_candidate.py
+      - name: Test narrative v4 candidate
+        run: python -m unittest discover -s tests -p 'test_narrative_v4_candidate.py'
+      - name: Assert legacy authority untouched
+        shell: bash
+        run: |
+          BASE_REF="${{ github.base_ref }}"
+          if [ -z "$BASE_REF" ]; then BASE_REF="main"; fi
+          git fetch origin "$BASE_REF"
+          git diff --exit-code "origin/$BASE_REF" -- \
+            data/narrative/canon_v3.json \
+            data/narrative/acts_v3.json \
+            data/narrative/dialogues.json \
+            data/narrative/endings_v2.json || {
+              echo 'Legacy narrative authority changed in v4 candidate batch.'
+              exit 1
+            }

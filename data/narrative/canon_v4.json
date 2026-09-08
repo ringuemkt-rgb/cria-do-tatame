@@ -1,0 +1,68 @@
+{
+  "$schema": "cria_narrative_canon_v4",
+  "version": "4.0.0-candidate.1",
+  "status": "CANON_CANDIDATE_NOT_RUNTIME_AUTHORITY",
+  "current_runtime_authority": "data/narrative/canon_v3.json",
+  "promotion_requires": ["narrative_v4_validator_pass", "repository_quality_pass", "human_canon_approval", "runtime_migration_plan"],
+  "thesis": {
+    "phrase": "Ser forte e ser gentil.",
+    "dramatic_question": "Ruan consegue transformar forca em responsabilidade sem transformar dor em vinganca?",
+    "rating_tone": "16+ por peso moral, sem glamour da violencia",
+    "symbol": "Gorila Silverback"
+  },
+  "setting": {"region": "Baixo Sul da Bahia", "main_hub": "Itubera"},
+  "prologue": "data/narrative/prologue_v1.json",
+  "act_identity_policy": {
+    "stable_ids": ["ato_1_o_chao", "ato_2_o_molde", "ato_3_o_nome", "ato_4_a_queda", "ato_5_o_legado"],
+    "display_subtitles": {
+      "ato_1_o_chao": "RAIZ",
+      "ato_2_o_molde": "CIRCUITO",
+      "ato_3_o_nome": "SOMBRA",
+      "ato_4_a_queda": "TERRITORIO",
+      "ato_5_o_legado": "VERDADE"
+    },
+    "ids_must_not_be_renamed": true
+  },
+  "migration_decisions": {
+    "vera_id": "vera_salles",
+    "vera_recruitment": "end_of_act_2_mandatory",
+    "tinker_knows_operation_from": "act_2",
+    "tinker_act5_reveal": "hidden_final_operation_detail_not_initial_pf_affiliation",
+    "chupeta": {"status": "NEW_CHARACTER_CANDIDATE_PENDING_CHARACTER_REGISTRY", "dramatic_function": "coercion_betting_militia", "must_not_replace": ["cassio_molho", "dr_sombra", "delegado_montenegro"]},
+    "pipoca": {"survives": true, "dramatic_function": "future_generation_at_risk"},
+    "biel": {"death_remains_act_4_irreversible": true},
+    "dende_truth": "perpetuated_silence_but_not_sole_author_of_erasure",
+    "teruko_name_policy": {"spoken_before_truth_threshold": false, "truth_fragments_required": 8, "spoken_after_threshold": true},
+    "truth_layer": {"main_ending": false, "overlay": true},
+    "chupeta_climax": "ruan_releases_submission_then_stabilizes_control",
+    "act5_required_payoffs": ["restituicao", "davi_revanche", "byaku_rematch", "dandara_abraco", "instituto_cria"]
+  },
+  "antagonist_functions": {
+    "cassio_molho": "personal_shortcut_and_temptation",
+    "dr_sombra": "land_capital_and_speculation",
+    "chupeta_candidate": "physical_coercion_betting_and_militia",
+    "delegado_montenegro": "false_institutional_pressure"
+  },
+  "truth_policy": {
+    "fragments_authority": "data/narrative/tekuro_fragments_v2.json",
+    "threshold": 8,
+    "name": "Teruko Nishiuchi",
+    "pre_threshold_public_name_forbidden": true,
+    "post_threshold_name_reveal_required": true,
+    "revenge_interpretation_forbidden": true
+  },
+  "ending_policy": {
+    "main_endings": ["heroi_duas_aguas", "rei_dos_atalhos"],
+    "truth_is_overlay": true,
+    "truth_may_overlay_both": true,
+    "choices_not_score_only": true
+  },
+  "ethics": {
+    "no_real_person_portraits": true,
+    "no_real_org_defamation": true,
+    "violence_has_consequence": true,
+    "revenge_arc_forbidden": true,
+    "regional_language_preserved": true,
+    "crime_glamor_forbidden": true
+  }
+}

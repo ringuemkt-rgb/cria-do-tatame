@@ -1,0 +1,83 @@
+{
+  "$schema": "cria_dialogues_v4",
+  "version": "4.0.0-candidate.1",
+  "status": "CANON_V4_CANDIDATE",
+  "authority": "data/narrative/canon_v4.json",
+  "rules": {
+    "language": "pt-BR",
+    "regional_grammar_preserved": true,
+    "pre_truth_hidden_name_forbidden": true,
+    "truth_name_unlock_threshold": 8,
+    "revenge_language_forbidden": true
+  },
+  "prologue_dialogues": [
+    {"id":"p0_tinker_duas_corridas","speaker":"tinker_bell","line":"Duas corrida, quatro real. Tu e lento hoje, Macacao."},
+    {"id":"p0_ruan_carga_quebrada","speaker":"ruan_macacao","line":"Lento nao. Cuidadoso. Carga quebrada nao paga."},
+    {"id":"p0_coro_dois_meninos","speaker":"coro","line":"Dois menino e um carro de mao. O Baixo Sul inteiro cabia naquilo."},
+    {"id":"p0_dende_terceiro_jeito","speaker":"mestre_dende","line":"Menino, tu e grande pra brigar e pequeno pra se esconder. Vem ca que eu te ensino um terceiro jeito."},
+    {"id":"p0_dende_tabuleiro_anda","speaker":"mestre_dende","line":"E tu, que joga xadrez: o tatame e um tabuleiro que anda. Vem os dois."},
+    {"id":"p0_degodo_corpo_nao_mente","speaker":"degodo","line":"Gi e roupa. Luta e corpo. E corpo nao mente."},
+    {"id":"p0_tinker_pensa_nao_cansa","speaker":"tinker_bell","line":"Tu ganhou no cansaco, nao na forca. Se tu cansa, tu perde. Se tu pensa, tu nao cansa."},
+    {"id":"p0_coro_um_so_lutador","speaker":"coro","line":"Naquele dia o carro de mao aposentou. E dois menino viraram um so lutador."}
+  ],
+  "act_dialogues": [
+    {"act":1,"scene":"entrada_terreiro","beats":[
+      {"speaker":"mestre_dende","line":"Pressao nao e forca, menino. Pressao e presenca."},
+      {"speaker":"ruan_macacao","line":"Eu vim aprender a vencer."},
+      {"speaker":"mestre_dende","line":"Entao aprende primeiro a cair sem procurar culpado."}
+    ]},
+    {"act":1,"scene":"faixa_azul","beats":[
+      {"speaker":"mestre_dende","line":"Forca sem gentileza e so medo com musculo. Nao me volta pra casa com medo com musculo."}
+    ]},
+    {"act":2,"scene":"concha_davi","beats":[
+      {"speaker":"davi_relampago","line":"Tu e bom, Macacao. Mas bom nao ganha. Quem ganha e quem quer mais."}
+    ]},
+    {"act":2,"scene":"vera_recruta","beats":[
+      {"speaker":"vera_salles","line":"Nao quero um policial. Quero um cria. So quem a rua abraca entra onde o dinheiro mora."},
+      {"speaker":"tinker_bell","line":"Se ele entra, eu desenho a saida."}
+    ]},
+    {"act":3,"scene":"degodo_descobre_disfarce","beats":[
+      {"speaker":"degodo","line":"Se tu cair, eu nao te levanto. Eu desco junto. Mas tu nao volta la sem eu."}
+    ]},
+    {"act":3,"scene":"faixa_marrom","beats":[
+      {"speaker":"mestre_dende","line":"A pergunta nao e se tu desceu. E se tu lembra o caminho de volta."}
+    ]},
+    {"act":4,"scene":"dende_admite_silencio","beats":[
+      {"speaker":"mestre_dende","line":"Eu sabia mais do que te contei."},
+      {"speaker":"mestre_dende","line":"Achei que silencio era protecao. Agora eu sei que silencio tambem protege quem apaga."}
+    ]},
+    {"act":4,"scene":"pratigi_do_avesso","beats":[
+      {"speaker":"ruan_do_avesso","line":"Eu sou o que sobra quando tu chama medo de necessidade."},
+      {"speaker":"ruan_macacao","line":"Tu nao e meu inimigo."},
+      {"speaker":"ruan_do_avesso","line":"Entao prova que consegue me carregar sem me obedecer."}
+    ]},
+    {"act":4,"scene":"faixa_preta","beats":[
+      {"speaker":"mestre_dende","line":"Agora tu nao e meu aluno. Tu e meu colega."}
+    ]},
+    {"act":5,"scene":"ruan_vs_chupeta","character_registry_status":"candidate_pending","beats":[
+      {"speaker":"ruan_macacao","line":"Eu podia. Eu nao vou. E isso que tu nunca vai entender.","mechanical_condition":"submission_released_then_control_stabilized"}
+    ]},
+    {"act":5,"scene":"davi_revanche","beats":[
+      {"speaker":"davi_relampago","line":"Vai apertar?"},
+      {"speaker":"ruan_macacao","line":"Ja acabou."},
+      {"speaker":"davi_relampago","line":"Agora tu entendeu timing."}
+    ]},
+    {"act":5,"scene":"tinker_revela_detalhe_final","beats":[
+      {"speaker":"tinker_bell","line":"Eu nao escondi de tu que a gente tava dentro. Escondi a ultima parte porque Montenegro ja tava ligando meu nome ao teu."},
+      {"speaker":"ruan_macacao","line":"E tu esperava que eu entendesse sozinho?"},
+      {"speaker":"tinker_bell","line":"Nao. Eu esperava voltar vivo pra explicar."}
+    ]}
+  ],
+  "truth_dialogues": [
+    {
+      "id":"truth_name_reveal",
+      "requires_truth_fragments":8,
+      "pre_threshold_forbidden":true,
+      "beats":[
+        {"speaker":"coro","line":"Teruko Nishiuchi."},
+        {"speaker":"crianca_epilogo","line":"Sensei, quem foi Teruko Nishiuchi?"},
+        {"speaker":"sensei_epilogo","line":"Deixa eu te contar."}
+      ]
+    }
+  ]
+}

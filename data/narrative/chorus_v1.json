@@ -1,0 +1,32 @@
+{
+  "$schema": "cria_narrative_chorus_v1",
+  "version": "1.0.0",
+  "status": "CANON_V4_CANDIDATE",
+  "authority": "data/narrative/canon_v4.json",
+  "purpose": "Narrador comunitario diegetico: comenta, exagera, lembra e corrige a fama de Ruan sem funcionar como narrador onisciente absoluto.",
+  "rules": {
+    "regional_language_preserved": true,
+    "may_exaggerate_public_events": true,
+    "may_not_reveal_hidden_truth_before_gate": true,
+    "may_not_glamorize_crime": true,
+    "silence_is_allowed_as_narrative_event": true
+  },
+  "act_openings": [
+    {"act":0,"line":"Dois menino e um carro de mao. O Baixo Sul inteiro cabia naquilo."},
+    {"act":1,"epigraph":"Menino que nasce de rio nao aprende a nadar: lembra.","function":"belonging"},
+    {"act":2,"epigraph":"Toda porta e uma boca: umas mordem, outras beijam, todas cobram.","function":"recognition"},
+    {"act":3,"epigraph":"No mangue, quem pisa leve nao afunda; quem pisa sozinho, afunda duas vezes.","function":"moral_cost"},
+    {"act":4,"epigraph":"Vento que vem do mar nao pede licenca; vento que vem de homem, menos ainda.","function":"assumption"},
+    {"act":5,"epigraph":"Nome apagado e semente: espera debaixo da terra ate chover justica.","function":"legacy","truth_safe":true}
+  ],
+  "interludes": [
+    {"id":"coro_dique","after":"primeira_luta_oficial_dique","line":"Diz que o menino do Dende derrubou um homem do tamanho de um saveiro. Diz que nao sorriu. Diz que pediu desculpa."},
+    {"id":"coro_pipoca","after":"pipoca_isca","tone":"first_collective_grief","line":"Naquele dia ninguem aumentou historia. O que doeu ja era grande demais."},
+    {"id":"coro_avesso","during":"pratigi_do_avesso","mode":"silence","duration_rule":"scene_owned"}
+  ],
+  "ending_variants": {
+    "heroi_duas_aguas":"O nome ficou grande porque coube mais gente dentro dele.",
+    "rei_dos_atalhos":"Todo mundo sabia o nome. Quase ninguem sabia chegar perto.",
+    "truth_overlay":{"requires_truth_fragments":8,"line":"Teruko Nishiuchi.","name_reveal":true}
+  }
+}
