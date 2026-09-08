@@ -2,16 +2,19 @@ class_name BJJGraphReducerV2
 extends RefCounted
 
 const RulesEngineScript = preload("res://src/combat/BJJRulesEngineV1.gd")
+const TimingPolicyScript = preload("res://src/combat/BJJTimingPolicyV1.gd")
 
 var kg: Dictionary = {}
 var techniques: Dictionary = {}
 var positions: Dictionary = {}
 var rules_engine: BJJRulesEngineV1
+var timing_policy
 var validation_errors: Array = []
 
-func _init(kg_data: Dictionary, rules_data: Dictionary):
+func _init(kg_data: Dictionary, rules_data: Dictionary, timing_data: Dictionary = {}):
 	kg = kg_data.duplicate(true)
 	rules_engine = RulesEngineScript.new(rules_data)
+	timing_policy = TimingPolicyScript.new(timing_data)
 	for raw_position in kg.get("positions", kg.get("posicoes", [])):
 		if typeof(raw_position) == TYPE_DICTIONARY:
 			var position: Dictionary = raw_position
@@ -28,7 +31,7 @@ func _init(kg_data: Dictionary, rules_data: Dictionary):
 func is_ready() -> bool:
 	return validation_errors.is_empty() and not techniques.is_empty()
 
-func new_state(ruleset: String, gi: bool, seed: int, belt_or_skill_division: String = "slice_any", age_division: String = "adult") -> Dictionary:
+func new_state(ruleset: String, gi: bool, seed: int, belt_or_skill_division: String = "slice_any", age_division: String = "adult", input_profile: String = "touch") -> Dictionary:
 	return {
 		"pos": "standing_neutral",
 		"top": 0,
@@ -36,6 +39,7 @@ func new_state(ruleset: String, gi: bool, seed: int, belt_or_skill_division: Str
 		"ruleset": ruleset,
 		"belt_or_skill_division": belt_or_skill_division,
 		"age_division": age_division,
+		"input_profile": input_profile,
 		"seed": seed,
 		"tick": 0,
 		"winner": 0,
@@ -80,13 +84,28 @@ func reduce(state: Dictionary, action: Dictionary) -> Dictionary:
 		if not counter_relation.is_empty() and techniques.has(defense_id):
 			var counter: Dictionary = techniques[defense_id]
 			if _technique_available_for_player(counter, s, defense_player):
-				_pay_gas(s, defense_player, float(counter.get("gas", 0.0)))
-				var counter_roll := _rng(s, defense_player * 31 + _string_salt(defense_id))
-				var counter_chance := clampf(float(counter.get("authoring_prior", 0.0)) + _grip_modifier(s, counter, defense_player), 0.0, 1.0)
-				if counter_roll < counter_chance:
-					_apply_counter_success(s, counter, counter_relation, defense_player)
-					_append_log(s, {"ev":"counter","t":defense_id,"against":attack_id,"by":defense_player,"outcome":str(counter_relation.get("outcome", "")),"roll":counter_roll,"chance":counter_chance})
-					return s
+				var timing_tier := str(counter_relation.get("timing_tier", timing_policy.default_tier()))
+				var input_profile := str(s.get("input_profile", "touch"))
+				var elapsed_ms := float(action.get("defense_elapsed_ms", 0.0))
+				if timing_policy.is_ready() and not timing_policy.is_within_window(elapsed_ms, timing_tier, input_profile):
+					var timing_meta: Dictionary = timing_policy.metadata(timing_tier, input_profile)
+					_append_log(s, {
+						"ev":"counter_late",
+						"t":defense_id,
+						"against":attack_id,
+						"by":defense_player,
+						"elapsed_ms":elapsed_ms,
+						"window_ms":int(timing_meta.get("window_ms", 0)),
+						"timing_tier":timing_tier
+					})
+				else:
+					_pay_gas(s, defense_player, float(counter.get("gas", 0.0)))
+					var counter_roll := _rng(s, defense_player * 31 + _string_salt(defense_id))
+					var counter_chance := clampf(float(counter.get("authoring_prior", 0.0)) + _grip_modifier(s, counter, defense_player), 0.0, 1.0)
+					if counter_roll < counter_chance:
+						_apply_counter_success(s, counter, counter_relation, defense_player)
+						_append_log(s, {"ev":"counter","t":defense_id,"against":attack_id,"by":defense_player,"outcome":str(counter_relation.get("outcome", "")),"roll":counter_roll,"chance":counter_chance,"elapsed_ms":elapsed_ms,"timing_tier":timing_tier})
+						return s
 
 	var attack_roll := _rng(s, attack_player * 17 + _string_salt(attack_id))
 	var attack_chance := clampf(float(attack.get("authoring_prior", 0.0)) + _grip_modifier(s, attack, attack_player), 0.0, 1.0)
@@ -112,8 +131,24 @@ func query(state: Dictionary, player: int) -> Array:
 			"to": str(technique.get("to", technique.get("para", ""))),
 			"scoring_event": event_id,
 			"potential_points": rules_engine.points_for_event(str(state.get("ruleset", "")), event_id),
-			"counter_count": int(technique.get("counters", []).size())
+			"counter_count": int(technique.get("counters", []).size()),
+			"counter_timing": _counter_timing_metadata(technique, state)
 		})
+	return out
+
+func _counter_timing_metadata(technique: Dictionary, state: Dictionary) -> Array:
+	var out: Array = []
+	if not timing_policy.is_ready():
+		return out
+	var input_profile := str(state.get("input_profile", "touch"))
+	for raw_relation in technique.get("counters", []):
+		if typeof(raw_relation) != TYPE_DICTIONARY:
+			continue
+		var relation: Dictionary = raw_relation
+		var tier := str(relation.get("timing_tier", timing_policy.default_tier()))
+		var item: Dictionary = timing_policy.metadata(tier, input_profile)
+		item["technique_id"] = str(relation.get("technique_id", ""))
+		out.append(item)
 	return out
 
 func _reduce_stabilization(s: Dictionary, action: Dictionary) -> Dictionary:

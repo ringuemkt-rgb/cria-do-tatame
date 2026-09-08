@@ -26,6 +26,18 @@ func _load_json(path: String) -> Dictionary:
 	file.close()
 	return parsed if typeof(parsed) == TYPE_DICTIONARY else {}
 
+func _has_log_event(state: Dictionary, event_id: String) -> bool:
+	for raw_item in state.get("log", []):
+		if typeof(raw_item) == TYPE_DICTIONARY and str(raw_item.get("ev", "")) == event_id:
+			return true
+	return false
+
+func _candidate_by_id(candidates: Array, technique_id: String) -> Dictionary:
+	for raw_candidate in candidates:
+		if typeof(raw_candidate) == TYPE_DICTIONARY and str(raw_candidate.get("id", "")) == technique_id:
+			return raw_candidate
+	return {}
+
 func _run() -> void:
 	var loaded: Dictionary = LoaderScript.load_from_path("res://data/bjj/bjj_kg_slice_ruan_davi_v1.json", false)
 	_assert(bool(loaded.get("ok", false)), "slice fixture should validate: %s" % str(loaded.get("errors", [])))
@@ -33,7 +45,9 @@ func _run() -> void:
 	_assert(not bool(full_attempt.get("ok", true)), "slice fixture must fail the full 40/120/10 gate")
 	var kg: Dictionary = loaded.get("kg", {})
 	var rules := _load_json("res://data/combat/bjj_rulesets_verified_v1.json")
-	var reducer = ReducerScript.new(kg, rules)
+	var timing := _load_json("res://data/combat/bjj_timing_windows_v1.json")
+	var position_values := _load_json("res://data/combat/bjj_position_values_v1.json")
+	var reducer = ReducerScript.new(kg, rules, timing)
 	_assert(reducer.is_ready(), "reducer should initialize with validated slice fixture")
 
 	var state: Dictionary = reducer.new_state("ibjjf", true, 12345)
@@ -43,11 +57,16 @@ func _run() -> void:
 	_assert(standing_actions.has("t001"), "standing actions must include t001")
 	_assert(standing_actions.has("t005"), "standing actions must include t005")
 
-	var counter_state: Dictionary = reducer.reduce(state, {"atk":"t001", "def":"slice_sprawl", "atk_player":1})
-	_assert(str(counter_state.get("pos", "")) == "front_headlock", "successful sprawl counter must redirect to front_headlock")
+	var counter_state: Dictionary = reducer.reduce(state, {"atk":"t001", "def":"slice_sprawl", "atk_player":1, "defense_elapsed_ms":250.0})
+	_assert(str(counter_state.get("pos", "")) == "front_headlock", "in-window sprawl counter must redirect to front_headlock")
 	_assert(int(counter_state.get("top", 0)) == 2, "countering defender must become top")
 	_assert(float(counter_state.get("p1", {}).get("gas", 100.0)) == 80.0, "attacker must pay gas on countered attempt")
-	_assert(float(counter_state.get("p2", {}).get("gas", 100.0)) == 92.0, "defender must pay gas for attempted counter")
+	_assert(float(counter_state.get("p2", {}).get("gas", 100.0)) == 92.0, "defender must pay gas for an in-window counter")
+
+	var late_counter_state: Dictionary = reducer.reduce(state, {"atk":"t001", "def":"slice_sprawl", "atk_player":1, "defense_elapsed_ms":500.0})
+	_assert(str(late_counter_state.get("pos", "")) != "front_headlock", "late counter must not redirect to front_headlock")
+	_assert(float(late_counter_state.get("p2", {}).get("gas", 100.0)) == 100.0, "late counter must not charge defender gas")
+	_assert(_has_log_event(late_counter_state, "counter_late"), "late counter must be explicit in replay log")
 
 	var deterministic_a: Dictionary = reducer.reduce(state, {"atk":"t005", "def":"", "atk_player":1})
 	var deterministic_b: Dictionary = reducer.reduce(state, {"atk":"t005", "def":"", "atk_player":1})
@@ -92,16 +111,34 @@ func _run() -> void:
 	var after_invalid: Dictionary = reducer.reduce(tired_state, {"atk":"t001", "def":"", "atk_player":1})
 	_assert(int(after_invalid.get("tick", -1)) == before_tick, "invalid/unaffordable action must not advance replay tick")
 
-	var utility = UtilityScript.new()
 	var candidates: Array = reducer.query(state, 1)
+	var t001_candidate := _candidate_by_id(candidates, "t001")
+	_assert(not t001_candidate.is_empty(), "query must expose t001 metadata")
+	var timing_rows: Array = t001_candidate.get("counter_timing", [])
+	_assert(timing_rows.size() == 1, "t001 must expose one counter timing row")
+	if timing_rows.size() == 1:
+		var timing_row: Dictionary = timing_rows[0]
+		_assert(int(timing_row.get("window_ms", 0)) == 350, "standard touch counter window must be 350ms")
+		_assert(str(timing_row.get("telegraph", "")) == "medium", "standard tier must expose medium telegraph")
+
+	var utility = UtilityScript.new(position_values)
+	_assert(is_equal_approx(utility.position_value_for("back_mount_seatbelt"), 1.0), "back mount positional value must be 1.0")
+	_assert(is_equal_approx(utility.position_value_for("mount_high"), 0.9), "mount positional value must be 0.9")
+	_assert(is_equal_approx(utility.position_value_for("closed_guard"), 0.4), "bottom guard positional value must be 0.4")
+	_assert(is_equal_approx(utility.position_value_for("inside_ashi_garami"), 0.45), "unmapped leglock position must use neutral fallback until expert value exists")
 	var first_choice := utility.choose(candidates, {})
 	var second_choice := utility.choose(candidates, {})
 	_assert(first_choice != "", "utility scorer must choose an available technique")
 	_assert(first_choice == second_choice, "utility scorer tie-breaking must be deterministic")
+	var synthetic: Array = [
+		{"id":"to_guard","authoring_prior":0.5,"potential_points":0,"gas":0,"counter_count":0,"to":"closed_guard"},
+		{"id":"to_back","authoring_prior":0.5,"potential_points":0,"gas":0,"counter_count":0,"to":"back_mount_seatbelt"}
+	]
+	_assert(utility.choose(synthetic, {}) == "to_back", "positional hierarchy must change utility ordering")
 
 	if failures.is_empty():
-		print("BJJ REDUCER V2 SMOKE PASS: %d checks" % checks)
+		print("BJJ REDUCER V2 P1 SMOKE PASS: %d checks" % checks)
 		quit(0)
 	else:
-		push_error("BJJ REDUCER V2 SMOKE FAIL: %d/%d failed" % [failures.size(), checks])
+		push_error("BJJ REDUCER V2 P1 SMOKE FAIL: %d/%d failed" % [failures.size(), checks])
 		quit(1)

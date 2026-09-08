@@ -1,11 +1,13 @@
 {
   "$schema": "cria.bjj_kg.slice_fixture.v1",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "status": "SLICE_FIXTURE_NONCANONICAL",
   "purpose": "Executable Ruan x Davi fixture for reducer-v2 validation while the full 40/120/10 F1 payload remains incomplete in chat.",
   "runtime_authority": false,
   "full_graph_claim": false,
   "rules_authority": "data/combat/bjj_rulesets_verified_v1.json",
+  "position_value_authority": "data/combat/bjj_position_values_v1.json",
+  "timing_authority": "data/combat/bjj_timing_windows_v1.json",
   "positions": [
     {"id":"standing_neutral","pt":"Em Pé Neutro","cat":"standing","side":"neutral"},
     {"id":"front_headlock","pt":"Front Headlock","cat":"clinch","side":"top"},
@@ -24,7 +26,7 @@
       "actor_role_from":"neutral","actor_role_to":"top","authoring_prior":0.55,"prior_status":"UNCALIBRATED_EXPERT_HEURISTIC","empirical_success":null,
       "gas":20,"availability":{"gi":true,"nogi":true},
       "legality":{"ibjjf_v6":{"allowed":true,"belt_or_skill_division":["slice_any"],"age_division":["adult"]},"adcc_championship_current":{"allowed":true,"belt_or_skill_division":["slice_any"],"age_division":["adult"]},"clandestine_cria_v1":{"allowed":true,"belt_or_skill_division":["slice_any"],"age_division":["adult"]}},
-      "counters":[{"technique_id":"slice_sprawl","outcome":"redirect_to_front_headlock"}],
+      "counters":[{"technique_id":"slice_sprawl","outcome":"redirect_to_front_headlock","timing_tier":"standard"}],
       "scoring_event":"takedown","stabilization_seconds":3.0
     },
     {
@@ -46,7 +48,7 @@
       "actor_role_from":"top","actor_role_to":"top","authoring_prior":0.55,"prior_status":"UNCALIBRATED_EXPERT_HEURISTIC","empirical_success":null,
       "gas":18,"availability":{"gi":true,"nogi":true},
       "legality":{"ibjjf_v6":{"allowed":true,"belt_or_skill_division":["slice_any"],"age_division":["adult"]},"adcc_championship_current":{"allowed":true,"belt_or_skill_division":["slice_any"],"age_division":["adult"]},"clandestine_cria_v1":{"allowed":true,"belt_or_skill_division":["slice_any"],"age_division":["adult"]}},
-      "counters":[{"technique_id":"t049","outcome":"redirect_to_knee_shield"}],
+      "counters":[{"technique_id":"t049","outcome":"redirect_to_knee_shield","timing_tier":"standard"}],
       "scoring_event":"guard_pass","stabilization_seconds":3.0
     },
     {

@@ -10,7 +10,10 @@ FIXTURE = ROOT / "data/bjj/bjj_kg_slice_ruan_davi_v1.json"
 FULL_KG = ROOT / "data/bjj/bjj_knowledge_graph_v1.json"
 AUTHORING = ROOT / "data/combat/bjj_kg_authoring_contract_v1.json"
 RULES = ROOT / "data/combat/bjj_rulesets_verified_v1.json"
+POSITION_VALUES = ROOT / "data/combat/bjj_position_values_v1.json"
+TIMING = ROOT / "data/combat/bjj_timing_windows_v1.json"
 REDUCER = ROOT / "src/combat/BJJGraphReducerV2.gd"
+TIMING_POLICY = ROOT / "src/combat/BJJTimingPolicyV1.gd"
 LOADER = ROOT / "src/combat/BJJGraphLoader.gd"
 UTILITY = ROOT / "src/ai/BJJUtilityScorerV2.gd"
 SMOKE = ROOT / "tests/bjj_reducer_v2_smoke.gd"
@@ -24,6 +27,18 @@ ALLOWED_COUNTER_OUTCOMES = {
     "submission_threat",
     "reset_to_neutral",
 }
+EXPECTED_POSITION_BANDS = {
+    "back_mount": 1.0,
+    "mount": 0.9,
+    "side": 0.75,
+    "knee_on_belly": 0.7,
+    "pass_in_progress": 0.6,
+    "half_top": 0.5,
+    "neutral": 0.45,
+    "guards_bottom": 0.4,
+    "half_bottom": 0.35,
+    "turtle": 0.25,
+}
 
 
 def load(path: Path) -> dict:
@@ -33,7 +48,47 @@ def load(path: Path) -> dict:
     return value
 
 
-def validate_fixture(fixture: dict, authoring: dict, rules: dict) -> list[str]:
+def validate_p1_tuning(position_values: dict, timing: dict) -> list[str]:
+    errors: list[str] = []
+    if position_values.get("status") != "AUTHORING_INITIAL":
+        errors.append("position values must remain AUTHORING_INITIAL before playtest/calibration")
+    if position_values.get("empirical_status") != "UNCALIBRATED_AUTHORING":
+        errors.append("position values must not claim empirical calibration")
+    if float(position_values.get("unmapped_fallback", -1.0)) != 0.45:
+        errors.append("position-value fallback must remain neutral=0.45")
+    bands = position_values.get("bands", {})
+    for band_id, expected in EXPECTED_POSITION_BANDS.items():
+        if float(bands.get(band_id, -999.0)) != expected:
+            errors.append(f"position band {band_id} must equal authored V.5 value {expected}")
+    ladder = position_values.get("hud_ladder", [])
+    pass_rows = [row for row in ladder if isinstance(row, dict) and row.get("id") == "pass_in_progress"]
+    if len(pass_rows) != 1 or pass_rows[0].get("transient_only") is not True:
+        errors.append("pass_in_progress must remain an explicitly transient HUD band")
+
+    if timing.get("status") != "AUTHORING_INITIAL":
+        errors.append("timing windows must remain AUTHORING_INITIAL before playtest")
+    if timing.get("empirical_status") != "UNCALIBRATED_AUTHORING":
+        errors.append("timing windows must not claim empirical calibration")
+    touch = timing.get("input_profiles", {}).get("touch", {})
+    touch_floor = int(touch.get("minimum_counter_window_ms", 0))
+    if touch_floor < 250:
+        errors.append("touch counter floor must be >=250ms")
+    tiers = timing.get("tiers", {})
+    default_tier = str(timing.get("default_tier", ""))
+    if default_tier not in tiers:
+        errors.append("timing default_tier must exist")
+    for tier_id, tier in tiers.items():
+        if not isinstance(tier, dict):
+            errors.append(f"timing tier {tier_id} must be object")
+            continue
+        if int(tier.get("window_ms", 0)) < touch_floor:
+            errors.append(f"timing tier {tier_id} violates touch floor")
+        if not str(tier.get("telegraph", "")):
+            errors.append(f"timing tier {tier_id} requires telegraph metadata")
+    return errors
+
+
+def validate_fixture(fixture: dict, authoring: dict, rules: dict, timing: dict | None = None) -> list[str]:
     errors: list[str] = []
     if fixture.get("status") != "SLICE_FIXTURE_NONCANONICAL":
         errors.append("slice fixture must remain explicitly noncanonical")
@@ -43,7 +98,12 @@ def validate_fixture(fixture: dict, authoring: dict, rules: dict) -> list[str]:
         errors.append("slice fixture cannot claim to be the full graph")
     if fixture.get("rules_authority") != "data/combat/bjj_rulesets_verified_v1.json":
         errors.append("slice fixture must reference versioned rules authority")
+    if fixture.get("position_value_authority") != "data/combat/bjj_position_values_v1.json":
+        errors.append("slice fixture must reference positional-value authority")
+    if fixture.get("timing_authority") != "data/combat/bjj_timing_windows_v1.json":
+        errors.append("slice fixture must reference timing authority")
 
+    valid_tiers = set((timing or {}).get("tiers", {}).keys())
     source_status = fixture.get("source_status", {})
     if source_status.get("last_complete_received_technique_id") != "t092":
         errors.append("source ledger must preserve t092 as last complete received technique")
@@ -107,6 +167,11 @@ def validate_fixture(fixture: dict, authoring: dict, rules: dict) -> list[str]:
                 errors.append(f"{tid}: missing counter target {counter_id}")
             if counter.get("outcome") not in ALLOWED_COUNTER_OUTCOMES:
                 errors.append(f"{tid}: invalid counter outcome {counter.get('outcome')}")
+            timing_tier = str(counter.get("timing_tier", ""))
+            if not timing_tier:
+                errors.append(f"{tid}: counter {counter_id} requires timing_tier")
+            elif valid_tiers and timing_tier not in valid_tiers:
+                errors.append(f"{tid}: counter {counter_id} uses unknown timing tier {timing_tier}")
 
     adcc = rules.get("rulesets", {}).get("adcc_championship_current", {}).get("points", {})
     if adcc.get("mount") != 2 or adcc.get("back_mount_hooks_or_body_triangle") != 3:
@@ -116,14 +181,31 @@ def validate_fixture(fixture: dict, authoring: dict, rules: dict) -> list[str]:
 
 def validate_repository() -> list[str]:
     errors: list[str] = []
-    required = [FIXTURE, AUTHORING, RULES, REDUCER, LOADER, UTILITY, SMOKE]
+    required = [
+        FIXTURE,
+        AUTHORING,
+        RULES,
+        POSITION_VALUES,
+        TIMING,
+        REDUCER,
+        TIMING_POLICY,
+        LOADER,
+        UTILITY,
+        SMOKE,
+    ]
     for path in required:
         if not path.exists():
             errors.append(f"missing required reducer-v2 artifact: {path.relative_to(ROOT)}")
     if errors:
         return errors
     try:
-        errors.extend(validate_fixture(load(FIXTURE), load(AUTHORING), load(RULES)))
+        fixture = load(FIXTURE)
+        authoring = load(AUTHORING)
+        rules = load(RULES)
+        position_values = load(POSITION_VALUES)
+        timing = load(TIMING)
+        errors.extend(validate_p1_tuning(position_values, timing))
+        errors.extend(validate_fixture(fixture, authoring, rules, timing))
     except (OSError, ValueError, json.JSONDecodeError) as exc:
         errors.append(f"parse failure: {exc}")
         return errors
@@ -146,6 +228,19 @@ def validate_repository() -> list[str]:
         errors.append("BJJGraphReducerV2 must consume authoring_prior")
     if "pending_score" not in reducer_text:
         errors.append("BJJGraphReducerV2 must defer scoring until stabilization")
+    for required_token in ("BJJTimingPolicyV1.gd", "defense_elapsed_ms", "counter_late", "counter_timing"):
+        if required_token not in reducer_text:
+            errors.append(f"BJJGraphReducerV2 missing P1 timing token: {required_token}")
+
+    timing_text = TIMING_POLICY.read_text(encoding="utf-8")
+    if "window_ms_for" not in timing_text or "is_within_window" not in timing_text:
+        errors.append("BJJTimingPolicyV1 must expose deterministic window queries")
+
+    utility_text = UTILITY.read_text(encoding="utf-8")
+    if "DEFAULT_POSITION_VALUES" in utility_text:
+        errors.append("BJJUtilityScorerV2 must not restore hardcoded position table")
+    if "position_value_for" not in utility_text or "position_groups" not in utility_text:
+        errors.append("BJJUtilityScorerV2 must consume versioned positional tuning")
     return errors
 
 
@@ -156,7 +251,7 @@ def main() -> int:
             print("FAIL", error)
         print(f"BJJ reducer-v2 slice gate failed: {len(errors)} error(s)")
         return 1
-    print("BJJ reducer-v2 slice PASS: deterministic adapter core staged; full KG promotion remains blocked")
+    print("BJJ reducer-v2 slice PASS: P1 positional values + touch timing staged; full KG promotion remains blocked")
     return 0
 
 
