@@ -13,7 +13,7 @@ Esta skill é uma camada operacional de direção/QA. Ela **não** é segunda fo
 
 Ordem de autoridade:
 
-1. `data/production/` — contratos executáveis e cânone mais recente;
+1. `data/production/canon_contract_v4_1.json` + `data/production/supreme_build_contract_v01.json` — cânone e contrato executável de build;
 2. `docs/DECISIONS.md` + cânone ativo;
 3. dados/runtime realmente consumidos;
 4. `data/visual/production_manifest_v02.json`, `data/visual/ui_theme_v2.json`, contratos do Asset Pipeline/Sprite Forge;
