@@ -1,0 +1,62 @@
+{
+  "$schema": "cria.character_visual_canon.v1",
+  "version": "1.0.0",
+  "status": "canonical_visual_contract",
+  "character_id": "ruan_macacao",
+  "display_name": "Ruan \"Macacão\" Silva",
+  "source_authority": {
+    "character_data": "data/characters.json#ruan_macacao",
+    "character_bible": "docs/03_CHARACTER_BIBLE.md#ruan-macacao-silva",
+    "sprite_factory": "docs/art/CRIA_PIXEL_ART_ASSET_FACTORY.md",
+    "production_contract": "data/production/supreme_build_contract_v01.json"
+  },
+  "identity": {
+    "origin": "Ituberá, Baixo Sul da Bahia",
+    "symbol": "Gorila Silverback",
+    "combat_style": "pressao_pesada_top_game",
+    "mechanical_signature": "silverback_grip",
+    "core_phrase": "Ser forte é ser gentil",
+    "real_person_likeness_forbidden": true,
+    "third_party_brand_marks_forbidden": true
+  },
+  "visual_language": {
+    "style": "HD Pixel Art 2.5D Regional Premium",
+    "mobile_readability_required": true,
+    "clear_silhouette_required": true,
+    "coherent_anatomy_required": true,
+    "visible_base_hips_and_grips_required": true,
+    "resampling": "nearest",
+    "integer_scale_only": true,
+    "anti_alias_policy": "none_after_normalization"
+  },
+  "frame_contract": {
+    "size_px": [128, 128],
+    "pivot_px": [64, 96],
+    "grounded_anchor": "feet"
+  },
+  "reference_contract": {
+    "master_reference": "assets/chars/ref/ruan_macacao_turnaround.png",
+    "master_reference_status": "pending_ingestion_and_human_approval",
+    "required_views": ["front", "side", "back"],
+    "combat_pose_required": true,
+    "reference_sha256_required": true,
+    "identity_regions": [
+      {"id": "face", "required": true, "bbox": null},
+      {"id": "upper_garment", "required": true, "bbox": null},
+      {"id": "signature_markings", "required": false, "bbox": null}
+    ],
+    "region_bboxes_require_human_authoring": true
+  },
+  "action_sets": {
+    "common": ["idle", "walk", "guard", "hurt", "knockdown", "victory", "defeat"],
+    "bjj_positional": ["grip", "grip_fight", "baiana_entry", "cem_quilos_control", "tap_reset"],
+    "signature": ["silverback_grip"],
+    "striking_candidates": ["jab", "cross", "hook", "uppercut", "slip", "dodge", "block", "clinch"],
+    "striking_candidates_authority": "tooling_capability_only_until_gameplay_contract_reconciled"
+  },
+  "fx_policy": {
+    "body_sheet_contains_detached_fx": false,
+    "separate_fx_classes": ["sweat", "impact", "blood_if_content_rating_allows", "glove_trail", "screen_shake_metadata"]
+  },
+  "shipping": false
+}
