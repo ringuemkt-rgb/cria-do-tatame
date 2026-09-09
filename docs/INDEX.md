@@ -36,7 +36,13 @@ Este arquivo é a porta de entrada da documentação ativa. Antes de criar um do
 
 ## Arte e produção
 
-- `art_bible/` — identidade visual e contratos de qualidade ativos;
+- [`../.agents/skills/cria-art-direction/SKILL.md`](../.agents/skills/cria-art-direction/SKILL.md) — skill mestre de direção visual; cânone, paleta, personagens, facções, arenas, mapas, UI, cartas, QA, rights e protocolo COMMAND;
+- [`../.agents/skills/cria-art-direction/references/anchors.md`](../.agents/skills/cria-art-direction/references/anchors.md) — hierarquia de âncoras e correções de cânone;
+- [`../.agents/skills/cria-art-direction/references/palette.md`](../.agents/skills/cria-art-direction/references/palette.md) — tokens de paleta e variantes cerimoniais;
+- [`../.agents/skills/cria-art-direction/references/qa.md`](../.agents/skills/cria-art-direction/references/qa.md) — blockers e thresholds técnicos/humanos;
+- [`../production/p1/CRIA_ART_P1_COMMANDS_V1.md`](../production/p1/CRIA_ART_P1_COMMANDS_V1.md) — 32 COMMANDS do primeiro lote visual Ruan × Davi;
+- [`../production/p1/cria_art_p1_commands_v1.json`](../production/p1/cria_art_p1_commands_v1.json) — fila P1 machine-readable, sempre `shipping=false` por padrão;
+- `art_bible/` — identidade visual e contratos de qualidade ativos quando presentes;
 - `production/` — planos de lote, pipeline e metas;
 - [`architecture/CRIA_SPRITE_FORGE_V1.md`](architecture/CRIA_SPRITE_FORGE_V1.md) — perfil mestre, anchor/scale QA e handoff de sprites para o pipeline existente;
 - [`production/APK_VISUAL_COMPLETION_PLAN_V09.md`](production/APK_VISUAL_COMPLETION_PLAN_V09.md) — gates de vertical slice e Android;
@@ -53,6 +59,7 @@ Este arquivo é a porta de entrada da documentação ativa. Antes de criar um do
 - [`../tools/audit/validate_canon_contract_v4_1.py`](../tools/audit/validate_canon_contract_v4_1.py) — gate do cânone e da D10;
 - [`../tools/audit/validate_faction_migration_v4_2.py`](../tools/audit/validate_faction_migration_v4_2.py) — gate das três facções, aliases e save v5;
 - [`../tools/art/validate_sprite_forge.py`](../tools/art/validate_sprite_forge.py) — gate de consistência entre ações de personagens;
+- [`../.agents/skills/cria-art-direction/scripts/validate_skill.py`](../.agents/skills/cria-art-direction/scripts/validate_skill.py) — gate fail-closed da skill e da fila P1;
 - [`../tools/data/validate_bjj_reducer_v2_slice.py`](../tools/data/validate_bjj_reducer_v2_slice.py) — gate fail-closed do reducer v2 e do fixture Ruan × Davi;
 - [`../tools/ai_asset_pipeline/cloud/validate_cloud_pipeline.py`](../tools/ai_asset_pipeline/cloud/validate_cloud_pipeline.py) — gate offline do adaptador de nuvem.
 

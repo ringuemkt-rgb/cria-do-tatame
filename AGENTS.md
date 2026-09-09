@@ -117,6 +117,8 @@ PR empilhado deve declarar dependência, ordem de merge e base ativa. Se a base 
 
 ## Arte, animação e áudio
 
+- Para qualquer tarefa visual — gerar, editar, avaliar, especificar ou preparar asset — carregue primeiro `.agents/skills/cria-art-direction/SKILL.md`.
+- Para sprites/animação de personagem, carregue também `.agents/skills/cria-sprite-forge/SKILL.md`; a skill de direção define o visual e a Sprite Forge define consistência técnica/handoff.
 - Concept art, mockup, geração bruta e fila de produção são candidatos.
 - Asset final exige origem/licença, metadata, preview, QA, aprovação humana e integração Godot.
 - Técnica pareada exige atacante, defensor, pivô compartilhado, timing e `sync_map`.
