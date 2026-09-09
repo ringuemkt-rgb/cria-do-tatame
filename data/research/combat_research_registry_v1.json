@@ -1,0 +1,169 @@
+{
+  "$schema": "cria.combat_research_registry.v1",
+  "version": "1.0.0",
+  "status": "RESEARCH_FINDINGS_NOT_RUNTIME_AUTHORITY",
+  "audited_at": "2026-09-09",
+  "external_tool_authority": "data/production/external_tool_registry_v1.json",
+  "shipping": false,
+  "policy": {
+    "this_file_may_authorize_code_or_asset_reuse": false,
+    "research_result_is_not_canon": true,
+    "checkpoint_and_dataset_rights_require_separate_review": true,
+    "pin_before_adoption": true
+  },
+  "findings": [
+    {
+      "id": "sam2",
+      "source": "facebookresearch/sam2",
+      "license_observed": "Apache-2.0 checkpoints/code/training; ancillary license exceptions exist",
+      "role": ["two_athlete_video_segmentation", "mask_tracking_under_partial_occlusion"],
+      "adoption": "HIGH_VALUE_RESEARCH_CANDIDATE",
+      "runtime_dependency": false
+    },
+    {
+      "id": "mmpose_rtmpose",
+      "source": "open-mmlab/mmpose",
+      "license_observed": "Apache-2.0 code",
+      "role": ["2d_pose", "whole_body_pose", "controlled_capture_pose"],
+      "adoption": "HIGH_VALUE_RESEARCH_CANDIDATE",
+      "warning": "Specific model weights and their training datasets require separate commercial-use review."
+    },
+    {
+      "id": "mmaction2",
+      "source": "open-mmlab/mmaction2",
+      "license_observed": "Apache-2.0 code",
+      "role": ["action_recognition", "temporal_localization", "pose_action_models"],
+      "adoption": "HIGH_VALUE_RESEARCH_CANDIDATE"
+    },
+    {
+      "id": "vjepa2",
+      "source": "facebookresearch/vjepa2",
+      "license_observed": "MIT repository code observed",
+      "role": ["self_supervised_video_embedding", "motion_understanding", "action_anticipation_research"],
+      "adoption": "RESEARCH_CANDIDATE",
+      "warning": "Audit each checkpoint/model card before production use."
+    },
+    {
+      "id": "internvideo3",
+      "source": "OpenGVLab/InternVideo",
+      "license_observed": "Apache-2.0 repository",
+      "role": ["long_video_semantic_index", "temporal_reasoning", "video_agent_research"],
+      "adoption": "RESEARCH_CANDIDATE"
+    },
+    {
+      "id": "pose2sim",
+      "source": "Pose2Sim/Pose2Sim",
+      "license_observed": "BSD-3-Clause reported by upstream",
+      "role": ["controlled_multiview_3d_kinematics", "sports_capture", "opensim_export"],
+      "adoption": "HIGH_VALUE_OWN_CAPTURE_CANDIDATE"
+    },
+    {
+      "id": "mediapipe",
+      "source": "google-ai-edge/mediapipe",
+      "license_observed": "Apache-2.0 project",
+      "role": ["lightweight_pose_first_pass", "local_capture_tooling"],
+      "adoption": "UTILITY_CANDIDATE"
+    },
+    {
+      "id": "open_fsw_2026",
+      "source": "milad67/Freestyle-Wrestling-Dataset",
+      "license_observed": "Repository declares MIT; underlying clips include controlled and broadcast footage",
+      "role": ["close_contact_action_recognition_benchmark", "occlusion_failure_research"],
+      "adoption": "BENCHMARK_ONLY_PENDING_MEDIA_RIGHTS",
+      "warning": "Do not infer commercial rights to underlying broadcast media from repository license alone."
+    },
+    {
+      "id": "vicos_bjj_positions",
+      "source": "ViCoS Lab Brazilian Jiu-Jitsu Positions Dataset",
+      "license_observed": "CC BY-NC-SA 4.0",
+      "role": ["position_detection_benchmark", "two_athlete_keypoint_benchmark"],
+      "adoption": "NONCOMMERCIAL_RESEARCH_ONLY",
+      "direct_commercial_training": false
+    },
+    {
+      "id": "hf_bjj_positions_submissions",
+      "source": "carlosj934/BJJ_Positions_Submissions",
+      "license_observed": "Dataset card says MIT",
+      "role": ["annotation_schema_reference"],
+      "adoption": "INSUFFICIENT_SCALE_FOR_TRAINING",
+      "warning": "Surfaced card currently reports only one sample."
+    },
+    {
+      "id": "mujoco",
+      "source": "google-deepmind/mujoco",
+      "license_observed": "Apache-2.0",
+      "role": ["offline_contact_dynamics_experiment", "biomechanical_hypothesis_testing"],
+      "adoption": "OPTIONAL_OFFLINE_RESEARCH",
+      "runtime_dependency": false
+    },
+    {
+      "id": "pettingzoo",
+      "source": "Farama-Foundation/PettingZoo",
+      "license_observed": "MIT",
+      "role": ["multi_agent_self_play_interface"],
+      "adoption": "OPTIONAL_CALIBRATION_RESEARCH"
+    },
+    {
+      "id": "godot_rl_agents",
+      "source": "edbeeching/godot_rl_agents",
+      "license_observed": "MIT",
+      "role": ["offline_godot_self_play", "policy_calibration"],
+      "adoption": "OPTIONAL_CALIBRATION_RESEARCH",
+      "warning": "Learned policy never bypasses rules/reducer."
+    },
+    {
+      "id": "limboai",
+      "source": "limbonaut/limboai",
+      "license_observed": "MIT-style permissive project",
+      "role": ["behavior_tree", "hierarchical_state_machine"],
+      "adoption": "ARCHITECTURE_CANDIDATE_AFTER_ENGINE_VERSION_RECONCILIATION"
+    },
+    {
+      "id": "godot_statecharts",
+      "source": "derkork/godot-statecharts",
+      "license_observed": "MIT",
+      "role": ["combat_macro_statecharts", "world_ai_statecharts"],
+      "adoption": "ARCHITECTURE_CANDIDATE"
+    },
+    {
+      "id": "godot_utility_ai",
+      "source": "Pennycook/godot-utility-ai",
+      "license_observed": "MIT",
+      "role": ["utility_scoring_reference"],
+      "adoption": "CONCEPT_OR_LIBRARY_CANDIDATE_AFTER_PIN_AND_AUDIT"
+    },
+    {
+      "id": "qwen_image_family",
+      "source": "QwenLM/Qwen-Image",
+      "license_observed": "Apache-2.0 project/model metadata observed",
+      "role": ["concept_art", "reference_conditioned_visual_authoring", "asset_candidate_generation"],
+      "adoption": "VISUAL_AUTHORING_CANDIDATE",
+      "warning": "Generated output still requires provenance, identity and rights review."
+    },
+    {
+      "id": "wan22_i2v",
+      "source": "Wan-Video/Wan2.2",
+      "license_observed": "Apache-2.0 project/model metadata observed",
+      "role": ["motion_concept_reference", "animation_previsualization"],
+      "adoption": "PREVIS_RESEARCH_CANDIDATE",
+      "runtime_dependency": false
+    }
+  ],
+  "blocked_or_restricted_examples": [
+    {
+      "id": "smplx",
+      "reason": "Observed licensing is noncommercial research unless separate permission is obtained.",
+      "default": "DO_NOT_DEPEND_ON_FOR_COMMERCIAL_CRIA_PIPELINE"
+    },
+    {
+      "id": "flux_dev_family",
+      "reason": "Several dev-family weights use noncommercial terms by default.",
+      "default": "RESEARCH_ONLY_UNLESS_COMMERCIAL_LICENSE_CLEAR"
+    },
+    {
+      "id": "deeplabcut_superanimal",
+      "reason": "SuperAnimal model terms are research/noncommercial in surfaced documentation.",
+      "default": "RESEARCH_ONLY"
+    }
+  ]
+}
