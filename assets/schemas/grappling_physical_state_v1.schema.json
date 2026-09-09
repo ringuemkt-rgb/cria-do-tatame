@@ -1,0 +1,100 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "cria.grappling_physical_state.v1.schema",
+  "title": "CRIA Grappling Physical State V1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["version", "position_id", "top_player", "athletes", "interaction", "authority"],
+  "properties": {
+    "version": {"const": "1.0.0"},
+    "position_id": {"type": "string", "minLength": 1},
+    "top_player": {"type": "integer", "minimum": 0, "maximum": 2},
+    "authority": {"const": "DERIVED_FROM_DETERMINISTIC_REDUCER"},
+    "athletes": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["p1", "p2"],
+      "properties": {
+        "p1": {"$ref": "#/$defs/athlete"},
+        "p2": {"$ref": "#/$defs/athlete"}
+      }
+    },
+    "interaction": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["connection_graph", "contact_continuity", "current_phase", "observation_status"],
+      "properties": {
+        "connection_graph": {"type": "array", "items": {"$ref": "#/$defs/edge"}},
+        "contact_continuity": {"oneOf": [{"type": "number", "minimum": 0, "maximum": 1}, {"const": "UNKNOWN"}]},
+        "current_phase": {"enum": ["anticipation", "entry", "establish", "stabilize", "response", "recovery", "idle", "UNKNOWN"]},
+        "observation_status": {"enum": ["UNOBSERVED", "PENDING_REVIEW", "EXPERT_APPROVED", "UNKNOWN"]}
+      }
+    }
+  },
+  "$defs": {
+    "unknownableScalar": {
+      "oneOf": [
+        {"type": "number", "minimum": 0, "maximum": 1},
+        {"const": "UNKNOWN"}
+      ]
+    },
+    "unknownableText": {
+      "oneOf": [
+        {"type": "string", "minLength": 1},
+        {"const": "UNKNOWN"}
+      ]
+    },
+    "athlete": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "posture", "support_points", "base_quality", "center_of_mass_projection",
+        "hip_orientation", "shoulder_orientation", "head_position", "inside_position",
+        "frames_and_wedges", "grip_graph", "grip_integrity", "underhook_overhook_state",
+        "leg_entanglement_topology", "knee_line_state", "heel_exposure", "off_balance",
+        "pressure_vector", "mobility_freedom", "pinned_segments", "submission_danger",
+        "gas", "isometric_load", "local_fatigue", "decision_confidence", "score"
+      ],
+      "properties": {
+        "posture": {"$ref": "#/$defs/unknownableText"},
+        "support_points": {"oneOf": [{"type": "array", "items": {"type": "string"}}, {"const": "UNKNOWN"}]},
+        "base_quality": {"$ref": "#/$defs/unknownableScalar"},
+        "center_of_mass_projection": {"$ref": "#/$defs/unknownableText"},
+        "hip_orientation": {"$ref": "#/$defs/unknownableText"},
+        "shoulder_orientation": {"$ref": "#/$defs/unknownableText"},
+        "head_position": {"$ref": "#/$defs/unknownableText"},
+        "inside_position": {"$ref": "#/$defs/unknownableText"},
+        "frames_and_wedges": {"oneOf": [{"type": "array", "items": {"type": "string"}}, {"const": "UNKNOWN"}]},
+        "grip_graph": {"oneOf": [{"type": "array", "items": {"$ref": "#/$defs/edge"}}, {"const": "UNKNOWN"}]},
+        "grip_integrity": {"$ref": "#/$defs/unknownableScalar"},
+        "underhook_overhook_state": {"$ref": "#/$defs/unknownableText"},
+        "leg_entanglement_topology": {"$ref": "#/$defs/unknownableText"},
+        "knee_line_state": {"$ref": "#/$defs/unknownableText"},
+        "heel_exposure": {"$ref": "#/$defs/unknownableScalar"},
+        "off_balance": {"$ref": "#/$defs/unknownableScalar"},
+        "pressure_vector": {"$ref": "#/$defs/unknownableText"},
+        "mobility_freedom": {"$ref": "#/$defs/unknownableScalar"},
+        "pinned_segments": {"oneOf": [{"type": "array", "items": {"type": "string"}}, {"const": "UNKNOWN"}]},
+        "submission_danger": {"$ref": "#/$defs/unknownableScalar"},
+        "gas": {"type": "number", "minimum": 0, "maximum": 100},
+        "isometric_load": {"$ref": "#/$defs/unknownableScalar"},
+        "local_fatigue": {"oneOf": [{"type": "object"}, {"const": "UNKNOWN"}]},
+        "decision_confidence": {"$ref": "#/$defs/unknownableScalar"},
+        "score": {"type": "integer", "minimum": 0}
+      }
+    },
+    "edge": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["type", "source", "target", "strength", "phase", "confidence"],
+      "properties": {
+        "type": {"enum": ["grip", "frame", "hook", "pin", "post", "wedge", "head_control", "chest_contact", "hip_contact", "leg_entanglement", "foot_contact", "mat_support"]},
+        "source": {"type": "string", "minLength": 1},
+        "target": {"type": "string", "minLength": 1},
+        "strength": {"oneOf": [{"type": "number", "minimum": 0, "maximum": 1}, {"const": "UNKNOWN"}]},
+        "phase": {"enum": ["anticipation", "entry", "establish", "stabilize", "response", "recovery", "UNKNOWN"]},
+        "confidence": {"oneOf": [{"type": "number", "minimum": 0, "maximum": 1}, {"const": "UNKNOWN"}]}
+      }
+    }
+  }
+}
