@@ -18,6 +18,8 @@ ARENAS = ROOT / "data/world/arena_info_v1.json"
 PREVIEW = ROOT / "tools/art/sprite_preview_harness.html"
 PROVENANCE_SCHEMA = ROOT / "assets/schemas/sprite_forge_v2.provenance.schema.json"
 PAIRED_SCHEMA = ROOT / "assets/schemas/paired_bjj_animation_v2.schema.json"
+IDENTITY_SCHEMA = ROOT / "assets/schemas/character_identity_master_v2.schema.json"
+WORLD_SCHEMA = ROOT / "assets/schemas/world_art_package_v2.schema.json"
 
 
 def load(path: Path) -> dict[str, Any]:
@@ -29,7 +31,19 @@ def load(path: Path) -> dict[str, Any]:
 
 def main() -> int:
     errors: list[str] = []
-    for required in (CONTRACT, POLICY, BJJ_GATE, REGISTRY, ROSTER, ARENAS, PREVIEW, PROVENANCE_SCHEMA, PAIRED_SCHEMA):
+    for required in (
+        CONTRACT,
+        POLICY,
+        BJJ_GATE,
+        REGISTRY,
+        ROSTER,
+        ARENAS,
+        PREVIEW,
+        PROVENANCE_SCHEMA,
+        PAIRED_SCHEMA,
+        IDENTITY_SCHEMA,
+        WORLD_SCHEMA,
+    ):
         if not required.exists():
             errors.append(f"missing required source: {required.relative_to(ROOT)}")
     if errors:
@@ -44,6 +58,8 @@ def main() -> int:
     arenas = load(ARENAS)
     provenance_schema = load(PROVENANCE_SCHEMA)
     paired_schema = load(PAIRED_SCHEMA)
+    identity_schema = load(IDENTITY_SCHEMA)
+    world_schema = load(WORLD_SCHEMA)
 
     if contract.get("version") != "2.0.0":
         errors.append("Sprite Forge v2 contract version must be 2.0.0")
@@ -69,6 +85,15 @@ def main() -> int:
     for field in ("turnaround", "front_combat_pose", "back_view", "side_view", "palette_signature", "silhouette_signature"):
         if field not in identity.get("master_artifacts", []):
             errors.append(f"identity_lock missing master artifact: {field}")
+    identity_required = set(identity_schema.get("required", []))
+    for field in ("character_id", "canon_refs", "palette_signature", "silhouette_signature", "asymmetry_contract", "variants", "human_reviewer", "rights_status", "shipping"):
+        if field not in identity_required:
+            errors.append(f"identity schema missing required field: {field}")
+    if identity_schema.get("properties", {}).get("shipping", {}).get("const") is not False:
+        errors.append("identity schema must enforce shipping=false")
+    variants = identity_schema.get("properties", {}).get("variants", {}).get("required", [])
+    if set(variants) != {"gi", "nogi"}:
+        errors.append("identity schema must require GI and NO-GI variants")
 
     paired = contract.get("paired_bjj_animation", {})
     canonical_phases = bjj_gate.get("paired_animation_contract", {}).get("required_phases", [])
@@ -81,6 +106,8 @@ def main() -> int:
     schema_phases = [item.get("const") for item in paired_schema.get("properties", {}).get("phases", {}).get("prefixItems", [])]
     if schema_phases != canonical_phases:
         errors.append("paired BJJ JSON schema phase order diverges from completion gate")
+    if paired_schema.get("properties", {}).get("shipping", {}).get("const") is not False:
+        errors.append("paired BJJ schema must enforce shipping=false")
 
     preview = contract.get("preview_harness", {})
     if preview.get("required_before_godot_promotion") is not True:
@@ -97,6 +124,12 @@ def main() -> int:
         errors.append("single flat generated maps must not be shipping-ready")
     if world.get("walkable_space_must_be_defined_by_game_data_not_image_guessing") is not True:
         errors.append("walkability must remain game-data authority")
+    world_required = set(world_schema.get("required", []))
+    for field in ("location_id", "layers", "collision_metadata", "navigation_metadata", "runtime_evidence", "human_visual_review", "rights_status", "shipping"):
+        if field not in world_required:
+            errors.append(f"world art schema missing required field: {field}")
+    if world_schema.get("properties", {}).get("shipping", {}).get("const") is not False:
+        errors.append("world art schema must enforce shipping=false")
 
     provenance = contract.get("provenance_sidecar", {})
     if provenance.get("shipping_default") is not False:
