@@ -1,0 +1,46 @@
+name: BJJ Shadow Runtime V1
+
+on:
+  pull_request:
+    branches:
+      - main
+    paths:
+      - "data/combat/combat_manager_bjj_shadow_map_v1.json"
+      - "src/combat/CombatManagerBJJShadowAdapterV1.gd"
+      - "src/autoloads/BJJShadowRuntimeObserver.gd"
+      - "tests/combat_manager_bjj_shadow_smoke.gd"
+      - "tests/test_bjj_shadow_runtime_v1.py"
+      - "tools/combat/validate_bjj_shadow_runtime_v1.py"
+      - "project.godot"
+      - "package.json"
+      - ".github/workflows/bjj-shadow-runtime-v1.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate-shadow-runtime:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Validate fail-closed shadow contract
+        run: |
+          python tools/combat/validate_bjj_shadow_runtime_v1.py
+          python -m unittest discover -s tests -p 'test_bjj_shadow_runtime_v1.py'
+      - name: Download Godot 4.2.2
+        run: |
+          curl -L --fail --retry 3 \
+            -o godot.zip \
+            https://github.com/godotengine/godot/releases/download/4.2.2-stable/Godot_v4.2.2-stable_linux.x86_64.zip
+          unzip -q godot.zip
+          mv Godot_v4.2.2-stable_linux.x86_64 godot
+          chmod +x godot
+          ./godot --version
+      - name: Import project
+        run: timeout 180 ./godot --headless --editor --path . --import
+      - name: Shadow runtime smoke
+        run: ./godot --headless --path . --script res://tests/combat_manager_bjj_shadow_smoke.gd
