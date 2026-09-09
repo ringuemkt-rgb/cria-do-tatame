@@ -1,0 +1,44 @@
+{
+  "$schema": "cria.minicpm5_runtime_profile.v1",
+  "version": "1.0.0",
+  "status": "OPTIONAL_LOCAL_CANDIDATE",
+  "shipping": false,
+  "model": "openbmb/MiniCPM5-2B",
+  "role": "OPTIONAL_HIGH_LEVEL_NPC_PLANNER",
+  "policies": {
+    "required_for_core_gameplay": false,
+    "direct_world_mutation": false,
+    "direct_combat_outcome": false,
+    "direct_economy_mutation": false,
+    "direct_save_mutation": false,
+    "direct_animation_playback": false,
+    "frame_loop_calls": false,
+    "tool_allowlist_required": true,
+    "schema_validation_required": true,
+    "knowledge_scope_filter_required": true,
+    "late_result_policy": "DISCARD",
+    "failure_policy": "DETERMINISTIC_FALLBACK",
+    "remote_endpoint_default_allowed": false
+  },
+  "profiles": {
+    "OFFLINE_BASELINE": {"enabled": false, "backend": "none", "required": true},
+    "SGLANG_TOOLS": {"enabled": false, "backend": "sglang", "base_url": "http://127.0.0.1:30000/v1", "tool_calling": true, "preferred_for_development": true},
+    "LOCAL_GGUF": {"enabled": false, "backend": "openai_compatible_local", "base_url": "http://127.0.0.1:8080/v1", "tool_calling": "VERIFY_RUNTIME_TEMPLATE", "preferred_for_development": false}
+  },
+  "generation": {"temperature": 0.2, "top_p": 0.9, "max_tokens": 512, "request_timeout_ms": 2500, "max_retries": 0},
+  "allowlisted_tools": [
+    "propose_motion_intent",
+    "propose_dialogue_intent",
+    "propose_training_intent",
+    "propose_bjj_strategy",
+    "summarize_memory_candidates"
+  ],
+  "forbidden_capabilities": [
+    "set_score", "set_winner", "award_item", "award_money", "teleport_actor",
+    "apply_submission", "change_canon", "write_save", "set_relationship",
+    "set_world_state", "play_authoritative_animation"
+  ],
+  "knowledge_policy": {"respect_npc_scope": true, "unknown_is_denied": true, "untrusted_world_text_can_change_tools": false},
+  "simulation_tier_policy": {"L0_DORMANT": "NEVER", "L1_STATISTICAL": "NEVER", "L2_ACTIVE_REGION": "SALIENT_OR_PLAN_EXPIRY_ONLY", "L3_FULL_RUNTIME": "SALIENT_OR_PLAN_EXPIRY_ONLY"},
+  "android_policy": "DO_NOT_ASSUME_LOCAL_LLM_SUPPORT_UNTIL_PHYSICAL_DEVICE_BENCHMARKS_PASS"
+}
