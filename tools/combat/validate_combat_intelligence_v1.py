@@ -11,6 +11,7 @@ CONTRACT = ROOT / "data/combat/combat_intelligence_contract_v1.json"
 COMPLETION = ROOT / "data/combat/bjj_completion_gate_v1.json"
 RULES = ROOT / "data/combat/bjj_rulesets_verified_v1.json"
 CORPUS = ROOT / "data/research/grappling_video_corpus_contract_v1.json"
+LEDGER = ROOT / "data/research/grappling_video_source_ledger_v1.json"
 OBS_SCHEMA = ROOT / "assets/schemas/grappling_observation_v1.schema.json"
 RESEARCH_REGISTRY = ROOT / "data/research/combat_research_registry_v1.json"
 MIGRATION = ROOT / "data/production/godot_migration_plan_v1.json"
@@ -26,9 +27,9 @@ def load(path: Path) -> dict[str, Any]:
 
 
 def validate(root: Path = ROOT) -> dict[str, Any]:
-    del root  # paths are intentionally repository-fixed authorities
+    del root
     errors: list[str] = []
-    required = [CONTRACT, COMPLETION, RULES, CORPUS, OBS_SCHEMA, RESEARCH_REGISTRY, MIGRATION, REDUCER, SKILL]
+    required = [CONTRACT, COMPLETION, RULES, CORPUS, LEDGER, OBS_SCHEMA, RESEARCH_REGISTRY, MIGRATION, REDUCER, SKILL]
     for path in required:
         if not path.exists():
             errors.append(f"missing required file: {path.relative_to(ROOT)}")
@@ -38,6 +39,7 @@ def validate(root: Path = ROOT) -> dict[str, Any]:
     contract = load(CONTRACT)
     completion = load(COMPLETION)
     corpus = load(CORPUS)
+    ledger = load(LEDGER)
     schema = load(OBS_SCHEMA)
     registry = load(RESEARCH_REGISTRY)
     migration = load(MIGRATION)
@@ -97,6 +99,16 @@ def validate(root: Path = ROOT) -> dict[str, Any]:
     if rights.get("preferred_corpus") != "CRIA_OWN_CAPTURE_WITH_RELEASES":
         errors.append("own capture with releases must be preferred commercial corpus")
 
+    if ledger.get("status") != "ACTIVE_EMPTY_LEDGER":
+        errors.append("v1 source ledger status must accurately describe current empty ingestion state")
+    sources = ledger.get("sources", [])
+    claims = ledger.get("ingestion_claim", {})
+    if sources:
+        errors.append("initial Combat Intelligence PR must not pretend external videos were ingested")
+    for field in ("videos_ingested", "expert_reviewed_observations", "commercial_training_eligible_videos"):
+        if int(claims.get(field, -1)) != 0:
+            errors.append(f"empty source ledger must claim zero: {field}")
+
     benchmarks = {x.get("id"): x for x in corpus.get("external_benchmarks", []) if isinstance(x, dict)}
     vicos = benchmarks.get("vicos_bjj_positions", {})
     if vicos.get("license_status") != "CC_BY_NC_SA_4_0_NONCOMMERCIAL" or vicos.get("commercial_training_default") is not False:
@@ -142,6 +154,7 @@ def validate(root: Path = ROOT) -> dict[str, Any]:
         "animation_phases": canonical_phases,
         "research_tools": len(registry.get("findings", [])),
         "external_benchmarks": len(benchmarks),
+        "videos_ingested": int(claims.get("videos_ingested", 0)),
         "godot_migration_target": migration.get("target_engine"),
         "commercial_video_default": rights.get("default_status"),
     }
