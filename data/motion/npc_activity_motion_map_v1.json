@@ -1,0 +1,28 @@
+{
+  "$schema": "cria.npc_activity_motion_map.v1",
+  "version": "1.0.0",
+  "status": "SAFE_FALLBACK_MAP",
+  "shipping": false,
+  "unknown_activity_policy": "IDLE",
+  "mappings": {
+    "idle": {"action_id": "idle", "category": "WORLD"},
+    "travel": {"action_id": "walk", "category": "WORLD"},
+    "walk": {"action_id": "walk", "category": "WORLD"},
+    "work": {"action_id": "interact", "category": "WORLD"},
+    "socialize": {"action_id": "talk", "category": "SOCIAL"},
+    "talk": {"action_id": "talk", "category": "SOCIAL"},
+    "coach": {"action_id": "coach_instruction", "category": "SOCIAL"},
+    "recording": {"action_id": "recording", "category": "SOCIAL"},
+    "training": {"action_id": "positional_drill", "category": "TRAINING"},
+    "warmup": {"action_id": "warmup", "category": "TRAINING"},
+    "sparring": {"action_id": "sparring_start", "category": "TRAINING"},
+    "competition": {"action_id": "match_ready", "category": "COMPETITION"},
+    "recover": {"action_id": "recover", "category": "DAMAGE_FATIGUE"}
+  },
+  "policy": {
+    "mapping_can_change_schedule": false,
+    "mapping_can_change_world_node": false,
+    "mapping_can_start_bjj_technique": false,
+    "unknown_activity_can_invent_motion": false
+  }
+}
