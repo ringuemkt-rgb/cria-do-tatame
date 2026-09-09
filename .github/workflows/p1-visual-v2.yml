@@ -10,6 +10,7 @@ on:
       - 'data/combat/roster_v3.json'
       - 'production/p1/**'
       - 'tools/art/**'
+      - 'tests/test_p1_visual_build_v2.py'
       - 'package.json'
       - '.github/workflows/p1-visual-v2.yml'
   push:
@@ -22,6 +23,7 @@ on:
       - 'data/combat/roster_v3.json'
       - 'production/p1/**'
       - 'tools/art/**'
+      - 'tests/test_p1_visual_build_v2.py'
       - 'package.json'
       - '.github/workflows/p1-visual-v2.yml'
 
@@ -37,5 +39,7 @@ jobs:
         run: python tools/art/validate_sprite_forge_v2.py
       - name: Validate gold-slice P1 visual contract
         run: python tools/art/validate_p1_visual_build_v2.py
+      - name: P1 invariant tests
+        run: python -m unittest discover -s tests -p 'test_p1_visual_build_v2.py'
       - name: Compile P1 validator
         run: python -m py_compile tools/art/validate_p1_visual_build_v2.py
