@@ -1,0 +1,28 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "cria.motion_intent.v1.schema",
+  "title": "CRIA Motion Intent V1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "version", "actor_id", "source", "category", "action_id",
+    "from_state", "desired_state", "priority", "requested_at_tick",
+    "expires_at_tick", "params", "requires_validation"
+  ],
+  "properties": {
+    "version": {"const": "1.0.0"},
+    "actor_id": {"type": "string", "minLength": 1},
+    "source": {"enum": ["PLAYER", "SCRIPTED", "UTILITY_AI", "MINICPM", "SYSTEM_EVENT"]},
+    "category": {"enum": ["WORLD", "SOCIAL", "TRAINING", "BJJ", "COMPETITION", "DAMAGE_FATIGUE", "CINEMATIC"]},
+    "action_id": {"type": "string", "minLength": 1, "pattern": "^[a-zA-Z0-9_\\-]+$"},
+    "target_actor_id": {"type": ["string", "null"]},
+    "from_state": {"type": "string", "minLength": 1},
+    "desired_state": {"type": "string", "minLength": 1},
+    "priority": {"type": "number", "minimum": 0, "maximum": 1},
+    "requested_at_tick": {"type": "integer", "minimum": 0},
+    "expires_at_tick": {"type": "integer", "minimum": 0},
+    "params": {"type": "object"},
+    "requires_validation": {"const": true},
+    "trace_id": {"type": ["string", "null"]}
+  }
+}
