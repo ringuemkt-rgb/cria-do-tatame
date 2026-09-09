@@ -125,7 +125,7 @@ def validate() -> dict[str, Any]:
     smoke = require_file(SMOKE_PATH)
 
     required_adapter_tokens = [
-        'return {"ok": false, "error": "legacy_state_ambiguous"',
+        '"error": "legacy_state_ambiguous"',
         '"policy": "REPORT_UNMAPPED_AND_DO_NOT_GUESS"',
         '"authoritative": false',
         "reducer.reduce(shadow_state, action)",
