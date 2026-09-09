@@ -50,9 +50,14 @@
         "data/chars/canon/ruan_macacao.json",
         "data/chars/canon/davi_relampago.json",
         "tools/art/validate_p1_visual_build_v2.py",
-        ".github/workflows/p1-visual-v2.yml"
+        ".github/workflows/p1-visual-v2.yml",
+        "data/combat/combat_manager_bjj_shadow_map_v1.json",
+        "src/combat/CombatManagerBJJShadowAdapterV1.gd",
+        "src/autoloads/BJJShadowRuntimeObserver.gd",
+        "tests/combat_manager_bjj_shadow_smoke.gd",
+        ".github/workflows/bjj-shadow-runtime-v1.yml"
       ],
-      "blockers": ["combat_manager_adapter_pending", "real_p1_assets_pending", "physical_android_evidence_pending"]
+      "blockers": ["combat_manager_authority_migration_pending", "real_p1_assets_pending", "physical_android_evidence_pending"]
     },
     {
       "id": "G2_characters",
@@ -97,9 +102,16 @@
         "assets/schemas/grappling_observation_v1.schema.json",
         ".agents/skills/cria-combat-intelligence/SKILL.md",
         "tools/combat/validate_combat_intelligence_v1.py",
-        ".github/workflows/combat-intelligence-v1.yml"
+        ".github/workflows/combat-intelligence-v1.yml",
+        "data/combat/combat_manager_bjj_shadow_map_v1.json",
+        "src/combat/CombatManagerBJJShadowAdapterV1.gd",
+        "src/autoloads/BJJShadowRuntimeObserver.gd",
+        "tools/combat/validate_bjj_shadow_runtime_v1.py",
+        "tests/test_bjj_shadow_runtime_v1.py",
+        "tests/combat_manager_bjj_shadow_smoke.gd",
+        ".github/workflows/bjj-shadow-runtime-v1.yml"
       ],
-      "blockers": ["full_kg_t093_t120_and_chains_not_received", "paired_animation_packages_missing", "F3_calibration_pending", "F4_balance_pending", "combat_intelligence_runtime_adapter_pending", "grappling_evidence_corpus_empty"]
+      "blockers": ["full_kg_t093_t120_and_chains_not_received", "paired_animation_packages_missing", "F3_calibration_pending", "F4_balance_pending", "shadow_equivalence_evidence_pending", "grappling_evidence_corpus_empty"]
     },
     {
       "id": "G4_world",
@@ -164,7 +176,8 @@
         "tools/art/sprite_preview_harness.html",
         ".github/workflows/sprite-forge-v2.yml",
         ".github/workflows/p1-visual-v2.yml",
-        ".github/workflows/combat-intelligence-v1.yml"
+        ".github/workflows/combat-intelligence-v1.yml",
+        ".github/workflows/bjj-shadow-runtime-v1.yml"
       ],
       "blockers": ["visual_runtime_qa_pending", "physical_android_evidence_pending", "windows_export_smoke_pending", "release_coverage_gate_pending"]
     }
