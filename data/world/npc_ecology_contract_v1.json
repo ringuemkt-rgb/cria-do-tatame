@@ -1,0 +1,74 @@
+{
+  "$schema": "cria.npc_ecology_contract.v1",
+  "version": "1.0.0",
+  "status": "ACTIVE_RUNTIME_FOUNDATION",
+  "runtime_authority": false,
+  "shipping": false,
+  "purpose": "Define the deterministic living-world substrate for NPC schedules, simulation tiers, knowledge boundaries, relationships and events without requiring an LLM for core gameplay.",
+  "world_authority": "data/world/world_map_v4.json",
+  "runtime_engine": "src/world/NPCEcologyEngineV1.gd",
+  "core_policy": {
+    "offline_core_required": true,
+    "llm_is_optional_enhancement": true,
+    "llm_may_mutate_world_directly": false,
+    "intention_requires_rules_validation": true,
+    "same_seed_and_actions_require_same_state": true,
+    "unknown_node_fails_closed": true,
+    "npc_cannot_use_unknown_information": true
+  },
+  "simulation_tiers": [
+    {"id": "L0_DORMANT", "purpose": "Far-away entity; only calendar-critical events advance."},
+    {"id": "L1_STATISTICAL", "purpose": "Off-screen entity; schedule and coarse outcomes advance deterministically."},
+    {"id": "L2_ACTIVE_REGION", "purpose": "Loaded/nearby region; location, intention and local interaction advance."},
+    {"id": "L3_FULL_RUNTIME", "purpose": "Current scene; Godot movement, collision, animation, perception and dialogue are active."}
+  ],
+  "knowledge_scopes": ["PUBLIC", "LOCAL", "FACTION", "ACADEMY", "PERSONAL", "SECRET", "UNKNOWN"],
+  "memory_classes": ["SEMANTIC", "EPISODIC", "RELATIONSHIP", "WORKING", "CORE_MEMORY"],
+  "relationship_axes": ["respect", "trust", "affection", "rivalry", "fear", "debt"],
+  "npc_required_fields": [
+    "id",
+    "home_node",
+    "schedule_profile",
+    "knowledge_scopes",
+    "goals",
+    "relationships"
+  ],
+  "schedule_entry_required_fields": ["start_minute", "end_minute", "node", "activity"],
+  "schedule_rules": {
+    "minutes_per_day": 1440,
+    "entries_must_not_overlap": true,
+    "start_inclusive_end_exclusive": true,
+    "node_must_exist_in_world_map": true,
+    "fallback_location": "home_node"
+  },
+  "archetypes": [
+    "fighter_student",
+    "fighter_competitor",
+    "coach",
+    "merchant",
+    "fisher",
+    "student",
+    "official",
+    "street_fighter",
+    "health_worker",
+    "journalist"
+  ],
+  "event_overrides": [
+    "tournament",
+    "storm",
+    "injury",
+    "festival",
+    "mission",
+    "faction_conflict"
+  ],
+  "completion_requirements": {
+    "engine_exists": true,
+    "schedule_validation": true,
+    "world_node_validation": true,
+    "deterministic_step_test": true,
+    "population_source_required_for_shipping": true,
+    "relationship_persistence_required_for_shipping": true,
+    "save_migration_required_for_shipping": true,
+    "runtime_scene_evidence_required_for_shipping": true
+  }
+}
