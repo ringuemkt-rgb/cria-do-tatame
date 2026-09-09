@@ -63,7 +63,7 @@
       "trigger": "Pixel Art",
       "weights_file": "Qwen-Image-2512-Master-Pixel-Art-LoRA.safetensors",
       "weights_sha256": "2a2775ac823b3704eba2f72f3be65d7b0fe3262f1822e971c16818d0c923a4b6",
-      "weights_size_bytes": 1267015356,
+      "weights_size_hub_display": "1.18 GB",
       "training_card_images": 50,
       "training_dataset_provenance": "not_disclosed_in_model_card",
       "notes": "Candidate generation is allowed, not shipping. Model card declares Apache-2.0, Qwen-Image-2512 base, trigger `Pixel Art`, 45–50 inference steps and 50 training images. Training-image provenance is not disclosed, so every output remains subject to rights review and human approval. This LoRA does not replace Sprite Forge, identity lock, paired-BJJ biomechanics or manual pixel cleanup."
