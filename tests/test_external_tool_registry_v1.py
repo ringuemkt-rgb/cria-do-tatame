@@ -33,6 +33,7 @@ class ExternalToolRegistryV1Tests(unittest.TestCase):
     def test_noncommercial_and_unknown_sources_are_no_copy(self):
         for sid in (
             "sprite_animator",
+            "blendi_sprite_sheet_creator",
             "cline_qwen_snes_engine",
             "pixel_life_simulator",
             "mia_deepseek_v4_1_html_100",
@@ -40,6 +41,12 @@ class ExternalToolRegistryV1Tests(unittest.TestCase):
         ):
             self.assertFalse(self.sources[sid]["direct_code_reuse"], sid)
             self.assertFalse(self.sources[sid]["direct_asset_reuse"], sid)
+
+    def test_blendi_sprite_creator_is_pinned_reference_only(self):
+        source = self.sources["blendi_sprite_sheet_creator"]
+        self.assertEqual(source["revision"], "4e0eeb413fc0ee1b3650957f47eb187dd4bdbf2d")
+        self.assertEqual(source["license_status"], "NO_LICENSE_FOUND")
+        self.assertEqual(source["adoption"], "STUDY_AND_REIMPLEMENT_CONCEPTS_ONLY")
 
     def test_pixelsrpg_assets_never_enter_directly(self):
         source = self.sources["pixelsrpg_forge"]
