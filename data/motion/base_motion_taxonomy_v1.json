@@ -1,0 +1,34 @@
+{
+  "$schema": "cria.base_motion_taxonomy.v1",
+  "version": "1.0.0",
+  "status": "SEMANTIC_ONLY_NOT_ASSET_AUTHORITY",
+  "shipping": false,
+  "family_category_map": {
+    "WORLD": "WORLD",
+    "SOCIAL": "SOCIAL",
+    "TRAINING": "TRAINING",
+    "BJJ_UPRIGHT": "BJJ",
+    "BJJ_GROUND": "BJJ",
+    "COMPETITION": "COMPETITION",
+    "DAMAGE_FATIGUE": "DAMAGE_FATIGUE",
+    "CINEMATIC": "CINEMATIC"
+  },
+  "families": {
+    "WORLD": ["idle", "breathe", "look", "turn", "walk", "jog", "run", "sprint", "stop", "pivot", "interact", "sit", "stand", "pick_up", "carry", "put_down"],
+    "SOCIAL": ["talk", "greet", "point", "challenge", "refuse", "celebrate", "frustration", "coach_instruction", "interview", "recording"],
+    "TRAINING": ["warmup", "mobility", "solo_drill", "grip_drill", "positional_drill", "sparring_start", "sparring_restart", "rest_between_rounds"],
+    "BJJ_UPRIGHT": ["stance", "grip_attempt", "grip_establish", "grip_break", "pummel", "underhook", "overhook", "level_change", "takedown_entry", "sprawl", "scramble"],
+    "BJJ_GROUND": ["guard", "top_pressure", "pass", "sweep", "mount", "side_control", "back_control", "escape", "submission_setup", "submission_control", "submission_resolution", "scramble_ground"],
+    "COMPETITION": ["match_enter", "match_ready", "restart", "win", "lose", "decision_react", "podium"],
+    "DAMAGE_FATIGUE": ["stumble", "brace", "fatigue_idle", "recover"],
+    "CINEMATIC": ["cinematic_idle", "cinematic_walk", "cinematic_react"]
+  },
+  "policy": {
+    "taxonomy_can_define_bjj_legality": false,
+    "taxonomy_can_define_scoring": false,
+    "taxonomy_can_promote_assets": false,
+    "graph_techniques_are_merged_as_bjj_actions": true,
+    "duplicate_action_ids_across_families_are_forbidden": true
+  },
+  "note": "This file defines semantic families only. Canonical BJJ technique actions are derived from the authoritative graph and Sprite Forge remains visual-production authority."
+}
