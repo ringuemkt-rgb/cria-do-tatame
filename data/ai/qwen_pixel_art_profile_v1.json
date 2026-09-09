@@ -1,0 +1,90 @@
+{
+  "$schema": "cria.qwen_pixel_art_profile.v1",
+  "version": "1.0.0",
+  "status": "CANDIDATE_AUTHORING_PROFILE",
+  "runtime_authority": false,
+  "shipping": false,
+  "model_registry": "data/ai/model_registry_v02.json",
+  "base_model": {
+    "id": "Qwen/Qwen-Image-2512",
+    "revision": "ca98f15a127a0c732aec7e60ba6e783fb953d490",
+    "license_metadata": "apache-2.0"
+  },
+  "lora": {
+    "id": "prithivMLmods/Qwen-Image-2512-Pixel-Art-LoRA",
+    "revision": "e14eea588e8e4a9c753439e52a203d06288769c5",
+    "license_metadata": "apache-2.0",
+    "trigger": "Pixel Art",
+    "weights_file": "Qwen-Image-2512-Master-Pixel-Art-LoRA.safetensors",
+    "weights_sha256": "2a2775ac823b3704eba2f72f3be65d7b0fe3262f1822e971c16818d0c923a4b6",
+    "training_images_declared": 50,
+    "training_dataset_provenance": "NOT_DISCLOSED_IN_MODEL_CARD"
+  },
+  "acquisition": {
+    "metadata_clone": "GIT_LFS_SKIP_SMUDGE=1 git clone https://huggingface.co/prithivMLmods/Qwen-Image-2512-Pixel-Art-LoRA",
+    "metadata_clone_semantics": "CLONES_POINTERS_AND_METADATA_ONLY",
+    "weights_download_policy": "ON_DEMAND_PINNED_REVISION_ONLY",
+    "persistent_public_repo_cache": false,
+    "verify_sha256_before_inference": true
+  },
+  "inference": {
+    "dtype_preferred": "bfloat16",
+    "device_preferred": "cuda",
+    "steps_default": 48,
+    "steps_allowed": [45, 46, 47, 48, 49, 50],
+    "published_dimensions": [
+      {"width": 1024, "height": 1024, "use": "character_identity_concept_or_square_asset"},
+      {"width": 1280, "height": 832, "use": "arena_environment_concept"}
+    ],
+    "dimension_note": "The upstream card labels 1280x832 as 3:1, but 1280/832 is approximately 1.538; CRIA records the dimensions, not the incorrect ratio label."
+  },
+  "routing": {
+    "high_value": [
+      "arena_environment_concept",
+      "regional_props",
+      "collectable_concepts",
+      "icon_concepts",
+      "story_scene_concepts"
+    ],
+    "conditional": [
+      "character_turnaround_concept",
+      "character_combat_pose_concept",
+      "portrait_concept"
+    ],
+    "not_authoritative_alone": [
+      "fighter_core_spritesheet",
+      "fighter_clinch_spritesheet",
+      "fighter_ground_spritesheet",
+      "paired_bjj_technique",
+      "identity_from_real_person_reference",
+      "ui_with_baked_text"
+    ]
+  },
+  "prompt_contract": {
+    "prefix": "Pixel Art, CRIA DO TATAME Regional Premium 2D pixel art, Brazilian Baixo Sul Bahia, true square pixel grid, crisp manual pixel clusters, cel-shaded surfaces, grounded anatomy, no smooth vector, no photo, no 3D CGI,",
+    "must_append_from_skill": ".agents/skills/cria-art-direction/SKILL.md",
+    "forbid_baked_text_by_default": true,
+    "forbid_real_brand_marks": true,
+    "forbid_unapproved_faction_or_canon_changes": true
+  },
+  "postprocess_required": [
+    "human_visual_selection",
+    "identity_lock_when_character",
+    "palette_snap",
+    "manual_pixel_cleanup",
+    "nearest_neighbor_normalization",
+    "set_pivot_when_sprite",
+    "sprite_forge_qa_when_sprite",
+    "paired_sync_and_bjj_biomechanics_when_technique",
+    "provenance_sidecar",
+    "rights_review",
+    "human_approval",
+    "godot_integration_before_product_status"
+  ],
+  "promotion_guards": {
+    "generation_implies_approval": false,
+    "generation_implies_rights_clearance": false,
+    "generation_implies_shipping": false,
+    "model_license_implies_training_dataset_provenance": false
+  }
+}
