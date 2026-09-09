@@ -1,0 +1,58 @@
+name: Sprite Forge V2
+
+on:
+  pull_request:
+    paths:
+      - 'data/visual/**'
+      - 'data/production/external_tool_registry_v1.json'
+      - 'data/combat/**'
+      - 'data/bjj/**'
+      - 'data/world/**'
+      - 'tools/art/**'
+      - 'tools/ci/validate_external_tool_registry_v1.py'
+      - 'tests/test_sprite_forge_v2.py'
+      - 'tests/test_external_tool_registry_v1.py'
+      - '.agents/skills/cria-sprite-forge/**'
+      - 'package.json'
+      - '.github/workflows/sprite-forge-v2.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'data/visual/**'
+      - 'data/production/external_tool_registry_v1.json'
+      - 'data/combat/**'
+      - 'data/bjj/**'
+      - 'data/world/**'
+      - 'tools/art/**'
+      - 'tools/ci/validate_external_tool_registry_v1.py'
+      - 'tests/test_sprite_forge_v2.py'
+      - 'tests/test_external_tool_registry_v1.py'
+      - '.agents/skills/cria-sprite-forge/**'
+      - 'package.json'
+      - '.github/workflows/sprite-forge-v2.yml'
+
+jobs:
+  validate-forge-v2:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Validate external source licensing policy
+        run: python tools/ci/validate_external_tool_registry_v1.py
+      - name: Derive full visual manufacturing obligations
+        run: python tools/art/derive_sprite_forge_v2_requirements.py
+      - name: Validate Sprite Forge V2 contracts
+        run: python tools/art/validate_sprite_forge_v2.py
+      - name: Unit tests
+        run: |
+          python -m unittest discover -s tests -p 'test_external_tool_registry_v1.py'
+          python -m unittest discover -s tests -p 'test_sprite_forge_v2.py'
+      - name: Compile authoring scripts
+        run: python -m py_compile tools/art/derive_sprite_forge_v2_requirements.py tools/art/validate_sprite_forge_v2.py
+      - name: Upload materialized requirements
+        uses: actions/upload-artifact@v4
+        with:
+          name: sprite-forge-v2-requirements
+          path: production/generated/sprite_forge_v2_requirements.materialized.json
