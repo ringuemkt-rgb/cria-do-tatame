@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>CRIA Sprite Forge V2 — Preview Harness</title>
+<style>
+  :root{font-family:system-ui,-apple-system,Segoe UI,sans-serif;color-scheme:dark;background:#0d0f12;color:#eef1f4}
+  body{margin:0;padding:20px;background:#0d0f12}.app{max-width:1100px;margin:auto;display:grid;gap:16px}
+  .panel{background:#15191f;border:1px solid #2a3039;border-radius:12px;padding:16px}.row{display:flex;gap:12px;flex-wrap:wrap;align-items:center}
+  button,input,select{font:inherit}button{background:#262d36;color:#fff;border:1px solid #3a4350;border-radius:8px;padding:8px 12px;cursor:pointer}
+  label{display:flex;gap:8px;align-items:center}.stage{display:grid;place-items:center;min-height:520px;overflow:auto;background:#090b0e;border-radius:10px}
+  canvas{image-rendering:pixelated;image-rendering:crisp-edges;background-image:linear-gradient(45deg,#24282d 25%,transparent 25%),linear-gradient(-45deg,#24282d 25%,transparent 25%),linear-gradient(45deg,transparent 75%,#24282d 75%),linear-gradient(-45deg,transparent 75%,#24282d 75%);background-size:24px 24px;background-position:0 0,0 12px,12px -12px,-12px 0}
+  .status{white-space:pre-wrap;font-family:ui-monospace,SFMono-Regular,Consolas,monospace;font-size:13px;line-height:1.45}.warn{color:#ffcf66}.ok{color:#7ee787}
+</style>
+</head>
+<body><main class="app">
+<section class="panel"><h1>CRIA Sprite Forge V2</h1><p>Ferramenta offline de inspeção. Não é runtime, não altera canon e não aprova shipping.</p>
+<div class="row"><label>Frames PNG <input id="files" type="file" accept="image/png" multiple></label><label>FPS <input id="fps" type="range" min="1" max="24" value="12"><span id="fpsv">12</span></label><label>Zoom <input id="zoom" type="range" min="1" max="6" value="3"><span id="zoomv">3×</span></label></div>
+<div class="row"><button id="play">Pausar</button><button id="prev">◀</button><button id="next">▶</button><label><input id="mirror" type="checkbox"> espelhar</label><label><input id="bbox" type="checkbox" checked> contentBounds</label><label><input id="anchor" type="checkbox" checked> pivot/ground</label></div></section>
+<section class="panel stage"><canvas id="canvas" width="128" height="128"></canvas></section>
+<section class="panel"><div id="status" class="status">Carregue frames PNG já normalizados ou candidatos para inspeção.</div></section>
+</main>
+<script>
+(() => {
+  const FRAME_W=128, FRAME_H=128, PIVOT={x:64,y:96};
+  const $=id=>document.getElementById(id), canvas=$('canvas'), ctx=canvas.getContext('2d',{willReadFrequently:true});
+  ctx.imageSmoothingEnabled=false;
+  let frames=[], index=0, playing=true, last=0;
+  function bounds(img){
+    const c=document.createElement('canvas'); c.width=img.width;c.height=img.height;
+    const x=c.getContext('2d',{willReadFrequently:true});x.drawImage(img,0,0);
+    const d=x.getImageData(0,0,c.width,c.height).data; let minX=c.width,minY=c.height,maxX=-1,maxY=-1,count=0;
+    for(let yy=0;yy<c.height;yy++)for(let xx=0;xx<c.width;xx++){if(d[(yy*c.width+xx)*4+3]>8){count++;minX=Math.min(minX,xx);minY=Math.min(minY,yy);maxX=Math.max(maxX,xx);maxY=Math.max(maxY,yy)}}
+    return count?{x:minX,y:minY,width:maxX-minX+1,height:maxY-minY+1,pixels:count}:null;
+  }
+  async function loadFiles(list){
+    const sorted=[...list].sort((a,b)=>a.name.localeCompare(b.name,undefined,{numeric:true})); frames=[];
+    for(const file of sorted){const url=URL.createObjectURL(file);const img=new Image();await new Promise((r,j)=>{img.onload=r;img.onerror=j;img.src=url});frames.push({name:file.name,img,bounds:bounds(img),url});}
+    index=0;render();report();
+  }
+  function render(){
+    const z=Number($('zoom').value);canvas.style.width=(FRAME_W*z)+'px';canvas.style.height=(FRAME_H*z)+'px';
+    ctx.clearRect(0,0,FRAME_W,FRAME_H); if(!frames.length)return;
+    const f=frames[index], mirror=$('mirror').checked;
+    ctx.save(); if(mirror){ctx.translate(FRAME_W,0);ctx.scale(-1,1)} ctx.drawImage(f.img,0,0,FRAME_W,FRAME_H);ctx.restore();
+    if($('bbox').checked&&f.bounds){const sx=FRAME_W/f.img.width,sy=FRAME_H/f.img.height;ctx.strokeStyle='#55d6ff';ctx.lineWidth=1;ctx.strokeRect(f.bounds.x*sx+.5,f.bounds.y*sy+.5,f.bounds.width*sx,f.bounds.height*sy)}
+    if($('anchor').checked){ctx.strokeStyle='#ffcf66';ctx.beginPath();ctx.moveTo(PIVOT.x-6,PIVOT.y);ctx.lineTo(PIVOT.x+6,PIVOT.y);ctx.moveTo(PIVOT.x,PIVOT.y-6);ctx.lineTo(PIVOT.x,PIVOT.y+6);ctx.stroke();ctx.strokeStyle='rgba(255,207,102,.45)';ctx.beginPath();ctx.moveTo(0,PIVOT.y);ctx.lineTo(FRAME_W,PIVOT.y);ctx.stroke()}
+    report();
+  }
+  function report(){
+    if(!frames.length){$('status').textContent='Carregue frames PNG já normalizados ou candidatos para inspeção.';return}
+    const f=frames[index], b=f.bounds; const edge=b&&(b.x===0||b.y===0||b.x+b.width>=f.img.width||b.y+b.height>=f.img.height);
+    const heights=frames.filter(x=>x.bounds).map(x=>x.bounds.height/x.img.height);const mean=heights.reduce((a,b)=>a+b,0)/(heights.length||1);const variance=heights.reduce((a,b)=>a+(b-mean)**2,0)/(heights.length||1);const cv=mean?Math.sqrt(variance)/mean:0;
+    const empty=frames.filter(x=>!x.bounds).length,edges=frames.filter(x=>x.bounds&&(x.bounds.x===0||x.bounds.y===0||x.bounds.x+x.bounds.width>=x.img.width||x.bounds.y+x.bounds.height>=x.img.height)).length;
+    $('status').textContent=`frame ${index+1}/${frames.length}: ${f.name}\nsource=${f.img.width}x${f.img.height} normalized_preview=128x128\ncontentBounds=${b?`${b.x},${b.y},${b.width},${b.height}`:'EMPTY'}\nbody_height_cv=${cv.toFixed(4)} (v1 grounded target ≤0.08)\nempty_frames=${empty} edge_touch_frames=${edges}\npivot=64,96 mirror=${$('mirror').checked}\n${edge?'WARNING: current content touches source edge':''}`;
+  }
+  function tick(t){const fps=Number($('fps').value);if(playing&&frames.length&&t-last>=1000/fps){index=(index+1)%frames.length;last=t;render()}requestAnimationFrame(tick)}
+  $('files').addEventListener('change',e=>loadFiles(e.target.files));$('fps').addEventListener('input',()=>{$('fpsv').textContent=$('fps').value});$('zoom').addEventListener('input',()=>{$('zoomv').textContent=$('zoom').value+'×';render()});
+  $('mirror').addEventListener('change',render);$('bbox').addEventListener('change',render);$('anchor').addEventListener('change',render);
+  $('play').addEventListener('click',()=>{playing=!playing;$('play').textContent=playing?'Pausar':'Reproduzir'});$('prev').addEventListener('click',()=>{if(frames.length){index=(index-1+frames.length)%frames.length;render()}});$('next').addEventListener('click',()=>{if(frames.length){index=(index+1)%frames.length;render()}});
+  requestAnimationFrame(tick);
+})();
+</script></body></html>
