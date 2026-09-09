@@ -47,15 +47,15 @@ func step(runtime_state: Dictionary, action: Dictionary) -> Dictionary:
 	var outcome_event := _new_outcome_event(after_combat, before_log_size)
 	var transition := _transition(before_combat, after_combat, action, outcome_event, accepted)
 	var motion_request: Dictionary = motion_binding.build_request(before_combat, after_combat, action, outcome_event)
-	var physical := PhysicalStateScript.from_reducer_state(after_combat)
 
+	# Reducer truth is committed immediately; biomechanical phase detail is not.
+	# The renderer/animation system must explicitly request a reviewed phase via
+	# physical_state_for_phase(). This prevents a completed technique from being
+	# silently collapsed into a guessed recovery pose/contact graph.
+	var physical := PhysicalStateScript.from_reducer_state(after_combat)
 	var visual_technique_id := str(motion_request.get("technique_id", ""))
-	if visual_technique_id != "" and binding_by_technique.has(visual_technique_id):
-		var binding: Dictionary = binding_by_technique[visual_technique_id]
-		if str(binding.get("review_status", "PENDING")) == "APPROVED":
-			physical = PhysicalStateScript.apply_reviewed_binding(physical, binding, "recovery")
-		else:
-			physical = PhysicalStateScript.set_unobserved_phase(physical, "recovery")
+	if visual_technique_id != "":
+		physical = PhysicalStateScript.set_unobserved_phase(physical, "UNKNOWN")
 
 	var next_state := {
 		"runtime_version": "1.0.0",
@@ -73,6 +73,16 @@ func step(runtime_state: Dictionary, action: Dictionary) -> Dictionary:
 		"outcome_event": outcome_event,
 		"authoritative_state_changed_by_renderer": false
 	}
+
+func physical_state_for_phase(runtime_state: Dictionary, technique_id: String, phase: String) -> Dictionary:
+	var combat: Dictionary = runtime_state.get("combat", {}).duplicate(true)
+	var physical := PhysicalStateScript.from_reducer_state(combat)
+	if not binding_by_technique.has(technique_id):
+		return PhysicalStateScript.set_unobserved_phase(physical, phase)
+	var binding: Dictionary = binding_by_technique[technique_id]
+	if str(binding.get("review_status", "PENDING")) != "APPROVED":
+		return PhysicalStateScript.set_unobserved_phase(physical, phase)
+	return PhysicalStateScript.apply_reviewed_binding(physical, binding, phase)
 
 func available_actions(runtime_state: Dictionary, player: int) -> Array:
 	return reducer.available_actions(runtime_state.get("combat", {}), player)
