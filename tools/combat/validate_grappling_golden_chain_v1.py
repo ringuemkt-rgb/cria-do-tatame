@@ -52,6 +52,12 @@ def technique_index(graph: dict[str, Any]) -> dict[str, dict[str, Any]]:
     return out
 
 
+def _valid_continuity(value: Any) -> bool:
+    if value == "UNKNOWN":
+        return True
+    return isinstance(value, (int, float)) and not isinstance(value, bool) and 0.0 <= float(value) <= 1.0
+
+
 def validate() -> dict[str, Any]:
     graph = load_json(GRAPH_PATH)
     golden = load_json(GOLDEN_PATH)
@@ -95,9 +101,7 @@ def validate() -> dict[str, Any]:
             fail(f"success chain is discontinuous before {tid}: expected {expected_from}, got {declared_from}")
         if declared_from not in positions or declared_to not in positions:
             fail(f"success chain references unknown position: {tid}")
-        declared_event = str(step.get("scoring_event", ""))
-        source_event = str(source.get("scoring_event", ""))
-        if declared_event != source_event:
+        if str(step.get("scoring_event", "")) != str(source.get("scoring_event", "")):
             fail(f"success chain scoring event disagrees with graph: {tid}")
         expected_from = declared_to
         used_ids.add(tid)
@@ -159,6 +163,8 @@ def validate() -> dict[str, Any]:
         fail("pending physical binding must never be runtime-applicable")
     if policy.get("runtime_may_infer_hidden_contact") is not False:
         fail("runtime must not infer hidden grappling contacts")
+    if policy.get("runtime_may_infer_contact_continuity_from_edge_presence") is not False:
+        fail("contact continuity must never be inferred from edge presence")
     binding_rows = {str(row.get("technique_id", "")): row for row in bindings.get("bindings", []) if isinstance(row, dict)}
     missing_bindings = sorted(used_ids - set(binding_rows))
     if missing_bindings:
@@ -169,12 +175,23 @@ def validate() -> dict[str, Any]:
         status = str(row.get("review_status", ""))
         if status not in {"PENDING", "APPROVED", "FAIL"}:
             fail(f"invalid physical binding review status: {tid}:{status}")
+        if not isinstance(row.get("phase_contact_continuity", {}), dict):
+            fail(f"phase_contact_continuity must be an object: {tid}")
         if status == "APPROVED":
             approved_bindings += 1
             if not row.get("evidence_refs") or not str(row.get("reviewer", "")).strip():
                 fail(f"approved binding lacks evidence/reviewer: {tid}")
-            if not row.get("phase_edges"):
+            phase_edges = row.get("phase_edges", {})
+            if not isinstance(phase_edges, dict) or not phase_edges:
                 fail(f"approved binding lacks phase edges: {tid}")
+            continuity = row.get("phase_contact_continuity", {})
+            for phase in phase_edges:
+                if phase not in PHASES:
+                    fail(f"approved binding contains invalid phase: {tid}:{phase}")
+                if phase not in continuity:
+                    fail(f"approved binding lacks reviewed continuity for phase: {tid}:{phase}")
+                if not _valid_continuity(continuity[phase]):
+                    fail(f"approved binding has invalid continuity: {tid}:{phase}")
 
     runtime = text(RUNTIME_PATH)
     physical_runtime = text(PHYSICAL_RUNTIME_PATH)
@@ -187,12 +204,19 @@ def validate() -> dict[str, Any]:
         '"authoritative_state_changed_by_renderer": false',
         "PhysicalStateScript.from_reducer_state",
         "motion_binding.build_request",
+        "physical_state_for_phase",
     ]
     for token in required_runtime_tokens:
         if token not in runtime:
             fail(f"grappling runtime missing authority token: {token}")
+    if 'apply_reviewed_binding(physical, binding, "recovery")' in runtime:
+        fail("runtime must not collapse every reviewed technique into recovery phase")
     if '"UNKNOWN"' not in physical_runtime or "review_status" not in physical_runtime:
         fail("physical runtime must preserve unknowns and reviewed-binding gate")
+    if '1.0 if not raw_edges.is_empty()' in physical_runtime:
+        fail("physical runtime must not infer perfect contact continuity from edge presence")
+    if "phase_contact_continuity" not in physical_runtime:
+        fail("physical runtime must consume reviewed phase continuity")
     if "validate_edge" not in graph_runtime or "EDGE_TYPES" not in graph_runtime:
         fail("connection graph validator incomplete")
     if '"may_mutate_combat": false' not in motion_runtime or '"visual_only": true' not in motion_runtime:
