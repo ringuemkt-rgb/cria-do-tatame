@@ -1,0 +1,45 @@
+name: P1 Visual V2
+
+on:
+  pull_request:
+    paths:
+      - 'data/chars/canon/**'
+      - 'data/visual/**'
+      - 'data/bjj/**'
+      - 'data/world/**'
+      - 'data/combat/roster_v3.json'
+      - 'production/p1/**'
+      - 'tools/art/**'
+      - 'tests/test_p1_visual_build_v2.py'
+      - 'package.json'
+      - '.github/workflows/p1-visual-v2.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'data/chars/canon/**'
+      - 'data/visual/**'
+      - 'data/bjj/**'
+      - 'data/world/**'
+      - 'data/combat/roster_v3.json'
+      - 'production/p1/**'
+      - 'tools/art/**'
+      - 'tests/test_p1_visual_build_v2.py'
+      - 'package.json'
+      - '.github/workflows/p1-visual-v2.yml'
+
+jobs:
+  validate-p1-visual:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Validate Sprite Forge V2 foundation
+        run: python tools/art/validate_sprite_forge_v2.py
+      - name: Validate gold-slice P1 visual contract
+        run: python tools/art/validate_p1_visual_build_v2.py
+      - name: P1 invariant tests
+        run: python -m unittest discover -s tests -p 'test_p1_visual_build_v2.py'
+      - name: Compile P1 validator
+        run: python -m py_compile tools/art/validate_p1_visual_build_v2.py

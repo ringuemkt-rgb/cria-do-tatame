@@ -1,0 +1,76 @@
+{
+  "$schema": "cria.character_visual_canon.v1",
+  "version": "1.0.0",
+  "status": "canonical_visual_contract",
+  "character_id": "davi_relampago",
+  "display_name": "Davi Relâmpago",
+  "source_authority": {
+    "character_data": "data/characters.json#davi_relampago",
+    "character_bible": "docs/03_CHARACTER_BIBLE.md#davi-relampago",
+    "roster": "data/combat/roster_v3.json#davi_relampago",
+    "sprite_factory": "docs/art/CRIA_PIXEL_ART_ASSET_FACTORY.md",
+    "production_contract": "data/production/supreme_build_contract_v01.json"
+  },
+  "identity": {
+    "origin": "Circuito regional",
+    "symbol": null,
+    "combat_style": "speed_scramble_counter",
+    "mechanical_signature": "counter_whiff",
+    "narrative_function": "Provar que timing, precisão, disciplina e contra-ataque podem superar força bruta.",
+    "real_person_likeness_forbidden": true,
+    "third_party_brand_marks_forbidden": true
+  },
+  "visual_language": {
+    "style": "HD Pixel Art 2.5D Regional Premium",
+    "identity_direction": "technical_rival_fast_reactive",
+    "relative_silhouette": "must_read_lighter_faster_and_more_reactive_than_ruan_without_becoming_exaggerated_or_cartoonishly_thin",
+    "mobile_readability_required": true,
+    "clear_silhouette_required": true,
+    "coherent_anatomy_required": true,
+    "visible_base_hips_and_grips_required": true,
+    "resampling": "nearest",
+    "integer_scale_only": true,
+    "anti_alias_policy": "none_after_normalization"
+  },
+  "frame_contract": {
+    "size_px": [128, 128],
+    "pivot_px": [64, 96],
+    "grounded_anchor": "feet"
+  },
+  "reference_contract": {
+    "master_reference": null,
+    "master_reference_status": "pending_human_reference_selection_and_ingestion",
+    "required_views": ["front", "side", "back"],
+    "combat_pose_required": true,
+    "reference_sha256_required": true,
+    "identity_regions": [
+      {"id": "face", "required": true, "bbox": null},
+      {"id": "upper_garment", "required": true, "bbox": null},
+      {"id": "signature_markings", "required": false, "bbox": null}
+    ],
+    "region_bboxes_require_human_authoring": true,
+    "blue_gi_status": "candidate_visual_direction_pending_human_reference_approval",
+    "blue_gi_is_canon_by_this_file": false
+  },
+  "action_sets": {
+    "common": ["idle", "walk", "guard", "hurt", "knockdown", "victory", "defeat"],
+    "bjj_positional": ["grip", "grip_fight", "counter_entry", "sprawl_response", "scramble", "tap_reset"],
+    "signature": ["counter_whiff"],
+    "striking_candidates": [],
+    "striking_candidates_authority": "none"
+  },
+  "combat_identity": {
+    "principles": ["speed", "precision", "counter_attack", "scramble", "timing", "discipline"],
+    "forbidden_visual_shortcuts": [
+      "recolored_ruan",
+      "generic_striker_stance_as_core_identity",
+      "magic_or_weapon_attack_language",
+      "identity_change_between_directions"
+    ]
+  },
+  "fx_policy": {
+    "body_sheet_contains_detached_fx": false,
+    "separate_fx_classes": ["sweat", "impact_if_rules_context_requires", "screen_shake_metadata"]
+  },
+  "shipping": false
+}

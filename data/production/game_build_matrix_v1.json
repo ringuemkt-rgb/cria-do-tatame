@@ -41,7 +41,17 @@
       "priority": 1,
       "state": "PARTIAL",
       "required": ["menu_to_terreiro", "deck_training", "graph_combat", "position_ladder", "counter_telegraph", "result", "cria_live", "week_advance", "save_resume", "web_proof", "android_proof"],
-      "evidence": ["data/bjj/bjj_kg_slice_ruan_davi_v1.json", "src/combat/BJJGraphReducerV2.gd", "data/combat/bjj_position_values_v1.json", "data/combat/bjj_timing_windows_v1.json"],
+      "evidence": [
+        "data/bjj/bjj_kg_slice_ruan_davi_v1.json",
+        "src/combat/BJJGraphReducerV2.gd",
+        "data/combat/bjj_position_values_v1.json",
+        "data/combat/bjj_timing_windows_v1.json",
+        "data/visual/p1_visual_build_contract_v2.json",
+        "data/chars/canon/ruan_macacao.json",
+        "data/chars/canon/davi_relampago.json",
+        "tools/art/validate_p1_visual_build_v2.py",
+        ".github/workflows/p1-visual-v2.yml"
+      ],
       "blockers": ["combat_manager_adapter_pending", "real_p1_assets_pending", "physical_android_evidence_pending"]
     },
     {
@@ -60,7 +70,9 @@
         "assets/schemas/sprite_forge_v2.provenance.schema.json",
         "tools/art/derive_sprite_forge_v2_requirements.py",
         "tools/art/validate_sprite_forge_v2.py",
-        ".github/workflows/sprite-forge-v2.yml"
+        ".github/workflows/sprite-forge-v2.yml",
+        "data/chars/canon/ruan_macacao.json",
+        "data/chars/canon/davi_relampago.json"
       ],
       "blockers": ["identity_master_missing_for_most_roster", "approved_animation_packages_missing"]
     },
@@ -95,7 +107,8 @@
         "tools/data/validate_npc_ecology_v1.py",
         "data/visual/sprite_forge_contract_v2.json",
         "data/visual/sprite_forge_requirements_v2.json",
-        "assets/schemas/world_art_package_v2.schema.json"
+        "assets/schemas/world_art_package_v2.schema.json",
+        "data/visual/p1_visual_build_contract_v2.json"
       ],
       "blockers": ["map_atlas_machine_contract_pending_repo_integration", "approved_runtime_map_layers_missing", "npc_population_source_pending", "npc_runtime_scene_evidence_pending"]
     },
@@ -141,7 +154,8 @@
         "production/evidence/android_physical_device_v1.json",
         "tools/ci/validate_qa_evidence_v1.py",
         "tools/art/sprite_preview_harness.html",
-        ".github/workflows/sprite-forge-v2.yml"
+        ".github/workflows/sprite-forge-v2.yml",
+        ".github/workflows/p1-visual-v2.yml"
       ],
       "blockers": ["visual_runtime_qa_pending", "physical_android_evidence_pending", "windows_export_smoke_pending", "release_coverage_gate_pending"]
     }
