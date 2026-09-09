@@ -1,0 +1,27 @@
+{
+  "$schema": "cria.qa_evidence_contract.v1",
+  "version": "1.0.0",
+  "status": "ACTIVE_FAIL_CLOSED_GATE",
+  "purpose": "Prevent automated exports, empty screenshot runs or narrative claims from being promoted to visual QA or physical Android certification.",
+  "visual_runtime": {
+    "evidence_path": "production/evidence/visual_runtime_qa_v1.json",
+    "pass_requires": ["status=PASS", "commit_sha", "godot_version", "frames_checked>0", "scenes_checked>0", "viewport_matrix", "frame_evidence", "human_reviewer", "checked_at"],
+    "required_viewports": ["360x800", "390x844", "412x915"],
+    "required_scene_classes": ["combat", "world", "ui"],
+    "zero_frames_policy": "FAIL",
+    "screenshot_only_without_runtime_context": "FAIL"
+  },
+  "android_physical": {
+    "evidence_path": "production/evidence/android_physical_device_v1.json",
+    "pass_requires": ["status=PASS", "commit_sha", "apk_sha256", "device_manufacturer", "device_model", "android_version", "abi", "installation_proof", "launch_proof", "touch_proof", "combat_proof", "save_resume_proof", "frame_pacing_observation", "human_reviewer", "checked_at"],
+    "automated_emulator_counts_as_physical": false,
+    "apk_export_counts_as_physical": false,
+    "desktop_android_subsystem_counts_as_physical": false
+  },
+  "release_policy": {
+    "visual_runtime_must_pass": true,
+    "android_physical_must_pass_for_android_release": true,
+    "missing_evidence_fails_release": true,
+    "pending_evidence_fails_release": true
+  }
+}

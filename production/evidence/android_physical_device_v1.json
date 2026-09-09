@@ -1,0 +1,20 @@
+{
+  "$schema": "cria.android_physical_device_evidence.v1",
+  "status": "PENDING",
+  "commit_sha": null,
+  "apk_sha256": null,
+  "device_manufacturer": null,
+  "device_model": null,
+  "android_version": null,
+  "abi": null,
+  "installation_proof": null,
+  "launch_proof": null,
+  "touch_proof": null,
+  "combat_proof": null,
+  "save_resume_proof": null,
+  "frame_pacing_observation": null,
+  "human_reviewer": null,
+  "checked_at": null,
+  "blockers": ["physical_device_not_tested"],
+  "note": "APK export, emulator execution or desktop Android subsystem evidence cannot set this ledger to PASS."
+}
