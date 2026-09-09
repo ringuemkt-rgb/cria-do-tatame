@@ -44,21 +44,26 @@ func _run() -> void:
 	_check(not bool(observation.get("authoritative", true)), "observation cannot become authoritative")
 	_check(str(observation.get("canonical_expected_to", "")) == "half_guard_top", "canonical baiana destination preserved")
 
-	# Runtime wiring: use the real autoload flow. Shadow output must be evidence only.
-	var start: Dictionary = CombatManager.start_combat("terreiro_da_luta", "ruan_macacao", "davi_relampago")
-	_check(bool(start.get("ok", false)), "real CombatManager starts")
-	var live_result: Dictionary = CombatManager.apply_player_action("baiana")
-	_check(live_result.has("success"), "legacy live result remains available")
-	await process_frame
-	var comparison: Dictionary = BJJShadowRuntimeObserver.get_last_comparison()
-	_check(not comparison.is_empty(), "runtime observer records comparison")
-	_check(not bool(comparison.get("authoritative", true)), "runtime comparison is non-authoritative")
-	_check(str(comparison.get("legacy_action_id", "")) == "baiana", "runtime comparison identifies legacy action")
-	var summary: Dictionary = BJJShadowRuntimeObserver.summary()
-	_check(int(summary.get("comparisons", 0)) >= 1, "runtime shadow session counts comparisons")
-	_check(not bool(summary.get("authoritative", true)), "runtime shadow summary cannot claim authority")
-	if bool(CombatManager.get("is_running")):
-		CombatManager.finish_combat({"winner": "ruan_macacao", "loser": "davi_relampago", "method": "shadow_smoke", "technical": false})
+	# Runtime wiring: resolve autoload nodes explicitly because this smoke runs via --script.
+	var combat_manager = root.get_node_or_null("CombatManager")
+	var shadow_observer = root.get_node_or_null("BJJShadowRuntimeObserver")
+	_check(combat_manager != null, "CombatManager autoload exists")
+	_check(shadow_observer != null, "BJJShadowRuntimeObserver autoload exists")
+	if combat_manager != null and shadow_observer != null:
+		var start: Dictionary = combat_manager.call("start_combat", "terreiro_da_luta", "ruan_macacao", "davi_relampago")
+		_check(bool(start.get("ok", false)), "real CombatManager starts")
+		var live_result: Dictionary = combat_manager.call("apply_player_action", "baiana")
+		_check(live_result.has("success"), "legacy live result remains available")
+		await process_frame
+		var comparison: Dictionary = shadow_observer.call("get_last_comparison")
+		_check(not comparison.is_empty(), "runtime observer records comparison")
+		_check(not bool(comparison.get("authoritative", true)), "runtime comparison is non-authoritative")
+		_check(str(comparison.get("legacy_action_id", "")) == "baiana", "runtime comparison identifies legacy action")
+		var summary: Dictionary = shadow_observer.call("summary")
+		_check(int(summary.get("comparisons", 0)) >= 1, "runtime shadow session counts comparisons")
+		_check(not bool(summary.get("authoritative", true)), "runtime shadow summary cannot claim authority")
+		if bool(combat_manager.get("is_running")):
+			combat_manager.call("finish_combat", {"winner": "ruan_macacao", "loser": "davi_relampago", "method": "shadow_smoke", "technical": false})
 
 	if failures.is_empty():
 		print("BJJ_SHADOW_SMOKE PASS %d/%d" % [checks, checks])
