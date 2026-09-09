@@ -1,0 +1,89 @@
+{
+  "$schema": "cria.p1_visual_build.contract.v2",
+  "version": "2.0.0",
+  "status": "ACTIVE_P1_BUILD_CONTRACT",
+  "shipping": false,
+  "purpose": "Turn the existing P1 authoring queue into a Sprite Forge V2-controlled gold-slice build plan without changing runtime canon or inventing missing BJJ/world evidence.",
+  "authorities": {
+    "sprite_forge": "data/visual/sprite_forge_contract_v2.json",
+    "sprite_requirements": "data/visual/sprite_forge_requirements_v2.json",
+    "production_os": "data/visual/production_manifest_v03.json",
+    "legacy_p1_queue": "production/p1/cria_art_p1_commands_v1.json",
+    "bjj_slice": "data/bjj/bjj_kg_slice_ruan_davi_v1.json",
+    "world_catalog": "data/world/arena_info_v1.json",
+    "character_roster": "data/combat/roster_v3.json"
+  },
+  "scope": {
+    "fighters": ["ruan_macacao", "davi_relampago"],
+    "canonical_world_locations": ["terreiro", "arena_do_dique"],
+    "location_aliases": {
+      "terreiro_da_luta": "terreiro"
+    },
+    "executable_bjj_techniques": ["t001", "slice_sprawl", "t005", "t025", "t049", "slice_side_to_mount", "t057"],
+    "excluded_legality_fixture_techniques": ["slice_heel_hook"]
+  },
+  "legacy_queue_contract": {
+    "required_batches": {
+      "P1-CHAR-01": 10,
+      "P1-TECH-01": 7,
+      "P1-ARENA-01": 10,
+      "P1-UI-01": 5
+    },
+    "all_commands_candidate_only": true,
+    "all_commands_shipping_false": true,
+    "all_outputs_must_live_under": "production/candidates/p1/",
+    "paired_phases_must_match_sprite_forge_v2": true
+  },
+  "identity_gate": {
+    "visual_canon_required": {
+      "ruan_macacao": "data/chars/canon/ruan_macacao.json",
+      "davi_relampago": "data/chars/canon/davi_relampago.json"
+    },
+    "approved_identity_master_required_before_action_sheets": true,
+    "reference_sha256_required_before_approval": true,
+    "davi_blue_gi_is_conditional_until_human_reference_approval": true
+  },
+  "world_gate": {
+    "canonical_id_is_world_catalog_id": true,
+    "runtime_aliases_may_not_create_duplicate_art_packages": true,
+    "each_p1_location_requires_layered_world_package": true,
+    "flat_generated_map_never_satisfies_world_package": true,
+    "collision_and_navigation_metadata_required_separately": true,
+    "runtime_scene_evidence_required": true
+  },
+  "bjj_gate": {
+    "only_executable_slice_techniques_are_p1_art_requirements": true,
+    "legality_only_heel_hook_has_no_p1_art_requirement": true,
+    "paired_animation_schema": "assets/schemas/paired_bjj_animation_v2.schema.json",
+    "expert_biomechanical_review_required": true,
+    "full_game_promotion_requires_full_40_120_10_graph": true
+  },
+  "ui_gate": {
+    "ui_commands_remain_part_of_gold_slice": true,
+    "hud_may_not_be_baked_into_world_bitmaps": true,
+    "mobile_readability_required": true
+  },
+  "promotion_order": [
+    "ruan_identity_master",
+    "davi_identity_master",
+    "p1_directional_locomotion",
+    "terreiro_layered_world_package",
+    "arena_do_dique_layered_world_package",
+    "p1_ground_position_bases",
+    "p1_paired_bjj_techniques",
+    "p1_ui",
+    "godot_integration",
+    "runtime_visual_capture",
+    "physical_android_review"
+  ],
+  "definition_of_p1_visual_ready": [
+    "both_identity_masters_human_approved",
+    "all_legacy_p1_commands_reconciled_to_v2_requirements",
+    "all_executable_p1_bjj_techniques_have_reviewed_paired_packages",
+    "both_world_locations_have_layered_runtime_packages",
+    "technical_sprite_qa_pass",
+    "rights_clearance_pass",
+    "godot_runtime_visual_evidence_pass",
+    "physical_android_visual_playtest_pass"
+  ]
+}
