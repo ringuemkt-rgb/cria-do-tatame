@@ -19,7 +19,7 @@
       "id": "G0_production_os",
       "name": "Production OS and governance",
       "priority": 0,
-      "state": "IN_PROGRESS",
+      "state": "PASS",
       "required": ["production_manifest_v03", "game_build_matrix", "deterministic_derivator", "coverage_ledger", "tool_registry", "quality_gate"],
       "evidence": [
         "data/visual/production_manifest_v03.json",
@@ -28,9 +28,12 @@
         "production/coverage/asset_links_v1.json",
         "data/production/external_tool_registry_v1.json",
         "tools/ci/validate_external_tool_registry_v1.py",
-        "tools/ci/validate_production_coverage_v03.py"
+        "tools/ci/validate_production_coverage_v03.py",
+        ".github/workflows/external-tool-intake-v1.yml",
+        ".github/workflows/production-os-v03.yml",
+        ".github/workflows/four-critical-gates-v1.yml"
       ],
-      "blockers": ["critical_gate_quality_execution_pending"]
+      "blockers": []
     },
     {
       "id": "G1_gold_vertical_slice",
