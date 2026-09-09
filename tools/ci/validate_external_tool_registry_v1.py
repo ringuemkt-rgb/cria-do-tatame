@@ -108,7 +108,6 @@ def main() -> int:
         if adoption == "BLOCKED_DEACTIVATED" and entry.get("cria_roles"):
             errors.append(f"{sid}: deactivated source must have no CRIA roles")
 
-        # Anything adopted/ported beyond pure design reference must be commit-pinned.
         if entry.get("kind") == "github_repo" and adoption in {
             "PORT_SELECTED_PATTERNS",
             "REIMPLEMENT_CONCEPTS_PENDING_LICENSE_REVIEW",
@@ -130,6 +129,9 @@ def main() -> int:
         elif sid == "sprite_animator":
             if direct_code or adoption != "REIMPLEMENT_CONCEPTS_ONLY":
                 errors.append("Sprite Animator must remain concept-only without separate commercial license")
+        elif sid == "blendi_sprite_sheet_creator":
+            if direct_code or direct_asset or license_status != "NO_LICENSE_FOUND" or adoption != "STUDY_AND_REIMPLEMENT_CONCEPTS_ONLY":
+                errors.append("blendi sprite-sheet-creator must remain pinned no-copy reference until upstream publishes a clear license")
         elif sid == "pixelsrpg_forge":
             if direct_asset or adoption != "TAXONOMY_AND_TOOL_REFERENCE_ONLY":
                 errors.append("PixelSRPG Forge assets must remain blocked from direct CRIA use")
@@ -144,6 +146,7 @@ def main() -> int:
         "cline_qwen_snes_engine",
         "pixel_life_simulator",
         "sprite_animator",
+        "blendi_sprite_sheet_creator",
         "pixelsrpg_forge",
         "mia_deepseek_v4_1_html_100",
         "mia_gpt6_astra_html_100",
