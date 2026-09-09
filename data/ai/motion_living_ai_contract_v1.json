@@ -1,0 +1,67 @@
+{
+  "$schema": "cria.motion_living_ai_contract.v1",
+  "version": "1.0.0",
+  "status": "ACTIVE_FOUNDATION_FAIL_CLOSED",
+  "shipping": false,
+  "purpose": "Connect deterministic NPC ecology, optional high-level local AI, motion intents, BJJ validation and visual playback without allowing an LLM or renderer to become game-state authority.",
+  "authorities": {
+    "npc_world_state": "src/world/NPCEcologyEngineV1.gd",
+    "bjj_outcome": "src/combat/BJJGraphReducerV2.gd",
+    "grappling_runtime": "src/combat/CriaGrapplingRuntimeV1.gd",
+    "paired_animation_contract": "assets/schemas/paired_bjj_animation_v2.schema.json",
+    "sprite_production": ".agents/skills/cria-sprite-forge/SKILL.md",
+    "motion_intent_schema": "assets/schemas/motion_intent_v1.schema.json",
+    "npc_plan_schema": "assets/schemas/npc_cognitive_plan_v1.schema.json"
+  },
+  "authority_order": [
+    "deterministic_game_rules",
+    "canonical_world_and_combat_state",
+    "validated_motion_intent",
+    "approved_visual_asset",
+    "optional_llm_proposal"
+  ],
+  "core_invariants": [
+    "The complete game must remain playable with every LLM backend disabled.",
+    "LLM output is a proposal and cannot directly mutate world, economy, save, score, winner or combat position.",
+    "BJJ intents must be validated by the canonical graph/reducer before any committed paired animation is requested.",
+    "Animation completion never awards points and never commits a combat transition.",
+    "Unknown knowledge scopes are denied to NPC cognition.",
+    "L0 and L1 NPC simulation never calls an LLM.",
+    "Late asynchronous LLM results are discarded.",
+    "Action ids proposed by an LLM must already exist in the supplied action allowlist.",
+    "Unapproved or missing motion assets remain explicit and do not change the deterministic result.",
+    "Same deterministic inputs produce the same core game state regardless of LLM availability."
+  ],
+  "simulation_tiers": {
+    "L0_DORMANT": {"llm": false, "motion_runtime": false, "decision": "calendar_only"},
+    "L1_STATISTICAL": {"llm": false, "motion_runtime": false, "decision": "deterministic_coarse_simulation"},
+    "L2_ACTIVE_REGION": {"llm": "optional_sparse", "motion_runtime": "coarse_or_scene_dependent", "decision": "utility_first"},
+    "L3_FULL_RUNTIME": {"llm": "optional_sparse", "motion_runtime": true, "decision": "utility_first_with_optional_slow_plan"}
+  },
+  "bjj_policy": {
+    "llm_can_propose_strategy": true,
+    "llm_can_select_only_supplied_candidate_ids": true,
+    "llm_can_resolve_technique": false,
+    "llm_can_award_score": false,
+    "llm_can_set_winner": false,
+    "renderer_can_mutate_reducer": false,
+    "paired_animation_requires_canonical_transition": true
+  },
+  "memory_policy": {
+    "llm_summary_is_candidate_only": true,
+    "memory_commit_requires_deterministic_host_validation": true,
+    "bounded_context_required": true,
+    "secret_or_unknown_scope_denied": true
+  },
+  "completion_requirements": {
+    "offline_fallback_proven": true,
+    "tool_allowlist_gate": true,
+    "knowledge_scope_gate": true,
+    "intent_schema_gate": true,
+    "bjj_router_gate": true,
+    "paired_visual_only_gate": true,
+    "godot_smoke_required": true,
+    "android_llm_runtime_required_for_shipping": false,
+    "physical_android_core_gameplay_proof_still_required_for_shipping": true
+  }
+}
