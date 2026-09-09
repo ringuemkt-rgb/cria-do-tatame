@@ -7,7 +7,7 @@ const TimingPolicyScript = preload("res://src/combat/BJJTimingPolicyV1.gd")
 var kg: Dictionary = {}
 var techniques: Dictionary = {}
 var positions: Dictionary = {}
-var rules_engine: BJJRulesEngineV1
+var rules_engine
 var timing_policy
 var validation_errors: Array = []
 
@@ -164,7 +164,7 @@ func _reduce_stabilization(s: Dictionary, action: Dictionary) -> Dictionary:
 	s["tick"] = int(s.get("tick", 0)) + 1
 	pending["stabilized_seconds"] = float(pending.get("stabilized_seconds", 0.0)) + seconds
 	if float(pending.get("stabilized_seconds", 0.0)) >= float(pending.get("required_seconds", 3.0)):
-		var points := rules_engine.points_for_event(str(s.get("ruleset", "")), str(pending.get("event", "")))
+		var points: int = int(rules_engine.points_for_event(str(s.get("ruleset", "")), str(pending.get("event", ""))))
 		if points > 0:
 			var fighter_key := _fighter_key(player)
 			var fighter: Dictionary = s.get(fighter_key, {}).duplicate(true)
