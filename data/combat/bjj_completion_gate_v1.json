@@ -1,0 +1,65 @@
+{
+  "$schema": "cria.bjj_completion_gate.v1",
+  "version": "1.0.0",
+  "status": "ACTIVE_FAIL_CLOSED_GATE",
+  "runtime_authority": false,
+  "purpose": "Make G3 completion machine-readable without inventing missing BJJ source content. Normal validation may report blockers; full/shipping validation must fail until every source, graph, rules, animation and calibration condition is proven.",
+  "authorities": {
+    "authoring_contract": "data/combat/bjj_kg_authoring_contract_v1.json",
+    "rulesets": "data/combat/bjj_rulesets_verified_v1.json",
+    "slice_graph": "data/bjj/bjj_kg_slice_ruan_davi_v1.json",
+    "full_graph": "data/bjj/bjj_knowledge_graph_v1.json"
+  },
+  "minimum_targets": {
+    "positions": 40,
+    "techniques": 120,
+    "chains": 10
+  },
+  "required_technique_fields": [
+    "id",
+    "from",
+    "to",
+    "actor_role_from",
+    "actor_role_to",
+    "type",
+    "authoring_prior",
+    "counters"
+  ],
+  "required_dimensions": {
+    "legality": ["ruleset", "gi_or_nogi", "belt_or_skill_division", "age_division"],
+    "counter": ["technique_id", "outcome", "timing_tier"],
+    "paired_animation": ["technique_id", "phases", "sync_points", "contact_points", "pivot_policy"],
+    "calibration": ["authoring_prior_status", "empirical_success", "F3_status", "F4_status"]
+  },
+  "paired_animation_contract": {
+    "required_phases": [
+      "anticipation",
+      "entry",
+      "establish",
+      "stabilize",
+      "response",
+      "recovery"
+    ],
+    "contact_point_fields": ["phase", "attacker_limb", "defender_target", "contact_type"],
+    "sync_point_fields": ["phase", "attacker_frame", "defender_frame"],
+    "rules": [
+      "GI-only grip targets are forbidden in NO-GI execution.",
+      "Attacker and defender frames must preserve limb continuity through every phase.",
+      "A paired animation can visualize only a graph transition that exists in the authoritative technique source.",
+      "Expert biomechanical review is required before human_approved.",
+      "Generated imagery never promotes technique legality or scoring authority."
+    ]
+  },
+  "completion_policy": {
+    "missing_full_graph": "BLOCKED_ON_SOURCE",
+    "counts_below_minimum": "BLOCKED_ON_SOURCE",
+    "invalid_cross_reference": "FAIL",
+    "missing_rules_legality": "FAIL",
+    "missing_counter_semantics": "FAIL",
+    "missing_paired_animation_contract": "FAIL",
+    "F3_unfinished": "BLOCKED_CALIBRATION",
+    "F4_unfinished": "BLOCKED_BALANCE",
+    "human_expert_review_required": true,
+    "shipping_requires_all_checks": true
+  }
+}
