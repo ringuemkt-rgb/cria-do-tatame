@@ -1,0 +1,18 @@
+{
+  "$schema": "cria.visual_runtime_qa.v1",
+  "status": "PENDING",
+  "commit_sha": null,
+  "godot_version": null,
+  "frames_checked": 0,
+  "scenes_checked": 0,
+  "scene_classes_checked": [],
+  "viewport_matrix": [],
+  "frame_evidence": [],
+  "human_reviewer": null,
+  "checked_at": null,
+  "blockers": [
+    "runtime_capture_not_recorded",
+    "human_visual_review_not_recorded"
+  ],
+  "note": "This ledger intentionally starts pending. PASS is forbidden when frames_checked == 0."
+}
