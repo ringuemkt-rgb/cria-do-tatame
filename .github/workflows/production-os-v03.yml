@@ -1,0 +1,49 @@
+name: Production OS V03
+
+on:
+  pull_request:
+    branches:
+      - main
+    paths:
+      - "data/production/**"
+      - "data/visual/production_manifest_v03.json"
+      - "production/coverage/**"
+      - "production/p1/**"
+      - "tools/ci/derive_production_manifest_v03.py"
+      - "tools/ci/validate_production_coverage_v03.py"
+      - "tests/test_production_os_v03.py"
+      - "docs/architecture/CRIA_PRODUCTION_OS_V03.md"
+      - "package.json"
+      - ".github/workflows/production-os-v03.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  derive-and-validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Derive materialized production manifest
+        run: python tools/ci/derive_production_manifest_v03.py
+      - name: Validate normal coverage
+        run: python tools/ci/validate_production_coverage_v03.py
+      - name: Unit tests
+        run: python -m unittest discover -s tests -p 'test_production_os_v03.py'
+      - name: Prove shipping gate fails closed today
+        run: |
+          if python tools/ci/validate_production_coverage_v03.py --shipping; then
+            echo "Shipping gate unexpectedly passed before full coverage" >&2
+            exit 1
+          fi
+      - name: Upload derived reports
+        uses: actions/upload-artifact@v4
+        with:
+          name: production-os-v03-report
+          path: |
+            production/generated/production_manifest_v03.materialized.json
+            production/generated/production_coverage_v03.json
