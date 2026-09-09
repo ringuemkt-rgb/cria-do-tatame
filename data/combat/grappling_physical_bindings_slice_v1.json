@@ -8,17 +8,19 @@
   "policy": {
     "runtime_may_apply_pending_binding": false,
     "runtime_may_infer_hidden_contact": false,
+    "runtime_may_infer_contact_continuity_from_edge_presence": false,
     "unknown_is_valid": true,
     "approved_binding_requires_expert_review": true,
-    "approved_binding_requires_evidence_refs": true
+    "approved_binding_requires_evidence_refs": true,
+    "approved_phase_continuity_requires_reviewed_value_or_unknown": true
   },
   "bindings": [
-    {"technique_id":"t001","review_status":"PENDING","evidence_refs":[],"reviewer":"","phase_edges":{},"notes":"Double-leg physical/contact topology requires expert or CRIA capture review before runtime enrichment."},
-    {"technique_id":"slice_sprawl","review_status":"PENDING","evidence_refs":[],"reviewer":"","phase_edges":{},"notes":"Sprawl/front-headlock topology intentionally unknown until reviewed."},
-    {"technique_id":"t005","review_status":"PENDING","evidence_refs":[],"reviewer":"","phase_edges":{},"notes":"Guard-pull topology intentionally unknown until reviewed."},
-    {"technique_id":"t025","review_status":"PENDING","evidence_refs":[],"reviewer":"","phase_edges":{},"notes":"Body-lock pass topology intentionally unknown until reviewed."},
-    {"technique_id":"t049","review_status":"PENDING","evidence_refs":[],"reviewer":"","phase_edges":{},"notes":"Knee-shield defensive topology intentionally unknown until reviewed."},
-    {"technique_id":"slice_side_to_mount","review_status":"PENDING","evidence_refs":[],"reviewer":"","phase_edges":{},"notes":"Side-to-mount topology intentionally unknown until reviewed."},
-    {"technique_id":"t057","review_status":"PENDING","evidence_refs":[],"reviewer":"","phase_edges":{},"notes":"Mount armbar topology and safety-critical limb detail require expert review; no inference is permitted."}
+    {"technique_id":"t001","review_status":"PENDING","evidence_refs":[],"reviewer":"","phase_edges":{},"phase_contact_continuity":{},"notes":"Double-leg physical/contact topology requires expert or CRIA capture review before runtime enrichment."},
+    {"technique_id":"slice_sprawl","review_status":"PENDING","evidence_refs":[],"reviewer":"","phase_edges":{},"phase_contact_continuity":{},"notes":"Sprawl/front-headlock topology intentionally unknown until reviewed."},
+    {"technique_id":"t005","review_status":"PENDING","evidence_refs":[],"reviewer":"","phase_edges":{},"phase_contact_continuity":{},"notes":"Guard-pull topology intentionally unknown until reviewed."},
+    {"technique_id":"t025","review_status":"PENDING","evidence_refs":[],"reviewer":"","phase_edges":{},"phase_contact_continuity":{},"notes":"Body-lock pass topology intentionally unknown until reviewed."},
+    {"technique_id":"t049","review_status":"PENDING","evidence_refs":[],"reviewer":"","phase_edges":{},"phase_contact_continuity":{},"notes":"Knee-shield defensive topology intentionally unknown until reviewed."},
+    {"technique_id":"slice_side_to_mount","review_status":"PENDING","evidence_refs":[],"reviewer":"","phase_edges":{},"phase_contact_continuity":{},"notes":"Side-to-mount topology intentionally unknown until reviewed."},
+    {"technique_id":"t057","review_status":"PENDING","evidence_refs":[],"reviewer":"","phase_edges":{},"phase_contact_continuity":{},"notes":"Mount armbar topology and safety-critical limb detail require expert review; no inference is permitted."}
   ]
 }
