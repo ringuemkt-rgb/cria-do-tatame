@@ -1,0 +1,56 @@
+name: Four Critical Gates V1
+
+on:
+  pull_request:
+    branches:
+      - main
+    paths:
+      - "data/production/external_tool_registry_v1.json"
+      - "data/combat/bjj_completion_gate_v1.json"
+      - "data/world/npc_ecology_contract_v1.json"
+      - "data/production/qa_evidence_contract_v1.json"
+      - "production/evidence/**"
+      - "src/world/NPCEcologyEngineV1.gd"
+      - "tools/ci/validate_external_tool_registry_v1.py"
+      - "tools/ci/validate_qa_evidence_v1.py"
+      - "tools/data/validate_bjj_completion_gate_v1.py"
+      - "tools/data/validate_npc_ecology_v1.py"
+      - "tests/test_four_critical_gates_v1.py"
+      - "data/production/game_build_matrix_v1.json"
+      - "package.json"
+      - ".github/workflows/four-critical-gates-v1.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate-critical-gates:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Validate official external-tool registry
+        run: python tools/ci/validate_external_tool_registry_v1.py
+      - name: Validate BJJ completion ledger truthfully
+        run: python tools/data/validate_bjj_completion_gate_v1.py
+      - name: Prove incomplete BJJ cannot claim full completion
+        run: |
+          if python tools/data/validate_bjj_completion_gate_v1.py --full; then
+            echo "BJJ full gate unexpectedly passed before authoritative completion" >&2
+            exit 1
+          fi
+      - name: Validate NPC ecology foundation
+        run: python tools/data/validate_npc_ecology_v1.py
+      - name: Validate QA evidence ledgers
+        run: python tools/ci/validate_qa_evidence_v1.py
+      - name: Prove release QA fails closed before real evidence
+        run: |
+          if python tools/ci/validate_qa_evidence_v1.py --release; then
+            echo "QA release gate unexpectedly passed without visual and physical-device evidence" >&2
+            exit 1
+          fi
+      - name: Unit tests
+        run: python -m unittest discover -s tests -p 'test_four_critical_gates_v1.py'
