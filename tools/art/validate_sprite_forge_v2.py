@@ -16,6 +16,8 @@ REGISTRY = ROOT / "data/production/external_tool_registry_v1.json"
 ROSTER = ROOT / "data/combat/roster_v3.json"
 ARENAS = ROOT / "data/world/arena_info_v1.json"
 PREVIEW = ROOT / "tools/art/sprite_preview_harness.html"
+PROVENANCE_SCHEMA = ROOT / "assets/schemas/sprite_forge_v2.provenance.schema.json"
+PAIRED_SCHEMA = ROOT / "assets/schemas/paired_bjj_animation_v2.schema.json"
 
 
 def load(path: Path) -> dict[str, Any]:
@@ -27,7 +29,7 @@ def load(path: Path) -> dict[str, Any]:
 
 def main() -> int:
     errors: list[str] = []
-    for required in (CONTRACT, POLICY, BJJ_GATE, REGISTRY, ROSTER, ARENAS, PREVIEW):
+    for required in (CONTRACT, POLICY, BJJ_GATE, REGISTRY, ROSTER, ARENAS, PREVIEW, PROVENANCE_SCHEMA, PAIRED_SCHEMA):
         if not required.exists():
             errors.append(f"missing required source: {required.relative_to(ROOT)}")
     if errors:
@@ -40,6 +42,8 @@ def main() -> int:
     registry = load(REGISTRY)
     roster = load(ROSTER)
     arenas = load(ARENAS)
+    provenance_schema = load(PROVENANCE_SCHEMA)
+    paired_schema = load(PAIRED_SCHEMA)
 
     if contract.get("version") != "2.0.0":
         errors.append("Sprite Forge v2 contract version must be 2.0.0")
@@ -74,6 +78,9 @@ def main() -> int:
         errors.append("generic attack prompts must not define BJJ motion")
     if paired.get("expert_biomechanical_review_required") is not True:
         errors.append("paired BJJ animation requires expert biomechanical review")
+    schema_phases = [item.get("const") for item in paired_schema.get("properties", {}).get("phases", {}).get("prefixItems", [])]
+    if schema_phases != canonical_phases:
+        errors.append("paired BJJ JSON schema phase order diverges from completion gate")
 
     preview = contract.get("preview_harness", {})
     if preview.get("required_before_godot_promotion") is not True:
@@ -97,6 +104,11 @@ def main() -> int:
     for field in ("source_requirement_id", "model_or_tool_revision", "qa_evidence", "human_approval", "rights_status", "shipping"):
         if field not in provenance.get("required_fields", []):
             errors.append(f"provenance sidecar missing required field: {field}")
+    schema_required = set(provenance_schema.get("required", []))
+    if not set(provenance.get("required_fields", [])).issubset(schema_required):
+        errors.append("provenance JSON schema does not enforce every contract-required field")
+    if provenance_schema.get("properties", {}).get("shipping", {}).get("const") is not False:
+        errors.append("provenance schema must enforce shipping=false")
 
     sources = {row.get("id"): row for row in registry.get("sources", []) if isinstance(row, dict)}
     external = sources.get("blendi_sprite_sheet_creator")
