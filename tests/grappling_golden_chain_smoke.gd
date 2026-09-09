@@ -57,6 +57,12 @@ func _run() -> void:
 	_check(not bool(take_down_motion.get("may_mutate_combat", true)), "motion cannot mutate combat")
 	_check(str(take_down_motion.get("asset_status", "")) == "MISSING_APPROVED_FINAL", "missing final paired animation remains explicit")
 	_check(not bool(take_down_motion.get("ready_to_play", true)), "unapproved motion cannot be promoted")
+	_check(str(state.get("physical", {}).get("interaction", {}).get("current_phase", "")) == "UNKNOWN", "completed reducer action does not guess a physical recovery phase")
+	_check(str(state.get("physical", {}).get("interaction", {}).get("contact_continuity", "")) == "UNKNOWN", "contact continuity remains unknown without reviewed evidence")
+	var requested_entry: Dictionary = runtime.physical_state_for_phase(state, "t001", "entry")
+	_check(str(requested_entry.get("interaction", {}).get("current_phase", "")) == "entry", "renderer may request a specific physical phase")
+	_check(str(requested_entry.get("interaction", {}).get("observation_status", "")) == "UNOBSERVED", "pending physical binding stays unobserved")
+	_check(str(requested_entry.get("interaction", {}).get("contact_continuity", "")) == "UNKNOWN", "phase request cannot infer contact continuity")
 
 	var stabilized: Dictionary = runtime.step(state, {"kind":"stabilize", "player":1, "seconds":3.0})
 	state = stabilized.get("state", {})
