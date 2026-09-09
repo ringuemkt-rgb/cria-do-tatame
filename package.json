@@ -14,6 +14,7 @@
     "validate:node": "node tools/node/validate_json.mjs",
     "validate:data": "node tools/node/validate_game_data.mjs",
     "validate:cloud": "python tools/ai_asset_pipeline/cloud/validate_cloud_pipeline.py",
+    "validate:qwen-pixel-art": "python tools/ai_asset_pipeline/cloud/validate_qwen_pixel_art_profile.py",
     "test:cloud": "python -m unittest discover -s tests/cloud -p 'test_*.py'",
     "validate:repository": "python tools/validate_complete_game.py",
     "validate:runtime": "python tools/validate_runtime_contracts.py",
@@ -43,7 +44,7 @@
     "cloud:batch": "python tools/ai_asset_pipeline/cloud/prepare_batch.py --output-dir tools/ai_asset_pipeline/generated_outputs/candidate_batches",
     "animations:generate": "python tools/animation/generate_character_animation_pack.py",
     "validate:animations": "python tools/animation/generate_character_animation_pack.py --validate-only",
-    "quality": "npm run validate:governance && npm run validate:canon && npm run validate:factions-v4 && npm run validate:phase1-data && npm run validate:skill-tree-visual && npm run validate:python && npm run validate:node && npm run validate:data && npm run validate:cloud && npm run test:cloud && npm run validate:animations && npm run validate:asset-protocol && npm run validate:sprite-forge && npm run validate:sprite-forge-phase1 && npm run test:sprite-forge && npm run test:sprite-forge-phase1 && npm run validate:art-direction && npm run test:art-direction && npm run derive:production-v03 && npm run validate:production-v03 && npm run test:production-v03 && npm run validate:bjj-kg-authoring && npm run test:bjj-kg-authoring && npm run validate:bjj-reducer-v2 && npm run test:bjj-reducer-v2 && npm run validate:repository && npm run validate:runtime && npm run validate:release && npm run validate:supreme && npm run validate:deck",
+    "quality": "npm run validate:governance && npm run validate:canon && npm run validate:factions-v4 && npm run validate:phase1-data && npm run validate:skill-tree-visual && npm run validate:python && npm run validate:node && npm run validate:data && npm run validate:cloud && npm run validate:qwen-pixel-art && npm run test:cloud && npm run validate:animations && npm run validate:asset-protocol && npm run validate:sprite-forge && npm run validate:sprite-forge-phase1 && npm run test:sprite-forge && npm run test:sprite-forge-phase1 && npm run validate:art-direction && npm run test:art-direction && npm run derive:production-v03 && npm run validate:production-v03 && npm run test:production-v03 && npm run validate:bjj-kg-authoring && npm run test:bjj-kg-authoring && npm run validate:bjj-reducer-v2 && npm run test:bjj-reducer-v2 && npm run validate:repository && npm run validate:runtime && npm run validate:release && npm run validate:supreme && npm run validate:deck",
     "build:android:windows": "powershell -ExecutionPolicy Bypass -File tools/build/build_android_debug.ps1",
     "build:android:linux": "bash tools/build/build_android_debug.sh",
     "build:windows": "powershell -ExecutionPolicy Bypass -File tools/build/build_windows_debug.ps1"
