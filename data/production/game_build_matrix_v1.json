@@ -21,8 +21,16 @@
       "priority": 0,
       "state": "IN_PROGRESS",
       "required": ["production_manifest_v03", "game_build_matrix", "deterministic_derivator", "coverage_ledger", "tool_registry", "quality_gate"],
-      "evidence": ["data/visual/production_manifest_v03.json", ".agents/skills/cria-art-direction/SKILL.md", "production/p1/cria_art_p1_commands_v1.json"],
-      "blockers": ["coverage_ledger_pending", "tool_registry_pending"]
+      "evidence": [
+        "data/visual/production_manifest_v03.json",
+        ".agents/skills/cria-art-direction/SKILL.md",
+        "production/p1/cria_art_p1_commands_v1.json",
+        "production/coverage/asset_links_v1.json",
+        "data/production/external_tool_registry_v1.json",
+        "tools/ci/validate_external_tool_registry_v1.py",
+        "tools/ci/validate_production_coverage_v03.py"
+      ],
+      "blockers": ["critical_gate_quality_execution_pending"]
     },
     {
       "id": "G1_gold_vertical_slice",
@@ -48,8 +56,14 @@
       "priority": 2,
       "state": "BLOCKED_ON_SOURCE",
       "required": ["40_positions", "120_techniques", "10_chains", "counters", "rules_legality", "paired_animation", "F3_calibration", "F4_balance"],
-      "evidence": ["data/combat/bjj_kg_authoring_contract_v1.json", "data/combat/bjj_rulesets_verified_v1.json", "data/bjj/bjj_kg_slice_ruan_davi_v1.json"],
-      "blockers": ["full_kg_t093_t120_and_chains_not_received"]
+      "evidence": [
+        "data/combat/bjj_kg_authoring_contract_v1.json",
+        "data/combat/bjj_rulesets_verified_v1.json",
+        "data/bjj/bjj_kg_slice_ruan_davi_v1.json",
+        "data/combat/bjj_completion_gate_v1.json",
+        "tools/data/validate_bjj_completion_gate_v1.py"
+      ],
+      "blockers": ["full_kg_t093_t120_and_chains_not_received", "paired_animation_packages_missing", "F3_calibration_pending", "F4_balance_pending"]
     },
     {
       "id": "G4_world",
@@ -57,8 +71,14 @@
       "priority": 2,
       "state": "PARTIAL",
       "required": ["core_world_graph", "10_core_map_pages", "resource_overlay", "walkable_hubs", "arena_layers", "collisions", "npc_ecology", "tide_routes", "collectables"],
-      "evidence": ["data/world/world_map_v4.json", "data/world/arena_info_v1.json"],
-      "blockers": ["map_atlas_machine_contract_pending_repo_integration", "approved_runtime_map_layers_missing"]
+      "evidence": [
+        "data/world/world_map_v4.json",
+        "data/world/arena_info_v1.json",
+        "data/world/npc_ecology_contract_v1.json",
+        "src/world/NPCEcologyEngineV1.gd",
+        "tools/data/validate_npc_ecology_v1.py"
+      ],
+      "blockers": ["map_atlas_machine_contract_pending_repo_integration", "approved_runtime_map_layers_missing", "npc_population_source_pending", "npc_runtime_scene_evidence_pending"]
     },
     {
       "id": "G5_narrative",
@@ -93,8 +113,16 @@
       "priority": 0,
       "state": "PARTIAL",
       "required": ["deterministic_replay", "python_tests", "godot_smokes", "visual_screenshot_qa", "accessibility", "web_export", "android_export", "windows_export", "physical_android", "release_coverage_gate"],
-      "evidence": ["tools/validate_complete_game.py", "tools/validate_release_readiness.py", ".github/workflows/full-game-hardening.yml"],
-      "blockers": ["visual_runtime_qa_pending", "physical_android_evidence_pending", "release_coverage_gate_pending"]
+      "evidence": [
+        "tools/validate_complete_game.py",
+        "tools/validate_release_readiness.py",
+        ".github/workflows/full-game-hardening.yml",
+        "data/production/qa_evidence_contract_v1.json",
+        "production/evidence/visual_runtime_qa_v1.json",
+        "production/evidence/android_physical_device_v1.json",
+        "tools/ci/validate_qa_evidence_v1.py"
+      ],
+      "blockers": ["visual_runtime_qa_pending", "physical_android_evidence_pending", "windows_export_smoke_pending", "release_coverage_gate_pending"]
     }
   ]
 }
