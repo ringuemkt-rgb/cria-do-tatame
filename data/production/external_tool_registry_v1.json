@@ -1,0 +1,151 @@
+{
+  "$schema": "cria.external_tool_registry.v1",
+  "version": "1.0.0",
+  "status": "ACTIVE_RESEARCH_REGISTRY",
+  "audited_at": "2026-09-09",
+  "default_policy": {
+    "runtime_dependency": false,
+    "shipping_default": false,
+    "pin_revision": true,
+    "copy_code_only_when_license_clear": true,
+    "copy_assets_only_when_asset_level_rights_clear": true,
+    "concept_reimplementation_allowed": true,
+    "canon_authority": false
+  },
+  "sources": [
+    {
+      "id": "qwen_2512_pixel_art_lora",
+      "kind": "hugging_face_model",
+      "source": "prithivMLmods/Qwen-Image-2512-Pixel-Art-LoRA",
+      "revision": "e14eea588e8e4a9c753439e52a203d06288769c5",
+      "license_status": "CLEAR_APACHE_2_0_METADATA",
+      "adoption": "ADOPTED_CANDIDATE_GENERATOR",
+      "direct_code_reuse": false,
+      "direct_asset_reuse": false,
+      "cria_roles": ["arena_concept", "prop_concept", "icon_concept", "story_scene_concept", "conditional_character_concept"],
+      "notes": "Already integrated through qwen_pixel_art_profile_v1. Training dataset provenance is not disclosed, therefore generation never implies shipping rights."
+    },
+    {
+      "id": "claude_code_game_studios",
+      "kind": "github_repo",
+      "source": "Donchitos/Claude-Code-Game-Studios",
+      "revision": "984023ddac0d5e27624f2baacde6105e45de375f",
+      "license_status": "CLEAR_MIT",
+      "adoption": "PORT_SELECTED_PATTERNS",
+      "direct_code_reuse": true,
+      "direct_asset_reuse": false,
+      "attribution_required": true,
+      "cria_roles": ["studio_orchestration", "godot_specialist_pattern", "asset_spec", "asset_audit", "art_bible_review", "team_combat", "team_ui", "team_qa", "release_gates", "accessibility", "performance_review"],
+      "notes": "High-value source for 49-agent/73-skill studio structure, path-scoped rules, hooks, vertical-slice gates and department review. Port only selected concepts/files after reconciliation with CRIA AGENTS, Production OS and Godot 4.3 authorities."
+    },
+    {
+      "id": "wolfcha",
+      "kind": "github_repo",
+      "source": "oil-oil/wolfcha",
+      "revision": "a4c246b09a5cdfdd88a07db8a0a6dbca403142ad",
+      "license_status": "CONFLICT_README_MIT_LICENSE_FILE_APACHE_2_0",
+      "adoption": "REIMPLEMENT_CONCEPTS_PENDING_LICENSE_REVIEW",
+      "direct_code_reuse": false,
+      "direct_asset_reuse": false,
+      "cria_roles": ["npc_personality", "memory_grounding", "private_public_knowledge_separation", "suspicion_state", "social_decision_intent", "conversation_resume", "vote_history_pattern"],
+      "notes": "README says MIT while repository LICENSE contains Apache-2.0. Technical concepts are highly valuable for living-world NPCs: stable personalities, memory, role goals, public/private knowledge separation and fact-grounded prompts. Do not copy code until license discrepancy is explicitly resolved."
+    },
+    {
+      "id": "cline_qwen_snes_engine",
+      "kind": "github_repo",
+      "source": "QuantumBitX/cline-qwen-snes-engine",
+      "revision": "f8c2c30ffb7dfb36ef4b4315585ab321ff9bd444",
+      "license_status": "NO_LICENSE_FOUND",
+      "adoption": "STUDY_AND_REIMPLEMENT_CONCEPTS_ONLY",
+      "direct_code_reuse": false,
+      "direct_asset_reuse": false,
+      "cria_roles": ["fixed_timestep_reference", "camera_bounds", "tile_collision_reference", "autotiling_reference", "sprite_atlas_baking", "parallax_reference", "particle_pooling", "headless_behavior_tests", "data_generated_levels"],
+      "notes": "Technically strong HTML/Canvas platformer with 182 documented checks and data-driven level/sprite tooling. No LICENSE file found at the audited revision. Its Mario-style assets/content are also unsuitable for CRIA production. Use ideas only."
+    },
+    {
+      "id": "pixel_life_simulator",
+      "kind": "github_repo",
+      "source": "LabibLikesChimken/Pixel-Life-Simulator",
+      "revision": "a84301a3597f00b5f267073eb163d4faea6cec57",
+      "license_status": "NO_LICENSE_FOUND",
+      "adoption": "LOW_PRIORITY_REFERENCE_ONLY",
+      "direct_code_reuse": false,
+      "direct_asset_reuse": false,
+      "cria_roles": ["mobile_virtual_joystick_reference", "pixelated_canvas_reference", "four_direction_sprite_reference"],
+      "notes": "Small browser prototype. Useful only as a simple mobile-control/pixel-rendering reference; CRIA's Godot systems are already substantially more mature."
+    },
+    {
+      "id": "sprite_animator",
+      "kind": "github_repo",
+      "source": "poirotw66/Sprite-Animator",
+      "revision": "f713c5ae8bdc6ffe78eb3e961bd18f724eda5cfe",
+      "license_status": "CC_BY_NC_SA_4_0_NONCOMMERCIAL",
+      "adoption": "REIMPLEMENT_CONCEPTS_ONLY",
+      "direct_code_reuse": false,
+      "direct_asset_reuse": false,
+      "cria_roles": ["sprite_sheet_generation_pattern", "integer_grid_slicing", "padding_shift_alignment", "chroma_key_cleanup", "background_color_normalization", "apng_gif_zip_export", "web_worker_processing", "batch_job_restore", "secret_scan_ci_pattern"],
+      "notes": "Technically excellent and active, but commercial use of the project is blocked without a separate commercial license. Reimplement algorithms/workflow concepts independently; never copy project code into commercial CRIA without permission."
+    },
+    {
+      "id": "pixelsrpg_forge",
+      "kind": "github_repo",
+      "source": "Huu-Yuu/PixelSRPG-Forge",
+      "revision": "5ff74c28ea96798d43e55cafbabbee80c8945a4f",
+      "license_status": "REPO_STRUCTURE_MIT_ASSET_RIGHTS_UNKNOWN",
+      "adoption": "TAXONOMY_AND_TOOL_REFERENCE_ONLY",
+      "direct_code_reuse": false,
+      "direct_asset_reuse": false,
+      "cria_roles": ["asset_taxonomy_reference", "coverage_checklist_reference", "atlas_packer_reference"],
+      "notes": "README states assets were collected from internet downloads and commercial purchases and that copyright status is not known for all materials; it even references Stardew Valley assets. No asset may enter CRIA shipping from this collection without item-level provenance."
+    },
+    {
+      "id": "mia_deepseek_v4_1_html_100",
+      "kind": "design_benchmark_repo",
+      "source": "MiaAI-Lab/DeepSeek-v4-1-Flash-100-HTML-Files",
+      "revision": "main",
+      "license_status": "NO_LICENSE_FOUND",
+      "adoption": "DESIGN_PATTERN_REFERENCE_ONLY",
+      "direct_code_reuse": false,
+      "direct_asset_reuse": false,
+      "cria_roles": ["ui_creativity_reference", "microinteraction_reference", "procedural_visual_reference", "accessibility_motion_reference"],
+      "favorite_patterns": {
+        "077_pixel_art_studio": ["draw", "erase", "fill", "color_pick", "undo_redo", "zoom", "preview"],
+        "006_editorial_spread": ["strong_hierarchy", "limited_accent_color", "responsive_layout", "reduced_motion"],
+        "098_domino_cascade": ["place_draw_chain", "slow_motion", "sound_toggle", "zoom"],
+        "004_rain_alley": ["multi_pass_weather", "reflections", "screen_shake", "pointer_light", "reduced_motion"],
+        "007_kinetic_clock": ["state_change_animation", "real_time_loop", "style_presets", "reduced_motion"],
+        "032_glitch_lab": ["controlled_post_fx", "presets", "freeze_frame"],
+        "033_soft_synth": ["direct_manipulation_controls", "keyboard_shortcuts", "procedural_audio"],
+        "034_kaleidoscope": ["mirrored_drawing", "brush_controls", "undo"],
+        "059_cursor_comet": ["velocity_driven_particles", "intensity_hold", "burst", "trail_length"],
+        "080_vinyl_deck": ["direct_manipulation", "procedural_audio", "pitch_control", "one_shots"],
+        "100_metamorphosis": ["swarm_states", "scatter", "swirl", "repel"]
+      },
+      "notes": "Useful as a creativity and interaction benchmark. No repository license was found, so CRIA may study and reimplement interaction ideas but should not copy the HTML/CSS/JS wholesale."
+    },
+    {
+      "id": "mia_gpt6_astra_html_100",
+      "kind": "design_benchmark_repo",
+      "source": "MiaAI-Lab/GPT-6-Astra-100-HTML-Files",
+      "revision": "main",
+      "license_status": "UNVERIFIED_FOR_CODE_REUSE",
+      "adoption": "COMPARATIVE_DESIGN_REFERENCE_ONLY",
+      "direct_code_reuse": false,
+      "direct_asset_reuse": false,
+      "cria_roles": ["ui_benchmark_comparison", "creative_diversity_reference"],
+      "notes": "Comparison corpus only. Model-ranking claims from social posts are subjective benchmark commentary, not engineering evidence for CRIA."
+    },
+    {
+      "id": "old_cria_android_repo",
+      "kind": "github_repo",
+      "source": "ringuemkt-rgb/Cria-do-tatame-",
+      "revision": "main",
+      "license_status": "INTERNAL_DEACTIVATED_REPO",
+      "adoption": "BLOCKED_DEACTIVATED",
+      "direct_code_reuse": false,
+      "direct_asset_reuse": false,
+      "cria_roles": [],
+      "notes": "README explicitly marks this old Android/Gradle prototype as deactivated and points all work to ringuemkt-rgb/cria-do-tatame."
+    }
+  ]
+}
