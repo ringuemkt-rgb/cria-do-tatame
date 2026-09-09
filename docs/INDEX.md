@@ -18,6 +18,7 @@ Este arquivo é a porta de entrada da documentação ativa. Antes de criar um do
 - [`../data/production/supreme_build_contract_v01.json`](../data/production/supreme_build_contract_v01.json) — metas e release gates;
 - [`../data/production/release_gate_status_v01.json`](../data/production/release_gate_status_v01.json) — ledger único com evidências e pendências de release;
 - [`../data/production/game_build_matrix_v1.json`](../data/production/game_build_matrix_v1.json) — matriz machine-readable de completude do jogo inteiro, G0–G8;
+- [`../data/production/external_tool_registry_v1.json`](../data/production/external_tool_registry_v1.json) — intake auditado de repositórios/modelos/benchmarks externos e políticas de reuso;
 - [`../data/visual/production_manifest_v03.json`](../data/visual/production_manifest_v03.json) — contrato ativo de derivação audiovisual fail-closed;
 - [`../data/visual/production_manifest_v02.json`](../data/visual/production_manifest_v02.json) — inventário audiovisual histórico/compatível usado como entrada do v03;
 - [`../production/coverage/asset_links_v1.json`](../production/coverage/asset_links_v1.json) — vínculo explícito requisito→binário para coverage e shipping;
@@ -41,6 +42,7 @@ Este arquivo é a porta de entrada da documentação ativa. Antes de criar um do
 ## Arte e produção
 
 - [`architecture/CRIA_PRODUCTION_OS_V03.md`](architecture/CRIA_PRODUCTION_OS_V03.md) — derivação data-driven, coverage ledger e gates de promoção até shipping;
+- [`architecture/EXTERNAL_GAME_STUDIO_INTAKE_V1.md`](architecture/EXTERNAL_GAME_STUDIO_INTAKE_V1.md) — regras de ADOPT/PORT/REIMPLEMENT/REFERENCE/BLOCK para fontes externas;
 - [`../.agents/skills/cria-art-direction/SKILL.md`](../.agents/skills/cria-art-direction/SKILL.md) — skill mestre de direção visual; cânone, paleta, personagens, facções, arenas, mapas, UI, cartas, QA, rights e protocolo COMMAND;
 - [`../.agents/skills/cria-art-direction/references/anchors.md`](../.agents/skills/cria-art-direction/references/anchors.md) — hierarquia de âncoras e correções de cânone;
 - [`../.agents/skills/cria-art-direction/references/palette.md`](../.agents/skills/cria-art-direction/references/palette.md) — tokens de paleta e variantes cerimoniais;
@@ -67,6 +69,7 @@ Este arquivo é a porta de entrada da documentação ativa. Antes de criar um do
 - [`../.agents/skills/cria-art-direction/scripts/validate_skill.py`](../.agents/skills/cria-art-direction/scripts/validate_skill.py) — gate fail-closed da skill e da fila P1;
 - [`../tools/ci/derive_production_manifest_v03.py`](../tools/ci/derive_production_manifest_v03.py) — derivador determinístico de requisitos de produção;
 - [`../tools/ci/validate_production_coverage_v03.py`](../tools/ci/validate_production_coverage_v03.py) — coverage normal + shipping fail-closed;
+- [`../tools/ci/validate_external_tool_registry_v1.py`](../tools/ci/validate_external_tool_registry_v1.py) — bloqueia reuso direto de fontes sem licença clara, NC, conflitantes ou desativadas;
 - [`../tools/data/validate_bjj_reducer_v2_slice.py`](../tools/data/validate_bjj_reducer_v2_slice.py) — gate fail-closed do reducer v2 e do fixture Ruan × Davi;
 - [`../tools/ai_asset_pipeline/cloud/validate_cloud_pipeline.py`](../tools/ai_asset_pipeline/cloud/validate_cloud_pipeline.py) — gate offline do adaptador de nuvem;
 - [`../tools/ai_asset_pipeline/cloud/validate_qwen_pixel_art_profile.py`](../tools/ai_asset_pipeline/cloud/validate_qwen_pixel_art_profile.py) — gate fail-closed do stack Qwen Pixel Art.

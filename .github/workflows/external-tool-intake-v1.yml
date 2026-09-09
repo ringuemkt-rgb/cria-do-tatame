@@ -1,0 +1,30 @@
+name: External Tool Intake V1
+
+on:
+  pull_request:
+    branches:
+      - main
+    paths:
+      - "data/production/external_tool_registry_v1.json"
+      - "tools/ci/validate_external_tool_registry_v1.py"
+      - "tests/test_external_tool_registry_v1.py"
+      - "docs/architecture/EXTERNAL_GAME_STUDIO_INTAKE_V1.md"
+      - "package.json"
+      - ".github/workflows/external-tool-intake-v1.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Validate registry policy
+        run: python tools/ci/validate_external_tool_registry_v1.py
+      - name: Run registry tests
+        run: python -m unittest discover -s tests -p 'test_external_tool_registry_v1.py'
