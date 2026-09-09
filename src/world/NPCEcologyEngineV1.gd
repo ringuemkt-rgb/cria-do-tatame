@@ -53,7 +53,7 @@ func validate_profiles(profiles: Array) -> Array:
 	return errors
 
 func new_state(profiles: Array, seed: int, start_day: int = 0, start_minute: int = 360) -> Dictionary:
-	var errors := validate_profiles(profiles)
+	var errors: Array = validate_profiles(profiles)
 	if not errors.is_empty():
 		return {"ok": false, "errors": errors}
 	var npc_states: Dictionary = {}
@@ -72,18 +72,18 @@ func new_state(profiles: Array, seed: int, start_day: int = 0, start_minute: int
 		"ok": true,
 		"seed": seed,
 		"tick": 0,
-		"day": max(0, start_day),
+		"day": maxi(0, start_day),
 		"minute": clampi(start_minute, 0, 1439),
 		"npc_states": npc_states,
 		"event_overrides": {}
 	}
 
 func step(state: Dictionary, profiles: Array, elapsed_minutes: int, full_runtime_nodes: Array = [], active_region_nodes: Array = []) -> Dictionary:
-	if state.get("ok", false) is not bool or not bool(state.get("ok", false)):
+	if not bool(state.get("ok", false)):
 		return state.duplicate(true)
 	if elapsed_minutes <= 0:
 		return state.duplicate(true)
-	var next := state.duplicate(true)
+	var next: Dictionary = state.duplicate(true)
 	var total_minutes := int(next.get("minute", 0)) + elapsed_minutes
 	next["day"] = int(next.get("day", 0)) + int(total_minutes / 1440)
 	next["minute"] = total_minutes % 1440
@@ -97,8 +97,8 @@ func step(state: Dictionary, profiles: Array, elapsed_minutes: int, full_runtime
 		if npc_id == "" or not states.has(npc_id):
 			continue
 		var npc_state: Dictionary = states[npc_id].duplicate(true)
-		var resolved := resolve_schedule(profile, int(next.get("minute", 0)))
-		var override := _resolve_override(next, npc_id)
+		var resolved: Dictionary = resolve_schedule(profile, int(next.get("minute", 0)))
+		var override: Dictionary = _resolve_override(next, npc_id)
 		if not override.is_empty():
 			resolved = override
 		var target_node := str(resolved.get("node", profile.get("home_node", "")))
@@ -135,7 +135,7 @@ func can_access_fact(profile: Dictionary, fact_scope: String) -> bool:
 	return typeof(scopes) == TYPE_ARRAY and fact_scope in scopes
 
 func remember(state: Dictionary, npc_id: String, memory: Dictionary, max_working_memories: int = 12) -> Dictionary:
-	var next := state.duplicate(true)
+	var next: Dictionary = state.duplicate(true)
 	var states: Dictionary = next.get("npc_states", {}).duplicate(true)
 	if not states.has(npc_id):
 		return next
@@ -144,7 +144,7 @@ func remember(state: Dictionary, npc_id: String, memory: Dictionary, max_working
 	var memory_type := str(memory.get("class", "WORKING"))
 	if memory_type == "UNKNOWN":
 		return next
-	var item := memory.duplicate(true)
+	var item: Dictionary = memory.duplicate(true)
 	item["recorded_tick"] = int(next.get("tick", 0))
 	memories.append(item)
 	if memory_type == "WORKING":
@@ -164,7 +164,7 @@ func remember(state: Dictionary, npc_id: String, memory: Dictionary, max_working
 	return next
 
 func set_event_override(state: Dictionary, npc_id: String, node_id: String, activity: String, expires_tick: int) -> Dictionary:
-	var next := state.duplicate(true)
+	var next: Dictionary = state.duplicate(true)
 	if not nodes.has(node_id):
 		return next
 	var overrides: Dictionary = next.get("event_overrides", {}).duplicate(true)
