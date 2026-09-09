@@ -23,7 +23,8 @@ Este arquivo é a porta de entrada da documentação ativa. Antes de criar um do
 - [`../production/coverage/asset_links_v1.json`](../production/coverage/asset_links_v1.json) — vínculo explícito requisito→binário para coverage e shipping;
 - [`../data/visual/sprite_forge_contract_v1.json`](../data/visual/sprite_forge_contract_v1.json) — consistência quantitativa de sprites sobre o Asset Pipeline v2;
 - [`../data/production/repository_governance_v01.json`](../data/production/repository_governance_v01.json) — governança validável por máquina;
-- [`../data/ai/cloud_drive_layout_v01.json`](../data/ai/cloud_drive_layout_v01.json) — árvore privada e política de promoção do adaptador Drive.
+- [`../data/ai/cloud_drive_layout_v01.json`](../data/ai/cloud_drive_layout_v01.json) — árvore privada e política de promoção do adaptador Drive;
+- [`../data/ai/qwen_pixel_art_profile_v1.json`](../data/ai/qwen_pixel_art_profile_v1.json) — perfil pinado do stack Qwen 2512 + Pixel Art LoRA para geração de candidatos.
 
 ## Produto e gameplay
 
@@ -51,6 +52,7 @@ Este arquivo é a porta de entrada da documentação ativa. Antes de criar um do
 - [`architecture/CRIA_SPRITE_FORGE_V1.md`](architecture/CRIA_SPRITE_FORGE_V1.md) — perfil mestre, anchor/scale QA e handoff de sprites para o pipeline existente;
 - [`production/APK_VISUAL_COMPLETION_PLAN_V09.md`](production/APK_VISUAL_COMPLETION_PLAN_V09.md) — gates de vertical slice e Android;
 - [`production/DRIVE_CLOUD_V1.md`](production/DRIVE_CLOUD_V1.md) — adaptador privado Google Drive, Colab, rclone e provenance Hugging Face;
+- [`production/QWEN_PIXEL_ART_AUTHORING_V1.md`](production/QWEN_PIXEL_ART_AUTHORING_V1.md) — uso auditado do Qwen Pixel Art LoRA como gerador de candidatos, com clone metadata-only e download pinado;
 - [`../data/ai/model_registry_v02.json`](../data/ai/model_registry_v02.json) — auditoria e gates atuais de modelos Hugging Face.
 
 ## Engenharia e QA
@@ -66,7 +68,8 @@ Este arquivo é a porta de entrada da documentação ativa. Antes de criar um do
 - [`../tools/ci/derive_production_manifest_v03.py`](../tools/ci/derive_production_manifest_v03.py) — derivador determinístico de requisitos de produção;
 - [`../tools/ci/validate_production_coverage_v03.py`](../tools/ci/validate_production_coverage_v03.py) — coverage normal + shipping fail-closed;
 - [`../tools/data/validate_bjj_reducer_v2_slice.py`](../tools/data/validate_bjj_reducer_v2_slice.py) — gate fail-closed do reducer v2 e do fixture Ruan × Davi;
-- [`../tools/ai_asset_pipeline/cloud/validate_cloud_pipeline.py`](../tools/ai_asset_pipeline/cloud/validate_cloud_pipeline.py) — gate offline do adaptador de nuvem.
+- [`../tools/ai_asset_pipeline/cloud/validate_cloud_pipeline.py`](../tools/ai_asset_pipeline/cloud/validate_cloud_pipeline.py) — gate offline do adaptador de nuvem;
+- [`../tools/ai_asset_pipeline/cloud/validate_qwen_pixel_art_profile.py`](../tools/ai_asset_pipeline/cloud/validate_qwen_pixel_art_profile.py) — gate fail-closed do stack Qwen Pixel Art.
 
 ## Status dos documentos
 
