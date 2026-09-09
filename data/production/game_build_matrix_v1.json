@@ -1,0 +1,100 @@
+{
+  "$schema": "cria.game_build_matrix.v1",
+  "version": "1.0.0",
+  "status": "ACTIVE_BUILD_MATRIX",
+  "purpose": "Single machine-readable completion matrix for the whole game. It prevents visual, content or CI progress from being confused with playable/shipping completion.",
+  "runtime_engine": "Godot",
+  "target_platforms": ["android_arm64", "web", "windows_x86_64"],
+  "completion_claim_policy": {
+    "complete_requires_all_domains": true,
+    "shipping_requires_asset_coverage_percent": 100,
+    "shipping_requires_zero_source_blockers": true,
+    "shipping_requires_zero_pending_rights": true,
+    "shipping_requires_human_visual_approval": true,
+    "shipping_requires_runtime_evidence": true,
+    "android_release_requires_physical_device_evidence": true
+  },
+  "domains": [
+    {
+      "id": "G0_production_os",
+      "name": "Production OS and governance",
+      "priority": 0,
+      "state": "IN_PROGRESS",
+      "required": ["production_manifest_v03", "game_build_matrix", "deterministic_derivator", "coverage_ledger", "tool_registry", "quality_gate"],
+      "evidence": ["data/visual/production_manifest_v03.json", ".agents/skills/cria-art-direction/SKILL.md", "production/p1/cria_art_p1_commands_v1.json"],
+      "blockers": ["coverage_ledger_pending", "tool_registry_pending"]
+    },
+    {
+      "id": "G1_gold_vertical_slice",
+      "name": "Gold vertical slice Ruan x Davi",
+      "priority": 1,
+      "state": "PARTIAL",
+      "required": ["menu_to_terreiro", "deck_training", "graph_combat", "position_ladder", "counter_telegraph", "result", "cria_live", "week_advance", "save_resume", "web_proof", "android_proof"],
+      "evidence": ["data/bjj/bjj_kg_slice_ruan_davi_v1.json", "src/combat/BJJGraphReducerV2.gd", "data/combat/bjj_position_values_v1.json", "data/combat/bjj_timing_windows_v1.json"],
+      "blockers": ["combat_manager_adapter_pending", "real_p1_assets_pending", "physical_android_evidence_pending"]
+    },
+    {
+      "id": "G2_characters",
+      "name": "Characters and animation",
+      "priority": 2,
+      "state": "PARTIAL",
+      "required": ["roster_identity", "turnarounds", "gi_nogi_variants", "combat_core", "clinch", "ground", "portraits", "emotes", "npc_motion"],
+      "evidence": ["data/combat/roster_v3.json", "data/visual/production_manifest_v02.json", "data/visual/sprite_qa_profiles_v1.json"],
+      "blockers": ["identity_master_missing_for_most_roster", "approved_animation_packages_missing"]
+    },
+    {
+      "id": "G3_bjj_content",
+      "name": "BJJ knowledge graph, techniques and balance",
+      "priority": 2,
+      "state": "BLOCKED_ON_SOURCE",
+      "required": ["40_positions", "120_techniques", "10_chains", "counters", "rules_legality", "paired_animation", "F3_calibration", "F4_balance"],
+      "evidence": ["data/combat/bjj_kg_authoring_contract_v1.json", "data/combat/bjj_rulesets_verified_v1.json", "data/bjj/bjj_kg_slice_ruan_davi_v1.json"],
+      "blockers": ["full_kg_t093_t120_and_chains_not_received"]
+    },
+    {
+      "id": "G4_world",
+      "name": "World, maps, hubs and arenas",
+      "priority": 2,
+      "state": "PARTIAL",
+      "required": ["core_world_graph", "10_core_map_pages", "resource_overlay", "walkable_hubs", "arena_layers", "collisions", "npc_ecology", "tide_routes", "collectables"],
+      "evidence": ["data/world/world_map_v4.json", "data/world/arena_info_v1.json"],
+      "blockers": ["map_atlas_machine_contract_pending_repo_integration", "approved_runtime_map_layers_missing"]
+    },
+    {
+      "id": "G5_narrative",
+      "name": "Narrative, missions and endings",
+      "priority": 2,
+      "state": "PARTIAL",
+      "required": ["canon_authority", "acts", "missions", "dialogues", "prologue", "chorus", "endings", "runtime_scene_mapping", "save_migration"],
+      "evidence": ["data/narrative/canon_v3.json", "data/narrative/acts_v3.json", "data/narrative/endings_v2.json"],
+      "blockers": ["missions_v1_missing", "narrative_v4_candidate_not_runtime_authority", "runtime_scene_mapping_pending"]
+    },
+    {
+      "id": "G6_progression_economy",
+      "name": "Progression, factions and economy",
+      "priority": 3,
+      "state": "PARTIAL",
+      "required": ["belts", "stripes", "skill_graph", "synergies", "respec", "training", "rust", "faction_rep", "territory", "criacoin", "crialive", "weekly_loop"],
+      "evidence": ["data/progression/skill_graph_v1.json", "data/progression/training_exercises_v2.json", "data/factions/factions_v2.json"],
+      "blockers": ["stripes_system_pending", "synergy_runtime_pending", "rust_replacement_pending"]
+    },
+    {
+      "id": "G7_audio",
+      "name": "Music, SFX, ambience and voice",
+      "priority": 3,
+      "state": "PLANNED",
+      "required": ["ui_sfx", "combat_foley", "arena_ambience", "music", "voice_optional", "mix", "runtime_import", "rights_sidecars"],
+      "evidence": ["data/visual/production_manifest_v02.json"],
+      "blockers": ["approved_audio_packages_missing"]
+    },
+    {
+      "id": "G8_qa_release",
+      "name": "QA, accessibility and release certification",
+      "priority": 0,
+      "state": "PARTIAL",
+      "required": ["deterministic_replay", "python_tests", "godot_smokes", "visual_screenshot_qa", "accessibility", "web_export", "android_export", "windows_export", "physical_android", "release_coverage_gate"],
+      "evidence": ["tools/validate_complete_game.py", "tools/validate_release_readiness.py", ".github/workflows/full-game-hardening.yml"],
+      "blockers": ["visual_runtime_qa_pending", "physical_android_evidence_pending", "release_coverage_gate_pending"]
+    }
+  ]
+}

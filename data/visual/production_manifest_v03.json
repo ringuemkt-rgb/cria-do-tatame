@@ -1,0 +1,102 @@
+{
+  "$schema": "cria.production_manifest.contract.v03",
+  "version": "3.0.0",
+  "status": "ACTIVE_DERIVATION_CONTRACT",
+  "runtime_authority": false,
+  "shipping_default": false,
+  "style_authority": ".agents/skills/cria-art-direction/SKILL.md",
+  "sprite_authority": "data/visual/sprite_qa_profiles_v1.json",
+  "historical_manifest": "data/visual/production_manifest_v02.json",
+  "binary_registry": "assets/manifest_v2.json",
+  "materialized_output": "production/generated/production_manifest_v03.materialized.json",
+  "coverage_output": "production/generated/production_coverage_v03.json",
+  "sources": {
+    "roster": {"path": "data/combat/roster_v3.json", "required": true},
+    "arena_info": {"path": "data/world/arena_info_v1.json", "required": true},
+    "narrative_acts": {"path": "data/narrative/acts_v3.json", "required": true},
+    "icons": {"path": "data/visual/icons_manifest_v1.json", "required": true},
+    "slice_kg": {"path": "data/bjj/bjj_kg_slice_ruan_davi_v1.json", "required": true, "scope": "P1_ONLY"},
+    "full_bjj_kg": {"path": "data/bjj/bjj_knowledge_graph_v1.json", "required_for_full_shipping": true},
+    "cards": {"path": "data/combat/cards_v1.json", "required_for_full_shipping": true},
+    "missions": {"path": "data/narrative/missions_v1.json", "required_for_full_shipping": true},
+    "legacy_visual": {"path": "data/visual/production_manifest_v02.json", "required": true},
+    "p1_queue": {"path": "production/p1/cria_art_p1_commands_v1.json", "required": true}
+  },
+  "policies": {
+    "source_blockers_fail_shipping": true,
+    "candidate_never_implies_approved": true,
+    "approved_never_implies_integrated": true,
+    "integrated_requires_godot_evidence": true,
+    "shipping_requires_rights": true,
+    "shipping_requires_human_approval": true,
+    "shipping_requires_qa": true,
+    "shipping_requires_runtime_integration": true,
+    "shipping_requires_coverage_percent": 100,
+    "full_graph_claim_requires": {"positions": 40, "techniques": 120, "chains": 10},
+    "p1_isolation": {
+      "fighters": ["ruan_macacao", "davi_relampago"],
+      "arenas": ["terreiro", "arena_do_dique"],
+      "excluded_fixture_techniques": ["slice_heel_hook"]
+    },
+    "production_aliases": {
+      "terreiro": ["terreiro_da_luta"]
+    }
+  },
+  "derivation": {
+    "characters": {
+      "source": "roster.fighters",
+      "requirements": ["turnaround", "combat_pose", "fighter_core", "fighter_clinch", "fighter_ground", "portrait_emotes"],
+      "priority": 2
+    },
+    "techniques": {
+      "source_preference": ["full_bjj_kg.techniques", "slice_kg.techniques"],
+      "requirements": ["paired_animation", "tech_icon"],
+      "priority": 2,
+      "full_graph_only_for_scale": true
+    },
+    "cards": {
+      "source": "cards",
+      "requirements": ["card_art"],
+      "priority": 3
+    },
+    "arenas": {
+      "source": "arena_info.arenas",
+      "requirements": ["bg_far", "bg_mid", "play_area", "foreground", "particles", "props", "ambient_npcs", "climate", "audio"],
+      "fight_ui_types": ["oficial", "clandestina", "treino"],
+      "priority": 2
+    },
+    "narrative": {
+      "source": "narrative_acts",
+      "requirements": ["story_scene"],
+      "priority": 3
+    },
+    "icons": {
+      "source": "icons",
+      "requirements": ["icon"],
+      "priority": 3
+    },
+    "ui": {
+      "source": "legacy_visual.ui_screens",
+      "requirements": ["ui_screen"],
+      "priority": 2
+    },
+    "audio": {
+      "source": "legacy_visual.audio_packages",
+      "requirements": ["audio_package"],
+      "priority": 3
+    },
+    "p1": {
+      "source": "p1_queue",
+      "mode": "AUTHORING_QUEUE_LOCKED",
+      "priority": 1
+    }
+  },
+  "approval_state_machine": [
+    "pending",
+    "generated",
+    "qa_passed",
+    "human_approved",
+    "integrated",
+    "shipping"
+  ]
+}

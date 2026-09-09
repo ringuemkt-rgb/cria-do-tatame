@@ -1,0 +1,15 @@
+{
+  "$schema": "cria.production_asset_links.v1",
+  "version": "1.0.0",
+  "status": "ACTIVE_COVERAGE_LEDGER",
+  "policy": {
+    "links_are_explicit": true,
+    "path_substring_matching_forbidden": true,
+    "default_shipping": false,
+    "human_approval_required": true,
+    "rights_clearance_required": true,
+    "qa_required": true,
+    "godot_integration_required": true
+  },
+  "links": []
+}
