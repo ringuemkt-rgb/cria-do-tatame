@@ -15,6 +15,7 @@ BJJ_GATE = ROOT / "data/combat/bjj_completion_gate_v1.json"
 REGISTRY = ROOT / "data/production/external_tool_registry_v1.json"
 ROSTER = ROOT / "data/combat/roster_v3.json"
 ARENAS = ROOT / "data/world/arena_info_v1.json"
+PREVIEW = ROOT / "tools/art/sprite_preview_harness.html"
 
 
 def load(path: Path) -> dict[str, Any]:
@@ -26,7 +27,7 @@ def load(path: Path) -> dict[str, Any]:
 
 def main() -> int:
     errors: list[str] = []
-    for required in (CONTRACT, POLICY, BJJ_GATE, REGISTRY, ROSTER, ARENAS):
+    for required in (CONTRACT, POLICY, BJJ_GATE, REGISTRY, ROSTER, ARENAS, PREVIEW):
         if not required.exists():
             errors.append(f"missing required source: {required.relative_to(ROOT)}")
     if errors:
@@ -79,6 +80,10 @@ def main() -> int:
         errors.append("preview harness must run before Godot promotion")
     if preview.get("zero_frames_checked_is_pass") is not False:
         errors.append("zero-frame preview cannot pass")
+    preview_text = PREVIEW.read_text(encoding="utf-8")
+    for token in ("contentBounds", "PIVOT={x:64,y:96}", "imageSmoothingEnabled=false", "type=\"file\""):
+        if token not in preview_text:
+            errors.append(f"preview harness missing expected independent inspection feature: {token}")
 
     world = contract.get("world_art", {})
     if world.get("generated_single_flat_map_is_not_shipping_ready") is not True:
@@ -116,6 +121,8 @@ def main() -> int:
         errors.append("derived fighter coverage does not equal roster")
     if output.get("summary", {}).get("world_locations") != len(arenas.get("arenas", [])):
         errors.append("derived world coverage does not equal arena catalog")
+    if int(output.get("summary", {}).get("requirements_total", 0)) <= 1000:
+        errors.append("derived visual coverage unexpectedly small; expected >1000 obligations for current roster/world")
 
     p1_fighters = set(policy.get("priority", {}).get("p1_fighters", []))
     for fid in p1_fighters:
