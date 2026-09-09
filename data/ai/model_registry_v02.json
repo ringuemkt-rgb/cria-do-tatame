@@ -2,7 +2,7 @@
   "schema_version": "2.0.0",
   "contract_id": "cria_do_tatame_hugging_face_model_registry_v02",
   "status": "research_registry",
-  "audited_at": "2026-08-10",
+  "audited_at": "2026-09-09",
   "revision_policy": "resolve_ref_to_immutable_sha_per_batch",
   "runtime_policy": "offline_candidate_research_only",
   "shipping_policy": "human_license_quality_and_canon_approval_required",
@@ -42,6 +42,31 @@
       "adoption_status": "research_only",
       "source_url": "https://huggingface.co/artificialguybr/PixelArtRedmond",
       "notes": "Adapter research only; resolve and record an immutable revision for every batch."
+    },
+    {
+      "id": "Qwen/Qwen-Image-2512",
+      "role": "high-capacity base image model for CRIA pixel-art candidate generation",
+      "requested_ref": "ca98f15a127a0c732aec7e60ba6e783fb953d490",
+      "license": "apache-2.0",
+      "adoption_status": "candidate_generation_allowed",
+      "source_url": "https://huggingface.co/Qwen/Qwen-Image-2512",
+      "notes": "Audited as the declared base of the CRIA pixel-art LoRA. Large model footprint; offline authoring only. Base output never bypasses art-direction, provenance, QA or human approval."
+    },
+    {
+      "id": "prithivMLmods/Qwen-Image-2512-Pixel-Art-LoRA",
+      "role": "primary pixel-art candidate adapter for environments, props, icons and character concept passes",
+      "requested_ref": "e14eea588e8e4a9c753439e52a203d06288769c5",
+      "license": "apache-2.0",
+      "adoption_status": "candidate_generation_allowed",
+      "source_url": "https://huggingface.co/prithivMLmods/Qwen-Image-2512-Pixel-Art-LoRA",
+      "base_model": "Qwen/Qwen-Image-2512",
+      "trigger": "Pixel Art",
+      "weights_file": "Qwen-Image-2512-Master-Pixel-Art-LoRA.safetensors",
+      "weights_sha256": "2a2775ac823b3704eba2f72f3be65d7b0fe3262f1822e971c16818d0c923a4b6",
+      "weights_size_bytes": 1267015356,
+      "training_card_images": 50,
+      "training_dataset_provenance": "not_disclosed_in_model_card",
+      "notes": "Candidate generation is allowed, not shipping. Model card declares Apache-2.0, Qwen-Image-2512 base, trigger `Pixel Art`, 45–50 inference steps and 50 training images. Training-image provenance is not disclosed, so every output remains subject to rights review and human approval. This LoRA does not replace Sprite Forge, identity lock, paired-BJJ biomechanics or manual pixel cleanup."
     },
     {
       "id": "xinsir/controlnet-openpose-sdxl-1.0",
