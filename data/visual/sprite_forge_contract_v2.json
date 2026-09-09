@@ -1,0 +1,149 @@
+{
+  "$schema": "cria.sprite_forge.contract.v2",
+  "version": "2.0.0",
+  "status": "ACTIVE_AUTHORING_AND_QA_CONTRACT",
+  "purpose": "Production-grade, fail-closed 2D pixel-art manufacturing contract for CRIA DO TATAME. It converts authoritative game requirements into identity-locked, directionally consistent, biomechanically reviewable sprite candidates before Godot integration.",
+  "authority": {
+    "runtime": "Godot",
+    "game_requirement_authority": "data/visual/production_manifest_v03.json + tools/ci/derive_production_manifest_v03.py",
+    "visual_authority": ".agents/skills/cria-art-direction/SKILL.md",
+    "sprite_qa_authority": "data/visual/sprite_qa_profiles_v1.json",
+    "bjj_authority": "data/combat/bjj_completion_gate_v1.json + authoritative BJJ graph/rulesets",
+    "asset_registry": "assets/manifest_v2.json",
+    "external_research_registry": "data/production/external_tool_registry_v1.json",
+    "this_contract_may_override_canon_or_gameplay": false,
+    "this_contract_may_set_shipping_true": false
+  },
+  "compatibility": {
+    "v1_contract": "data/visual/sprite_forge_contract_v1.json",
+    "v1_manifest_filename": "sprite_forge_manifest.json",
+    "v2_adds_authoring_requirements_without_invalidating_v1_packages": true
+  },
+  "design_goal": {
+    "style": "premium 2D pixel art with strong regional identity, readable silhouettes, restrained 2.5D layering, deterministic anchors and no 3D/CGI runtime dependency",
+    "world": "Baixo Sul da Bahia represented through layered maps, weather, vegetation, architecture, tatames, streets, mangrove/coastal identity and readable gameplay spaces",
+    "combat": "characters must visually execute graph-valid jiu-jitsu states and transitions, not generic attack animations",
+    "mobile_first": true
+  },
+  "frame_contract": {
+    "normalized_gameplay_frame_px": [128, 128],
+    "upright_pivot_px": [64, 96],
+    "resampling": "nearest",
+    "integer_scale_only": true,
+    "binary_alpha_after_normalization": true,
+    "image_smoothing": false,
+    "raw_generation_may_use_larger_resolution": true,
+    "raw_generation_is_never_runtime_asset": true
+  },
+  "pipeline": [
+    "derive_requirement",
+    "resolve_authorities",
+    "resolve_identity_master",
+    "resolve_model_adapter",
+    "generate_or_ingest_candidate",
+    "remove_or_normalize_background",
+    "extract_frames",
+    "measure_content_bounds",
+    "normalize_scale",
+    "normalize_anchor_and_pivot",
+    "palette_and_alpha_cleanup",
+    "identity_comparison",
+    "paired_bjj_sync_validation_when_applicable",
+    "preview_harness",
+    "technical_qa",
+    "human_visual_cultural_biomechanical_review",
+    "rights_review",
+    "asset_registry_handoff",
+    "godot_import",
+    "runtime_visual_evidence"
+  ],
+  "identity_lock": {
+    "required_for_playable_character": true,
+    "master_artifacts": ["turnaround", "front_combat_pose", "back_view", "side_view", "palette_signature", "silhouette_signature"],
+    "reference_chain_required": true,
+    "cross_action_face_body_clothing_consistency_required": true,
+    "gi_nogi_are_explicit_variants_not_prompt_accidents": true,
+    "real_person_likeness_forbidden_by_roster_guardrail": true,
+    "generated_identity_never_self_approves": true
+  },
+  "directional_authoring": {
+    "canonical_directions": ["down", "up", "side_right"],
+    "side_left_policy": "derive_by_reviewed_horizontal_mirror_only_when_asymmetry_contract_allows",
+    "reference_conditioning_order": ["identity_master", "same_action_front_or_down", "target_direction"],
+    "direction_change_may_not_change_equipment_or_attack_semantics": true,
+    "per_direction_scale_normalization_required": true
+  },
+  "content_bounds_normalization": {
+    "measure_nontransparent_bbox_per_frame": true,
+    "record_bbox": ["x", "y", "width", "height"],
+    "record_body_height_ratio": true,
+    "record_feet_or_contact_anchor": true,
+    "upright_scale_reference": "approved master action content height",
+    "ground_scale_reference": "approved identity body-span profile",
+    "crop_may_not_cut_body_or_required_contact_fx": true,
+    "detached_fx_are_separate_layers_by_default": true
+  },
+  "model_adapter_policy": {
+    "provider_is_authoring_only": true,
+    "network_or_api_is_never_required_by_runtime": true,
+    "adapter_records_model_revision_or_endpoint": true,
+    "adapter_records_known_failure_modes": true,
+    "adapter_may_patch_prompts_for_direction_text_grid_or_background_failures": true,
+    "model_output_status": "CANDIDATE",
+    "model_output_default_shipping": false,
+    "provider_terms_and_output_rights_require_separate_review": true
+  },
+  "paired_bjj_animation": {
+    "source_transition_must_exist": true,
+    "attacker_and_defender_are_one_synchronized_package": true,
+    "required_phases": ["anticipation", "entry", "establish", "stabilize", "response", "recovery"],
+    "shared_fields": ["technique_id", "from_position", "to_position", "attacker_role", "defender_role", "modality", "pivot_policy", "sync_points", "contact_points"],
+    "contact_point_fields": ["phase", "attacker_limb", "defender_target", "contact_type"],
+    "sync_point_fields": ["phase", "attacker_frame", "defender_frame"],
+    "limb_continuity_required": true,
+    "gi_only_grip_forbidden_in_nogi": true,
+    "generic_attack_prompt_cannot_define_bjj_motion": true,
+    "expert_biomechanical_review_required": true
+  },
+  "preview_harness": {
+    "required_before_godot_promotion": true,
+    "renderer_is_not_gameplay_authority": true,
+    "required_checks": ["idle_loop", "walk_direction_cycle", "scale_consistency", "anchor_stability", "left_right_policy", "attack_or_transition_once", "background_transparency", "content_bounds_overlay"],
+    "paired_required_checks": ["shared_pivot", "contact_continuity", "sync_points", "no_body_interpenetration_beyond_contract", "phase_order"],
+    "capture_evidence_required": true,
+    "zero_frames_checked_is_pass": false
+  },
+  "world_art": {
+    "runtime_layers": ["background", "terrain", "structures", "props", "decals", "collision_or_navigation_metadata", "characters", "foreground_occlusion", "weather_fx", "lighting_fx", "hud"],
+    "generated_single_flat_map_is_not_shipping_ready": true,
+    "walkable_space_must_be_defined_by_game_data_not_image_guessing": true,
+    "collision_and_navigation_are_runtime_metadata_not_baked_visual_assumptions": true,
+    "regional_reference_and_cultural_review_required": true,
+    "parallax_or_2_5d_layers_may_not_reduce_gameplay_readability": true
+  },
+  "technical_gates": {
+    "inherit": "data/visual/sprite_qa_profiles_v1.json",
+    "additional": ["content_bounds_present", "identity_reference_chain_present", "direction_contract_valid", "model_provenance_present", "preview_frames_checked", "paired_sync_valid_when_required", "world_layer_contract_valid_when_required"],
+    "automatic_gate_may_set_human_approval": false,
+    "automatic_gate_may_set_rights_status": false
+  },
+  "provenance_sidecar": {
+    "required_fields": ["asset_id", "source_requirement_id", "authoring_method", "model_or_tool", "model_or_tool_revision", "source_references", "license_or_terms_status", "human_editor", "qa_evidence", "human_approval", "rights_status", "shipping"],
+    "shipping_default": false,
+    "unknown_source_or_rights_blocks_promotion": true
+  },
+  "external_research_constraints": {
+    "blendi_sprite_sheet_creator": "study and independently reimplement concepts only while no license is published",
+    "sprite_animator": "concept-only because CC BY-NC-SA blocks commercial incorporation without separate license",
+    "pixelsrpg_forge": "taxonomy/reference only; asset-level rights unknown",
+    "qwen_pixel_lora": "candidate generator only; generated output still requires human/rights review"
+  },
+  "completion_policy": {
+    "tooling_ready_requires_contract_and_validator": true,
+    "character_ready_requires_identity_and_all_required_action_packages": true,
+    "technique_ready_requires_graph_validity_and_paired_animation_review": true,
+    "world_ready_requires_layered_runtime_map_and_runtime_evidence": true,
+    "game_complete_requires_production_os_all_domains_pass": true,
+    "no_count_or_readme_claim_can_override_evidence": true
+  }
+}

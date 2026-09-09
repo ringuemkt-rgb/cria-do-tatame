@@ -87,6 +87,18 @@
       "notes": "Technically excellent and active, but commercial use of the project is blocked without a separate commercial license. Reimplement algorithms/workflow concepts independently; never copy project code into commercial CRIA without permission."
     },
     {
+      "id": "blendi_sprite_sheet_creator",
+      "kind": "github_repo",
+      "source": "blendi-remade/sprite-sheet-creator",
+      "revision": "4e0eeb413fc0ee1b3650957f47eb187dd4bdbf2d",
+      "license_status": "NO_LICENSE_FOUND",
+      "adoption": "STUDY_AND_REIMPLEMENT_CONCEPTS_ONLY",
+      "direct_code_reuse": false,
+      "direct_asset_reuse": false,
+      "cria_roles": ["reference_conditioned_directional_generation", "frame_grid_extraction", "content_bounds_measurement", "per_animation_scale_normalization", "preview_harness_reference", "isometric_world_preview_reference", "model_specific_prompt_adapter_reference", "background_removal_provider_pattern"],
+      "notes": "Strong authoring reference for directional sprite generation, frame extraction/content bounds, scale normalization and playable preview. Repository has no LICENSE and upstream issue #3 explicitly requests one; therefore no code or assets may be copied. CRIA independently reimplements concepts under its own contracts. Generic attack prompts are never BJJ authority."
+    },
+    {
       "id": "pixelsrpg_forge",
       "kind": "github_repo",
       "source": "Huu-Yuu/PixelSRPG-Forge",

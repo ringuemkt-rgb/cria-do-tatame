@@ -1,0 +1,72 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "cria.character_identity_master.v2.schema",
+  "title": "CRIA Character Identity Master V2",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "character_id",
+    "canon_refs",
+    "master_status",
+    "palette_signature",
+    "silhouette_signature",
+    "asymmetry_contract",
+    "variants",
+    "human_reviewer",
+    "rights_status",
+    "shipping"
+  ],
+  "properties": {
+    "character_id": {"type": "string", "minLength": 1},
+    "canon_refs": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "string"}},
+    "master_status": {"type": "string", "enum": ["PENDING", "APPROVED", "REJECTED"]},
+    "palette_signature": {
+      "type": "object",
+      "required": ["colors"],
+      "properties": {
+        "colors": {"type": "array", "minItems": 1, "items": {"type": "string", "pattern": "^#[0-9A-Fa-f]{6}$"}},
+        "notes": {"type": "string"}
+      }
+    },
+    "silhouette_signature": {
+      "type": "object",
+      "required": ["reference_asset", "body_ratio_notes"],
+      "properties": {
+        "reference_asset": {"type": "string", "minLength": 1},
+        "body_ratio_notes": {"type": "string", "minLength": 1}
+      }
+    },
+    "asymmetry_contract": {
+      "type": "object",
+      "required": ["horizontal_mirror_safe", "notes"],
+      "properties": {
+        "horizontal_mirror_safe": {"type": "boolean"},
+        "notes": {"type": "string"}
+      }
+    },
+    "variants": {
+      "type": "object",
+      "required": ["gi", "nogi"],
+      "properties": {
+        "gi": {"$ref": "#/$defs/variant"},
+        "nogi": {"$ref": "#/$defs/variant"}
+      }
+    },
+    "human_reviewer": {"type": ["string", "null"]},
+    "rights_status": {"type": "string", "enum": ["PENDING", "CLEARED", "BLOCKED", "UNKNOWN"]},
+    "shipping": {"const": false}
+  },
+  "$defs": {
+    "variant": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["turnaround", "front_combat_pose", "back_view", "side_view"],
+      "properties": {
+        "turnaround": {"type": ["string", "null"]},
+        "front_combat_pose": {"type": ["string", "null"]},
+        "back_view": {"type": ["string", "null"]},
+        "side_view": {"type": ["string", "null"]}
+      }
+    }
+  }
+}

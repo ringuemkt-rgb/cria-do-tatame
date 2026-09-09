@@ -50,7 +50,18 @@
       "priority": 2,
       "state": "PARTIAL",
       "required": ["roster_identity", "turnarounds", "gi_nogi_variants", "combat_core", "clinch", "ground", "portraits", "emotes", "npc_motion"],
-      "evidence": ["data/combat/roster_v3.json", "data/visual/production_manifest_v02.json", "data/visual/sprite_qa_profiles_v1.json"],
+      "evidence": [
+        "data/combat/roster_v3.json",
+        "data/visual/production_manifest_v02.json",
+        "data/visual/sprite_qa_profiles_v1.json",
+        "data/visual/sprite_forge_contract_v2.json",
+        "data/visual/sprite_forge_requirements_v2.json",
+        "assets/schemas/character_identity_master_v2.schema.json",
+        "assets/schemas/sprite_forge_v2.provenance.schema.json",
+        "tools/art/derive_sprite_forge_v2_requirements.py",
+        "tools/art/validate_sprite_forge_v2.py",
+        ".github/workflows/sprite-forge-v2.yml"
+      ],
       "blockers": ["identity_master_missing_for_most_roster", "approved_animation_packages_missing"]
     },
     {
@@ -64,7 +75,9 @@
         "data/combat/bjj_rulesets_verified_v1.json",
         "data/bjj/bjj_kg_slice_ruan_davi_v1.json",
         "data/combat/bjj_completion_gate_v1.json",
-        "tools/data/validate_bjj_completion_gate_v1.py"
+        "tools/data/validate_bjj_completion_gate_v1.py",
+        "data/visual/sprite_forge_contract_v2.json",
+        "assets/schemas/paired_bjj_animation_v2.schema.json"
       ],
       "blockers": ["full_kg_t093_t120_and_chains_not_received", "paired_animation_packages_missing", "F3_calibration_pending", "F4_balance_pending"]
     },
@@ -79,7 +92,10 @@
         "data/world/arena_info_v1.json",
         "data/world/npc_ecology_contract_v1.json",
         "src/world/NPCEcologyEngineV1.gd",
-        "tools/data/validate_npc_ecology_v1.py"
+        "tools/data/validate_npc_ecology_v1.py",
+        "data/visual/sprite_forge_contract_v2.json",
+        "data/visual/sprite_forge_requirements_v2.json",
+        "assets/schemas/world_art_package_v2.schema.json"
       ],
       "blockers": ["map_atlas_machine_contract_pending_repo_integration", "approved_runtime_map_layers_missing", "npc_population_source_pending", "npc_runtime_scene_evidence_pending"]
     },
@@ -123,7 +139,9 @@
         "data/production/qa_evidence_contract_v1.json",
         "production/evidence/visual_runtime_qa_v1.json",
         "production/evidence/android_physical_device_v1.json",
-        "tools/ci/validate_qa_evidence_v1.py"
+        "tools/ci/validate_qa_evidence_v1.py",
+        "tools/art/sprite_preview_harness.html",
+        ".github/workflows/sprite-forge-v2.yml"
       ],
       "blockers": ["visual_runtime_qa_pending", "physical_android_evidence_pending", "windows_export_smoke_pending", "release_coverage_gate_pending"]
     }

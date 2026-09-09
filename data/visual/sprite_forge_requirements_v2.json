@@ -1,0 +1,44 @@
+{
+  "$schema": "cria.sprite_forge.requirements.v2",
+  "version": "2.0.0",
+  "status": "ACTIVE_DERIVATION_POLICY",
+  "contract": "data/visual/sprite_forge_contract_v2.json",
+  "sources": {
+    "roster": "data/combat/roster_v3.json",
+    "arena_info": "data/world/arena_info_v1.json",
+    "bjj_full_graph": "data/bjj/bjj_knowledge_graph_v1.json",
+    "bjj_slice_fallback": "data/bjj/bjj_kg_slice_ruan_davi_v1.json",
+    "bjj_completion_gate": "data/combat/bjj_completion_gate_v1.json"
+  },
+  "character": {
+    "identity_artifacts": ["identity_master", "turnaround", "front_combat_pose", "back_view", "side_view", "palette_signature", "silhouette_signature"],
+    "world_locomotion_actions": ["idle_down", "walk_down", "walk_up", "walk_side"],
+    "combat_upright_actions": ["guard", "grip", "grip_fight", "clinch_entry", "hurt", "victory"],
+    "combat_ground_actions": ["ground_transition", "control_pose", "tap_reset", "defeat"],
+    "presentation_artifacts": ["portrait", "emote_set"],
+    "variants": ["gi", "nogi"],
+    "side_left_policy": "reviewed_mirror_when_asymmetry_allows",
+    "all_playable_fighters_require_identity_before_animation": true
+  },
+  "technique": {
+    "requirements": ["paired_animation_contract", "paired_body_candidate", "technique_icon"],
+    "only_authoritative_graph_transitions_may_be_produced": true,
+    "slice_graph_scope": "P1_FIXTURE_ONLY",
+    "full_graph_minimum": {"positions": 40, "techniques": 120, "chains": 10}
+  },
+  "world_location": {
+    "requirements": ["terrain_or_base_layer", "structures_layer", "props_layer", "foreground_occlusion_layer", "collision_metadata", "navigation_metadata", "lighting_profile", "weather_profile", "ambient_fx_profile"],
+    "single_flat_generated_map_is_shipping_ready": false,
+    "runtime_collision_and_navigation_must_be_authored_separately": true
+  },
+  "priority": {
+    "p1_fighters": ["ruan_macacao", "davi_relampago"],
+    "p1_locations": ["terreiro", "arena_do_dique"],
+    "p1_priority": 1,
+    "full_roster_priority": 2,
+    "world_priority": 2,
+    "technique_priority": 2
+  },
+  "output": "production/generated/sprite_forge_v2_requirements.materialized.json",
+  "shipping_default": false
+}
