@@ -1,0 +1,36 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "cria.sprite_forge_v2.provenance.schema",
+  "title": "CRIA Sprite Forge V2 Provenance Sidecar",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "asset_id",
+    "source_requirement_id",
+    "authoring_method",
+    "model_or_tool",
+    "model_or_tool_revision",
+    "source_references",
+    "license_or_terms_status",
+    "human_editor",
+    "qa_evidence",
+    "human_approval",
+    "rights_status",
+    "shipping"
+  ],
+  "properties": {
+    "asset_id": {"type": "string", "minLength": 1},
+    "source_requirement_id": {"type": "string", "pattern": "^sprite_v2:"},
+    "authoring_method": {"type": "string", "enum": ["manual", "generated", "generated_then_manual", "procedural", "mixed"]},
+    "model_or_tool": {"type": "string", "minLength": 1},
+    "model_or_tool_revision": {"type": ["string", "null"]},
+    "source_references": {"type": "array", "items": {"type": "string"}, "minItems": 1, "uniqueItems": true},
+    "license_or_terms_status": {"type": "string", "minLength": 1},
+    "human_editor": {"type": ["string", "null"]},
+    "qa_evidence": {"type": "array", "items": {"type": "string"}},
+    "human_approval": {"type": "boolean"},
+    "rights_status": {"type": "string", "enum": ["PENDING", "CLEARED", "BLOCKED", "UNKNOWN"]},
+    "shipping": {"const": false},
+    "notes": {"type": "string"}
+  }
+}
