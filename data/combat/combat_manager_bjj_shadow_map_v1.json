@@ -1,0 +1,73 @@
+{
+  "$schema": "cria.combat_manager_bjj_shadow_map.v1",
+  "version": "1.0.0",
+  "status": "SHADOW_ONLY_NON_AUTHORITATIVE",
+  "shipping": false,
+  "purpose": "Measure semantic drift between the current product CombatManager vocabulary and BJJGraphReducerV2 before any authority migration.",
+  "authority": {
+    "legacy_runtime": "src/autoloads/CombatManager.gd",
+    "target_reducer": "src/combat/BJJGraphReducerV2.gd",
+    "slice_graph": "data/bjj/bjj_kg_slice_ruan_davi_v1.json",
+    "shadow_may_change_live_combat": false,
+    "shadow_may_award_score": false,
+    "shadow_may_finish_combat": false
+  },
+  "legacy_state_map": {
+    "PLAYER_STANDING_NEUTRAL": {"canonical": "standing_neutral", "confidence": "EXACT"},
+    "PLAYER_TOP_CLINCH": {"canonical": null, "confidence": "AMBIGUOUS", "reason": "Legacy clinch does not specify head/arm/tie topology."},
+    "PLAYER_BOTTOM_CLINCH": {"canonical": null, "confidence": "AMBIGUOUS", "reason": "Legacy clinch does not specify head/arm/tie topology."},
+    "PLAYER_TOP_GUARD": {"canonical": null, "confidence": "AMBIGUOUS", "reason": "Could represent closed guard top, half guard top or another guard engagement."},
+    "PLAYER_BOTTOM_GUARD": {"canonical": null, "confidence": "AMBIGUOUS", "reason": "Could represent closed/open/half guard bottom; do not guess."},
+    "PLAYER_TOP_SIDE": {"canonical": "side_control", "confidence": "HIGH"},
+    "PLAYER_BOTTOM_SIDE": {"canonical": "side_control", "confidence": "HIGH", "perspective": "bottom"},
+    "PLAYER_TOP_MOUNT": {"canonical": "mount_high", "confidence": "HIGH"},
+    "PLAYER_BOTTOM_MOUNT": {"canonical": "mount_high", "confidence": "HIGH", "perspective": "bottom"},
+    "PLAYER_BACK_ATTACK": {"canonical": "back_mount_seatbelt", "confidence": "MEDIUM", "reason": "Seatbelt does not itself imply scoring hooks/body triangle."},
+    "PLAYER_BACK_DEFENSE": {"canonical": "back_mount_seatbelt", "confidence": "MEDIUM", "perspective": "defender"},
+    "PLAYER_SUBMISSION_ATTACK": {"canonical": null, "confidence": "AMBIGUOUS", "reason": "Submission family and control topology are missing."},
+    "PLAYER_SUBMISSION_DEFENSE": {"canonical": null, "confidence": "AMBIGUOUS", "reason": "Submission family and escape hierarchy are missing."},
+    "RESET": {"canonical": "standing_neutral", "confidence": "HIGH"}
+  },
+  "legacy_action_map": {
+    "baiana": {
+      "canonical": "t001",
+      "confidence": "HIGH",
+      "legacy_from": "PLAYER_STANDING_NEUTRAL",
+      "legacy_to": "PLAYER_TOP_GUARD",
+      "canonical_from": "standing_neutral",
+      "canonical_to": "half_guard_top",
+      "known_delta": "Legacy destination collapses guard topology; canonical slice establishes top half guard after the takedown."
+    },
+    "sprawl": {
+      "canonical": "slice_sprawl",
+      "confidence": "MEDIUM",
+      "legacy_from": "PLAYER_STANDING_NEUTRAL",
+      "legacy_to": "PLAYER_STANDING_NEUTRAL",
+      "canonical_from": "standing_neutral",
+      "canonical_to": "front_headlock",
+      "known_delta": "Canonical counter includes successful front-headlock establishment; legacy Sprawl returns neutral and loses the control outcome."
+    },
+    "puxada_guarda": {
+      "canonical": "t005",
+      "confidence": "HIGH",
+      "legacy_from": "PLAYER_STANDING_NEUTRAL",
+      "legacy_to": "PLAYER_BOTTOM_GUARD",
+      "canonical_from": "standing_neutral",
+      "canonical_to": "closed_guard",
+      "known_delta": "Legacy bottom-guard state is broader than the canonical closed-guard result."
+    }
+  },
+  "unmapped_policy": {
+    "legacy_action_without_verified_canonical_edge": "REPORT_UNMAPPED_AND_DO_NOT_GUESS",
+    "ambiguous_legacy_state": "REPORT_AMBIGUOUS_AND_DO_NOT_SYNC",
+    "semantic_delta_blocks_authority_promotion": true
+  },
+  "promotion_requirements": [
+    "Every live P1 legacy action has an authoritative canonical edge or an explicit deprecation path.",
+    "Every live legacy state has an unambiguous canonical representation or is replaced by richer state.",
+    "Legacy and reducer deterministic replay comparison has zero unexplained divergence.",
+    "Rules/scoring parity is proven for the selected ruleset.",
+    "CombatManager delegates outcome authority through an adapter without duplicating managers.",
+    "Full Godot and Android regression gates are green."
+  ]
+}
