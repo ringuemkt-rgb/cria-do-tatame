@@ -1,0 +1,148 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "cria.grappling_observation.v1",
+  "title": "CRIA Grappling Observation V1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["observation_id", "source_id", "start_ms", "end_ms", "ruleset_context", "position", "phase", "athletes", "interaction", "confidence", "review"],
+  "properties": {
+    "observation_id": {"type": "string", "minLength": 1},
+    "source_id": {"type": "string", "minLength": 1},
+    "start_ms": {"type": "integer", "minimum": 0},
+    "end_ms": {"type": "integer", "minimum": 1},
+    "ruleset_context": {
+      "type": "object",
+      "required": ["ruleset", "gi_or_nogi"],
+      "properties": {
+        "ruleset": {"type": "string"},
+        "gi_or_nogi": {"enum": ["gi", "nogi", "unknown"]},
+        "scoring_phase": {"enum": ["no_positive_points", "points_active", "unknown"]},
+        "time_remaining_ms": {"type": ["integer", "null"], "minimum": 0}
+      }
+    },
+    "position": {
+      "type": "object",
+      "required": ["id", "top_player"],
+      "properties": {
+        "id": {"type": "string"},
+        "family": {"type": ["string", "null"]},
+        "top_player": {"enum": [0, 1, 2]},
+        "observed_or_inferred": {"enum": ["observed", "inferred", "unknown"]}
+      }
+    },
+    "technique_candidate": {"type": ["string", "null"]},
+    "counter_candidate": {"type": ["string", "null"]},
+    "phase": {"enum": ["anticipation", "entry", "establish", "stabilize", "response", "recovery", "unknown"]},
+    "athletes": {
+      "type": "array",
+      "minItems": 2,
+      "maxItems": 2,
+      "items": {
+        "type": "object",
+        "required": ["player", "mask_track_id", "pose", "base", "orientation", "fatigue_observation"],
+        "properties": {
+          "player": {"enum": [1, 2]},
+          "mask_track_id": {"type": ["string", "null"]},
+          "pose": {
+            "type": "object",
+            "required": ["format", "keypoints", "mean_confidence"],
+            "properties": {
+              "format": {"enum": ["coco17", "body26", "wholebody", "custom_grappling", "unknown"]},
+              "keypoints": {"type": "array"},
+              "mean_confidence": {"type": "number", "minimum": 0, "maximum": 1},
+              "occluded_keypoints": {"type": "array", "items": {"type": "string"}}
+            }
+          },
+          "base": {
+            "type": "object",
+            "properties": {
+              "support_points": {"type": "array", "items": {"type": "string"}},
+              "quality": {"type": ["number", "null"], "minimum": 0, "maximum": 1},
+              "off_balance": {"type": ["number", "null"], "minimum": 0, "maximum": 1}
+            }
+          },
+          "orientation": {
+            "type": "object",
+            "properties": {
+              "hip": {"type": ["string", "null"]},
+              "shoulder": {"type": ["string", "null"]},
+              "head": {"type": ["string", "null"]}
+            }
+          },
+          "fatigue_observation": {
+            "type": "object",
+            "properties": {
+              "global": {"type": ["number", "null"], "minimum": 0, "maximum": 1},
+              "isometric_load": {"type": ["number", "null"], "minimum": 0, "maximum": 1},
+              "basis": {"enum": ["visual_estimate", "sensor", "expert_annotation", "unknown"]}
+            }
+          }
+        }
+      }
+    },
+    "interaction": {
+      "type": "object",
+      "required": ["contacts", "grips_or_ties", "inside_position", "force_direction", "boundary_context"],
+      "properties": {
+        "contacts": {"type": "array", "items": {"$ref": "#/$defs/contact"}},
+        "grips_or_ties": {"type": "array", "items": {"$ref": "#/$defs/contact"}},
+        "inside_position": {"type": ["string", "null"]},
+        "force_direction": {"type": ["string", "null"]},
+        "boundary_context": {"enum": ["center", "warning_zone", "out_of_bounds", "unknown"]},
+        "contact_continuity": {"type": ["number", "null"], "minimum": 0, "maximum": 1}
+      }
+    },
+    "score_event_candidate": {"type": ["string", "null"]},
+    "stabilization_ms": {"type": ["integer", "null"], "minimum": 0},
+    "confidence": {
+      "type": "object",
+      "required": ["athlete_identity", "position", "technique", "phase", "contact", "pose", "occlusion"],
+      "properties": {
+        "athlete_identity": {"type": "number", "minimum": 0, "maximum": 1},
+        "position": {"type": "number", "minimum": 0, "maximum": 1},
+        "technique": {"type": "number", "minimum": 0, "maximum": 1},
+        "phase": {"type": "number", "minimum": 0, "maximum": 1},
+        "contact": {"type": "number", "minimum": 0, "maximum": 1},
+        "pose": {"type": "number", "minimum": 0, "maximum": 1},
+        "occlusion": {"type": "number", "minimum": 0, "maximum": 1}
+      }
+    },
+    "model_trace": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["tool", "revision", "role"],
+        "properties": {
+          "tool": {"type": "string"},
+          "revision": {"type": "string"},
+          "role": {"type": "string"},
+          "threshold": {"type": ["number", "null"]}
+        }
+      }
+    },
+    "review": {
+      "type": "object",
+      "required": ["status", "biomechanics_reviewed", "rules_reviewed"],
+      "properties": {
+        "status": {"enum": ["UNREVIEWED", "ACCEPTED", "REJECTED", "UNCERTAIN"]},
+        "biomechanics_reviewed": {"type": "boolean"},
+        "rules_reviewed": {"type": "boolean"},
+        "reviewer_id": {"type": ["string", "null"]},
+        "notes": {"type": ["string", "null"]}
+      }
+    }
+  },
+  "$defs": {
+    "contact": {
+      "type": "object",
+      "required": ["source", "target", "type", "confidence"],
+      "properties": {
+        "source": {"type": "string"},
+        "target": {"type": "string"},
+        "type": {"enum": ["grip", "tie", "frame", "hook", "pin", "post", "wedge", "chest_contact", "hip_contact", "leg_entanglement", "foot_contact", "unknown"]},
+        "confidence": {"type": "number", "minimum": 0, "maximum": 1},
+        "visibility": {"enum": ["visible", "partially_occluded", "occluded", "unknown"]}
+      }
+    }
+  }
+}

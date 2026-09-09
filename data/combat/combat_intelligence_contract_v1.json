@@ -1,0 +1,206 @@
+{
+  "$schema": "cria.combat_intelligence.v1",
+  "version": "1.0.0",
+  "status": "ACTIVE_AUTHORING_AND_CALIBRATION_CONTRACT",
+  "shipping": false,
+  "purpose": "Extend the deterministic BJJ reducer with a richer evidence-driven grappling state, fighter identity, tactical planning and animation semantics without making AI/video models rules authorities.",
+  "authority": {
+    "runtime_engine": "Godot",
+    "runtime_state_authority": "src/combat/BJJGraphReducerV2.gd",
+    "rules_authority": "data/combat/bjj_rulesets_verified_v1.json",
+    "completion_authority": "data/combat/bjj_completion_gate_v1.json",
+    "timing_authority": "data/combat/bjj_timing_windows_v1.json",
+    "position_value_authority": "data/combat/bjj_position_values_v1.json",
+    "video_or_ml_may_define_legality": false,
+    "video_or_ml_may_define_scoring": false,
+    "llm_may_run_inner_combat_loop": false,
+    "this_contract_may_set_shipping_true": false
+  },
+  "design_principles": [
+    "Simulation state is authoritative; animation visualizes state rather than defining it.",
+    "A technique is a causal transition with prerequisites, contacts, force direction, response branches and recovery, not a named animation clip.",
+    "Fighter identity changes preferred plans, rhythm and risk profile without bypassing rules.",
+    "Every advantage has a counter-cost or matchup tradeoff.",
+    "Input-to-state response takes priority over decorative animation latency.",
+    "Observed video evidence is probabilistic evidence and requires expert review under severe grappling occlusion."
+  ],
+  "contest_state": {
+    "required_fields": [
+      "ruleset",
+      "match_phase",
+      "phase_clock_ms",
+      "scoring_phase",
+      "mat_zone",
+      "boundary_state",
+      "score",
+      "penalties",
+      "negative_points",
+      "pending_score"
+    ],
+    "match_phases": ["regulation", "overtime", "finished"],
+    "scoring_phases": ["no_positive_points", "points_active", "finished"],
+    "mat_zones": ["center", "warning_zone", "out_of_bounds"]
+  },
+  "athlete_state": {
+    "required_dimensions": [
+      "posture",
+      "support_points",
+      "base_quality",
+      "center_of_mass_projection",
+      "hip_orientation",
+      "shoulder_orientation",
+      "head_position",
+      "inside_position",
+      "frames_and_wedges",
+      "grip_graph",
+      "grip_integrity",
+      "underhook_overhook_state",
+      "leg_entanglement_topology",
+      "knee_line_state",
+      "heel_exposure",
+      "off_balance",
+      "pressure_vector",
+      "mobility_freedom",
+      "pinned_segments",
+      "submission_danger",
+      "gas",
+      "isometric_load",
+      "local_fatigue",
+      "decision_confidence"
+    ],
+    "normalized_scalar_range": [0.0, 1.0],
+    "angles_are_relative_not_world_absolute": true,
+    "unknown_observation_is_allowed": true,
+    "unknown_observation_must_not_be_imputed_as_fact": true
+  },
+  "interaction_state": {
+    "required_dimensions": [
+      "position_id",
+      "position_family",
+      "top_player",
+      "connection_graph",
+      "contact_continuity",
+      "dominant_control_points",
+      "force_direction",
+      "transition_intent",
+      "current_phase",
+      "escape_routes",
+      "score_eligibility_timer_ms",
+      "submission_escape_hierarchy"
+    ],
+    "animation_phases": ["anticipation", "entry", "establish", "stabilize", "response", "recovery"]
+  },
+  "connection_graph": {
+    "node_types": ["p1_head", "p1_torso", "p1_limb", "p1_hand", "p1_leg", "p2_head", "p2_torso", "p2_limb", "p2_hand", "p2_leg", "gi_fabric", "mat", "boundary"],
+    "edge_types": ["grip", "frame", "hook", "pin", "post", "wedge", "head_control", "chest_contact", "hip_contact", "leg_entanglement", "foot_contact", "mat_support"],
+    "edge_fields": ["type", "source", "target", "strength", "phase", "confidence"]
+  },
+  "technique_contract": {
+    "required_fields": [
+      "id",
+      "from",
+      "to",
+      "type",
+      "actor_role_from",
+      "actor_role_to",
+      "preconditions",
+      "entry_cues",
+      "required_connections",
+      "body_alignment",
+      "weight_shift",
+      "force_direction",
+      "attacker_objective",
+      "defender_responses",
+      "success_topology",
+      "failure_topology",
+      "counters",
+      "energy_cost",
+      "risk_profile",
+      "rules_legality",
+      "animation_phases"
+    ],
+    "phase_semantics": {
+      "anticipation": "Readable intent or setup while preserving cancel/counter opportunity.",
+      "entry": "Initial committed connection, level/angle change or grip/tie acquisition.",
+      "establish": "Required topology and control contacts are created.",
+      "stabilize": "Control satisfies rules-specific stabilization where applicable.",
+      "response": "Defender branch, frame, base recovery, counter or submission defense is resolved.",
+      "recovery": "Both athletes settle into the resulting authoritative state."
+    },
+    "generic_attack_animation_is_valid_technique_definition": false,
+    "success_probability_is_not_legality": true
+  },
+  "tactical_ai": {
+    "inner_loop": "deterministic_reducer",
+    "planner_layers": ["rules_filter", "statechart", "utility_planner", "short_horizon_chain_search", "fighter_identity_bias"],
+    "optional_offline_layers": ["self_play_calibration", "behavior_cloning_research", "video_tendency_estimation"],
+    "llm_roles": ["offline_annotation_assist", "coach_commentary_draft", "npc_dialogue_draft", "research_query_generation"],
+    "llm_forbidden_roles": ["legality_decision", "score_decision", "frame_authority", "runtime_rng", "submission_safety_decision"],
+    "utility_dimensions": [
+      "rules_score_value",
+      "position_value",
+      "finish_probability",
+      "counter_exposure",
+      "energy_cost",
+      "isometric_cost",
+      "boundary_risk",
+      "time_context",
+      "opponent_tendency",
+      "fighter_style_fit",
+      "chain_value",
+      "escape_value"
+    ]
+  },
+  "fighter_identity": {
+    "principle": "Identity is expressed by preferred states, entries, tempos, chains and risk tolerance rather than flat stat bonuses.",
+    "dimensions": [
+      "preferred_range",
+      "preferred_ties",
+      "takedown_family_bias",
+      "guard_family_bias",
+      "passing_family_bias",
+      "scramble_rate",
+      "top_pressure_bias",
+      "submission_family_bias",
+      "pace_profile",
+      "counter_bias",
+      "risk_tolerance",
+      "late_match_strategy"
+    ],
+    "momentum_system_name": "Cria Rhythm",
+    "momentum_rule": "Reward executing a fighter's coherent game plan, but never make an illegal technique legal or erase a valid counter."
+  },
+  "video_evidence": {
+    "corpus_contract": "data/research/grappling_video_corpus_contract_v1.json",
+    "observation_schema": "assets/schemas/grappling_observation_v1.schema.json",
+    "allowed_uses": ["tendency_estimation", "phase_timing", "key_pose_reference", "common_counter_frequency", "chain_frequency", "camera_reference", "animation_review"],
+    "forbidden_as_sole_evidence": ["joint_torque", "submission_safety", "rules_legality", "exact_hidden_grip", "exact_occluded_limb_pose"],
+    "expert_review_required": true
+  },
+  "animation_binding": {
+    "visual_contract": "data/visual/sprite_forge_contract_v2.json",
+    "paired_schema": "assets/schemas/paired_bjj_animation_v2.schema.json",
+    "state_to_visual_rule": "The renderer receives authoritative phase/contact/state metadata and selects or blends approved paired animation; it never changes the resulting combat state.",
+    "contact_window_required": true,
+    "contact_mismatch_is_fail": true,
+    "identity_lock_required": true,
+    "pixel_art_is_primary_shipping_direction": true,
+    "future_3d_or_hybrid_renderer_allowed_without_changing_simulation": true
+  },
+  "calibration": {
+    "authoring_prior_status": "HEURISTIC_UNTIL_EVIDENCE",
+    "video_frequency_is_not_success_probability": true,
+    "required_splits": ["training", "validation", "holdout"],
+    "required_reports": ["coverage", "confusion", "calibration", "rules_consistency", "expert_disagreement", "occlusion_failure"],
+    "promotion_requires_human_expert": true
+  },
+  "release_gates": {
+    "full_bjj_graph_required": true,
+    "paired_animation_required": true,
+    "rules_tests_required": true,
+    "deterministic_replay_required": true,
+    "visual_runtime_evidence_required": true,
+    "physical_android_evidence_required": true,
+    "zero_unlicensed_training_or_shipping_assets_required": true
+  }
+}

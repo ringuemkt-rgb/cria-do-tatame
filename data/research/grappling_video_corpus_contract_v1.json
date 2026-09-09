@@ -1,0 +1,108 @@
+{
+  "$schema": "cria.grappling_video_corpus.v1",
+  "version": "1.0.0",
+  "status": "ACTIVE_RESEARCH_CONTRACT",
+  "shipping": false,
+  "purpose": "Build a rights-aware, evidence-first video corpus for grappling tactics, movement and animation research without treating copyrighted footage or ML inference as canon.",
+  "rights_policy": {
+    "default_status": "BLOCKED_UNTIL_RIGHTS_CLASSIFIED",
+    "commercial_training_requires_explicit_rights_or_compatible_license": true,
+    "broadcast_or_instructional_video_may_be_used_automatically_for_commercial_training": false,
+    "public_url_is_not_permission": true,
+    "downloader_license_does_not_grant_video_rights": true,
+    "preferred_corpus": "CRIA_OWN_CAPTURE_WITH_RELEASES",
+    "source_record_required_before_processing": true
+  },
+  "source_classes": {
+    "A_OWN_CAPTURE": {
+      "priority": 1,
+      "allowed_for_model_training": true,
+      "requirements": ["athlete_release", "camera_operator_or_owner_rights", "location_permission_if_needed", "source_hash", "capture_metadata"]
+    },
+    "B_OPEN_LICENSE_DATASET": {
+      "priority": 2,
+      "allowed_for_model_training": "ONLY_IF_LICENSE_AND_UNDERLYING_MEDIA_ALLOW_TARGET_USE",
+      "requirements": ["dataset_license", "media_rights_review", "attribution_if_required", "version_pin"]
+    },
+    "C_OFFICIAL_RULE_OR_EDUCATION_REFERENCE": {
+      "priority": 3,
+      "allowed_for_model_training": false,
+      "allowed_for_human_reference": true,
+      "requirements": ["source_url", "publisher", "access_date", "purpose_limitation"]
+    },
+    "D_BROADCAST_OR_COMMERCIAL_INSTRUCTION": {
+      "priority": 4,
+      "allowed_for_model_training": false,
+      "allowed_for_human_reference": "CASE_BY_CASE",
+      "requirements": ["rights_review", "no_redistribution", "no_asset_extraction_for_shipping"]
+    }
+  },
+  "pipeline": [
+    {"stage": "01_intake", "tools": ["source_ledger"], "output": "rights-classified source record"},
+    {"stage": "02_normalize", "tools": ["FFmpeg"], "output": "timestamp-stable mezzanine/video proxies"},
+    {"stage": "03_segment", "tools": ["PySceneDetect", "rules_clock_cues"], "output": "round/exchange/clip boundaries"},
+    {"stage": "04_transcribe", "tools": ["Whisper"], "output": "instruction/commentary transcript when useful"},
+    {"stage": "05_athlete_masks", "tools": ["SAM2"], "output": "p1/p2 masks with occlusion confidence"},
+    {"stage": "06_pose", "tools": ["MediaPipe", "MMPose_RTMPose", "Pose2Sim_for_controlled_multiview"], "output": "2D/3D pose candidates with confidence"},
+    {"stage": "07_video_features", "tools": ["MMAction2", "V-JEPA2", "InternVideo3"], "output": "temporal embeddings and action candidates"},
+    {"stage": "08_structured_annotation", "tools": ["human_annotation_ui"], "output": "grappling observations"},
+    {"stage": "09_expert_review", "tools": ["BJJ_expert_review", "rules_review"], "output": "accepted/rejected observations"},
+    {"stage": "10_index", "tools": ["Parquet", "DuckDB", "LanceDB_or_Qdrant"], "output": "queryable evidence corpus"},
+    {"stage": "11_calibrate", "tools": ["statistical_calibration", "holdout_evaluation"], "output": "non-canonical tuning candidates"},
+    {"stage": "12_animation_reference", "tools": ["paired_key_pose_export", "Sprite_Forge_V2"], "output": "reviewed movement reference packages"}
+  ],
+  "annotation_units": {
+    "match": ["ruleset", "division", "gi_or_nogi", "duration", "score_timeline", "winner_method"],
+    "exchange": ["start_ms", "end_ms", "entry_position", "exit_position", "initiative", "boundary_context"],
+    "technique_attempt": ["technique_candidate", "phase_timestamps", "success_or_failure", "counter_candidate", "score_event", "stabilization_ms"],
+    "frame_observation": ["athlete_masks", "keypoints", "contacts", "grips_or_ties", "base", "head_position", "hip_orientation", "inside_position", "occlusion"]
+  },
+  "required_confidence_dimensions": ["athlete_identity", "position", "technique", "phase", "contact", "pose", "occlusion"],
+  "occlusion_policy": {
+    "grappling_is_high_occlusion_domain": true,
+    "hidden_limb_inference_is_fact": false,
+    "low_confidence_contact_must_be_unknown": true,
+    "broadcast_single_view_may_be_final_biomechanics_authority": false,
+    "controlled_multiview_capture_preferred_for_animation_keyframes": true
+  },
+  "own_capture_protocol": {
+    "recommended_cameras": "4_to_8_synchronized_views",
+    "capture_subjects": "two_consenting_grappling_athletes",
+    "wardrobe": "high_contrast_unbranded_rashguards_or_approved_GI",
+    "calibration": ["intrinsics", "extrinsics", "mat_scale", "sync_clap_or_timecode"],
+    "repetitions": ["normal_speed", "controlled_speed", "common_counter_branch", "failure_branch"],
+    "capture_each": ["starting_position", "entry", "critical_contact", "control_established", "defensive_response", "recovery"],
+    "safety": ["qualified_participants", "tap_protocol", "no_forced_end_range_for_reference_capture", "stop_on_discomfort"]
+  },
+  "external_benchmarks": [
+    {
+      "id": "vicos_bjj_positions",
+      "role": "research_benchmark_only",
+      "license_status": "CC_BY_NC_SA_4_0_NONCOMMERCIAL",
+      "commercial_training_default": false,
+      "notes": "Useful for BJJ position/keypoint evaluation, but noncommercial license blocks default commercial CRIA training use."
+    },
+    {
+      "id": "open_fsw_2026",
+      "role": "wrestling_action_recognition_research",
+      "license_status": "REPO_MIT_MEDIA_RIGHTS_REQUIRE_REVIEW",
+      "commercial_training_default": false,
+      "notes": "Close-contact occlusion benchmark with seven wrestling techniques; repository license alone is insufficient proof for every underlying broadcast clip."
+    },
+    {
+      "id": "hf_bjj_positions_submissions",
+      "role": "schema_inspiration_only",
+      "license_status": "DATASET_CARD_MIT_BUT_INSUFFICIENT_SCALE",
+      "commercial_training_default": false,
+      "notes": "Current surfaced card reports only one sample; not a meaningful training source."
+    }
+  ],
+  "promotion_policy": {
+    "raw_model_label_to_canon": false,
+    "human_expert_acceptance_required": true,
+    "rules_source_crosscheck_required": true,
+    "source_rights_required_for_training_or_asset_derivation": true,
+    "store_model_version_and_thresholds": true,
+    "keep_rejected_and_uncertain_examples_for_error_analysis": true
+  }
+}

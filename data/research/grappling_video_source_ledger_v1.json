@@ -1,0 +1,36 @@
+{
+  "$schema": "cria.grappling_video_source_ledger.v1",
+  "version": "1.0.0",
+  "status": "ACTIVE_EMPTY_LEDGER",
+  "shipping": false,
+  "corpus_contract": "data/research/grappling_video_corpus_contract_v1.json",
+  "policy": {
+    "empty_is_valid": true,
+    "absence_of_source_records_means_no_video_has_been_ingested": true,
+    "source_record_required_before_processing": true,
+    "commercial_training_requires_status": ["OWNED_WITH_RELEASES", "OPEN_LICENSE_VERIFIED_FOR_COMMERCIAL_TRAINING", "SEPARATELY_LICENSED"],
+    "human_reference_only_status": ["OFFICIAL_REFERENCE_ONLY", "BROADCAST_REFERENCE_CASE_BY_CASE", "NONCOMMERCIAL_RESEARCH_ONLY"],
+    "blocked_status": ["UNREVIEWED", "RIGHTS_UNKNOWN", "LICENSE_CONFLICT", "DO_NOT_USE"]
+  },
+  "required_source_fields": [
+    "source_id",
+    "source_class",
+    "title",
+    "owner_or_publisher",
+    "source_locator",
+    "accessed_at",
+    "rights_status",
+    "license_or_permission_evidence",
+    "media_sha256",
+    "allowed_uses",
+    "forbidden_uses",
+    "athlete_release_status",
+    "notes"
+  ],
+  "sources": [],
+  "ingestion_claim": {
+    "videos_ingested": 0,
+    "expert_reviewed_observations": 0,
+    "commercial_training_eligible_videos": 0
+  }
+}

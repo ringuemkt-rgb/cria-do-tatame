@@ -80,6 +80,18 @@ Nunca escolha a versão “mais bonita” ou “mais completa” sem verificar i
 - IDs de dados são estáveis; renome só com mapper.
 - Uma classe, JSON ou asset sem consumidor real não conta como feature integrada.
 
+## Combate, BJJ e inteligência de vídeo
+
+- Para qualquer alteração de combate, regra, técnica, counter, IA de luta, animação BJJ, calibração ou análise de vídeo, carregue `.agents/skills/cria-combat-intelligence/SKILL.md`.
+- `BJJGraphReducerV2` + regras versionadas permanecem autoridade de estado durante a evolução v1; IA e vídeo propõem/calibram, não decidem legalidade ou pontuação.
+- Nenhuma LLM entra no loop interno frame-a-frame do combate.
+- Técnica é transição causal com precondições, contatos, força, resposta, resultado e recuperação; nunca apenas nome de animação.
+- Observação de vídeo com membro/pegada oclusa pode permanecer `unknown`; não invente biomecânica escondida.
+- URL pública, vídeo de campeonato ou vídeo-aula não significam licença para treinamento comercial. Consulte o source ledger antes de processar.
+- Para material comercial de movimento, prefira captura CRIA própria com consentimento/releases e múltiplos ângulos.
+- Regras ADCC/IBJJF vêm das fontes de regras versionadas; frequência observada em vídeo não altera regra.
+- `Cria Rhythm` representa identidade tática por preferências, ritmo e cadeias, nunca por imunidade arbitrária a counters.
+
 ## Fluxo que não pode regredir
 
 ```text
@@ -119,6 +131,7 @@ PR empilhado deve declarar dependência, ordem de merge e base ativa. Se a base 
 
 - Para qualquer tarefa visual — gerar, editar, avaliar, especificar ou preparar asset — carregue primeiro `.agents/skills/cria-art-direction/SKILL.md`.
 - Para sprites/animação de personagem, carregue também `.agents/skills/cria-sprite-forge/SKILL.md`; a skill de direção define o visual e a Sprite Forge define consistência técnica/handoff.
+- Para animação de técnica BJJ, carregue também `.agents/skills/cria-combat-intelligence/SKILL.md`; o combate define semântica física/contato e a Sprite Forge define fabricação visual.
 - Concept art, mockup, geração bruta e fila de produção são candidatos.
 - Asset final exige origem/licença, metadata, preview, QA, aprovação humana e integração Godot.
 - Técnica pareada exige atacante, defensor, pivô compartilhado, timing e `sync_map`.

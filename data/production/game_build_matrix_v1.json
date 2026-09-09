@@ -89,9 +89,17 @@
         "data/combat/bjj_completion_gate_v1.json",
         "tools/data/validate_bjj_completion_gate_v1.py",
         "data/visual/sprite_forge_contract_v2.json",
-        "assets/schemas/paired_bjj_animation_v2.schema.json"
+        "assets/schemas/paired_bjj_animation_v2.schema.json",
+        "data/combat/combat_intelligence_contract_v1.json",
+        "data/combat/ruleset_strategy_profiles_v1.json",
+        "data/research/grappling_video_corpus_contract_v1.json",
+        "data/research/grappling_video_source_ledger_v1.json",
+        "assets/schemas/grappling_observation_v1.schema.json",
+        ".agents/skills/cria-combat-intelligence/SKILL.md",
+        "tools/combat/validate_combat_intelligence_v1.py",
+        ".github/workflows/combat-intelligence-v1.yml"
       ],
-      "blockers": ["full_kg_t093_t120_and_chains_not_received", "paired_animation_packages_missing", "F3_calibration_pending", "F4_balance_pending"]
+      "blockers": ["full_kg_t093_t120_and_chains_not_received", "paired_animation_packages_missing", "F3_calibration_pending", "F4_balance_pending", "combat_intelligence_runtime_adapter_pending", "grappling_evidence_corpus_empty"]
     },
     {
       "id": "G4_world",
@@ -155,7 +163,8 @@
         "tools/ci/validate_qa_evidence_v1.py",
         "tools/art/sprite_preview_harness.html",
         ".github/workflows/sprite-forge-v2.yml",
-        ".github/workflows/p1-visual-v2.yml"
+        ".github/workflows/p1-visual-v2.yml",
+        ".github/workflows/combat-intelligence-v1.yml"
       ],
       "blockers": ["visual_runtime_qa_pending", "physical_android_evidence_pending", "windows_export_smoke_pending", "release_coverage_gate_pending"]
     }

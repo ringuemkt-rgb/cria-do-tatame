@@ -1,0 +1,58 @@
+name: Combat Intelligence V1
+
+on:
+  pull_request:
+    paths:
+      - 'data/combat/**'
+      - 'data/research/**'
+      - 'assets/schemas/grappling_observation_v1.schema.json'
+      - '.agents/skills/cria-combat-intelligence/**'
+      - 'docs/architecture/CRIA_COMBAT_INTELLIGENCE_OS_V1.md'
+      - 'tools/combat/**'
+      - 'tests/test_combat_intelligence_v1.py'
+      - 'package.json'
+      - '.github/workflows/combat-intelligence-v1.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'data/combat/**'
+      - 'data/research/**'
+      - 'assets/schemas/grappling_observation_v1.schema.json'
+      - '.agents/skills/cria-combat-intelligence/**'
+      - 'docs/architecture/CRIA_COMBAT_INTELLIGENCE_OS_V1.md'
+      - 'tools/combat/**'
+      - 'tests/test_combat_intelligence_v1.py'
+      - 'package.json'
+      - '.github/workflows/combat-intelligence-v1.yml'
+
+jobs:
+  validate-combat-intelligence:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Validate Combat Intelligence contracts
+        run: python tools/combat/validate_combat_intelligence_v1.py
+      - name: Run Combat Intelligence tests
+        run: python -m unittest discover -s tests -p 'test_combat_intelligence_v1.py'
+      - name: Compile validator
+        run: python -m py_compile tools/combat/validate_combat_intelligence_v1.py
+      - name: Validate JSON corpus and schemas
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          for p in [
+              'data/combat/combat_intelligence_contract_v1.json',
+              'data/combat/ruleset_strategy_profiles_v1.json',
+              'data/research/grappling_video_corpus_contract_v1.json',
+              'data/research/grappling_video_source_ledger_v1.json',
+              'data/research/combat_research_registry_v1.json',
+              'data/production/godot_migration_plan_v1.json',
+              'assets/schemas/grappling_observation_v1.schema.json',
+          ]:
+              json.loads(Path(p).read_text(encoding='utf-8'))
+              print('OK', p)
+          PY

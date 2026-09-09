@@ -1,0 +1,60 @@
+{
+  "$schema": "cria.godot_migration_plan.v1",
+  "version": "1.0.0",
+  "status": "PLANNED_SEPARATE_BRANCH",
+  "shipping": false,
+  "observed_at": "2026-09-09",
+  "current_project_declared_line": "4.3-era project",
+  "current_ci_observed_engine": "4.2.2",
+  "target_engine": "4.7.2-stable",
+  "target_reason": "Current stable supported Godot maintenance release as of audit date; migration should improve supportability without mixing engine risk into combat-system architecture changes.",
+  "do_not": [
+    "Do not change engine version in the Combat Intelligence OS PR.",
+    "Do not mass-save scenes/resources before a clean import baseline is captured.",
+    "Do not merge if runtime or Android behavior changes without explanation.",
+    "Do not accept warnings caused by migration as silent success."
+  ],
+  "migration_branch": "chore/godot-4-7-2-migration",
+  "phases": [
+    {
+      "id": "M0_BASELINE",
+      "required": ["pin current main SHA", "archive current CI logs", "record import warnings", "record smoke counts", "record APK package/size"]
+    },
+    {
+      "id": "M1_CI_ONLY_PROBE",
+      "required": ["run Godot 4.7.2 import headless", "run all existing smokes", "do not commit resource rewrites yet"]
+    },
+    {
+      "id": "M2_API_DIFF",
+      "required": ["audit animation API changes", "audit TileMap/TileMapLayer usage", "audit navigation", "audit input", "audit export presets", "audit deprecated calls"]
+    },
+    {
+      "id": "M3_CONTROLLED_MIGRATION",
+      "required": ["update project/resource compatibility", "fix code intentionally", "keep patches reviewable", "no unrelated gameplay changes"]
+    },
+    {
+      "id": "M4_DUAL_EVIDENCE",
+      "required": ["old-engine baseline comparison", "4.7.2 runtime smoke", "full-game smoke", "BJJ reducer smoke", "visual screenshot comparison", "Android debug export"]
+    },
+    {
+      "id": "M5_PROMOTION",
+      "required": ["all critical workflows green", "no unexplained warning regression", "human visual review", "documented rollback point"]
+    }
+  ],
+  "known_review_targets": [
+    "AnimationTree/BlendSpace synchronization semantics",
+    "TileMap deprecation and TileMapLayer migration",
+    "2D navigation behavior",
+    "Android export templates and Java/SDK requirements",
+    "resource importer changes",
+    "input latency and touch behavior",
+    "pixel texture filtering/import defaults"
+  ],
+  "success_policy": {
+    "runtime_smoke_must_not_regress": true,
+    "visual_pixel_art_filtering_must_not_regress": true,
+    "deterministic_bjj_replays_must_match": true,
+    "android_export_required": true,
+    "physical_device_evidence_still_required_for_release": true
+  }
+}

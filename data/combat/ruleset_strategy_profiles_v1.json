@@ -1,0 +1,69 @@
+{
+  "$schema": "cria.ruleset_strategy_profiles.v1",
+  "version": "1.0.0",
+  "status": "VERIFIED_SUPPORTING_TIMING_PROFILE",
+  "runtime_authority": false,
+  "scoring_authority": "data/combat/bjj_rulesets_verified_v1.json",
+  "verified_at": "2026-09-09",
+  "profiles": {
+    "adcc_world_qualifying": {
+      "ruleset": "adcc_championship_current",
+      "source_url": "https://adcombat.com/adcc-rules-regulations/",
+      "regulation_ms": 600000,
+      "overtime_ms": 300000,
+      "max_overtimes": 1,
+      "phases": [
+        {"start_ms": 0, "end_ms": 300000, "positive_points": false, "negative_points": false, "label": "no_points"},
+        {"start_ms": 300000, "end_ms": 600000, "positive_points": true, "negative_points": true, "label": "points_active"}
+      ],
+      "overtime_positive_points": true,
+      "overtime_negative_points": true
+    },
+    "adcc_world_finals_superfight": {
+      "ruleset": "adcc_championship_current",
+      "source_url": "https://adcombat.com/adcc-rules-regulations/",
+      "regulation_ms": 1200000,
+      "overtime_ms": 600000,
+      "max_overtimes": 2,
+      "phases": [
+        {"start_ms": 0, "end_ms": 600000, "positive_points": false, "negative_points": true, "label": "negative_only"},
+        {"start_ms": 600000, "end_ms": 1200000, "positive_points": true, "negative_points": true, "label": "points_active"}
+      ],
+      "overtime_positive_points": true,
+      "overtime_negative_points": true
+    },
+    "adcc_trials_qualifying": {
+      "ruleset": "adcc_championship_current",
+      "source_url": "https://adcombat.com/adcc-rules-regulations/",
+      "regulation_ms": 360000,
+      "overtime_ms": 180000,
+      "max_overtimes": 1,
+      "phases": [
+        {"start_ms": 0, "end_ms": 180000, "positive_points": false, "negative_points": false, "label": "no_points"},
+        {"start_ms": 180000, "end_ms": 360000, "positive_points": true, "negative_points": true, "label": "points_active"}
+      ],
+      "overtime_positive_points": true,
+      "overtime_negative_points": true
+    },
+    "adcc_trials_final": {
+      "ruleset": "adcc_championship_current",
+      "source_url": "https://adcombat.com/adcc-rules-regulations/",
+      "regulation_ms": 480000,
+      "overtime_ms": 240000,
+      "max_overtimes": 1,
+      "phases": [
+        {"start_ms": 0, "end_ms": 240000, "positive_points": false, "negative_points": true, "label": "negative_only"},
+        {"start_ms": 240000, "end_ms": 480000, "positive_points": true, "negative_points": true, "label": "points_active"}
+      ],
+      "overtime_positive_points": true,
+      "overtime_negative_points": true
+    }
+  },
+  "runtime_integration_requirements": [
+    "Map profile clock phases into ContestState.scoring_phase.",
+    "Do not duplicate point values from bjj_rulesets_verified_v1.json.",
+    "Negative-point reasons need separate verified event semantics before runtime scoring.",
+    "Boundary restart must preserve established position/grips according to current ADCC rules.",
+    "AI utility must use phase context but may not change rule semantics."
+  ]
+}
