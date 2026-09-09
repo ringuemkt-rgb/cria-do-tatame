@@ -237,7 +237,7 @@ func _select_goal(profile: Dictionary, state: Dictionary, npc_id: String) -> Str
 
 func _deterministic_jitter(seed: int, npc_id: String, goal_id: String, day: int) -> float:
 	var salt := seed + day * 131 + _string_salt(npc_id) * 17 + _string_salt(goal_id) * 31
-	var value := abs(salt % 1000)
+	var value: int = absi(salt % 1000)
 	return float(value) / 100000.0
 
 func _string_salt(value: String) -> int:
