@@ -56,6 +56,42 @@ class GrapplingGoldenChainContractTests(unittest.TestCase):
                 with self.assertRaises(SystemExit):
                     validator.validate()
 
+    def test_approved_binding_cannot_infer_contact_continuity_from_edges(self) -> None:
+        source = json.loads(validator.BINDINGS_PATH.read_text(encoding="utf-8"))
+        row = source["bindings"][0]
+        row["review_status"] = "APPROVED"
+        row["evidence_refs"] = ["cria_capture:test:001"]
+        row["reviewer"] = "expert-reviewer"
+        row["phase_edges"] = {
+            "entry": [
+                {
+                    "type": "grip",
+                    "source": "p1_left_hand",
+                    "target": "p2_right_leg",
+                    "strength": "UNKNOWN",
+                    "phase": "entry",
+                    "confidence": 0.8,
+                }
+            ]
+        }
+        row["phase_contact_continuity"] = {}
+        with tempfile.TemporaryDirectory() as tmpdir:
+            path = Path(tmpdir) / "bindings.json"
+            path.write_text(json.dumps(source), encoding="utf-8")
+            with mock.patch.object(validator, "BINDINGS_PATH", path):
+                with self.assertRaises(SystemExit):
+                    validator.validate()
+
+    def test_continuity_policy_cannot_be_relaxed(self) -> None:
+        source = json.loads(validator.BINDINGS_PATH.read_text(encoding="utf-8"))
+        source["policy"]["runtime_may_infer_contact_continuity_from_edge_presence"] = True
+        with tempfile.TemporaryDirectory() as tmpdir:
+            path = Path(tmpdir) / "bindings.json"
+            path.write_text(json.dumps(source), encoding="utf-8")
+            with mock.patch.object(validator, "BINDINGS_PATH", path):
+                with self.assertRaises(SystemExit):
+                    validator.validate()
+
 
 if __name__ == "__main__":
     unittest.main()
