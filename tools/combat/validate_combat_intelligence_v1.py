@@ -10,6 +10,7 @@ ROOT = Path(__file__).resolve().parents[2]
 CONTRACT = ROOT / "data/combat/combat_intelligence_contract_v1.json"
 COMPLETION = ROOT / "data/combat/bjj_completion_gate_v1.json"
 RULES = ROOT / "data/combat/bjj_rulesets_verified_v1.json"
+STRATEGY = ROOT / "data/combat/ruleset_strategy_profiles_v1.json"
 CORPUS = ROOT / "data/research/grappling_video_corpus_contract_v1.json"
 LEDGER = ROOT / "data/research/grappling_video_source_ledger_v1.json"
 OBS_SCHEMA = ROOT / "assets/schemas/grappling_observation_v1.schema.json"
@@ -29,7 +30,7 @@ def load(path: Path) -> dict[str, Any]:
 def validate(root: Path = ROOT) -> dict[str, Any]:
     del root
     errors: list[str] = []
-    required = [CONTRACT, COMPLETION, RULES, CORPUS, LEDGER, OBS_SCHEMA, RESEARCH_REGISTRY, MIGRATION, REDUCER, SKILL]
+    required = [CONTRACT, COMPLETION, RULES, STRATEGY, CORPUS, LEDGER, OBS_SCHEMA, RESEARCH_REGISTRY, MIGRATION, REDUCER, SKILL]
     for path in required:
         if not path.exists():
             errors.append(f"missing required file: {path.relative_to(ROOT)}")
@@ -38,6 +39,8 @@ def validate(root: Path = ROOT) -> dict[str, Any]:
 
     contract = load(CONTRACT)
     completion = load(COMPLETION)
+    rules = load(RULES)
+    strategy = load(STRATEGY)
     corpus = load(CORPUS)
     ledger = load(LEDGER)
     schema = load(OBS_SCHEMA)
@@ -88,6 +91,30 @@ def validate(root: Path = ROOT) -> dict[str, Any]:
     for role in ("legality_decision", "score_decision", "runtime_rng", "submission_safety_decision"):
         if role not in forbidden_roles:
             errors.append(f"LLM forbidden-role contract missing: {role}")
+
+    if strategy.get("runtime_authority") is not False:
+        errors.append("strategy profile must not silently become rules/runtime authority")
+    if strategy.get("scoring_authority") != "data/combat/bjj_rulesets_verified_v1.json":
+        errors.append("strategy timing profile must defer point values to verified rules")
+    adcc_rules = rules.get("rulesets", {}).get("adcc_championship_current", {})
+    if int(adcc_rules.get("stabilization_seconds", 0)) != 3:
+        errors.append("verified ADCC rules must preserve 3-second stabilization")
+    expected_profiles = {
+        "adcc_world_qualifying": (600000, 300000, 1),
+        "adcc_world_finals_superfight": (1200000, 600000, 2),
+        "adcc_trials_qualifying": (360000, 180000, 1),
+        "adcc_trials_final": (480000, 240000, 1),
+    }
+    profiles = strategy.get("profiles", {})
+    for profile_id, expected in expected_profiles.items():
+        profile = profiles.get(profile_id, {})
+        if (int(profile.get("regulation_ms", -1)), int(profile.get("overtime_ms", -1)), int(profile.get("max_overtimes", -1))) != expected:
+            errors.append(f"ADCC timing profile mismatch: {profile_id}")
+        phases = profile.get("phases", [])
+        if len(phases) != 2 or int(phases[0].get("start_ms", -1)) != 0 or int(phases[-1].get("end_ms", -1)) != expected[0]:
+            errors.append(f"ADCC phase coverage mismatch: {profile_id}")
+        if "points" in profile:
+            errors.append(f"strategy profile must not duplicate scoring table: {profile_id}")
 
     rights = corpus.get("rights_policy", {})
     if rights.get("default_status") != "BLOCKED_UNTIL_RIGHTS_CLASSIFIED":
@@ -152,6 +179,7 @@ def validate(root: Path = ROOT) -> dict[str, Any]:
         "errors": errors,
         "bjj_target": target,
         "animation_phases": canonical_phases,
+        "adcc_strategy_profiles": len(profiles),
         "research_tools": len(registry.get("findings", [])),
         "external_benchmarks": len(benchmarks),
         "videos_ingested": int(claims.get("videos_ingested", 0)),
