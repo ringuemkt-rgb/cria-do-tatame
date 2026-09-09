@@ -15,17 +15,25 @@
 ### Visual / UI
 
 - `data/visual/production_manifest_v02.json`
+- `data/visual/production_manifest_v03.json`
 - `data/visual/ui_theme_v2.json`
 - `docs/05_ART_DIRECTION.md`
 - `docs/08_ASSET_PIPELINE.md`
 
-### Sprite consistency
+### Sprite consistency and production
 
-- `data/visual/sprite_forge_contract_v1.json`
-- `data/visual/sprite_qa_profiles_v1.json`
-- `.agents/skills/cria-sprite-forge/SKILL.md`
-- `tools/art/validate_asset_protocol.py`
-- `tools/art/validate_sprite_forge.py`
+- `data/visual/sprite_forge_contract_v1.json` — legacy quantitative package compatibility;
+- `data/visual/sprite_forge_contract_v2.json` — active production-grade authoring/QA contract;
+- `data/visual/sprite_forge_requirements_v2.json` — derived character/world/BJJ manufacturing policy;
+- `data/visual/sprite_qa_profiles_v1.json` — technical action profiles;
+- `assets/schemas/character_identity_master_v2.schema.json`;
+- `assets/schemas/paired_bjj_animation_v2.schema.json`;
+- `assets/schemas/world_art_package_v2.schema.json`;
+- `assets/schemas/sprite_forge_v2.provenance.schema.json`;
+- `.agents/skills/cria-sprite-forge/SKILL.md`;
+- `tools/art/validate_asset_protocol.py`;
+- `tools/art/validate_sprite_forge.py`;
+- `tools/art/validate_sprite_forge_v2.py`.
 
 ### BJJ vertical slice
 
@@ -33,6 +41,7 @@
 - `data/combat/bjj_rulesets_verified_v1.json`
 - `data/combat/bjj_position_values_v1.json`
 - `data/combat/bjj_timing_windows_v1.json`
+- `data/combat/bjj_completion_gate_v1.json`
 
 ## B. Visual anchors from creator review — session references
 
@@ -70,6 +79,9 @@ A character identity master must resolve to:
 - GI/NO-GI outfit variant;
 - team/faction patch rules;
 - stable identity anchors;
+- front/back/side reference chain;
+- palette and silhouette signature;
+- asymmetry/mirroring contract;
 - human approval status;
 - provenance/rights status.
 
@@ -88,7 +100,9 @@ Use the approved map direction as composition/style reference:
 - region-specific economy/culture/landmarks;
 - base art separated from mutable overlays.
 
-Geography, POI IDs, faction control, locks and resource data must come from authoritative `data/` before runtime integration.
+A single generated flat map is never a shipping map. Production locations must separate terrain/base, structures, props, foreground occlusion, collision/navigation metadata, lighting, weather and ambient FX.
+
+Geography, POI IDs, faction control, locks, navigation, collision and resource data must come from authoritative `data/`/runtime contracts before integration.
 
 ## F. Escalation
 
