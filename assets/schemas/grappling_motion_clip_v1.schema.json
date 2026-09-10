@@ -13,7 +13,7 @@
   ],
   "properties": {
     "version": {"const": "1.0.0"},
-    "clip_id": {"type": "string", "pattern": "^clip_[a-z0-9][a-z0-9_\-]*$"},
+    "clip_id": {"type": "string", "pattern": "^clip_[a-z0-9][a-z0-9_-]*$"},
     "source_id": {"type": "string", "minLength": 1},
     "source_tier": {"enum": ["A_CRIA_OWN_MULTIVIEW", "B_LICENSED_OR_OPEN_COMMERCIAL", "C_RESEARCH_NONCOMMERCIAL", "D_BROADCAST_OR_INSTRUCTIONAL_REFERENCE"]},
     "rights_status": {"enum": ["BLOCKED", "RESEARCH_ONLY", "COMMERCIAL_DERIVATION_ALLOWED"]},
