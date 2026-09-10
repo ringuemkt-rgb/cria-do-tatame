@@ -1,0 +1,58 @@
+name: Grappling Fatigue F3 V1
+
+on:
+  pull_request:
+    branches:
+      - main
+    paths:
+      - "data/combat/grappling_fatigue_contract_v1.json"
+      - "data/combat/grappling_fatigue_profiles_slice_v1.json"
+      - "data/combat/f3_calibration_contract_v1.json"
+      - "data/research/f3_observation_ledger_v1.json"
+      - "src/combat/GrapplingFatigueModelV1.gd"
+      - "src/combat/CriaGrapplingRuntimeV1.gd"
+      - "tools/combat/f3_calibrate_bjj_v1.py"
+      - "tools/combat/validate_grappling_fatigue_f3_v1.py"
+      - "tests/test_grappling_fatigue_f3_v1.py"
+      - "tests/grappling_fatigue_f3_smoke.gd"
+      - "package.json"
+      - ".github/workflows/grappling-fatigue-f3-v1.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate-fatigue-f3:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Validate contracts and tests
+        run: |
+          python tools/combat/validate_grappling_fatigue_f3_v1.py
+          python tools/combat/f3_calibrate_bjj_v1.py
+          python -m unittest discover -s tests -p 'test_grappling_fatigue_f3_v1.py'
+      - name: Prove F3 data gate remains blocked today
+        run: |
+          if python tools/combat/f3_calibrate_bjj_v1.py --require-data; then
+            echo "F3 unexpectedly reported eligible data" >&2
+            exit 1
+          else
+            echo "Expected: F3 promotion data is still pending"
+          fi
+      - name: Download Godot 4.2.2
+        run: |
+          curl -L --fail --retry 3 \
+            -o godot.zip \
+            https://github.com/godotengine/godot/releases/download/4.2.2-stable/Godot_v4.2.2-stable_linux.x86_64.zip
+          unzip -q godot.zip
+          mv Godot_v4.2.2-stable_linux.x86_64 godot
+          chmod +x godot
+          ./godot --version
+      - name: Import project
+        run: timeout 180 ./godot --headless --editor --path . --import
+      - name: Run fatigue shadow smoke
+        run: ./godot --headless --path . --script res://tests/grappling_fatigue_f3_smoke.gd
