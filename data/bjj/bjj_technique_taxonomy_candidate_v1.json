@@ -1,0 +1,32 @@
+{
+  "$schema":"cria.bjj_technique_taxonomy_candidate.v1",
+  "version":"1.0.0",
+  "status":"CANDIDATE_FRAGMENT_MANIFEST",
+  "shipping":false,
+  "full_graph_claim":false,
+  "target_count":120,
+  "family_size":10,
+  "family_files":[
+    "data/bjj/reconstruction/01_takedowns_defense_v1.json",
+    "data/bjj/reconstruction/02_clinch_v1.json",
+    "data/bjj/reconstruction/03_guard_entry_retention_v1.json",
+    "data/bjj/reconstruction/04_sweeps_v1.json",
+    "data/bjj/reconstruction/05_passes_v1.json",
+    "data/bjj/reconstruction/06_dominant_back_v1.json",
+    "data/bjj/reconstruction/07_escapes_v1.json",
+    "data/bjj/reconstruction/08_arm_locks_v1.json",
+    "data/bjj/reconstruction/09_chokes_v1.json",
+    "data/bjj/reconstruction/10_leg_entanglement_v1.json",
+    "data/bjj/reconstruction/11_leg_submissions_v1.json",
+    "data/bjj/reconstruction/12_control_retention_v1.json"
+  ],
+  "policy":{
+    "family_files_are_authoring_candidates":true,
+    "manifest_order_is_stable":true,
+    "duplicate_ids_forbidden":true,
+    "unknown_positions_forbidden":true,
+    "empirical_success_must_remain_null_until_F3":true,
+    "rules_review_pending_is_valid":true,
+    "all_high_risk_finishes_remain_abstract":true
+  }
+}
