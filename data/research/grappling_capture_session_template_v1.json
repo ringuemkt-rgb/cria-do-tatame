@@ -1,0 +1,104 @@
+{
+  "$schema": "cria.grappling_capture_session.v1",
+  "version": "1.0.0",
+  "status": "TEMPLATE_NOT_EVIDENCE",
+  "capture_complete": false,
+  "shipping": false,
+  "session_id": "REPLACE_BEFORE_CAPTURE",
+  "purpose": "Template for a rights-cleared multi-camera CRIA grappling capture session. Empty or placeholder fields are intentional and never constitute evidence.",
+  "technique_scope": [],
+  "modality": "unknown",
+  "ruleset_context": "UNKNOWN",
+  "location": {
+    "site_id": null,
+    "permission_ref": null,
+    "mat_dimensions_m": null,
+    "surface_notes": null
+  },
+  "participants": [
+    {
+      "track_id": "p1",
+      "participant_id": null,
+      "athlete_release_ref": null,
+      "identity_policy": "PSEUDONYMIZE_UNLESS_SHIPPING_IDENTITY_APPROVED",
+      "qualification_note": null
+    },
+    {
+      "track_id": "p2",
+      "participant_id": null,
+      "athlete_release_ref": null,
+      "identity_policy": "PSEUDONYMIZE_UNLESS_SHIPPING_IDENTITY_APPROVED",
+      "qualification_note": null
+    }
+  ],
+  "recording_rights": {
+    "recording_owner": null,
+    "recording_rights_ref": null,
+    "commercial_derivation_allowed": false,
+    "redistribution_allowed": false
+  },
+  "capture": {
+    "planned_fps": 60,
+    "high_speed_optional_fps": 120,
+    "synchronization_method": null,
+    "measured_sync_error_ms": null,
+    "camera_count": 6,
+    "cameras": [
+      {"camera_id":"cam01","role":"front_oblique_left","raw_file_sha256":null,"width":null,"height":null,"fps":null},
+      {"camera_id":"cam02","role":"front_oblique_right","raw_file_sha256":null,"width":null,"height":null,"fps":null},
+      {"camera_id":"cam03","role":"rear_oblique_left","raw_file_sha256":null,"width":null,"height":null,"fps":null},
+      {"camera_id":"cam04","role":"rear_oblique_right","raw_file_sha256":null,"width":null,"height":null,"fps":null},
+      {"camera_id":"cam05","role":"lateral_left","raw_file_sha256":null,"width":null,"height":null,"fps":null},
+      {"camera_id":"cam06","role":"lateral_right","raw_file_sha256":null,"width":null,"height":null,"fps":null}
+    ]
+  },
+  "calibration": {
+    "intrinsics_complete": false,
+    "extrinsics_complete": false,
+    "distortion_complete": false,
+    "scale_reference_complete": false,
+    "mat_coordinate_system_complete": false,
+    "calibration_bundle_ref": null,
+    "calibration_sha256": null,
+    "reprojection_error_px": null
+  },
+  "wardrobe": {
+    "p1": {"variant":"unknown","rights_cleared":false,"high_contrast":false},
+    "p2": {"variant":"unknown","rights_cleared":false,"high_contrast":false},
+    "logos_or_third_party_marks_present": "UNKNOWN"
+  },
+  "required_repetition_plan": [
+    {"id":"normal_competition_speed","complete":false},
+    {"id":"controlled_instructional_speed","complete":false},
+    {"id":"primary_defense_or_counter","complete":false},
+    {"id":"representative_failure_branch","complete":false}
+  ],
+  "safety": {
+    "tap_protocol_confirmed": false,
+    "qualified_participants_confirmed": false,
+    "stop_on_discomfort_confirmed": false,
+    "submission_end_range_will_not_be_forced": true,
+    "safety_supervisor_required_for_high_risk": true,
+    "safety_supervisor_ref": null
+  },
+  "quality": {
+    "dropped_frames_checked": false,
+    "sync_checked": false,
+    "coverage_checked": false,
+    "occlusion_reviewed": false,
+    "identity_switch_reviewed": false
+  },
+  "promotion": {
+    "may_create_motion_clips": false,
+    "may_create_commercial_training_data": false,
+    "may_create_shipping_animation_reference": false,
+    "blockers": [
+      "replace_template_placeholders",
+      "athlete_releases_missing",
+      "recording_rights_missing",
+      "camera_files_unhashed",
+      "calibration_missing",
+      "session_qa_missing"
+    ]
+  }
+}
