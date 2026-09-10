@@ -44,15 +44,25 @@
       "evidence": [
         "data/bjj/bjj_kg_slice_ruan_davi_v1.json",
         "src/combat/BJJGraphReducerV2.gd",
+        "src/combat/CriaGrapplingRuntimeV1.gd",
+        "src/combat/GrapplingPhysicalStateV1.gd",
+        "src/combat/GrapplingConnectionGraphV1.gd",
+        "src/animation/BJJMotionBindingV1.gd",
+        "data/combat/golden_chain_ruan_davi_v1.json",
         "data/combat/bjj_position_values_v1.json",
         "data/combat/bjj_timing_windows_v1.json",
         "data/visual/p1_visual_build_contract_v2.json",
         "data/chars/canon/ruan_macacao.json",
         "data/chars/canon/davi_relampago.json",
         "tools/art/validate_p1_visual_build_v2.py",
-        ".github/workflows/p1-visual-v2.yml"
+        ".github/workflows/p1-visual-v2.yml",
+        "data/combat/combat_manager_bjj_shadow_map_v1.json",
+        "src/combat/CombatManagerBJJShadowAdapterV1.gd",
+        "src/autoloads/BJJShadowRuntimeObserver.gd",
+        ".github/workflows/bjj-shadow-runtime-v1.yml",
+        ".github/workflows/grappling-golden-chain-v1.yml"
       ],
-      "blockers": ["combat_manager_adapter_pending", "real_p1_assets_pending", "physical_android_evidence_pending"]
+      "blockers": ["combat_manager_authority_migration_pending", "real_p1_assets_pending", "physical_android_evidence_pending"]
     },
     {
       "id": "G2_characters",
@@ -68,13 +78,18 @@
         "data/visual/sprite_forge_requirements_v2.json",
         "assets/schemas/character_identity_master_v2.schema.json",
         "assets/schemas/sprite_forge_v2.provenance.schema.json",
+        "assets/schemas/grappling_motion_clip_v1.schema.json",
+        "data/research/grappling_motion_lab_contract_v1.json",
+        "data/research/motion_tool_registry_v1.json",
+        ".agents/skills/cria-grappling-motion-lab/SKILL.md",
         "tools/art/derive_sprite_forge_v2_requirements.py",
         "tools/art/validate_sprite_forge_v2.py",
         ".github/workflows/sprite-forge-v2.yml",
+        ".github/workflows/grappling-motion-lab-v1.yml",
         "data/chars/canon/ruan_macacao.json",
         "data/chars/canon/davi_relampago.json"
       ],
-      "blockers": ["identity_master_missing_for_most_roster", "approved_animation_packages_missing"]
+      "blockers": ["identity_master_missing_for_most_roster", "approved_animation_packages_missing", "rights_cleared_motion_capture_evidence_pending"]
     },
     {
       "id": "G3_bjj_content",
@@ -97,9 +112,29 @@
         "assets/schemas/grappling_observation_v1.schema.json",
         ".agents/skills/cria-combat-intelligence/SKILL.md",
         "tools/combat/validate_combat_intelligence_v1.py",
-        ".github/workflows/combat-intelligence-v1.yml"
+        ".github/workflows/combat-intelligence-v1.yml",
+        "data/combat/combat_manager_bjj_shadow_map_v1.json",
+        "src/combat/CombatManagerBJJShadowAdapterV1.gd",
+        "src/autoloads/BJJShadowRuntimeObserver.gd",
+        "tools/combat/validate_bjj_shadow_runtime_v1.py",
+        ".github/workflows/bjj-shadow-runtime-v1.yml",
+        "src/combat/CriaGrapplingRuntimeV1.gd",
+        "src/combat/GrapplingPhysicalStateV1.gd",
+        "src/combat/GrapplingConnectionGraphV1.gd",
+        "data/combat/golden_chain_ruan_davi_v1.json",
+        "data/combat/grappling_physical_bindings_slice_v1.json",
+        "data/visual/golden_chain_motion_requirements_v1.json",
+        "tools/combat/validate_grappling_golden_chain_v1.py",
+        ".github/workflows/grappling-golden-chain-v1.yml",
+        "data/research/grappling_motion_lab_contract_v1.json",
+        "data/research/grappling_capture_session_template_v1.json",
+        "data/research/motion_tool_registry_v1.json",
+        "assets/schemas/grappling_motion_clip_v1.schema.json",
+        ".agents/skills/cria-grappling-motion-lab/SKILL.md",
+        "tools/combat/validate_grappling_motion_lab_v1.py",
+        ".github/workflows/grappling-motion-lab-v1.yml"
       ],
-      "blockers": ["full_kg_t093_t120_and_chains_not_received", "paired_animation_packages_missing", "F3_calibration_pending", "F4_balance_pending", "combat_intelligence_runtime_adapter_pending", "grappling_evidence_corpus_empty"]
+      "blockers": ["full_kg_t093_t120_and_chains_not_received", "paired_animation_packages_missing", "physical_bindings_expert_review_pending", "F3_calibration_pending", "F4_balance_pending", "combat_manager_authority_migration_pending", "grappling_motion_corpus_empty"]
     },
     {
       "id": "G4_world",
@@ -164,7 +199,11 @@
         "tools/art/sprite_preview_harness.html",
         ".github/workflows/sprite-forge-v2.yml",
         ".github/workflows/p1-visual-v2.yml",
-        ".github/workflows/combat-intelligence-v1.yml"
+        ".github/workflows/combat-intelligence-v1.yml",
+        ".github/workflows/bjj-shadow-runtime-v1.yml",
+        ".github/workflows/grappling-golden-chain-v1.yml",
+        ".github/workflows/grappling-motion-lab-v1.yml",
+        "tools/combat/validate_grappling_motion_lab_v1.py"
       ],
       "blockers": ["visual_runtime_qa_pending", "physical_android_evidence_pending", "windows_export_smoke_pending", "release_coverage_gate_pending"]
     }

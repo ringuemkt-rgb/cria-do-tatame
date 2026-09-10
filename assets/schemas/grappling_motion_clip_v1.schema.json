@@ -1,0 +1,170 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "cria.grappling_motion_clip.v1.schema",
+  "title": "CRIA Grappling Motion Clip V1",
+  "description": "Metadata-only contract for one rights-classified grappling clip. Raw video never belongs in Git through this schema.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "version", "clip_id", "source_id", "source_tier", "rights_status", "allowed_uses",
+    "capture", "time", "modality", "ruleset_context", "technique", "athletes",
+    "phase_spans", "derived_artifacts", "occlusion", "expert_review", "provenance",
+    "shipping"
+  ],
+  "properties": {
+    "version": {"const": "1.0.0"},
+    "clip_id": {"type": "string", "pattern": "^clip_[a-z0-9][a-z0-9_-]*$"},
+    "source_id": {"type": "string", "minLength": 1},
+    "source_tier": {"enum": ["A_CRIA_OWN_MULTIVIEW", "B_LICENSED_OR_OPEN_COMMERCIAL", "C_RESEARCH_NONCOMMERCIAL", "D_BROADCAST_OR_INSTRUCTIONAL_REFERENCE"]},
+    "rights_status": {"enum": ["BLOCKED", "RESEARCH_ONLY", "COMMERCIAL_DERIVATION_ALLOWED"]},
+    "allowed_uses": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {"enum": ["benchmark", "error_analysis", "human_reference", "model_training", "biomechanical_derivation", "animation_reference", "shipping_asset_derivation"]}
+    },
+    "capture": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["method", "capture_session_id", "cameras", "calibration_ref", "release_refs", "recording_rights_ref"],
+      "properties": {
+        "method": {"enum": ["controlled_multiview", "controlled_single_view", "licensed_external", "research_dataset", "broadcast_reference", "instructional_reference"]},
+        "capture_session_id": {"oneOf": [{"type": "string", "minLength": 1}, {"type": "null"}]},
+        "cameras": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["camera_id", "file_sha256", "fps", "width", "height"],
+            "properties": {
+              "camera_id": {"type": "string", "minLength": 1},
+              "file_sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+              "fps": {"type": "number", "exclusiveMinimum": 0},
+              "width": {"type": "integer", "minimum": 1},
+              "height": {"type": "integer", "minimum": 1}
+            }
+          }
+        },
+        "calibration_ref": {"oneOf": [{"type": "string", "minLength": 1}, {"type": "null"}]},
+        "release_refs": {"type": "array", "items": {"type": "string", "minLength": 1}},
+        "recording_rights_ref": {"oneOf": [{"type": "string", "minLength": 1}, {"type": "null"}]}
+      }
+    },
+    "time": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["start_ms", "end_ms", "fps"],
+      "properties": {
+        "start_ms": {"type": "integer", "minimum": 0},
+        "end_ms": {"type": "integer", "minimum": 1},
+        "fps": {"type": "number", "exclusiveMinimum": 0}
+      }
+    },
+    "modality": {"enum": ["gi", "nogi", "unknown"]},
+    "ruleset_context": {"oneOf": [{"type": "string", "minLength": 1}, {"const": "UNKNOWN"}]},
+    "technique": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["technique_id", "label_status", "confidence"],
+      "properties": {
+        "technique_id": {"oneOf": [{"type": "string", "minLength": 1}, {"type": "null"}]},
+        "label_status": {"enum": ["UNLABELED", "MODEL_CANDIDATE", "HUMAN_LABELED", "EXPERT_APPROVED", "UNKNOWN"]},
+        "confidence": {"oneOf": [{"type": "number", "minimum": 0, "maximum": 1}, {"const": "UNKNOWN"}]}
+      }
+    },
+    "athletes": {
+      "type": "array",
+      "minItems": 2,
+      "maxItems": 2,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["track_id", "identity_status", "consent_ref"],
+        "properties": {
+          "track_id": {"enum": ["p1", "p2"]},
+          "identity_status": {"enum": ["CONSENTED_KNOWN", "PSEUDONYMIZED", "UNKNOWN"]},
+          "consent_ref": {"oneOf": [{"type": "string", "minLength": 1}, {"type": "null"}]}
+        }
+      }
+    },
+    "phase_spans": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["phase", "start_ms", "end_ms", "confidence", "review_status", "connection_edges_ref", "contact_continuity"],
+        "properties": {
+          "phase": {"enum": ["anticipation", "entry", "establish", "stabilize", "response", "recovery"]},
+          "start_ms": {"type": "integer", "minimum": 0},
+          "end_ms": {"type": "integer", "minimum": 0},
+          "confidence": {"oneOf": [{"type": "number", "minimum": 0, "maximum": 1}, {"const": "UNKNOWN"}]},
+          "review_status": {"enum": ["UNREVIEWED", "UNCERTAIN", "EXPERT_APPROVED", "REJECTED"]},
+          "connection_edges_ref": {"oneOf": [{"type": "string", "minLength": 1}, {"const": "UNKNOWN"}]},
+          "contact_continuity": {"oneOf": [{"type": "number", "minimum": 0, "maximum": 1}, {"const": "UNKNOWN"}]}
+        }
+      }
+    },
+    "derived_artifacts": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["masks", "pose_2d", "pose_3d", "contacts", "transcript", "embeddings"],
+      "properties": {
+        "masks": {"$ref": "#/$defs/artifactRef"},
+        "pose_2d": {"$ref": "#/$defs/artifactRef"},
+        "pose_3d": {"$ref": "#/$defs/artifactRef"},
+        "contacts": {"$ref": "#/$defs/artifactRef"},
+        "transcript": {"$ref": "#/$defs/artifactRef"},
+        "embeddings": {"$ref": "#/$defs/artifactRef"}
+      }
+    },
+    "occlusion": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["rate", "identity_switches", "hidden_contact_policy"],
+      "properties": {
+        "rate": {"oneOf": [{"type": "number", "minimum": 0, "maximum": 1}, {"const": "UNKNOWN"}]},
+        "identity_switches": {"oneOf": [{"type": "integer", "minimum": 0}, {"const": "UNKNOWN"}]},
+        "hidden_contact_policy": {"const": "UNKNOWN_UNLESS_REVIEWED"}
+      }
+    },
+    "expert_review": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["status", "reviewer_id", "rules_reviewer_id", "reviewed_at"],
+      "properties": {
+        "status": {"enum": ["PENDING", "UNCERTAIN", "APPROVED", "REJECTED"]},
+        "reviewer_id": {"oneOf": [{"type": "string", "minLength": 1}, {"type": "null"}]},
+        "rules_reviewer_id": {"oneOf": [{"type": "string", "minLength": 1}, {"type": "null"}]},
+        "reviewed_at": {"oneOf": [{"type": "string", "format": "date-time"}, {"type": "null"}]}
+      }
+    },
+    "provenance": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["manifest_sha256", "pipeline_version", "tool_versions", "created_at"],
+      "properties": {
+        "manifest_sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+        "pipeline_version": {"type": "string", "minLength": 1},
+        "tool_versions": {"type": "object"},
+        "created_at": {"type": "string", "format": "date-time"}
+      }
+    },
+    "shipping": {"const": false}
+  },
+  "$defs": {
+    "artifactRef": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["ref", "sha256", "status"],
+          "properties": {
+            "ref": {"type": "string", "minLength": 1},
+            "sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+            "status": {"enum": ["CANDIDATE", "REVIEWED", "REJECTED"]}
+          }
+        },
+        {"type": "null"}
+      ]
+    }
+  }
+}

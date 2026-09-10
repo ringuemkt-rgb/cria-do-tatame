@@ -1,0 +1,206 @@
+{
+  "$schema": "cria.motion_tool_registry.v1",
+  "version": "1.0.0",
+  "status": "RESEARCH_AND_AUTHORING_REGISTRY_NOT_REUSE_AUTHORITY",
+  "audited_at": "2026-09-09",
+  "shipping": false,
+  "reuse_authority": "data/production/external_tool_registry_v1.json",
+  "policy": {
+    "this_registry_may_authorize_runtime_dependency": false,
+    "this_registry_may_authorize_asset_shipping": false,
+    "code_license_does_not_grant_checkpoint_rights": true,
+    "checkpoint_license_does_not_grant_dataset_rights": true,
+    "dataset_license_does_not_grant_unrelated_media_rights": true,
+    "external_tool_output_requires_cria_provenance_and_review": true,
+    "pin_exact_revision_before_production_adoption": true
+  },
+  "high_value_candidates": [
+    {
+      "id": "pose2sim",
+      "source": "perfanalytics/pose2sim",
+      "observed_license": "BSD-3-Clause",
+      "roles": ["multiview_calibration", "camera_sync", "multi_person_3d_kinematics", "opensim_export", "reprojection_qa"],
+      "adoption": "PREFERRED_OWN_CAPTURE_CANDIDATE",
+      "notes": "Current package metadata declares BSD-3-Clause. Audit bundled/optional pose models separately."
+    },
+    {
+      "id": "opensim",
+      "source": "opensim-org/opensim-core",
+      "observed_license": "Apache-2.0",
+      "roles": ["musculoskeletal_analysis", "kinematic_qa", "optional_motion_hypothesis_testing"],
+      "adoption": "OPTIONAL_BIOMECHANICS_CANDIDATE",
+      "notes": "Core is permissive; third-party components remain independently reviewable. Never use simulation as rules or technique authority."
+    },
+    {
+      "id": "sam2",
+      "source": "facebookresearch/sam2",
+      "observed_license": "Apache-2.0 with ancillary exceptions",
+      "roles": ["athlete_segmentation", "mask_tracking", "occlusion_support"],
+      "adoption": "HIGH_VALUE_PRELABEL_CANDIDATE",
+      "notes": "Model/code/checkpoint terms must be pinned at adoption time; masks are candidates, not facts."
+    },
+    {
+      "id": "mmpose_rtmpose",
+      "source": "open-mmlab/mmpose",
+      "observed_license": "Apache-2.0 code",
+      "roles": ["2d_pose", "whole_body_pose", "hand_and_body_keypoint_candidates"],
+      "adoption": "PREFERRED_POSE_CANDIDATE",
+      "notes": "Specific checkpoints and training datasets require separate rights review."
+    },
+    {
+      "id": "mmaction2",
+      "source": "open-mmlab/mmaction2",
+      "observed_license": "Apache-2.0 code",
+      "roles": ["temporal_action_candidate", "temporal_localization", "pose_action_benchmark"],
+      "adoption": "PRELABEL_ONLY_CANDIDATE",
+      "notes": "Action predictions cannot define CRIA technique truth."
+    },
+    {
+      "id": "cvat_community",
+      "source": "cvat-ai/cvat",
+      "observed_license": "MIT for CVAT Community; FFmpeg and optional/serverless components may have separate terms",
+      "roles": ["video_annotation", "track_review", "quality_control", "team_annotation"],
+      "adoption": "PREFERRED_ANNOTATION_UI_CANDIDATE"
+    },
+    {
+      "id": "label_studio",
+      "source": "HumanSignal/label-studio",
+      "observed_license": "Apache-2.0 community project",
+      "roles": ["multimodal_annotation", "annotation_workflow_alternative"],
+      "adoption": "ANNOTATION_ALTERNATIVE"
+    },
+    {
+      "id": "dvc",
+      "source": "treeverse/dvc",
+      "observed_license": "Apache-2.0",
+      "roles": ["dataset_versioning", "pipeline_reproducibility", "experiment_lineage"],
+      "adoption": "PREFERRED_DATA_VERSIONING_CANDIDATE"
+    },
+    {
+      "id": "fiftyone",
+      "source": "voxel51/fiftyone",
+      "observed_license": "Apache-2.0 project metadata observed",
+      "roles": ["dataset_visual_qa", "error_analysis", "embedding_and_label_inspection"],
+      "adoption": "DATASET_QA_CANDIDATE"
+    },
+    {
+      "id": "mujoco",
+      "source": "google-deepmind/mujoco",
+      "observed_license": "Apache-2.0 source; docs/media may differ",
+      "roles": ["offline_contact_dynamics_hypotheses", "control_experiments"],
+      "adoption": "OPTIONAL_OFFLINE_RESEARCH"
+    },
+    {
+      "id": "brax",
+      "source": "google/brax",
+      "observed_license": "Apache-2.0",
+      "roles": ["accelerated_offline_control", "self_play_research"],
+      "adoption": "OPTIONAL_OFFLINE_RESEARCH"
+    },
+    {
+      "id": "genesis",
+      "source": "Genesis-Embodied-AI/Genesis",
+      "observed_license": "Apache-2.0 source observed",
+      "roles": ["embodied_physics_research", "synthetic_control_experiments"],
+      "adoption": "OPTIONAL_OFFLINE_RESEARCH"
+    }
+  ],
+  "external_executable_only": [
+    {
+      "id": "ffmpeg",
+      "source": "FFmpeg",
+      "observed_license": "LGPL/GPL depends on build and enabled components",
+      "roles": ["mezzanine_normalization", "frame_time_normalization", "proxy_generation"],
+      "adoption": "EXTERNAL_TOOL_AFTER_BUILD_LICENSE_AUDIT",
+      "embed_in_game": false
+    },
+    {
+      "id": "blender",
+      "source": "Blender",
+      "observed_license": "GPL",
+      "roles": ["offline_motion_inspection", "retargeting", "reference_rendering"],
+      "adoption": "EXTERNAL_DCC_ONLY",
+      "embed_in_game": false
+    }
+  ],
+  "restricted_or_reference_only": [
+    {
+      "id": "freemocap",
+      "source": "freemocap/freemocap",
+      "observed_license": "AGPL-3.0 with separate commercial licensing path advertised upstream",
+      "adoption": "REFERENCE_OR_SEPARATE_TOOL_PENDING_LEGAL_DECISION",
+      "commercial_embedding_default": false
+    },
+    {
+      "id": "blendanything",
+      "source": "mmlab-cv/BlendAnything",
+      "observed_license": "ACADEMIC_OR_NON_PROFIT_NONCOMMERCIAL_RESEARCH_ONLY",
+      "adoption": "RESEARCH_REFERENCE_ONLY",
+      "commercial_use_default": false,
+      "notes": "Useful cross-topology blending/retargeting concept, but current repository license is explicitly noncommercial and training data/checkpoints retain source terms."
+    },
+    {
+      "id": "intermask",
+      "source": "gohar-malik/intermask",
+      "observed_license": "MIT repository code observed; InterHuman/Inter-X/SMPL-X dependencies and data impose separate restrictions",
+      "adoption": "ARCHITECTURE_REFERENCE_ONLY_UNTIL_DATA_AND_MODEL_AUDIT",
+      "commercial_pretrained_use_default": false
+    },
+    {
+      "id": "human_x_interaction",
+      "source": "facebookresearch/human-x-interaction or surfaced official implementation",
+      "observed_license": "MIT repository code observed; asset/model/dependency rights require item review",
+      "adoption": "PLANNER_AND_PHYSICS_TRACKER_ARCHITECTURE_REFERENCE",
+      "commercial_pretrained_use_default": false
+    },
+    {
+      "id": "coshmdm",
+      "source": "CoShMDM official implementation",
+      "observed_license": "CC BY-NC-SA 4.0 surfaced",
+      "adoption": "NONCOMMERCIAL_RESEARCH_ONLY",
+      "commercial_use_default": false
+    },
+    {
+      "id": "interact2ar",
+      "source": "Interact2Ar official implementation",
+      "observed_license": "academic/non-profit noncommercial research license surfaced",
+      "adoption": "NONCOMMERCIAL_RESEARCH_ONLY",
+      "commercial_use_default": false
+    },
+    {
+      "id": "intergen_interhuman",
+      "source": "InterGen / InterHuman",
+      "observed_license": "CC BY-NC-SA 4.0 dataset path surfaced",
+      "adoption": "NONCOMMERCIAL_RESEARCH_ONLY",
+      "commercial_use_default": false
+    },
+    {
+      "id": "vicos_bjj",
+      "source": "ViCoS Brazilian Jiu-Jitsu Positions Dataset",
+      "observed_license": "CC BY-NC-SA 4.0",
+      "adoption": "BENCHMARK_ONLY",
+      "commercial_use_default": false
+    },
+    {
+      "id": "open_fsw_2026",
+      "source": "milad67/Freestyle-Wrestling-Dataset",
+      "observed_license": "repository MIT; underlying controlled/broadcast media rights not established by code license",
+      "adoption": "BENCHMARK_ONLY_PENDING_MEDIA_RIGHTS",
+      "commercial_use_default": false
+    },
+    {
+      "id": "smplx",
+      "source": "SMPL-X ecosystem",
+      "observed_license": "restricted/noncommercial research terms observed for core body-model assets",
+      "adoption": "DO_NOT_REQUIRE_IN_COMMERCIAL_CRIA_PIPELINE",
+      "commercial_use_default": false
+    }
+  ],
+  "pending_review": [
+    {
+      "id": "motionmind",
+      "adoption": "DO_NOT_ADOPT_UNTIL_CANONICAL_SOURCE_AND_LICENSE_ARE_VERIFIED",
+      "roles": ["motion_search_reference", "pose_to_motion_pipeline_reference"]
+    }
+  ]
+}

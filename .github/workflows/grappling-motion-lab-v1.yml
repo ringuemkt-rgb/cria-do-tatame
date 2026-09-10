@@ -1,0 +1,24 @@
+name: Grappling Motion Lab V1
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+jobs:
+  validate-motion-lab:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Validate Motion Lab contracts
+        run: python tools/combat/validate_grappling_motion_lab_v1.py
+
+      - name: Run Motion Lab invariant tests
+        run: python -m unittest discover -s tests -p 'test_grappling_motion_lab_v1.py'

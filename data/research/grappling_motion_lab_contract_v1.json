@@ -1,0 +1,208 @@
+{
+  "$schema": "cria.grappling_motion_lab.v1",
+  "version": "1.0.0",
+  "status": "ACTIVE_AUTHORING_AND_RESEARCH_CONTRACT",
+  "shipping": false,
+  "runtime_authority": false,
+  "purpose": "Turn rights-cleared grappling capture into reviewed biomechanical evidence and motion-reference packages without allowing computer vision, generative AI or animation to redefine combat truth.",
+  "authorities": {
+    "combat_state": "src/combat/BJJGraphReducerV2.gd",
+    "grappling_runtime": "src/combat/CriaGrapplingRuntimeV1.gd",
+    "physical_state": "src/combat/GrapplingPhysicalStateV1.gd",
+    "physical_bindings": "data/combat/grappling_physical_bindings_slice_v1.json",
+    "rules": "data/combat/bjj_rulesets_verified_v1.json",
+    "motion_requirements": "data/visual/golden_chain_motion_requirements_v1.json",
+    "sprite_pipeline": "data/visual/sprite_forge_contract_v2.json",
+    "source_rights": "data/research/grappling_video_corpus_contract_v1.json",
+    "source_ledger": "data/research/grappling_video_source_ledger_v1.json"
+  },
+  "non_authority_rules": {
+    "pose_model_may_define_position": false,
+    "action_model_may_define_technique": false,
+    "video_embedding_may_define_rule": false,
+    "motion_generator_may_define_contact": false,
+    "renderer_may_define_score": false,
+    "generated_motion_may_set_shipping_true": false,
+    "public_video_url_is_permission": false
+  },
+  "source_tiers": {
+    "A_CRIA_OWN_MULTIVIEW": {
+      "priority": 1,
+      "commercial_derivation_default": "ELIGIBLE_AFTER_RELEASE_AND_SESSION_QA",
+      "requirements": [
+        "athlete_release_refs",
+        "recording_rights_ref",
+        "location_permission_ref_when_needed",
+        "raw_file_sha256",
+        "capture_session_metadata",
+        "camera_calibration_bundle",
+        "identity_privacy_review"
+      ]
+    },
+    "B_LICENSED_OR_OPEN_COMMERCIAL": {
+      "priority": 2,
+      "commercial_derivation_default": "BLOCKED_UNTIL_ITEM_LEVEL_RIGHTS_PASS",
+      "requirements": ["license_text_or_contract_ref", "underlying_media_rights", "attribution_plan", "source_hash"]
+    },
+    "C_RESEARCH_NONCOMMERCIAL": {
+      "priority": 3,
+      "commercial_derivation_default": "FORBIDDEN",
+      "allowed_uses": ["benchmark", "error_analysis", "architecture_research"],
+      "forbidden_uses": ["commercial_model_training", "shipping_asset_derivation"]
+    },
+    "D_BROADCAST_OR_INSTRUCTIONAL_REFERENCE": {
+      "priority": 4,
+      "commercial_derivation_default": "FORBIDDEN_WITHOUT_SEPARATE_PERMISSION",
+      "allowed_uses": ["human_study_when_lawful", "rule_or_tactical_reference_when_lawful"],
+      "forbidden_uses": ["automatic_download_pipeline", "redistribution", "frame_extraction_into_shipping_assets"]
+    }
+  },
+  "capture_protocol": {
+    "preferred_views": 6,
+    "recommended_view_range": [4, 8],
+    "minimum_for_gold_multiview": 4,
+    "preferred_fps": 60,
+    "high_speed_fps_when_available": 120,
+    "camera_policy": [
+      "fixed_exposure_and_focus_when_possible",
+      "crossing_views_to_reduce_mutual_occlusion",
+      "full_mat_reference_visible",
+      "avoid_single_shared_occlusion_axis",
+      "record_calibration_before_or_after_same_session"
+    ],
+    "calibration_required": [
+      "intrinsics_per_camera",
+      "extrinsics_per_camera",
+      "distortion_coefficients",
+      "mat_coordinate_system",
+      "scale_reference",
+      "synchronization_method",
+      "measured_sync_error_ms",
+      "calibration_hash"
+    ],
+    "athlete_wardrobe": [
+      "unbranded_or_rights_cleared",
+      "high_contrast_between_athletes",
+      "no_loose_accessories",
+      "gi_or_nogi_variant_recorded_explicitly"
+    ],
+    "required_repetitions": [
+      "normal_competition_speed",
+      "controlled_instructional_speed",
+      "primary_defense_or_counter",
+      "representative_failure_branch"
+    ],
+    "safety": [
+      "qualified_grapplers",
+      "clear_tap_protocol",
+      "submission_end_range_never_forced_for_capture",
+      "stop_immediately_on_pain_or_discomfort",
+      "safety_supervisor_for_high_risk_submissions"
+    ]
+  },
+  "pipeline": [
+    {"id":"M00","name":"rights_intake","required":true,"input":"raw source","output":"rights-cleared source record"},
+    {"id":"M01","name":"immutable_ingest","required":true,"input":"rights-cleared files","output":"sha256-addressed raw manifest"},
+    {"id":"M02","name":"normalize_media","required":true,"tools":["FFmpeg"],"output":"timestamp-stable mezzanine and proxies"},
+    {"id":"M03","name":"sync_and_calibrate","required":true,"tools":["Pose2Sim_or_equivalent"],"output":"camera calibration and sync report"},
+    {"id":"M04","name":"athlete_segmentation","required":false,"tools":["SAM2"],"output":"p1/p2 masks plus confidence"},
+    {"id":"M05","name":"pose_estimation","required":true,"tools":["RTMPose_or_reviewed_equivalent"],"output":"2D keypoint candidates"},
+    {"id":"M06","name":"multiview_reconstruction","required_for_gold":true,"tools":["Pose2Sim","OpenSim_optional"],"output":"3D kinematics candidates and reprojection diagnostics"},
+    {"id":"M07","name":"contact_candidates","required":true,"output":"candidate connection edges with uncertainty"},
+    {"id":"M08","name":"phase_segmentation","required":true,"output":"six-phase spans with confidence"},
+    {"id":"M09","name":"expert_annotation","required":true,"tools":["CVAT_or_equivalent"],"output":"reviewed grappling observations"},
+    {"id":"M10","name":"biomechanical_review","required":true,"output":"reviewed physical binding candidate"},
+    {"id":"M11","name":"rules_review","required":true,"output":"rules-context crosscheck; never rule creation"},
+    {"id":"M12","name":"version_and_index","required":true,"tools":["DVC_or_content_addressed_store","Parquet","DuckDB"],"output":"reproducible evidence package"},
+    {"id":"M13","name":"authoring_reference","required":true,"tools":["Blender_optional","Sprite_Forge_V2"],"output":"paired motion reference package"},
+    {"id":"M14","name":"pixel_motion_production","required":true,"tools":["Sprite_Forge_V2"],"output":"candidate paired pixel animation"},
+    {"id":"M15","name":"runtime_visual_qa","required":true,"output":"Godot frame evidence and human approval"}
+  ],
+  "six_phase_motion_contract": ["anticipation", "entry", "establish", "stabilize", "response", "recovery"],
+  "phase_evidence": {
+    "each_phase_requires": [
+      "frame_or_time_span",
+      "athlete_identity_confidence",
+      "pose_confidence",
+      "occlusion_state",
+      "connection_edges_or_explicit_unknown",
+      "contact_continuity_or_explicit_unknown",
+      "review_status"
+    ],
+    "edge_presence_implies_continuity": false,
+    "hidden_grip_may_be_inferred_as_fact": false,
+    "low_confidence_contact_state": "UNKNOWN"
+  },
+  "biomechanics": {
+    "required_when_observable": [
+      "support_points",
+      "base_quality",
+      "center_of_mass_projection",
+      "hip_orientation",
+      "shoulder_orientation",
+      "head_position",
+      "inside_position",
+      "frames_and_wedges",
+      "underhook_overhook_state",
+      "off_balance",
+      "pressure_vector",
+      "mobility_freedom",
+      "pinned_segments",
+      "leg_entanglement_topology",
+      "knee_line_state",
+      "heel_exposure",
+      "submission_danger"
+    ],
+    "uncertain_values_must_remain_unknown": true,
+    "single_view_broadcast_is_gold_3d_authority": false
+  },
+  "conditioning_model_research": {
+    "global_gas_only_is_sufficient": false,
+    "candidate_dimensions": [
+      "whole_body_gas",
+      "forearm_grip_fatigue",
+      "upper_body_isometric_load",
+      "trunk_isometric_load",
+      "hip_leg_dynamic_load",
+      "breathing_recovery",
+      "local_fatigue"
+    ],
+    "gi_and_nogi_calibrated_separately": true,
+    "values_are_tuning_candidates_until_F3": true
+  },
+  "quality_metrics": {
+    "capture": ["sync_error_ms", "calibration_residual", "dropped_frames", "camera_coverage"],
+    "pose": ["per_joint_confidence", "reprojection_error", "identity_switches", "occlusion_rate"],
+    "contact": ["expert_precision", "expert_recall", "unknown_rate", "continuity_error"],
+    "phase": ["boundary_error_ms", "expert_agreement"],
+    "animation": ["contact_slip_px", "pivot_drift_px", "scale_drift", "limb_teleport_events", "silhouette_readability_at_game_scale"],
+    "runtime": ["deterministic_replay_match", "visual_frames_checked", "mobile_frame_pacing"]
+  },
+  "promotion_gates": {
+    "source_rights_pass": true,
+    "capture_or_media_qa_pass": true,
+    "expert_bjj_review_pass": true,
+    "rules_crosscheck_pass": true,
+    "phase_evidence_complete_or_unknown_explicit": true,
+    "contact_continuity_never_inferred": true,
+    "provenance_complete": true,
+    "sprite_forge_pass": true,
+    "godot_visual_qa_pass": true,
+    "human_visual_approval": true,
+    "all_required_for_shipping_asset": true
+  },
+  "scale_strategy": {
+    "goal": "thousands_of_reviewable_clips_without_claiming_unreviewed_volume_as_knowledge",
+    "active_learning": true,
+    "priority_queue": [
+      "high_uncertainty",
+      "high_occlusion",
+      "rare_position_or_counter",
+      "model_disagreement",
+      "golden_chain_coverage_gap",
+      "high_shipping_value"
+    ],
+    "automation_may_prelabel": true,
+    "automation_may_final_approve": false
+  }
+}
