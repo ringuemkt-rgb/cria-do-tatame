@@ -1,0 +1,113 @@
+{
+  "$schema": "cria.bjj_authority_reconstruction.v1",
+  "version": "1.0.0",
+  "status": "CANDIDATE_AUTHORING_ONLY",
+  "shipping": false,
+  "purpose": "Reconstruct the missing full BJJ authoring authority from preserved project evidence and reviewed domain taxonomy without pretending the lost/truncated t001-t120 payload was recovered.",
+  "current_truth": {
+    "authoritative_full_graph_exists": false,
+    "authoritative_full_graph_path": "data/bjj/bjj_knowledge_graph_v1.json",
+    "last_historically_reported_complete_id": "t092",
+    "next_historically_reported_fragment": "t093",
+    "historical_payload_materialized_in_repository": false,
+    "complete_chains_historically_received": false,
+    "reconstruction_is_recovery_of_original_payload": false
+  },
+  "candidate_sources": [
+    {
+      "id": "gold_slice",
+      "path": "data/bjj/bjj_kg_slice_ruan_davi_v1.json",
+      "authority": "EXECUTABLE_NONCANONICAL_SLICE",
+      "allowed_use": ["preserve_known_semantics", "preserve_known_mapping", "test_reconstruction"]
+    },
+    {
+      "id": "legacy_runtime_catalog",
+      "path": "data/techniques.json",
+      "authority": "LEGACY_RUNTIME_DATA",
+      "allowed_use": ["name_and_family_discovery", "legacy_alias_discovery"],
+      "forbidden_use": ["copy_base_chance_as_empirical_success", "copy_score_as_current_rules_authority"]
+    },
+    {
+      "id": "legacy_v05_catalog",
+      "path": "data/techniques/technique_catalog_v05.json",
+      "authority": "LEGACY_DESIGN_DATA",
+      "allowed_use": ["name_and_family_discovery", "legacy_alias_discovery"],
+      "forbidden_use": ["copy_base_chance_as_empirical_success", "copy_state_machine_as_canonical_graph"]
+    },
+    {
+      "id": "atlas_pr67",
+      "source_locator": "github:pull/67:data/research/atlas_dinamica_source_v1.json",
+      "authority": "RESEARCH_DRAFT_NOT_MERGED",
+      "allowed_use": ["taxonomy_inspiration", "safety_class_inspiration"],
+      "forbidden_use": ["treat_as_verified_biomechanics", "treat_as_current_rules_authority"]
+    },
+    {
+      "id": "ibjjf_rules_current",
+      "source_locator": "https://ibjjf.com/books-videos",
+      "verified_at": "2026-09-10",
+      "observed_public_version": "Rule Book v6.0",
+      "authority": "RULESET_SOURCE",
+      "allowed_use": ["rules_version", "scoring_and_legality_review"]
+    },
+    {
+      "id": "adcc_rules_current",
+      "source_locator": "https://adcombat.com/adcc-rules-regulations/",
+      "verified_at": "2026-09-10",
+      "authority": "RULESET_SOURCE",
+      "allowed_use": ["rules_version", "scoring", "match_phase", "legality_review"]
+    }
+  ],
+  "candidate_artifacts": {
+    "positions": "data/bjj/bjj_position_taxonomy_candidate_v1.json",
+    "techniques": "data/bjj/bjj_technique_taxonomy_candidate_v1.json",
+    "chains": "data/bjj/bjj_chain_taxonomy_candidate_v1.json",
+    "derived_graph": "data/bjj/bjj_knowledge_graph_candidate_v1.json"
+  },
+  "targets": {"positions": 40, "techniques": 120, "chains": 10},
+  "identity_policy": {
+    "candidate_ids_are_semantic_not_historical_t_numbers": true,
+    "do_not_reassign_unknown_historical_t_ids": true,
+    "known_gold_slice_mapping_may_be_recorded": true,
+    "canonical_id_assignment_requires_explicit_promotion_review": true
+  },
+  "technique_policy": {
+    "minimum_fields": ["id", "name_pt", "family", "type", "from", "to", "actor_role_from", "actor_role_to", "source_basis", "expert_review_status", "rules_review_status", "empirical_success", "safety_class"],
+    "empirical_success_default": null,
+    "authoring_prior_required_in_candidate": false,
+    "rules_legality_may_be_guessed": false,
+    "rules_review_pending_is_valid_candidate_state": true,
+    "high_risk_submission_detail": "ABSTRACT_FINISH_ONLY",
+    "dangerous_escape_direction_detail": "FORBIDDEN"
+  },
+  "graph_policy": {
+    "candidate_full_graph_claim": false,
+    "candidate_runtime_authority": false,
+    "candidate_calibration_authority": false,
+    "every_from_to_position_must_exist": true,
+    "actor_roles": ["neutral", "top", "bottom"],
+    "chain_continuity_required": true,
+    "self_loop_allowed_for_control_retention": true,
+    "submission_is_terminal": true
+  },
+  "review_states": {
+    "expert": ["PENDING", "APPROVED", "REJECTED"],
+    "rules": ["PENDING", "APPROVED", "REJECTED", "NOT_APPLICABLE"],
+    "promotion_requires_all_expert_approved": true,
+    "promotion_requires_rules_review_for_rules_sensitive_edges": true
+  },
+  "promotion_gates": [
+    "candidate_counts_exact_40_120_10",
+    "zero_duplicate_ids",
+    "zero_unknown_positions",
+    "zero_broken_chain_steps",
+    "zero_historical_id_reassignment_without_mapping_evidence",
+    "all_required_expert_reviews_approved",
+    "rules_legality_matrix_complete",
+    "F3_calibration_policy_approved",
+    "F4_balance_complete",
+    "paired_animation_requirements_derived",
+    "physical_bindings_reviewed_for_shipping_scope",
+    "separate_PR_creates_authoritative_full_graph"
+  ],
+  "promotion_ready": false
+}
