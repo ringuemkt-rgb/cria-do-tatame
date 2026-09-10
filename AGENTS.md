@@ -83,11 +83,17 @@ Nunca escolha a versão “mais bonita” ou “mais completa” sem verificar i
 ## Combate, BJJ e inteligência de vídeo
 
 - Para qualquer alteração de combate, regra, técnica, counter, IA de luta, animação BJJ, calibração ou análise de vídeo, carregue `.agents/skills/cria-combat-intelligence/SKILL.md`.
+- Para mocap, captura multiview, ingestão de corpus, pose/contato, reconstrução 3D, biomecânica, anotação ou geração de referência de movimento, carregue também `.agents/skills/cria-grappling-motion-lab/SKILL.md`.
+- Se a saída do Motion Lab alimentar arte/animação, carregue ainda `.agents/skills/cria-art-direction/SKILL.md` e `.agents/skills/cria-sprite-forge/SKILL.md` antes de fabricar o asset.
 - `BJJGraphReducerV2` + regras versionadas permanecem autoridade de estado durante a evolução v1; IA e vídeo propõem/calibram, não decidem legalidade ou pontuação.
+- `CriaGrapplingRuntimeV1` consome o reducer e expõe estado físico/motion requests; renderer e motion lab nunca alteram score, winner ou posição autoritativa.
 - Nenhuma LLM entra no loop interno frame-a-frame do combate.
 - Técnica é transição causal com precondições, contatos, força, resposta, resultado e recuperação; nunca apenas nome de animação.
-- Observação de vídeo com membro/pegada oclusa pode permanecer `unknown`; não invente biomecânica escondida.
+- Observação de vídeo com membro/pegada oclusa pode permanecer `UNKNOWN`; não invente biomecânica escondida.
+- Presença de um edge de contato não prova continuidade perfeita; `contact_continuity` exige evidência revisada ou permanece `UNKNOWN`.
 - URL pública, vídeo de campeonato ou vídeo-aula não significam licença para treinamento comercial. Consulte o source ledger antes de processar.
+- Não criar downloader automático de broadcast, plataforma de assinatura ou vídeo-aula como atalho para corpus.
+- Vídeo bruto e derivados pesados não entram em Git; versionar apenas metadados, hashes e referências para armazenamento controlado.
 - Para material comercial de movimento, prefira captura CRIA própria com consentimento/releases e múltiplos ângulos.
 - Regras ADCC/IBJJF vêm das fontes de regras versionadas; frequência observada em vídeo não altera regra.
 - `Cria Rhythm` representa identidade tática por preferências, ritmo e cadeias, nunca por imunidade arbitrária a counters.
@@ -132,6 +138,7 @@ PR empilhado deve declarar dependência, ordem de merge e base ativa. Se a base 
 - Para qualquer tarefa visual — gerar, editar, avaliar, especificar ou preparar asset — carregue primeiro `.agents/skills/cria-art-direction/SKILL.md`.
 - Para sprites/animação de personagem, carregue também `.agents/skills/cria-sprite-forge/SKILL.md`; a skill de direção define o visual e a Sprite Forge define consistência técnica/handoff.
 - Para animação de técnica BJJ, carregue também `.agents/skills/cria-combat-intelligence/SKILL.md`; o combate define semântica física/contato e a Sprite Forge define fabricação visual.
+- Para animação derivada de mocap/vídeo, carregue também `.agents/skills/cria-grappling-motion-lab/SKILL.md`; somente evidência rights-cleared/revisada pode alimentar physical binding final.
 - Concept art, mockup, geração bruta e fila de produção são candidatos.
 - Asset final exige origem/licença, metadata, preview, QA, aprovação humana e integração Godot.
 - Técnica pareada exige atacante, defensor, pivô compartilhado, timing e `sync_map`.
