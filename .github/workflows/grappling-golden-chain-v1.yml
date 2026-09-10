@@ -1,0 +1,51 @@
+name: Grappling Golden Chain V1
+
+on:
+  pull_request:
+    branches:
+      - main
+      - feat/combat-manager-bjj-shadow-v1
+    paths:
+      - "assets/schemas/grappling_physical_state_v1.schema.json"
+      - "data/combat/golden_chain_ruan_davi_v1.json"
+      - "data/combat/grappling_physical_bindings_slice_v1.json"
+      - "data/visual/golden_chain_motion_requirements_v1.json"
+      - "src/combat/GrapplingConnectionGraphV1.gd"
+      - "src/combat/GrapplingPhysicalStateV1.gd"
+      - "src/combat/CriaGrapplingRuntimeV1.gd"
+      - "src/animation/BJJMotionBindingV1.gd"
+      - "tests/grappling_golden_chain_smoke.gd"
+      - "tests/test_grappling_golden_chain_v1.py"
+      - "tools/combat/validate_grappling_golden_chain_v1.py"
+      - "package.json"
+      - ".github/workflows/grappling-golden-chain-v1.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate-golden-chain:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Validate cross-authority golden chain
+        run: |
+          python tools/combat/validate_grappling_golden_chain_v1.py
+          python -m unittest discover -s tests -p 'test_grappling_golden_chain_v1.py'
+      - name: Download Godot 4.2.2
+        run: |
+          curl -L --fail --retry 3 \
+            -o godot.zip \
+            https://github.com/godotengine/godot/releases/download/4.2.2-stable/Godot_v4.2.2-stable_linux.x86_64.zip
+          unzip -q godot.zip
+          mv Godot_v4.2.2-stable_linux.x86_64 godot
+          chmod +x godot
+          ./godot --version
+      - name: Import project
+        run: timeout 180 ./godot --headless --editor --path . --import
+      - name: Run golden-chain smoke
+        run: ./godot --headless --path . --script res://tests/grappling_golden_chain_smoke.gd

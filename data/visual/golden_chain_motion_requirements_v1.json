@@ -1,0 +1,27 @@
+{
+  "$schema": "cria.golden_chain_motion_requirements.v1",
+  "version": "1.0.0",
+  "status": "AUTHORING_REQUIRED_NOT_SHIPPING_EVIDENCE",
+  "shipping": false,
+  "golden_chain": "data/combat/golden_chain_ruan_davi_v1.json",
+  "paired_animation_schema": "assets/schemas/paired_bjj_animation_v2.schema.json",
+  "sprite_forge_contract": "data/visual/sprite_forge_contract_v2.json",
+  "phases": ["anticipation", "entry", "establish", "stabilize", "response", "recovery"],
+  "requirements": [
+    {"technique_id":"t001","from":"standing_neutral","to":"half_guard_top","paired":true,"asset_status":"MISSING_APPROVED_FINAL","human_approval":false},
+    {"technique_id":"slice_sprawl","from":"standing_neutral","to":"front_headlock","paired":true,"asset_status":"MISSING_APPROVED_FINAL","human_approval":false},
+    {"technique_id":"t005","from":"standing_neutral","to":"closed_guard","paired":true,"asset_status":"MISSING_APPROVED_FINAL","human_approval":false},
+    {"technique_id":"t025","from":"half_guard_top","to":"side_control","paired":true,"asset_status":"MISSING_APPROVED_FINAL","human_approval":false},
+    {"technique_id":"t049","from":"half_guard_top","to":"knee_shield_half","paired":true,"asset_status":"MISSING_APPROVED_FINAL","human_approval":false},
+    {"technique_id":"slice_side_to_mount","from":"side_control","to":"mount_high","paired":true,"asset_status":"MISSING_APPROVED_FINAL","human_approval":false},
+    {"technique_id":"t057","from":"mount_high","to":"submission","paired":true,"asset_status":"MISSING_APPROVED_FINAL","human_approval":false}
+  ],
+  "promotion_policy": {
+    "generated_candidate_is_shipping": false,
+    "biomechanical_review_required": true,
+    "identity_lock_required": true,
+    "contact_continuity_required": true,
+    "approved_physical_binding_required_before_final_bjj_animation": true,
+    "rights_and_provenance_required": true
+  }
+}

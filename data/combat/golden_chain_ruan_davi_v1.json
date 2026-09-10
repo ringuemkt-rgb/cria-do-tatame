@@ -1,0 +1,36 @@
+{
+  "$schema": "cria.grappling_golden_chain.v1",
+  "version": "1.0.0",
+  "status": "SLICE_ONLY_FAIL_CLOSED",
+  "shipping": false,
+  "purpose": "Prove deterministic reducer -> canonical transition -> paired-motion request across a representative Ruan x Davi grappling chain without claiming the incomplete slice is the full BJJ graph.",
+  "source_graph": "data/bjj/bjj_kg_slice_ruan_davi_v1.json",
+  "runtime_authority": "src/combat/BJJGraphReducerV2.gd",
+  "rules_authority": "data/combat/bjj_rulesets_verified_v1.json",
+  "motion_authority": "VISUAL_ONLY_NON_AUTHORITATIVE",
+  "success_seed": 4,
+  "ruleset": "ibjjf_v6",
+  "gi": true,
+  "motion_phases": ["anticipation", "entry", "establish", "stabilize", "response", "recovery"],
+  "success_chain": [
+    {"technique_id": "t001", "from": "standing_neutral", "to": "half_guard_top", "actor": 1, "scoring_event": "takedown", "stabilization_seconds": 3.0},
+    {"technique_id": "t025", "from": "half_guard_top", "to": "side_control", "actor": 1, "scoring_event": "guard_pass", "stabilization_seconds": 3.0},
+    {"technique_id": "slice_side_to_mount", "from": "side_control", "to": "mount_high", "actor": 1, "scoring_event": "mount", "stabilization_seconds": 3.0},
+    {"technique_id": "t057", "from": "mount_high", "to": "submission", "actor": 1, "scoring_event": "", "stabilization_seconds": 0.0}
+  ],
+  "defense_branches": [
+    {"attack_id": "t001", "counter_id": "slice_sprawl", "from": "standing_neutral", "to": "front_headlock", "attack_player": 1, "defense_elapsed_ms": 250.0, "known_good_seed": 12345},
+    {"attack_id": "t025", "counter_id": "t049", "from": "half_guard_top", "to": "knee_shield_half", "attack_player": 1, "defense_elapsed_ms": 250.0, "known_good_seed": 1}
+  ],
+  "alternate_branches": [
+    {"technique_id": "t005", "from": "standing_neutral", "to": "closed_guard", "actor": 1}
+  ],
+  "invariants": [
+    "Every technique and position must exist in the slice source graph.",
+    "Every defense branch must be declared as a counter relation on the attack source.",
+    "Reducer state is authoritative; motion requests cannot change position, score, gas or winner.",
+    "Score is awarded only by the reducer after the configured stabilization interval.",
+    "Missing or pending biomechanical/animation evidence remains explicit and cannot be inferred into approval.",
+    "The slice cannot satisfy the full 40/120/10 shipping gate."
+  ]
+}
