@@ -1,0 +1,51 @@
+name: BJJ Authority Reconstruction V1
+
+on:
+  pull_request:
+    branches:
+      - main
+    paths:
+      - "data/combat/bjj_authority_reconstruction_contract_v1.json"
+      - "data/bjj/bjj_position_taxonomy_candidate_v1.json"
+      - "data/bjj/bjj_technique_taxonomy_candidate_v1.json"
+      - "data/bjj/bjj_chain_taxonomy_candidate_v1.json"
+      - "data/bjj/bjj_knowledge_graph_candidate_v1.json"
+      - "data/bjj/reconstruction/**"
+      - "tools/data/build_bjj_reconstruction_v1.py"
+      - "tools/data/validate_bjj_authority_reconstruction_v1.py"
+      - "tests/test_bjj_authority_reconstruction_v1.py"
+      - "package.json"
+      - ".github/workflows/bjj-authority-reconstruction-v1.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  reconstruct-and-validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Build expanded review graph
+        run: python tools/data/build_bjj_reconstruction_v1.py --write-expanded
+      - name: Validate reconstruction authority boundaries
+        run: |
+          python tools/data/validate_bjj_authority_reconstruction_v1.py
+          python -m unittest discover -s tests -p 'test_bjj_authority_reconstruction_v1.py'
+      - name: Prove reconstruction cannot self-promote
+        run: |
+          if python tools/data/build_bjj_reconstruction_v1.py --require-promotion-ready; then
+            echo "Reconstruction unexpectedly became promotion-ready" >&2
+            exit 1
+          else
+            echo "Expected: structural candidate remains blocked on expert/rules/F3/F4/pair-motion gates"
+          fi
+      - name: Upload expanded candidate for review
+        uses: actions/upload-artifact@v4
+        with:
+          name: bjj-reconstruction-expanded-v1
+          path: reports/bjj_reconstruction/bjj_knowledge_graph_candidate_v1.expanded.json
+          if-no-files-found: error
