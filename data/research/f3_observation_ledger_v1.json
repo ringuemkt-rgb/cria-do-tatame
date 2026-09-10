@@ -1,0 +1,45 @@
+{
+  "$schema": "cria.f3_observation_ledger.v1",
+  "version": "1.0.0",
+  "status": "ACTIVE_EMPTY_LEDGER",
+  "shipping": false,
+  "contract": "data/combat/f3_calibration_contract_v1.json",
+  "policy": {
+    "empty_is_valid": true,
+    "empty_means_F3_data_pending": true,
+    "observations_are_metadata_not_raw_video": true,
+    "expert_and_rules_review_required": true,
+    "rights_eligible_for_calibration_required": true,
+    "uncertain_outcomes_excluded_from_binary_success": true,
+    "synthetic_or_self_play_observations_may_enter_empirical_ledger": false
+  },
+  "required_fields": [
+    "observation_id",
+    "source_id",
+    "source_event_id",
+    "clip_id",
+    "athlete_pair_group",
+    "technique_id",
+    "from_position",
+    "to_position_observed",
+    "attempt_outcome",
+    "ruleset",
+    "modality",
+    "skill_band",
+    "phase_timing_ms",
+    "fatigue_context",
+    "expert_review_status",
+    "rules_review_status",
+    "rights_eligible_for_calibration",
+    "split",
+    "provenance_sha256"
+  ],
+  "observations": [],
+  "claims": {
+    "eligible_observations": 0,
+    "train": 0,
+    "validation": 0,
+    "holdout": 0,
+    "F3_status": "DATA_PENDING"
+  }
+}

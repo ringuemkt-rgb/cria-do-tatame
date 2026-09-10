@@ -4,16 +4,19 @@ extends RefCounted
 const ReducerScript = preload("res://src/combat/BJJGraphReducerV2.gd")
 const PhysicalStateScript = preload("res://src/combat/GrapplingPhysicalStateV1.gd")
 const MotionBindingScript = preload("res://src/animation/BJJMotionBindingV1.gd")
+const FatigueScript = preload("res://src/combat/GrapplingFatigueModelV1.gd")
 
 var reducer
 var motion_binding
+var fatigue_model
 var physical_bindings: Dictionary = {}
 var binding_by_technique: Dictionary = {}
 var golden_contract: Dictionary = {}
 
-func _init(kg_data: Dictionary, rules_data: Dictionary, timing_data: Dictionary, motion_requirements: Dictionary, physical_binding_data: Dictionary = {}, golden_data: Dictionary = {}):
+func _init(kg_data: Dictionary, rules_data: Dictionary, timing_data: Dictionary, motion_requirements: Dictionary, physical_binding_data: Dictionary = {}, golden_data: Dictionary = {}, fatigue_contract: Dictionary = {}, fatigue_profiles: Dictionary = {}):
 	reducer = ReducerScript.new(kg_data, rules_data, timing_data)
 	motion_binding = MotionBindingScript.new(motion_requirements)
+	fatigue_model = FatigueScript.new(fatigue_contract, fatigue_profiles)
 	physical_bindings = physical_binding_data.duplicate(true)
 	golden_contract = golden_data.duplicate(true)
 	for raw_binding in physical_bindings.get("bindings", []):
@@ -27,9 +30,12 @@ func _init(kg_data: Dictionary, rules_data: Dictionary, timing_data: Dictionary,
 func is_ready() -> bool:
 	return reducer != null and reducer.is_ready()
 
-func new_match(ruleset: String, gi: bool, seed: int, belt_or_skill_division: String = "slice_any", age_division: String = "adult", input_profile: String = "touch") -> Dictionary:
+func fatigue_shadow_ready() -> bool:
+	return fatigue_model != null and fatigue_model.is_ready()
+
+func new_match(ruleset: String, gi: bool, seed: int, belt_or_skill_division: String = "slice_any", age_division: String = "adult", input_profile: String = "touch", fatigue_residual: Dictionary = {}) -> Dictionary:
 	var combat: Dictionary = reducer.new_state(ruleset, gi, seed, belt_or_skill_division, age_division, input_profile)
-	return {
+	var state := {
 		"runtime_version": "1.0.0",
 		"combat": combat,
 		"physical": PhysicalStateScript.from_reducer_state(combat),
@@ -37,6 +43,9 @@ func new_match(ruleset: String, gi: bool, seed: int, belt_or_skill_division: Str
 		"renderer_authoritative": false,
 		"shipping": false
 	}
+	if fatigue_shadow_ready():
+		state["fatigue"] = fatigue_model.new_state(fatigue_residual)
+	return state
 
 func step(runtime_state: Dictionary, action: Dictionary) -> Dictionary:
 	var before_combat: Dictionary = runtime_state.get("combat", {}).duplicate(true)
@@ -65,14 +74,31 @@ func step(runtime_state: Dictionary, action: Dictionary) -> Dictionary:
 		"renderer_authoritative": false,
 		"shipping": false
 	}
+	if fatigue_shadow_ready():
+		var before_fatigue: Dictionary = runtime_state.get("fatigue", fatigue_model.new_state())
+		next_state["fatigue"] = fatigue_model.observe_step(before_fatigue, before_combat, after_combat, action, outcome_event)
+
 	return {
 		"accepted": accepted,
 		"state": next_state,
 		"transition": transition,
 		"motion_request": motion_request,
 		"outcome_event": outcome_event,
-		"authoritative_state_changed_by_renderer": false
+		"fatigue_effect": fatigue_model.projected_effect(next_state.get("fatigue", {}), int(action.get("atk_player", 0))) if fatigue_shadow_ready() else {},
+		"authoritative_state_changed_by_renderer": false,
+		"authoritative_state_changed_by_fatigue": false
 	}
+
+func rest_fatigue(runtime_state: Dictionary, seconds: float) -> Dictionary:
+	var next := runtime_state.duplicate(true)
+	if not fatigue_shadow_ready():
+		return next
+	var before_combat: Dictionary = runtime_state.get("combat", {}).duplicate(true)
+	next["fatigue"] = fatigue_model.rest(runtime_state.get("fatigue", fatigue_model.new_state()), seconds)
+	# Rest is a between-match/recovery observation in V1. It cannot alter reducer gas,
+	# score, position, winner or RNG state.
+	next["combat"] = before_combat
+	return next
 
 func physical_state_for_phase(runtime_state: Dictionary, technique_id: String, phase: String) -> Dictionary:
 	var combat: Dictionary = runtime_state.get("combat", {}).duplicate(true)
@@ -88,7 +114,18 @@ func available_actions(runtime_state: Dictionary, player: int) -> Array:
 	return reducer.available_actions(runtime_state.get("combat", {}), player)
 
 func query(runtime_state: Dictionary, player: int) -> Array:
-	return reducer.query(runtime_state.get("combat", {}), player)
+	var rows: Array = reducer.query(runtime_state.get("combat", {}), player)
+	if not fatigue_shadow_ready():
+		return rows
+	var effect: Dictionary = fatigue_model.projected_effect(runtime_state.get("fatigue", {}), player)
+	for index in range(rows.size()):
+		if typeof(rows[index]) != TYPE_DICTIONARY:
+			continue
+		var row: Dictionary = rows[index].duplicate(true)
+		row["fatigue_shadow"] = effect.duplicate(true)
+		row["fatigue_profile"] = fatigue_model.profile_for(str(row.get("id", "")))
+		rows[index] = row
+	return rows
 
 func motion_coverage() -> Dictionary:
 	var technique_ids: Array = []
@@ -106,6 +143,26 @@ func motion_coverage() -> Dictionary:
 		if str(technique_id) != "" and technique_id not in unique_ids:
 			unique_ids.append(technique_id)
 	return motion_binding.coverage(unique_ids)
+
+func fatigue_coverage() -> Dictionary:
+	if not fatigue_shadow_ready():
+		return {"ok": false, "reason": "FATIGUE_SHADOW_UNCONFIGURED"}
+	var technique_ids: Array = []
+	for raw_step in golden_contract.get("success_chain", []):
+		if typeof(raw_step) == TYPE_DICTIONARY:
+			technique_ids.append(str(raw_step.get("technique_id", "")))
+	for raw_branch in golden_contract.get("defense_branches", []):
+		if typeof(raw_branch) == TYPE_DICTIONARY:
+			technique_ids.append(str(raw_branch.get("attack_id", "")))
+			technique_ids.append(str(raw_branch.get("counter_id", "")))
+	for raw_branch in golden_contract.get("alternate_branches", []):
+		if typeof(raw_branch) == TYPE_DICTIONARY:
+			technique_ids.append(str(raw_branch.get("technique_id", "")))
+	var unique_ids: Array = []
+	for technique_id in technique_ids:
+		if str(technique_id) != "" and technique_id not in unique_ids:
+			unique_ids.append(technique_id)
+	return fatigue_model.coverage(unique_ids)
 
 func _new_outcome_event(after_combat: Dictionary, before_log_size: int) -> Dictionary:
 	var log: Array = after_combat.get("log", [])

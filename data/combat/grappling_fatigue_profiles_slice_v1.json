@@ -1,0 +1,73 @@
+{
+  "$schema": "cria.grappling_fatigue_profiles.v1",
+  "version": "1.0.0",
+  "status": "UNCALIBRATED_AUTHORING_PRIORS",
+  "shipping": false,
+  "graph_scope": "data/bjj/bjj_kg_slice_ruan_davi_v1.json",
+  "contract": "data/combat/grappling_fatigue_contract_v1.json",
+  "policy": {
+    "levels_are_empirical_measurements": false,
+    "levels_may_modify_reducer_probability": false,
+    "profile_absence_is_valid_unknown": true,
+    "expert_review_required_before_profile_promotion": true,
+    "F3_required_before_gameplay_effect": true
+  },
+  "profiles": [
+    {
+      "technique_id": "t001",
+      "label": "double_leg",
+      "review_status": "AUTHORING_PRIOR_UNCALIBRATED",
+      "performer_load": {"systemic":"HIGH","forearm_grip":"MODERATE","upper_body_isometric":"MODERATE","trunk_isometric":"HIGH","lower_body":"VERY_HIGH","recovery_debt":"HIGH"},
+      "opponent_load": "UNKNOWN",
+      "notes": "Broad load classification only; no exact force, torque or physiological coefficient is asserted."
+    },
+    {
+      "technique_id": "slice_sprawl",
+      "label": "sprawl",
+      "review_status": "AUTHORING_PRIOR_UNCALIBRATED",
+      "performer_load": {"systemic":"HIGH","forearm_grip":"LOW","upper_body_isometric":"MODERATE","trunk_isometric":"HIGH","lower_body":"HIGH","recovery_debt":"MODERATE"},
+      "opponent_load": "UNKNOWN",
+      "notes": "Defensive load is modeled only for the performer until controlled capture/review provides opponent-side evidence."
+    },
+    {
+      "technique_id": "t005",
+      "label": "guard_pull",
+      "review_status": "AUTHORING_PRIOR_UNCALIBRATED",
+      "performer_load": {"systemic":"MODERATE","forearm_grip":"MODERATE","upper_body_isometric":"MODERATE","trunk_isometric":"MODERATE","lower_body":"LOW","recovery_debt":"LOW"},
+      "opponent_load": "UNKNOWN",
+      "notes": "GI/NO-GI grip differences remain a calibration dimension and are not inferred here."
+    },
+    {
+      "technique_id": "t025",
+      "label": "body_lock_pass",
+      "review_status": "AUTHORING_PRIOR_UNCALIBRATED",
+      "performer_load": {"systemic":"HIGH","forearm_grip":"HIGH","upper_body_isometric":"HIGH","trunk_isometric":"VERY_HIGH","lower_body":"MODERATE","recovery_debt":"HIGH"},
+      "opponent_load": "UNKNOWN",
+      "notes": "The profile expresses sustained-control authoring intent, not a measured metabolic cost."
+    },
+    {
+      "technique_id": "t049",
+      "label": "knee_shield_response",
+      "review_status": "AUTHORING_PRIOR_UNCALIBRATED",
+      "performer_load": {"systemic":"MODERATE","forearm_grip":"MODERATE","upper_body_isometric":"MODERATE","trunk_isometric":"HIGH","lower_body":"HIGH","recovery_debt":"MODERATE"},
+      "opponent_load": "UNKNOWN",
+      "notes": "Response profile remains broad and must be checked against owned capture."
+    },
+    {
+      "technique_id": "slice_side_to_mount",
+      "label": "side_control_to_mount",
+      "review_status": "AUTHORING_PRIOR_UNCALIBRATED",
+      "performer_load": {"systemic":"MODERATE","forearm_grip":"MODERATE","upper_body_isometric":"HIGH","trunk_isometric":"HIGH","lower_body":"MODERATE","recovery_debt":"MODERATE"},
+      "opponent_load": "UNKNOWN",
+      "notes": "Control-transfer load is intentionally coarse until phase-level observations exist."
+    },
+    {
+      "technique_id": "t057",
+      "label": "mount_armbar",
+      "review_status": "AUTHORING_PRIOR_UNCALIBRATED",
+      "performer_load": {"systemic":"MODERATE","forearm_grip":"MODERATE","upper_body_isometric":"HIGH","trunk_isometric":"HIGH","lower_body":"MODERATE","recovery_debt":"MODERATE"},
+      "opponent_load": "UNKNOWN",
+      "notes": "Submission safety and joint load are explicitly outside this model; no injury threshold is represented."
+    }
+  ]
+}
