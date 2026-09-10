@@ -1,0 +1,95 @@
+{
+  "$schema": "cria.grappling_fatigue.v1",
+  "version": "1.0.0",
+  "status": "SHADOW_CALIBRATION_ONLY",
+  "shipping": false,
+  "purpose": "Track deterministic systemic and local grappling fatigue for research, replay and F3 calibration without changing authoritative reducer outcomes before empirical promotion.",
+  "authority": {
+    "combat_state": "src/combat/BJJGraphReducerV2.gd",
+    "runtime_wrapper": "src/combat/CriaGrapplingRuntimeV1.gd",
+    "fatigue_runtime": "src/combat/GrapplingFatigueModelV1.gd",
+    "combat_intelligence_contract": "data/combat/combat_intelligence_contract_v1.json",
+    "f3_contract": "data/combat/f3_calibration_contract_v1.json",
+    "fatigue_may_change_position": false,
+    "fatigue_may_change_score": false,
+    "fatigue_may_change_winner": false,
+    "fatigue_may_change_rng": false,
+    "fatigue_may_modify_success_before_f3_approval": false
+  },
+  "dimensions": [
+    "systemic",
+    "forearm_grip",
+    "upper_body_isometric",
+    "trunk_isometric",
+    "lower_body",
+    "recovery_debt"
+  ],
+  "state_range": [0.0, 1.0],
+  "load_scale": {
+    "UNKNOWN": null,
+    "LOW": 0.25,
+    "MODERATE": 0.5,
+    "HIGH": 0.75,
+    "VERY_HIGH": 1.0
+  },
+  "shadow_update": {
+    "authoring_step_scale": 0.08,
+    "gas_delta_systemic_scale": 0.0025,
+    "stabilization_systemic_per_second": 0.002,
+    "stabilization_recovery_debt_per_second": 0.001,
+    "rule": "These coefficients are deterministic authoring parameters, not physiological measurements. They exist only to exercise the state model until F3 calibration."
+  },
+  "recovery_authoring_prior": {
+    "per_minute": {
+      "systemic": 0.035,
+      "forearm_grip": 0.02,
+      "upper_body_isometric": 0.025,
+      "trunk_isometric": 0.025,
+      "lower_body": 0.025,
+      "recovery_debt": 0.015
+    },
+    "status": "UNCALIBRATED_AUTHORING_PRIOR",
+    "cross_match_complete_reset_allowed": false
+  },
+  "technique_profile_policy": {
+    "source": "data/combat/grappling_fatigue_profiles_slice_v1.json",
+    "unknown_profile_is_valid": true,
+    "unknown_profile_may_be_imputed_from_animation": false,
+    "unknown_profile_may_be_imputed_from_technique_name": false,
+    "profile_numbers_are_empirical": false,
+    "expert_review_required_for_profile_promotion": true
+  },
+  "competition_model": {
+    "fatigue_persists_between_matches": true,
+    "rest_is_explicit_event": true,
+    "rest_never_restores_above_baseline": true,
+    "local_dimensions_recover_independently": true,
+    "new_match_may_receive_previous_residual_state": true
+  },
+  "evidence_basis": [
+    {
+      "id": "pmid_39467539",
+      "citation": "Fagundes et al. Neuromuscular Fatigue During Brazilian Jiujitsu Matches: Analysis of Upper and Lower Limbs. Int J Sports Physiol Perform. 2025;20(1):23-29.",
+      "pmid": "39467539",
+      "doi": "10.1123/ijspp.2023-0546",
+      "used_for": ["local_fatigue_dimensions", "between_match_residual_fatigue"],
+      "coefficient_source": false
+    },
+    {
+      "id": "pmid_25559902",
+      "citation": "Brazilian Jiu-Jitsu Simulated Competition Part II: Physical Performance, Time-Motion, Technical-Tactical Analyses, and Perceptual Responses.",
+      "pmid": "25559902",
+      "doi": "10.1519/JSC.0000000000000819",
+      "used_for": ["grip_fatigue_dimension", "repeated_match_accumulation"],
+      "coefficient_source": false
+    }
+  ],
+  "promotion_gates": {
+    "F3_status_required": "APPROVED",
+    "expert_review_required": true,
+    "holdout_report_required": true,
+    "ruleset_and_modality_stratification_required": true,
+    "minimum_sample_policy_must_be_defined_before_effect_activation": true,
+    "effect_activation_is_separate_pr": true
+  }
+}
