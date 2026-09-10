@@ -1,0 +1,21 @@
+{
+  "$schema":"cria.bjj_chain_taxonomy_candidate.v1",
+  "version":"1.0.0",
+  "status":"CANDIDATE_PENDING_EXPERT_REVIEW",
+  "shipping":false,
+  "full_graph_claim":false,
+  "target_count":10,
+  "policy":{"chain_continuity_required":true,"chain_is_strategy_not_guaranteed_combo":true,"counter_branches_required_before_promotion":true,"expert_review_required":true},
+  "chains":[
+    {"id":"chain_pressure_bodylock_mount","name_pt":"Pressão: Body Lock → Passagem → Montada","start_position":"standing_neutral","end_position":"submission","steps":["rec_body_lock_entry","rec_body_lock_mat_return","rec_body_lock_half_pass","rec_side_to_mount","rec_mount_armbar"],"expert_review_status":"PENDING","rules_review_status":"PENDING","purpose":"gold_style_pressure"},
+    {"id":"chain_double_leg_mount_choke","name_pt":"Double Leg → Side → Montada → Triângulo de Braço","start_position":"standing_neutral","end_position":"submission","steps":["rec_double_leg","rec_body_lock_half_pass","rec_side_to_mount","rec_arm_triangle_mount"],"expert_review_status":"PENDING","rules_review_status":"PENDING","purpose":"gold_slice_extension"},
+    {"id":"chain_closed_guard_sweep_pass_mount","name_pt":"Guarda Fechada → Raspagem → Passagem → Montada","start_position":"standing_neutral","end_position":"submission","steps":["rec_guard_pull_closed","rec_scissor_sweep","rec_stack_pass_closed","rec_side_to_knee_on_belly","rec_knee_on_belly_to_mount","rec_mount_armbar"],"expert_review_status":"PENDING","rules_review_status":"PENDING","purpose":"guard_to_top_progression"},
+    {"id":"chain_butterfly_to_back","name_pt":"Borboleta → Topo → Costas","start_position":"standing_neutral","end_position":"submission","steps":["rec_guard_pull_butterfly","rec_butterfly_sweep","rec_over_under_pass","rec_side_to_mount","rec_mount_to_technical_mount","rec_technical_mount_to_seatbelt","rec_seatbelt_to_hooks","rec_rnc_hooks"],"expert_review_status":"PENDING","rules_review_status":"PENDING","purpose":"bottom_to_back_chain"},
+    {"id":"chain_open_slx_ashi","name_pt":"Guarda Aberta → SLX → Ashi","start_position":"standing_neutral","end_position":"submission","steps":["rec_sit_to_open_guard","rec_open_to_slx","rec_slx_to_inside_ashi","rec_inside_ashi_sweep","rec_straight_ankle_top"],"expert_review_status":"PENDING","rules_review_status":"PENDING","purpose":"leg_entanglement_transition"},
+    {"id":"chain_dlr_5050_leg","name_pt":"DLR → 50/50 → Topo","start_position":"open_guard_supine","end_position":"submission","steps":["rec_open_to_dlr","rec_dlr_to_5050","rec_5050_sweep","rec_kneebar_inside_ashi"],"expert_review_status":"PENDING","rules_review_status":"PENDING","purpose":"leg_guard_chain"},
+    {"id":"chain_front_headlock_back","name_pt":"Snapdown → Tartaruga → Costas","start_position":"standing_neutral","end_position":"submission","steps":["rec_snapdown","rec_front_headlock_go_behind","rec_turtle_back_take","rec_seatbelt_to_body_triangle","rec_rnc_body_triangle"],"expert_review_status":"PENDING","rules_review_status":"PENDING","purpose":"front_headlock_to_back"},
+    {"id":"chain_side_escape_deep_half_top","name_pt":"Escape do Side → Deep Half → Topo","start_position":"side_control","end_position":"submission","steps":["rec_side_shrimp_to_half","rec_half_to_deep_half","rec_deep_half_old_school","rec_body_lock_half_pass","rec_side_to_mount","rec_arm_triangle_mount"],"expert_review_status":"PENDING","rules_review_status":"PENDING","purpose":"defensive_recovery_to_offense"},
+    {"id":"chain_back_escape_to_pressure","name_pt":"Escape das Costas → Retorno em Pé → Pressão","start_position":"back_mount_hooks","end_position":"side_control","steps":["rec_hooks_escape","rec_turtle_standup","rec_underhook_entry","rec_underhook_to_body_lock","rec_body_lock_mat_return","rec_body_lock_half_pass"],"expert_review_status":"PENDING","rules_review_status":"PENDING","purpose":"defense_to_reengagement"},
+    {"id":"chain_open_rdlr_ashi","name_pt":"Guarda Aberta → RDLR → Ashi","start_position":"closed_guard","end_position":"submission","steps":["rec_closed_to_open_guard","rec_open_to_rdlr","rec_rdlr_to_outside_ashi","rec_outside_ashi_sweep","rec_straight_ankle_top"],"expert_review_status":"PENDING","rules_review_status":"PENDING","purpose":"guard_retention_to_leg_chain"}
+  ]
+}
