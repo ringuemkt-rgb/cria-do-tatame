@@ -1,0 +1,80 @@
+{
+  "$schema": "cria.f3_calibration.v1",
+  "version": "1.0.0",
+  "status": "INFRASTRUCTURE_READY_DATA_PENDING",
+  "shipping": false,
+  "purpose": "Define how reviewed grappling observations may populate empirical success/timing/fatigue evidence without confusing video frequency, authoring priors, self-play or game-balance tuning with observed competition data.",
+  "authorities": {
+    "bjj_authoring": "data/combat/bjj_kg_authoring_contract_v1.json",
+    "completion_gate": "data/combat/bjj_completion_gate_v1.json",
+    "motion_lab": "data/research/grappling_motion_lab_contract_v1.json",
+    "source_ledger": "data/research/grappling_video_source_ledger_v1.json",
+    "observation_ledger": "data/research/f3_observation_ledger_v1.json",
+    "rules": "data/combat/bjj_rulesets_verified_v1.json",
+    "fatigue": "data/combat/grappling_fatigue_contract_v1.json"
+  },
+  "hard_boundaries": {
+    "authoring_prior_is_empirical_success": false,
+    "video_frequency_is_success_probability": false,
+    "self_play_frequency_is_empirical_frequency": false,
+    "model_prediction_is_ground_truth": false,
+    "unreviewed_observation_may_enter_calibration": false,
+    "rights_blocked_source_may_enter_promotion_dataset": false,
+    "F3_may_change_rules_or_legality": false,
+    "F3_may_activate_runtime_effects_by_itself": false
+  },
+  "eligible_observation_requires": [
+    "source_id",
+    "clip_id",
+    "technique_id",
+    "from_position",
+    "attempt_outcome",
+    "ruleset",
+    "modality",
+    "skill_band",
+    "expert_review_status=APPROVED",
+    "rules_review_status=APPROVED",
+    "rights_eligible_for_calibration=true",
+    "split",
+    "provenance_sha256"
+  ],
+  "attempt_outcomes": ["SUCCESS", "FAILURE", "COUNTERED", "ABORTED", "UNCERTAIN"],
+  "binary_success_policy": {
+    "SUCCESS": 1,
+    "FAILURE": 0,
+    "COUNTERED": 0,
+    "ABORTED": "EXCLUDE_FROM_BINARY_UNLESS_PROTOCOL_VERSION_EXPLICITLY_INCLUDES",
+    "UNCERTAIN": "EXCLUDE"
+  },
+  "stratification": ["technique_id", "from_position", "ruleset", "modality", "skill_band"],
+  "split_policy": {
+    "allowed": ["train", "validation", "holdout"],
+    "group_by": ["source_event_id", "athlete_pair_group"],
+    "same_source_event_may_cross_splits": false,
+    "same_athlete_pair_group_may_cross_splits": false,
+    "holdout_required_for_promotion": true
+  },
+  "reports": {
+    "required": ["coverage", "success_counts", "wilson_interval", "phase_timing", "fatigue_context", "expert_disagreement", "occlusion_failure", "rights_coverage"],
+    "binary_interval_method": "WILSON_95",
+    "small_sample_warning_below_n": 20,
+    "promotion_minimum_n": null,
+    "promotion_minimum_n_status": "MUST_BE_APPROVED_BEFORE_RUNTIME_EFFECT_ACTIVATION"
+  },
+  "fatigue_calibration": {
+    "calibrate_local_dimensions_separately": true,
+    "candidate_context_fields": ["pre_match_residual", "forearm_grip", "upper_body_isometric", "trunk_isometric", "lower_body", "rest_seconds_since_prior_match"],
+    "fatigue_effect_is_causal_claim": false,
+    "observational_association_must_not_be_labeled_causal": true,
+    "controlled_capture_can_calibrate_animation_load_but_not_competition_success": true
+  },
+  "promotion": {
+    "current_F3_status": "DATA_PENDING",
+    "requires_nonempty_holdout": true,
+    "requires_expert_signoff": true,
+    "requires_calibration_report_version": true,
+    "requires_source_rights_audit": true,
+    "requires_reproducible_snapshot_hash": true,
+    "runtime_activation_requires_separate_review_and_PR": true
+  }
+}
