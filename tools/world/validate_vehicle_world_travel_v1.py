@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
 """Fail-closed validator for Vehicle World Travel V1.
 
-This gate validates the travel contract and the currently consumed world-map shape
-without pretending the future semantic-map migration is already live.
+This gate validates the travel contract, vehicle-service economy and the currently
+consumed world-map shape without pretending the future semantic-map migration is
+already live.
 """
 from __future__ import annotations
 
@@ -14,8 +15,11 @@ from typing import Any
 ROOT = Path(__file__).resolve().parents[2]
 CONTRACT_PATH = ROOT / "data/world/vehicle_world_travel_v1.json"
 MAP_PATH = ROOT / "data/world/world_map_v4.json"
+ECONOMY_PATH = ROOT / "data/economy.json"
 RESOLVER_PATH = ROOT / "src/world/WorldRouteResolver.gd"
+SERVICE_MODEL_PATH = ROOT / "src/world/VehicleServiceModel.gd"
 SMOKE_PATH = ROOT / "tests/world_route_resolver_smoke.gd"
+SERVICE_SMOKE_PATH = ROOT / "tests/vehicle_service_smoke.gd"
 
 ALLOWED_ROUTE_TYPES = {
     "terrestre",
@@ -135,6 +139,10 @@ def validate_contract(contract: dict[str, Any], errors: list[str], warnings: lis
         errors.append("kombi_terreiro must use rota_101")
     if "terrestrial_primary" not in kombi.get("route_classes", []):
         errors.append("kombi_terreiro must support terrestrial_primary")
+    default_state = kombi.get("default_state", {})
+    for field in {"fuel", "condition", "hard_damage", "upgrades"}:
+        if field not in default_state:
+            errors.append(f"kombi default_state missing {field}")
 
     forbidden = set(map(str, contract.get("kombi_upgrades", {}).get("forbidden", [])))
     if "weapons" not in forbidden or "combat_damage_bonus" not in forbidden:
@@ -183,6 +191,48 @@ def validate_contract(contract: dict[str, Any], errors: list[str], warnings: lis
         warnings.append("maritime minigame should remain outside V1 scope")
 
 
+def validate_vehicle_service(
+    contract: dict[str, Any], economy: dict[str, Any], errors: list[str]
+) -> None:
+    service = economy.get("vehicle_service", {})
+    if not isinstance(service, dict) or not service:
+        errors.append("economy.vehicle_service missing")
+        return
+    for key in {
+        "refuel_block_units",
+        "refuel_block_cost",
+        "condition_repair_block_units",
+        "condition_repair_block_cost",
+        "hard_damage_repair_cost_per_level",
+    }:
+        value = service.get(key)
+        if not isinstance(value, (int, float)) or value <= 0:
+            errors.append(f"vehicle service rule must be positive: {key}")
+
+    catalog = service.get("upgrade_catalog", {})
+    if not isinstance(catalog, dict):
+        errors.append("vehicle_service.upgrade_catalog must be an object")
+        return
+    allowed = set(map(str, contract.get("kombi_upgrades", {}).get("allowed", [])))
+    forbidden = set(map(str, contract.get("kombi_upgrades", {}).get("forbidden", [])))
+    missing = sorted(allowed - set(catalog))
+    if missing:
+        errors.append("allowed Kombi upgrades missing economy entries: " + ", ".join(missing))
+    overlap = sorted(forbidden & set(catalog))
+    if overlap:
+        errors.append("forbidden upgrades must not have purchasable economy entries: " + ", ".join(overlap))
+    for upgrade_id, definition in catalog.items():
+        if not isinstance(definition, dict):
+            errors.append(f"upgrade definition must be object: {upgrade_id}")
+            continue
+        cost = definition.get("cost")
+        if not isinstance(cost, int) or cost < 0:
+            errors.append(f"upgrade cost must be non-negative integer: {upgrade_id}")
+        effects = definition.get("effects", {})
+        if not isinstance(effects, dict) or not effects:
+            errors.append(f"upgrade effects missing: {upgrade_id}")
+
+
 def validate_world_map(world_map: dict[str, Any], errors: list[str], warnings: list[str]) -> None:
     routes = routes_from(world_map)
     endpoints = available_endpoint_ids(world_map)
@@ -213,11 +263,14 @@ def validate_world_map(world_map: dict[str, Any], errors: list[str], warnings: l
         seen.add(key)
 
         minigame = str(route.get("minigame", ""))
-        normalized_type = "terrestre" if route_type == "ponte" else ("connection" if route_type == "conexao" else route_type)
+        normalized_type = (
+            "terrestre"
+            if route_type == "ponte"
+            else ("connection" if route_type == "conexao" else route_type)
+        )
         if minigame == "rota_101" and normalized_type != "terrestre":
             errors.append(f"{label}: rota_101 is terrestrial-only")
 
-    # Semantic-map snapshots use either `pages/nodes/routes` or `paginas/nos/rotas`.
     has_supported_shape = (
         isinstance(world_map.get("pages"), list)
         and isinstance(world_map.get("nodes"), list)
@@ -234,15 +287,36 @@ def validate_world_map(world_map: dict[str, Any], errors: list[str], warnings: l
 def validate_source_files(errors: list[str]) -> None:
     if not RESOLVER_PATH.exists():
         errors.append("WorldRouteResolver.gd missing")
+    if not SERVICE_MODEL_PATH.exists():
+        errors.append("VehicleServiceModel.gd missing")
     if not SMOKE_PATH.exists():
         errors.append("world_route_resolver_smoke.gd missing")
+    if not SERVICE_SMOKE_PATH.exists():
+        errors.append("vehicle_service_smoke.gd missing")
     if RESOLVER_PATH.exists():
         text = RESOLVER_PATH.read_text(encoding="utf-8")
-        for needle in ["resolve_route", "resolve_all_from", "_evaluate_gates", "_method_options"]:
+        for needle in [
+            "resolve_route",
+            "resolve_all_from",
+            "_evaluate_gates",
+            "_evaluate_destination_node_gate",
+            "_method_options",
+        ]:
             if f"func {needle}" not in text:
                 errors.append(f"resolver missing function: {needle}")
         if "WorldMapManager" in text or "WorldState" in text or "SaveManager" in text:
             errors.append("VT1 resolver must remain pure and must not mutate autoload authorities")
+    if SERVICE_MODEL_PATH.exists():
+        text = SERVICE_MODEL_PATH.read_text(encoding="utf-8")
+        for needle in ["initialize", "get_effective_stats", "quote"]:
+            if f"func {needle}" not in text:
+                errors.append(f"vehicle service model missing function: {needle}")
+        for forbidden_reference in ["WorldState", "SaveManager", "WorldMapManager"]:
+            if forbidden_reference in text:
+                errors.append(
+                    "VehicleServiceModel must remain pure; found authority reference: "
+                    + forbidden_reference
+                )
 
 
 def main() -> int:
@@ -251,17 +325,20 @@ def main() -> int:
     try:
         contract = load_json(CONTRACT_PATH)
         world_map = load_json(MAP_PATH)
+        economy = load_json(ECONOMY_PATH)
     except ValidationError as exc:
         print(f"VEHICLE_WORLD_TRAVEL_V1 FAIL: {exc}")
         return 1
 
     validate_contract(contract, errors, warnings)
+    validate_vehicle_service(contract, economy, errors)
     validate_world_map(world_map, errors, warnings)
     validate_source_files(errors)
 
     print(
         "VEHICLE_WORLD_TRAVEL_V1 "
         f"routes={len(routes_from(world_map))} vehicles={len(contract.get('vehicles', {}))} "
+        f"upgrades={len(economy.get('vehicle_service', {}).get('upgrade_catalog', {}))} "
         f"warnings={len(warnings)} errors={len(errors)}"
     )
     for warning in warnings:
