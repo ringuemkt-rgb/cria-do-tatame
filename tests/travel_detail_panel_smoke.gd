@@ -9,10 +9,18 @@ func _init() -> void:
 	call_deferred("_run")
 
 func _run() -> void:
-	var map_before: Dictionary = WorldMapManager.to_dict().duplicate(true)
-	var money_before := int(WorldState.money)
-	var energy_before := float(WorldState.energy)
-	var world_hub_before := str(WorldState.current_hub)
+	var world_map_manager: Node = root.get_node_or_null("WorldMapManager")
+	var world_state: Node = root.get_node_or_null("WorldState")
+	_check(world_map_manager != null, "WorldMapManager autoload is available")
+	_check(world_state != null, "WorldState autoload is available")
+	if world_map_manager == null or world_state == null:
+		_finish()
+		return
+
+	var map_before: Dictionary = world_map_manager.call("to_dict").duplicate(true)
+	var money_before := int(world_state.get("money"))
+	var energy_before := float(world_state.get("energy"))
+	var world_hub_before := str(world_state.get("current_hub"))
 
 	var panel = PanelScene.instantiate()
 	root.add_child(panel)
@@ -51,21 +59,23 @@ func _run() -> void:
 		var selected: Dictionary = panel.get_view_model()
 		_check(str(selected.get("selected_method", "")) == "kombi_terreiro", "method selection remains a preview")
 
-	_check(WorldMapManager.to_dict() == map_before, "VT2 panel does not mutate WorldMapManager")
-	_check(int(WorldState.money) == money_before, "VT2 panel does not spend money")
-	_check(is_equal_approx(float(WorldState.energy), energy_before), "VT2 panel does not spend energy")
-	_check(str(WorldState.current_hub) == world_hub_before, "VT2 panel does not move WorldState hub")
+	_check(world_map_manager.call("to_dict") == map_before, "VT2 panel does not mutate WorldMapManager")
+	_check(int(world_state.get("money")) == money_before, "VT2 panel does not spend money")
+	_check(is_equal_approx(float(world_state.get("energy")), energy_before), "VT2 panel does not spend energy")
+	_check(str(world_state.get("current_hub")) == world_hub_before, "VT2 panel does not move WorldState hub")
 
 	var unresolved: Dictionary = panel.present_node("itubera", {"id": "sem_rota", "nome": "Sem Rota", "tipo": "interesse"}, context)
 	_check(not bool(unresolved.get("route_found", true)), "uncatalogued destination fails closed")
 	_check(not bool(unresolved.get("traversable", true)), "uncatalogued destination cannot start travel")
 	_check(unresolved.get("method_options", []).is_empty(), "uncatalogued destination exposes no methods")
-	_check(WorldMapManager.to_dict() == map_before, "failed preview still does not mutate map state")
+	_check(world_map_manager.call("to_dict") == map_before, "failed preview still does not mutate map state")
 
 	panel.close_panel()
 	_check(not panel.visible, "panel closes without travel")
 	panel.queue_free()
+	_finish()
 
+func _finish() -> void:
 	print("TRAVEL_DETAIL_PANEL_SMOKE checks=%d failures=%d" % [checks, failures.size()])
 	for failure in failures:
 		push_error(failure)
