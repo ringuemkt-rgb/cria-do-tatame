@@ -4,3 +4,5 @@
 
 [node name="Z1" instance=ExtResource("1_base")]
 scene_id = "z1"
+
+[node name="SceneSpecificAnchor" type="Node" parent="."]
