@@ -1,0 +1,40 @@
+{
+  "$schema": "cria_world_map_life_v1",
+  "version": "1.0.0",
+  "status": "candidate_runtime_direction",
+  "shipping": false,
+  "authority": {
+    "world_data": "data/world/world_map_v4.json",
+    "travel_state": "WorldMapManager",
+    "presentation": "scenes/world/WorldMapScreen.tscn"
+  },
+  "reference_provenance": {
+    "source": "user_supplied_session",
+    "reference_set": "baixo_sul_map_direction_2026_09_12",
+    "images": ["01-1000398260.png", "02-1000398261.png", "03-1000398262.png", "04-1000398263.png", "05-1000398255.png", "06-1000398256.png", "07-1000398257.png", "08-1000398258.png", "09-1000398259.png", "10-1000398158.png"],
+    "use": "art_direction_only",
+    "human_review_required_before_shipping": true
+  },
+  "layers": ["map_base_art", "world_overlay", "ui_overlay", "narrative_overlay"],
+  "visual_language": {
+    "frame": "ink_black_with_aged_gold_filigree",
+    "terrain": "illustrated_2_5d_baixo_sul",
+    "water": "deep_cyan_with_foam_and_reflections",
+    "routes": {"land": "warm_light_dashed", "sea": "cyan_dashed", "blocked": "muted_red", "secret": "violet_mist"},
+    "nodes": "circular_badges_with_state_driven_rings",
+    "mutable_text": "godot_ui_only"
+  },
+  "ambient_motion": [
+    {"id": "water_reflection", "layer": "map_base_art", "priority": "high", "reduced_motion": "static_highlight"},
+    {"id": "route_flow", "layer": "world_overlay", "priority": "high", "reduced_motion": "static_route"},
+    {"id": "node_pulse", "layer": "world_overlay", "priority": "high", "reduced_motion": "static_ring"},
+    {"id": "boat_drift", "layer": "world_overlay", "priority": "medium", "reduced_motion": "hidden"},
+    {"id": "mist_and_fireflies", "layer": "narrative_overlay", "priority": "medium", "reduced_motion": "hidden"}
+  ],
+  "production_rules": [
+    "No reference screenshot is a shipping asset by itself.",
+    "Names, locks, factions and travel state are read from canonical game data.",
+    "Do not bake mutable UI, real brands or unverified real-world institutions into base art.",
+    "Final painted bases require provenance, visual QA, Android performance QA and human approval."
+  ]
+}
