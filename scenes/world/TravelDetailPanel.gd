@@ -2,6 +2,7 @@ extends PanelContainer
 class_name TravelDetailPanel
 
 signal method_previewed(vehicle_id: String)
+signal travel_requested(destination_node: String, vehicle_id: String, world_context: Dictionary)
 signal panel_closed
 
 const ResolverScript = preload("res://src/world/WorldRouteResolver.gd")
@@ -22,26 +23,32 @@ const VEHICLE_LABELS := {
 @onready var gate_label: Label = $Margin/VBox/Gate
 @onready var methods_box: VBoxContainer = $Margin/VBox/Methods
 @onready var message_label: Label = $Margin/VBox/Message
+@onready var start_button: Button = $Margin/VBox/Start
 @onready var close_button: Button = $Margin/VBox/Close
 
 var resolver = ResolverScript.new()
 var selected_node: Dictionary = {}
 var resolved_route: Dictionary = {}
 var selected_method := ""
+var last_world_context: Dictionary = {}
 var last_view_model: Dictionary = {}
 
 func _ready() -> void:
 	var status: Dictionary = resolver.initialize()
 	if not bool(status.get("ok", false)):
 		message_label.text = "Planejamento indisponível: dados de rota não carregados."
+	start_button.disabled = true
+	start_button.pressed.connect(_on_start_pressed)
 	close_button.pressed.connect(close_panel)
 	visible = false
 
 func present_node(origin_id: String, node: Dictionary, world_context: Dictionary = {}) -> Dictionary:
 	selected_node = node.duplicate(true)
 	selected_method = ""
+	last_world_context = world_context.duplicate(true)
 	resolved_route = {}
 	visible = true
+	start_button.disabled = true
 	_clear_methods()
 
 	var destination_id := str(node.get("id", ""))
@@ -60,6 +67,7 @@ func present_node(origin_id: String, node: Dictionary, world_context: Dictionary
 func close_panel() -> void:
 	visible = false
 	selected_method = ""
+	start_button.disabled = true
 	panel_closed.emit()
 
 func get_view_model() -> Dictionary:
@@ -72,6 +80,7 @@ func _show_unresolved(origin_id: String, destination_id: String, destination_nam
 	mastery_label.text = "Conhecimento da rota: desconhecido"
 	gate_label.text = "Nenhuma viagem será iniciada por esta tela."
 	message_label.text = "O local existe no mapa, mas ainda não há ligação data-driven entre a origem atual e este destino."
+	start_button.disabled = true
 	last_view_model = {
 		"route_found": false,
 		"origin": origin_id,
@@ -103,8 +112,8 @@ func _render_route(destination_name: String, route: Dictionary, world_context: D
 	var traversable := bool(route.get("traversable", false))
 	var reasons: Array = route.get("gate_status", {}).get("reasons", [])
 	if traversable:
-		gate_label.text = "ROTA LIBERADA • escolha um meio para pré-visualizar."
-		message_label.text = "Planejamento somente leitura. A viagem só será comprometida pelo fluxo VT3."
+		gate_label.text = "ROTA LIBERADA • escolha um meio."
+		message_label.text = "Selecione o meio. Só PREPARAR VIAGEM criará o TravelPlan; nada foi gasto ainda."
 	else:
 		gate_label.text = "ROTA BLOQUEADA • %s" % _reasons_text(reasons)
 		message_label.text = "Os requisitos são mostrados antes de qualquer custo ou mudança de localização."
@@ -145,9 +154,17 @@ func _add_method_button(option: Dictionary, traversable: bool) -> void:
 
 func _on_method_previewed(vehicle_id: String, mode: String) -> void:
 	selected_method = vehicle_id
-	message_label.text = "%s selecionado para prévia • modo %s. Nenhum recurso foi gasto." % [str(VEHICLE_LABELS.get(vehicle_id, vehicle_id)), mode]
+	start_button.disabled = not bool(last_view_model.get("traversable", false))
+	message_label.text = "%s selecionado • modo %s. Pressione PREPARAR VIAGEM para criar o plano." % [str(VEHICLE_LABELS.get(vehicle_id, vehicle_id)), mode]
 	last_view_model["selected_method"] = vehicle_id
 	method_previewed.emit(vehicle_id)
+
+func _on_start_pressed() -> void:
+	if selected_method == "" or not bool(last_view_model.get("traversable", false)):
+		start_button.disabled = true
+		return
+	start_button.disabled = true
+	travel_requested.emit(str(last_view_model.get("destination", "")), selected_method, last_world_context.duplicate(true))
 
 func _clear_methods() -> void:
 	for child in methods_box.get_children():
