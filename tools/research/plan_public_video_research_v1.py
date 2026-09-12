@@ -14,6 +14,7 @@ from typing import Any
 ROOT = Path(__file__).resolve().parents[2]
 DIRECTOR = ROOT / "data/research/public_video_analysis_director_v1.json"
 GOLDEN = ROOT / "data/combat/golden_chain_ruan_davi_v1.json"
+BJJ_SLICE = ROOT / "data/bjj/bjj_kg_slice_ruan_davi_v1.json"
 LEDGER = ROOT / "data/research/public_video_observation_ledger_v1.json"
 
 
@@ -24,37 +25,64 @@ def load(path: Path) -> dict[str, Any]:
     return value
 
 
-def technique_rows(golden: dict[str, Any]) -> list[dict[str, Any]]:
+def technique_catalog(bjj: dict[str, Any]) -> dict[str, dict[str, Any]]:
+    catalog: dict[str, dict[str, Any]] = {}
+    for row in bjj.get("techniques", []):
+        if not isinstance(row, dict):
+            continue
+        tid = str(row.get("id", "")).strip()
+        if tid:
+            catalog[tid] = row
+    return catalog
+
+
+def technique_rows(golden: dict[str, Any], catalog: dict[str, dict[str, Any]]) -> list[dict[str, Any]]:
     out: list[dict[str, Any]] = []
     seen: set[str] = set()
+
+    def append_target(tid: str, src: Any, dst: Any, kind: str, reason: str) -> None:
+        if not tid or tid in seen:
+            return
+        seen.add(tid)
+        meta = catalog.get(tid, {})
+        out.append({
+            "technique_id": tid,
+            "name_pt": meta.get("pt") or tid,
+            "technique_type": meta.get("type") or kind,
+            "from": src or meta.get("from"),
+            "to": dst or meta.get("to"),
+            "kind": kind,
+            "priority_reason": reason,
+        })
+
     for lane in ("success_chain", "alternate_branches"):
         for row in golden.get(lane, []):
-            if not isinstance(row, dict):
-                continue
-            tid = str(row.get("technique_id", "")).strip()
-            if tid and tid not in seen:
-                seen.add(tid)
-                out.append({
-                    "technique_id": tid,
-                    "from": row.get("from"),
-                    "to": row.get("to"),
-                    "kind": "transition",
-                    "priority_reason": "golden_chain_gap",
-                })
+            if isinstance(row, dict):
+                append_target(
+                    str(row.get("technique_id", "")).strip(),
+                    row.get("from"),
+                    row.get("to"),
+                    "transition",
+                    "golden_chain_gap",
+                )
+
     for row in golden.get("defense_branches", []):
         if not isinstance(row, dict):
             continue
-        for key, kind in (("attack_id", "attack"), ("counter_id", "counter")):
-            tid = str(row.get(key, "")).strip()
-            if tid and tid not in seen:
-                seen.add(tid)
-                out.append({
-                    "technique_id": tid,
-                    "from": row.get("from"),
-                    "to": row.get("to"),
-                    "kind": kind,
-                    "priority_reason": "missing_counter_or_failure" if kind == "counter" else "golden_chain_gap",
-                })
+        append_target(
+            str(row.get("attack_id", "")).strip(),
+            row.get("from"),
+            row.get("to"),
+            "attack",
+            "golden_chain_gap",
+        )
+        append_target(
+            str(row.get("counter_id", "")).strip(),
+            row.get("from"),
+            row.get("to"),
+            "counter",
+            "missing_counter_or_failure",
+        )
     return out
 
 
@@ -74,14 +102,15 @@ def observed_techniques(ledger: dict[str, Any]) -> set[str]:
 
 
 def build_queries(target: dict[str, Any], ruleset: str) -> list[str]:
-    tid = target["technique_id"]
-    src = target.get("from") or ""
-    dst = target.get("to") or ""
-    base = f"Brazilian Jiu-Jitsu {tid} {src} {dst}".strip()
+    name = str(target.get("name_pt") or target["technique_id"])
+    src = str(target.get("from") or "").replace("_", " ")
+    dst = str(target.get("to") or "").replace("_", " ")
+    technique_type = str(target.get("technique_type") or "")
+    context = " ".join(part for part in (name, technique_type, src, dst) if part).strip()
     return [
-        f"{base} competition match {ruleset}",
-        f"{base} technique class mechanics counter",
-        f"{base} championship full match",
+        f"Brazilian Jiu-Jitsu {context} competition full match {ruleset}",
+        f"BJJ {context} technique mechanics common mistakes counter",
+        f"BJJ championship {context} full match",
     ]
 
 
@@ -93,13 +122,15 @@ def main() -> int:
 
     director = load(DIRECTOR)
     golden = load(GOLDEN)
+    bjj = load(BJJ_SLICE)
     ledger = load(LEDGER)
     weights = director.get("information_gain_weights", {})
     observed = observed_techniques(ledger)
     ruleset = str(golden.get("ruleset", "bjj"))
+    catalog = technique_catalog(bjj)
 
     ranked: list[dict[str, Any]] = []
-    for target in technique_rows(golden):
+    for target in technique_rows(golden, catalog):
         reason = target["priority_reason"]
         score = int(weights.get(reason, 1))
         if target["technique_id"] in observed:
@@ -129,7 +160,10 @@ def main() -> int:
         print(json.dumps(report, ensure_ascii=False, indent=2))
     else:
         for index, row in enumerate(report["next_targets"], 1):
-            print(f"{index:02d}. {row['technique_id']} score={row['information_gain_score']} {row.get('from')} -> {row.get('to')}")
+            print(
+                f"{index:02d}. {row['technique_id']} {row['name_pt']} "
+                f"score={row['information_gain_score']} {row.get('from')} -> {row.get('to')}"
+            )
             for query in row["queries"]:
                 print(f"    - {query}")
     return 0
