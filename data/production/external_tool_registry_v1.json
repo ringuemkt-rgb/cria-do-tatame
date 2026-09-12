@@ -2,7 +2,7 @@
   "$schema": "cria.external_tool_registry.v1",
   "version": "1.0.0",
   "status": "ACTIVE_RESEARCH_REGISTRY",
-  "audited_at": "2026-09-09",
+  "audited_at": "2026-09-12",
   "default_policy": {
     "runtime_dependency": false,
     "shipping_default": false,
@@ -37,6 +37,19 @@
       "attribution_required": true,
       "cria_roles": ["studio_orchestration", "godot_specialist_pattern", "asset_spec", "asset_audit", "art_bible_review", "team_combat", "team_ui", "team_qa", "release_gates", "accessibility", "performance_review"],
       "notes": "High-value source for 49-agent/73-skill studio structure, path-scoped rules, hooks, vertical-slice gates and department review. Port only selected concepts/files after reconciliation with CRIA AGENTS, Production OS and Godot 4.3 authorities."
+    },
+    {
+      "id": "mixamo_llm_mocap",
+      "kind": "github_repo",
+      "source": "squall01337/mixamo-llm-mocap",
+      "revision": "00dfd5385506022d533c84f6737a09f5f4392623",
+      "license_status": "CLEAR_MIT",
+      "adoption": "ADOPTED_EXTERNAL_OFFLINE_TOOL_PINNED",
+      "direct_code_reuse": false,
+      "direct_asset_reuse": false,
+      "attribution_required": true,
+      "cria_roles": ["offline_motion_retarget", "two_performer_pair_retarget", "foot_and_root_motion_qa", "reference_comparison", "pair_spacing_reach_intrusion_qa", "mesh_contact_qa", "preview_render"],
+      "notes": "Repository code is MIT at the pinned revision, but Mixamo characters, GVHMR, pretrained checkpoints, SMPL-X and Blender MCP are separately licensed. CRIA uses a separate pinned checkout through tools/motion_factory/run_mixamo_llm_mocap.py; no upstream assets are copied, no runtime dependency is created, and commercial promotion remains blocked until third-party terms and source-media rights pass."
     },
     {
       "id": "wolfcha",
