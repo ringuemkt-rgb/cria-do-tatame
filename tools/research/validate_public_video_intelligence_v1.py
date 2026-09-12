@@ -14,6 +14,7 @@ MOTION_LAB = ROOT / "data/research/grappling_motion_lab_contract_v1.json"
 MOTION_FACTORY = ROOT / "data/production/motion_factory_v1.json"
 SKILL = ROOT / ".agents/skills/cria-public-video-intelligence/SKILL.md"
 PLANNER = ROOT / "tools/research/plan_public_video_research_v1.py"
+YOUTUBE_ADAPTER = ROOT / "tools/research/youtube_public_discovery_v1.py"
 
 
 def load(path: Path) -> dict[str, Any]:
@@ -25,7 +26,7 @@ def load(path: Path) -> dict[str, Any]:
 
 def main() -> int:
     errors: list[str] = []
-    for path in (DIRECTOR, LEDGER, CORPUS, MOTION_LAB, MOTION_FACTORY, SKILL, PLANNER):
+    for path in (DIRECTOR, LEDGER, CORPUS, MOTION_LAB, MOTION_FACTORY, SKILL, PLANNER, YOUTUBE_ADAPTER):
         if not path.exists():
             errors.append(f"missing required file: {path.relative_to(ROOT)}")
     if errors:
@@ -38,6 +39,7 @@ def main() -> int:
     motion_lab = load(MOTION_LAB)
     motion_factory = load(MOTION_FACTORY)
     skill = SKILL.read_text(encoding="utf-8")
+    youtube_text = YOUTUBE_ADAPTER.read_text(encoding="utf-8")
 
     if director.get("version") != "1.0.0" or director.get("status") != "ACTIVE_AUTONOMOUS_RESEARCH_DIRECTOR":
         errors.append("director must be active v1.0.0")
@@ -140,12 +142,29 @@ def main() -> int:
         if token not in skill:
             errors.append(f"skill missing policy token: {token}")
 
+    # Guard the YouTube adapter against capability inflation or hidden scraping.
+    for token in (
+        'API_BASE = "https://www.googleapis.com/youtube/v3"',
+        '"visual_observation_claimed": False',
+        '"downloads_media": False',
+        '"downloads_captions": False',
+        '"evidence_mode": "METADATA_ONLY"',
+    ):
+        if token not in youtube_text:
+            errors.append(f"YouTube adapter missing fail-closed token: {token}")
+    forbidden_adapter_tokens = ("yt-dlp", "youtube-dl", "pytube", "captions/download")
+    lowered = youtube_text.lower()
+    for token in forbidden_adapter_tokens:
+        if token.lower() in lowered:
+            errors.append(f"YouTube discovery adapter must not contain downloader/caption-download path: {token}")
+
     result = {
         "ok": not errors,
         "errors": errors,
         "cycle_stages": len(ids),
         "source_records": len(sources),
         "observations": len(observations),
+        "youtube_adapter": "OFFICIAL_METADATA_ONLY",
         "shipping": False,
     }
     print(json.dumps(result, ensure_ascii=False, indent=2, sort_keys=True))
