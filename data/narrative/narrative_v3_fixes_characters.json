@@ -1,0 +1,339 @@
+{
+  "$schema": "cria_character_addendum_v3_fixes",
+  "version": "1.0.0",
+  "authority": "data/narrative/canon_v3.json",
+  "purpose": "Registrar personagens introduzidos pelos cinco fixes narrativos sem reescrever retroativamente a bible v1.",
+  "rules": {
+    "all_characters_are_fictional": true,
+    "no_real_person_likeness": true,
+    "children_are_never_operational_assets": true,
+    "antagonist_humanization_is_not_absolution": true
+  },
+  "characters": [
+    {
+      "id": "george_chupeta",
+      "nome": "George 'Chupeta'",
+      "papel": "antagonista humano da rede e ex-aluno de Dende",
+      "arquetipo_jung": "Filho Perdido / Sombra do Discipulo",
+      "identidade": {
+        "idade": "adulto",
+        "origem": "Baixo Sul ficcional"
+      },
+      "visual": {
+        "silhueta": "elegante, compacta, contida",
+        "cor": "grafite, vinho e dourado gasto",
+        "acessorio": "terno simples; nenhum simbolo real",
+        "cabelo": "curto",
+        "roupa": "social discreta"
+      },
+      "psique": {
+        "want": "provar que a rua e mais forte que o limite moral do tatame",
+        "need": "reconhecer que poder comprado cobra pessoas",
+        "fear": "voltar a ser o aluno rejeitado",
+        "flaw": "confunde custo imposto aos outros com força propria"
+      },
+      "voz": {
+        "estilo": "baixa, segura, sem caricatura",
+        "fala": "Eu provei que a rua é mais forte."
+      },
+      "combate": {
+        "estilo": "pressao madura e finalizacoes controladoras",
+        "assinatura": "Preco da Rua"
+      },
+      "arco": "melhor aluno -> ruptura com Dende -> banqueiro da rede -> ponto mole com Dona Zefa -> confronto sem quebra",
+      "relacoes": [
+        "Dende ex-mestre",
+        "Ruan espelho moral",
+        "Dona Zefa mae",
+        "Cassio/Montenegro rede de interesse"
+      ],
+      "segredo": "cuida da mae com ternura enquanto sustenta uma rede que fere outras familias",
+      "papel_no_jogo": "antagonista tragico do eixo humano; boss moral A5"
+    },
+    {
+      "id": "dona_zefa",
+      "nome": "Dona Zefa",
+      "papel": "mae de Chupeta e ponto de humanidade, nunca refem",
+      "arquetipo_jung": "Grande Mae",
+      "identidade": {
+        "idade": "idosa",
+        "origem": "Baixo Sul ficcional"
+      },
+      "visual": {
+        "silhueta": "fragil sem ser infantilizada",
+        "cor": "azul claro e off-white",
+        "acessorio": "livro",
+        "cabelo": "grisalho",
+        "roupa": "hospitalar simples"
+      },
+      "psique": {
+        "want": "presenca do filho",
+        "need": "nenhuma funcao de expiar crimes alheios",
+        "fear": "adoecimento e abandono",
+        "flaw": "nao usada como falha moral"
+      },
+      "voz": {
+        "estilo": "pouca fala",
+        "fala": ""
+      },
+      "combate": {
+        "estilo": "nao combatente",
+        "assinatura": "nenhuma"
+      },
+      "arco": "presenca breve no hospital humaniza sem absolver",
+      "relacoes": [
+        "George Chupeta filho"
+      ],
+      "segredo": "nenhum",
+      "papel_no_jogo": "cena 4.5b; proibido usa-la como alvo, chantagem ou moeda"
+    },
+    {
+      "id": "pedro_bala",
+      "nome": "Pedro 'Bala'",
+      "papel": "Capitao da molecada e fiscal de confianca",
+      "arquetipo_jung": "Guardiao Jovem",
+      "identidade": {
+        "idade": "adolescente",
+        "origem": "Itubera ficcional"
+      },
+      "visual": {
+        "silhueta": "magro, firme",
+        "cor": "azul gasto e amarelo",
+        "acessorio": "cordao do Terreiro",
+        "cabelo": "curto",
+        "roupa": "treino simples"
+      },
+      "psique": {
+        "want": "proteger os menores",
+        "need": "ver adultos voltarem quando prometem",
+        "fear": "ser abandonado por mais um capitão",
+        "flaw": "desconfiança defensiva"
+      },
+      "voz": {
+        "estilo": "direta, desconfiada",
+        "fala": "Capitão que some não é capitão."
+      },
+      "combate": {
+        "estilo": "iniciante; sem glorificacao de luta de rua",
+        "assinatura": "nenhuma"
+      },
+      "arco": "desconfiança -> confronto -> retorno comprovado -> escudo dos Capitaes",
+      "relacoes": [
+        "Ruan referencia sob prova",
+        "Pipoca e Foguete protegidos"
+      ],
+      "segredo": "nenhum",
+      "papel_no_jogo": "mede confiança por ações e organiza proteção da molecada"
+    },
+    {
+      "id": "pipoca",
+      "nome": "Pipoca",
+      "papel": "crianca do Terreiro e arco de transmissao",
+      "arquetipo_jung": "Crianca / Aprendiz",
+      "identidade": {
+        "idade": "crianca",
+        "origem": "Itubera ficcional"
+      },
+      "visual": {
+        "silhueta": "pequena, energetica",
+        "cor": "off-white, azul e amarelo",
+        "acessorio": "faixa branca no final Heroi",
+        "cabelo": "curto",
+        "roupa": "treino confortável"
+      },
+      "psique": {
+        "want": "ser forte como Ruan",
+        "need": "aprender que força primeiro e conter",
+        "fear": "ser impotente",
+        "flaw": "imita sem compreender"
+      },
+      "voz": {
+        "estilo": "franca e literal",
+        "fala": "Tu luta diferente agora."
+      },
+      "combate": {
+        "estilo": "aprendizagem segura; sem foco competitivo infantil",
+        "assinatura": "segurar_antes_de_bater"
+      },
+      "arco": "idolo -> isca -> cicatriz -> primeira faixa",
+      "relacoes": [
+        "Ruan mestre",
+        "Bala protetor",
+        "Foguete colega"
+      ],
+      "segredo": "nenhum",
+      "papel_no_jogo": "torna a tese observavel e fecha o Heroi com primeira faixa"
+    },
+    {
+      "id": "foguete",
+      "nome": "Foguete",
+      "papel": "Capitao cooptado que retorna",
+      "arquetipo_jung": "Filho Prodigo",
+      "identidade": {
+        "idade": "adolescente",
+        "origem": "Itubera ficcional"
+      },
+      "visual": {
+        "silhueta": "leve e inquieta",
+        "cor": "verde gasto e grafite",
+        "acessorio": "mochila",
+        "cabelo": "curto",
+        "roupa": "casual"
+      },
+      "psique": {
+        "want": "dinheiro rapido e pertencimento",
+        "need": "limite sem humilhacao",
+        "fear": "retaliacao e expulsao",
+        "flaw": "impulsividade"
+      },
+      "voz": {
+        "estilo": "rapida, envergonhada quando retorna",
+        "fala": "Eu achei que era só dinheiro."
+      },
+      "combate": {
+        "estilo": "nao foco",
+        "assinatura": "nenhuma"
+      },
+      "arco": "cooptado -> assustado -> acolhido -> protegido com limite",
+      "relacoes": [
+        "Ruan protetor",
+        "Bala capitao",
+        "Pipoca colega"
+      ],
+      "segredo": "viu algo que nao devia enquanto fazia recado",
+      "papel_no_jogo": "prova que o Terreiro acolhe erro sem normalizar risco"
+    },
+    {
+      "id": "degodo",
+      "nome": "Adriano 'Degodo'",
+      "papel": "adulto do Terreiro e instrutor relutante da molecada",
+      "arquetipo_jung": "Guardiao",
+      "identidade": {
+        "idade": "adulto",
+        "origem": "Baixo Sul ficcional"
+      },
+      "visual": {
+        "silhueta": "larga e cansada",
+        "cor": "terra e grafite",
+        "acessorio": "toalha de treino",
+        "cabelo": "curto",
+        "roupa": "gi gasto"
+      },
+      "psique": {
+        "want": "evitar que menino precise lutar na rua",
+        "need": "admitir que ensinar tambem e proteger",
+        "fear": "repetir ciclos de violencia",
+        "flaw": "dureza verbal"
+      },
+      "voz": {
+        "estilo": "seca, old school",
+        "fala": "Eu não treino menino pra lutar. Treino menino pra não precisar lutar."
+      },
+      "combate": {
+        "estilo": "BJJ raiz defensivo",
+        "assinatura": "Base de Porteira"
+      },
+      "arco": "reclama da aula infantil -> ensina junto -> assume papel protetivo",
+      "relacoes": [
+        "Dende mestre",
+        "Ruan parceiro de tatame",
+        "Capitaes alunos"
+      ],
+      "segredo": "nenhum",
+      "papel_no_jogo": "cena ancora Aula dos Capitaes"
+    },
+    {
+      "id": "coro",
+      "nome": "Coro",
+      "papel": "voz comunitaria extradiegética de realidade magica",
+      "arquetipo_jung": "Coro Grego",
+      "identidade": {
+        "idade": "atemporal",
+        "origem": "voz coletiva ficcional do Baixo Sul"
+      },
+      "visual": {
+        "silhueta": "nao possui corpo fixo",
+        "cor": "n/a",
+        "acessorio": "n/a",
+        "cabelo": "n/a",
+        "roupa": "n/a"
+      },
+      "psique": {
+        "want": "registrar consequencia sem explicar demais",
+        "need": "preservar ambiguidade",
+        "fear": "virar narrador moralista",
+        "flaw": "nenhuma pessoa individual responde por suas falas"
+      },
+      "voz": {
+        "estilo": "oral, curta, 'Diz que...'",
+        "fala": "Diz que dinheiro sujo não compra sono. Diz que é verdade."
+      },
+      "combate": {
+        "estilo": "nao aplicavel",
+        "assinatura": "nenhuma"
+      },
+      "arco": "aparece quando comunidade, culpa ou mito precisam deixar marca",
+      "relacoes": [
+        "Ruan como objeto de memoria coletiva"
+      ],
+      "segredo": "nao e fonte factual onisciente; e dispositivo de memoria e mito",
+      "papel_no_jogo": "voz off, transicoes e consequencia"
+    }
+  ],
+  "character_overrides": [
+    {
+      "id": "tinker_bell",
+      "supersedes_fields": [
+        "papel",
+        "segredo",
+        "arco",
+        "relacoes",
+        "papel_no_jogo"
+      ],
+      "papel": "irmao, empresario e co-arquiteto civil da queda de Chupeta; nao e policial",
+      "segredo": "Ruan omite dele a infiltracao durante parte do Ato 3; Tinker descobre padroes e exige agencia propria",
+      "arco": "companheiro/empresario -> percebe incoerencias -> confronta Ruan -> escolhe saber de tudo -> co-arquiteto civil -> afastamento operacional A4 -> retorno",
+      "relacoes": [
+        "Ruan irmao e amigo",
+        "Vera interlocutora institucional depois da verdade",
+        "Dende confianca conquistada"
+      ],
+      "papel_no_jogo": "vinculo dinamico, leitura tatica civil, contrapeso de lealdade; nunca handler"
+    },
+    {
+      "id": "vera_salles",
+      "supersedes_fields": [
+        "papel",
+        "arco",
+        "relacoes",
+        "papel_no_jogo"
+      ],
+      "papel": "agente federal ficcional e eixo institucional da infiltracao",
+      "arco": "recruta Ruan opcionalmente -> utilitarismo tensionado em A3 -> Ruan recusa usar criancas -> aprende limite operacional -> Operacao Raiz Forte",
+      "relacoes": [
+        "Ruan fonte/aliado com agencia",
+        "Tinker civil informado depois",
+        "Montenegro e Chupeta alvos"
+      ],
+      "papel_no_jogo": "rota Verdade, pressao institucional e infiltracao PF; nao controla moralmente Ruan"
+    },
+    {
+      "id": "ruan_do_avesso",
+      "supersedes_fields": [
+        "papel",
+        "identidade",
+        "segredo",
+        "arco",
+        "papel_no_jogo"
+      ],
+      "papel": "manifestacao de realidade magica da divida moral de Ruan; espelho, nunca demonio",
+      "identidade": {
+        "idade": "igual ao save de Ruan",
+        "origem": "Pratigi do Avesso; somente Ruan o ve, mas marcas e efeitos persistem no mundo"
+      },
+      "segredo": "nao e sonho nem simples alucinacao; sua ontologia permanece poetica, mas seus efeitos de jogo sao reais e persistentes",
+      "arco": "surge quando sombra, cobertura rachada, lua cheia e mare baixa coincidem -> cobra mentira -> integra sem finalizacao -> retorna quando Ruan mente de novo",
+      "papel_no_jogo": "boss moral recorrente; perder cobra honra e aumenta a divida, vencer por aceitacao concede Visao do Avesso"
+    }
+  ]
+}

@@ -1,6 +1,6 @@
 {
   "$schema": "cria_dialogues_v3",
-  "version": "3.0.0",
+  "version": "3.1.0",
   "authority": "data/narrative/canon_v3.json",
   "rules": {
     "language": "pt-BR",
@@ -10,133 +10,573 @@
   },
   "clue_dialogues": [
     {
-      "id":"clue_seu_neco_01",
-      "speaker":"seu_neco",
-      "context":"margem do rio, depois do Ato 2",
-      "lines":["Teu pai conhecia correnteza que nao aparece no mapa.","Tem gente que some do papel antes de sumir da memoria."]
+      "id": "clue_seu_neco_01",
+      "speaker": "seu_neco",
+      "context": "margem do rio, depois do Ato 2",
+      "lines": [
+        "Teu pai conhecia correnteza que nao aparece no mapa.",
+        "Tem gente que some do papel antes de sumir da memoria."
+      ]
     },
     {
-      "id":"clue_iara_01",
-      "speaker":"cigana_iara",
-      "context":"feira, opcional",
-      "lines":["Tem nome que some do papel e continua crescendo na raiz.","Quando a flor volta, pergunta quem ficou regando."]
+      "id": "clue_iara_01",
+      "speaker": "cigana_iara",
+      "context": "feira, opcional",
+      "lines": [
+        "Tem nome que some do papel e continua crescendo na raiz.",
+        "Quando a flor volta, pergunta quem ficou regando."
+      ]
     },
     {
-      "id":"clue_chie_01",
-      "speaker":"dona_chie",
-      "context":"Ato 4, acolhimento",
-      "lines":["Tem coisa que a gente guarda ate a pessoa aprender a segurar.","Verdade na mao errada vira faca. Aprende primeiro a nao cortar ninguem com ela."]
+      "id": "clue_chie_01",
+      "speaker": "dona_chie",
+      "context": "Ato 4, acolhimento",
+      "lines": [
+        "Tem coisa que a gente guarda ate a pessoa aprender a segurar.",
+        "Verdade na mao errada vira faca. Aprende primeiro a nao cortar ninguem com ela."
+      ]
     },
     {
-      "id":"clue_dende_01",
-      "speaker":"mestre_dende",
-      "context":"Ato 4, depois da morte de Biel",
-      "lines":["Eu sabia mais do que te contei.","Nao calei pra te fazer fraco. Calei porque achei que silencio era protecao. Talvez eu tenha errado."]
+      "id": "clue_dende_01",
+      "speaker": "mestre_dende",
+      "context": "Ato 4, depois da morte de Biel",
+      "lines": [
+        "Eu sabia mais do que te contei.",
+        "Nao calei pra te fazer fraco. Calei porque achei que silencio era protecao. Talvez eu tenha errado."
+      ]
     }
   ],
   "act_dialogues": [
     {
-      "act":1,
-      "scene":"entrada_terreiro",
-      "beats":[
-        {"speaker":"mestre_dende","line":"Ser forte e ser gentil. Se uma coisa mata a outra, voce ainda nao entendeu nenhuma das duas."},
-        {"speaker":"ruan_macacao","line":"Eu vim aprender a vencer."},
-        {"speaker":"mestre_dende","line":"Entao aprende primeiro a cair sem procurar culpado."}
+      "act": 1,
+      "scene": "entrada_terreiro",
+      "beats": [
+        {
+          "speaker": "mestre_dende",
+          "line": "Ser forte e ser gentil. Se uma coisa mata a outra, voce ainda nao entendeu nenhuma das duas."
+        },
+        {
+          "speaker": "ruan_macacao",
+          "line": "Eu vim aprender a vencer."
+        },
+        {
+          "speaker": "mestre_dende",
+          "line": "Entao aprende primeiro a cair sem procurar culpado."
+        }
       ]
     },
     {
-      "act":1,
-      "scene":"primeira_vitoria_mao_estendida",
-      "beats":[
-        {"speaker":"davi_relampago","line":"Vai comemorar ou vai me deixar levantar?"},
-        {"speaker":"ruan_macacao","line":"Levanta."}
+      "act": 1,
+      "scene": "primeira_vitoria_mao_estendida",
+      "beats": [
+        {
+          "speaker": "davi_relampago",
+          "line": "Vai comemorar ou vai me deixar levantar?"
+        },
+        {
+          "speaker": "ruan_macacao",
+          "line": "Levanta."
+        }
       ]
     },
     {
-      "act":2,
-      "scene":"cassio_primeira_oferta",
-      "beats":[
-        {"speaker":"cassio_molho","line":"Voce tem conta, familia e talento. Orgulho nao paga nenhum dos tres."},
-        {"speaker":"ruan_macacao","line":"Eu nao preciso de favor."},
-        {"speaker":"cassio_molho","line":"Esse e o problema. Voce acha que aceitar ajuda e o mesmo que dever a alma."}
+      "act": 2,
+      "scene": "cassio_primeira_oferta",
+      "beats": [
+        {
+          "speaker": "cassio_molho",
+          "line": "Voce tem conta, familia e talento. Orgulho nao paga nenhum dos tres."
+        },
+        {
+          "speaker": "ruan_macacao",
+          "line": "Eu nao preciso de favor."
+        },
+        {
+          "speaker": "cassio_molho",
+          "line": "Esse e o problema. Voce acha que aceitar ajuda e o mesmo que dever a alma."
+        }
       ]
     },
     {
-      "act":3,
-      "scene":"o_barco_pos_consequencia",
-      "beats":[
-        {"speaker":"vera_salles","line":"A informacao era incompleta. Eu agi mesmo assim."},
-        {"speaker":"ruan_macacao","line":"E quem pagou nao fui eu nem voce."},
-        {"speaker":"vera_salles","line":"Entao para de contar essa historia como se alguem aqui tivesse a mao limpa."}
+      "act": 3,
+      "scene": "o_barco_pos_consequencia",
+      "beats": [
+        {
+          "speaker": "vera_salles",
+          "line": "A informacao era incompleta. Eu agi mesmo assim."
+        },
+        {
+          "speaker": "ruan_macacao",
+          "line": "E quem pagou nao fui eu nem voce."
+        },
+        {
+          "speaker": "vera_salles",
+          "line": "Entao para de contar essa historia como se alguem aqui tivesse a mao limpa."
+        }
       ]
     },
     {
-      "act":3,
-      "scene":"o_palco",
-      "beats":[
-        {"speaker":"leoa","line":"Hype vai embora. Quem mora aqui fica com o que sobrou."},
-        {"speaker":"ruan_macacao","line":"Eu achei que vencer ia proteger meu nome."},
-        {"speaker":"leoa","line":"Nome nao precisa de protecao. Gente precisa."}
+      "act": 3,
+      "scene": "o_palco",
+      "beats": [
+        {
+          "speaker": "leoa",
+          "line": "Hype vai embora. Quem mora aqui fica com o que sobrou."
+        },
+        {
+          "speaker": "ruan_macacao",
+          "line": "Eu achei que vencer ia proteger meu nome."
+        },
+        {
+          "speaker": "leoa",
+          "line": "Nome nao precisa de protecao. Gente precisa."
+        }
       ]
     },
     {
-      "act":4,
-      "scene":"dende_promete_merecer",
-      "beats":[
-        {"speaker":"mestre_dende","line":"Eu nao vou te pedir pra esquecer.","delivery":"quebrada"},
-        {"speaker":"mestre_dende","line":"Promete que vai merecer o que ainda da pra salvar.","delivery":"baixo"},
-        {"speaker":"ruan_macacao","line":"Eu prometo tentar sem transformar ele em desculpa."}
+      "act": 4,
+      "scene": "dende_promete_merecer",
+      "beats": [
+        {
+          "speaker": "mestre_dende",
+          "line": "Eu nao vou te pedir pra esquecer.",
+          "delivery": "quebrada"
+        },
+        {
+          "speaker": "mestre_dende",
+          "line": "Promete que vai merecer o que ainda da pra salvar.",
+          "delivery": "baixo"
+        },
+        {
+          "speaker": "ruan_macacao",
+          "line": "Eu prometo tentar sem transformar ele em desculpa."
+        }
       ]
     },
     {
-      "act":4,
-      "scene":"o_contrato",
-      "beats":[
-        {"speaker":"cassio_molho","line":"Eu nao inventei tua fome. So estou dizendo que sei vender o prato."},
-        {"speaker":"vera_salles","line":"Contrato tambem e escolha. E escolha deixa rastro."},
-        {"speaker":"tinker_bell","line":"Escolhe o que voce consegue sustentar quando nao tiver ninguem olhando."}
+      "act": 4,
+      "scene": "o_contrato",
+      "beats": [
+        {
+          "speaker": "cassio_molho",
+          "line": "Eu nao inventei tua fome. So estou dizendo que sei vender o prato."
+        },
+        {
+          "speaker": "vera_salles",
+          "line": "Contrato tambem e escolha. E escolha deixa rastro."
+        },
+        {
+          "speaker": "tinker_bell",
+          "line": "Escolhe o que voce consegue sustentar quando nao tiver ninguem olhando."
+        }
       ]
     },
     {
-      "act":4,
-      "scene":"pratigi_do_avesso",
-      "beats":[
-        {"speaker":"ruan_do_avesso","line":"Eu sou o que sobra quando voce chama medo de necessidade."},
-        {"speaker":"ruan_macacao","line":"Voce nao e meu inimigo."},
-        {"speaker":"ruan_do_avesso","line":"Entao prova que consegue me carregar sem me obedecer."}
+      "act": 5,
+      "scene": "revanche_davi",
+      "beats": [
+        {
+          "speaker": "davi_relampago",
+          "line": "Vai apertar?"
+        },
+        {
+          "speaker": "ruan_macacao",
+          "line": "Ja acabou."
+        },
+        {
+          "speaker": "davi_relampago",
+          "line": "Agora voce entendeu timing."
+        }
       ]
     },
     {
-      "act":5,
-      "scene":"revanche_davi",
-      "beats":[
-        {"speaker":"davi_relampago","line":"Vai apertar?"},
-        {"speaker":"ruan_macacao","line":"Ja acabou."},
-        {"speaker":"davi_relampago","line":"Agora voce entendeu timing."}
+      "act": 5,
+      "scene": "tinker_revela",
+      "beats": [
+        {
+          "speaker": "tinker_bell",
+          "line": "Eu sumi porque ficar perto de tu naquele momento colocava mais gente em risco."
+        },
+        {
+          "speaker": "ruan_macacao",
+          "line": "E tu esperava que eu entendesse sozinho?"
+        },
+        {
+          "speaker": "tinker_bell",
+          "line": "Não. Eu esperava voltar vivo pra explicar. Mas polícia eu nunca fui. Quem responde por essa parte é Vera."
+        }
       ]
     },
     {
-      "act":5,
-      "scene":"tinker_revela",
-      "beats":[
-        {"speaker":"tinker_bell","line":"Eu sumi porque ficar perto de voce naquele momento colocava mais gente em risco."},
-        {"speaker":"ruan_macacao","line":"E voce esperava que eu entendesse sozinho?"},
-        {"speaker":"tinker_bell","line":"Nao. Eu esperava voltar vivo pra explicar."}
+      "act": 5,
+      "scene": "instituto_cria",
+      "beats": [
+        {
+          "speaker": "dandara",
+          "line": "Agora vai ter timer?"
+        },
+        {
+          "speaker": "ruan_macacao",
+          "line": "So pra quem quiser."
+        },
+        {
+          "speaker": "dandara",
+          "line": "Entao eu fico."
+        }
       ]
     },
     {
-      "act":5,
-      "scene":"instituto_cria",
-      "beats":[
-        {"speaker":"dandara","line":"Agora vai ter timer?"},
-        {"speaker":"ruan_macacao","line":"So pra quem quiser."},
-        {"speaker":"dandara","line":"Entao eu fico."}
+      "act": 3,
+      "scene": "3.2b_o_gosto",
+      "beats": [
+        {
+          "speaker": "tinker_bell",
+          "line": "Tu ganhou. Limpo, até."
+        },
+        {
+          "speaker": "ruan_macacao",
+          "line": "Eu ouvi o ombro dele estalar, Tinker. E eu continuei."
+        },
+        {
+          "speaker": "tinker_bell",
+          "line": "Tu gostou?",
+          "delivery": "pausa_antes"
+        },
+        {
+          "speaker": "coro",
+          "line": "Diz que naquela noite o Macacão lavou a mão três vez. Diz que na quarta, ele parou de lavar.",
+          "delivery": "v.o."
+        }
+      ]
+    },
+    {
+      "act": 3,
+      "scene": "3.5b_forca_primeiro",
+      "beats": [
+        {
+          "speaker": "pipoca",
+          "line": "Me ensina a ser forte igual tu?"
+        },
+        {
+          "speaker": "ruan_macacao",
+          "line": "Força primeiro é não machucar. Aprende a segurar antes de aprender a bater."
+        }
+      ]
+    },
+    {
+      "act": 3,
+      "scene": "3.6_bala_desconfia",
+      "beats": [
+        {
+          "speaker": "pedro_bala",
+          "line": "Tu some de dia, luta de noite pra bandido, e quer que eu confie? Capitão que some não é capitão."
+        },
+        {
+          "speaker": "ruan_macacao",
+          "line": "Então não confia na fala. Me cobra na volta."
+        }
+      ]
+    },
+    {
+      "act": 3,
+      "scene": "3.6b_tu_luta_diferente",
+      "beats": [
+        {
+          "speaker": "pipoca",
+          "line": "Macacão… tu luta diferente agora. Antes tu ganhava segurando. Agora tu ganha machucando. Tu tá lutando como eles."
+        },
+        {
+          "speaker": "ruan_macacao",
+          "line": "Eu tô lutando como eles por fora. Por dentro eu ainda sou teu mestre. Me cobra se eu esquecer."
+        }
+      ]
+    },
+    {
+      "act": 3,
+      "scene": "3.9b_ordem_impossivel",
+      "beats": [
+        {
+          "speaker": "vera_salles",
+          "line": "É matemática, Macacão. Cinco menino por um banqueiro."
+        },
+        {
+          "speaker": "ruan_macacao",
+          "line": "Matemática não. É gente. Eu não te dou menino. Tu quer o Chupeta? Pega ele sem passar por cima de criança. Senão tu é igual ele de farda."
+        }
+      ]
+    },
+    {
+      "act": 4,
+      "scene": "4.1b_quem_volta",
+      "beats": [
+        {
+          "speaker": "ruan_macacao",
+          "line": "Aqui não. Ele tá comigo. E o Terreiro sabe o nome dele."
+        },
+        {
+          "speaker": "pedro_bala",
+          "line": "Eu não confio em quem some. Mas eu confio em quem volta. Tu voltou. Tá bom."
+        }
+      ]
+    },
+    {
+      "act": 4,
+      "scene": "4.1c_foguete_volta",
+      "beats": [
+        {
+          "speaker": "foguete",
+          "line": "Eu fiz recado pra eles. Eu achei que era só dinheiro."
+        },
+        {
+          "speaker": "ruan_macacao",
+          "line": "Aqui dentro tu é menino. Lá fora eu cuido. Mas tu não volta lá."
+        }
+      ]
+    },
+    {
+      "act": 4,
+      "scene": "4.2b_o_aluno_que_ficou",
+      "beats": [
+        {
+          "speaker": "mestre_dende",
+          "line": "George foi meu melhor aluno. Melhor que tu, melhor que eu fui. Mas quando a milícia veio comprar o braço dele, eu disse não. Ele disse que eu escolhi a fraqueza. Foi embora jurando que a rua ia ensinar o que o tatame não ensina."
+        },
+        {
+          "speaker": "ruan_macacao",
+          "line": "E o que a rua ensinou, mestre?"
+        },
+        {
+          "speaker": "mestre_dende",
+          "line": "Que dinheiro compra tudo, menos o que ele deixou aqui dentro.",
+          "stage_direction": "aponta_o_peito"
+        }
+      ]
+    },
+    {
+      "act": 4,
+      "scene": "4.2c_a_aula_dos_capitaes",
+      "beats": [
+        {
+          "speaker": "degodo",
+          "line": "Eu não treino menino pra lutar. Treino menino pra não precisar lutar."
+        },
+        {
+          "speaker": "mestre_dende",
+          "line": "É a mesma coisa, Adriano. Só muda o dia que tu percebe."
+        }
+      ]
+    },
+    {
+      "act": 4,
+      "scene": "4.3b_mentindo_pra_quem",
+      "beats": [
+        {
+          "speaker": "tinker_bell",
+          "line": "Eu não sou polícia, irmão. Eu sou teu empresário. E teu melhor amigo. E os dois tão te lendo diferente."
+        },
+        {
+          "speaker": "ruan_macacao",
+          "line": "Eu não podia te contar. Era pra te proteger."
+        },
+        {
+          "speaker": "tinker_bell",
+          "line": "Proteger é contar. Mentir é usar. Eu não sou teu handler, Ruan. Eu sou teu irmão. Daqui pra frente, eu sei de tudo — e eu decido comigo, não por ti."
+        }
+      ]
+    },
+    {
+      "act": 4,
+      "scene": "4.3c_mao_marcada",
+      "beats": [
+        {
+          "speaker": "ruan_macacao",
+          "line": "Tu vai aprender comigo. Todo dia. Até tua mão ficar mais forte que o medo."
+        },
+        {
+          "speaker": "pipoca",
+          "line": "Pra bater mais forte?"
+        },
+        {
+          "speaker": "ruan_macacao",
+          "line": "Pra não precisar."
+        }
+      ]
+    },
+    {
+      "act": 4,
+      "scene": "4.4_pratigi_do_avesso",
+      "beats": [
+        {
+          "speaker": "ruan_do_avesso",
+          "line": "Eu não sou teu sonho, Macacão. Eu sou teu recibo. Toda mentira tua tá escrita em mim."
+        },
+        {
+          "speaker": "ruan_do_avesso",
+          "line": "Me mata e tu vira eu. Me aceita e eu te ensino o que tu esconde. Mas lembra: eu volto quando tu mentir de novo."
+        },
+        {
+          "speaker": "ruan_macacao",
+          "line": "Então ajoelha. Eu vou carregar o que é meu sem te obedecer.",
+          "resolution": "aceitar_sem_finalizar"
+        }
+      ]
+    },
+    {
+      "act": 4,
+      "scene": "4.5b_o_hospital",
+      "beats": [
+        {
+          "speaker": "coro",
+          "line": "Diz que o Chupeta paga o remédio da mãe com o dinheiro que suja a mão de todo mundo. Diz que ele beija a testa dela e depois assina ordem pra quebrar osso de menino. Diz que é o mesmo homem. É.",
+          "delivery": "v.o."
+        }
+      ]
+    },
+    {
+      "act": 4,
+      "scene": "4.6_escudo_da_molecada",
+      "beats": [
+        {
+          "speaker": "pedro_bala",
+          "line": "Eu não confio em quem some. Mas eu confio em quem volta. Tu voltou. Tá bom."
+        },
+        {
+          "speaker": "pedro_bala",
+          "line": "Daqui pra frente nenhum Capitão faz recado pra Chupeta. Se apertar, chama o Terreiro."
+        }
+      ]
+    },
+    {
+      "act": 5,
+      "scene": "5.2_confronto_chupeta",
+      "beats": [
+        {
+          "speaker": "george_chupeta",
+          "line": "Dendê escolheu tu. O lento. O gentil. Eu provei que a rua é mais forte."
+        },
+        {
+          "speaker": "ruan_macacao",
+          "line": "Tu provou que a rua é mais cara. Custou tua mãe te ver assim. Custou menino que nem eu fui. Tu não é forte, George. Tu é caro."
+        },
+        {
+          "speaker": "ruan_macacao",
+          "line": "Eu podia. Eu não vou. É isso que o tatame ensinou e tu não quis aprender.",
+          "stage_direction": "segura_a_finalizacao_e_soltar"
+        }
+      ]
+    },
+    {
+      "act": 5,
+      "scene": "5.5s_o_dinheiro_que_nao_lava",
+      "beats": [
+        {
+          "speaker": "coro",
+          "line": "Diz que o Macacão ficou rico. Diz que ninguém viu ele rir de novo. Diz que dinheiro sujo não compra sono. Diz que é verdade.",
+          "delivery": "v.o."
+        }
+      ]
+    },
+    {
+      "act": 5,
+      "scene": "5.6s_a_volta",
+      "beats": [
+        {
+          "speaker": "mestre_dende",
+          "line": "O tatame não fecha pra quem volta. Mas tu não volta pra ser perdoado. Tu volta pra recomeçar."
+        },
+        {
+          "speaker": "mestre_dende",
+          "line": "Todo mundo que entra aqui, entra assim. Até tu. Principalmente tu.",
+          "stage_direction": "estende_uma_faixa_branca"
+        }
+      ],
+      "choices": [
+        {
+          "id": "aceitar_faixa_branca",
+          "label": "Aceitar a faixa branca",
+          "result": "Ruan ajoelha, amarra e recomeça do zero."
+        },
+        {
+          "id": "recusar_e_seguir_estrada",
+          "label": "Recusar e andar",
+          "result": "Ruan olha o tatame uma ultima vez e segue a estrada."
+        }
+      ]
+    },
+    {
+      "act": 3,
+      "scene": "3.8_a_isca",
+      "beats": [
+        {
+          "speaker": "pipoca",
+          "line": "Mestre… disseram que tu vinha se eu mandasse mensagem."
+        },
+        {
+          "speaker": "ruan_macacao",
+          "line": "Tu fez certo em me chamar. Agora fica atrás de mim."
+        },
+        {
+          "speaker": "george_chupeta",
+          "line": "O menino só abriu a porta. Quem escolheu entrar foi tu."
+        }
+      ]
+    },
+    {
+      "act": 4,
+      "scene": "4.2a_rastro_do_aluno",
+      "beats": [
+        {
+          "speaker": "byaku",
+          "line": "Antes de ser Chupeta, George era do Terreiro."
+        },
+        {
+          "speaker": "kenzo_kuroi",
+          "line": "O padrão dele não nasceu na rua. A rua comprou uma técnica que já vinha treinada."
+        },
+        {
+          "speaker": "ruan_macacao",
+          "line": "Então Dendê vai me contar o resto."
+        }
+      ]
+    },
+    {
+      "act": 5,
+      "scene": "5.5h_primeira_faixa",
+      "beats": [
+        {
+          "speaker": "pipoca",
+          "line": "Agora eu sou forte?"
+        },
+        {
+          "speaker": "ruan_macacao",
+          "line": "Agora tu começou. Forte a gente prova no jeito que segura."
+        }
       ]
     }
   ],
   "ending_lines": {
-    "heroi_duas_aguas":["Ganhar foi a parte curta.","E a parte longa?","Ficar."],
-    "rei_dos_atalhos":["Todo mundo sabe teu nome.","E voce?","Ainda estou tentando lembrar."],
-    "a_verdade":["Vo... eu aprendi a plantar."]
+    "heroi_duas_aguas": [
+      "Ganhar foi a parte curta.",
+      "E a parte longa?",
+      "Ficar."
+    ],
+    "rei_dos_atalhos": [
+      "Todo mundo sabe teu nome.",
+      "E voce?",
+      "Ainda estou tentando lembrar."
+    ],
+    "a_verdade": [
+      "Vo... eu aprendi a plantar."
+    ],
+    "sombras_recomeco": [
+      "Todo mundo entra assim.",
+      "Até eu?",
+      "Principalmente tu."
+    ],
+    "sombras_estrada": [
+      "A porta ficou aberta.",
+      "E ele?",
+      "Escolheu a estrada."
+    ]
   }
 }

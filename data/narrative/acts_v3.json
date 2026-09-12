@@ -1,84 +1,422 @@
 {
   "$schema": "cria_narrative_acts_v3",
-  "version": "3.0.0",
+  "version": "3.1.0",
   "authority": "data/narrative/canon_v3.json",
   "acts": [
     {
       "id": "ato_1_o_chao",
       "title": "O CHAO",
-      "ages": [19, 20],
+      "ages": [
+        19,
+        20
+      ],
       "belt_range": "branca_para_azul",
       "premise": "Ruan aprende que forca sem base vira queda e que gentileza e disciplina, nao fraqueza.",
       "required_beats": [
-        {"id": "entrada_terreiro", "location": "terreiro_da_luta", "characters": ["ruan_macacao", "mestre_dende"], "result": "tese_ser_forte_e_ser_gentil"},
-        {"id": "conhecer_nucleo", "characters": ["biel", "dandara", "leoa"], "result": "pertencimento_inicial"},
-        {"id": "primeira_vitoria_mao_estendida", "result": "honra_como_acao"},
-        {"id": "ferida_origem", "duration_seconds": 5, "presentation": "eliptica", "result": "pai_desaparecido_terra_perdida_sem_vinganca"}
+        {
+          "id": "entrada_terreiro",
+          "location": "terreiro_da_luta",
+          "characters": [
+            "ruan_macacao",
+            "mestre_dende"
+          ],
+          "result": "tese_ser_forte_e_ser_gentil"
+        },
+        {
+          "id": "conhecer_nucleo",
+          "characters": [
+            "biel",
+            "dandara",
+            "leoa"
+          ],
+          "result": "pertencimento_inicial"
+        },
+        {
+          "id": "primeira_vitoria_mao_estendida",
+          "result": "honra_como_acao"
+        },
+        {
+          "id": "ferida_origem",
+          "duration_seconds": 5,
+          "presentation": "eliptica",
+          "result": "pai_desaparecido_terra_perdida_sem_vinganca"
+        }
       ],
       "causal_exit": "dividas + orgulho -> oferta de Cassio no Ato 2"
     },
     {
       "id": "ato_2_o_molde",
       "title": "O MOLDE",
-      "ages": [21, 22],
+      "ages": [
+        21,
+        22
+      ],
       "belt_range": "azul_para_roxa",
       "premise": "Ruan cresce em publico e confunde autonomia com orgulho.",
       "required_beats": [
-        {"id": "pratigi_hype", "location": "praia_de_pratigi", "result": "hype_cresce"},
-        {"id": "concha_davi", "location": "praia_da_concha", "opponent": "davi_relampago", "result": "davi_vence_de_modo_moralmente_sujo"},
-        {"id": "primeiro_clandestino", "location": "ferro_velho_da_lapa", "opponent": "oni_da_lapa", "result": "codigo_submundo_apresentado"},
-        {"id": "cassio_oferta_dinheiro", "characters": ["cassio_molho", "ruan_macacao"], "result": "ruan_recusa_por_orgulho"}
+        {
+          "id": "pratigi_hype",
+          "location": "praia_de_pratigi",
+          "result": "hype_cresce"
+        },
+        {
+          "id": "concha_davi",
+          "location": "praia_da_concha",
+          "opponent": "davi_relampago",
+          "result": "davi_vence_de_modo_moralmente_sujo"
+        },
+        {
+          "id": "primeiro_clandestino",
+          "location": "ferro_velho_da_lapa",
+          "opponent": "oni_da_lapa",
+          "result": "codigo_submundo_apresentado"
+        },
+        {
+          "id": "cassio_oferta_dinheiro",
+          "characters": [
+            "cassio_molho",
+            "ruan_macacao"
+          ],
+          "result": "ruan_recusa_por_orgulho"
+        }
       ],
       "causal_exit": "orgulho + necessidade -> Ruan entra pelas regras do submundo no Ato 3"
     },
     {
       "id": "ato_3_o_nome",
       "title": "O NOME",
-      "ages": [23, 24],
-      "belt_range": "roxa_para_marrom",
-      "premise": "Sobreviver e buscar a verdade passam a produzir culpa real.",
-      "required_beats": [
-        {"id": "infiltracao_tripla", "factions": ["ALE", "LEM", "NTM"], "double_purpose": ["sobrevivencia", "fragmentos_da_verdade"]},
-        {"id": "aprender_codigo", "result": "Ruan_entende_regras_morais_e_sociais_do_submundo"},
-        {"id": "vera_recruta", "optional": true, "characters": ["vera_salles", "ruan_macacao"]},
-        {"id": "byaku_primeira_aula", "characters": ["byaku", "ruan_macacao"], "style": "NO-GI"},
-        {"id": "o_barco", "scene_ref": "3.3a_o_barco", "result": "inocente_preso_maos_sujas_sobe"},
-        {"id": "biel_escorrega", "result": "prenuncio_da_queda"}
+      "ages": [
+        23,
+        24
       ],
-      "causal_exit": "culpa + Biel + Maos Sujas -> A Queda"
+      "belt_range": "roxa_para_marrom",
+      "premise": "Sobreviver e buscar a verdade passam a produzir culpa real, enquanto a cobertura cobra lealdade e identidade.",
+      "required_beats": [
+        {
+          "id": "infiltracao_tripla",
+          "factions": [
+            "ALE",
+            "LEM",
+            "NTM"
+          ],
+          "double_purpose": [
+            "sobrevivencia",
+            "fragmentos_da_verdade"
+          ]
+        },
+        {
+          "id": "aprender_codigo",
+          "result": "Ruan_entende_regras_morais_e_sociais_do_submundo"
+        },
+        {
+          "id": "o_gosto",
+          "scene_ref": "3.2b_o_gosto",
+          "result": [
+            "sombra_sobe",
+            "culpa_corporal",
+            "coro_marca_mudanca"
+          ]
+        },
+        {
+          "id": "o_que_e_forca",
+          "scene_ref": "3.5b_forca_primeiro",
+          "characters": [
+            "pipoca",
+            "ruan_macacao"
+          ],
+          "result": "Ruan_ensina_conter_antes_de_ferir"
+        },
+        {
+          "id": "bala_desconfia",
+          "scene_ref": "3.6_bala_desconfia",
+          "characters": [
+            "pedro_bala",
+            "ruan_macacao"
+          ],
+          "result": "capitaes_passam_a_cobrar_coerencia"
+        },
+        {
+          "id": "tu_luta_diferente",
+          "scene_ref": "3.6b_tu_luta_diferente",
+          "characters": [
+            "pipoca",
+            "ruan_macacao"
+          ],
+          "result": "Ruan_reconhece_mascara_da_infiltracao"
+        },
+        {
+          "id": "vera_recruta",
+          "optional": true,
+          "characters": [
+            "vera_salles",
+            "ruan_macacao"
+          ]
+        },
+        {
+          "id": "a_isca",
+          "scene_ref": "3.8_a_isca",
+          "characters": [
+            "pipoca",
+            "george_chupeta",
+            "ruan_macacao"
+          ],
+          "result": "Pipoca_deixa_de_ser_pano_de_fundo"
+        },
+        {
+          "id": "ordem_impossivel",
+          "scene_ref": "3.9b_ordem_impossivel",
+          "characters": [
+            "vera_salles",
+            "ruan_macacao"
+          ],
+          "result": "criancas_nao_sao_ativos_operacionais"
+        },
+        {
+          "id": "byaku_primeira_aula",
+          "characters": [
+            "byaku",
+            "ruan_macacao"
+          ],
+          "style": "NO-GI"
+        },
+        {
+          "id": "o_barco",
+          "scene_ref": "3.3a_o_barco",
+          "result": "inocente_preso_maos_sujas_sobe"
+        },
+        {
+          "id": "biel_escorrega",
+          "result": "prenuncio_da_queda"
+        }
+      ],
+      "causal_exit": "culpa + cobertura rachada + molecada em risco + Biel + Maos Sujas -> A Queda"
     },
     {
       "id": "ato_4_a_queda",
       "title": "A QUEDA",
-      "ages": [25, 26],
-      "belt_range": "marrom_para_preta",
-      "premise": "Ruan precisa atravessar luto e culpa sem transformar ambos em licenca para crueldade.",
-      "required_beats": [
-        {"id": "morte_biel", "presentation": "eliptica", "silence_seconds": 8, "revenge_payoff_forbidden": true},
-        {"id": "dende_colapsa", "key_line_id": "dende_promete_merecer"},
-        {"id": "o_contrato", "branches": ["cassio", "vera", "nenhum"]},
-        {"id": "chie_acolhe", "characters": ["dona_chie", "ruan_macacao"]},
-        {"id": "pratigi_do_avesso", "opponent": "ruan_do_avesso", "scaling": "save_stats + maos_sujas*0.3", "integration_condition": "vencer_sem_furia"},
-        {"id": "cost_montage", "scene_ref": "4.5_cost_montage"}
+      "ages": [
+        25,
+        26
       ],
-      "causal_exit": "luto integrado + responsabilidade -> restituicao e legado"
+      "belt_range": "marrom_para_preta",
+      "premise": "Ruan precisa atravessar luto, culpa e o espelho de Chupeta sem transformar dor em licença para crueldade.",
+      "required_beats": [
+        {
+          "id": "morte_biel",
+          "presentation": "eliptica",
+          "silence_seconds": 8,
+          "revenge_payoff_forbidden": true
+        },
+        {
+          "id": "dende_colapsa",
+          "key_line_id": "dende_promete_merecer"
+        },
+        {
+          "id": "bala_quem_volta",
+          "scene_ref": "4.1b_quem_volta",
+          "characters": [
+            "pedro_bala",
+            "ruan_macacao"
+          ],
+          "resolution": "sem_bater"
+        },
+        {
+          "id": "foguete_volta",
+          "scene_ref": "4.1c_foguete_volta",
+          "characters": [
+            "foguete",
+            "ruan_macacao"
+          ],
+          "result": "acolhimento_com_limite"
+        },
+        {
+          "id": "rastro_do_aluno",
+          "scene_ref": "4.2a_rastro_do_aluno",
+          "characters": [
+            "byaku",
+            "kenzo_kuroi",
+            "ruan_macacao"
+          ],
+          "result": "Ruan_descobre_que_Chupeta_veio_do_Terreiro_antes_de_Dende_confirmar"
+        },
+        {
+          "id": "aluno_que_ficou",
+          "scene_ref": "4.2b_o_aluno_que_ficou",
+          "characters": [
+            "mestre_dende",
+            "ruan_macacao",
+            "george_chupeta"
+          ],
+          "result": "Chupeta_ligado_ao_Terreiro"
+        },
+        {
+          "id": "aula_dos_capitaes",
+          "scene_ref": "4.2c_a_aula_dos_capitaes",
+          "characters": [
+            "ruan_macacao",
+            "mestre_dende",
+            "degodo",
+            "pedro_bala",
+            "pipoca",
+            "foguete"
+          ],
+          "result": "Terreiro_vira_estrutura_de_protecao"
+        },
+        {
+          "id": "tinker_confronta",
+          "scene_ref": "4.3b_mentindo_pra_quem",
+          "characters": [
+            "tinker_bell",
+            "ruan_macacao"
+          ],
+          "result": "Tinker_coarquiteto_por_escolha"
+        },
+        {
+          "id": "pipoca_cicatriz",
+          "scene_ref": "4.3c_mao_marcada",
+          "characters": [
+            "pipoca",
+            "ruan_macacao"
+          ],
+          "result": "aula_em_vez_de_vinganca"
+        },
+        {
+          "id": "o_contrato",
+          "branches": [
+            "cassio",
+            "vera",
+            "nenhum"
+          ]
+        },
+        {
+          "id": "chie_acolhe",
+          "characters": [
+            "dona_chie",
+            "ruan_macacao"
+          ]
+        },
+        {
+          "id": "pratigi_do_avesso",
+          "scene_ref": "4.4_pratigi_do_avesso",
+          "opponent": "ruan_do_avesso",
+          "scaling": "save_stats + maos_sujas*0.3",
+          "trigger": "sombra>=50 + cobertura_rachada + lua_cheia + mare_baixa",
+          "integration_condition": "aceitar_sem_finalizar"
+        },
+        {
+          "id": "o_hospital",
+          "scene_ref": "4.5b_o_hospital",
+          "characters": [
+            "george_chupeta",
+            "dona_zefa",
+            "ruan_macacao"
+          ],
+          "result": "antagonista_humanizado_sem_absolvicao"
+        },
+        {
+          "id": "bala_escudo",
+          "scene_ref": "4.6_escudo_da_molecada",
+          "characters": [
+            "pedro_bala"
+          ],
+          "result": "capitaes_param_de_fazer_recados_para_rede"
+        },
+        {
+          "id": "cost_montage",
+          "scene_ref": "4.5_cost_montage"
+        }
+      ],
+      "causal_exit": "luto integrado + molecada protegida + Tinker aliado consciente + Chupeta compreendido sem ser absolvido -> confronto e legado"
     },
     {
       "id": "ato_5_o_legado",
       "title": "O LEGADO",
-      "ages": [27, 28],
+      "ages": [
+        27,
+        28
+      ],
       "belt_range": "preta",
       "premise": "A faixa preta mede o que Ruan devolve ao mundo, nao o que consegue arrancar dele.",
       "required_beats": [
-        {"id": "restituicao", "scene_ref": "5.4a_restituicao", "optional_scenes": 4},
-        {"id": "davi_revanche", "opponent": "davi_relampago", "resolution": ["domina", "solta", "estende_a_mao"]},
-        {"id": "byaku_rematch", "opponent": "byaku", "condition": "vencer_sem_cortar_a_faixa", "unlock": "NO-GI_completo"},
-        {"id": "operacao_raiz_forte", "result": ["montenegro_exposto", "cassio_exposto"]},
-        {"id": "tinker_revela", "result": "revelacao_PF_e_motivo_do_sumiço_Ato4"},
-        {"id": "dandara_abraco", "result": "fecho_afetivo"},
-        {"id": "instituto_cria", "result": "legado_material"}
+        {
+          "id": "confronto_chupeta",
+          "scene_ref": "5.2_confronto_chupeta",
+          "opponent": "george_chupeta",
+          "resolution": [
+            "domina",
+            "segura_finalizacao",
+            "nao_quebra"
+          ],
+          "result": "tese_do_tatame_provada_em_acao"
+        },
+        {
+          "id": "restituicao",
+          "scene_ref": "5.4a_restituicao",
+          "optional_scenes": 4
+        },
+        {
+          "id": "davi_revanche",
+          "opponent": "davi_relampago",
+          "resolution": [
+            "domina",
+            "solta",
+            "estende_a_mao"
+          ]
+        },
+        {
+          "id": "byaku_rematch",
+          "opponent": "byaku",
+          "condition": "vencer_sem_cortar_a_faixa",
+          "unlock": "NO-GI_completo"
+        },
+        {
+          "id": "operacao_raiz_forte",
+          "result": [
+            "chupeta_exposto",
+            "montenegro_exposto",
+            "cassio_exposto"
+          ]
+        },
+        {
+          "id": "tinker_revela",
+          "result": "tinker_assume_coautoria_e_explica_sumiço;_Vera_permanece_eixo_federal"
+        },
+        {
+          "id": "pipoca_primeira_faixa",
+          "scene_ref": "5.5h_primeira_faixa",
+          "ending": "heroi_duas_aguas",
+          "result": "transmissao_da_tese"
+        },
+        {
+          "id": "dandara_abraco",
+          "result": "fecho_afetivo"
+        },
+        {
+          "id": "instituto_cria",
+          "result": "legado_material"
+        }
       ],
-      "causal_exit": "calculo_final + epilogos + camada A Verdade"
+      "causal_exit": "calculo_final + epilogos + camada A Verdade",
+      "branch_scenes": {
+        "sombras": [
+          {
+            "scene_ref": "5.5s_o_dinheiro_que_nao_lava",
+            "result": "riqueza_externa_corroi_sono_e_vinculos"
+          },
+          {
+            "scene_ref": "5.6s_a_volta",
+            "result": "faixa_branca_oferecida_como_recomeco"
+          },
+          {
+            "choice": "aceitar_faixa_branca",
+            "result": "ngplus_redencao_do_zero"
+          },
+          {
+            "choice": "recusar_e_seguir_estrada",
+            "result": "tragedia_assumida_sem_impunidade"
+          }
+        ]
+      }
     }
   ],
   "adult_scenes": [
@@ -88,9 +426,28 @@
       "title": "A Cobranca",
       "purpose": "mostrar que sobreviver pode empurrar Ruan a instrumentalizar gente sem transformar o jogo em manual de crime",
       "choices": [
-        {"id": "limpa", "effects": {"honra": 3, "maos_sujas": -2}},
-        {"id": "ambigua", "effects": {"hype": 2, "maos_sujas": 4}},
-        {"id": "suja", "effects": {"criacoin": 1, "maos_sujas": 12, "sombra": 5}}
+        {
+          "id": "limpa",
+          "effects": {
+            "honra": 3,
+            "maos_sujas": -2
+          }
+        },
+        {
+          "id": "ambigua",
+          "effects": {
+            "hype": 2,
+            "maos_sujas": 4
+          }
+        },
+        {
+          "id": "suja",
+          "effects": {
+            "criacoin": 1,
+            "maos_sujas": 12,
+            "sombra": 5
+          }
+        }
       ]
     },
     {
@@ -106,9 +463,28 @@
         "O silencio de Ruan pesa mais que qualquer celebracao."
       ],
       "confrontation_choices": [
-        {"id": "assumir_parte", "effects": {"verdade": 8, "honra": 4, "maos_sujas": 6}},
-        {"id": "culpar_terceiros", "effects": {"faca": 8, "maos_sujas": 14}},
-        {"id": "reparar_em_silencio", "effects": {"verdade": 4, "maos_sujas": 8}}
+        {
+          "id": "assumir_parte",
+          "effects": {
+            "verdade": 8,
+            "honra": 4,
+            "maos_sujas": 6
+          }
+        },
+        {
+          "id": "culpar_terceiros",
+          "effects": {
+            "faca": 8,
+            "maos_sujas": 14
+          }
+        },
+        {
+          "id": "reparar_em_silencio",
+          "effects": {
+            "verdade": 4,
+            "maos_sujas": 8
+          }
+        }
       ]
     },
     {
@@ -116,13 +492,19 @@
       "act": 3,
       "title": "O Palco",
       "result": "luta_suja_viraliza_e_comunidade_rejeita",
-      "effects": {"hype": 12, "maos_sujas": 10}
+      "effects": {
+        "hype": 12,
+        "maos_sujas": 10
+      }
     },
     {
       "id": "4.0a_maos_tremem",
       "act": 4,
       "title": "Maos Tremem",
-      "mechanic": {"temporary_grip_penalty": true, "recurring_silence": true},
+      "mechanic": {
+        "temporary_grip_penalty": true,
+        "recurring_silence": true
+      },
       "meaning": "culpa aparece no corpo sem diagnostico romantizado"
     },
     {
@@ -130,15 +512,194 @@
       "act": 4,
       "title": "Cost Montage",
       "dialogue": false,
-      "images": ["tatame_vazio", "mensagem_nao_respondida", "gi_remendado", "cadeira_vazia", "chuva_no_metal"]
+      "images": [
+        "tatame_vazio",
+        "mensagem_nao_respondida",
+        "gi_remendado",
+        "cadeira_vazia",
+        "chuva_no_metal"
+      ]
     },
     {
       "id": "5.4a_restituicao",
       "act": 5,
       "title": "Restituicao",
-      "optional_scenes": ["familia_do_inocente", "terreiro", "comunidade_pratigi", "pessoa_traida"],
+      "optional_scenes": [
+        "familia_do_inocente",
+        "terreiro",
+        "comunidade_pratigi",
+        "pessoa_traida"
+      ],
       "effect_rule": "atenua Maos Sujas sem apagar cicatriz",
-      "unlocks": ["epilogos_de_responsabilidade"]
+      "unlocks": [
+        "epilogos_de_responsabilidade"
+      ]
+    },
+    {
+      "id": "3.2b_o_gosto",
+      "act": 3,
+      "title": "O Gosto",
+      "placement": "apos_primeira_clandestina_em_que_Ruan_vai_alem_do_necessario",
+      "purpose": "fazer a infiltracao doer psicologicamente",
+      "effects": {
+        "sombra": 1
+      },
+      "presentation": [
+        "Ruan encara as proprias maos no vestiario.",
+        "Tinker entra e nao filma.",
+        "O Coro fecha a cena sem explicar o sentimento."
+      ]
+    },
+    {
+      "id": "3.5b_forca_primeiro",
+      "act": 3,
+      "title": "Forca Primeiro",
+      "purpose": "plantar o arco de Pipoca antes de ele virar isca",
+      "lesson": "forca primeiro e nao machucar"
+    },
+    {
+      "id": "3.6_bala_desconfia",
+      "act": 3,
+      "title": "Capitao que Some",
+      "purpose": "dar agencia a Pedro Bala e tornar confianca algo conquistado"
+    },
+    {
+      "id": "3.6b_tu_luta_diferente",
+      "act": 3,
+      "title": "Tu Luta Diferente",
+      "purpose": "Pipoca percebe a erosao moral antes dos adultos"
+    },
+    {
+      "id": "3.8_a_isca",
+      "act": 3,
+      "title": "A Isca",
+      "purpose": "Chupeta usa Pipoca para atrair Ruan; dano e consequencia, nunca espetaculo",
+      "child_harm_presentation": "nao_grafica"
+    },
+    {
+      "id": "3.9b_ordem_impossivel",
+      "act": 3,
+      "title": "A Ordem Impossivel",
+      "purpose": "Ruan recusa transformar criancas em ativos de operacao",
+      "choice_locked": "nao_entregar_rota_da_molecada"
+    },
+    {
+      "id": "4.1b_quem_volta",
+      "act": 4,
+      "title": "Quem Volta",
+      "purpose": "Ruan protege Bala sem bater, usando presenca e o nome do Terreiro"
+    },
+    {
+      "id": "4.1c_foguete_volta",
+      "act": 4,
+      "title": "Foguete Volta",
+      "purpose": "acolher erro sem normalizar cooptacao",
+      "result": "proteção + limite + corte_de_contato_com_rede"
+    },
+    {
+      "id": "4.2b_o_aluno_que_ficou",
+      "act": 4,
+      "title": "O Aluno que Ficou",
+      "purpose": "revelar Chupeta como tragedia do tatame que perdeu um aluno"
+    },
+    {
+      "id": "4.2c_a_aula_dos_capitaes",
+      "act": 4,
+      "title": "A Aula dos Capitaes",
+      "purpose": "transformar o Terreiro em mecanismo de prevencao e pertencimento"
+    },
+    {
+      "id": "4.3b_mentindo_pra_quem",
+      "act": 4,
+      "title": "Tu Ta Mentindo Pra Mim ou Pra Ti?",
+      "purpose": "Tinker recupera agencia e entra na queda de Chupeta por escolha"
+    },
+    {
+      "id": "4.3c_mao_marcada",
+      "act": 4,
+      "title": "A Mao Marcada",
+      "purpose": "substituir promessa de vinganca por promessa de ensino"
+    },
+    {
+      "id": "4.4_pratigi_do_avesso",
+      "act": 4,
+      "title": "Pratigi do Avesso",
+      "purpose": "materializar a divida moral sob regras claras",
+      "trigger_all": {
+        "sombra_min": 50,
+        "story_flag": "cobertura_rachada",
+        "lunar_state": "lua_cheia",
+        "tide_state": "mare_baixa"
+      },
+      "lose": {
+        "honra": -1,
+        "permanent": true,
+        "grant": "tecnica_de_sombra",
+        "avesso_debt": 1
+      },
+      "win": {
+        "required": "aceitar_sem_finalizar",
+        "grant": "visao_do_avesso"
+      },
+      "recurrence": "retorna_quando_Ruan_mente_de_novo"
+    },
+    {
+      "id": "4.5b_o_hospital",
+      "act": 4,
+      "title": "O Hospital",
+      "purpose": "humanizar Chupeta sem absolve-lo",
+      "presentation": "Ruan observa Chupeta cuidando da mae Dona Zefa; nao ha chantagem nem uso dela como alvo"
+    },
+    {
+      "id": "4.6_escudo_da_molecada",
+      "act": 4,
+      "title": "Escudo da Molecada",
+      "purpose": "fechar arco de Bala como organizador dos Capitaes"
+    },
+    {
+      "id": "5.2_confronto_chupeta",
+      "act": 5,
+      "title": "O Preco da Rua",
+      "purpose": "confronto final trágico; Ruan domina e escolhe nao quebrar",
+      "finisher_forbidden": true
+    },
+    {
+      "id": "5.5h_primeira_faixa",
+      "act": 5,
+      "title": "Primeira Faixa",
+      "ending": "heroi_duas_aguas",
+      "purpose": "Ruan amarra a primeira faixa de Pipoca e transmite a tese"
+    },
+    {
+      "id": "5.5s_o_dinheiro_que_nao_lava",
+      "act": 5,
+      "title": "O Dinheiro que Nao Lava",
+      "ending": "rei_dos_atalhos",
+      "purpose": "mostrar corrosao do dinheiro da rede; riqueza nao funciona como premio"
+    },
+    {
+      "id": "5.6s_a_volta",
+      "act": 5,
+      "title": "A Volta",
+      "ending": "rei_dos_atalhos",
+      "purpose": "Dende oferece recomeço sem perdao barato",
+      "choices": [
+        {
+          "id": "aceitar_faixa_branca",
+          "unlock": "ngplus_recomeco"
+        },
+        {
+          "id": "recusar_e_seguir_estrada",
+          "result": "tragedia_assumida"
+        }
+      ]
+    },
+    {
+      "id": "4.2a_rastro_do_aluno",
+      "act": 4,
+      "title": "O Rastro do Aluno",
+      "purpose": "Byaku e Kenzo revelam que a tecnica de Chupeta tem raiz no Terreiro; Dende confirma a historia na cena seguinte",
+      "result": "backstory_em_duas_fontes_antes_da_confissao_do_mentor"
     }
   ],
   "compliance": {
