@@ -10,6 +10,7 @@ ROOT = Path(__file__).resolve().parents[1]
 VALIDATOR = ROOT / "tools/research/validate_public_video_intelligence_v1.py"
 PLANNER = ROOT / "tools/research/plan_public_video_research_v1.py"
 YOUTUBE = ROOT / "tools/research/youtube_public_discovery_v1.py"
+REPORTER = ROOT / "tools/research/report_public_video_project_status_v1.py"
 DIRECTOR = ROOT / "data/research/public_video_analysis_director_v1.json"
 
 
@@ -21,6 +22,7 @@ class PublicVideoIntelligenceV1Tests(unittest.TestCase):
         self.assertTrue(report["ok"])
         self.assertEqual(report["cycle_stages"], 14)
         self.assertEqual(report["youtube_adapter"], "OFFICIAL_METADATA_ONLY")
+        self.assertTrue(report["project_status_reporter"])
         self.assertFalse(report["shipping"])
 
     def test_director_is_fail_closed(self) -> None:
@@ -72,6 +74,24 @@ class PublicVideoIntelligenceV1Tests(unittest.TestCase):
         request = report["search_requests"][0]
         self.assertEqual(request["type"], "video")
         self.assertEqual(request["videoEmbeddable"], "true")
+
+    def test_status_report_is_project_facing_and_autonomous(self) -> None:
+        proc = subprocess.run(
+            [sys.executable, str(REPORTER), "--next", "5", "--json"],
+            cwd=ROOT,
+            capture_output=True,
+            text=True,
+        )
+        self.assertEqual(proc.returncode, 0, proc.stdout + proc.stderr)
+        report = json.loads(proc.stdout)
+        self.assertTrue(report["ok"])
+        self.assertEqual(report["project_assessment"], "INFRASTRUCTURE_READY_EVIDENCE_COLLECTION_NOT_STARTED")
+        self.assertFalse(report["user_action_required_now"])
+        self.assertEqual(report["motion_factory"]["units_total"], 7)
+        self.assertEqual(report["motion_factory"]["capture_pending"], 7)
+        names = {row["name"] for row in report["next_autonomous_targets"]}
+        self.assertIn("Baiana Double-Leg", names)
+        self.assertGreaterEqual(len(report["true_blockers"]), 1)
 
 
 if __name__ == "__main__":
