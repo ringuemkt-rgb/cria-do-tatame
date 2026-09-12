@@ -54,6 +54,15 @@ func resolve_route(origin: String, destination: String, world_context: Dictionar
 
 	var normalized := _normalize_route(selected, origin_id, destination_id, reversed)
 	var gate_result := _evaluate_gates(normalized, world_context)
+	var node_gate := _evaluate_destination_node_gate(destination_id, world_context)
+	var reasons: Array = gate_result.get("reasons", []).duplicate()
+	for reason_value in node_gate.get("reasons", []):
+		if not reasons.has(reason_value):
+			reasons.append(reason_value)
+	gate_result["reasons"] = reasons
+	gate_result["node_lock"] = node_gate.get("lock", {}).duplicate(true)
+	gate_result["traversable"] = reasons.is_empty()
+
 	normalized["traversable"] = bool(gate_result.get("traversable", false))
 	normalized["gate_status"] = gate_result
 	normalized["world_context_snapshot"] = _context_snapshot(world_context)
@@ -164,6 +173,122 @@ func _evaluate_gates(route: Dictionary, world_context: Dictionary) -> Dictionary
 		"evaluated_gate": gate.duplicate(true)
 	}
 
+func _evaluate_destination_node_gate(destination_id: String, world_context: Dictionary) -> Dictionary:
+	var node := _find_node(destination_id)
+	if node.is_empty():
+		return {"traversable": true, "reasons": [], "lock": {}}
+	var lock_value: Variant = node.get("lock", node.get("bloqueio", {}))
+	if typeof(lock_value) != TYPE_DICTIONARY or lock_value.is_empty():
+		return {"traversable": true, "reasons": [], "lock": {}}
+	var lock: Dictionary = lock_value
+	var lock_type := str(lock.get("tipo", lock.get("type", "")))
+	var requirement: Variant = lock.get("req", lock.get("requirement", null))
+	var reasons: Array[String] = []
+
+	match lock_type:
+		"mission", "missao":
+			if not _named_requirement_satisfied(str(requirement), world_context):
+				reasons.append("node_lock_unsatisfied:mission")
+		"ato", "act":
+			if int(world_context.get("act", world_context.get("ato", 0))) < int(requirement):
+				reasons.append("node_lock_unsatisfied:act")
+			var extra := str(lock.get("extra", ""))
+			if extra != "" and not _named_requirement_satisfied(extra, world_context):
+				reasons.append("node_lock_unsatisfied:%s" % extra)
+		"rep", "reputation":
+			if not _reputation_rank_satisfied(str(requirement), world_context):
+				reasons.append("node_lock_unsatisfied:reputation")
+		"composto", "compound":
+			var requirements: Array = requirement if typeof(requirement) == TYPE_ARRAY else []
+			for requirement_value in requirements:
+				var token := str(requirement_value)
+				if not _named_requirement_satisfied(token, world_context):
+					reasons.append("node_lock_unsatisfied:%s" % token)
+		"hype":
+			if float(world_context.get("hype", -1.0)) < float(requirement):
+				reasons.append("node_lock_unsatisfied:hype")
+			if lock.has("ato") and int(world_context.get("act", world_context.get("ato", 0))) < int(lock.get("ato", 0)):
+				reasons.append("node_lock_unsatisfied:act")
+		"heat":
+			var heat_value := _heat_for_node(node, world_context)
+			if heat_value < 0.0:
+				reasons.append("node_lock_context_missing:heat")
+			elif heat_value < float(requirement):
+				reasons.append("node_lock_unsatisfied:heat")
+			if lock.has("ato") and int(world_context.get("act", world_context.get("ato", 0))) < int(lock.get("ato", 0)):
+				reasons.append("node_lock_unsatisfied:act")
+		"fragmentos", "fragments":
+			if _fragment_count(world_context) < int(requirement):
+				reasons.append("node_lock_unsatisfied:fragments")
+		_:
+			if lock_type != "":
+				reasons.append("node_lock_unsupported:%s" % lock_type)
+
+	return {"traversable": reasons.is_empty(), "reasons": reasons, "lock": lock.duplicate(true)}
+
+func _find_node(node_id: String) -> Dictionary:
+	var nodes: Array = map_data.get("nodes", map_data.get("nos", []))
+	for node_value in nodes:
+		if typeof(node_value) != TYPE_DICTIONARY:
+			continue
+		var node: Dictionary = node_value
+		if _canonical_endpoint(str(node.get("id", ""))) == node_id:
+			return node.duplicate(true)
+	return {}
+
+func _named_requirement_satisfied(token: String, world_context: Dictionary) -> bool:
+	var requirement := token.strip_edges()
+	if requirement == "":
+		return true
+	var flags: Dictionary = world_context.get("flags", {})
+	if flags.has(requirement) and bool(flags.get(requirement, false)):
+		return true
+	var missions: Array = world_context.get("completed_missions", [])
+	if missions.has(requirement):
+		return true
+	if requirement.begins_with("ato"):
+		var act_text := requirement.trim_prefix("ato")
+		if act_text.is_valid_int():
+			return int(world_context.get("act", world_context.get("ato", 0))) >= int(act_text)
+	if requirement == "lua_cheia":
+		return bool(world_context.get("lua_cheia", false))
+	if requirement == "mare_baixa":
+		return str(world_context.get("tide", world_context.get("mare", ""))) == "baixa"
+	if requirement == "mare_alta":
+		return str(world_context.get("tide", world_context.get("mare", ""))) == "alta"
+	if requirement.begins_with("hype_"):
+		var hype_text := requirement.trim_prefix("hype_")
+		if hype_text.is_valid_float():
+			return float(world_context.get("hype", -1.0)) >= float(hype_text)
+	return false
+
+func _reputation_rank_satisfied(rank_id: String, world_context: Dictionary) -> bool:
+	var ranks: Dictionary = map_data.get("reputation_ranks", {})
+	var rank: Dictionary = ranks.get(rank_id, {})
+	if rank.is_empty():
+		return bool(world_context.get("flags", {}).get(rank_id, false))
+	var axis := str(rank.get("axis", ""))
+	if axis == "":
+		return false
+	return float(world_context.get(axis, -1.0)) >= float(rank.get("min", 0.0))
+
+func _heat_for_node(node: Dictionary, world_context: Dictionary) -> float:
+	var by_faction: Dictionary = world_context.get("heat_by_faction", {})
+	var faction := str(node.get("faccao", node.get("faction", "")))
+	if faction != "" and by_faction.has(faction):
+		return float(by_faction.get(faction, -1.0))
+	if world_context.has("heat"):
+		return float(world_context.get("heat", -1.0))
+	return -1.0
+
+func _fragment_count(world_context: Dictionary) -> int:
+	var collectibles: Dictionary = world_context.get("collectibles", {})
+	if collectibles.has("fragmentos"):
+		return int(collectibles.get("fragmentos", 0))
+	if collectibles.has("fragmentos_total"):
+		return int(collectibles.get("fragmentos_total", 0))
+	return int(collectibles.get("fragmento_reliquia", 0)) + int(collectibles.get("fragmento_memoria", 0))
+
 func _gate_value_satisfied(key: String, requirement: Variant, world_context: Dictionary) -> bool:
 	match key:
 		"ato", "act":
@@ -254,7 +379,7 @@ func _default_tide_for_gate() -> String:
 	return str(travel_contract.get("route_resolver", {}).get("default_tide_for_mare_gate", "alta"))
 
 func _context_snapshot(world_context: Dictionary) -> Dictionary:
-	var allowed_keys := ["weather", "tide", "mare", "act", "ato", "ng_plus", "lua_cheia", "sombra", "collectibles", "flags", "route_unlocks"]
+	var allowed_keys := ["weather", "tide", "mare", "act", "ato", "ng_plus", "lua_cheia", "sombra", "hype", "honra", "heat", "heat_by_faction", "collectibles", "flags", "completed_missions", "route_unlocks"]
 	var output := {}
 	for key in allowed_keys:
 		if world_context.has(key):
