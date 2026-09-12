@@ -7,6 +7,8 @@
   "purpose": "Define the deterministic living-world substrate for NPC schedules, simulation tiers, knowledge boundaries, relationships and events without requiring an LLM for core gameplay.",
   "world_authority": "data/world/world_map_v4.json",
   "runtime_engine": "src/world/NPCEcologyEngineV1.gd",
+  "social_memory_contract": "data/world/npc_social_memory_contract_v1.json",
+  "social_memory_runtime_owner": "NPCMemoryManager",
   "core_policy": {
     "offline_core_required": true,
     "llm_is_optional_enhancement": true,
@@ -44,6 +46,7 @@
     "population_source_required_for_shipping": true,
     "relationship_persistence_required_for_shipping": true,
     "save_migration_required_for_shipping": true,
-    "runtime_scene_evidence_required_for_shipping": true
+    "runtime_scene_evidence_required_for_shipping": true,
+    "social_memory_contract_required_for_shipping": true
   }
 }
