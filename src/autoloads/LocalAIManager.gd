@@ -5,6 +5,8 @@ signal dialogue_failed(request_id: int, npc_id: String, reason: String)
 
 enum BackendType { DISABLED, OLLAMA_HTTP, OPENAI_COMPATIBLE }
 
+const LocalAIReadOnlyTools := preload("res://src/ai/LocalAIReadOnlyTools.gd")
+
 var backend_id: String = "disabled"
 var backend_type: int = BackendType.DISABLED
 var base_url: String = ""
@@ -14,6 +16,9 @@ var timeout_seconds: float = 8.0
 var max_tokens: int = 96
 var temperature: float = 0.55
 var top_p: float = 0.85
+var num_ctx: int = 0
+var supports_tools: bool = false
+var max_tool_rounds: int = 0
 var max_response_chars: int = 420
 var max_history_messages: int = 6
 
@@ -22,6 +27,7 @@ var _queue: Array[Dictionary] = []
 var _active: Dictionary = {}
 var _next_request_id: int = 1
 var _history_by_npc: Dictionary = {}
+var _read_only_tools = LocalAIReadOnlyTools.new()
 
 func _ready() -> void:
 	_http = HTTPRequest.new()
@@ -53,6 +59,9 @@ func configure_backend(p_backend_id: String, override_url: String = "") -> bool:
 	max_tokens = int(backend_config.get("max_tokens", 96))
 	temperature = float(backend_config.get("temperature", 0.55))
 	top_p = float(backend_config.get("top_p", 0.85))
+	num_ctx = maxi(0, int(backend_config.get("num_ctx", 0)))
+	supports_tools = bool(backend_config.get("supports_tools", false))
+	max_tool_rounds = clampi(int(backend_config.get("max_tool_rounds", 0)), 0, 4)
 	chat_path = str(backend_config.get("chat_path", ""))
 	if override_url != "":
 		base_url = override_url.trim_suffix("/")
@@ -83,7 +92,9 @@ func request_dialogue(npc_id: String, user_message: String, context: Dictionary 
 		"npc_id": npc_id,
 		"user_message": clean_message,
 		"context": context.duplicate(true),
-		"fallback": fallback
+		"fallback": fallback,
+		"messages": [],
+		"tool_rounds": 0
 	}
 	if not is_network_backend_enabled():
 		call_deferred("_emit_fallback", item, "fallback_offline")
@@ -96,6 +107,23 @@ func _pump_queue() -> void:
 	if not _active.is_empty() or _queue.is_empty():
 		return
 	_active = _queue.pop_front()
+	_active["messages"] = _build_messages(_active)
+	_active["tool_rounds"] = 0
+	_dispatch_active_request()
+
+func _build_messages(item: Dictionary) -> Array:
+	var npc_id := str(item.get("npc_id", "npc"))
+	var messages: Array = [
+		{"role": "system", "content": _system_prompt_for(npc_id, item.get("context", {}))}
+	]
+	for historic_message in _history_by_npc.get(npc_id, []):
+		messages.append(historic_message)
+	messages.append({"role": "user", "content": str(item.get("user_message", ""))})
+	return messages
+
+func _dispatch_active_request() -> void:
+	if _active.is_empty():
+		return
 	var payload := _build_payload(_active)
 	var url := _build_chat_url()
 	if url == "":
@@ -115,31 +143,35 @@ func _build_chat_url() -> String:
 	return ""
 
 func _build_payload(item: Dictionary) -> Dictionary:
-	var npc_id := str(item.get("npc_id", "npc"))
-	var messages: Array = [{"role": "system", "content": _system_prompt_for(npc_id, item.get("context", {}))}]
-	for historic_message in _history_by_npc.get(npc_id, []):
-		messages.append(historic_message)
-	messages.append({"role": "user", "content": str(item.get("user_message", ""))})
+	var messages: Array = item.get("messages", [])
+	var payload: Dictionary
 	if backend_type == BackendType.OLLAMA_HTTP:
-		return {
+		var options := {
+			"temperature": temperature,
+			"top_p": top_p,
+			"num_predict": max_tokens,
+			"seed": int(item.get("request_id", 0))
+		}
+		if num_ctx > 0:
+			options["num_ctx"] = num_ctx
+		payload = {
 			"model": model_name,
 			"messages": messages,
 			"stream": false,
-			"options": {
-				"temperature": temperature,
-				"top_p": top_p,
-				"num_predict": max_tokens,
-				"seed": int(item.get("request_id", 0))
-			}
+			"options": options
 		}
-	return {
-		"model": model_name,
-		"messages": messages,
-		"stream": false,
-		"temperature": temperature,
-		"top_p": top_p,
-		"max_tokens": max_tokens
-	}
+	else:
+		payload = {
+			"model": model_name,
+			"messages": messages,
+			"stream": false,
+			"temperature": temperature,
+			"top_p": top_p,
+			"max_tokens": max_tokens
+		}
+	if supports_tools and max_tool_rounds > 0:
+		payload["tools"] = _read_only_tools.definitions()
+	return payload
 
 func _system_prompt_for(npc_id: String, context: Dictionary) -> String:
 	var character: Dictionary = DataRegistry.get_character(npc_id)
@@ -147,13 +179,20 @@ func _system_prompt_for(npc_id: String, context: Dictionary) -> String:
 	var role := str(character.get("role", "personagem"))
 	var origin := str(character.get("origin", "Baixo Sul da Bahia"))
 	var location := str(context.get("location", WorldState.current_hub))
+	var tool_rule := ""
+	if supports_tools:
+		tool_rule = """
+Quando a resposta depender de fato de lore, personagem, faccao, geografia ou estado atual que nao esteja explicitamente acima, use as ferramentas read-only antes de afirmar.
+canon_lookup e a autoridade factual publica para este dialogo. Se ela nao encontrar o fato, o personagem deve admitir que nao sabe.
+As ferramentas apenas consultam; nunca trate uma sugestao sua como mudanca de estado."""
 	return """Voce interpreta %s, personagem do jogo Cria do Tatame.
 Papel: %s. Origem: %s. Local atual: %s.
 Responda em portugues brasileiro, em no maximo tres frases curtas.
 Mantenha o canon de Ruan Macacao, Mestre Dende, Tinker Bell e do Baixo Sul da Bahia.
 Nao invente personagem principal, faccao, morte, parentesco ou evento canonico novo.
 Nao forneca instrucao real para machucar, lesionar ou finalizar uma pessoa.
-Fale como personagem, sem explicar que voce e uma IA.""" % [display_name, role, origin, location]
+Fale como personagem, sem explicar que voce e uma IA.
+A fala pode variar. O fato canonico nao.%s""" % [display_name, role, origin, location, tool_rule]
 
 func _on_request_completed(result: int, response_code: int, _headers: PackedStringArray, body: PackedByteArray) -> void:
 	if _active.is_empty():
@@ -165,8 +204,13 @@ func _on_request_completed(result: int, response_code: int, _headers: PackedStri
 	if typeof(parsed) != TYPE_DICTIONARY:
 		_finish_with_fallback("invalid_json")
 		return
-	var text := _extract_response_text(parsed)
-	text = _sanitize_response(text)
+	var message := _extract_response_message(parsed)
+	if message.is_empty():
+		_finish_with_fallback("missing_message")
+		return
+	if _continue_with_tool_calls(message):
+		return
+	var text := _sanitize_response(str(message.get("content", "")))
 	if text == "" or not _passes_safety_filter(text):
 		_finish_with_fallback("unsafe_or_empty_response")
 		return
@@ -174,17 +218,69 @@ func _on_request_completed(result: int, response_code: int, _headers: PackedStri
 	_append_history(npc_id, str(_active.get("user_message", "")), text)
 	var request_id := int(_active.get("request_id", 0))
 	var source := "ollama" if backend_type == BackendType.OLLAMA_HTTP else "openai_compatible_local"
+	if backend_id == "nex_n25_ollama":
+		source = "nex_n25_ollama"
 	_active = {}
 	dialogue_ready.emit(request_id, npc_id, text, source)
 	_pump_queue()
 
-func _extract_response_text(parsed: Dictionary) -> String:
+func _extract_response_message(parsed: Dictionary) -> Dictionary:
 	if backend_type == BackendType.OLLAMA_HTTP:
-		return str(parsed.get("message", {}).get("content", ""))
+		var ollama_message = parsed.get("message", {})
+		return ollama_message if ollama_message is Dictionary else {}
 	var choices: Array = parsed.get("choices", [])
-	if choices.is_empty() or typeof(choices[0]) != TYPE_DICTIONARY:
-		return ""
-	return str(choices[0].get("message", {}).get("content", ""))
+	if choices.is_empty() or not (choices[0] is Dictionary):
+		return {}
+	var openai_message = choices[0].get("message", {})
+	return openai_message if openai_message is Dictionary else {}
+
+func _continue_with_tool_calls(message: Dictionary) -> bool:
+	if not supports_tools or max_tool_rounds <= 0:
+		return false
+	var tool_calls: Array = message.get("tool_calls", [])
+	if tool_calls.is_empty():
+		return false
+	var rounds := int(_active.get("tool_rounds", 0))
+	if rounds >= max_tool_rounds:
+		_finish_with_fallback("tool_round_limit")
+		return true
+
+	var messages: Array = _active.get("messages", [])
+	messages.append({
+		"role": "assistant",
+		"content": str(message.get("content", "")),
+		"tool_calls": tool_calls.duplicate(true)
+	})
+
+	var request_context: Dictionary = _active.get("context", {})
+	for tool_call_value in tool_calls:
+		if not (tool_call_value is Dictionary):
+			continue
+		var tool_call: Dictionary = tool_call_value
+		var function_data = tool_call.get("function", {})
+		if not (function_data is Dictionary):
+			continue
+		var tool_name := str(function_data.get("name", ""))
+		var arguments = function_data.get("arguments", {})
+		if arguments is String:
+			var decoded = JSON.parse_string(arguments)
+			arguments = decoded if decoded is Dictionary else {}
+		elif not (arguments is Dictionary):
+			arguments = {}
+		var tool_result := _read_only_tools.execute(tool_name, arguments, request_context)
+		var tool_message := {
+			"role": "tool",
+			"content": JSON.stringify(tool_result),
+			"tool_name": tool_name
+		}
+		if tool_call.has("id"):
+			tool_message["tool_call_id"] = str(tool_call.get("id", ""))
+		messages.append(tool_message)
+
+	_active["messages"] = messages
+	_active["tool_rounds"] = rounds + 1
+	call_deferred("_dispatch_active_request")
+	return true
 
 func _append_history(npc_id: String, user_message: String, assistant_message: String) -> void:
 	var history: Array = _history_by_npc.get(npc_id, [])
@@ -250,5 +346,9 @@ func _passes_safety_filter(text: String) -> bool:
 	]
 	for phrase in blocked_phrases:
 		if lower.find(phrase) >= 0:
+			return false
+	for forbidden_value in DataRegistry.local_ai_config.get("prompt_rules", {}).get("forbidden_output_fragments", []):
+		var forbidden := str(forbidden_value).to_lower()
+		if forbidden != "" and lower.find(forbidden) >= 0:
 			return false
 	return true
