@@ -17,13 +17,17 @@ on:
       - "scenes/world/TravelDetailPanel.tscn"
       - "scenes/world/WorldMapScreen.gd"
       - "scenes/world/WorldMapScreen.tscn"
+      - "scenes/world/Rota101Travel.gd"
+      - "scenes/world/Rota101Travel.tscn"
       - "tests/world_route_resolver_smoke.gd"
       - "tests/travel_detail_panel_smoke.gd"
       - "tests/world_travel_two_phase_smoke.gd"
       - "tests/vehicle_service_smoke.gd"
       - "tests/rota_101_simulation_smoke.gd"
+      - "tests/rota_101_scene_smoke.gd"
       - "tools/world/validate_vehicle_world_travel_v1.py"
       - "docs/gameplay/VEHICLE_WORLD_TRAVEL_V1.md"
+      - "docs/visual/ROTA101_VIDEO_REFERENCE_V1.md"
       - ".github/workflows/vehicle-world-travel-v1.yml"
   push:
     branches: [main]
@@ -40,13 +44,17 @@ on:
       - "scenes/world/TravelDetailPanel.tscn"
       - "scenes/world/WorldMapScreen.gd"
       - "scenes/world/WorldMapScreen.tscn"
+      - "scenes/world/Rota101Travel.gd"
+      - "scenes/world/Rota101Travel.tscn"
       - "tests/world_route_resolver_smoke.gd"
       - "tests/travel_detail_panel_smoke.gd"
       - "tests/world_travel_two_phase_smoke.gd"
       - "tests/vehicle_service_smoke.gd"
       - "tests/rota_101_simulation_smoke.gd"
+      - "tests/rota_101_scene_smoke.gd"
       - "tools/world/validate_vehicle_world_travel_v1.py"
       - "docs/gameplay/VEHICLE_WORLD_TRAVEL_V1.md"
+      - "docs/visual/ROTA101_VIDEO_REFERENCE_V1.md"
       - ".github/workflows/vehicle-world-travel-v1.yml"
   workflow_dispatch:
 
@@ -93,3 +101,6 @@ jobs:
 
       - name: ROTA 101 simulation smoke
         run: ./godot --headless --path . --script res://tests/rota_101_simulation_smoke.gd
+
+      - name: ROTA 101 scene smoke
+        run: ./godot --headless --path . --script res://tests/rota_101_scene_smoke.gd
