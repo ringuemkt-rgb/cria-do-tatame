@@ -5,7 +5,6 @@ signal node_focused(node: Dictionary)
 
 const MAP_DATA_PATH := "res://data/world/world_map_v4.json"
 const LIFE_CONTRACT_PATH := "res://data/visual/world_map_life_v1.json"
-const REGIONAL_BASE_ART_PATH := "res://assets/world/maps/candidate/baixo_sul_base_v01.jpg"
 const DESIGN_SIZE := Vector2(1920.0, 1080.0)
 
 var active_page_id := "01"
@@ -14,7 +13,7 @@ var motion_enabled := true
 var _time := 0.0
 var _map_data: Dictionary = {}
 var _life_contract: Dictionary = {}
-var _regional_base_art: Texture2D
+var _base_art_by_page: Dictionary = {}
 
 func _ready() -> void:
 	_load_contracts()
@@ -42,8 +41,12 @@ func _gui_input(event: InputEvent) -> void:
 func _load_contracts() -> void:
 	_map_data = _load_json(MAP_DATA_PATH)
 	_life_contract = _load_json(LIFE_CONTRACT_PATH)
-	if ResourceLoader.exists(REGIONAL_BASE_ART_PATH):
-		_regional_base_art = load(REGIONAL_BASE_ART_PATH) as Texture2D
+	for asset_value in _life_contract.get("candidate_assets", []):
+		var asset: Dictionary = asset_value
+		var asset_path := str(asset.get("path", ""))
+		var page_id := str(asset.get("page_id", ""))
+		if page_id != "" and ResourceLoader.exists(asset_path):
+			_base_art_by_page[page_id] = load(asset_path) as Texture2D
 
 func _load_json(path: String) -> Dictionary:
 	if not FileAccess.file_exists(path):
@@ -87,8 +90,9 @@ func _draw() -> void:
 func _draw_map_backdrop(bounds: Rect2) -> void:
 	draw_rect(bounds.grow(-18.0), Color("0c4157"))
 	var inset := bounds.grow(-42.0)
-	if active_page_id == "01" and _regional_base_art != null:
-		draw_texture_rect(_regional_base_art, inset, false)
+	var base_art: Texture2D = _base_art_by_page.get(active_page_id, null)
+	if base_art != null:
+		draw_texture_rect(base_art, inset, false)
 		draw_rect(inset, Color(0.01, 0.05, 0.07, 0.16))
 		_draw_ambient_boat(bounds)
 		return

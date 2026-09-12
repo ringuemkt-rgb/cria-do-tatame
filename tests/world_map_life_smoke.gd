@@ -26,9 +26,11 @@ func _run() -> void:
 		_assert(contract.get("shipping", true) == false, "Referências visuais foram promovidas sem QA humano")
 		_assert(str(contract.get("authority", {}).get("travel_state", "")) == "WorldMapManager", "Mapa criou autoridade concorrente de viagem")
 		var candidate_assets: Array = contract.get("candidate_assets", [])
-		_assert(candidate_assets.size() == 1, "Base visual candidata do Baixo Sul não foi registrada")
-		if not candidate_assets.is_empty():
-			_assert(ResourceLoader.exists(str(candidate_assets[0].get("path", ""))), "Base visual candidata não é carregável pelo Godot")
+		_assert(candidate_assets.size() == 5, "As cinco bases visuais candidatas já produzidas não foram registradas")
+		for asset_value in candidate_assets:
+			_assert(ResourceLoader.exists(str(asset_value.get("path", ""))), "Base visual candidata não é carregável pelo Godot")
+		var coverage: Dictionary = contract.get("paint_coverage", {})
+		_assert(coverage.get("painted_pages", []).size() + coverage.get("pending_pages", []).size() == 10, "Cobertura de pintura não cobre as dez páginas")
 		var layer: Node = screen.get_node_or_null("WorldMapLifeLayer")
 		_assert(layer != null and layer.open_page("02"), "Página de Ituberá não abre no runtime")
 		_assert(str(layer.get("active_page_id")) == "02", "Página ativa não foi atualizada")

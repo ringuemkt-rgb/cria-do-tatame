@@ -24,8 +24,49 @@
       "origin": "generated_from_user_art_direction",
       "shipping": false,
       "required_gates": ["provenance_review", "visual_review", "android_runtime_capture", "human_approval"]
+    },
+    {
+      "id": "itubera_base_v01",
+      "path": "res://assets/world/maps/candidate/itubera_base_v01.jpg",
+      "page_id": "02",
+      "layer": "map_base_art",
+      "origin": "generated_from_user_art_direction",
+      "shipping": false,
+      "required_gates": ["provenance_review", "visual_review", "android_runtime_capture", "human_approval"]
+    },
+    {
+      "id": "nilo_pecanha_base_v01",
+      "path": "res://assets/world/maps/candidate/nilo_pecanha_base_v01.jpg",
+      "page_id": "03",
+      "layer": "map_base_art",
+      "origin": "generated_from_user_art_direction",
+      "shipping": false,
+      "required_gates": ["provenance_review", "visual_review", "android_runtime_capture", "human_approval"]
+    },
+    {
+      "id": "valenca_base_v01",
+      "path": "res://assets/world/maps/candidate/valenca_base_v01.jpg",
+      "page_id": "04",
+      "layer": "map_base_art",
+      "origin": "generated_from_user_art_direction",
+      "shipping": false,
+      "required_gates": ["provenance_review", "visual_review", "android_runtime_capture", "human_approval"]
+    },
+    {
+      "id": "camamu_base_v01",
+      "path": "res://assets/world/maps/candidate/camamu_base_v01.jpg",
+      "page_id": "05",
+      "layer": "map_base_art",
+      "origin": "generated_from_user_art_direction",
+      "shipping": false,
+      "required_gates": ["provenance_review", "visual_review", "android_runtime_capture", "human_approval"]
     }
   ],
+  "paint_coverage": {
+    "painted_pages": ["01", "02", "03", "04", "05"],
+    "pending_pages": ["06", "07", "08", "09", "10"],
+    "fallback": "procedural_2_5d_runtime_layer"
+  },
   "layers": ["map_base_art", "world_overlay", "ui_overlay", "narrative_overlay"],
   "visual_language": {
     "frame": "ink_black_with_aged_gold_filigree",
