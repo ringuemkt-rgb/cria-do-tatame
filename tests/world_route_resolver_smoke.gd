@@ -8,11 +8,17 @@ var checks := 0
 func _init() -> void:
 	var fixture_map := {
 		"aliases": {"ponte_do_saci": "ponte_do_saici"},
+		"reputation_ranks": {"respeitado": {"axis": "honra", "min": 60}},
+		"nos": [
+			{"id": "ponte_do_saici", "lock": {"tipo": "composto", "req": ["ato2", "tinker"]}},
+			{"id": "dojo_honra", "lock": {"tipo": "rep", "req": "respeitado"}}
+		],
 		"rotas": [
 			{"de": "itubera_hub", "para": "valenca_hub", "tipo": "terrestre", "minigame": "rota_101", "distancia_km": 56.0, "base_time_minutes": 70},
 			{"de": "valenca_hub", "para": "cairu_hub", "tipo": "maritima", "mare": true, "base_time_minutes": 50},
 			{"de": "valenca_hub", "para": "ponte_do_saici", "tipo": "ponte", "base_time_minutes": 15},
 			{"de": "itubera_hub", "para": "atalho_secreto", "tipo": "secreta", "gate": {"ato": 3}},
+			{"de": "itubera_hub", "para": "dojo_honra", "tipo": "terrestre"},
 			{"de": "cairu_hub", "para": "marau_hub", "tipo": "maritima", "minigame": "rota_101"}
 		]
 	}
@@ -60,9 +66,20 @@ func _init() -> void:
 	_check(_has_method(high_tide_result.get("route", {}).get("method_options", []), "barco_ferry"), "ferry allowed on maritime route")
 	_check(not _has_method(high_tide_result.get("route", {}).get("method_options", []), "kombi_terreiro"), "kombi rejected on maritime route")
 
-	var bridge_result: Dictionary = resolver.resolve_route("valenca_hub", "ponte_do_saci", {"tide": "alta"})
-	_check(str(bridge_result.get("route", {}).get("type", "")) == "terrestre", "ponte normalizes to terrestrial")
-	_check(str(bridge_result.get("route", {}).get("subtype", "")) == "bridge", "ponte keeps bridge subtype")
+	var bridge_locked: Dictionary = resolver.resolve_route("valenca_hub", "ponte_do_saci", {"tide": "alta", "act": 3, "flags": {}})
+	_check(str(bridge_locked.get("route", {}).get("type", "")) == "terrestre", "ponte normalizes to terrestrial")
+	_check(str(bridge_locked.get("route", {}).get("subtype", "")) == "bridge", "ponte keeps bridge subtype")
+	_check(not bool(bridge_locked.get("route", {}).get("traversable", true)), "destination compound lock fails closed")
+	_check(_has_reason(bridge_locked.get("route", {}), "node_lock_unsatisfied:tinker"), "destination lock reports missing named requirement")
+	var bridge_open: Dictionary = resolver.resolve_route("valenca_hub", "ponte_do_saci", {"tide": "alta", "act": 3, "flags": {"tinker": true}})
+	_check(bool(bridge_open.get("route", {}).get("traversable", false)), "destination compound lock opens when every requirement is satisfied")
+	_check(bool(bridge_open.get("route", {}).get("world_context_snapshot", {}).get("flags", {}).get("tinker", false)), "node-lock context is preserved in immutable snapshot")
+
+	var honor_locked: Dictionary = resolver.resolve_route("itubera_hub", "dojo_honra", {"honra": 59})
+	_check(not bool(honor_locked.get("route", {}).get("traversable", true)), "reputation node lock blocks below rank threshold")
+	_check(_has_reason(honor_locked.get("route", {}), "node_lock_unsatisfied:reputation"), "reputation lock exposes deterministic reason")
+	var honor_open: Dictionary = resolver.resolve_route("itubera_hub", "dojo_honra", {"honra": 60})
+	_check(bool(honor_open.get("route", {}).get("traversable", false)), "reputation node lock opens at threshold")
 
 	var secret_locked: Dictionary = resolver.resolve_route("itubera_hub", "atalho_secreto", {"act": 2})
 	_check(not bool(secret_locked.get("route", {}).get("traversable", true)), "secret route fails closed before act gate")
