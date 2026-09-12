@@ -1,0 +1,34 @@
+name: God Mode Sprite Candidate
+
+on:
+  pull_request:
+    paths:
+      - 'data/production/external_tool_registry_v1.json'
+      - 'data/visual/godmode_sprite_adapter_v1.json'
+      - 'tools/art/validate_godmode_sprite_adapter_v1.py'
+      - 'tests/test_godmode_sprite_adapter_v1.py'
+      - '.github/workflows/godmode-sprite-candidate.yml'
+  push:
+    branches:
+      - visual/godmode-sprite-candidate
+
+jobs:
+  validate-godmode-sprite-candidate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Validate external-tool registry
+        run: python tools/ci/validate_external_tool_registry_v1.py
+
+      - name: Validate God Mode adapter
+        run: python tools/art/validate_godmode_sprite_adapter_v1.py
+
+      - name: Run adapter invariants
+        run: python -m unittest discover -s tests -p 'test_godmode_sprite_adapter_v1.py'
