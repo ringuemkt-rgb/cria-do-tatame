@@ -8,8 +8,10 @@ on:
       - "data/economy.json"
       - "data/world/vehicle_world_travel_v1.json"
       - "data/world/world_map_v4.json"
+      - "data/world/rota_101_v1.json"
       - "src/world/WorldRouteResolver.gd"
       - "src/world/VehicleServiceModel.gd"
+      - "src/world/Rota101Simulation.gd"
       - "src/autoloads/WorldMapManager.gd"
       - "scenes/world/TravelDetailPanel.gd"
       - "scenes/world/TravelDetailPanel.tscn"
@@ -19,6 +21,7 @@ on:
       - "tests/travel_detail_panel_smoke.gd"
       - "tests/world_travel_two_phase_smoke.gd"
       - "tests/vehicle_service_smoke.gd"
+      - "tests/rota_101_simulation_smoke.gd"
       - "tools/world/validate_vehicle_world_travel_v1.py"
       - "docs/gameplay/VEHICLE_WORLD_TRAVEL_V1.md"
       - ".github/workflows/vehicle-world-travel-v1.yml"
@@ -28,8 +31,10 @@ on:
       - "data/economy.json"
       - "data/world/vehicle_world_travel_v1.json"
       - "data/world/world_map_v4.json"
+      - "data/world/rota_101_v1.json"
       - "src/world/WorldRouteResolver.gd"
       - "src/world/VehicleServiceModel.gd"
+      - "src/world/Rota101Simulation.gd"
       - "src/autoloads/WorldMapManager.gd"
       - "scenes/world/TravelDetailPanel.gd"
       - "scenes/world/TravelDetailPanel.tscn"
@@ -39,6 +44,7 @@ on:
       - "tests/travel_detail_panel_smoke.gd"
       - "tests/world_travel_two_phase_smoke.gd"
       - "tests/vehicle_service_smoke.gd"
+      - "tests/rota_101_simulation_smoke.gd"
       - "tools/world/validate_vehicle_world_travel_v1.py"
       - "docs/gameplay/VEHICLE_WORLD_TRAVEL_V1.md"
       - ".github/workflows/vehicle-world-travel-v1.yml"
@@ -84,3 +90,6 @@ jobs:
 
       - name: Vehicle service smoke
         run: ./godot --headless --path . --script res://tests/vehicle_service_smoke.gd
+
+      - name: ROTA 101 simulation smoke
+        run: ./godot --headless --path . --script res://tests/rota_101_simulation_smoke.gd
