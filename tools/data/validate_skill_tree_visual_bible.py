@@ -77,9 +77,9 @@ def main() -> int:
 
     official = {f["id"]: f["display_name"] for f in factions.get("factions", [])}
     expected_factions = {
-        "ALE": "Os Aleluiados",
+        "ALE": "Os Aleluiado",
         "LEM": "Lá Ele Mil Vezes",
-        "NTM": "Nós Tem o Molho",
+        "NTM": "Nós Tem Um Molho",
     }
     if official != expected_factions:
         fail(f"faction canon drift: {official}")

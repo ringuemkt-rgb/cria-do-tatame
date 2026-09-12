@@ -18,6 +18,23 @@ import validate_sprite_forge_phase1 as phase1  # noqa: E402
 
 
 class SpriteForgePhase1Tests(unittest.TestCase):
+    def test_every_canonical_character_action_has_a_qa_profile(self):
+        profiles = json.loads(
+            (ROOT / "data/visual/sprite_qa_profiles_v1.json").read_text(encoding="utf-8")
+        )["action_profile_registry"]
+
+        missing = []
+        for path in sorted((ROOT / "data/chars/canon").glob("*.json")):
+            character = json.loads(path.read_text(encoding="utf-8"))
+            for action_set in character.get("action_sets", {}).values():
+                if not isinstance(action_set, list):
+                    continue
+                for action in action_set:
+                    if isinstance(action, str) and action not in profiles:
+                        missing.append(f"{character['character_id']}:{action}")
+
+        self.assertEqual(missing, [])
+
     def test_profiles_are_14_automatic_plus_2_authority(self) -> None:
         data = json.loads((ROOT / "data/visual/sprite_qa_profiles_v1.json").read_text(encoding="utf-8"))
         self.assertEqual(phase1.validate_profiles(data), [])

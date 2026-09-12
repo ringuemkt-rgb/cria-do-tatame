@@ -27,10 +27,11 @@ class ProductionOSV03Tests(unittest.TestCase):
         self.assertEqual(out["source_snapshot"]["p1_commands"], 32)
         self.assertEqual(out["source_snapshot"]["roster_fighters"], 17)
         self.assertEqual(out["source_snapshot"]["world_locations"], 40)
+        self.assertEqual(out["source_snapshot"]["missions"], 45)
         codes = {b["code"] for b in out["source_blockers"]}
         self.assertIn("full_bjj_kg_missing", codes)
         self.assertIn("cards_source_missing", codes)
-        self.assertIn("missions_source_missing", codes)
+        self.assertNotIn("missions_source_missing", codes)
 
     def test_fixture_legality_edge_never_enters_production_requirements(self):
         out = self.derive()

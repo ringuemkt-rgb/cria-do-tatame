@@ -91,6 +91,9 @@
     "guard": "upright_grounded",
     "grip": "upright_grounded",
     "grip_fight": "dynamic_upright",
+    "counter_entry": "dynamic_upright",
+    "sprawl_response": "ground_transition",
+    "scramble": "ground_transition",
     "hurt": "dynamic_upright",
     "victory": "dynamic_upright",
     "defeat": "ground_transition",
@@ -106,7 +109,8 @@
     "dodge": "evasive",
     "block": "dynamic_upright",
     "clinch": "ground_transition",
-    "silverback_grip": "signature_custom"
+    "silverback_grip": "signature_custom",
+    "counter_whiff": "signature_custom"
   },
   "authority_guards": {
     "striking_actions_are_gameplay_authority": false,
