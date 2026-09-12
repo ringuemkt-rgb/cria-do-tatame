@@ -1,7 +1,7 @@
 extends Node
 
 const FactionIdentityV4 = preload("res://src/factions/FactionIdentityV4.gd")
-const SAVE_VERSION := 5
+const SAVE_VERSION := 6
 const SAVE_PREFIX := "user://cria_save_"
 const SAVE_SUFFIX := ".json"
 const SAVE_PATH := "user://savegame.json"
@@ -10,6 +10,8 @@ func save_game(slot_id := 1) -> bool:
 	var data: Dictionary = WorldState.to_dict()
 	data["save_version"] = SAVE_VERSION
 	data["saved_at"] = Time.get_datetime_string_from_system()
+	if has_node("/root/ProgressionOS"):
+		data["progression_state"] = ProgressionOS.to_dict()
 	if has_node("/root/TinkerBondManager"):
 		data["tinker_bond"] = TinkerBondManager.to_dict()
 	if has_node("/root/MissionManager"):
@@ -92,10 +94,12 @@ func load_game(slot_id := 1) -> bool:
 		if not _write_atomic_json(path, parsed):
 			push_warning("[SaveManager] Backup carregado, mas nao foi possivel restaurar o arquivo principal.")
 	var original_version := int(parsed.get("save_version", 1))
-	var migration_required := original_version < SAVE_VERSION or _contains_legacy_faction_state(parsed)
+	var migration_required := original_version < SAVE_VERSION or not parsed.has("progression_state") or _contains_legacy_faction_state(parsed)
 	if parsed.has("faction_director_state") and typeof(parsed["faction_director_state"]) == TYPE_DICTIONARY:
 		parsed["faction_director_state"] = FactionIdentityV4.migrate_director_state(parsed["faction_director_state"])
 	WorldState.load_from_dict(parsed)
+	if has_node("/root/ProgressionOS"):
+		ProgressionOS.load_from_dict(parsed.get("progression_state", {}))
 	if parsed.has("tinker_bond") and has_node("/root/TinkerBondManager"):
 		TinkerBondManager.load_from_dict(parsed["tinker_bond"])
 	if parsed.has("mission_state") and has_node("/root/MissionManager"):
@@ -112,6 +116,8 @@ func load_game(slot_id := 1) -> bool:
 		GearManager.load_from_dict(parsed["gear_state"])
 	if parsed.has("training_state") and has_node("/root/TrainingManager"):
 		TrainingManager.load_from_dict(parsed["training_state"])
+	if has_node("/root/ProgressionOS") and migration_required:
+		ProgressionOS.import_legacy_learned_techniques(WorldState.techniques_learned)
 	if parsed.has("hub_activity_state") and has_node("/root/HubActivityManager"):
 		HubActivityManager.load_from_dict(parsed["hub_activity_state"])
 	if parsed.has("cria_live_interaction_state") and has_node("/root/CriaLiveInteractionManager"):
@@ -134,12 +140,16 @@ func _persist_migrated_save(path: String, source: Dictionary, original_version: 
 	migrated["save_version"] = SAVE_VERSION
 	migrated["migrated_from_save_version"] = original_version
 	migrated["migrated_at"] = Time.get_datetime_string_from_system()
+	if has_node("/root/ProgressionOS"):
+		migrated["progression_state"] = ProgressionOS.to_dict()
 	if has_node("/root/FactionManager"):
 		migrated["faction_state"] = FactionManager.to_dict()
 	if has_node("/root/FactionDirectorManager"):
 		migrated["faction_director_state"] = FactionDirectorManager.to_dict()
+	if has_node("/root/TrainingManager"):
+		migrated["training_state"] = TrainingManager.to_dict()
 	if not _write_atomic_json(path, migrated):
-		push_warning("[SaveManager] Save carregado, mas a persistencia da migracao v5 falhou.")
+		push_warning("[SaveManager] Save carregado, mas a persistencia da migracao v6 falhou.")
 
 func _contains_legacy_faction_state(data: Dictionary) -> bool:
 	var faction_state: Dictionary = data.get("faction_state", {})
