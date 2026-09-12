@@ -1,0 +1,159 @@
+{
+  "$schema": "cria.public_video_analysis_director.v1",
+  "version": "1.0.0",
+  "status": "ACTIVE_AUTONOMOUS_RESEARCH_DIRECTOR",
+  "shipping": false,
+  "runtime_authority": false,
+  "purpose": "Autonomously discover, rank and analyze lawful public combat-video references for CRIA DO TATAME while separating metadata, transcript, visual observation, biomechanical evidence and rights-sensitive asset derivation.",
+  "authorities": {
+    "rules": "data/combat/bjj_rulesets_verified_v1.json",
+    "combat_state": "src/combat/BJJGraphReducerV2.gd",
+    "golden_chain": "data/combat/golden_chain_ruan_davi_v1.json",
+    "video_corpus": "data/research/grappling_video_corpus_contract_v1.json",
+    "motion_lab": "data/research/grappling_motion_lab_contract_v1.json",
+    "motion_factory": "data/production/motion_factory_v1.json",
+    "observation_ledger": "data/research/public_video_observation_ledger_v1.json"
+  },
+  "platform_policy": {
+    "youtube_public_url_is_permission": false,
+    "youtube_official_api_for_discovery_metadata": true,
+    "third_party_caption_download_via_youtube_data_api_default": false,
+    "caption_download_requires_video_edit_permission": true,
+    "automated_scraping_or_download_default": false,
+    "authorized_player_or_browser_observation_allowed_when_environment_and_terms_permit": true,
+    "store_raw_third_party_media_in_git": false,
+    "store_extracted_third_party_frames_in_git": false,
+    "store_timestamped_transformed_observations": true
+  },
+  "capability_states": [
+    "DISCOVERY_READY",
+    "METADATA_READY",
+    "TRANSCRIPT_READY",
+    "VISUAL_READY",
+    "PARTIAL_METADATA_ONLY",
+    "PARTIAL_TRANSCRIPT_ONLY",
+    "VISUAL_ACCESS_UNAVAILABLE",
+    "RIGHTS_BLOCKED",
+    "SOURCE_UNAVAILABLE"
+  ],
+  "source_classes": [
+    "OWNED_CAPTURE",
+    "OPEN_LICENSE_VERIFIED",
+    "OFFICIAL_RULE_EDUCATION",
+    "PUBLIC_COMPETITION_REFERENCE",
+    "PUBLIC_INSTRUCTION_REFERENCE",
+    "UNKNOWN_RIGHTS"
+  ],
+  "research_lanes": {
+    "competition": [
+      "positions",
+      "entries",
+      "transitions",
+      "counters",
+      "stabilization",
+      "scoring_events",
+      "boundary_events",
+      "failure_patterns",
+      "fatigue_cues"
+    ],
+    "instruction": [
+      "prerequisites",
+      "grips_or_ties",
+      "base_head_hip_cues",
+      "mechanical_sequence",
+      "common_errors",
+      "counters",
+      "gi_nogi_specificity",
+      "safety_cues"
+    ],
+    "championship": [
+      "ruleset_division",
+      "match_graph_coverage",
+      "technique_frequency_candidates",
+      "position_frequency_candidates",
+      "scoring_distribution_candidates",
+      "style_archetypes",
+      "graph_coverage_gaps"
+    ]
+  },
+  "autonomous_cycle": [
+    {"id":"PV00","name":"derive_project_gaps","input":"golden chain + completion gates + open motion/sprite obligations","output":"ranked research questions"},
+    {"id":"PV01","name":"generate_queries","output":"technique/position/athlete/event/ruleset queries"},
+    {"id":"PV02","name":"discover_sources","output":"candidate video/source records"},
+    {"id":"PV03","name":"deduplicate","output":"unique source set"},
+    {"id":"PV04","name":"rights_and_access_classification","output":"source class + allowed operations + capability state"},
+    {"id":"PV05","name":"rank_information_gain","output":"priority queue"},
+    {"id":"PV06","name":"collect_metadata","output":"title/channel/date/id/duration/event context"},
+    {"id":"PV07","name":"collect_transcript_if_permitted","output":"timestamped transcript claims or explicit unavailable status"},
+    {"id":"PV08","name":"visual_observation_if_permitted","output":"timestamped direct observations or explicit unavailable status"},
+    {"id":"PV09","name":"segment_and_label","output":"exchange/attempt/six-phase candidates with confidence"},
+    {"id":"PV10","name":"rules_and_graph_crosscheck","output":"supported/contradicted/unresolved claim states"},
+    {"id":"PV11","name":"cross_source_synthesis","output":"triangulated project evidence"},
+    {"id":"PV12","name":"project_impact","output":"gameplay/motion/sprite/research priority changes"},
+    {"id":"PV13","name":"report","output":"concise project-status report"}
+  ],
+  "observation_statuses": [
+    "OBSERVED_HIGH_CONFIDENCE",
+    "OBSERVED_MODERATE_CONFIDENCE",
+    "CANDIDATE_LOW_CONFIDENCE",
+    "TRANSCRIPT_ONLY",
+    "METADATA_ONLY",
+    "UNKNOWN_OCCLUDED",
+    "CONTRADICTED",
+    "NOT_ACCESSIBLE"
+  ],
+  "required_confidence_dimensions": [
+    "source_identity",
+    "athlete_or_role_identity",
+    "position",
+    "technique",
+    "phase",
+    "contact",
+    "pose",
+    "occlusion",
+    "rules_interpretation"
+  ],
+  "information_gain_weights": {
+    "golden_chain_gap": 5,
+    "missing_counter_or_failure": 5,
+    "rules_dispute_resolution": 5,
+    "high_frequency_competition_pattern": 4,
+    "rare_game_critical_position": 4,
+    "complementary_view_or_source": 3,
+    "official_provenance": 3,
+    "clear_timestamps_or_chapters": 2,
+    "caption_availability": 1,
+    "duplicate_or_highlight_without_context": -4,
+    "unknown_rights_or_access": -3
+  },
+  "promotion_rules": {
+    "single_video_may_define_gameplay_mechanic": false,
+    "public_video_may_define_rules": false,
+    "public_video_may_define_score": false,
+    "public_video_may_define_canon": false,
+    "public_video_may_be_gold_3d_biomechanics_authority": false,
+    "public_standard_license_video_may_train_commercial_model_by_default": false,
+    "public_standard_license_video_may_feed_motion_factory_by_default": false,
+    "public_standard_license_video_may_create_shipping_frames_by_default": false,
+    "timestamped_research_observation_may_inform_priority": true,
+    "multi_source_review_may_create_noncanonical_tuning_candidate": true,
+    "owned_or_separately_licensed_capture_required_for_motion_derivation": true
+  },
+  "fail_closed": {
+    "metadata_never_implies_visual_observation": true,
+    "transcript_never_implies_visual_observation": true,
+    "hidden_contact_remains_unknown": true,
+    "no_access_never_becomes_negative_evidence": true,
+    "rights_unknown_blocks_derivation_not_research_metadata": true,
+    "source_failure_auto_selects_next_candidate": true,
+    "user_not_required_to_select_next_query": true
+  },
+  "default_user_report": {
+    "show_operations_log": false,
+    "show_project_delta": true,
+    "show_evidence_changes": true,
+    "show_gameplay_motion_sprite_impact": true,
+    "show_true_blockers": true,
+    "show_next_autonomous_target": true
+  }
+}

@@ -1,0 +1,38 @@
+name: Public Video Intelligence V1
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+jobs:
+  validate-public-video-intelligence:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Validate director contracts
+        run: python tools/research/validate_public_video_intelligence_v1.py
+
+      - name: Run invariant tests
+        run: python -m unittest discover -s tests -p 'test_public_video_intelligence_v1.py'
+
+      - name: Exercise autonomous query planner
+        run: python tools/research/plan_public_video_research_v1.py --limit 12 --json
+
+      - name: Exercise official YouTube discovery adapter without network
+        run: python tools/research/youtube_public_discovery_v1.py --query "BJJ side control mount competition" --max-results 3 --dry-run
+
+      - name: Exercise concise autonomous project report
+        run: python tools/research/report_public_video_project_status_v1.py --next 5 --json
+
+      - name: Preserve existing video/motion rights gates
+        run: |
+          python tools/combat/validate_grappling_motion_lab_v1.py
+          python tools/motion_factory/validate_motion_factory_v1.py
