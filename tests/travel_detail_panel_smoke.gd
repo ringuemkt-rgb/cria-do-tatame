@@ -25,6 +25,10 @@ func _run() -> void:
 	var panel = PanelScene.instantiate()
 	root.add_child(panel)
 	await process_frame
+	var requests: Array = []
+	panel.travel_requested.connect(func(destination_node: String, vehicle_id: String, world_context: Dictionary):
+		requests.append({"destination": destination_node, "vehicle": vehicle_id, "context": world_context.duplicate(true)})
+	)
 
 	var node := {
 		"id": "ponte_do_saici",
@@ -43,6 +47,7 @@ func _run() -> void:
 	_check(bool(blocked_view.get("route_found", false)), "panel resolves route even when destination node is locked")
 	_check(not bool(blocked_view.get("traversable", true)), "destination node lock blocks travel preview")
 	_check(blocked_view.get("gate_reasons", []).has("node_lock_unsatisfied:tinker"), "node lock exposes missing tinker requirement")
+	_check(panel.get_node("Margin/VBox/Start").disabled, "prepare action is disabled while destination is locked")
 	_check(world_map_manager.call("to_dict") == map_before, "locked preview does not mutate map state")
 
 	var context := blocked_context.duplicate(true)
@@ -51,7 +56,7 @@ func _run() -> void:
 	_check(bool(view.get("route_found", false)), "panel resolves a catalogued route")
 	_check(str(view.get("destination", "")) == "ponte_do_saici", "panel keeps destination id")
 	_check(str(view.get("route_type", "")) == "terrestre", "panel displays normalized route type")
-	_check(bool(view.get("read_only", false)), "panel declares read-only VT2 semantics")
+	_check(bool(view.get("read_only", false)), "panel presentation stays read-only")
 	_check(bool(view.get("traversable", false)), "destination opens when node requirements are satisfied")
 	_check(_has_method(view.get("method_options", []), "kombi_terreiro"), "panel exposes Kombi option")
 	_check(_has_method(view.get("method_options", []), "onibus_regional"), "panel exposes regional bus fallback")
@@ -60,6 +65,7 @@ func _run() -> void:
 	_check(panel.visible, "panel becomes visible after focus")
 
 	var kombi_button: Button = panel.get_node_or_null("Margin/VBox/Methods/Method_kombi_terreiro")
+	var start_button: Button = panel.get_node("Margin/VBox/Start")
 	_check(kombi_button != null, "Kombi preview button is rendered")
 	if kombi_button != null:
 		_check(not kombi_button.disabled, "Kombi preview button enabled on traversable route")
@@ -67,16 +73,26 @@ func _run() -> void:
 		await process_frame
 		var selected: Dictionary = panel.get_view_model()
 		_check(str(selected.get("selected_method", "")) == "kombi_terreiro", "method selection remains a preview")
+		_check(not start_button.disabled, "prepare action enables only after valid method selection")
+		start_button.pressed.emit()
+		await process_frame
+		_check(requests.size() == 1, "prepare action emits exactly one travel request")
+		if requests.size() == 1:
+			_check(str(requests[0].get("destination", "")) == "ponte_do_saici", "travel request carries destination")
+			_check(str(requests[0].get("vehicle", "")) == "kombi_terreiro", "travel request carries selected vehicle")
+			_check(bool(requests[0].get("context", {}).get("flags", {}).get("tinker", false)), "travel request carries immutable planning context")
+		_check(start_button.disabled, "prepare action locks after emission to prevent double request")
 
-	_check(world_map_manager.call("to_dict") == map_before, "VT2 panel does not mutate WorldMapManager")
-	_check(int(world_state.get("money")) == money_before, "VT2 panel does not spend money")
-	_check(is_equal_approx(float(world_state.get("energy")), energy_before), "VT2 panel does not spend energy")
-	_check(str(world_state.get("current_hub")) == world_hub_before, "VT2 panel does not move WorldState hub")
+	_check(world_map_manager.call("to_dict") == map_before, "panel signal emission still does not mutate WorldMapManager")
+	_check(int(world_state.get("money")) == money_before, "panel does not spend money")
+	_check(is_equal_approx(float(world_state.get("energy")), energy_before), "panel does not spend energy")
+	_check(str(world_state.get("current_hub")) == world_hub_before, "panel does not move WorldState hub")
 
 	var unresolved: Dictionary = panel.present_node("itubera", {"id": "sem_rota", "nome": "Sem Rota", "tipo": "interesse"}, context)
 	_check(not bool(unresolved.get("route_found", true)), "uncatalogued destination fails closed")
 	_check(not bool(unresolved.get("traversable", true)), "uncatalogued destination cannot start travel")
 	_check(unresolved.get("method_options", []).is_empty(), "uncatalogued destination exposes no methods")
+	_check(panel.get_node("Margin/VBox/Start").disabled, "uncatalogued destination cannot emit prepare request")
 	_check(world_map_manager.call("to_dict") == map_before, "failed preview still does not mutate map state")
 
 	panel.close_panel()
