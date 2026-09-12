@@ -8,12 +8,14 @@ on:
       - "data/world/vehicle_world_travel_v1.json"
       - "data/world/world_map_v4.json"
       - "src/world/WorldRouteResolver.gd"
+      - "src/autoloads/WorldMapManager.gd"
       - "scenes/world/TravelDetailPanel.gd"
       - "scenes/world/TravelDetailPanel.tscn"
       - "scenes/world/WorldMapScreen.gd"
       - "scenes/world/WorldMapScreen.tscn"
       - "tests/world_route_resolver_smoke.gd"
       - "tests/travel_detail_panel_smoke.gd"
+      - "tests/world_travel_two_phase_smoke.gd"
       - "tools/world/validate_vehicle_world_travel_v1.py"
       - "docs/gameplay/VEHICLE_WORLD_TRAVEL_V1.md"
       - ".github/workflows/vehicle-world-travel-v1.yml"
@@ -23,12 +25,14 @@ on:
       - "data/world/vehicle_world_travel_v1.json"
       - "data/world/world_map_v4.json"
       - "src/world/WorldRouteResolver.gd"
+      - "src/autoloads/WorldMapManager.gd"
       - "scenes/world/TravelDetailPanel.gd"
       - "scenes/world/TravelDetailPanel.tscn"
       - "scenes/world/WorldMapScreen.gd"
       - "scenes/world/WorldMapScreen.tscn"
       - "tests/world_route_resolver_smoke.gd"
       - "tests/travel_detail_panel_smoke.gd"
+      - "tests/world_travel_two_phase_smoke.gd"
       - "tools/world/validate_vehicle_world_travel_v1.py"
       - "docs/gameplay/VEHICLE_WORLD_TRAVEL_V1.md"
       - ".github/workflows/vehicle-world-travel-v1.yml"
@@ -68,3 +72,6 @@ jobs:
 
       - name: Travel detail panel smoke
         run: ./godot --headless --path . --script res://tests/travel_detail_panel_smoke.gd
+
+      - name: Two-phase travel smoke
+        run: ./godot --headless --path . --script res://tests/world_travel_two_phase_smoke.gd
