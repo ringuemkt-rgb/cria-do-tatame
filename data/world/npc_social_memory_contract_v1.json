@@ -1,0 +1,100 @@
+{
+  "$schema": "cria.npc_social_memory_contract.v1",
+  "version": "1.0.0",
+  "status": "ACTIVE_EXPERIMENTAL_RUNTIME",
+  "runtime_authority": "NPCMemoryManager",
+  "runtime_component": "src/world/NPCSocialMemoryV1.gd",
+  "save_owner": "SaveManager",
+  "issue": 112,
+  "principles": {
+    "fact_is_not_belief": true,
+    "belief_is_not_claim": true,
+    "private_knowledge_requires_perception_or_reveal": true,
+    "provenance_required": true,
+    "memory_is_bounded": true,
+    "memory_is_versioned": true,
+    "llm_cannot_write_memory": true,
+    "same_state_and_actions_are_deterministic": true
+  },
+  "event_types": [
+    "FACT_OBSERVED",
+    "FACT_REVEALED",
+    "CLAIM_HEARD",
+    "RELATIONSHIP_DELTA"
+  ],
+  "knowledge_scopes": [
+    "PUBLIC",
+    "LOCAL",
+    "FACTION",
+    "ACADEMY",
+    "PERSONAL",
+    "SECRET",
+    "UNKNOWN"
+  ],
+  "relationship_axes": [
+    "respect",
+    "trust",
+    "affection",
+    "rivalry",
+    "fear",
+    "debt",
+    "suspicion"
+  ],
+  "relationship_range": {
+    "min": -100.0,
+    "max": 100.0,
+    "default": 0.0
+  },
+  "confidence_range": {
+    "min": 0.0,
+    "max": 1.0
+  },
+  "limits": {
+    "event_log": 96,
+    "known_facts_per_npc": 64,
+    "beliefs_per_npc": 32,
+    "episodes_per_npc": 48,
+    "contradictions_per_npc": 24,
+    "provenance_per_record": 8
+  },
+  "fact_required_fields": [
+    "id",
+    "subject_id",
+    "predicate",
+    "value",
+    "scope",
+    "authority"
+  ],
+  "claim_required_fields": [
+    "id",
+    "subject_id",
+    "predicate",
+    "value",
+    "confidence"
+  ],
+  "event_required_fields": {
+    "FACT_OBSERVED": ["event_id", "fact", "witnesses"],
+    "FACT_REVEALED": ["event_id", "fact", "recipients", "source_actor_id"],
+    "CLAIM_HEARD": ["event_id", "claim", "recipients", "source_actor_id"],
+    "RELATIONSHIP_DELTA": ["event_id", "npc_id", "target_id", "deltas"]
+  },
+  "contradiction_policy": {
+    "canonical_fact_wins": true,
+    "claim_never_overwrites_fact": true,
+    "contradicted_claim_suspicion_delta": 12.0,
+    "contradicted_claim_trust_delta": -8.0,
+    "matching_fact_confirms_belief": true
+  },
+  "deterministic_action_tags": {
+    "investigate": {"suspicion": 0.25, "fear": 0.05},
+    "confront": {"suspicion": 0.18, "rivalry": 0.10, "fear": -0.08},
+    "approach": {"trust": 0.12, "affection": 0.08, "fear": -0.08},
+    "help": {"trust": 0.12, "respect": 0.08, "debt": 0.05},
+    "avoid": {"fear": 0.15, "suspicion": 0.08}
+  },
+  "forbidden_writers": [
+    "LocalAIManager",
+    "Nex-N2.5-mini",
+    "WorldDirector remote AI proxy"
+  ]
+}

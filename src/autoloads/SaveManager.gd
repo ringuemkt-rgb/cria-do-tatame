@@ -36,6 +36,8 @@ func save_game(slot_id := 1) -> bool:
 		data["game_flow_state"] = GameFlowManager.to_dict()
 	if has_node("/root/WorldDirectorManager"):
 		data["world_director_state"] = WorldDirectorManager.to_dict()
+	if has_node("/root/NPCMemoryManager"):
+		data["npc_memory_state"] = NPCMemoryManager.to_dict()
 	if has_node("/root/NFTManager"):
 		data["nft_state"] = NFTManager.to_dict()
 	if has_node("/root/DeckManager"):
@@ -94,7 +96,7 @@ func load_game(slot_id := 1) -> bool:
 		if not _write_atomic_json(path, parsed):
 			push_warning("[SaveManager] Backup carregado, mas nao foi possivel restaurar o arquivo principal.")
 	var original_version := int(parsed.get("save_version", 1))
-	var migration_required := original_version < SAVE_VERSION or not parsed.has("progression_state") or _contains_legacy_faction_state(parsed)
+	var migration_required := original_version < SAVE_VERSION or not parsed.has("progression_state") or not parsed.has("npc_memory_state") or _contains_legacy_faction_state(parsed)
 	if parsed.has("faction_director_state") and typeof(parsed["faction_director_state"]) == TYPE_DICTIONARY:
 		parsed["faction_director_state"] = FactionIdentityV4.migrate_director_state(parsed["faction_director_state"])
 	WorldState.load_from_dict(parsed)
@@ -126,6 +128,8 @@ func load_game(slot_id := 1) -> bool:
 		GameFlowManager.load_from_dict(parsed["game_flow_state"])
 	if has_node("/root/WorldDirectorManager"):
 		WorldDirectorManager.load_from_dict(parsed.get("world_director_state", {}))
+	if has_node("/root/NPCMemoryManager"):
+		NPCMemoryManager.load_from_dict(parsed.get("npc_memory_state", {}))
 	if has_node("/root/NFTManager"):
 		NFTManager.load_from_dict(parsed.get("nft_state", {}))
 	if has_node("/root/DeckManager"):
@@ -153,6 +157,8 @@ func _persist_migrated_save(path: String, source: Dictionary, original_version: 
 		migrated["faction_director_state"] = FactionDirectorManager.to_dict()
 	if has_node("/root/TrainingManager"):
 		migrated["training_state"] = TrainingManager.to_dict()
+	if has_node("/root/NPCMemoryManager"):
+		migrated["npc_memory_state"] = NPCMemoryManager.to_dict()
 	if not _write_atomic_json(path, migrated):
 		push_warning("[SaveManager] Save carregado, mas a persistencia da migracao v6 falhou.")
 

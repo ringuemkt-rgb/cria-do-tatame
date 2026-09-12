@@ -117,6 +117,8 @@ func reset_new_game():
 		TinkerBondManager.reset()
 	if has_node("/root/ProgressionOS"):
 		ProgressionOS.reset()
+	if has_node("/root/NPCMemoryManager"):
+		NPCMemoryManager.reset()
 	if has_node("/root/TrainingManager"):
 		TrainingManager.reset()
 	_sync_aliases()
