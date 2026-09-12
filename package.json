@@ -39,6 +39,7 @@
     "validate:public-video-intelligence": "python tools/research/validate_public_video_intelligence_v1.py",
     "test:public-video-intelligence": "python -m unittest discover -s tests -p 'test_public_video_intelligence_v1.py'",
     "research:public-video-plan": "python tools/research/plan_public_video_research_v1.py --limit 12 --json",
+    "report:public-video": "python tools/research/report_public_video_project_status_v1.py --next 5 --json",
     "validate:motion-factory": "python tools/motion_factory/validate_motion_factory_v1.py",
     "test:motion-factory": "python -m unittest discover -s tests -p 'test_motion_factory_v1.py'",
     "validate:grappling-fatigue-f3": "python tools/combat/validate_grappling_fatigue_f3_v1.py",
