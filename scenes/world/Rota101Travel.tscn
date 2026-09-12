@@ -1,0 +1,179 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scenes/world/Rota101Travel.gd" id="1_rota"]
+
+[node name="Rota101Travel" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_rota")
+
+[node name="HUD" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 1
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Top" type="HBoxContainer" parent="HUD"]
+layout_mode = 0
+offset_left = 28.0
+offset_top = 22.0
+offset_right = 1252.0
+offset_bottom = 80.0
+theme_override_constants/separation = 18
+
+[node name="Route" type="Label" parent="HUD/Top"]
+custom_minimum_size = Vector2(310, 0)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.94902, 0.901961, 0.690196, 1)
+theme_override_font_sizes/font_size = 18
+text = "ORIGEM → DESTINO"
+
+[node name="Speed" type="Label" parent="HUD/Top"]
+custom_minimum_size = Vector2(120, 0)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.94902, 0.901961, 0.690196, 1)
+theme_override_font_sizes/font_size = 20
+text = "000 km/h"
+
+[node name="Vehicle" type="Label" parent="HUD/Top"]
+custom_minimum_size = Vector2(190, 0)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.882353, 0.905882, 0.878431, 1)
+text = "KOMBI DO TERREIRO"
+
+[node name="Condition" type="Label" parent="HUD/Top"]
+custom_minimum_size = Vector2(220, 0)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.882353, 0.905882, 0.878431, 1)
+text = "KOMBI 100% • LIMPEZA 100"
+
+[node name="Progress" type="ProgressBar" parent="HUD/Top"]
+custom_minimum_size = Vector2(260, 22)
+layout_mode = 2
+size_flags_vertical = 4
+show_percentage = false
+
+[node name="Message" type="Label" parent="HUD"]
+layout_mode = 0
+offset_left = 28.0
+offset_top = 90.0
+offset_right = 920.0
+offset_bottom = 126.0
+theme_override_colors/font_color = Color(0.94902, 0.901961, 0.690196, 1)
+text = "Dirija limpo."
+
+[node name="Accessibility" type="HBoxContainer" parent="HUD"]
+layout_mode = 0
+offset_left = 28.0
+offset_top = 136.0
+offset_right = 650.0
+offset_bottom = 178.0
+theme_override_constants/separation = 12
+
+[node name="AutoAccelerate" type="CheckButton" parent="HUD/Accessibility"]
+layout_mode = 2
+text = "AUTO ACELERAR"
+
+[node name="LaneAssist" type="CheckButton" parent="HUD/Accessibility"]
+layout_mode = 2
+text = "ASSISTÊNCIA DE FAIXA"
+
+[node name="ReducedShake" type="CheckButton" parent="HUD/Accessibility"]
+layout_mode = 2
+text = "REDUZIR TREPIDAÇÃO"
+
+[node name="Controls" type="HBoxContainer" parent="HUD"]
+layout_mode = 0
+offset_left = 28.0
+offset_top = 622.0
+offset_right = 1252.0
+offset_bottom = 706.0
+theme_override_constants/separation = 10
+
+[node name="Left" type="Button" parent="HUD/Controls"]
+custom_minimum_size = Vector2(118, 72)
+layout_mode = 2
+text = "◀ ESQ"
+
+[node name="Right" type="Button" parent="HUD/Controls"]
+custom_minimum_size = Vector2(118, 72)
+layout_mode = 2
+text = "DIR ▶"
+
+[node name="Accelerate" type="Button" parent="HUD/Controls"]
+custom_minimum_size = Vector2(150, 72)
+layout_mode = 2
+text = "ACELERAR"
+
+[node name="Brake" type="Button" parent="HUD/Controls"]
+custom_minimum_size = Vector2(150, 72)
+layout_mode = 2
+text = "FREAR"
+
+[node name="Horn" type="Button" parent="HUD/Controls"]
+custom_minimum_size = Vector2(130, 72)
+layout_mode = 2
+text = "BUZINA"
+
+[node name="Pause" type="Button" parent="HUD/Controls"]
+custom_minimum_size = Vector2(130, 72)
+layout_mode = 2
+text = "PAUSA"
+
+[node name="Spacer" type="Control" parent="HUD/Controls"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Hint" type="Label" parent="HUD/Controls"]
+custom_minimum_size = Vector2(310, 72)
+layout_mode = 2
+vertical_alignment = 1
+theme_override_colors/font_color = Color(0.780392, 0.819608, 0.8, 1)
+text = "TECLADO: A/D ou ←/→ • W/↑ • S/↓ • Espaço"
+
+[node name="ResultPanel" type="PanelContainer" parent="HUD"]
+layout_mode = 0
+offset_left = 390.0
+offset_top = 220.0
+offset_right = 890.0
+offset_bottom = 500.0
+
+[node name="Margin" type="MarginContainer" parent="HUD/ResultPanel"]
+layout_mode = 2
+theme_override_constants/margin_left = 28
+theme_override_constants/margin_top = 24
+theme_override_constants/margin_right = 28
+theme_override_constants/margin_bottom = 24
+
+[node name="VBox" type="VBoxContainer" parent="HUD/ResultPanel/Margin"]
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="Title" type="Label" parent="HUD/ResultPanel/Margin/VBox"]
+layout_mode = 2
+horizontal_alignment = 1
+theme_override_colors/font_color = Color(0.803922, 0.560784, 0.235294, 1)
+theme_override_font_sizes/font_size = 20
+text = "RESULTADO DA ROTA"
+
+[node name="Result" type="Label" parent="HUD/ResultPanel/Margin/VBox"]
+custom_minimum_size = Vector2(0, 110)
+layout_mode = 2
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
+theme_override_colors/font_color = Color(0.952941, 0.941176, 0.917647, 1)
+theme_override_font_sizes/font_size = 21
+text = "RESULTADO"
+
+[node name="Continue" type="Button" parent="HUD/ResultPanel/Margin/VBox"]
+custom_minimum_size = Vector2(0, 56)
+layout_mode = 2
+text = "CONTINUAR"
