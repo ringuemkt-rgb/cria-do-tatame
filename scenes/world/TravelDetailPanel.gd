@@ -151,6 +151,7 @@ func _on_method_previewed(vehicle_id: String, mode: String) -> void:
 
 func _clear_methods() -> void:
 	for child in methods_box.get_children():
+		methods_box.remove_child(child)
 		child.queue_free()
 
 func _context_text(world_context: Dictionary) -> String:
