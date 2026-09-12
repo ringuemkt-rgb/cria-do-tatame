@@ -1,5 +1,5 @@
 {
-  "version": "0.1.0",
+  "version": "0.2.0",
   "language": "pt-BR",
   "runtime_policy": {
     "enabled_by_default": false,
@@ -25,6 +25,21 @@
       "max_tokens": 96,
       "temperature": 0.55,
       "top_p": 0.85
+    },
+    "nex_n25_ollama": {
+      "type": "ollama_http",
+      "description": "Nex-N2.5-mini GGUF Q4_K_M para dialogo agentic experimental em desktop/LAN. Desligado por padrao e nunca usado no combate.",
+      "desktop_url": "http://127.0.0.1:11434",
+      "android_emulator_url": "http://10.0.2.2:11434",
+      "model": "hf.co/abenzerps/Nex-N2.5-mini-GGUF:Q4_K_M",
+      "timeout_seconds": 30.0,
+      "max_tokens": 128,
+      "temperature": 0.35,
+      "top_p": 0.9,
+      "num_ctx": 8192,
+      "supports_tools": true,
+      "max_tool_rounds": 3,
+      "profile_path": "res://data/ai/nex_n25_dialogue_profile_v1.json"
     },
     "llama_cpp_server": {
       "type": "openai_compatible",
@@ -59,6 +74,16 @@
       "license": "Apache-2.0",
       "tier": "desktop_forte",
       "production_note": "Nao e o modelo padrao do Android por custo de memoria e bateria."
+    },
+    {
+      "hub_id": "abenzerps/Nex-N2.5-mini-GGUF",
+      "base_model": "nex-agi/Nex-N2.5-mini",
+      "role": "dialogo agentic limitado com tool calling read-only e verificacao canonica",
+      "license": "Apache-2.0",
+      "tier": "desktop_muito_forte",
+      "adoption_status": "experimental_optional_dialogue_only",
+      "profile_path": "res://data/ai/nex_n25_dialogue_profile_v1.json",
+      "production_note": "Q4_K_M externo ao APK; backend manual, fallback obrigatorio e nenhuma autoridade sobre gameplay/canon."
     }
   ],
   "prompt_rules": {
@@ -68,6 +93,12 @@
     "forbid_combat_instruction": true,
     "forbid_new_major_lore": true,
     "fallback_on_timeout": true,
-    "fallback_on_invalid_json": true
+    "fallback_on_invalid_json": true,
+    "forbidden_output_fragments": [
+      "caio ravel",
+      "ruan cria",
+      "os aleluiados",
+      "nós tem o molho"
+    ]
   }
 }

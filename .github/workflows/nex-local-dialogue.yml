@@ -1,0 +1,41 @@
+name: Nex Local Dialogue Gate
+
+on:
+  pull_request:
+    paths:
+      - "data/ai/local_ai_config_v01.json"
+      - "data/ai/nex_n25_dialogue_profile_v1.json"
+      - "src/autoloads/LocalAIManager.gd"
+      - "src/ai/LocalAIReadOnlyTools.gd"
+      - "tools/ai/validate_local_ai_nex_v1.py"
+      - "tests/test_local_ai_nex_v1.py"
+      - "docs/LOCAL_AI_ANDROID.md"
+      - ".github/workflows/nex-local-dialogue.yml"
+  push:
+    branches:
+      - "feat/living-npc-nex-dialogue-v1"
+    paths:
+      - "data/ai/local_ai_config_v01.json"
+      - "data/ai/nex_n25_dialogue_profile_v1.json"
+      - "src/autoloads/LocalAIManager.gd"
+      - "src/ai/LocalAIReadOnlyTools.gd"
+      - "tools/ai/validate_local_ai_nex_v1.py"
+      - "tests/test_local_ai_nex_v1.py"
+      - "docs/LOCAL_AI_ANDROID.md"
+      - ".github/workflows/nex-local-dialogue.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  contract:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Validate Nex dialogue contract
+        run: python tools/ai/validate_local_ai_nex_v1.py
+      - name: Test Nex dialogue contract
+        run: python -m unittest tests/test_local_ai_nex_v1.py

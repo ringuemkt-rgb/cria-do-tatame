@@ -1,0 +1,67 @@
+{
+  "$schema": "cria_nex_n25_dialogue_profile_v1",
+  "version": "1.0.0",
+  "status": "EXPERIMENTAL_OPTIONAL_DIALOGUE",
+  "audited_at": "2026-09-12",
+  "runtime_authority": false,
+  "shipping": false,
+  "critical_gameplay_dependency": false,
+  "network_default": false,
+  "base_model": {
+    "id": "nex-agi/Nex-N2.5-mini",
+    "architecture": "qwen3_5_moe",
+    "parameters_total_m": 35107.2,
+    "license": "Apache-2.0",
+    "context_max_tokens": 262144,
+    "capabilities": [
+      "text",
+      "multimodal",
+      "tool_calling"
+    ]
+  },
+  "quantized_runtime": {
+    "id": "abenzerps/Nex-N2.5-mini-GGUF",
+    "revision": "52debb74f4e7cc54f4ac1146b20b0ebb205a8933",
+    "quantization": "Q4_K_M",
+    "model_reference": "hf.co/abenzerps/Nex-N2.5-mini-GGUF:Q4_K_M",
+    "artifact_size_display": "21.17 GB",
+    "artifact_sha256": "dd296f683c798a3e4058fb1ef8c462e6a4cc8b89cd196742a8e5a3da4057fbb3",
+    "mmproj_f16_optional": {
+      "artifact_size_display": "899 MB",
+      "artifact_sha256": "4734f7323dfc0e8dcd5c7c408991aad438021aeab761d223aec0b38a4457ca83",
+      "used_by_this_slice": false
+    },
+    "license": "Apache-2.0"
+  },
+  "integration": {
+    "backend_id": "nex_n25_ollama",
+    "transport": "Ollama /api/chat",
+    "default_num_ctx": 8192,
+    "text_only_in_this_slice": true,
+    "tool_policy": "read_only_allowlist",
+    "allowed_tools": [
+      "canon_lookup",
+      "scene_state_get",
+      "progression_summary_get"
+    ],
+    "max_tool_rounds": 3,
+    "fallback": "data/dialogues/ai_fallbacks_v01.json",
+    "state_mutation_by_model": false,
+    "combat_use": false
+  },
+  "canon_precedence": [
+    "data/production/canon_contract_v4_1.json",
+    "active canonical runtime data from DataRegistry",
+    "non-conflicting public fields from data/brand/canon_lock.json"
+  ],
+  "known_constraints": [
+    "The 262144-token model maximum is not a hardware promise; this profile starts at 8192 tokens.",
+    "The Q4_K_M model remains external to the APK and must never become a required Android download.",
+    "Tool calling quality depends on the local Ollama build/chat template and must pass the dedicated smoke before broader NPC rollout.",
+    "This slice does not implement persistent NPC fact/belief memory; that remains tracked by issue #112."
+  ],
+  "sources": [
+    "https://huggingface.co/nex-agi/Nex-N2.5-mini",
+    "https://huggingface.co/abenzerps/Nex-N2.5-mini-GGUF"
+  ]
+}
