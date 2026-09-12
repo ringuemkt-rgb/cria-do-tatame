@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import json
+import re
 import sys
 from pathlib import Path
 
@@ -33,6 +34,12 @@ def read_text(relative: str) -> str:
 
 def load_json(relative: str) -> dict:
     return json.loads(read_text(relative))
+
+
+def runtime_save_version(save_manager: str) -> int:
+    match = re.search(r"const\s+SAVE_VERSION\s*:=\s*(\d+)", save_manager)
+    assert match is not None, "SaveManager sem SAVE_VERSION"
+    return int(match.group(1))
 
 
 def validate_contract() -> None:
@@ -69,7 +76,9 @@ def validate_runtime_sources() -> None:
     assert 'const ACTIVE_FACTIONS := ["ALE", "LEM", "NTM"]' in faction_manager
     assert "legacy_archive" in faction_manager
     assert "func canonicalize_faction_id" in faction_manager
-    assert "const SAVE_VERSION := 5" in save_manager
+    # A migração de facções introduziu o schema v5. Subsistemas posteriores podem
+    # elevar a versão global, mas nunca regredi-la abaixo de v5.
+    assert runtime_save_version(save_manager) >= 5
     assert "_persist_migrated_save" in save_manager
     assert "migrate_director_state" in save_manager
     assert "FactionManager.canonicalize_faction_id" in bridge
@@ -173,7 +182,7 @@ def main() -> int:
         for failure in failures:
             print(f" - {failure}")
         return 1
-    print("[FactionMigrationV4.2] OK - 3 facções, aliases e save v5 validados")
+    print("[FactionMigrationV4.2] OK - 3 facções, aliases e compatibilidade save >= v5 validados")
     return 0
 
 

@@ -40,6 +40,8 @@ signal skill_unlocked(skill_id)
 signal sponsor_contract_signed(sponsor_id)
 signal sponsor_contract_broken(sponsor_id)
 signal crisis_triggered(crisis_id)
+signal training_completed(training_type, activity_id, result)
+signal world_travel_completed(hub_id, first_visit, travel_entry)
 
 signal dia_avancou(day_name, week_number)
 
@@ -50,6 +52,13 @@ signal cria_live_post_generated(post_data)
 signal cria_live_metrics_changed(faction_id, metrics)
 
 signal reputacao_mudou(axis, delta, new_value)
+
+signal progress_event_recorded(event)
+signal progression_changed(snapshot)
+signal progression_domain_changed(domain_id, xp)
+signal technique_mastery_changed(technique_id, entry)
+signal codex_entry_changed(technique_id, entry)
+signal achievement_unlocked(achievement_id, reward)
 
 signal faction_relation_changed(faction_id, delta, new_value, reason)
 signal faction_heat_changed(faction_id, delta, new_value, reason)

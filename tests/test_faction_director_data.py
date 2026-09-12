@@ -124,7 +124,9 @@ def test_runtime_contracts_are_registered() -> None:
     assert 'FactionAIPlanBridge="*res://src/autoloads/FactionAIPlanBridge.gd"' in project
     assert "signal faction_operation_started" in signal_bus
     assert "signal faction_leadership_changed" in signal_bus
-    assert 'const SAVE_VERSION := 5' in save_manager
+    # ProgressionOS introduz o progression_state e portanto eleva o schema de save para v6.
+    assert 'const SAVE_VERSION := 6' in save_manager
+    assert 'data["progression_state"]' in save_manager
     assert 'data["faction_director_state"]' in save_manager
     assert 'data["cria_live_state"]' in save_manager
     assert 'const ACTIVE_FACTIONS := ["ALE", "LEM", "NTM"]' in faction_manager
