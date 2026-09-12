@@ -15,6 +15,7 @@ MOTION_FACTORY = ROOT / "data/production/motion_factory_v1.json"
 SKILL = ROOT / ".agents/skills/cria-public-video-intelligence/SKILL.md"
 PLANNER = ROOT / "tools/research/plan_public_video_research_v1.py"
 YOUTUBE_ADAPTER = ROOT / "tools/research/youtube_public_discovery_v1.py"
+STATUS_REPORTER = ROOT / "tools/research/report_public_video_project_status_v1.py"
 
 
 def load(path: Path) -> dict[str, Any]:
@@ -26,7 +27,17 @@ def load(path: Path) -> dict[str, Any]:
 
 def main() -> int:
     errors: list[str] = []
-    for path in (DIRECTOR, LEDGER, CORPUS, MOTION_LAB, MOTION_FACTORY, SKILL, PLANNER, YOUTUBE_ADAPTER):
+    for path in (
+        DIRECTOR,
+        LEDGER,
+        CORPUS,
+        MOTION_LAB,
+        MOTION_FACTORY,
+        SKILL,
+        PLANNER,
+        YOUTUBE_ADAPTER,
+        STATUS_REPORTER,
+    ):
         if not path.exists():
             errors.append(f"missing required file: {path.relative_to(ROOT)}")
     if errors:
@@ -40,6 +51,7 @@ def main() -> int:
     motion_factory = load(MOTION_FACTORY)
     skill = SKILL.read_text(encoding="utf-8")
     youtube_text = YOUTUBE_ADAPTER.read_text(encoding="utf-8")
+    reporter_text = STATUS_REPORTER.read_text(encoding="utf-8")
 
     if director.get("version") != "1.0.0" or director.get("status") != "ACTIVE_AUTONOMOUS_RESEARCH_DIRECTOR":
         errors.append("director must be active v1.0.0")
@@ -158,6 +170,16 @@ def main() -> int:
         if token.lower() in lowered:
             errors.append(f"YouTube discovery adapter must not contain downloader/caption-download path: {token}")
 
+    # Reporter is deliberately project-facing: no user action is required for normal research routing.
+    for token in (
+        '"user_action_required_now": False',
+        '"next_autonomous_targets"',
+        '"true_blockers"',
+        '"project_assessment"',
+    ):
+        if token not in reporter_text:
+            errors.append(f"project status reporter missing autonomy token: {token}")
+
     result = {
         "ok": not errors,
         "errors": errors,
@@ -165,6 +187,7 @@ def main() -> int:
         "source_records": len(sources),
         "observations": len(observations),
         "youtube_adapter": "OFFICIAL_METADATA_ONLY",
+        "project_status_reporter": True,
         "shipping": False,
     }
     print(json.dumps(result, ensure_ascii=False, indent=2, sort_keys=True))
