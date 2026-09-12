@@ -2,7 +2,7 @@ extends Control
 
 const HUB_SCENE := "res://scenes/hubs/TerreiroDaLuta.tscn"
 
-var scene_id := "cena_ruan_derrota_mangue"
+@export var scene_id := "cena_ruan_derrota_mangue"
 
 func _ready() -> void:
 	if has_node("Panel/Next"):
