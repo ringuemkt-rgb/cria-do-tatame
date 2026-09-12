@@ -1,0 +1,128 @@
+{
+  "$schema": "cria.motion_factory.slice.v1",
+  "version": "1.0.0",
+  "status": "CAPTURE_PENDING",
+  "shipping": false,
+  "purpose": "First executable Motion Factory backlog for the canonical Ruan x Davi grappling slice. Units are production obligations, not evidence that capture or mocap already exists.",
+  "source_chain": "data/combat/golden_chain_ruan_davi_v1.json",
+  "motion_factory": "data/production/motion_factory_v1.json",
+  "performers": [
+    {"slot": "p1", "character_id": "ruan_macacao", "role_default": "attacker"},
+    {"slot": "p2", "character_id": "davi_relampago", "role_default": "defender"}
+  ],
+  "capture_policy": {
+    "source_tier": "A_CRIA_OWN_MULTIVIEW",
+    "authoring_plate": "LOCKED_CAMERA_PAIR_PLATE_ALLOWED_AS_RETARGET_REFERENCE",
+    "gold_biomechanics": "REQUIRES_MOTION_LAB_MULTIVIEW_REVIEW",
+    "t_pose_bookends_for_mixamo_adapter": true,
+    "performers_must_not_cross_screen_sides_during_pair_plate": true,
+    "different_high_contrast_clothing": true,
+    "full_body_visibility_target": true,
+    "raw_media_in_git": false,
+    "rights_and_release_refs_required": true
+  },
+  "canonical_phases": [
+    "anticipation",
+    "entry",
+    "establish",
+    "stabilize",
+    "response",
+    "recovery"
+  ],
+  "units": [
+    {
+      "id": "mf_ruan_davi_t001_takedown",
+      "technique_id": "t001",
+      "from": "standing_neutral",
+      "to": "half_guard_top",
+      "attacker": "ruan_macacao",
+      "defender": "davi_relampago",
+      "modality": "GI",
+      "branch": "success_chain",
+      "capture_status": "PENDING",
+      "action_spec_status": "PENDING_HUMAN_BEAT_REVIEW"
+    },
+    {
+      "id": "mf_ruan_davi_slice_sprawl",
+      "technique_id": "slice_sprawl",
+      "from": "standing_neutral",
+      "to": "front_headlock",
+      "attacker": "ruan_macacao",
+      "defender": "davi_relampago",
+      "modality": "GI",
+      "branch": "defense_counter",
+      "capture_status": "PENDING",
+      "action_spec_status": "PENDING_HUMAN_BEAT_REVIEW"
+    },
+    {
+      "id": "mf_ruan_davi_t025_guard_pass",
+      "technique_id": "t025",
+      "from": "half_guard_top",
+      "to": "side_control",
+      "attacker": "ruan_macacao",
+      "defender": "davi_relampago",
+      "modality": "GI",
+      "branch": "success_chain",
+      "capture_status": "PENDING",
+      "action_spec_status": "PENDING_HUMAN_BEAT_REVIEW"
+    },
+    {
+      "id": "mf_ruan_davi_t049_knee_shield_counter",
+      "technique_id": "t049",
+      "from": "half_guard_top",
+      "to": "knee_shield_half",
+      "attacker": "ruan_macacao",
+      "defender": "davi_relampago",
+      "modality": "GI",
+      "branch": "defense_counter",
+      "capture_status": "PENDING",
+      "action_spec_status": "PENDING_HUMAN_BEAT_REVIEW"
+    },
+    {
+      "id": "mf_ruan_davi_side_to_mount",
+      "technique_id": "slice_side_to_mount",
+      "from": "side_control",
+      "to": "mount_high",
+      "attacker": "ruan_macacao",
+      "defender": "davi_relampago",
+      "modality": "GI",
+      "branch": "success_chain",
+      "capture_status": "PENDING",
+      "action_spec_status": "PENDING_HUMAN_BEAT_REVIEW"
+    },
+    {
+      "id": "mf_ruan_davi_t057_submission",
+      "technique_id": "t057",
+      "from": "mount_high",
+      "to": "submission",
+      "attacker": "ruan_macacao",
+      "defender": "davi_relampago",
+      "modality": "GI",
+      "branch": "success_chain",
+      "capture_status": "PENDING",
+      "action_spec_status": "PENDING_HUMAN_BEAT_REVIEW",
+      "safety_note": "Capture stops before forced end range; tap and safety protocol remain authoritative."
+    },
+    {
+      "id": "mf_ruan_davi_t005_closed_guard_entry",
+      "technique_id": "t005",
+      "from": "standing_neutral",
+      "to": "closed_guard",
+      "attacker": "ruan_macacao",
+      "defender": "davi_relampago",
+      "modality": "GI",
+      "branch": "alternate_branch",
+      "capture_status": "PENDING",
+      "action_spec_status": "PENDING_HUMAN_BEAT_REVIEW"
+    }
+  ],
+  "promotion": {
+    "capture_complete": false,
+    "retarget_complete": false,
+    "numeric_qa_complete": false,
+    "mesh_contact_review_complete": false,
+    "sprite_forge_complete": false,
+    "godot_visual_qa_complete": false,
+    "human_approved": false
+  }
+}
