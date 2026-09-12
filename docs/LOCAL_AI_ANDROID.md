@@ -73,6 +73,53 @@ Fluxo inválido para release:
 - Suporte explícito a português entre os idiomas do modelo.
 - Recomendado para prototipação no desktop, não como padrão de aparelho intermediário.
 
+### Nex-N2.5-mini — diálogo agentic experimental
+
+O Nex entra apenas como **backend opcional de desenvolvimento** para fala episódica. O modelo não recebe autoridade sobre `WorldState`, `ProgressionOS`, combate, save ou cânone.
+
+Perfil auditado:
+
+- base: `nex-agi/Nex-N2.5-mini`, Apache-2.0, arquitetura `qwen3_5_moe`;
+- runtime testado por contrato: `abenzerps/Nex-N2.5-mini-GGUF`, Q4_K_M;
+- revisão GGUF pinada: `52debb74f4e7cc54f4ac1146b20b0ebb205a8933`;
+- Q4_K_M registrado com SHA-256 `dd296f683c798a3e4058fb1ef8c462e6a4cc8b89cd196742a8e5a3da4057fbb3`;
+- tamanho observado do Q4_K_M: aproximadamente 21,17 GB;
+- contexto do perfil CRIA começa em **8K**, não em 262K, para manter o custo local limitado;
+- multimodal permanece fora deste slice; a integração atual é texto + tool calling read-only.
+
+Instalação/teste manual:
+
+```bash
+ollama run hf.co/abenzerps/Nex-N2.5-mini-GGUF:Q4_K_M
+```
+
+Ativação no desenvolvimento:
+
+```gdscript
+LocalAIManager.configure_backend("nex_n25_ollama")
+```
+
+No celular físico, informe o IP LAN do servidor:
+
+```gdscript
+LocalAIManager.configure_backend(
+    "nex_n25_ollama",
+    "http://192.168.1.50:11434"
+)
+```
+
+### Ferramentas permitidas ao Nex
+
+A allowlist atual é deliberadamente pequena:
+
+- `canon_lookup` — fatos públicos, com precedência para `canon_contract_v4_1.json`;
+- `scene_state_get` — apenas localização/cena e relógio público;
+- `progression_summary_get` — somente `respect` e XP social agregados.
+
+Todas são read-only. O modelo não recebe tool de escrita. Em especial, não existe tool para `record_event`, combate, save, unlock, dinheiro ou reputação.
+
+Há um conflito legado conhecido em `data/brand/canon_lock.json`: nomes antigos de facção ainda aparecem nesse arquivo. A projeção fornecida à IA **não usa esse campo bruto**; facções vêm do contrato v4.1, onde `ALE = Os Aleluiado` e `NTM = Nós Tem Um Molho`.
+
 ## Backend nativo Android futuro
 
 Uma versão realmente on-device exige uma destas rotas:
@@ -145,7 +192,9 @@ LocalAIManager.configure_backend(
 - timeout vira fallback;
 - JSON inválido vira fallback;
 - rede desligada por padrão;
-- nenhuma chave OpenAI ou Hugging Face dentro do APK.
+- nenhuma chave OpenAI ou Hugging Face dentro do APK;
+- tool calling, quando habilitado, usa allowlist read-only e limite de rodadas;
+- variações legadas conhecidas de nomes canônicos são rejeitadas antes de chegar ao jogador.
 
 ## Testes obrigatórios
 
@@ -157,6 +206,10 @@ LocalAIManager.configure_backend(
 6. Dois NPCs pedindo fala: fila sequencial sem mistura.
 7. Combate durante falha de IA generativa: zero impacto no loop.
 8. Fechar e reabrir o jogo: nenhuma dependência de servidor.
+9. Nex pede `canon_lookup`: somente a allowlist read-only é executada.
+10. Nex excede `max_tool_rounds`: fallback é acionado.
+11. Nex tenta usar tool desconhecida: `tool_not_allowed`.
+12. Resposta contém nome canônico legado bloqueado: fallback é acionado.
 
 ## Definition of Done da IA generativa
 
@@ -168,3 +221,5 @@ A feature só pode ser chamada de pronta quando:
 - o Android físico foi testado;
 - RAM, bateria, temperatura e latência estão documentadas;
 - nenhuma promessa de "IA dentro do APK" depende de um servidor escondido na rede.
+
+O slice Nex v1 é apenas **experimental e opcional** até que os gates acima e o escopo de memória social da issue #112 sejam concluídos.
