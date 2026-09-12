@@ -45,9 +45,13 @@ class PublicVideoIntelligenceV1Tests(unittest.TestCase):
         report = json.loads(proc.stdout)
         self.assertTrue(report["ok"])
         self.assertFalse(report["user_selection_required"])
-        ids = {row["technique_id"] for row in report["next_targets"]}
+        by_id = {row["technique_id"]: row for row in report["next_targets"]}
         for expected in ("t001", "slice_sprawl", "t025", "t049", "slice_side_to_mount", "t057", "t005"):
-            self.assertIn(expected, ids)
+            self.assertIn(expected, by_id)
+        self.assertEqual(by_id["t001"]["name_pt"], "Baiana Double-Leg")
+        self.assertEqual(by_id["t025"]["name_pt"], "Body-Lock Pass")
+        self.assertTrue(any("Baiana Double-Leg" in q for q in by_id["t001"]["queries"]))
+        self.assertTrue(any("Body-Lock Pass" in q for q in by_id["t025"]["queries"]))
         for row in report["next_targets"]:
             self.assertGreaterEqual(len(row["queries"]), 3)
 
