@@ -32,22 +32,31 @@ func _run() -> void:
 		"tipo": "clandestina",
 		"faccao": "NTM"
 	}
-	var context := {
+	var blocked_context := {
 		"weather": "chuva",
 		"act": 3,
 		"sombra": 10,
 		"flags": {},
 		"route_unlocks": []
 	}
+	var blocked_view: Dictionary = panel.present_node("itubera", node, blocked_context)
+	_check(bool(blocked_view.get("route_found", false)), "panel resolves route even when destination node is locked")
+	_check(not bool(blocked_view.get("traversable", true)), "destination node lock blocks travel preview")
+	_check(blocked_view.get("gate_reasons", []).has("node_lock_unsatisfied:tinker"), "node lock exposes missing tinker requirement")
+	_check(world_map_manager.call("to_dict") == map_before, "locked preview does not mutate map state")
+
+	var context := blocked_context.duplicate(true)
+	context["flags"] = {"tinker": true}
 	var view: Dictionary = panel.present_node("itubera", node, context)
 	_check(bool(view.get("route_found", false)), "panel resolves a catalogued route")
 	_check(str(view.get("destination", "")) == "ponte_do_saici", "panel keeps destination id")
 	_check(str(view.get("route_type", "")) == "terrestre", "panel displays normalized route type")
 	_check(bool(view.get("read_only", false)), "panel declares read-only VT2 semantics")
-	_check(bool(view.get("traversable", false)), "unblocked terrestrial route is previewable")
+	_check(bool(view.get("traversable", false)), "destination opens when node requirements are satisfied")
 	_check(_has_method(view.get("method_options", []), "kombi_terreiro"), "panel exposes Kombi option")
 	_check(_has_method(view.get("method_options", []), "onibus_regional"), "panel exposes regional bus fallback")
 	_check(str(view.get("world_context_snapshot", {}).get("weather", "")) == "chuva", "panel preserves route context snapshot")
+	_check(bool(view.get("world_context_snapshot", {}).get("flags", {}).get("tinker", false)), "panel preserves node-lock flag in context snapshot")
 	_check(panel.visible, "panel becomes visible after focus")
 
 	var kombi_button: Button = panel.get_node_or_null("Margin/VBox/Methods/Method_kombi_terreiro")
