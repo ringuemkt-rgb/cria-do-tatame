@@ -26,6 +26,52 @@
       "notes": "Already integrated through qwen_pixel_art_profile_v1. Training dataset provenance is not disclosed, therefore generation never implies shipping rights."
     },
     {
+      "id": "pixellab_mcp",
+      "kind": "remote_mcp_service",
+      "source": "https://api.pixellab.ai/mcp",
+      "revision": "docs-audited-2026-09-12_terms-2025-11-23",
+      "license_status": "SERVICE_TERMS_COMMERCIAL_OUTPUT_ALLOWED_NO_MODEL_TRAINING",
+      "adoption": "ADOPTED_EXTERNAL_AUTHORING_PROVIDER",
+      "direct_code_reuse": false,
+      "direct_asset_reuse": false,
+      "runtime_dependency": false,
+      "shipping_default": false,
+      "canon_authority": false,
+      "authentication": {
+        "scheme": "bearer",
+        "secret_policy": "environment_or_secret_store_only",
+        "forbid_repository_token": true
+      },
+      "output_policy": {
+        "generated_outputs_may_be_commercial_candidates": true,
+        "automatic_shipping": false,
+        "human_visual_review_required": true,
+        "asset_sidecar_and_provenance_required": true,
+        "model_training_reuse_without_written_permission": false
+      },
+      "cria_roles": [
+        "pixel_art_candidate_generation",
+        "character_identity_candidate",
+        "directional_character_views",
+        "locomotion_animation_candidate",
+        "non_authoritative_action_animation_candidate",
+        "tileset_candidate_generation",
+        "map_prop_candidate_generation",
+        "vehicle_sprite_candidate_generation",
+        "ui_icon_candidate_generation",
+        "reference_conditioned_generation",
+        "background_removal_and_editing"
+      ],
+      "blocked_roles": [
+        "canon_authority",
+        "bjj_legality_authority",
+        "combat_scoring_authority",
+        "runtime_required_generation",
+        "automatic_shipping_promotion"
+      ],
+      "notes": "Official PixelLab remote MCP authoring endpoint. Use only as an interchangeable CRIA Sprite Forge candidate generator. PixelLab documentation advertises character, animation, tileset, UI and pixel-art generation; terms dated 2025-11-23 allow commercial use of generated creations while forbidding training new models on generated images without explicit written permission. Never commit bearer tokens. Outputs remain shipping=false until CRIA provenance, identity, visual, rights, BJJ-when-applicable and Godot runtime gates pass."
+    },
+    {
       "id": "claude_code_game_studios",
       "kind": "github_repo",
       "source": "Donchitos/Claude-Code-Game-Studios",
