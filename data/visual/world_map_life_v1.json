@@ -15,6 +15,17 @@
     "use": "art_direction_only",
     "human_review_required_before_shipping": true
   },
+  "candidate_assets": [
+    {
+      "id": "baixo_sul_base_v01",
+      "path": "res://assets/world/maps/candidate/baixo_sul_base_v01.jpg",
+      "page_id": "01",
+      "layer": "map_base_art",
+      "origin": "generated_from_user_art_direction",
+      "shipping": false,
+      "required_gates": ["provenance_review", "visual_review", "android_runtime_capture", "human_approval"]
+    }
+  ],
   "layers": ["map_base_art", "world_overlay", "ui_overlay", "narrative_overlay"],
   "visual_language": {
     "frame": "ink_black_with_aged_gold_filigree",
