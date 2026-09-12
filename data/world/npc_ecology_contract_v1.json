@@ -26,7 +26,7 @@
   ],
   "knowledge_scopes": ["PUBLIC", "LOCAL", "FACTION", "ACADEMY", "PERSONAL", "SECRET", "UNKNOWN"],
   "memory_classes": ["SEMANTIC", "EPISODIC", "RELATIONSHIP", "WORKING", "CORE_MEMORY"],
-  "relationship_axes": ["respect", "trust", "affection", "rivalry", "fear", "debt"],
+  "relationship_axes": ["respect", "trust", "affection", "rivalry", "fear", "debt", "suspicion"],
   "npc_required_fields": ["id", "home_node", "schedule_profile", "knowledge_scopes", "goals", "relationships"],
   "schedule_entry_required_fields": ["start_minute", "end_minute", "node", "activity"],
   "schedule_rules": {
