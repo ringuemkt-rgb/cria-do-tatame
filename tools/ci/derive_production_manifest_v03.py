@@ -243,6 +243,8 @@ class Derivator:
         missions = self.load_source("missions")
         if not missions:
             self.add_blocker("missions_source_missing", self.contract["sources"]["missions"]["path"], "MISSION_SCENE_SCALE_BLOCKED")
+        else:
+            self.source_snapshot["missions"] = len(missions.get("missions", []))
 
     def derive_icons(self) -> None:
         icons = self.load_source("icons", blocker_if_missing=True)
