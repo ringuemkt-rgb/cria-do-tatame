@@ -1,0 +1,47 @@
+name: Motion Factory V1
+
+on:
+  pull_request:
+    paths:
+      - 'data/production/motion_factory_v1.json'
+      - 'data/motion/**'
+      - 'data/production/external_tool_registry_v1.json'
+      - 'data/research/motion_tool_registry_v1.json'
+      - 'tools/motion_factory/**'
+      - 'tests/test_motion_factory_v1.py'
+      - 'docs/gameplay/MOTION_FACTORY_V1.md'
+      - '.github/workflows/motion-factory-v1.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'data/production/motion_factory_v1.json'
+      - 'data/motion/**'
+      - 'data/production/external_tool_registry_v1.json'
+      - 'data/research/motion_tool_registry_v1.json'
+      - 'tools/motion_factory/**'
+      - 'tests/test_motion_factory_v1.py'
+      - 'docs/gameplay/MOTION_FACTORY_V1.md'
+
+jobs:
+  validate-motion-factory:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Validate Motion Factory contract
+        run: python tools/motion_factory/validate_motion_factory_v1.py
+
+      - name: Run Motion Factory invariant tests
+        run: python -m unittest discover -s tests -p 'test_motion_factory_v1.py'
+
+      - name: Re-run external tool license gate
+        run: python tools/ci/validate_external_tool_registry_v1.py
+
+      - name: Re-run Grappling Motion Lab gate
+        run: python tools/combat/validate_grappling_motion_lab_v1.py

@@ -1,0 +1,88 @@
+{
+  "$schema": "cria.motion_factory.v1",
+  "version": "1.0.0",
+  "status": "ACTIVE_OFFLINE_AUTHORING_PIPELINE",
+  "shipping": false,
+  "runtime_dependency": false,
+  "purpose": "Convert rights-cleared CRIA combat capture into measurable 3D retarget references, pair-contact QA and Sprite Forge handoff without allowing mocap tooling to redefine combat state, BJJ legality, scoring or shipping status.",
+  "upstream": {
+    "id": "mixamo_llm_mocap",
+    "source": "squall01337/mixamo-llm-mocap",
+    "revision": "00dfd5385506022d533c84f6737a09f5f4392623",
+    "code_license": "MIT",
+    "vendored": false,
+    "runtime_dependency": false,
+    "third_party_review_required": [
+      "Adobe Mixamo character terms",
+      "GVHMR code and checkpoint terms",
+      "SMPL-X body-model terms",
+      "Blender and Blender MCP terms"
+    ]
+  },
+  "authorities": {
+    "combat_state": "src/combat/BJJGraphReducerV2.gd",
+    "grappling_runtime": "src/combat/CriaGrapplingRuntimeV1.gd",
+    "motion_lab": "data/research/grappling_motion_lab_contract_v1.json",
+    "golden_chain": "data/combat/golden_chain_ruan_davi_v1.json",
+    "sprite_forge": "data/visual/sprite_forge_contract_v2.json",
+    "external_tool_registry": "data/production/external_tool_registry_v1.json",
+    "motion_tool_registry": "data/research/motion_tool_registry_v1.json"
+  },
+  "input_policy": {
+    "preferred_source": "CRIA_OWN_CAPTURE_WITH_RELEASES",
+    "public_url_is_permission": false,
+    "raw_media_may_be_committed_to_git": false,
+    "source_hash_required": true,
+    "rights_classification_required_before_processing": true,
+    "single_view_output_is_gold_biomechanical_authority": false
+  },
+  "canonical_phases": [
+    "anticipation",
+    "entry",
+    "establish",
+    "stabilize",
+    "response",
+    "recovery"
+  ],
+  "pipeline": [
+    {"id": "MF00", "name": "rights_gate", "output": "ledger-backed source approval"},
+    {"id": "MF01", "name": "immutable_ingest", "output": "external sha256-addressed plate manifest"},
+    {"id": "MF02", "name": "pose_estimate", "tool": "estimate_pose_gvhmr.py", "output": "landmarks candidate"},
+    {"id": "MF03", "name": "landmark_analysis", "tool": "analyze_landmarks.py", "output": "numeric beat evidence"},
+    {"id": "MF04", "name": "action_spec_review", "output": "human-reviewed action_spec JSON"},
+    {"id": "MF05", "name": "retarget", "tool": "lift_to_mixamo.py", "output": "rig-proportional joint targets"},
+    {"id": "MF06", "name": "blender_apply", "tool": "run_in_blender.py all", "output": "FK animation candidate"},
+    {"id": "MF07", "name": "clip_qa", "tool": "qa_clip.py", "output": "skeleton, root and foot-contact QA"},
+    {"id": "MF08", "name": "reference_compare", "tool": "compare_reference.py", "output": "frame-window divergence report"},
+    {"id": "MF09", "name": "pair_compare", "tool": "compare_pair.py", "output": "separation, reach and intrusion QA"},
+    {"id": "MF10", "name": "mesh_contact", "tool": "run_in_blender.py contact", "output": "evaluated mesh collision evidence"},
+    {"id": "MF11", "name": "preview", "tool": "render_preview.py", "output": "side-by-side review evidence"},
+    {"id": "MF12", "name": "sprite_handoff", "output": "normalized motion reference for Sprite Forge V2"},
+    {"id": "MF13", "name": "godot_runtime_visual_qa", "output": "real in-engine frame evidence and human approval"}
+  ],
+  "qa_gates": [
+    "ANIM_QA_01_SKELETON_INTEGRITY",
+    "ANIM_QA_02_FOOT_CONTACT",
+    "ANIM_QA_03_ROOT_DISPLACEMENT",
+    "ANIM_QA_04_SILHOUETTE_READABILITY",
+    "ANIM_QA_05_STRIKE_OR_ENTRY_REACH",
+    "ANIM_QA_06_PAIR_SPACING",
+    "ANIM_QA_07_MESH_COLLISION",
+    "ANIM_QA_08_SPRITE_PIVOT_CONSISTENCY",
+    "ANIM_QA_09_GAMEPLAY_TIMING",
+    "ANIM_QA_10_ANDROID_SPRITE_BUDGET"
+  ],
+  "hard_gates": {
+    "mocap_may_define_technique": false,
+    "mocap_may_define_rules": false,
+    "mocap_may_define_score": false,
+    "mocap_may_set_shipping_true": false,
+    "generated_or_retargeted_output_may_auto_approve": false,
+    "pair_collision_proxy_may_replace_mesh_contact_when_visuals_disagree": false,
+    "human_review_required": true,
+    "rights_review_required": true,
+    "sprite_forge_required": true,
+    "godot_runtime_evidence_required": true
+  },
+  "vertical_slice": "data/motion/ruan_davi_motion_slice_v1.json"
+}
