@@ -1,0 +1,81 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scenes/story/StoryScenePlayer.gd" id="1_story"]
+
+[node name="PrologueBase" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_story")
+scene_id = "z1"
+
+[node name="Background" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.043, 0.043, 0.051, 1)
+
+[node name="Panel" type="Panel" parent="."]
+layout_mode = 0
+offset_left = 64.0
+offset_top = 64.0
+offset_right = 1216.0
+offset_bottom = 656.0
+
+[node name="Title" type="Label" parent="Panel"]
+layout_mode = 0
+offset_left = 48.0
+offset_top = 36.0
+offset_right = 1088.0
+offset_bottom = 78.0
+theme_override_font_sizes/font_size = 28
+text = "Cena"
+
+[node name="Location" type="Label" parent="Panel"]
+layout_mode = 0
+offset_left = 48.0
+offset_top = 92.0
+offset_right = 1088.0
+offset_bottom = 122.0
+theme_override_font_sizes/font_size = 16
+
+[node name="Mood" type="Label" parent="Panel"]
+layout_mode = 0
+offset_left = 48.0
+offset_top = 132.0
+offset_right = 1088.0
+offset_bottom = 164.0
+theme_override_font_sizes/font_size = 14
+autowrap_mode = 2
+
+[node name="Text" type="Label" parent="Panel"]
+layout_mode = 0
+offset_left = 48.0
+offset_top = 208.0
+offset_right = 1088.0
+offset_bottom = 430.0
+theme_override_font_sizes/font_size = 22
+autowrap_mode = 2
+vertical_alignment = 1
+
+[node name="Back" type="Button" parent="Panel"]
+layout_mode = 0
+offset_left = 48.0
+offset_top = 492.0
+offset_right = 248.0
+offset_bottom = 548.0
+text = "VOLTAR"
+
+[node name="Next" type="Button" parent="Panel"]
+layout_mode = 0
+offset_left = 888.0
+offset_top = 492.0
+offset_right = 1088.0
+offset_bottom = 548.0
+text = "CONTINUAR"

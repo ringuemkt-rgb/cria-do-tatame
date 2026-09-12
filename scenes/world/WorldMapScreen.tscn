@@ -1,45 +1,117 @@
-[gd_scene load_steps=2 format=3]
+[gd_scene load_steps=3 format=3]
 
-[ext_resource type="Script" path="res://scenes/world/WorldMapScreen.gd" id="1_map"]
+[ext_resource type="Script" path="res://scenes/world/WorldMapScreen.gd" id="1_screen"]
+[ext_resource type="Script" path="res://scenes/world/WorldMapLifeLayer.gd" id="2_life"]
 
 [node name="WorldMapScreen" type="Control"]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-script = ExtResource("1_map")
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_screen")
 
-[node name="Panel" type="VBoxContainer" parent="."]
+[node name="WorldMapLifeLayer" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("2_life")
+
+[node name="HUD" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="LeftPanel" type="VBoxContainer" parent="HUD"]
+layout_mode = 0
+offset_left = 34.0
+offset_top = 116.0
+offset_right = 330.0
+offset_bottom = 342.0
+mouse_filter = 2
+theme_override_colors/font_color = Color(0.96, 0.91, 0.7, 1)
+theme_override_font_sizes/font_size = 16
+
+[node name="Title" type="Label" parent="HUD/LeftPanel"]
 layout_mode = 2
+text = "ROTA DO CRIA"
+theme_override_colors/font_color = Color(0.94, 0.79, 0.39, 1)
+theme_override_font_sizes/font_size = 22
 
-[node name="Title" type="Label" parent="Panel"]
-layout_mode = 2
-text = "MAPA DO BAIXO SUL"
-
-[node name="Status" type="Label" parent="Panel"]
+[node name="Status" type="Label" parent="HUD/LeftPanel"]
 layout_mode = 2
 text = "Hub atual"
 
-[node name="Message" type="Label" parent="Panel"]
+[node name="Message" type="Label" parent="HUD/LeftPanel"]
 layout_mode = 2
-text = "Escolha um destino"
+autowrap_mode = 2
+text = "Escolha uma região no mapa."
 
-[node name="Itubera" type="Button" parent="Panel"]
+[node name="Detail" type="Label" parent="HUD/LeftPanel"]
 layout_mode = 2
-text = "ITUBERA"
+autowrap_mode = 2
+text = "Rotas, locais e segredos usam estado canônico do jogo."
 
-[node name="Salvador" type="Button" parent="Panel"]
+[node name="Regional" type="Button" parent="HUD/LeftPanel"]
 layout_mode = 2
+mouse_filter = 0
+text = "VOLTAR AO BAIXO SUL"
+
+[node name="RightPanel" type="VBoxContainer" parent="HUD"]
+layout_mode = 0
+offset_left = 1510.0
+offset_top = 120.0
+offset_right = 1880.0
+offset_bottom = 470.0
+mouse_filter = 2
+theme_override_colors/font_color = Color(0.96, 0.91, 0.7, 1)
+theme_override_font_sizes/font_size = 16
+
+[node name="Title" type="Label" parent="HUD/RightPanel"]
+layout_mode = 2
+text = "VIAGEM DISPONÍVEL"
+theme_override_colors/font_color = Color(0.94, 0.79, 0.39, 1)
+theme_override_font_sizes/font_size = 19
+
+[node name="Itubera" type="Button" parent="HUD/RightPanel"]
+layout_mode = 2
+mouse_filter = 0
+text = "ITUBERÁ"
+
+[node name="Salvador" type="Button" parent="HUD/RightPanel"]
+layout_mode = 2
+mouse_filter = 0
 text = "SALVADOR"
 
-[node name="Zambiapunga" type="Button" parent="Panel"]
+[node name="Zambiapunga" type="Button" parent="HUD/RightPanel"]
 layout_mode = 2
+mouse_filter = 0
 text = "ZAMBIAPUNGA"
 
-[node name="Camamu" type="Button" parent="Panel"]
+[node name="Camamu" type="Button" parent="HUD/RightPanel"]
 layout_mode = 2
+mouse_filter = 0
 text = "CAMAMU E MANGUEZAL"
 
-[node name="Back" type="Button" parent="Panel"]
+[node name="Back" type="Button" parent="HUD/RightPanel"]
 layout_mode = 2
-text = "VOLTAR"
+mouse_filter = 0
+text = "VOLTAR AO TERREIRO"
+
+[node name="Footer" type="Label" parent="HUD"]
+layout_mode = 0
+offset_left = 34.0
+offset_top = 1008.0
+offset_right = 1250.0
+offset_bottom = 1052.0
+mouse_filter = 2
+theme_override_colors/font_color = Color(0.87, 0.78, 0.48, 1)
+text = "TOQUE EM UM MUNICÍPIO • ROTAS PONTILHADAS INDICAM CAMINHOS • ANÉIS VIOLETAS GUARDAM SEGREDOS"
