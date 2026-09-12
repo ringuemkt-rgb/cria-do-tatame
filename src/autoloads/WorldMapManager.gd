@@ -1,6 +1,7 @@
 extends Node
 
 const ResolverScript = preload("res://src/world/WorldRouteResolver.gd")
+const VehicleServiceScript = preload("res://src/world/VehicleServiceModel.gd")
 const TRAVEL_CONTRACT_PATH := "res://data/world/vehicle_world_travel_v1.json"
 const WORLD_TRAVEL_STATE_VERSION := 1
 const MAX_COMMITTED_PLAN_IDS := 64
@@ -23,6 +24,7 @@ var world_travel_state: Dictionary = {
 }
 
 var _resolver = ResolverScript.new()
+var _vehicle_service = VehicleServiceScript.new()
 var _travel_contract: Dictionary = {}
 
 func _ready() -> void:
@@ -114,9 +116,10 @@ func prepare_travel(destination_node: String, vehicle_id: String, world_context:
 	if int(WorldState.money) < base_money_cost:
 		return _travel_error("insufficient_money", {"required": base_money_cost, "available": int(WorldState.money)})
 
-	var vehicle_state: Dictionary = world_travel_state.get("vehicle_states", {}).get(vehicle, {})
+	var vehicle_state: Dictionary = world_travel_state.get("vehicle_states", {}).get(vehicle, {}).duplicate(true)
 	if vehicle_state.has("fuel") and float(vehicle_state.get("fuel", 0.0)) < base_fuel_cost:
 		return _travel_error("insufficient_fuel", {"required": base_fuel_cost, "available": float(vehicle_state.get("fuel", 0.0))})
+	var vehicle_stats := _vehicle_service.get_effective_stats(vehicle, vehicle_state)
 
 	var sequence := maxi(1, int(world_travel_state.get("next_plan_sequence", 1)))
 	var plan_id := "travel:%08d:%s:%s:%s" % [sequence, origin, destination, vehicle]
@@ -130,6 +133,8 @@ func prepare_travel(destination_node: String, vehicle_id: String, world_context:
 		"route_subtype": str(route.get("subtype", "")),
 		"route_class": str(route.get("route_class", "")),
 		"vehicle_id": vehicle,
+		"vehicle_state_snapshot": vehicle_state.duplicate(true),
+		"vehicle_stats_snapshot": vehicle_stats.duplicate(true),
 		"world_context_snapshot": route.get("world_context_snapshot", {}).duplicate(true),
 		"base_time_minutes": maxi(0, int(route.get("base_time_minutes", 0))),
 		"base_money_cost": base_money_cost,
@@ -254,6 +259,52 @@ func get_pending_travel_plan() -> Dictionary:
 func get_route_mastery(route_id: String) -> Dictionary:
 	return world_travel_state.get("route_mastery", {}).get(route_id, {}).duplicate(true)
 
+func get_vehicle_state(vehicle_id: String) -> Dictionary:
+	_ensure_travel_runtime()
+	return world_travel_state.get("vehicle_states", {}).get(vehicle_id, {}).duplicate(true)
+
+func get_vehicle_effective_stats(vehicle_id: String) -> Dictionary:
+	_ensure_travel_runtime()
+	return _vehicle_service.get_effective_stats(vehicle_id, get_vehicle_state(vehicle_id))
+
+func quote_vehicle_service(vehicle_id: String, request: Dictionary) -> Dictionary:
+	_ensure_travel_runtime()
+	if not get_pending_travel_plan().is_empty():
+		return _travel_error("vehicle_service_blocked_during_pending_travel", {"plan_id": str(get_pending_travel_plan().get("plan_id", ""))})
+	return _vehicle_service.quote(vehicle_id, get_vehicle_state(vehicle_id), request)
+
+func service_vehicle(vehicle_id: String, request: Dictionary) -> Dictionary:
+	var quote: Dictionary = quote_vehicle_service(vehicle_id, request)
+	if not bool(quote.get("ok", false)):
+		return quote
+	var total_cost := maxi(0, int(quote.get("total_cost", 0)))
+	if int(WorldState.money) < total_cost:
+		return _travel_error("insufficient_money_for_vehicle_service", {"required": total_cost, "available": int(WorldState.money)})
+	if bool(quote.get("no_op", false)):
+		return {
+			"ok": true,
+			"vehicle_id": vehicle_id,
+			"spent": 0,
+			"state": get_vehicle_state(vehicle_id),
+			"effective_stats": get_vehicle_effective_stats(vehicle_id),
+			"line_items": []
+		}
+
+	var vehicle_states: Dictionary = world_travel_state.get("vehicle_states", {})
+	vehicle_states[vehicle_id] = quote.get("projected_state", {}).duplicate(true)
+	world_travel_state["vehicle_states"] = vehicle_states
+	WorldState.money -= total_cost
+	WorldState._sync_aliases()
+	SaveManager.save_game(1)
+	return {
+		"ok": true,
+		"vehicle_id": vehicle_id,
+		"spent": total_cost,
+		"state": get_vehicle_state(vehicle_id),
+		"effective_stats": get_vehicle_effective_stats(vehicle_id),
+		"line_items": quote.get("line_items", []).duplicate(true)
+	}
+
 func get_available_activities() -> Array:
 	return get_hub_data(current_hub).get("activities", [])
 
@@ -287,6 +338,11 @@ func _ensure_travel_runtime() -> void:
 		_travel_contract = _load_json(TRAVEL_CONTRACT_PATH)
 	if _resolver.map_data.is_empty() or _resolver.travel_contract.is_empty():
 		_resolver.initialize({}, _travel_contract)
+	_vehicle_service.initialize(
+		_travel_contract.get("vehicles", {}),
+		_travel_contract.get("kombi_upgrades", {}),
+		DataRegistry.economy if has_node("/root/DataRegistry") else {}
+	)
 	_ensure_world_travel_state()
 
 func _default_world_travel_state() -> Dictionary:
@@ -316,7 +372,9 @@ func _ensure_world_travel_state() -> void:
 		var vehicle_id := str(vehicle_id_value)
 		if not vehicle_states.has(vehicle_id):
 			var vehicle: Dictionary = _travel_contract.get("vehicles", {}).get(vehicle_id_value, {})
-			vehicle_states[vehicle_id] = vehicle.get("default_state", {}).duplicate(true)
+			var default_state: Dictionary = vehicle.get("default_state", {})
+			if not default_state.is_empty():
+				vehicle_states[vehicle_id] = default_state.duplicate(true)
 	world_travel_state["vehicle_states"] = vehicle_states
 
 func _build_world_context(override: Dictionary) -> Dictionary:
@@ -353,6 +411,7 @@ func _preview_vehicle_outcome(plan: Dictionary, outcome: Dictionary) -> Dictiona
 	var current_state: Dictionary = world_travel_state.get("vehicle_states", {}).get(vehicle_id, {}).duplicate(true)
 	if current_state.is_empty():
 		return {"ok": true, "state": {}}
+	var effective_stats := _vehicle_service.get_effective_stats(vehicle_id, current_state)
 
 	var next_state := current_state.duplicate(true)
 	if current_state.has("fuel"):
@@ -360,11 +419,11 @@ func _preview_vehicle_outcome(plan: Dictionary, outcome: Dictionary) -> Dictiona
 		var next_fuel := float(current_state.get("fuel", 0.0)) + fuel_delta
 		if next_fuel < -0.001:
 			return {"ok": false, "error": "insufficient_fuel_at_commit", "details": {"fuel_delta": fuel_delta, "available": float(current_state.get("fuel", 0.0))}}
-		var fuel_capacity := float(_travel_contract.get("vehicles", {}).get(vehicle_id, {}).get("fuel_capacity", 100.0))
+		var fuel_capacity := float(effective_stats.get("fuel_capacity", _travel_contract.get("vehicles", {}).get(vehicle_id, {}).get("fuel_capacity", 100.0)))
 		next_state["fuel"] = clampf(next_fuel, 0.0, fuel_capacity)
 	if current_state.has("condition"):
 		var condition_delta := float(outcome.get("vehicle_condition_delta", 0.0))
-		var condition_capacity := float(_travel_contract.get("vehicles", {}).get(vehicle_id, {}).get("condition_capacity", 100.0))
+		var condition_capacity := float(effective_stats.get("condition_capacity", _travel_contract.get("vehicles", {}).get(vehicle_id, {}).get("condition_capacity", 100.0)))
 		next_state["condition"] = clampf(float(current_state.get("condition", 100.0)) + condition_delta, 0.0, condition_capacity)
 	if current_state.has("hard_damage"):
 		next_state["hard_damage"] = clampi(int(current_state.get("hard_damage", 0)) + int(outcome.get("hard_damage_delta", 0)), 0, 3)
