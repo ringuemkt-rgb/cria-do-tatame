@@ -2,7 +2,7 @@
   "$schema": "cria.motion_tool_registry.v1",
   "version": "1.0.0",
   "status": "RESEARCH_AND_AUTHORING_REGISTRY_NOT_REUSE_AUTHORITY",
-  "audited_at": "2026-09-09",
+  "audited_at": "2026-09-12",
   "shipping": false,
   "reuse_authority": "data/production/external_tool_registry_v1.json",
   "policy": {
@@ -46,6 +46,26 @@
       "roles": ["2d_pose", "whole_body_pose", "hand_and_body_keypoint_candidates"],
       "adoption": "PREFERRED_POSE_CANDIDATE",
       "notes": "Specific checkpoints and training datasets require separate rights review."
+    },
+    {
+      "id": "mixamo_llm_mocap",
+      "source": "squall01337/mixamo-llm-mocap",
+      "revision": "00dfd5385506022d533c84f6737a09f5f4392623",
+      "observed_license": "MIT repository code; Mixamo, GVHMR, pretrained checkpoints, SMPL-X and Blender MCP terms are separate",
+      "roles": [
+        "locked_camera_pose_to_mixamo_retarget",
+        "two_performer_pair_retarget",
+        "root_motion_reference",
+        "foot_planting_qa",
+        "frame_reference_comparison",
+        "pair_spacing_reach_intrusion_qa",
+        "evaluated_mesh_contact_qa",
+        "preview_render"
+      ],
+      "adoption": "ADOPTED_PINNED_OFFLINE_AUTHORING_ADAPTER_LICENSE_GATED",
+      "runtime_dependency": false,
+      "commercial_output_default": "BLOCKED_UNTIL_THIRD_PARTY_LICENSE_GATE",
+      "notes": "High-value bridge from rights-cleared locked-camera plates to measured Mixamo-style retarget references. CRIA calls a separate pinned checkout through tools/motion_factory/run_mixamo_llm_mocap.py. It is not BJJ authority, not a Godot dependency and does not auto-promote generated output."
     },
     {
       "id": "mmaction2",
