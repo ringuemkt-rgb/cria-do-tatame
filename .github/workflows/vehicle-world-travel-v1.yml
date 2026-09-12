@@ -1,0 +1,57 @@
+name: Vehicle World Travel V1
+
+on:
+  pull_request:
+    branches:
+      - main
+    paths:
+      - "data/world/vehicle_world_travel_v1.json"
+      - "data/world/world_map_v4.json"
+      - "src/world/WorldRouteResolver.gd"
+      - "tests/world_route_resolver_smoke.gd"
+      - "tools/world/validate_vehicle_world_travel_v1.py"
+      - "docs/gameplay/VEHICLE_WORLD_TRAVEL_V1.md"
+      - ".github/workflows/vehicle-world-travel-v1.yml"
+  push:
+    branches: [main]
+    paths:
+      - "data/world/vehicle_world_travel_v1.json"
+      - "data/world/world_map_v4.json"
+      - "src/world/WorldRouteResolver.gd"
+      - "tests/world_route_resolver_smoke.gd"
+      - "tools/world/validate_vehicle_world_travel_v1.py"
+      - "docs/gameplay/VEHICLE_WORLD_TRAVEL_V1.md"
+      - ".github/workflows/vehicle-world-travel-v1.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  contract-and-route-resolver:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Validate vehicle travel contract
+        run: python tools/world/validate_vehicle_world_travel_v1.py
+
+      - name: Download Godot 4.2.2
+        run: |
+          curl -L --fail --retry 3 \
+            -o godot.zip \
+            https://github.com/godotengine/godot/releases/download/4.2.2-stable/Godot_v4.2.2-stable_linux.x86_64.zip
+          unzip -q godot.zip
+          mv Godot_v4.2.2-stable_linux.x86_64 godot
+          chmod +x godot
+          ./godot --version
+
+      - name: Import project
+        run: timeout 180 ./godot --headless --editor --path . --import
+
+      - name: Route resolver smoke
+        run: ./godot --headless --path . --script res://tests/world_route_resolver_smoke.gd
