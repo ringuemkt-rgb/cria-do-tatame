@@ -26,6 +26,9 @@ jobs:
       - name: Exercise autonomous query planner
         run: python tools/research/plan_public_video_research_v1.py --limit 12 --json
 
+      - name: Exercise official YouTube discovery adapter without network
+        run: python tools/research/youtube_public_discovery_v1.py --query "BJJ side control mount competition" --max-results 3 --dry-run
+
       - name: Preserve existing video/motion rights gates
         run: |
           python tools/combat/validate_grappling_motion_lab_v1.py
