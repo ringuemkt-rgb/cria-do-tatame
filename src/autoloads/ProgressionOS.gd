@@ -93,18 +93,18 @@ func record_event(
 	context: Dictionary = {},
 	event_id: String = ""
 ) -> Dictionary:
-	var normalized_type := event_type.strip_edges()
-	var normalized_source := source.strip_edges()
+	var normalized_type: String = event_type.strip_edges()
+	var normalized_source: String = source.strip_edges()
 	if normalized_type == "" or normalized_source == "":
 		return {"ok": false, "error": "invalid_event_identity"}
 
-	var resolved_id := event_id.strip_edges()
+	var resolved_id: String = event_id.strip_edges()
 	if resolved_id == "":
 		resolved_id = "evt:%08d:%s:%s" % [next_event_sequence, normalized_source, normalized_type]
 	if _event_ids.has(resolved_id):
 		return {"ok": false, "duplicate": true, "event_id": resolved_id}
 
-	var rule := _get_event_rule(normalized_type)
+	var rule: Dictionary = _get_event_rule(normalized_type)
 	var normalized_context: Dictionary = context.duplicate(true)
 	if not normalized_context.has("domain"):
 		normalized_context["domain"] = str(rule.get("domain", ""))
@@ -113,7 +113,7 @@ func record_event(
 	if not normalized_context.has("respect"):
 		normalized_context["respect"] = int(rule.get("respect", 0))
 
-	var event := {
+	var event: Dictionary = {
 		"id": resolved_id,
 		"type": normalized_type,
 		"source": normalized_source,
@@ -140,35 +140,35 @@ func _get_event_rule(event_type: String) -> Dictionary:
 	return _config.get("event_rules", {}).get(event_type, {})
 
 func _apply_event(event: Dictionary) -> void:
-	var event_type := str(event.get("type", "unknown"))
+	var event_type: String = str(event.get("type", "unknown"))
 	var context: Dictionary = event.get("context", {})
 	counters[event_type] = int(counters.get(event_type, 0)) + 1
 
-	var domain := str(context.get("domain", ""))
-	var domain_xp := float(context.get("domain_xp", event.get("amount", 0.0)))
+	var domain: String = str(context.get("domain", ""))
+	var domain_xp: float = float(context.get("domain_xp", event.get("amount", 0.0)))
 	if domain != "":
-		domains[domain] = max(0.0, float(domains.get(domain, 0.0)) + domain_xp)
+		domains[domain] = maxf(0.0, float(domains.get(domain, 0.0)) + domain_xp)
 		if not _replaying and SignalBus.has_signal("progression_domain_changed"):
 			SignalBus.progression_domain_changed.emit(StringName(domain), float(domains[domain]))
 
 	respect = maxi(0, respect + int(context.get("respect", 0)))
 
-	var discovery_id := str(context.get("discovery_id", ""))
+	var discovery_id: String = str(context.get("discovery_id", ""))
 	if discovery_id != "" and not discoveries.has(discovery_id):
 		discoveries.append(discovery_id)
 
-	var achievement_id := str(context.get("achievement_id", ""))
+	var achievement_id: String = str(context.get("achievement_id", ""))
 	if achievement_id != "" and not achievements.has(achievement_id):
 		achievements.append(achievement_id)
 		if not _replaying and SignalBus.has_signal("achievement_unlocked"):
 			SignalBus.achievement_unlocked.emit(StringName(achievement_id), context.get("reward", {}).duplicate(true))
 
-	var skill_points_delta := int(context.get("skill_points_delta", 0))
+	var skill_points_delta: int = int(context.get("skill_points_delta", 0))
 	if skill_points_delta != 0 and not _replaying and has_node("/root/WorldState"):
 		WorldState.skill_points = maxi(0, int(WorldState.skill_points) + skill_points_delta)
 		WorldState._sync_aliases()
 
-	var technique_id := str(context.get("technique_id", ""))
+	var technique_id: String = str(context.get("technique_id", ""))
 	if technique_id != "":
 		_apply_mastery_delta(technique_id, float(context.get("mastery_xp", 0.0)), event)
 
@@ -187,9 +187,9 @@ func _apply_mastery_delta(technique_id: String, points: float, event: Dictionary
 		"last_event_id": ""
 	}).duplicate(true)
 
-	var old_stage := str(entry.get("stage", "discovered"))
+	var old_stage: String = str(entry.get("stage", "discovered"))
 	entry["discovered"] = true
-	entry["points"] = max(0.0, float(entry.get("points", 0.0)) + points)
+	entry["points"] = maxf(0.0, float(entry.get("points", 0.0)) + points)
 	if bool(context.get("attempted", false)):
 		entry["attempts"] = int(entry.get("attempts", 0)) + 1
 	if bool(context.get("success", false)):
@@ -213,7 +213,7 @@ func _apply_mastery_delta(technique_id: String, points: float, event: Dictionary
 		SignalBus.codex_entry_changed.emit(StringName(technique_id), entry.duplicate(true))
 
 func _mastery_stage_for_points(points: float) -> String:
-	var resolved := "discovered"
+	var resolved: String = "discovered"
 	for threshold_value in _get_mastery_thresholds():
 		var threshold: Dictionary = threshold_value
 		if points >= float(threshold.get("points", 0.0)):
@@ -227,7 +227,7 @@ func _get_mastery_thresholds() -> Array:
 	return thresholds
 
 func _stage_index(stage: String) -> int:
-	var thresholds := _get_mastery_thresholds()
+	var thresholds: Array = _get_mastery_thresholds()
 	for index in range(thresholds.size()):
 		if str(thresholds[index].get("stage", "")) == stage:
 			return index
@@ -254,9 +254,9 @@ func get_mastery_points(technique_id: String) -> float:
 	return float(mastery.get(technique_id, {}).get("points", 0.0))
 
 func get_mastery_points_map() -> Dictionary:
-	var output := {}
+	var output: Dictionary = {}
 	for technique_id_value in mastery.keys():
-		var technique_id := str(technique_id_value)
+		var technique_id: String = str(technique_id_value)
 		output[technique_id] = float(mastery[technique_id].get("points", 0.0))
 	return output
 
@@ -277,7 +277,7 @@ func get_domain_xp(domain_id: String) -> float:
 	return float(domains.get(domain_id, 0.0))
 
 func get_total_xp() -> float:
-	var total := 0.0
+	var total: float = 0.0
 	for value in domains.values():
 		total += float(value)
 	return total
@@ -323,17 +323,18 @@ func load_from_dict(data: Dictionary) -> void:
 		if typeof(event_value) != TYPE_DICTIONARY:
 			continue
 		var event: Dictionary = event_value
-		var event_id := str(event.get("id", ""))
+		var event_id: String = str(event.get("id", ""))
 		if event_id != "":
 			_event_ids[event_id] = true
+	var projections_missing: bool = counters.is_empty() and not ledger.is_empty()
 	_ensure_domain_keys()
-	if not ledger.is_empty() and (domains.is_empty() or counters.is_empty()):
+	if projections_missing:
 		rebuild_projections_from_ledger()
 	_sync_world_state_techniques()
 	_emit_progression_changed()
 
 func rebuild_projections_from_ledger() -> void:
-	var saved_ledger := ledger.duplicate(true)
+	var saved_ledger: Array = ledger.duplicate(true)
 	_clear_projections_only()
 	_replaying = true
 	for event_value in saved_ledger:
@@ -356,7 +357,7 @@ func _clear_projections_only() -> void:
 
 func _ensure_domain_keys() -> void:
 	for domain_value in _config.get("domains", []):
-		var domain := str(domain_value)
+		var domain: String = str(domain_value)
 		if domain != "" and not domains.has(domain):
 			domains[domain] = 0.0
 
@@ -364,7 +365,7 @@ func _sync_world_state_techniques() -> void:
 	if not has_node("/root/WorldState"):
 		return
 	for technique_id_value in mastery.keys():
-		var technique_id := str(technique_id_value)
+		var technique_id: String = str(technique_id_value)
 		var entry: Dictionary = mastery[technique_id]
 		if _stage_index(str(entry.get("stage", "discovered"))) >= _stage_index("learned"):
 			if not WorldState.techniques_learned.has(technique_id):
@@ -373,9 +374,9 @@ func _sync_world_state_techniques() -> void:
 
 func import_legacy_training_mastery(legacy_mastery: Dictionary) -> void:
 	for technique_id_value in legacy_mastery.keys():
-		var technique_id := str(technique_id_value)
-		var target := max(0.0, float(legacy_mastery[technique_id_value]))
-		var current := get_mastery_points(technique_id)
+		var technique_id: String = str(technique_id_value)
+		var target: float = maxf(0.0, float(legacy_mastery[technique_id_value]))
+		var current: float = get_mastery_points(technique_id)
 		if target <= current:
 			continue
 		record_event(
@@ -395,9 +396,9 @@ func import_legacy_training_mastery(legacy_mastery: Dictionary) -> void:
 		)
 
 func import_legacy_learned_techniques(techniques: Array) -> void:
-	var learned_threshold := get_mastery_threshold("learned")
+	var learned_threshold: float = get_mastery_threshold("learned")
 	for technique_id_value in techniques:
-		var technique_id := str(technique_id_value)
+		var technique_id: String = str(technique_id_value)
 		if technique_id == "" or get_mastery_points(technique_id) >= learned_threshold:
 			continue
 		record_event(
@@ -418,14 +419,14 @@ func import_legacy_learned_techniques(techniques: Array) -> void:
 func _on_training_completed(training_type, activity_id, result) -> void:
 	if typeof(result) != TYPE_DICTIONARY or not bool(result.get("ok", false)):
 		return
-	var resolved_type := str(training_type)
-	var resolved_id := str(activity_id)
+	var resolved_type: String = str(training_type)
+	var resolved_id: String = str(activity_id)
 	if resolved_type == "technical":
-		var mastery_xp := float(result.get("mastery_xp", result.get("xp", 0.0)))
+		var mastery_xp: float = float(result.get("mastery_xp", result.get("xp", 0.0)))
 		record_event(
 			"technical_training",
 			"training",
-			float(result.get("progression_xp", max(10.0, mastery_xp * 0.5))),
+			float(result.get("progression_xp", maxf(10.0, mastery_xp * 0.5))),
 			{
 				"technique_id": resolved_id,
 				"mastery_xp": mastery_xp,
@@ -445,17 +446,17 @@ func _on_training_completed(training_type, activity_id, result) -> void:
 func _on_technique_resolved(result) -> void:
 	if typeof(result) != TYPE_DICTIONARY:
 		return
-	var actor_id := str(result.get("actor_id", ""))
+	var actor_id: String = str(result.get("actor_id", ""))
 	if not has_node("/root/WorldState") or actor_id != str(WorldState.player_id):
 		return
-	var technique_id := str(result.get("technique_id", result.get("action_id", "")))
+	var technique_id: String = str(result.get("technique_id", result.get("action_id", "")))
 	if technique_id == "":
 		return
 	if has_node("/root/DataRegistry") and DataRegistry.get_technique(technique_id).is_empty():
 		return
-	var success := bool(result.get("success", false))
+	var success: bool = bool(result.get("success", false))
 	var mastery_rule: Dictionary = _config.get("technique_combat_mastery", {})
-	var mastery_xp := float(mastery_rule.get("success" if success else "failure", 3.0 if success else 0.5))
+	var mastery_xp: float = float(mastery_rule.get("success" if success else "failure", 3.0 if success else 0.5))
 	record_event(
 		"technique_attempt",
 		"combat",
@@ -471,17 +472,17 @@ func _on_technique_resolved(result) -> void:
 func _on_combat_finished(result) -> void:
 	if typeof(result) != TYPE_DICTIONARY or not has_node("/root/WorldState"):
 		return
-	var won := str(result.get("winner", "")) == str(WorldState.player_id)
-	var event_type := "combat_win" if won else "combat_loss"
-	var rule := _get_event_rule(event_type)
-	var xp := float(rule.get("domain_xp", 100.0 if won else 40.0))
-	var respect_delta := int(rule.get("respect", 10 if won else 2))
+	var won: bool = str(result.get("winner", "")) == str(WorldState.player_id)
+	var event_type: String = "combat_win" if won else "combat_loss"
+	var rule: Dictionary = _get_event_rule(event_type)
+	var xp: float = float(rule.get("domain_xp", 100.0 if won else 40.0))
+	var respect_delta: int = int(rule.get("respect", 10 if won else 2))
 	if won and bool(result.get("technical", false)):
 		var bonus: Dictionary = _config.get("technical_finish_bonus", {})
 		xp += float(bonus.get("domain_xp", 25.0))
 		respect_delta += int(bonus.get("respect", 5))
-	var fight_number := int(WorldState.fights_won) + int(WorldState.fights_lost)
-	var arena := ""
+	var fight_number: int = int(WorldState.fights_won) + int(WorldState.fights_lost)
+	var arena: String = ""
 	if has_node("/root/CombatManager"):
 		arena = str(CombatManager.arena_id)
 	record_event(
@@ -500,7 +501,7 @@ func _on_combat_finished(result) -> void:
 	)
 
 func _on_mission_completed(mission_id) -> void:
-	var resolved_id := str(mission_id)
+	var resolved_id: String = str(mission_id)
 	if resolved_id == "":
 		return
 	record_event(
@@ -512,12 +513,13 @@ func _on_mission_completed(mission_id) -> void:
 	)
 
 func _on_world_travel_completed(hub_id, first_visit, travel_entry) -> void:
-	var resolved_hub := str(hub_id)
+	var resolved_hub: String = str(hub_id)
 	if resolved_hub == "":
 		return
-	var is_first := bool(first_visit)
-	var event_type := "travel_first_visit" if is_first else "travel_repeat"
-	var stable_id := "travel:first:%s" % resolved_hub if is_first else ""
+	var is_first: bool = bool(first_visit)
+	var event_type: String = "travel_first_visit" if is_first else "travel_repeat"
+	var stable_id: String = "travel:first:%s" % resolved_hub if is_first else ""
+	var travel_context: Dictionary = travel_entry.duplicate(true) if typeof(travel_entry) == TYPE_DICTIONARY else {}
 	record_event(
 		event_type,
 		"exploration",
@@ -525,7 +527,7 @@ func _on_world_travel_completed(hub_id, first_visit, travel_entry) -> void:
 		{
 			"hub_id": resolved_hub,
 			"first_visit": is_first,
-			"travel": travel_entry.duplicate(true) if typeof(travel_entry) == TYPE_DICTIONARY else {},
+			"travel": travel_context,
 			"discovery_id": "hub:%s" % resolved_hub
 		},
 		stable_id
@@ -536,12 +538,12 @@ func _evaluate_achievements() -> void:
 		if typeof(achievement_value) != TYPE_DICTIONARY:
 			continue
 		var achievement: Dictionary = achievement_value
-		var achievement_id := str(achievement.get("id", ""))
+		var achievement_id: String = str(achievement.get("id", ""))
 		if achievement_id == "" or achievements.has(achievement_id):
 			continue
-		var metric := str(achievement.get("metric", ""))
-		var op := str(achievement.get("op", ">="))
-		var target := float(achievement.get("value", 0.0))
+		var metric: String = str(achievement.get("metric", ""))
+		var op: String = str(achievement.get("op", ">="))
+		var target: float = float(achievement.get("value", 0.0))
 		if not _compare(_metric_value(metric), op, target):
 			continue
 		var reward: Dictionary = achievement.get("reward", {}).duplicate(true)
@@ -582,8 +584,8 @@ func _metric_value(metric: String) -> float:
 	return float(counters.get(metric, 0))
 
 func _count_stage_at_least(stage: String) -> int:
-	var target := _stage_index(stage)
-	var total := 0
+	var target: int = _stage_index(stage)
+	var total: int = 0
 	for entry_value in mastery.values():
 		if typeof(entry_value) == TYPE_DICTIONARY and _stage_index(str(entry_value.get("stage", "discovered"))) >= target:
 			total += 1
