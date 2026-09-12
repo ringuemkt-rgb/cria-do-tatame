@@ -195,6 +195,12 @@ func _reasons_text(reasons: Array) -> String:
 			_:
 				if reason.begins_with("gate_unsatisfied:"):
 					labels.append("falta %s" % reason.trim_prefix("gate_unsatisfied:"))
+				elif reason.begins_with("node_lock_unsatisfied:"):
+					labels.append("falta %s" % reason.trim_prefix("node_lock_unsatisfied:"))
+				elif reason.begins_with("node_lock_context_missing:"):
+					labels.append("contexto ausente: %s" % reason.trim_prefix("node_lock_context_missing:"))
+				elif reason.begins_with("node_lock_unsupported:"):
+					labels.append("bloqueio ainda não suportado: %s" % reason.trim_prefix("node_lock_unsupported:"))
 				else:
 					labels.append(reason.replace("_", " "))
 	return ", ".join(labels)
