@@ -5,9 +5,11 @@ on:
     branches:
       - main
     paths:
+      - "data/economy.json"
       - "data/world/vehicle_world_travel_v1.json"
       - "data/world/world_map_v4.json"
       - "src/world/WorldRouteResolver.gd"
+      - "src/world/VehicleServiceModel.gd"
       - "src/autoloads/WorldMapManager.gd"
       - "scenes/world/TravelDetailPanel.gd"
       - "scenes/world/TravelDetailPanel.tscn"
@@ -16,15 +18,18 @@ on:
       - "tests/world_route_resolver_smoke.gd"
       - "tests/travel_detail_panel_smoke.gd"
       - "tests/world_travel_two_phase_smoke.gd"
+      - "tests/vehicle_service_smoke.gd"
       - "tools/world/validate_vehicle_world_travel_v1.py"
       - "docs/gameplay/VEHICLE_WORLD_TRAVEL_V1.md"
       - ".github/workflows/vehicle-world-travel-v1.yml"
   push:
     branches: [main]
     paths:
+      - "data/economy.json"
       - "data/world/vehicle_world_travel_v1.json"
       - "data/world/world_map_v4.json"
       - "src/world/WorldRouteResolver.gd"
+      - "src/world/VehicleServiceModel.gd"
       - "src/autoloads/WorldMapManager.gd"
       - "scenes/world/TravelDetailPanel.gd"
       - "scenes/world/TravelDetailPanel.tscn"
@@ -33,6 +38,7 @@ on:
       - "tests/world_route_resolver_smoke.gd"
       - "tests/travel_detail_panel_smoke.gd"
       - "tests/world_travel_two_phase_smoke.gd"
+      - "tests/vehicle_service_smoke.gd"
       - "tools/world/validate_vehicle_world_travel_v1.py"
       - "docs/gameplay/VEHICLE_WORLD_TRAVEL_V1.md"
       - ".github/workflows/vehicle-world-travel-v1.yml"
@@ -75,3 +81,6 @@ jobs:
 
       - name: Two-phase travel smoke
         run: ./godot --headless --path . --script res://tests/world_travel_two_phase_smoke.gd
+
+      - name: Vehicle service smoke
+        run: ./godot --headless --path . --script res://tests/vehicle_service_smoke.gd
