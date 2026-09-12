@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-import importlib.util
 import json
 import subprocess
 import sys
@@ -10,6 +9,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 VALIDATOR = ROOT / "tools/research/validate_public_video_intelligence_v1.py"
 PLANNER = ROOT / "tools/research/plan_public_video_research_v1.py"
+YOUTUBE = ROOT / "tools/research/youtube_public_discovery_v1.py"
 DIRECTOR = ROOT / "data/research/public_video_analysis_director_v1.json"
 
 
@@ -20,6 +20,7 @@ class PublicVideoIntelligenceV1Tests(unittest.TestCase):
         report = json.loads(proc.stdout)
         self.assertTrue(report["ok"])
         self.assertEqual(report["cycle_stages"], 14)
+        self.assertEqual(report["youtube_adapter"], "OFFICIAL_METADATA_ONLY")
         self.assertFalse(report["shipping"])
 
     def test_director_is_fail_closed(self) -> None:
@@ -49,6 +50,24 @@ class PublicVideoIntelligenceV1Tests(unittest.TestCase):
             self.assertIn(expected, ids)
         for row in report["next_targets"]:
             self.assertGreaterEqual(len(row["queries"]), 3)
+
+    def test_youtube_adapter_dry_run_is_metadata_only(self) -> None:
+        proc = subprocess.run(
+            [sys.executable, str(YOUTUBE), "--query", "BJJ side control mount competition", "--max-results", "3", "--dry-run"],
+            cwd=ROOT,
+            capture_output=True,
+            text=True,
+        )
+        self.assertEqual(proc.returncode, 0, proc.stdout + proc.stderr)
+        report = json.loads(proc.stdout)
+        self.assertTrue(report["ok"])
+        self.assertEqual(report["mode"], "DRY_RUN_OFFICIAL_API_ONLY")
+        self.assertFalse(report["downloads_media"])
+        self.assertFalse(report["downloads_captions"])
+        self.assertFalse(report["visual_observation_claimed"])
+        request = report["search_requests"][0]
+        self.assertEqual(request["type"], "video")
+        self.assertEqual(request["videoEmbeddable"], "true")
 
 
 if __name__ == "__main__":
