@@ -32,6 +32,9 @@ jobs:
       - name: Validate Progression OS contract
         run: python tools/data/validate_progression_os_v1.py
 
+      - name: Validate NPC social memory contract
+        run: python tools/data/validate_npc_social_memory_v1.py
+
       - name: Upload static audit reports
         if: always()
         uses: actions/upload-artifact@v4
@@ -80,6 +83,12 @@ jobs:
           set -o pipefail
           ./godot --headless --path . --script res://tests/progression_os_smoke.gd 2>&1 | tee reports/runtime_audit/progression_os_smoke.log
 
+      - name: Run NPC social memory smoke
+        shell: bash
+        run: |
+          set -o pipefail
+          ./godot --headless --path . --script res://tests/npc_social_memory_smoke.gd 2>&1 | tee reports/runtime_audit/npc_social_memory_smoke.log
+
       - name: Upload Godot logs
         if: always()
         uses: actions/upload-artifact@v4
@@ -89,4 +98,5 @@ jobs:
             reports/runtime_audit/godot_import.log
             reports/runtime_audit/godot_smoke.log
             reports/runtime_audit/progression_os_smoke.log
+            reports/runtime_audit/npc_social_memory_smoke.log
           if-no-files-found: warn
