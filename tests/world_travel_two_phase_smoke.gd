@@ -25,7 +25,7 @@ func _run() -> void:
 	var node_before := str(map_manager.current_node)
 	var money_before := int(world_state.money)
 	var energy_before := float(world_state.energy)
-	var log_before := map_manager.travel_log.size()
+	var log_before: int = map_manager.travel_log.size()
 
 	var prepared: Dictionary = map_manager.prepare_travel(
 		"pancada_grande",
@@ -81,7 +81,7 @@ func _run() -> void:
 
 	var money_after_commit := int(world_state.money)
 	var energy_after_commit := float(world_state.energy)
-	var log_after_commit := map_manager.travel_log.size()
+	var log_after_commit: int = map_manager.travel_log.size()
 	var progression_after_commit := int(progression.counters.get("travel_completed", 0))
 	var duplicate: Dictionary = map_manager.commit_travel_outcome(plan_id, {"success": true, "energy_delta": -50.0})
 	_check(not bool(duplicate.get("ok", true)), "duplicate commit is rejected")
