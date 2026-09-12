@@ -2,7 +2,7 @@
   "schema_version": "1.0.0",
   "owner_id": "ruan_macacao",
   "belt": "branca",
-  "limits": {"active": 5, "passive": 3, "hand": 3},
+  "limits": {"active": 5, "passive": 3, "hand": 4},
   "cards": [
     {
       "id": "card_grip_de_ferro_01",
@@ -17,6 +17,8 @@
       "clash_effect": {"grip_pressure_bonus": 0.08},
       "response_to_families": [],
       "valid_states": ["PLAYER_STANDING_NEUTRAL"],
+      "formats": ["GI", "NO-GI"],
+      "rarity": "rara",
       "xp": 0,
       "xp_to_next": 100,
       "unlocked": true
@@ -34,6 +36,8 @@
       "clash_effect": {"takedown_entry_bonus": 0.08},
       "response_to_families": [],
       "valid_states": ["PLAYER_STANDING_NEUTRAL"],
+      "formats": ["GI", "NO-GI"],
+      "rarity": "rara",
       "xp": 0,
       "xp_to_next": 100,
       "unlocked": true
@@ -51,6 +55,8 @@
       "clash_effect": {"defense_efficiency_bonus": 0.12},
       "response_to_families": ["queda"],
       "valid_states": ["PLAYER_STANDING_NEUTRAL"],
+      "formats": ["GI", "NO-GI"],
+      "rarity": "rara",
       "xp": 15,
       "xp_to_next": 180,
       "unlocked": true
@@ -68,6 +74,8 @@
       "clash_effect": {"off_balance_bonus": 0.08},
       "response_to_families": [],
       "valid_states": ["PLAYER_BOTTOM_GUARD"],
+      "formats": ["GI", "NO-GI"],
+      "rarity": "rara",
       "xp": 0,
       "xp_to_next": 100,
       "unlocked": true
@@ -85,6 +93,8 @@
       "clash_effect": {"stabilization_bonus": 0.08},
       "response_to_families": [],
       "valid_states": ["PLAYER_TOP_SIDE"],
+      "formats": ["GI", "NO-GI"],
+      "rarity": "rara",
       "xp": 0,
       "xp_to_next": 100,
       "unlocked": true
@@ -102,6 +112,8 @@
       "clash_effect": {},
       "response_to_families": ["pegada", "pressao"],
       "valid_states": ["PLAYER_STANDING_NEUTRAL"],
+      "formats": ["GI", "NO-GI"],
+      "rarity": "comum",
       "xp": 0,
       "xp_to_next": 100,
       "unlocked": true
@@ -119,6 +131,8 @@
       "clash_effect": {"defense_efficiency_bonus": 0.10},
       "response_to_families": ["dominante", "finalizacao"],
       "valid_states": ["PLAYER_BOTTOM_MOUNT"],
+      "formats": ["GI", "NO-GI"],
+      "rarity": "rara",
       "xp": 20,
       "xp_to_next": 180,
       "unlocked": true
@@ -136,6 +150,8 @@
       "clash_effect": {"defense_efficiency_bonus": 0.08},
       "response_to_families": ["controle", "passagem"],
       "valid_states": ["PLAYER_BOTTOM_SIDE"],
+      "formats": ["GI", "NO-GI"],
+      "rarity": "comum",
       "xp": 0,
       "xp_to_next": 100,
       "unlocked": true
@@ -153,6 +169,8 @@
       "clash_effect": {"submission_pressure_bonus": 0.08},
       "response_to_families": [],
       "valid_states": ["PLAYER_TOP_MOUNT"],
+      "formats": ["GI", "NO-GI"],
+      "rarity": "epica",
       "xp": 0,
       "xp_to_next": 120,
       "unlocked": false
@@ -170,6 +188,8 @@
       "clash_effect": {"submission_pressure_bonus": 0.10},
       "response_to_families": [],
       "valid_states": ["PLAYER_BACK_ATTACK"],
+      "formats": ["GI", "NO-GI"],
+      "rarity": "epica",
       "xp": 0,
       "xp_to_next": 120,
       "unlocked": false

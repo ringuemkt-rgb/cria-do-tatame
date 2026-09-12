@@ -125,7 +125,7 @@ func _test_combat_deck() -> void:
 		return
 	deck_manager.call("configure_from_data", data_registry.get("combat_deck"))
 	var hand: Array = deck_manager.call("get_hand")
-	_assert(hand.size() == 3, "Mao inicial do deck nao possui 3 cartas")
+	_assert(hand.size() == 4, "Mao inicial do deck nao possui 4 cartas")
 	var techniques: Dictionary = data_registry.get("techniques")
 	for card_value in deck_manager.call("get_collection"):
 		var card: Dictionary = card_value
