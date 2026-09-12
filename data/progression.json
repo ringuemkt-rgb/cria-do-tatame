@@ -1,5 +1,5 @@
 {
-  "version": "0.1.0",
+  "version": "1.0.0",
   "belts": [
     {"id": "white", "name": "Faixa Branca", "act_range": [1], "xp_required": 0},
     {"id": "blue", "name": "Faixa Azul", "act_range": [1, 2], "xp_required": 500},
@@ -11,5 +11,85 @@
     {"id": "caminho_da_pressao", "name": "Caminho da Pressão", "focus": "grip, pressure, top control"},
     {"id": "caminho_da_leitura", "name": "Caminho da Leitura", "focus": "focus, timing, transitions"},
     {"id": "caminho_da_raiz", "name": "Caminho da Raiz", "focus": "moral, resilience, legacy"}
-  ]
+  ],
+  "runtime_progression": {
+    "schema_version": 1,
+    "authority": {
+      "ledger": "ProgressionOS",
+      "technique_mastery": "ProgressionOS",
+      "money": "WorldState.money",
+      "reputation": "WorldState.reputation",
+      "training_compatibility": "TrainingManager"
+    },
+    "domains": ["combat", "training", "exploration", "story", "social"],
+    "mastery_thresholds": [
+      {"stage": "discovered", "points": 0},
+      {"stage": "learned", "points": 100},
+      {"stage": "practiced", "points": 250},
+      {"stage": "mastered", "points": 500},
+      {"stage": "signature", "points": 900}
+    ],
+    "event_rules": {
+      "combat_win": {"domain": "combat", "domain_xp": 100, "respect": 10},
+      "combat_loss": {"domain": "combat", "domain_xp": 40, "respect": 2},
+      "technique_attempt": {"domain": "combat", "domain_xp": 2, "respect": 0},
+      "physical_training": {"domain": "training", "domain_xp": 35, "respect": 1},
+      "technical_training": {"domain": "training", "domain_xp": 20, "respect": 1},
+      "mission_complete": {"domain": "story", "domain_xp": 75, "respect": 10},
+      "travel_first_visit": {"domain": "exploration", "domain_xp": 50, "respect": 3},
+      "travel_repeat": {"domain": "exploration", "domain_xp": 5, "respect": 0}
+    },
+    "technical_finish_bonus": {"domain_xp": 25, "respect": 5},
+    "technique_combat_mastery": {"success": 3, "failure": 0.5},
+    "achievements": [
+      {
+        "id": "primeira_vitoria",
+        "name": "Primeira Vitória",
+        "metric": "fights_won",
+        "op": ">=",
+        "value": 1,
+        "reward": {"respect": 5, "skill_points": 0}
+      },
+      {
+        "id": "primeira_tecnica_aprendida",
+        "name": "Primeira Técnica Aprendida",
+        "metric": "learned_techniques",
+        "op": ">=",
+        "value": 1,
+        "reward": {"respect": 2, "skill_points": 1}
+      },
+      {
+        "id": "andarilho_do_baixo_sul",
+        "name": "Andarilho do Baixo Sul",
+        "metric": "visited_hubs",
+        "op": ">=",
+        "value": 3,
+        "reward": {"respect": 5, "skill_points": 1}
+      },
+      {
+        "id": "dez_missoes_cumpridas",
+        "name": "Palavra Cumprida",
+        "metric": "completed_missions",
+        "op": ">=",
+        "value": 10,
+        "reward": {"respect": 10, "skill_points": 1}
+      },
+      {
+        "id": "disciplina_500",
+        "name": "Pedra de Amolar",
+        "metric": "domain.training",
+        "op": ">=",
+        "value": 500,
+        "reward": {"respect": 10, "skill_points": 1}
+      },
+      {
+        "id": "tecnica_assinatura",
+        "name": "Marca Registrada",
+        "metric": "signature_techniques",
+        "op": ">=",
+        "value": 1,
+        "reward": {"respect": 20, "skill_points": 2}
+      }
+    ]
+  }
 }

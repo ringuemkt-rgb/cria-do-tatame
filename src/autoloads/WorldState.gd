@@ -115,6 +115,10 @@ func reset_new_game():
 	reputation = {"honra": 50.0, "hype": 30.0, "sombra": 0.0, "legado": 20.0, "dupla_face": 0.0, "moral": 50.0, "raiz": 20.0}
 	if has_node("/root/TinkerBondManager"):
 		TinkerBondManager.reset()
+	if has_node("/root/ProgressionOS"):
+		ProgressionOS.reset()
+	if has_node("/root/TrainingManager"):
+		TrainingManager.reset()
 	_sync_aliases()
 
 func advance_day():

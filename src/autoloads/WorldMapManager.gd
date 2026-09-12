@@ -27,12 +27,21 @@ func travel_to(hub_id: String) -> Dictionary:
 	WorldState.money -= cost
 	current_hub = hub_id
 	WorldState.current_hub = hub_id
-	if not visited_hubs.has(hub_id):
+	var first_visit := not visited_hubs.has(hub_id)
+	if first_visit:
 		visited_hubs.append(hub_id)
-	travel_log.append({"hub": hub_id, "week": WorldState.week, "day": WorldState.days[WorldState.day_index], "cost": cost})
+	var travel_entry := {
+		"hub": hub_id,
+		"week": WorldState.week,
+		"day": WorldState.days[WorldState.day_index],
+		"cost": cost
+	}
+	travel_log.append(travel_entry)
 	var hours := int(hub.get("travel_hours", 0))
 	if hours >= int(DataRegistry.hubs_dense.get("travel_rules", {}).get("day_advance_threshold_hours", 8)):
 		WorldState.advance_day()
+	if SignalBus.has_signal("world_travel_completed"):
+		SignalBus.world_travel_completed.emit(StringName(hub_id), first_visit, travel_entry.duplicate(true))
 	SaveManager.save_game(1)
 	return {"ok": true, "message": "Viagem para " + str(hub.get("name", hub_id)) + " concluida.", "hub": hub}
 

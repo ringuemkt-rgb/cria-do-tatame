@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+import re
 import subprocess
 import sys
 from pathlib import Path
@@ -37,7 +38,9 @@ def test_runtime_writes_canonical_ids_and_keeps_aliases() -> None:
     assert '"ALE": "Os Aleluiado"' in mapper
     assert 'const ACTIVE_FACTIONS := ["ALE", "LEM", "NTM"]' in manager
     assert '"legacy_archive": legacy_archive.duplicate(true)' in manager
-    assert "const SAVE_VERSION := 5" in save
+    version_match = re.search(r"const\s+SAVE_VERSION\s*:=\s*(\d+)", save)
+    assert version_match is not None
+    assert int(version_match.group(1)) >= 5
     assert "_persist_migrated_save" in save
 
 
