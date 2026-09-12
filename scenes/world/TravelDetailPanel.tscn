@@ -3,9 +3,9 @@
 [ext_resource type="Script" path="res://scenes/world/TravelDetailPanel.gd" id="1_panel"]
 
 [node name="TravelDetailPanel" type="PanelContainer"]
-custom_minimum_size = Vector2(560, 430)
+custom_minimum_size = Vector2(560, 480)
 offset_left = 1280.0
-offset_top = 500.0
+offset_top = 450.0
 offset_right = 1880.0
 offset_bottom = 1000.0
 mouse_filter = 0
@@ -77,6 +77,12 @@ layout_mode = 2
 autowrap_mode = 2
 theme_override_colors/font_color = Color(0.952941, 0.941176, 0.917647, 1)
 text = "Selecione um local para planejar."
+
+[node name="Start" type="Button" parent="Margin/VBox"]
+custom_minimum_size = Vector2(0, 52)
+layout_mode = 2
+disabled = true
+text = "PREPARAR VIAGEM"
 
 [node name="Close" type="Button" parent="Margin/VBox"]
 custom_minimum_size = Vector2(0, 48)
