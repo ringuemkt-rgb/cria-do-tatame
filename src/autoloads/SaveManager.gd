@@ -137,6 +137,11 @@ func load_game(slot_id := 1) -> bool:
 
 func _persist_migrated_save(path: String, source: Dictionary, original_version: int) -> void:
 	var migrated := source.duplicate(true)
+	# Re-serializa a autoridade viva depois das importacoes v6. Isso garante que
+	# tecnicas aprendidas, skill points e aliases derivados nao fiquem apenas em memoria.
+	var current_world_state: Dictionary = WorldState.to_dict()
+	for key_value in current_world_state.keys():
+		migrated[str(key_value)] = current_world_state[key_value]
 	migrated["save_version"] = SAVE_VERSION
 	migrated["migrated_from_save_version"] = original_version
 	migrated["migrated_at"] = Time.get_datetime_string_from_system()
