@@ -32,5 +32,8 @@ builds/android/*.idsig
 builds/android/*.sha256.txt
 reports/build/
 reports/runtime_audit/
+reports/godot_ai_eval/local/
+addons/godot_ai/
+addons/.godot_ai_update/
 *.translation
 .android/
