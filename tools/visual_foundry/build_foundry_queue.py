@@ -3,7 +3,7 @@
 
 This planner does not call external AI services. It converts the repository's
 canonical visual scope into explicit production jobs that can later be consumed
-by Blender/cloud adapters.
+by Blender/cloud adapters and the existing art pipeline.
 """
 from __future__ import annotations
 
@@ -31,7 +31,6 @@ def build_character_jobs(manifest: dict[str, Any], profile: dict[str, Any]) -> l
         for profile_name in character.get("profiles", []):
             action_names.extend(animation_profiles.get(profile_name, []))
 
-        # deterministic de-duplication while preserving manifest order
         actions = list(dict.fromkeys(action_names + character.get("signature", [])))
         jobs.append(
             {
@@ -50,10 +49,12 @@ def build_character_jobs(manifest: dict[str, Any], profile: dict[str, Any]) -> l
                     "rig",
                     "animation",
                     "orthographic_render",
+                    "portrait_and_icon_export",
                     "pixel_pass",
                     "sprite_forge_qa",
                     "godot_integration"
                 ],
+                "secondary_outputs": ["portrait", "ui_icon"],
                 "output_dir": f"production/visual_foundry/{character['id']}",
                 "shipping_target": "2d_sprite",
                 "requires_provenance": True,
@@ -91,8 +92,68 @@ def build_paired_technique_jobs(manifest: dict[str, Any], profile: dict[str, Any
     return jobs
 
 
+def build_arena_jobs(manifest: dict[str, Any], profile: dict[str, Any]) -> list[dict[str, Any]]:
+    jobs: list[dict[str, Any]] = []
+    for arena in manifest.get("arenas", []):
+        jobs.append(
+            {
+                "job_version": 1,
+                "kind": "arena_visual_pack",
+                "arena_id": arena["id"],
+                "arena_type": arena.get("type"),
+                "layers": arena.get("layers", 5),
+                "variants": arena.get("variants", []),
+                "profile": profile["id"],
+                "stages": [
+                    "reference_lock",
+                    "blockout",
+                    "modular_props",
+                    "parallax_layers",
+                    "lighting_variants",
+                    "collision_guides",
+                    "camera_bounds",
+                    "pixel_art_qa",
+                    "godot_scene_integration"
+                ],
+                "output_dir": f"production/visual_foundry/arenas/{arena['id']}",
+                "shipping_target": "2d_layered_arena",
+                "requires_provenance": True,
+            }
+        )
+    return jobs
+
+
+def build_ui_jobs(manifest: dict[str, Any], profile: dict[str, Any]) -> list[dict[str, Any]]:
+    jobs: list[dict[str, Any]] = []
+    for screen_id in manifest.get("ui_screens", []):
+        jobs.append(
+            {
+                "job_version": 1,
+                "kind": "ui_screen_pack",
+                "screen_id": screen_id,
+                "profile": profile["id"],
+                "stages": [
+                    "layout_contract",
+                    "component_art",
+                    "icon_pass",
+                    "mobile_legibility_qa",
+                    "godot_control_integration"
+                ],
+                "output_dir": f"production/visual_foundry/ui/{screen_id}",
+                "shipping_target": "godot_ui_assets",
+                "requires_provenance": True,
+            }
+        )
+    return jobs
+
+
 def build_queue(manifest: dict[str, Any], profile: dict[str, Any]) -> list[dict[str, Any]]:
-    return build_character_jobs(manifest, profile) + build_paired_technique_jobs(manifest, profile)
+    return (
+        build_character_jobs(manifest, profile)
+        + build_paired_technique_jobs(manifest, profile)
+        + build_arena_jobs(manifest, profile)
+        + build_ui_jobs(manifest, profile)
+    )
 
 
 def main() -> int:
