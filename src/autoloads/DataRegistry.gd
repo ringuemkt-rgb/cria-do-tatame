@@ -27,6 +27,7 @@ var player_progression := {}
 var customization_options := {}
 var training_minigames := {}
 var cria_live_interactive := {}
+var cria_live_v1 := {}
 var hub_activities := {}
 var complete_game_flow := {}
 var campaign_cinematics := {}
@@ -71,6 +72,7 @@ const DATA_FILES := {
 	"customization_options": "res://data/customization/customization_options.json",
 	"training_minigames": "res://data/training/training_minigames_v01.json",
 	"cria_live_interactive": "res://data/cria_live/cria_live_interactive_v01.json",
+	"cria_live_v1": "res://data/social/crialive_v1.json",
 	"hub_activities": "res://data/missions/hub_activities_v01.json",
 	"complete_game_flow": "res://data/gameplay/complete_game_flow_v01.json",
 	"campaign_cinematics": "res://data/story/campaign_cinematics_v01.json",
@@ -118,6 +120,7 @@ func load_all():
 	customization_options = _load_raw("customization_options")
 	training_minigames = _load_raw("training_minigames")
 	cria_live_interactive = _load_raw("cria_live_interactive")
+	cria_live_v1 = _load_raw("cria_live_v1")
 	hub_activities = _load_raw("hub_activities")
 	complete_game_flow = _load_raw("complete_game_flow")
 	campaign_cinematics = _load_raw("campaign_cinematics")
@@ -181,6 +184,8 @@ func validate_core_data():
 		errors.append("hubs_dense_v01.json nao carregado")
 	if player_progression.is_empty():
 		errors.append("player_progression.json nao carregado")
+	if cria_live_v1.is_empty():
+		errors.append("crialive_v1 nao carregado")
 	if complete_game_flow.is_empty():
 		errors.append("complete_game_flow_v01.json nao carregado")
 	if campaign_cinematics.is_empty():
