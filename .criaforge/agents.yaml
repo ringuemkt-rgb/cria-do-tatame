@@ -1,23 +1,47 @@
-version: 0.6.0
-agents:
-  creative_director:
-    owns: [canon, tone, identity, world]
-  technical_director:
-    owns: [godot, architecture, data, performance]
-  producer:
-    owns: [roadmap, milestones, backlog, risk]
+version: 1.0.0
+mode: role_routing_not_multi_agent_requirement
+rule: one capable agent may execute multiple roles; roles define authority and review lenses, not process count
+
+roles:
+  producer_orchestrator:
+    owns: [capability_handshake, roadmap, vertical_scope, dependencies, risk, handoff, evidence]
+    skill: .agents/skills/cria-universal-producer/SKILL.md
+  canon_director:
+    owns: [canon, tone, identity, world, narrative_precedence]
+    authorities: [data/production/canon_contract_v4_1.json, docs/canon]
+  godot_technical_director:
+    owns: [godot, architecture, scenes, data_consumers, save, performance, export]
+    authorities: [project.godot, src, scenes, tests]
   bjj_gameplay_lead:
-    owns: [combat_flow, techniques, scoring, balance]
+    owns: [combat_flow, techniques, scoring, counters, balance, reducer_semantics]
+    skill: .agents/skills/cria-combat-intelligence/SKILL.md
   motion_lab_lead:
-    owns: [video_research, pose, keyframes, biomechanics]
-  pixel_art_lead:
-    owns: [sprites, atlas, qa_visual, animation_readability]
+    owns: [rights_cleared_video, pose, contact, keyframes, biomechanics, paired_motion_reference]
+    skill: .agents/skills/cria-grappling-motion-lab/SKILL.md
+  art_director:
+    owns: [visual_canon, characters, arenas, maps, ui, readability, palette]
+    skill: .agents/skills/cria-art-direction/SKILL.md
+  sprite_forge_lead:
+    owns: [identity_lock, sprite_scale, pivot, atlas, animation_readability, paired_sprite_handoff]
+    skill: .agents/skills/cria-sprite-forge/SKILL.md
+  world_systems_lead:
+    owns: [world_state, travel, npc_ecology, map_presentation, deterministic_world_reactivity]
+    authorities: [src/autoloads/WorldMapManager.gd, src/autoloads/WorldDirectorManager.gd, data/world]
   ai_lead:
-    owns: [opponent_gameplans, memory, adaptive_behavior]
-  qa_lead:
-    owns: [tests, validation, reports, acceptance]
+    owns: [opponent_gameplans, npc_intent, memory, offline_fallback, adaptive_behavior]
+    constraint: ai_never_becomes_combat_or_world_fact_authority
+  audio_lead:
+    owns: [audio_assets, mix, sfx_hooks, music_provenance]
+    authority: src/autoloads/AudioManager.gd
+  qa_release_lead:
+    owns: [tests, regression, accessibility, performance, ci, android_device_evidence, release_gates]
+    authorities: [package.json, data/production/supreme_build_contract_v01.json, data/production/release_gate_status_v01.json]
 
 handoff:
-  technique_request: [bjj_gameplay_lead, motion_lab_lead, pixel_art_lead, technical_director, qa_lead]
-  arena_request: [creative_director, pixel_art_lead, technical_director, qa_lead]
-  career_request: [creative_director, producer, technical_director, ai_lead]
+  technique_request: [producer_orchestrator, bjj_gameplay_lead, motion_lab_lead, art_director, sprite_forge_lead, godot_technical_director, qa_release_lead]
+  visual_character_request: [producer_orchestrator, canon_director, art_director, sprite_forge_lead, godot_technical_director, qa_release_lead]
+  paired_bjj_request: [producer_orchestrator, bjj_gameplay_lead, motion_lab_lead, art_director, sprite_forge_lead, godot_technical_director, qa_release_lead]
+  arena_request: [producer_orchestrator, canon_director, art_director, world_systems_lead, godot_technical_director, qa_release_lead]
+  map_world_request: [producer_orchestrator, canon_director, world_systems_lead, art_director, godot_technical_director, qa_release_lead]
+  career_request: [producer_orchestrator, canon_director, world_systems_lead, ai_lead, godot_technical_director, qa_release_lead]
+  release_request: [producer_orchestrator, godot_technical_director, qa_release_lead]
