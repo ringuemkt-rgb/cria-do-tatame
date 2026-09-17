@@ -152,7 +152,7 @@ func _init() -> void:
 		"features": exact_features,
 		"attacker_animation": "ruan/double_leg/attacker",
 		"defender_animation": "davi/double_leg/defender",
-		"sync_map_ref": "res://data/animation/sync/double_leg_01.json",
+		"sync_map_ref": "sync/double_leg_01.json",
 		"contact_signature": query.get("reviewed_connection_signature", []).duplicate(true),
 		"source_ref": "owned_capture/session_test",
 		"rights_status": "COMMERCIAL_DERIVATION_ALLOWED",
