@@ -1,0 +1,63 @@
+version: 1.0.0
+workflow: visual_asset_to_runtime
+purpose: move one visible asset from canonical requirement to evidence-backed Godot candidate
+minimum_tier_for_generation: T2_ASSET_AUTHOR
+minimum_tier_for_runtime_claim: T3_RUNTIME_INTEGRATOR
+
+skills:
+  required:
+    - .agents/skills/cria-art-direction/SKILL.md
+  conditional:
+    sprite_or_animation: .agents/skills/cria-sprite-forge/SKILL.md
+    bjj_animation: .agents/skills/cria-combat-intelligence/SKILL.md
+    video_derived_motion: .agents/skills/cria-grappling-motion-lab/SKILL.md
+
+authorities:
+  - data/visual/production_manifest_v03.json
+  - production/coverage/asset_links_v1.json
+  - assets/manifest_v2.json
+  - data/production/external_tool_registry_v1.json
+
+steps:
+  - id: requirement
+    action: resolve_requirement_id_and_consumer_before_authoring
+  - id: references
+    action: resolve_canonical_visual_anchors_and_rights
+  - id: choose_route
+    choices:
+      - native_image_generation
+      - qwen_candidate_generator
+      - visual_foundry_3d_to_2d
+      - manual_dcc
+      - spec_only_if_no_generator
+  - id: candidate
+    action: generate_or_author_candidate_with_shipping_false
+  - id: normalize
+    action: deterministic_crop_alpha_scale_pivot_palette_and_format_processing
+  - id: technical_qa
+    action: run_asset_protocol_and_domain_specific_validators
+  - id: human_qa
+    action: identity_anatomy_readability_and_art_direction_review
+    required_for_promotion: true
+  - id: rights
+    action: verify_source_license_and_provenance
+    required_for_promotion: true
+  - id: godot
+    action: integrate_real_consumer_scene_or_resource
+    conditional_capability: godot_cli
+  - id: evidence
+    action: bind_requirement_to_real_asset_only_after_file_exists_and_runtime_evidence_is_available
+
+acceptance:
+  - requirement_id_exists
+  - raw_generation_not_used_as_runtime_asset
+  - provenance_recorded
+  - shipping_false_until_all_promotion_gates
+  - consumer_identified
+  - runtime_claim_only_with_runtime_evidence
+
+forbidden:
+  - auto_shipping_ai_output
+  - invented_asset_link
+  - code_drawn_placeholder_as_final_art
+  - third_party_asset_without_rights

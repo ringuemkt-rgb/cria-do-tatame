@@ -13,10 +13,33 @@ Antes de criar, editar, apagar, mover ou integrar qualquer arquivo:
 5. leia `docs/INDEX.md` e a fonte canônica da área;
 6. consulte `data/production/canon_contract_v4_1.json`;
 7. consulte `data/production/supreme_build_contract_v01.json`;
-8. procure implementação, issue ou PR equivalente;
-9. defina um lote vertical pequeno, testável e reversível.
+8. em tarefa multidomínio ou ambiente de agente novo, consulte `data/production/agent_production_contract_v1.json` e `.agents/skills/cria-universal-producer/SKILL.md`;
+9. procure implementação, issue ou PR equivalente;
+10. defina um lote vertical pequeno, testável e reversível.
 
 Não comece implementando apenas porque a solicitação parece clara. Primeiro confirme a posição da tarefa na arquitetura e no roadmap.
+
+## 0.1 Bootstrap universal por capacidades
+
+O projeto não depende de uma marca específica de IA. Todo agente deve trabalhar conforme as **capacidades realmente disponíveis**, nunca conforme capacidades presumidas.
+
+Quando houver shell/Python, rode:
+
+```bash
+python tools/agents/detect_capabilities.py --write reports/agent_bootstrap/capabilities.json
+```
+
+Capacidades nativas da plataforma que não aparecem no PATH — por exemplo `github_remote`, `web_research`, `vision`, `image_generate` e `image_edit` — podem ser declaradas explicitamente ao detector apenas quando estiverem realmente presentes.
+
+Regras:
+
+- escolha o maior tier seguro em `agent_production_contract_v1.json`;
+- ausência de ferramenta vira fallback, spec-only ou bloqueio explícito;
+- MCP é ponte opcional, nunca autoridade de runtime;
+- geração de imagem sem Godot não autoriza alegar integração;
+- CI sem aparelho físico não autoriza alegar `DEVICE_PASS`;
+- não instale ou copie ferramenta externa sem passar pelo `external_tool_registry_v1.json`;
+- a skill `cria-universal-producer` roteia tarefas multidomínio para as skills especialistas existentes; ela não substitui essas autoridades.
 
 ## Missão
 
@@ -177,7 +200,8 @@ Mudanças de release Android exigem instalação e teste em aparelho físico. De
 4. Validação — comandos e resultados;
 5. GitHub — branch, commits, issue e PR;
 6. Riscos — falhas, incertezas e dívida;
-7. Próximo lote — menor passo vertical de maior valor.
+7. Capacidades/gates ausentes — o que não pôde ser executado;
+8. Próximo lote — menor passo vertical de maior valor.
 
 ## Condições de parada
 
@@ -188,7 +212,7 @@ Pare e registre bloqueio quando houver:
 - branch-base abandonada sem estratégia de port;
 - licença ou origem incerta;
 - biomecânica insegura;
-- credencial ausente;
+- credencial ou capacidade necessária ausente sem fallback seguro;
 - ação irreversível não autorizada;
 - teste obrigatório impossível no ambiente.
 

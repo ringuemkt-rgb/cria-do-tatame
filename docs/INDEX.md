@@ -6,26 +6,42 @@ Este arquivo é a porta de entrada da documentação ativa. Antes de criar um do
 
 - [`../README.md`](../README.md) — visão do produto, instalação e comandos principais;
 - [`../AGENTS.md`](../AGENTS.md) — regras obrigatórias para agentes;
-- [`../CONTRIBUTING.md`](../CONTRIBUTING.md) — fluxo de contribuição;
 - [`DECISIONS.md`](DECISIONS.md) — decisões arquiteturais e canônicas D1–D11;
 - [`REPOSITORY_GOVERNANCE.md`](REPOSITORY_GOVERNANCE.md) — fonte única, branches, PRs e gates;
-- [`ROADMAP.md`](ROADMAP.md) — sequência oficial de construção.
+- [`ROADMAP.md`](ROADMAP.md) — sequência oficial de construção;
+- [`production/CRIA_GAME_FORGE_SYSTEM_V1.md`](production/CRIA_GAME_FORGE_SYSTEM_V1.md) — orquestração universal por capacidades para qualquer agente de IA.
 
 ## Contratos executáveis
 
+- [`../data/production/agent_production_contract_v1.json`](../data/production/agent_production_contract_v1.json) — capacidades, tiers, rotas de domínio, slots de ferramentas e bootstrap universal;
 - [`../data/production/canon_contract_v4_1.json`](../data/production/canon_contract_v4_1.json) — cânone v4.1, autoridades de runtime, facções e aliases;
 - [`../data/production/faction_migration_v4_2.json`](../data/production/faction_migration_v4_2.json) — três facções ativas, aliases e save v5;
 - [`../data/production/supreme_build_contract_v01.json`](../data/production/supreme_build_contract_v01.json) — metas e release gates;
 - [`../data/production/release_gate_status_v01.json`](../data/production/release_gate_status_v01.json) — ledger único com evidências e pendências de release;
 - [`../data/production/game_build_matrix_v1.json`](../data/production/game_build_matrix_v1.json) — matriz machine-readable de completude do jogo inteiro, G0–G8;
-- [`../data/production/external_tool_registry_v1.json`](../data/production/external_tool_registry_v1.json) — intake auditado de repositórios/modelos/benchmarks externos e políticas de reuso;
+- [`../data/production/external_tool_registry_v1.json`](../data/production/external_tool_registry_v1.json) — intake auditado de repositórios/modelos/bridges externos e políticas de reuso/licença;
 - [`../data/visual/production_manifest_v03.json`](../data/visual/production_manifest_v03.json) — contrato ativo de derivação audiovisual fail-closed;
 - [`../data/visual/production_manifest_v02.json`](../data/visual/production_manifest_v02.json) — inventário audiovisual histórico/compatível usado como entrada do v03;
 - [`../production/coverage/asset_links_v1.json`](../production/coverage/asset_links_v1.json) — vínculo explícito requisito→binário para coverage e shipping;
 - [`../data/visual/sprite_forge_contract_v1.json`](../data/visual/sprite_forge_contract_v1.json) — consistência quantitativa de sprites sobre o Asset Pipeline v2;
+- [`../data/visual/sprite_forge_contract_v2.json`](../data/visual/sprite_forge_contract_v2.json) — fabricação 2D ativa, identity lock, action grids, paired BJJ e QA fail-closed;
+- [`../data/visual/visual_foundry_profile_v1.json`](../data/visual/visual_foundry_profile_v1.json) — fabricação 3D→sprite offline para personagens/pares recorrentes;
 - [`../data/production/repository_governance_v01.json`](../data/production/repository_governance_v01.json) — governança validável por máquina;
 - [`../data/ai/cloud_drive_layout_v01.json`](../data/ai/cloud_drive_layout_v01.json) — árvore privada e política de promoção do adaptador Drive;
 - [`../data/ai/qwen_pixel_art_profile_v1.json`](../data/ai/qwen_pixel_art_profile_v1.json) — perfil pinado do stack Qwen 2512 + Pixel Art LoRA para geração de candidatos.
+
+## Agentes e produção universal
+
+- [`../.agents/skills/cria-universal-producer/SKILL.md`](../.agents/skills/cria-universal-producer/SKILL.md) — skill roteadora: capability handshake, tiers, tool slots, fallbacks e handoff padronizado;
+- [`../.criaforge/config.yaml`](../.criaforge/config.yaml) — configuração v1 do Game Forge;
+- [`../.criaforge/agents.yaml`](../.criaforge/agents.yaml) — papéis/review lenses sem exigir múltiplos agentes;
+- [`../.criaforge/quality_gates.yaml`](../.criaforge/quality_gates.yaml) — gates universais de capability, canon, BJJ, arte, runtime, Android e shipping;
+- [`../.criaforge/workflows/technique_to_gameplay.yaml`](../.criaforge/workflows/technique_to_gameplay.yaml) — técnica→gameplay;
+- [`../.criaforge/workflows/visual_asset_to_runtime.yaml`](../.criaforge/workflows/visual_asset_to_runtime.yaml) — requisito visual→candidato→Godot;
+- [`../.criaforge/workflows/paired_bjj_to_runtime.yaml`](../.criaforge/workflows/paired_bjj_to_runtime.yaml) — técnica BJJ pareada→sync/contact→runtime;
+- [`../.criaforge/workflows/map_world_to_runtime.yaml`](../.criaforge/workflows/map_world_to_runtime.yaml) — página/hub/arena→mundo existente→runtime;
+- [`../.criaforge/workflows/release_vertical_slice.yaml`](../.criaforge/workflows/release_vertical_slice.yaml) — quality→Godot→build→aparelho físico→ledger;
+- [`../tools/agents/detect_capabilities.py`](../tools/agents/detect_capabilities.py) — detector local sem leitura de segredos.
 
 ## Produto e gameplay
 
@@ -52,6 +68,7 @@ Este arquivo é a porta de entrada da documentação ativa. Antes de criar um do
 - `art_bible/` — identidade visual e contratos de qualidade ativos quando presentes;
 - `production/` — planos de lote, pipeline e metas;
 - [`architecture/CRIA_SPRITE_FORGE_V1.md`](architecture/CRIA_SPRITE_FORGE_V1.md) — perfil mestre, anchor/scale QA e handoff de sprites para o pipeline existente;
+- [`production/VISUAL_FOUNDRY_V1.md`](production/VISUAL_FOUNDRY_V1.md) — camada oficial 3D→sprite com Blender headless e gates de proveniência;
 - [`production/APK_VISUAL_COMPLETION_PLAN_V09.md`](production/APK_VISUAL_COMPLETION_PLAN_V09.md) — gates de vertical slice e Android;
 - [`production/DRIVE_CLOUD_V1.md`](production/DRIVE_CLOUD_V1.md) — adaptador privado Google Drive, Colab, rclone e provenance Hugging Face;
 - [`production/QWEN_PIXEL_ART_AUTHORING_V1.md`](production/QWEN_PIXEL_ART_AUTHORING_V1.md) — uso auditado do Qwen Pixel Art LoRA como gerador de candidatos, com clone metadata-only e download pinado;
@@ -69,7 +86,8 @@ Este arquivo é a porta de entrada da documentação ativa. Antes de criar um do
 - [`../.agents/skills/cria-art-direction/scripts/validate_skill.py`](../.agents/skills/cria-art-direction/scripts/validate_skill.py) — gate fail-closed da skill e da fila P1;
 - [`../tools/ci/derive_production_manifest_v03.py`](../tools/ci/derive_production_manifest_v03.py) — derivador determinístico de requisitos de produção;
 - [`../tools/ci/validate_production_coverage_v03.py`](../tools/ci/validate_production_coverage_v03.py) — coverage normal + shipping fail-closed;
-- [`../tools/ci/validate_external_tool_registry_v1.py`](../tools/ci/validate_external_tool_registry_v1.py) — bloqueia reuso direto de fontes sem licença clara, NC, conflitantes ou desativadas;
+- [`../tools/ci/validate_external_tool_registry_v1.py`](../tools/ci/validate_external_tool_registry_v1.py) — bloqueia reuso direto de fontes sem licença clara, NC, conflitantes, copyleft external-only ou desativadas;
+- [`../tools/ci/validate_agent_production_os_v1.py`](../tools/ci/validate_agent_production_os_v1.py) — valida capabilities, tiers, rotas, bridges, licenças e invariantes do produtor universal;
 - [`../tools/data/validate_bjj_reducer_v2_slice.py`](../tools/data/validate_bjj_reducer_v2_slice.py) — gate fail-closed do reducer v2 e do fixture Ruan × Davi;
 - [`../tools/ai_asset_pipeline/cloud/validate_cloud_pipeline.py`](../tools/ai_asset_pipeline/cloud/validate_cloud_pipeline.py) — gate offline do adaptador de nuvem;
 - [`../tools/ai_asset_pipeline/cloud/validate_qwen_pixel_art_profile.py`](../tools/ai_asset_pipeline/cloud/validate_qwen_pixel_art_profile.py) — gate fail-closed do stack Qwen Pixel Art.

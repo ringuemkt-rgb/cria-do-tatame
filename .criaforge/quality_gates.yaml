@@ -1,12 +1,109 @@
-version: 0.6.0
+version: 1.0.0
+policy:
+  fail_closed: true
+  shipping_default: false
+  missing_evidence_is_not_pass: true
+
 gates:
+  capability:
+    checks:
+      - capability_handshake_completed
+      - highest_safe_tier_selected
+      - unavailable_tools_not_claimed
+      - fallback_or_block_recorded
+  governance:
+    checks:
+      - single_repository
+      - no_second_runtime
+      - no_duplicate_manager
+      - branch_or_pr_workflow
+      - canonical_authority_respected
   canon:
-    checks: [protagonist_is_ruan_macacao, ptbr_language, baixo_sul_identity]
+    checks:
+      - protagonist_is_ruan_macacao
+      - ptbr_language
+      - baixo_sul_identity
+      - three_active_factions_respected
   bjj:
-    checks: [visible_grip, coherent_base, coherent_hip_line, state_transition_defined]
+    checks:
+      - reducer_state_transition_defined
+      - visible_or_explicitly_unknown_grip
+      - coherent_base
+      - coherent_hip_line
+      - contact_and_response_defined
+      - no_llm_frame_loop_authority
+  motion:
+    checks:
+      - source_provenance_recorded
+      - source_rights_reviewed_before_commercial_promotion
+      - occluded_contact_can_remain_unknown
+      - paired_motion_has_shared_origin
+      - paired_motion_has_sync_map
   art:
-    checks: [silhouette_readable_mobile, transparent_background, frame_manifest_exists]
+    checks:
+      - art_direction_loaded
+      - identity_lock_for_recurrent_character
+      - silhouette_readable_mobile
+      - candidate_default_shipping_false
+      - provenance_sidecar
+      - rights_gate
+  sprite:
+    checks:
+      - frame_128x128_rgba
+      - pivot_64_96
+      - nearest_filtering
+      - integer_scale
+      - scale_profile_consistent
+      - edge_touch_zero
+      - preview_and_metrics_exist
+  paired_sprite:
+    checks:
+      - attacker_and_defender_present
+      - shared_origin_present
+      - sync_map_present
+      - contact_map_present
+      - biomechanical_review
+  visual_foundry:
+    checks:
+      - 3d_is_offline_manufacturing_only
+      - tool_license_status_known
+      - identity_invariants_preserved
+      - orthographic_rgba_render_contract
+      - sprite_forge_handoff
+  world_map:
+    checks:
+      - existing_world_managers_remain_authority
+      - no_llm_per_frame_npc_motion
+      - world_data_consumer_exists
+      - presentation_does_not_override_world_truth
   godot:
-    checks: [json_valid, required_fields, data_driven_scripts]
+    checks:
+      - json_valid
+      - required_fields
+      - consumer_exists
+      - project_import_or_verified_ci_when_claimed
+      - runtime_smoke_when_claimed
+  accessibility_performance:
+    checks:
+      - mobile_readability
+      - reduced_motion_where_applicable
+      - atlas_and_draw_call_budgets_reviewed
+      - performance_claim_has_measurement
   qa:
-    checks: [validation_report_created, playtest_notes_created]
+    checks:
+      - validation_report_created
+      - regression_tests_run_when_available
+      - runtime_evidence_bound_to_commit
+  android:
+    checks:
+      - export_candidate_buildable
+      - adb_required_for_install_claim
+      - physical_device_required_for_device_pass
+  shipping:
+    checks:
+      - coverage_link_exists
+      - human_review_pass
+      - rights_review_pass
+      - godot_integration_pass
+      - required_release_gates_pass
+      - physical_android_gate_pass_when_release_requires_it

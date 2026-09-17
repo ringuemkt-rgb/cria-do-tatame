@@ -1,25 +1,66 @@
-version: 0.6.0
+version: 1.0.0
 workflow: technique_to_gameplay
+purpose: turn one canonical BJJ technique into a deterministic gameplay slice without requiring visual generation
+minimum_tier: T1_AUTHOR
+
+skills:
+  required:
+    - .agents/skills/cria-combat-intelligence/SKILL.md
+  conditional:
+    motion_or_video: .agents/skills/cria-grappling-motion-lab/SKILL.md
+    visual_asset: .agents/skills/cria-art-direction/SKILL.md
+    sprite_animation: .agents/skills/cria-sprite-forge/SKILL.md
+
+authorities:
+  - data/production/canon_contract_v4_1.json
+  - data/techniques/technique_catalog_v05.json
+  - data/combat
+  - src/combat
+
 steps:
-  - id: brief
-    output: technique_brief.md
+  - id: capability_handshake
+    action: select_highest_safe_tier
+    output: reports/agent_bootstrap/capabilities.json
+    optional_when_platform_capabilities_are_already_explicit: true
+  - id: inventory
+    action: find_existing_technique_state_edges_tests_and_open_prs
   - id: canon_check
-    output: canon_notes.md
-  - id: bjj_analysis
-    output: biomecanica.md
-  - id: gameplay_card
-    output: gameplay_card.json
-  - id: sprite_request
-    output: sprite_request.json
-  - id: atlas_manifest
-    output: manifest_stub.json
-  - id: godot_data
-    output: technique_catalog_patch.json
-  - id: qa_report
-    output: qa_report.md
+    action: confirm_ids_names_and_precedence
+  - id: combat_contract
+    action: define_preconditions_state_from_success_defense_cost_effects_score_and_recovery
+  - id: biomechanical_spec
+    action: define_base_grip_hip_line_contacts_force_direction_response_and_unknowns
+  - id: gameplay_data
+    action: modify_existing_canonical_data_not_parallel_catalog
+  - id: reducer_integration
+    action: integrate_with_existing_reducer_or_runtime_consumer
+  - id: visual_requirement
+    action: derive_candidate_sprite_or_motion_requirement_without_claiming_asset_completion
+    conditional: visual_output_required
+  - id: tests
+    action: add_or_update_deterministic_regression_tests
+  - id: validate
+    commands:
+      - npm run validate:combat-intelligence
+      - npm run test:combat-intelligence
+      - npm run validate:bjj-reducer-v2
+      - npm run test:bjj-reducer-v2
+  - id: godot_runtime
+    action: run_headless_smoke_if_godot_capability_exists
+    conditional_capability: godot_cli
+
 acceptance:
+  - existing_authority_reused
   - technique_has_state_from
   - technique_has_state_to_success
   - technique_has_defense_response
-  - sprite_request_has_actions
-  - qa_report_exists
+  - contacts_and_recovery_defined
+  - gameplay_consumer_exists
+  - tests_cover_success_and_defense
+  - missing_runtime_evidence_is_explicit
+
+forbidden:
+  - second_combat_manager
+  - animation_name_as_only_technique_definition
+  - llm_frame_loop_control
+  - hidden_contact_invention

@@ -1,0 +1,62 @@
+name: Agent Production OS v1
+
+on:
+  push:
+    branches:
+      - main
+      - 'feat/**'
+      - 'fix/**'
+    paths:
+      - 'AGENTS.md'
+      - '.agents/skills/cria-universal-producer/**'
+      - '.criaforge/**'
+      - 'data/production/agent_production_contract_v1.json'
+      - 'data/production/external_tool_registry_v1.json'
+      - 'tools/agents/**'
+      - 'tools/ci/validate_agent_production_os_v1.py'
+      - 'tools/ci/validate_external_tool_registry_v1.py'
+      - 'tests/test_agent_production_os_v1.py'
+      - 'tests/test_external_tool_registry_v1.py'
+      - 'docs/production/CRIA_GAME_FORGE_SYSTEM_V1.md'
+      - 'package.json'
+  pull_request:
+    paths:
+      - 'AGENTS.md'
+      - '.agents/skills/cria-universal-producer/**'
+      - '.criaforge/**'
+      - 'data/production/agent_production_contract_v1.json'
+      - 'data/production/external_tool_registry_v1.json'
+      - 'tools/agents/**'
+      - 'tools/ci/validate_agent_production_os_v1.py'
+      - 'tools/ci/validate_external_tool_registry_v1.py'
+      - 'tests/test_agent_production_os_v1.py'
+      - 'tests/test_external_tool_registry_v1.py'
+      - 'docs/production/CRIA_GAME_FORGE_SYSTEM_V1.md'
+      - 'package.json'
+  workflow_dispatch:
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Validate external tool registry
+        run: python tools/ci/validate_external_tool_registry_v1.py
+      - name: Test external tool registry
+        run: python -m unittest discover -s tests -p 'test_external_tool_registry_v1.py'
+      - name: Validate Universal Agent Production OS
+        run: python tools/ci/validate_agent_production_os_v1.py
+      - name: Test Universal Agent Production OS
+        run: python -m unittest discover -s tests -p 'test_agent_production_os_v1.py'
+      - name: Capability detector smoke
+        run: python tools/agents/detect_capabilities.py --declare github_remote,web_research --write reports/agent_bootstrap/ci-capabilities.json
+      - name: Upload capability report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: agent-production-os-capability-report
+          path: reports/agent_bootstrap/ci-capabilities.json
+          if-no-files-found: warn
