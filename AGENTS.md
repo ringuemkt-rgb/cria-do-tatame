@@ -114,6 +114,11 @@ Main Menu
 
 ## Processo de trabalho
 
+Quando o pedido exigir economia de tokens/créditos ou retomada eficiente,
+use `.agents/skills/efficient-verified-execution/SKILL.md` como procedimento
+auxiliar. Carregue suas referências sob demanda; ela não substitui a
+inicialização obrigatória, as autoridades do projeto ou os gates desta seção.
+
 1. **Inventário:** arquivos, sistemas, PRs, testes e dependências.
 2. **Diagnóstico:** fato, conflito, lacuna, risco e dívida.
 3. **Plano vertical:** objetivo observável, escopo, fora do escopo, testes e rollback.
