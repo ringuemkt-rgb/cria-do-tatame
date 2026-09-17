@@ -50,6 +50,13 @@ signal reputation_delta(axis, delta)
 signal cria_live_post_created(post)
 signal cria_live_post_generated(post_data)
 signal cria_live_metrics_changed(faction_id, metrics)
+signal crialive_profile_changed(profile)
+signal crialive_proposal_created(proposal)
+signal crialive_proposal_accepted(proposal)
+signal crialive_sponsor_payout(sponsor_id, amount, week)
+signal crialive_viral(post)
+signal crialive_nemesis_exposure(technique_id, count)
+signal crialive_lay_low_recommended(coverage_risk)
 
 signal reputacao_mudou(axis, delta, new_value)
 
