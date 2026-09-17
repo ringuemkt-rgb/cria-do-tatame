@@ -1,0 +1,42 @@
+name: Visual Foundry v1
+
+on:
+  push:
+    paths:
+      - 'data/visual/**'
+      - 'tools/visual_foundry/**'
+      - 'tests/test_visual_foundry_v1.py'
+      - '.github/workflows/visual-foundry.yml'
+  pull_request:
+    paths:
+      - 'data/visual/**'
+      - 'tools/visual_foundry/**'
+      - 'tests/test_visual_foundry_v1.py'
+      - '.github/workflows/visual-foundry.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Validate Visual Foundry contract
+        run: python tools/visual_foundry/validate_visual_foundry_v1.py
+
+      - name: Run Visual Foundry unit tests
+        run: python -m unittest discover -s tests -p 'test_visual_foundry_v1.py'
+
+      - name: Dry-run deterministic queue
+        run: python tools/visual_foundry/build_foundry_queue.py --stdout > /tmp/visual_foundry_queue.jsonl
+
+      - name: Verify queue is non-empty
+        run: test -s /tmp/visual_foundry_queue.jsonl
