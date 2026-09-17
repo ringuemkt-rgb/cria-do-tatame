@@ -1,26 +1,22 @@
-# Fatia ouro — auditoria 2026-09-16
+# Fatia ouro — auditoria 2026-09-17
 
-Repo `ringuemkt-rgb/cria-do-tatame` @ `8b162a6c`.
+Repo `ringuemkt-rgb/cria-do-tatame` branch `feat/slice-ouro-transition-v1`.
 
-## O que já existe no main
+## Correções neste commit
 
-- Godot 4.3, autoloads CombatManager / DataRegistry / GameFlowManager
-- `TechniqueResolver.gd` — chance, custo, efeitos. Sem deny, sem `state_to_defended` até este PR
-- `data/techniques.json` — ids PLAYER_* alinhados (baiana, sprawl, corte_joelho, triangulo, mata_leao, chave_braco)
-- `data/ai_config.json` + `DaviAIController.gd` — alfabeto de posição antigo (`PLAYER_GUARD`, `TOP_CONTROL`)
-- Catálogo v05 e BJJ KG slice — `runtime_authority: false`
-- Identity Ruan GPT — pintura, não pixel 128 (`shipping=false`)
-
-## Este PR completa (dados + resolver no commit seguinte)
-
-- Overlay `technique_slice_ouro_v1.json` (deny / chain / score / commit)
-- Mapper catálogo → PLAYER_* + espelho TOP↔BOTTOM
-- Policy Davi 7 nós no alfabeto da state machine
+- `TechniqueResolver.gd` — deny na janela (`frame <= commit_frame * defense_window`), fake antes do commit (custo 50%), `chain_id` +0.08, overlay merge.
+- `SliceStateMapper.gd` — catálogo → `PLAYER_*` + espelho TOP↔BOTTOM.
+- `DataRegistry.gd` — aplica `technique_slice_ouro_v1.json` em `get_technique` (aliases `knee_cut`/`clinch_entry`/`kimura`).
+- `DaviAIController.gd` — lê `davi_policy_slice_v1.json` e enviesa `preferred_ids` do estado atual. CombatManager continua juiz.
+- Validador `tools/combat/validate_slice_ouro_v1.py` + teste `tests/test_slice_ouro_v1.py`.
+- Smoke contratual: baiana vs sprawl na janela → `denied=true`, `state_to=PLAYER_TOP_CLINCH`.
 
 ## Ainda NÃO é jogo completo
 
-- PRs draft #138 #136 #140
-- Sprites pareados 6 fases
-- Identity Davi + Ruan v1b pixel
-- Terreiro / Dique layers L0–L2 shipping
-- LimboAI 1.2 não instalado
+- Sprites pareados 6 fases + `sync_map` das 7 arestas
+- Identity pixel shipping
+- Playtest Android físico / smoke Windows
+- Áudio mixado
+- Merge dos PRs draft de mundo/NFT/IA remota
+
+`shipping=false`. Sem segundo CombatManager. Sem LimboAI no tick.

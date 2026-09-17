@@ -11,7 +11,9 @@
     "montada": "PLAYER_TOP_MOUNT",
     "costas": "PLAYER_BACK_ATTACK",
     "finalizacao": "PLAYER_SUBMISSION_ATTACK",
-    "tartaruga": "PLAYER_BOTTOM_SIDE"
+    "tartaruga": "PLAYER_BOTTOM_SIDE",
+    "entrada_queda": "PLAYER_STANDING_NEUTRAL",
+    "PLAYER_STANDING_NEUTRAL": "PLAYER_STANDING_NEUTRAL"
   },
   "mirror": {
     "PLAYER_TOP_CLINCH": "PLAYER_BOTTOM_CLINCH",
