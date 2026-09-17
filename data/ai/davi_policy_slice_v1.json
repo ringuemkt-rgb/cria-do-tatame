@@ -16,6 +16,9 @@
     "baiana": "sprawl",
     "corte_joelho": "raspagem_tesoura",
     "chave_braco": "saida_montada",
-    "triangulo": "corte_joelho"
+    "triangulo": "corte_joelho",
+    "knee_cut": "raspagem_tesoura",
+    "kimura": "saida_montada",
+    "clinch_entry": "sprawl"
   }
 }
