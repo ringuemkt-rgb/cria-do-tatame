@@ -36,6 +36,10 @@ text = "Estado: EM PE - NEUTRO"
 layout_mode = 2
 text = "Recursos"
 
+[node name="Timer" type="Label" parent="Panel"]
+layout_mode = 2
+text = "TEMPO --:--"
+
 [node name="Message" type="Label" parent="Panel"]
 layout_mode = 2
 autowrap_mode = 3
@@ -45,6 +49,11 @@ text = "Ganhe a pegada, quebre a base e estabilize."
 layout_mode = 2
 autowrap_mode = 3
 text = "Davi esta lendo seu ritmo. Varie as entradas."
+
+[node name="Corner" type="Label" parent="Panel"]
+layout_mode = 2
+autowrap_mode = 3
+text = "TINKER: lê o jogo antes de forçar."
 
 [node name="Buttons" type="HBoxContainer" parent="Panel"]
 layout_mode = 2
@@ -78,4 +87,15 @@ text = "Sprawl"
 custom_minimum_size = Vector2(0, 64)
 layout_mode = 2
 size_flags_horizontal = 3
-text = "Encerrar"
+text = "Ação 5"
+
+[node name="Action6" type="Button" parent="Panel/Buttons"]
+custom_minimum_size = Vector2(0, 64)
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Ação 6"
+
+[node name="ViradaBtn" type="Button" parent="Panel"]
+custom_minimum_size = Vector2(0, 52)
+layout_mode = 2
+text = "VIRADA DO CRIA"

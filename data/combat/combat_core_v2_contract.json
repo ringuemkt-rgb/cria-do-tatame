@@ -1,0 +1,62 @@
+{
+  "$schema": "cria.combat_core_v2.contract.v1",
+  "version": "1.0.0",
+  "status": "STACKED_SLICE",
+  "shipping": false,
+  "authorities": {
+    "scene_and_legacy_runtime": "CombatManager",
+    "canonical_reducer_target": "BJJGraphReducerV2",
+    "progression_ledger": "ProgressionOS",
+    "time": "WorldDirectorManager",
+    "save": "SaveManager v6",
+    "factions_may_bias_only": true,
+    "crialive_may_decide_combat": false
+  },
+  "migration": {
+    "reducer_flip_allowed": false,
+    "reason": "No equivalent reducer-v1 comparator with the same canonical contract exists yet.",
+    "required_before_flip": [
+      "deterministic_v2_suite_green",
+      "legacy_compatibility_cases_green",
+      "explicit_parity_harness_available",
+      "physical_android_playtest"
+    ],
+    "deck_runtime_v2_opt_in": true,
+    "legacy_deck_autoload_preserved": true
+  },
+  "deck": {
+    "min_size": 6,
+    "max_size": 8,
+    "hand_size": 6,
+    "preset_ids": [
+      "ofensivo",
+      "defensivo",
+      "adaptativo"
+    ],
+    "seeded_shuffle": true,
+    "draws_only_from_selected_deck": true
+  },
+  "timing": {
+    "counter_min_ms": 250,
+    "interrupt_min_ms": 150,
+    "touch_floor_authority": "data/combat/bjj_timing_windows_v1.json"
+  },
+  "comeback": {
+    "id": "virada_do_cria",
+    "uses_per_fight": 1,
+    "outcome_authority": false,
+    "resource_recovery_only": true
+  },
+  "post_fight": {
+    "combat_manager_emits_clip_quality": true,
+    "crialive_consumes_after_combat": true,
+    "crialive_cannot_modify_result": true
+  },
+  "save": {
+    "save_version": 6,
+    "deck_and_presets_persisted": true,
+    "pre_fight_plan_runtime_only": true,
+    "mid_fight_resume_supported": false,
+    "mid_fight_resume_required_before_release": true
+  }
+}

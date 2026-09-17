@@ -1,0 +1,27 @@
+{
+  "$schema": "cria.ruleset_timers.v1",
+  "version": "1.0.0",
+  "authority_scope": "campaign_gameplay_timer_profiles_only",
+  "official_rules_claim": false,
+  "profiles": {
+    "ibjjf": {
+      "duration_sec": 360,
+      "overtime": false,
+      "sudden_death": false,
+      "rules_authority_id": "ibjjf_v6"
+    },
+    "adcc": {
+      "duration_sec": 300,
+      "overtime": true,
+      "overtime_duration_sec": 120,
+      "sudden_death": false,
+      "rules_authority_id": "adcc_championship_current"
+    },
+    "clandestina": {
+      "duration_sec": 0,
+      "overtime": false,
+      "sudden_death": true,
+      "rules_authority_id": "clandestine_cria_v1"
+    }
+  }
+}

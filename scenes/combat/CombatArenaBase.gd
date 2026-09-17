@@ -49,8 +49,14 @@ func _ready() -> void:
 	_build_placeholder_fighters()
 	_connect_buttons()
 	_connect_runtime_signals()
-	CombatManager.start_combat("terreiro_da_luta", "ruan_macacao", "davi_relampago")
+	var preflight: Dictionary = CombatManager.get_pre_fight_plan_v2()
+	var fight_arena := str(preflight.get("arena_id", "terreiro_da_luta"))
+	var fight_opponent := str(preflight.get("opponent_id", "davi_relampago"))
+	var start_result: Dictionary = CombatManager.start_combat(fight_arena, "ruan_macacao", fight_opponent)
+	if not bool(start_result.get("ok", false)):
+		push_error("[CombatArenaBase] Falha ao iniciar combate: %s" % str(start_result))
 	_ensure_ai_hint()
+	_refresh_v2_panel()
 	_update_state_label(CombatManager.get_current_state_name())
 	_refresh_action_buttons()
 	AudioManager.play_music_cue("terreiro")
@@ -82,7 +88,7 @@ func _style_combat_panel() -> void:
 	$Panel/Message.add_theme_color_override("font_color", Color("f2c230"))
 	$Panel/Message.add_theme_font_size_override("font_size", 15)
 	$Panel/AIHint.add_theme_color_override("font_color", Color("a8b7c9"))
-	for i in range(5):
+	for i in range(6):
 		var button: Button = get_node("Panel/Buttons/Action%s" % [i + 1])
 		VisualTheme.apply_action_button(button, VisualTheme.GOLD if i != 4 else VisualTheme.CONFLICT)
 
@@ -95,6 +101,12 @@ func _connect_runtime_signals() -> void:
 		SignalBus.combat_finished.connect(_on_combat_finished)
 	if not SignalBus.technique_resolved.is_connected(_on_technique_resolved):
 		SignalBus.technique_resolved.connect(_on_technique_resolved)
+	if not SignalBus.combat_v2_hand_changed.is_connected(_on_v2_hand_changed):
+		SignalBus.combat_v2_hand_changed.connect(_on_v2_hand_changed)
+	if not SignalBus.combat_v2_card_selected.is_connected(_on_v2_card_selected):
+		SignalBus.combat_v2_card_selected.connect(_on_v2_card_selected)
+	if not SignalBus.combat_corner_suggestion.is_connected(_on_corner_suggestion):
+		SignalBus.combat_corner_suggestion.connect(_on_corner_suggestion)
 
 func _build_placeholder_fighters() -> void:
 	ruan_placeholder = FighterPlaceholderScript.new()
@@ -124,13 +136,15 @@ func _set_ai_hint(text: String) -> void:
 
 func _connect_buttons() -> void:
 	action_buttons.clear()
-	for i in range(5):
+	for i in range(6):
 		var path: String = "Panel/Buttons/Action%s" % [i + 1]
 		if not has_node(path):
 			continue
 		var button: Button = get_node(path)
 		action_buttons.append(button)
 		button.pressed.connect(_on_action_button_pressed.bind(button))
+	if has_node("Panel/ViradaBtn") and not $Panel/ViradaBtn.pressed.is_connected(_on_virada_pressed):
+		$Panel/ViradaBtn.pressed.connect(_on_virada_pressed)
 
 func _refresh_action_buttons() -> void:
 	var available: Array = CombatManager.get_available_techniques()
@@ -163,11 +177,21 @@ func _on_action_button_pressed(button: Button) -> void:
 	var action_id: String = str(button.get_meta("action_id", ""))
 	if action_id == "" or not bool(button.get_meta("affordable", true)):
 		return
+	await _execute_player_action(action_id)
+
+func _execute_player_action(action_id: String) -> void:
+	if action_id == "" or not CombatManager.is_running:
+		return
 	AudioManager.play_sfx("botao")
 	_set_actions_enabled(false)
 	if ruan_placeholder != null:
 		ruan_placeholder.call("play_action", action_id)
 	var result: Dictionary = CombatManager.apply_player_action(action_id)
+	if not bool(result.get("success", false)) and str(result.get("error", "")) == "deck_card_not_in_hand":
+		_set_ai_hint("Essa técnica não está na tua mão agora.")
+		_refresh_action_buttons()
+		_set_actions_enabled(true)
+		return
 	davi_ai.call("record_player_action", action_id)
 	var success: bool = bool(result.get("success", false))
 	AudioManager.play_sfx(action_id)
@@ -179,6 +203,7 @@ func _on_action_button_pressed(button: Button) -> void:
 	if CombatManager.is_running:
 		_refresh_action_buttons()
 		_set_actions_enabled(true)
+		_refresh_v2_panel()
 
 func _run_davi_turn() -> void:
 	_set_ai_hint("%s Davi esta escolhendo a resposta..." % str(davi_ai.call("pressure_message")))
@@ -259,3 +284,53 @@ func _on_combat_finished(result) -> void:
 	var error: Error = get_tree().change_scene_to_file(RESULT_SCENE)
 	if error != OK:
 		push_error("[CombatArenaBase] Falha ao abrir resultado: %s" % error_string(error))
+
+
+func _process(delta: float) -> void:
+	if not CombatManager.is_running or not CombatManager.is_combat_v2_active():
+		return
+	var timer_result: Dictionary = CombatManager.tick_combat_timer(delta)
+	if has_node("Panel/Timer"):
+		var state: Dictionary = CombatManager.get_combat_state_v2()
+		$Panel/Timer.text = "TEMPO %02d:%02d%s" % [
+			int(state.get("timer", 0)) / 60,
+			int(state.get("timer", 0)) % 60,
+			" • OT" if bool(state.get("overtime", false)) else ""
+		]
+	if bool(timer_result.get("expired", false)) and has_node("Panel/Message"):
+		$Panel/Message.text = "Tempo esgotado. A resolução aguarda a autoridade de regras do combate."
+
+func _on_v2_hand_changed(_hand: Array) -> void:
+	if CombatManager.is_running:
+		_refresh_action_buttons()
+		_refresh_v2_panel()
+
+func _on_v2_card_selected(technique_id) -> void:
+	if CombatManager.is_running:
+		_execute_player_action(str(technique_id))
+
+func _on_corner_suggestion(suggestion) -> void:
+	if typeof(suggestion) != TYPE_DICTIONARY:
+		return
+	if has_node("Panel/Corner"):
+		$Panel/Corner.text = "TINKER: %s" % str(suggestion.get("reason", "Lê a resposta antes de forçar."))
+
+func _on_virada_pressed() -> void:
+	var result: Dictionary = CombatManager.activate_virada_do_cria(1)
+	if has_node("Panel/Message"):
+		$Panel/Message.text = "VIRADA DO CRIA: foco, moral e gás recuperados." if bool(result.get("ok", false)) else "Virada ainda não está disponível."
+	_refresh_v2_panel()
+
+func _refresh_v2_panel() -> void:
+	if not CombatManager.is_combat_v2_active():
+		if has_node("Panel/ViradaBtn"):
+			$Panel/ViradaBtn.visible = false
+		return
+	if has_node("Panel/ViradaBtn"):
+		$Panel/ViradaBtn.visible = true
+		var state: Dictionary = CombatManager.get_combat_state_v2()
+		$Panel/ViradaBtn.disabled = not bool(state.get("virada_disponivel", {}).get("p1", false))
+	if has_node("Panel/Corner"):
+		var suggestion: Dictionary = CombatManager.get_corner_suggestion()
+		if not suggestion.is_empty():
+			$Panel/Corner.text = "TINKER: %s" % str(suggestion.get("reason", "Joga o plano."))

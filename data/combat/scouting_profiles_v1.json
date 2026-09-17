@@ -1,0 +1,14 @@
+{
+  "$schema": "cria.scouting_profiles.v1",
+  "version": "1.0.0",
+  "status": "SLICE_AUTHORING",
+  "profiles": {
+    "davi_relampago": {
+      "style": "velocidade_apelacao",
+      "archetype": "speedster",
+      "weaknesses": ["half_guard", "leglock"],
+      "signature_chain": "chain_relampago",
+      "faction": "ALE"
+    }
+  }
+}
