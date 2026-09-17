@@ -1,0 +1,51 @@
+name: BJJ Atlas Specs QA
+
+on:
+  pull_request:
+    paths:
+      - 'data/research/**'
+      - 'data/schemas/ctt_reference_investigation_v1.schema.json'
+      - 'data/schemas/ctt_paired_motion_spec_v1.schema.json'
+      - 'tools/research/build_atlas_specs.py'
+  push:
+    branches: ['feat/bjj-dynamics-reference-v1']
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Build deterministic research outputs
+        run: |
+          python tools/research/build_atlas_specs.py --atlas-out /tmp/atlas.json --specs-out /tmp/specs.json
+      - name: Check structural invariants
+        run: |
+          python - <<'PY'
+          import json
+          from collections import Counter
+          atlas=json.load(open('/tmp/atlas.json',encoding='utf-8'))
+          specs=json.load(open('/tmp/specs.json',encoding='utf-8'))
+          expected=Counter({'TAKEDOWNS':10,'SWEEPS':10,'GUARD_PASSES':10,'ARM_LOCKS':5,'CHOKES':4,'LEG_ENTANGLEMENTS':3,'ESCAPES':8})
+          assert atlas['count']==50
+          assert specs['count']==50
+          assert Counter(t['classification']['family'] for t in atlas['techniques'])==expected
+          assert len({t['technique_id'] for t in atlas['techniques']})==50
+          phase_order=['anticipation','entry','contact','stabilization','response','recovery']
+          for record in atlas['techniques']:
+              assert record['verification_status']=='DRAFT_AWAITING_SOURCE_CITATION'
+              assert record['reference_layer']['asset_ingestion'] is False
+              assert record['production']['shipping'] is False
+          for spec in specs['specs']:
+              assert [p['name'] for p in spec['phases']]==phase_order
+              total=sum(p['frames'] for p in spec['phases'])
+              assert total==spec['frame_budget']['target']==spec['frame_budget']['allocation_sum']
+              assert spec['shipping']['eligible'] is False
+              assert 'L4' in spec['shipping']['gates']
+              assert spec['safety_policy']['dangerous_directional_escape_instruction'] is False
+              if spec['safety_class'].startswith('HIGH_RISK'):
+                  assert spec['safety_policy']['high_risk_finish_detail']=='ABSTRACTED'
+          print('PASS: Atlas/spec invariants')
+          PY
