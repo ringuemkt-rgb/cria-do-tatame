@@ -1,21 +1,47 @@
-version: 0.6.0
+version: 1.0.0
 project: Cria do Tatame
-engine: Godot 4.2+
+repository: ringuemkt-rgb/cria-do-tatame
 language: pt-BR
 style: HD Pixel Art 2.5D Regional Premium
 main_character: Ruan Macacao Silva
 hub: Terreiro da Luta
+runtime: Godot
+engine_minimum: Godot 4.2.2
+engine_production_target: Godot 4.3+
+
+mode:
+  orchestration: capability_based
+  provider_specific_required: false
+  multiple_agents_required: false
+  shipping_authority: false
 
 paths:
+  agents: AGENTS.md
+  universal_agent_contract: data/production/agent_production_contract_v1.json
+  canon_contract: data/production/canon_contract_v4_1.json
+  supreme_build_contract: data/production/supreme_build_contract_v01.json
+  game_build_matrix: data/production/game_build_matrix_v1.json
+  production_manifest: data/visual/production_manifest_v03.json
+  asset_coverage: production/coverage/asset_links_v1.json
+  external_tools: data/production/external_tool_registry_v1.json
+  motion_tools: data/research/motion_tool_registry_v1.json
+  sprite_forge: data/visual/sprite_forge_contract_v2.json
+  visual_foundry: data/visual/visual_foundry_profile_v1.json
   techniques: data/techniques/technique_catalog_v05.json
   combat_states: data/combat/combat_states_v05.json
   opponent_gameplans: data/ai/opponent_gameplans_v05.json
-  production_manifest: data/production/cria_forge_manifest_v06.json
   reports: reports/cria_forge
+  capability_report: reports/agent_bootstrap/capabilities.json
 
 rules:
-  no_third_party_copy: true
+  no_third_party_copy_without_registry_permission: true
+  no_second_runtime: true
+  no_second_project_godot: true
+  no_llm_frame_loop_combat: true
   use_ptbr_names: true
   mobile_first: true
   data_driven: true
-  godot_runtime: true
+  offline_critical_gameplay: true
+  candidate_assets_default_shipping_false: true
+  physical_android_required_for_release_claim: true
+  missing_capability_requires_fallback_or_block: true
