@@ -1,0 +1,71 @@
+{
+  "schema_version": 1,
+  "id": "cria_visual_foundry_v1",
+  "project": "cria_do_tatame_pressao",
+  "source_manifest": "data/visual/production_manifest_v02.json",
+  "target_engine": "Godot 4.3+",
+  "target_platforms": ["android_arm64", "windows_x86_64"],
+  "production_strategy": "3d_master_to_2d_sprite",
+  "render": {
+    "source_resolution": [1024, 1024],
+    "background": "transparent_rgba",
+    "camera": "orthographic",
+    "lighting": "locked_character_rig",
+    "color_space": "sRGB",
+    "frame_padding_px": 24,
+    "contact_line_required": true
+  },
+  "sprite": {
+    "combat_height_px": 72,
+    "hub_cell_px": 64,
+    "hub_directions": 8,
+    "grid_px": 16,
+    "texture_filter": "nearest",
+    "outline_px": 1,
+    "rim_light_px": 1,
+    "pivot": "ground_contact_center",
+    "anti_aliasing": "disabled_after_pixel_pass"
+  },
+  "mesh_budgets": {
+    "character_master_faces_soft_max": 300000,
+    "character_runtime_source_faces_soft_max": 35000,
+    "prop_runtime_source_faces_soft_max": 15000,
+    "note": "3D assets are production sources; 2D sprites remain the default gameplay shipping target."
+  },
+  "required_character_outputs": [
+    "provenance.json",
+    "master/master.glb",
+    "rig/rig_manifest.json",
+    "renders/render_manifest.json",
+    "sprites/spritesheet.png",
+    "sprites/metadata.json",
+    "sprites/contact_sheet.png",
+    "sprites/preview.gif",
+    "qa_report.md"
+  ],
+  "paired_technique_outputs": [
+    "attacker",
+    "defender",
+    "sync_map.json",
+    "hitbox.json"
+  ],
+  "tool_policy": {
+    "blender": {"status": "preferred", "role": ["dcc", "render", "rig_cleanup", "export"]},
+    "triposg": {"status": "candidate", "role": ["image_to_3d"]},
+    "triposr": {"status": "candidate", "role": ["fast_image_to_3d"]},
+    "trellis2": {"status": "candidate", "role": ["image_to_3d", "pbr_texturing"]},
+    "unirig": {"status": "candidate", "role": ["auto_rig"]},
+    "instant_meshes": {"status": "candidate", "role": ["retopology"]},
+    "quadriflow": {"status": "candidate", "role": ["retopology"]}
+  },
+  "gates": {
+    "license_provenance": true,
+    "identity_lock": true,
+    "stable_scale": true,
+    "stable_pivot": true,
+    "paired_animation_sync": true,
+    "sprite_forge_validation": true,
+    "godot_scene_integration": true,
+    "mobile_performance": true
+  }
+}
