@@ -1,5 +1,5 @@
 {
-  "version": "0.1.0",
+  "version": "0.2.0",
   "currency": "BRL",
   "starting_money": 0,
   "training_costs": {
@@ -12,5 +12,46 @@
     "local_sparring": 0,
     "official_match": 50,
     "regional_event": 120
+  },
+  "vehicle_service": {
+    "refuel_block_units": 10,
+    "refuel_block_cost": 3,
+    "condition_repair_block_units": 10,
+    "condition_repair_block_cost": 5,
+    "hard_damage_repair_cost_per_level": 20,
+    "upgrade_catalog": {
+      "tires": {
+        "cost": 30,
+        "effects": {"road_grip_bonus": 0.08}
+      },
+      "suspension": {
+        "cost": 40,
+        "effects": {"rough_road_condition_loss_multiplier": 0.8}
+      },
+      "fuel_tank": {
+        "cost": 35,
+        "effects": {"fuel_capacity_bonus": 25}
+      },
+      "headlights": {
+        "cost": 20,
+        "effects": {"night_visibility_bonus": 0.15}
+      },
+      "cargo_rack": {
+        "cost": 25,
+        "effects": {"cargo_capacity_bonus": 25}
+      },
+      "repair_kit": {
+        "cost": 15,
+        "effects": {"roadside_repair_charges": 1}
+      },
+      "seat_comfort": {
+        "cost": 20,
+        "effects": {"arrival_energy_loss_multiplier": 0.85}
+      },
+      "radio_cosmetic": {
+        "cost": 10,
+        "effects": {"cosmetic_only": true}
+      }
+    }
   }
 }
