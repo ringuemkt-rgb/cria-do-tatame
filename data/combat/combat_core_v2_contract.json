@@ -1,0 +1,39 @@
+{
+  "$schema": "cria.combat_core.v2",
+  "version": "2.0.0",
+  "shipping": false,
+  "authorities": {
+    "fight": "CombatManager",
+    "time": "WorldDirectorManager",
+    "ledger": "ProgressionOS",
+    "save": "SaveManager",
+    "reducer_v2": "shadow_until_parity",
+    "faction": "bias_only",
+    "crialive": "reads_clip_quality_only"
+  },
+  "inject_refcounted": [
+    "BJJGraphReducerV2",
+    "BJJUtilityScorerV2",
+    "BJJIdAdapterV1",
+    "CornerSystem",
+    "ScoutingSystem",
+    "ComebackSystem"
+  ],
+  "legacy_wrap": ["DeckManager autoload", "src/combat/CombatManager.gd clone"],
+  "deck": {"min": 6, "max": 8, "hand": 6, "draw_seeded": true},
+  "rulesets": ["ibjjf", "adcc", "clandestina"],
+  "wincons": ["submission_position_grip_tap", "points_timer", "sudden_death", "gas_out_control"],
+  "hp_is_not_wincon": true,
+  "virada_cria_per_fight": 1,
+  "counter_window_ms": 250,
+  "nemesis_learn_after_posts": 2,
+  "gold_slice": "ruan_macacao vs davi_relampago terreiro",
+  "parity_required_before_reducer_callsite": true,
+  "forbidden": [
+    "second_CombatManager_autoload",
+    "reducer_as_scene_authority",
+    "faction_writes_reduce",
+    "crialive_decides_fight",
+    "new_DeckManager_autoload"
+  ]
+}
