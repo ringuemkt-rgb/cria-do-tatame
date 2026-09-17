@@ -104,7 +104,7 @@
     },
     {
       "id": "technical_standup_space",
-      "attack_types": ["transition", " disengage"],
+      "attack_types": ["transition", "disengage"],
       "positions": ["seated_guard", "open_guard", "turtle"],
       "modes": ["gi", "nogi"],
       "roles": ["bottom", "neutral"],
