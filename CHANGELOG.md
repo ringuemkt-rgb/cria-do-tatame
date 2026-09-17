@@ -1,5 +1,20 @@
 # Changelog
 
+## v2.0.0 — Grappling Engine V2
+
+- Adicionada fachada `CriaGrapplingEngineV2` sobre o runtime determinístico existente, preservando `BJJGraphReducerV2` como autoridade de combate.
+- Adicionada topologia explícita de grips gi/no-gi com uma pegada por mão, superfícies corporais compartilhadas e superfícies de kimono exclusivas do gi.
+- Adicionado microestado não autoritativo com posição, papel top/bottom, modalidade, fase, fadiga, grips e contato revisado.
+- Adicionado seletor determinístico de reações para sprawl, whizzer, pummeling, frames, escapes, hand fighting e diferenças gi/no-gi.
+- Adicionado motion matching leve para clips pareados de pixel art, sem ML, física 3D ou extensão nativa em runtime.
+- Adicionados `reviewed_connection_signature`, banco compacto de movimentos e compilador fail-closed por licença/aprovação humana.
+- Adicionada timeline pareada por tempo com atacante, defensor, fases, sync points, contato e pivô compartilhado.
+- Adicionados schemas de `grappling_motion_variant` e `grappling_sync_map`.
+- Adicionado registro de pesquisa para InterAgent, ProtoMotions, MimicKit, AssistMimic, Godot Motion Matching e InterMimic com firewall de licenças/datasets.
+- Adicionados validator Python, unit tests, Godot headless smoke e workflow dedicado.
+- Integradas validação e regressão V2 ao `npm run quality`.
+- Documentada a estratégia de dataset próprio CRIA para captura multiview gi/no-gi e a prioridade do vertical slice Ruan × Davi.
+
 ## v1.0.0 — Visual Foundry
 
 - Adicionada a camada `tools/visual_foundry/` para fabricação visual 3D → sprite sem alterar o runtime 2D do jogo.
