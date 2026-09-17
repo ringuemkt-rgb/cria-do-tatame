@@ -1,5 +1,5 @@
 {
-  "version": "0.8.0",
+  "version": "0.9.0",
   "sponsors": [
     {
       "id": "apoio_terreiro",
@@ -32,6 +32,23 @@
         "raiz": 1
       },
       "description": "Parceria regional desbloqueada por consistencia e boa reputacao."
+    },
+    {
+      "id": "academia_suplementos",
+      "name": "Luiz Henrique Suplementos",
+      "tier": "crialive_1",
+      "status": "available",
+      "requirements": {
+        "followers": 500,
+        "hype": 20
+      },
+      "weekly_reward": 40,
+      "bonus_victory": 25,
+      "obligations": {
+        "posts_per_week": 1,
+        "patch": "luiz"
+      },
+      "description": "Primeiro contrato social do CriaLive v1. Paga semanalmente se a obrigacao minima de postagem for cumprida."
     }
   ]
 }
