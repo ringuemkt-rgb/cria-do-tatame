@@ -1,0 +1,76 @@
+{
+  "$schema": "cria.p1.work_order.identity_master.v1",
+  "version": "1.0.0",
+  "status": "READY_FOR_CANDIDATE_AUTHORING",
+  "shipping": false,
+  "command_id": "P1-CHAR-001",
+  "requirement_id": "p1_char:ruan_macacao:char_turnaround",
+  "character_id": "ruan_macacao",
+  "authorities": [
+    "data/chars/canon/ruan_macacao.json",
+    "production/p1/cria_art_p1_commands_v1.json",
+    "data/visual/p1_visual_build_contract_v2.json",
+    "data/visual/visual_foundry_profile_v1.json",
+    ".agents/skills/cria-art-direction/SKILL.md",
+    ".agents/skills/cria-sprite-forge/SKILL.md"
+  ],
+  "identity_lock": {
+    "style": "HD Pixel Art 2.5D Regional Premium",
+    "symbol": "Gorila Silverback",
+    "combat_style": "pressao_pesada_top_game",
+    "mechanical_signature": "silverback_grip",
+    "outfit_direction": "GI branco/off-white; faixa preta; sem marcas de terceiros",
+    "required_views": ["front", "side", "back"],
+    "combat_pose_required": true,
+    "frame_px": [128, 128],
+    "pivot_px": [64, 96],
+    "source_render_px": [1024, 1024],
+    "reference_target": "assets/chars/ref/ruan_macacao_turnaround.png",
+    "reference_status": "pending_ingestion_and_human_approval",
+    "reference_sha256": null,
+    "human_identity_approved": false
+  },
+  "manufacturing_route": [
+    "reference_lock",
+    "candidate_identity_sheet",
+    "human_identity_review",
+    "reference_sha256_lock",
+    "optional_3d_master",
+    "rig_if_3d_route",
+    "orthographic_render_or_direct_pixel_source",
+    "pixel_pass",
+    "sprite_forge_normalization",
+    "contact_sheet_preview",
+    "rights_review",
+    "coverage_link_preparation",
+    "godot_handoff"
+  ],
+  "required_candidate_outputs": [
+    "model_sheet.png",
+    "palette.json",
+    "provenance.json",
+    "license.json",
+    "qa_report.md",
+    "contact_sheet.png"
+  ],
+  "promotion_blockers": [
+    "reference_binary_not_ingested",
+    "reference_sha256_missing",
+    "human_identity_approval_missing",
+    "qa_not_run",
+    "rights_not_cleared",
+    "godot_not_integrated"
+  ],
+  "candidate_output_prefix": "production/candidates/p1/chars/ruan_macacao/turnaround_v1/",
+  "approved_runtime_prefix": "assets/production/chars/ruan_macacao/turnaround/",
+  "coverage_template": {
+    "requirement_id": "p1_char:ruan_macacao:char_turnaround",
+    "asset_paths": [],
+    "qa_passed": false,
+    "human_approved": false,
+    "rights_cleared": false,
+    "godot_integrated": false,
+    "shipping": false
+  },
+  "next_action": "Ingest/select the identity reference, record SHA-256, produce the first turnaround candidate, and stop for human identity approval before any action sheet."
+}

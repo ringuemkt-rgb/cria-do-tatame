@@ -1,0 +1,97 @@
+{
+  "$schema": "cria.p1.work_order.paired_bjj.v1",
+  "version": "1.0.0",
+  "status": "BLOCKED_BY_IDENTITY_AND_GROUND_BASES",
+  "shipping": false,
+  "command_id": "P1-TECH-001",
+  "requirement_id": "p1_paired:t001:paired_technique",
+  "technique_id": "t001",
+  "display_name": "Baiana Double-Leg",
+  "attacker_id": "ruan_macacao",
+  "defender_id": "davi_relampago",
+  "entry_state": "standing_neutral",
+  "exit_state": "half_guard_top",
+  "rules_context": {
+    "gi": true,
+    "nogi": true,
+    "scoring_event": "takedown",
+    "stabilization_seconds": 3.0
+  },
+  "authorities": [
+    "data/bjj/bjj_kg_slice_ruan_davi_v1.json",
+    "production/p1/cria_art_p1_commands_v1.json",
+    "data/visual/p1_visual_build_contract_v2.json",
+    "assets/schemas/paired_bjj_animation_v2.schema.json",
+    ".agents/skills/cria-combat-intelligence/SKILL.md",
+    ".agents/skills/cria-grappling-motion-lab/SKILL.md",
+    ".agents/skills/cria-art-direction/SKILL.md",
+    ".agents/skills/cria-sprite-forge/SKILL.md"
+  ],
+  "dependencies": [
+    {"command_id": "P1-CHAR-001", "gate": "human_identity_approved"},
+    {"command_id": "P1-CHAR-006", "gate": "human_identity_approved"},
+    {"command_id": "P1-CHAR-005", "gate": "ruan_ground_base_reviewed"},
+    {"command_id": "P1-CHAR-010", "gate": "davi_ground_base_reviewed"}
+  ],
+  "paired_contract": {
+    "frame_px": [128, 128],
+    "pivot_px": [64, 96],
+    "shared_pivot_required": true,
+    "phases": ["anticipation", "entry", "establish", "stabilize", "response", "recovery"],
+    "sync_map_required": true,
+    "contact_map_required": true,
+    "expert_biomechanical_review_required": true,
+    "no_teleport": true,
+    "no_unexplained_side_swap": true,
+    "gi_grip_must_match_visual_modality": true,
+    "detached_fx_only": true
+  },
+  "blocking_plan": [
+    {"phase": "anticipation", "goal": "readable standing setup before entry", "contact_points": "PENDING_EXPERT_BLOCKING"},
+    {"phase": "entry", "goal": "Ruan level-change/entry while Davi reaction remains readable", "contact_points": "PENDING_EXPERT_BLOCKING"},
+    {"phase": "establish", "goal": "paired drive/contact establishes the takedown trajectory", "contact_points": "PENDING_EXPERT_BLOCKING"},
+    {"phase": "stabilize", "goal": "landing resolves toward top half without teleport or clipping", "contact_points": "PENDING_EXPERT_BLOCKING"},
+    {"phase": "response", "goal": "Davi defensive reaction remains continuous with the landing state", "contact_points": "PENDING_EXPERT_BLOCKING"},
+    {"phase": "recovery", "goal": "final frame matches half_guard_top runtime base and 3s stabilization semantics", "contact_points": "PENDING_EXPERT_BLOCKING"}
+  ],
+  "required_candidate_outputs": [
+    "attacker_spritesheet.png",
+    "defender_spritesheet.png",
+    "sync_map.json",
+    "contact_map.json",
+    "metadata.json",
+    "preview.gif",
+    "contact_sheet.png",
+    "provenance.json",
+    "license.json",
+    "qa_report.md"
+  ],
+  "candidate_output_prefix": "production/candidates/p1/techniques/t001_ruan_vs_davi_v1/",
+  "approved_runtime_prefix": "assets/production/techniques/t001/paired_animation/",
+  "godot_handoff": {
+    "consumer": "BJJMotionBindingV1 / canonical combat transition adapter",
+    "binding_requires": "exact technique_id + entry_state + exit_state + paired sync metadata",
+    "runtime_evidence_required": true
+  },
+  "coverage_template": {
+    "requirement_id": "p1_paired:t001:paired_technique",
+    "asset_paths": [],
+    "qa_passed": false,
+    "human_approved": false,
+    "rights_cleared": false,
+    "godot_integrated": false,
+    "shipping": false
+  },
+  "promotion_blockers": [
+    "ruan_identity_master_not_approved",
+    "davi_identity_master_not_approved",
+    "ground_bases_not_reviewed",
+    "paired_blocking_expert_review_pending",
+    "sync_map_missing",
+    "contact_map_missing",
+    "sprite_forge_qa_pending",
+    "rights_pending",
+    "godot_runtime_evidence_pending"
+  ],
+  "next_action": "After both identity masters and ground bases are approved, block all six paired phases in one shared scene, freeze sync/contact maps, then derive attacker/defender sprite streams."
+}
