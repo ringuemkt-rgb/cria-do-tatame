@@ -1,0 +1,122 @@
+{
+  "$schema": "cria.grappling_reaction_policy.v1",
+  "version": "1.0.0",
+  "status": "ACTIVE_VISUAL_REACTION_POLICY",
+  "authority": "NON_AUTHORITATIVE_VISUAL_AND_AI_HINTS",
+  "purpose": "Rank plausible defensive/reaction intents from explicit combat context for animation selection and AI hinting without executing techniques or changing reducer truth.",
+  "score_model": {
+    "base_score": 1.0,
+    "exact_attack_type_bonus": 2.0,
+    "position_match_bonus": 1.5,
+    "mode_match_bonus": 0.5,
+    "role_match_bonus": 0.75,
+    "grip_signature_bonus": 0.75,
+    "low_gas_penalty": 0.5,
+    "tie_break": "reaction_id_ascending"
+  },
+  "gas_buckets": {
+    "fresh": [67.0, 100.0],
+    "working": [34.0, 66.999],
+    "fatigued": [0.0, 33.999]
+  },
+  "reactions": [
+    {
+      "id": "sprawl_frame",
+      "attack_types": ["takedown"],
+      "positions": ["standing_neutral", "standing_clinch"],
+      "modes": ["gi", "nogi"],
+      "roles": ["neutral"],
+      "tags": ["hips_back", "head_frame", "takedown_defense"]
+    },
+    {
+      "id": "whizzer_balance",
+      "attack_types": ["takedown", "clinch"],
+      "positions": ["standing_neutral", "standing_clinch"],
+      "modes": ["gi", "nogi"],
+      "roles": ["neutral"],
+      "tags": ["overhook", "hip_pressure", "balance"]
+    },
+    {
+      "id": "pummel_inside",
+      "attack_types": ["clinch", "grip"],
+      "positions": ["standing_clinch", "standing_neutral"],
+      "modes": ["gi", "nogi"],
+      "roles": ["neutral"],
+      "tags": ["inside_position", "underhook", "head_position"]
+    },
+    {
+      "id": "posture_recover",
+      "attack_types": ["grip", "submission", "sweep"],
+      "positions": ["closed_guard", "guard", "open_guard"],
+      "modes": ["gi", "nogi"],
+      "roles": ["top"],
+      "tags": ["posture", "elbow_position", "head_up"]
+    },
+    {
+      "id": "frame_hip_escape",
+      "attack_types": ["pass", "transition", "pin"],
+      "positions": ["side_control", "mount", "half_guard", "north_south"],
+      "modes": ["gi", "nogi"],
+      "roles": ["bottom"],
+      "tags": ["frame", "hip_escape", "guard_recovery"]
+    },
+    {
+      "id": "bridge_create_space",
+      "attack_types": ["pin", "transition"],
+      "positions": ["mount", "side_control"],
+      "modes": ["gi", "nogi"],
+      "roles": ["bottom"],
+      "tags": ["bridge", "off_balance", "escape_setup"]
+    },
+    {
+      "id": "elbow_knee_connection",
+      "attack_types": ["pass", "pin", "transition"],
+      "positions": ["side_control", "half_guard", "mount"],
+      "modes": ["gi", "nogi"],
+      "roles": ["bottom"],
+      "tags": ["inside_frame", "guard_retention", "knee_elbow"]
+    },
+    {
+      "id": "hand_fight_back_control",
+      "attack_types": ["submission", "control"],
+      "positions": ["back_control", "back_attack"],
+      "modes": ["gi", "nogi"],
+      "roles": ["bottom"],
+      "tags": ["two_on_one", "chin_defense", "shoulder_to_mat"]
+    },
+    {
+      "id": "grip_break_posture",
+      "attack_types": ["grip", "sweep", "submission"],
+      "positions": ["closed_guard", "open_guard", "standing_neutral", "standing_clinch"],
+      "modes": ["gi"],
+      "roles": ["top", "neutral"],
+      "preferred_opponent_grips": ["cross_collar", "same_side_collar", "sleeve_grip", "lapel_grip"],
+      "tags": ["gi", "grip_break", "posture"]
+    },
+    {
+      "id": "wrist_peel_head_position",
+      "attack_types": ["grip", "clinch", "submission"],
+      "positions": ["standing_neutral", "standing_clinch", "guard", "back_control"],
+      "modes": ["nogi"],
+      "roles": ["neutral", "top", "bottom"],
+      "preferred_opponent_grips": ["wrist_control", "collar_tie", "two_on_one"],
+      "tags": ["nogi", "hand_fight", "head_position"]
+    },
+    {
+      "id": "technical_standup_space",
+      "attack_types": ["transition", "disengage"],
+      "positions": ["seated_guard", "open_guard", "turtle"],
+      "modes": ["gi", "nogi"],
+      "roles": ["bottom", "neutral"],
+      "tags": ["distance", "base", "standup"]
+    }
+  ],
+  "hard_rules": {
+    "selector_executes_combat_action": false,
+    "selector_changes_score": false,
+    "selector_changes_position": false,
+    "selector_may_drive_animation_variant": true,
+    "selector_may_feed_existing_ai_as_hint": true,
+    "existing_combat_intelligence_remains_authority_for_ai_action_choice": true
+  }
+}

@@ -1,0 +1,156 @@
+{
+  "$schema": "cria.grip_topology.v1",
+  "version": "1.0.0",
+  "status": "ACTIVE_RUNTIME_SHADOW_CONTRACT",
+  "authority": "GAMEPLAY_INTERACTION_SHADOW_ONLY",
+  "purpose": "Represent explicit hand-to-body and hand-to-garment control for gi and no-gi without replacing BJJGraphReducerV2 as combat authority.",
+  "modes": ["gi", "nogi"],
+  "principles": {
+    "one_active_grip_per_hand": true,
+    "maximum_active_hand_grips_per_player": 2,
+    "hidden_or_unobserved_grip_is_never_invented": true,
+    "grip_graph_may_change_animation_selection": true,
+    "grip_graph_may_change_authoritative_outcome": false,
+    "integrity_is_gameplay_shadow_not_real_force_measurement": true
+  },
+  "body_nodes": [
+    "head", "neck", "shoulder_l", "shoulder_r", "upper_arm_l", "upper_arm_r",
+    "triceps_l", "triceps_r", "elbow_l", "elbow_r", "forearm_l", "forearm_r",
+    "wrist_l", "wrist_r", "hand_l", "hand_r", "torso", "waist", "hip_l", "hip_r",
+    "thigh_l", "thigh_r", "knee_l", "knee_r", "shin_l", "shin_r", "ankle_l", "ankle_r"
+  ],
+  "gi_nodes": [
+    "collar_l", "collar_r", "lapel_l", "lapel_r", "sleeve_l", "sleeve_r", "belt",
+    "pants_hip_l", "pants_hip_r", "pants_knee_l", "pants_knee_r", "pants_ankle_l", "pants_ankle_r"
+  ],
+  "source_slots": ["hand_l", "hand_r"],
+  "grip_types": [
+    {
+      "id": "wrist_control",
+      "modes": ["gi", "nogi"],
+      "targets": ["wrist_l", "wrist_r", "forearm_l", "forearm_r"],
+      "tags": ["hand_fighting", "upper_limb", "direct_body_control"]
+    },
+    {
+      "id": "two_on_one",
+      "modes": ["gi", "nogi"],
+      "targets": ["wrist_l", "wrist_r", "forearm_l", "forearm_r", "upper_arm_l", "upper_arm_r"],
+      "tags": ["hand_fighting", "arm_drag_family", "two_hand_pattern"]
+    },
+    {
+      "id": "collar_tie",
+      "modes": ["gi", "nogi"],
+      "targets": ["head", "neck"],
+      "tags": ["head_control", "standing", "clinch"]
+    },
+    {
+      "id": "triceps_control",
+      "modes": ["gi", "nogi"],
+      "targets": ["triceps_l", "triceps_r", "upper_arm_l", "upper_arm_r"],
+      "tags": ["arm_drag_family", "clinch"]
+    },
+    {
+      "id": "underhook",
+      "modes": ["gi", "nogi"],
+      "targets": ["torso", "shoulder_l", "shoulder_r"],
+      "tags": ["inside_position", "clinch", "ground"]
+    },
+    {
+      "id": "overhook",
+      "modes": ["gi", "nogi"],
+      "targets": ["upper_arm_l", "upper_arm_r", "shoulder_l", "shoulder_r"],
+      "tags": ["clinch", "whizzer", "ground"]
+    },
+    {
+      "id": "body_lock",
+      "modes": ["gi", "nogi"],
+      "targets": ["waist", "torso", "hip_l", "hip_r"],
+      "tags": ["two_hand_pattern", "takedown", "passing"]
+    },
+    {
+      "id": "head_and_arm",
+      "modes": ["gi", "nogi"],
+      "targets": ["head", "neck", "upper_arm_l", "upper_arm_r"],
+      "tags": ["two_hand_pattern", "head_control", "submission_or_pin"]
+    },
+    {
+      "id": "ankle_control",
+      "modes": ["gi", "nogi"],
+      "targets": ["ankle_l", "ankle_r", "shin_l", "shin_r"],
+      "tags": ["leg_control", "guard", "passing"]
+    },
+    {
+      "id": "leg_scoop",
+      "modes": ["gi", "nogi"],
+      "targets": ["thigh_l", "thigh_r", "knee_l", "knee_r"],
+      "tags": ["leg_control", "takedown", "passing"]
+    },
+    {
+      "id": "same_side_collar",
+      "modes": ["gi"],
+      "targets": ["collar_l", "collar_r"],
+      "tags": ["gi", "posture_control", "choke_setup"]
+    },
+    {
+      "id": "cross_collar",
+      "modes": ["gi"],
+      "targets": ["collar_l", "collar_r"],
+      "tags": ["gi", "cross_grip", "posture_control", "choke_setup"]
+    },
+    {
+      "id": "sleeve_grip",
+      "modes": ["gi"],
+      "targets": ["sleeve_l", "sleeve_r"],
+      "tags": ["gi", "upper_limb", "guard"]
+    },
+    {
+      "id": "pistol_sleeve",
+      "modes": ["gi"],
+      "targets": ["sleeve_l", "sleeve_r"],
+      "tags": ["gi", "upper_limb", "guard", "specialized"]
+    },
+    {
+      "id": "pocket_sleeve",
+      "modes": ["gi"],
+      "targets": ["sleeve_l", "sleeve_r"],
+      "tags": ["gi", "upper_limb", "guard", "specialized"]
+    },
+    {
+      "id": "lapel_grip",
+      "modes": ["gi"],
+      "targets": ["lapel_l", "lapel_r"],
+      "tags": ["gi", "lapel_system", "guard", "passing"]
+    },
+    {
+      "id": "belt_grip",
+      "modes": ["gi"],
+      "targets": ["belt"],
+      "tags": ["gi", "hip_control", "back_control", "takedown"]
+    },
+    {
+      "id": "pants_knee_grip",
+      "modes": ["gi"],
+      "targets": ["pants_knee_l", "pants_knee_r"],
+      "tags": ["gi", "leg_control", "passing", "guard"]
+    },
+    {
+      "id": "pants_ankle_grip",
+      "modes": ["gi"],
+      "targets": ["pants_ankle_l", "pants_ankle_r"],
+      "tags": ["gi", "leg_control", "passing", "guard"]
+    }
+  ],
+  "event_contract": {
+    "kinds": ["establish", "release", "adjust_integrity", "clear_player"],
+    "establish_required": ["actor", "source_hand", "target_player", "target_node", "grip_type"],
+    "release_required": ["edge_id"],
+    "adjust_required": ["edge_id", "integrity_delta"],
+    "integrity_range": [0.0, 1.0],
+    "default_integrity": 1.0
+  },
+  "animation_signatures": {
+    "empty": "none",
+    "format": "sorted unique grip_type ids per player",
+    "purpose": "Feed deterministic motion-variant selection; never infer rules or scoring."
+  }
+}

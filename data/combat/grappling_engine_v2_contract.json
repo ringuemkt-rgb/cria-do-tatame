@@ -1,0 +1,206 @@
+{
+  "$schema": "cria.grappling_engine.v2",
+  "version": "2.0.0",
+  "status": "ACTIVE_SHADOW_RUNTIME_AND_OFFLINE_PRODUCTION_CONTRACT",
+  "name": "CRIA Grappling Engine V2",
+  "goal": "Deliver responsive, varied and positionally coherent gi/no-gi grappling presentation in pixel art while keeping combat outcomes deterministic and mobile-friendly.",
+  "authorities": {
+    "scene_authority": "src/autoloads/CombatManager.gd",
+    "resolver_authority": "src/combat/TechniqueResolver.gd",
+    "combat_truth": "src/combat/BJJGraphReducerV2.gd",
+    "rules_truth": "src/combat/BJJRulesEngineV1.gd",
+    "base_runtime": "src/combat/CriaGrapplingRuntimeV1.gd",
+    "physical_evidence": "src/combat/GrapplingPhysicalStateV1.gd",
+    "presentation_bridge": "src/combat/GrapplingV2CombatBridge.gd",
+    "visual_motion_requirements": "data/visual/golden_chain_motion_requirements_v1.json",
+    "motion_factory": "data/production/motion_factory_v1.json",
+    "motion_lab": "data/research/grappling_motion_lab_contract_v1.json",
+    "visual_foundry": "data/visual/visual_foundry_profile_v1.json"
+  },
+  "new_modules": {
+    "grip_topology": "data/combat/grip_topology_v1.json",
+    "reaction_policy": "data/combat/grappling_reaction_policy_v1.json",
+    "motion_matching_profile": "data/animation/grappling_motion_matching_profile_v1.json",
+    "motion_variant_schema": "assets/schemas/grappling_motion_variant_v1.schema.json",
+    "sync_map_schema": "assets/schemas/grappling_sync_map_v1.schema.json",
+    "grip_runtime": "src/combat/GrapplingGripGraphV1.gd",
+    "microstate_runtime": "src/combat/GrapplingMicroStateV1.gd",
+    "reaction_runtime": "src/combat/GrapplingReactionSelectorV1.gd",
+    "motion_matcher": "src/animation/GrapplingMotionMatcherV1.gd",
+    "motion_database": "src/animation/GrapplingMotionDBV1.gd",
+    "paired_timeline": "src/animation/GrapplingPairedTimelineV1.gd",
+    "motion_database_compiler": "tools/motion_factory/compile_grappling_motion_db_v1.py",
+    "engine_facade": "src/combat/CriaGrapplingEngineV2.gd",
+    "combat_manager_bridge": "src/combat/GrapplingV2CombatBridge.gd"
+  },
+  "authority_firewall": {
+    "shadow_runtime_may_change_reducer_position": false,
+    "shadow_runtime_may_change_score": false,
+    "shadow_runtime_may_change_winner": false,
+    "shadow_runtime_may_change_rng": false,
+    "motion_clip_may_change_outcome": false,
+    "reaction_selector_may_execute_defense": false,
+    "renderer_may_invent_grip": false,
+    "expert_reviewed_contact_can_drive_visual_selection": true,
+    "explicit_player_grip_events_can_drive_visual_selection": true,
+    "bridge_may_replace_combat_manager": false
+  },
+  "runtime_layers": [
+    {
+      "id": "R0",
+      "name": "deterministic_combat",
+      "authority": true,
+      "components": ["CombatManager", "TechniqueResolver", "BJJGraphReducerV2", "BJJRulesEngineV1", "BJJTimingPolicyV1"]
+    },
+    {
+      "id": "R1",
+      "name": "interaction_shadow",
+      "authority": false,
+      "components": ["GrapplingGripGraphV1", "GrapplingMicroStateV1"],
+      "purpose": "Track explicit grip state and presentation context."
+    },
+    {
+      "id": "R2",
+      "name": "reaction_direction",
+      "authority": false,
+      "components": ["GrapplingReactionSelectorV1"],
+      "purpose": "Rank plausible visual reactions and AI hints."
+    },
+    {
+      "id": "R3",
+      "name": "motion_matching",
+      "authority": false,
+      "components": ["GrapplingMotionDBV1", "GrapplingMotionMatcherV1"],
+      "purpose": "Load rights-cleared approved motion metadata and select the best precompiled paired sprite variant."
+    },
+    {
+      "id": "R4",
+      "name": "paired_sprite_playback",
+      "authority": false,
+      "components": ["BJJMotionBindingV1", "GrapplingPairedTimelineV1", "Sprite Forge V2", "Godot AnimationPlayer/AnimatedSprite2D"],
+      "purpose": "Present attacker and defender clips from one reviewed timeline using shared sync points, contacts and pair pivot."
+    }
+  ],
+  "offline_layers": [
+    {
+      "id": "O0",
+      "name": "owned_capture",
+      "required_for_gold": true,
+      "contract": "data/research/grappling_motion_lab_contract_v1.json"
+    },
+    {
+      "id": "O1",
+      "name": "pose_and_contact_reconstruction",
+      "required_for_gold": true,
+      "outputs": ["3d_kinematics_candidate", "connection_edges_candidate", "uncertainty", "phase_spans"]
+    },
+    {
+      "id": "O2",
+      "name": "physics_refinement_research",
+      "required_for_shipping": false,
+      "purpose": "Use permissive research frameworks to test contact-preserving variants and failure/counter branches, never to redefine BJJ truth."
+    },
+    {
+      "id": "O3",
+      "name": "paired_animation_authoring",
+      "required_for_shipping": true,
+      "outputs": ["attacker_motion", "defender_motion", "sync_map", "contact_map", "root_track"]
+    },
+    {
+      "id": "O4",
+      "name": "pixel_compilation",
+      "required_for_shipping": true,
+      "outputs": ["spritesheet", "frame_metadata", "contact_sheet", "preview", "qa_report"]
+    },
+    {
+      "id": "O5",
+      "name": "motion_database_compilation",
+      "required_for_shipping": true,
+      "outputs": ["rights_filtered_motion_db"],
+      "policy": "Only COMMERCIAL_DERIVATION_ALLOWED + human-approved + APPROVED_FINAL + shipping=true variants enter the runtime database."
+    }
+  ],
+  "gi_nogi_model": {
+    "separate_calibration_required": true,
+    "same_technique_id_may_have_distinct_motion_families": true,
+    "gi_specific_control_surfaces": ["collar", "lapel", "sleeve", "belt", "pants"],
+    "nogi_primary_control_surfaces": ["wrist", "forearm", "triceps", "head", "neck", "underhook", "overhook", "waist", "hip", "leg"],
+    "forbidden": ["gi_only_grip_in_nogi", "silent_mode_conversion"]
+  },
+  "microstate_axes": [
+    "position_id",
+    "top_role",
+    "mode",
+    "transition_phase",
+    "gas_bucket",
+    "self_grip_signature",
+    "opponent_grip_signature",
+    "reviewed_connection_signature",
+    "reaction_id",
+    "previous_clip_id"
+  ],
+  "dynamic_presentation": {
+    "technique_is_not_one_animation": true,
+    "paired_clips_required_for_body_contact": true,
+    "high_value_transition_variant_target": 6,
+    "minimum_high_value_variants": 3,
+    "variants_may_differ_by": [
+      "entry_angle",
+      "side",
+      "grip_configuration",
+      "reviewed_contact_configuration",
+      "defender_reaction",
+      "fatigue_bucket",
+      "gi_nogi",
+      "success_failure_or_counter_visual_branch"
+    ],
+    "outcome_must_match_reducer": true
+  },
+  "runtime_performance_targets": {
+    "target_platform": "android_arm64",
+    "selection_algorithm": "small deterministic weighted search",
+    "heavy_ml_in_runtime": false,
+    "runtime_3d_physics_required": false,
+    "large_motion_database_loaded_as_raw_3d": false,
+    "clip_metadata_compaction_required": true,
+    "paired_timeline_clock": "integer_milliseconds",
+    "atlas_budget_still_owned_by_sprite_forge": true
+  },
+  "quality_gates": [
+    "GE2_01_AUTHORITY_FIREWALL",
+    "GE2_02_GI_NOGI_GRIP_LEGALITY",
+    "GE2_03_ONE_GRIP_PER_HAND",
+    "GE2_04_NO_HIDDEN_GRIP_INVENTION",
+    "GE2_05_DETERMINISTIC_REACTION_RANKING",
+    "GE2_06_DETERMINISTIC_MOTION_SELECTION",
+    "GE2_07_PAIRED_SYNC_MAP",
+    "GE2_08_CONTACT_COMPATIBLE_TRANSITIONS",
+    "GE2_09_GODOT_HEADLESS_SMOKE",
+    "GE2_10_EXISTING_RUNTIME_NO_REGRESSION",
+    "GE2_11_ANDROID_FRAME_PACING_EVIDENCE_BEFORE_SHIPPING",
+    "GE2_12_RIGHTS_AND_PROVENANCE",
+    "GE2_13_COMBAT_MANAGER_BRIDGE"
+  ],
+  "vertical_slice": {
+    "fighters": ["ruan_macacao", "davi_relampago"],
+    "modes": ["gi", "nogi"],
+    "priority_sequences": [
+      "hand_fight_to_clinch",
+      "single_leg_to_sprawl_or_finish",
+      "double_leg_to_guard_or_side_control",
+      "closed_guard_posture_and_grip_battle",
+      "knee_cut_pass_to_side_control",
+      "mount_escape_branch",
+      "back_control_hand_fight_to_mata_leao"
+    ]
+  },
+  "opportunities": [
+    "Build a proprietary rights-cleared gi/no-gi grappling motion dataset.",
+    "Train offline physics policies on CRIA-owned motion rather than noncommercial interaction datasets.",
+    "Compile multiple physically plausible motion variants into tiny runtime metadata.",
+    "Use grip signatures to make gi and no-gi feel mechanically and visually different.",
+    "Use deterministic reaction hints to reduce canned-animation repetition without delegating combat truth to AI.",
+    "Collect telemetry on chosen visual variants separately from authoritative combat telemetry to tune presentation safely.",
+    "Use active-learning coverage gaps to prioritize the next capture session instead of recording techniques blindly."
+  ]
+}

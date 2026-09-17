@@ -1,0 +1,87 @@
+{
+  "$schema": "cria.grappling_motion_matching_profile.v1",
+  "version": "1.0.0",
+  "status": "ACTIVE_MOBILE_RUNTIME_PROFILE",
+  "purpose": "Select the best precompiled paired sprite clip deterministically from gameplay context, preserving AAA-style continuity principles without running 3D motion matching or ML on mobile.",
+  "runtime": {
+    "ml_inference": false,
+    "native_extension_required": false,
+    "deterministic": true,
+    "shipping_target": "paired_2d_sprite_clips",
+    "tie_break": "clip_id_ascending",
+    "empty_database_behavior": "NO_SELECTION"
+  },
+  "query_features": [
+    "technique_id",
+    "attack_type",
+    "position_id",
+    "top_role",
+    "mode",
+    "phase",
+    "reaction_id",
+    "gas_bucket",
+    "self_grip_signature",
+    "opponent_grip_signature",
+    "reviewed_connection_signature",
+    "previous_clip_id"
+  ],
+  "weights": {
+    "technique_id": 10.0,
+    "attack_type": 4.0,
+    "position_id": 6.0,
+    "top_role": 2.0,
+    "mode": 5.0,
+    "phase": 4.0,
+    "reaction_id": 3.0,
+    "gas_bucket": 1.5,
+    "self_grip_signature": 2.5,
+    "opponent_grip_signature": 2.5,
+    "reviewed_connection_signature": 5.0,
+    "previous_clip_continuity": 1.0
+  },
+  "array_distance": "one_minus_jaccard",
+  "categorical_distance": "zero_if_equal_else_one",
+  "missing_feature_penalty_scale": 0.25,
+  "fallback_chain": [
+    "exact_technique_mode_position_contact",
+    "exact_technique_mode_position",
+    "technique_mode",
+    "technique_any_mode",
+    "attack_type_position",
+    "position_phase",
+    "generic_position",
+    "no_selection"
+  ],
+  "variant_strategy": {
+    "target_variants_per_high_value_transition": 6,
+    "minimum_variants_before_randomized_presentation": 3,
+    "variation_axes": [
+      "entry_angle",
+      "grip_configuration",
+      "reviewed_contact_configuration",
+      "defender_reaction",
+      "fatigue_bucket",
+      "left_right_side",
+      "gi_nogi",
+      "success_failure_counter_visual_branch"
+    ],
+    "authoritative_outcome_must_match_reducer": true
+  },
+  "inertialization_equivalent_for_sprite": {
+    "enabled": true,
+    "method": "phase_aligned_crossfade_and_pose_continuity_window",
+    "crossfade_ms_default": 70,
+    "crossfade_ms_grappling_contact": 40,
+    "hard_cut_allowed_when": ["impact_frame", "occluded_body_swap", "camera_transition"],
+    "contact_locked_phase_may_not_crossfade_to_incompatible_contact_graph": true
+  },
+  "pixel_constraints": {
+    "integer_anchor_positions": true,
+    "nearest_filter": true,
+    "subpixel_root_motion_at_runtime": false,
+    "shared_pair_pivot_required": true,
+    "sync_map_required_for_paired_technique": true,
+    "frame_hold_variation_allowed": true,
+    "duplicate_identical_frames_for_timing": false
+  }
+}

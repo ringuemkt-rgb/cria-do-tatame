@@ -1,0 +1,90 @@
+{
+  "$schema": "cria.grappling_engine_research_registry.v1",
+  "version": "1.0.0",
+  "status": "ACTIVE_RESEARCH_ONLY_REGISTRY",
+  "audited_at": "2026-09-17",
+  "policy": {
+    "runtime_dependency_default": false,
+    "direct_model_weight_reuse_default": false,
+    "dataset_reuse_requires_item_level_rights": true,
+    "permissive_code_license_does_not_clear_training_data_or_body_models": true,
+    "research_system_may_inspire_cria_reimplementation": true,
+    "combat_authority": false
+  },
+  "sources": [
+    {
+      "id": "interagent_cvpr2026",
+      "source": "BinLee26/InterAgent",
+      "kind": "github_repo",
+      "code_license_status": "CLEAR_MIT_REPOSITORY_METADATA",
+      "adoption": "STUDY_AND_BUILD_ADAPTER_EXPERIMENT_OFFLINE",
+      "roles": ["multi_agent_physics", "interaction_graph_representation", "contact_conditioned_control"],
+      "shipping_dependency": false,
+      "notes": "High-value architecture reference for interaction-graph-based multi-agent humanoid control. Check checkpoints, ASE dependencies and training-data terms independently before any model-weight reuse."
+    },
+    {
+      "id": "protomotions3",
+      "source": "NVlabs/ProtoMotions",
+      "kind": "github_repo",
+      "code_license_status": "CLEAR_APACHE_2_0_CODE_WITH_THIRD_PARTY_ASSET_CARVEOUTS",
+      "adoption": "PREFERRED_OFFLINE_PHYSICS_LAB_CANDIDATE",
+      "roles": ["physics_simulation", "motion_imitation", "humanoid_control", "offline_variant_generation", "benchmarking"],
+      "shipping_dependency": false,
+      "notes": "Repository is Apache-2.0, while SMPL/SMPL-H and simulator/assets retain separate terms. Prefer CRIA-owned motion data and separately cleared body-model/simulator assets."
+    },
+    {
+      "id": "mimickit",
+      "source": "xbpeng/MimicKit",
+      "kind": "github_repo",
+      "code_license_status": "CLEAR_APACHE_2_0",
+      "adoption": "LIGHTWEIGHT_OFFLINE_MOTION_IMITATION_CANDIDATE",
+      "roles": ["motion_imitation", "deepmimic", "amp", "ase", "skill_prior_experiments"],
+      "shipping_dependency": false,
+      "notes": "Useful smaller research surface than ProtoMotions for isolated experiments. Downloaded motion data and simulator dependencies require separate review."
+    },
+    {
+      "id": "assistmimic_cvpr2026",
+      "source": "YutoShibata07/AssistMimic",
+      "kind": "github_repo",
+      "code_license_status": "UNVERIFIED_FROM_CURRENT_PUBLIC_METADATA",
+      "adoption": "CONCEPT_AND_BENCHMARK_REFERENCE_ONLY_PENDING_LICENSE_REVIEW",
+      "roles": ["human_human_contact", "multi_agent_reinforcement_learning", "continuous_force_exchange", "retargeting_research"],
+      "shipping_dependency": false,
+      "notes": "Technically relevant to continuous two-person physical interaction, but it depends on PHC, SMPL/SMPL-X and research datasets such as Inter-X/HHI-Assist. Do not copy code, weights or dataset-derived assets until every layer is cleared."
+    },
+    {
+      "id": "godot_motion_matching_guilherme",
+      "source": "GuilhermeGSousa/godot-motion-matching",
+      "kind": "github_repo",
+      "code_license_status": "CLEAR_MIT",
+      "adoption": "ALGORITHM_REFERENCE_REIMPLEMENT_FOR_PIXEL_RUNTIME",
+      "roles": ["motion_matching", "pose_database", "feature_distance", "animation_continuity"],
+      "shipping_dependency": false,
+      "notes": "Project targets Godot 4.4 and 3D AnimationTree. CRIA reimplements the core deterministic feature-selection idea for paired sprite clips instead of adding a native 3D runtime dependency."
+    },
+    {
+      "id": "intermimic_cvpr2025",
+      "source": "Sirui-Xu/InterMimic",
+      "kind": "github_repo",
+      "code_license_status": "CLEAR_MIT_REPOSITORY_CODE_THIRD_PARTY_DATA_SEPARATE",
+      "adoption": "PHYSICS_CONTACT_ARCHITECTURE_REFERENCE",
+      "roles": ["whole_body_control", "physics_interaction", "contact_robustness"],
+      "shipping_dependency": false,
+      "notes": "Human-object rather than grappling-specific, but useful for robust contact-controller design. Training datasets and third-party dependencies must not silently enter CRIA."
+    }
+  ],
+  "blocked_data_classes": [
+    {
+      "id": "noncommercial_human_interaction_datasets",
+      "policy": "RESEARCH_ONLY",
+      "examples": ["Inter-X when its license forbids commercial derivation", "other NC interaction corpora"],
+      "shipping_derivation": false
+    },
+    {
+      "id": "uncleared_body_models_or_checkpoints",
+      "policy": "BLOCKED_UNTIL_TERMS_PASS",
+      "shipping_derivation": false
+    }
+  ],
+  "preferred_long_term_data_strategy": "CRIA_OWN_RIGHTS_CLEARED_MULTIVIEW_GI_NOGI_CAPTURE"
+}

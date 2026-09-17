@@ -1,0 +1,107 @@
+name: Grappling Engine V2
+
+on:
+  push:
+    paths:
+      - 'data/combat/grappling_engine_v2_contract.json'
+      - 'data/combat/grip_topology_v1.json'
+      - 'data/combat/grappling_reaction_policy_v1.json'
+      - 'data/animation/grappling_motion_matching_profile_v1.json'
+      - 'data/research/grappling_engine_research_registry_v1.json'
+      - 'assets/schemas/grappling_motion_variant_v1.schema.json'
+      - 'assets/schemas/grappling_sync_map_v1.schema.json'
+      - 'src/combat/GrapplingGripGraphV1.gd'
+      - 'src/combat/GrapplingMicroStateV1.gd'
+      - 'src/combat/GrapplingReactionSelectorV1.gd'
+      - 'src/combat/CriaGrapplingEngineV2.gd'
+      - 'src/animation/GrapplingMotionMatcherV1.gd'
+      - 'src/animation/GrapplingMotionDBV1.gd'
+      - 'src/animation/GrapplingPairedTimelineV1.gd'
+      - 'tools/combat/validate_grappling_engine_v2.py'
+      - 'tools/motion_factory/compile_grappling_motion_db_v1.py'
+      - 'tests/test_grappling_engine_v2.py'
+      - 'tests/grappling_engine_v2_smoke.gd'
+      - 'package.json'
+      - '.github/workflows/grappling-engine-v2.yml'
+  pull_request:
+    paths:
+      - 'data/combat/grappling_engine_v2_contract.json'
+      - 'data/combat/grip_topology_v1.json'
+      - 'data/combat/grappling_reaction_policy_v1.json'
+      - 'data/animation/grappling_motion_matching_profile_v1.json'
+      - 'data/research/grappling_engine_research_registry_v1.json'
+      - 'assets/schemas/grappling_motion_variant_v1.schema.json'
+      - 'assets/schemas/grappling_sync_map_v1.schema.json'
+      - 'src/combat/GrapplingGripGraphV1.gd'
+      - 'src/combat/GrapplingMicroStateV1.gd'
+      - 'src/combat/GrapplingReactionSelectorV1.gd'
+      - 'src/combat/CriaGrapplingEngineV2.gd'
+      - 'src/animation/GrapplingMotionMatcherV1.gd'
+      - 'src/animation/GrapplingMotionDBV1.gd'
+      - 'src/animation/GrapplingPairedTimelineV1.gd'
+      - 'tools/combat/validate_grappling_engine_v2.py'
+      - 'tools/motion_factory/compile_grappling_motion_db_v1.py'
+      - 'tests/test_grappling_engine_v2.py'
+      - 'tests/grappling_engine_v2_smoke.gd'
+      - 'package.json'
+      - '.github/workflows/grappling-engine-v2.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  static-contracts:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Validate Grappling Engine V2 contract
+        run: python tools/combat/validate_grappling_engine_v2.py
+
+      - name: Run Grappling Engine V2 unit tests
+        run: python -m unittest discover -s tests -p 'test_grappling_engine_v2.py'
+
+      - name: Check compiler with empty source
+        run: |
+          mkdir -p /tmp/empty_motion_variants
+          python tools/motion_factory/compile_grappling_motion_db_v1.py \
+            --source-dir /tmp/empty_motion_variants \
+            --output /tmp/grappling_motion_db_v1.json \
+            --check
+          python - <<'PY'
+          import json
+          data = json.load(open('/tmp/grappling_motion_db_v1.json', encoding='utf-8'))
+          assert data['version'] == '1.0.0'
+          assert data['clips'] == []
+          assert data['rejected'] == []
+          PY
+
+  godot-headless-smoke:
+    needs: static-contracts
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Download Godot 4.2.2
+        run: |
+          curl -L --fail --retry 3 \
+            -o godot.zip \
+            https://github.com/godotengine/godot/releases/download/4.2.2-stable/Godot_v4.2.2-stable_linux.x86_64.zip
+          unzip -q godot.zip
+          mv Godot_v4.2.2-stable_linux.x86_64 godot
+          chmod +x godot
+          ./godot --version
+
+      - name: Import and parse project
+        run: timeout 180 ./godot --headless --editor --path . --import
+
+      - name: Run Grappling Engine V2 smoke
+        run: ./godot --headless --path . --script res://tests/grappling_engine_v2_smoke.gd

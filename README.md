@@ -203,6 +203,51 @@ Ferramentas externas como TripoSG, TripoSR, TRELLIS.2, UniRig, Instant Meshes e 
 
 Documentação completa: [`docs/production/VISUAL_FOUNDRY_V1.md`](docs/production/VISUAL_FOUNDRY_V1.md).
 
+## Grappling Engine V2 — gi + no-gi dinâmico
+
+O `CRIA Grappling Engine V2` adiciona uma camada de interação e movimento sobre o runtime determinístico existente. Ele preserva `BJJGraphReducerV2` como verdade da luta e acrescenta:
+
+- grip graph explícito para gi/no-gi;
+- microestados de apresentação;
+- reação defensiva determinística;
+- motion matching de clips pareados em pixel art;
+- assinatura de contato revisada por especialista;
+- banco compacto de motion clips;
+- timeline compartilhada atacante/defensor;
+- compilação offline fail-closed por direitos e aprovação humana;
+- laboratório offline preparado para mocap, reconstrução, física e Visual Foundry.
+
+Fluxo resumido:
+
+```text
+input / IA
+→ BJJGraphReducerV2
+→ Grip Graph + Microstate
+→ Reaction Selector
+→ Sprite Motion Matcher
+→ Paired Timeline
+→ attacker + defender sprites
+→ Godot
+```
+
+A IA pesada e a física humanoide ficam **fora do runtime mobile**. Android recebe apenas estado determinístico, metadata compacta, sprites e sincronização.
+
+Validação:
+
+```bash
+npm run validate:grappling-engine-v2
+npm run test:grappling-engine-v2
+godot --headless --path . --script res://tests/grappling_engine_v2_smoke.gd
+```
+
+Compilar o banco de movimentos aprovados:
+
+```bash
+npm run compile:grappling-motion-db
+```
+
+Documentação completa: [`docs/gameplay/GRAPPLING_ENGINE_V2.md`](docs/gameplay/GRAPPLING_ENGINE_V2.md).
+
 ## Documentação essencial
 
 - [`docs/INDEX.md`](docs/INDEX.md) — índice canônico;
@@ -214,7 +259,8 @@ Documentação completa: [`docs/production/VISUAL_FOUNDRY_V1.md`](docs/productio
 - [`data/production/supreme_build_contract_v01.json`](data/production/supreme_build_contract_v01.json) — metas e release gates;
 - [`docs/qa/RUNTIME_AUDIT_V08.md`](docs/qa/RUNTIME_AUDIT_V08.md) — auditoria do runtime;
 - [`docs/production/APK_VISUAL_COMPLETION_PLAN_V09.md`](docs/production/APK_VISUAL_COMPLETION_PLAN_V09.md) — Definition of Done Android e audiovisual;
-- [`docs/production/VISUAL_FOUNDRY_V1.md`](docs/production/VISUAL_FOUNDRY_V1.md) — fabricação 3D→sprite, ferramentas e gates.
+- [`docs/production/VISUAL_FOUNDRY_V1.md`](docs/production/VISUAL_FOUNDRY_V1.md) — fabricação 3D→sprite, ferramentas e gates;
+- [`docs/gameplay/GRAPPLING_ENGINE_V2.md`](docs/gameplay/GRAPPLING_ENGINE_V2.md) — arquitetura gi/no-gi, motion matching, grips e produção offline.
 
 ## Contribuição
 
@@ -235,4 +281,4 @@ Gameplay crítico funciona offline. Serviços externos e IA são opcionais e nã
 
 ## Próximo objetivo
 
-Consolidar o runtime v4 em lotes seguros e fechar o **vertical slice ouro Ruan × Davi**: Terreiro, deck, Arena do Dique, combate completo, Cria Live, save/reload, touch, áudio e arte representativa rodando em Android físico com desempenho aprovado.
+Fechar o **vertical slice ouro Ruan × Davi** com Grappling Engine V2: gi/no-gi, hand fighting, queda + defesa, passagem, controles, escape e finalização, usando clips pareados aprovados derivados da Visual Foundry, rodando no Godot e validado em Android físico.

@@ -1,0 +1,49 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "cria.grappling_motion_variant.v1.schema",
+  "title": "CRIA Grappling Motion Variant V1",
+  "description": "One reviewed paired sprite-motion candidate compiled for deterministic runtime selection.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "version", "clip_id", "features", "attacker_animation", "defender_animation",
+    "sync_map_ref", "contact_signature", "source_ref", "rights_status",
+    "human_approval", "asset_status", "shipping"
+  ],
+  "properties": {
+    "version": {"const": "1.0.0"},
+    "clip_id": {"type": "string", "pattern": "^gclip_[a-z0-9][a-z0-9_-]*$"},
+    "features": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "technique_id", "attack_type", "position_id", "top_role", "mode", "phase",
+        "reaction_id", "gas_bucket", "self_grip_signature", "opponent_grip_signature",
+        "reviewed_connection_signature", "previous_clip_id"
+      ],
+      "properties": {
+        "technique_id": {"type": "string"},
+        "attack_type": {"type": "string"},
+        "position_id": {"type": "string"},
+        "top_role": {"enum": ["neutral", "top", "bottom"]},
+        "mode": {"enum": ["gi", "nogi"]},
+        "phase": {"enum": ["anticipation", "entry", "establish", "stabilize", "response", "recovery", "UNKNOWN"]},
+        "reaction_id": {"type": "string"},
+        "gas_bucket": {"enum": ["fresh", "working", "fatigued"]},
+        "self_grip_signature": {"type": "array", "uniqueItems": true, "items": {"type": "string"}},
+        "opponent_grip_signature": {"type": "array", "uniqueItems": true, "items": {"type": "string"}},
+        "reviewed_connection_signature": {"type": "array", "uniqueItems": true, "items": {"type": "string"}},
+        "previous_clip_id": {"type": "string"}
+      }
+    },
+    "attacker_animation": {"type": "string", "minLength": 1},
+    "defender_animation": {"type": "string", "minLength": 1},
+    "sync_map_ref": {"type": "string", "minLength": 1},
+    "contact_signature": {"type": "array", "uniqueItems": true, "items": {"type": "string"}},
+    "source_ref": {"type": "string", "minLength": 1},
+    "rights_status": {"enum": ["RESEARCH_ONLY", "COMMERCIAL_DERIVATION_ALLOWED", "BLOCKED"]},
+    "human_approval": {"type": "boolean"},
+    "asset_status": {"enum": ["CANDIDATE", "REVIEWED", "APPROVED_FINAL", "REJECTED"]},
+    "shipping": {"type": "boolean"}
+  }
+}
