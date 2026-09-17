@@ -157,7 +157,7 @@ Inventário canônico:
 data/visual/production_manifest_v02.json
 ```
 
-Gerar fila de produção:
+Gerar fila de produção existente:
 
 ```bash
 npm run assets:queue
@@ -166,6 +166,42 @@ npm run assets:queue
 Cada asset final precisa de origem/licença, metadata, preview, QA e integração em uma cena real. Técnicas de Jiu-Jitsu são animações pareadas: atacante e defensor compartilham pivôs, timing e `sync_map`.
 
 Concept art, mockup, prompt, spritesheet bruto ou fila JSONL não são assets finais.
+
+### Visual Foundry v1 — 3D → Sprite
+
+`tools/visual_foundry/` adiciona uma camada de fabricação visual para usar masters 3D como intermediários de produção sem transformar o jogo em 3D e sem criar um pipeline paralelo.
+
+Fluxo:
+
+```text
+referência / concept
+→ master 3D
+→ retopo + material
+→ rig + animação
+→ render ortográfico RGBA
+→ pixel pass
+→ Sprite Forge existente
+→ Godot
+```
+
+A Foundry cobre personagens, técnicas pareadas, arenas e UI a partir do mesmo manifesto canônico.
+
+Gerar a fila determinística completa:
+
+```bash
+python tools/visual_foundry/build_foundry_queue.py
+```
+
+Validar o contrato:
+
+```bash
+python tools/visual_foundry/validate_visual_foundry_v1.py
+python -m unittest discover -s tests -p 'test_visual_foundry_v1.py'
+```
+
+Ferramentas externas como TripoSG, TripoSR, TRELLIS.2, UniRig, Instant Meshes e QuadriFlow permanecem classificadas como **candidatas** até passarem por licença, instalação reproduzível, benchmark, exportação e QA. Blender é o DCC preferencial da camada. Nenhuma delas entra como dependência do runtime.
+
+Documentação completa: [`docs/production/VISUAL_FOUNDRY_V1.md`](docs/production/VISUAL_FOUNDRY_V1.md).
 
 ## Documentação essencial
 
@@ -177,7 +213,8 @@ Concept art, mockup, prompt, spritesheet bruto ou fila JSONL não são assets fi
 - [`docs/CRIA_DO_TATAME_SUPREME_BUILD_SPEC_V1.md`](docs/CRIA_DO_TATAME_SUPREME_BUILD_SPEC_V1.md) — escopo completo;
 - [`data/production/supreme_build_contract_v01.json`](data/production/supreme_build_contract_v01.json) — metas e release gates;
 - [`docs/qa/RUNTIME_AUDIT_V08.md`](docs/qa/RUNTIME_AUDIT_V08.md) — auditoria do runtime;
-- [`docs/production/APK_VISUAL_COMPLETION_PLAN_V09.md`](docs/production/APK_VISUAL_COMPLETION_PLAN_V09.md) — Definition of Done Android e audiovisual.
+- [`docs/production/APK_VISUAL_COMPLETION_PLAN_V09.md`](docs/production/APK_VISUAL_COMPLETION_PLAN_V09.md) — Definition of Done Android e audiovisual;
+- [`docs/production/VISUAL_FOUNDRY_V1.md`](docs/production/VISUAL_FOUNDRY_V1.md) — fabricação 3D→sprite, ferramentas e gates.
 
 ## Contribuição
 
