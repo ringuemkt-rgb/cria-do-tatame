@@ -109,6 +109,11 @@ func _collect_scene_paths(directory: String, output: Array[String]) -> void:
 				_collect_scene_paths(full_path, output)
 			elif item.ends_with(".tscn"):
 				output.append(full_path)
+			elif item.ends_with(".tscn.remap"):
+				# Exported packs expose remap sidecars; load the original resource path.
+				var original_path := full_path.trim_suffix(".remap")
+				if not output.has(original_path):
+					output.append(original_path)
 		item = dir.get_next()
 	dir.list_dir_end()
 

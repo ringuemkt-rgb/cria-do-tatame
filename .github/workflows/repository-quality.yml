@@ -31,35 +31,11 @@ jobs:
         with:
           python-version: "3.12"
 
-      - name: Validate Phase 1 data backbone and canon diff
-        run: python tools/data/validate_phase1_data.py
+      - name: Install image validation dependency
+        run: python -m pip install Pillow==10.4.0
 
-      - name: Validate skill-tree visual bible authority boundaries
-        run: python tools/data/validate_skill_tree_visual_bible.py
-
-      - name: Validate JSON syntax with Python
-        run: python tools/validate_json.py
-
-      - name: Validate JSON syntax with Node
-        run: node tools/node/validate_json.mjs
-
-      - name: Validate game-data references
-        run: node tools/node/validate_game_data.mjs
-
-      - name: Validate optional cloud adapter
-        run: python tools/ai_asset_pipeline/cloud/validate_cloud_pipeline.py
-
-      - name: Test optional cloud adapter
-        run: python -m unittest discover -s tests/cloud -p 'test_*.py'
-
-      - name: Validate complete repository
-        run: python tools/validate_complete_game.py
-
-      - name: Validate runtime contracts
-        run: python tools/validate_runtime_contracts.py
-
-      - name: Validate release readiness
-        run: python tools/validate_release_readiness.py
+      - name: Run the same complete quality gate as local development
+        run: npm run quality
 
       - name: Generate asset manifest
         run: node tools/node/generate_asset_manifest.mjs
