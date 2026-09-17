@@ -1,0 +1,54 @@
+version: 1.0.0
+workflow: release_vertical_slice
+purpose: prove one integrated slice from boot to device without confusing CI with release evidence
+minimum_tier_for_runtime: T3_RUNTIME_INTEGRATOR
+minimum_tier_for_device_release_claim: T5_RELEASE_OPERATOR
+
+authorities:
+  - data/production/supreme_build_contract_v01.json
+  - data/production/release_gate_status_v01.json
+  - data/production/game_build_matrix_v1.json
+  - package.json
+  - project.godot
+
+steps:
+  - id: scope_lock
+    action: name_exact_playable_slice_and_non_goals
+  - id: coverage
+    action: verify_required_code_data_scenes_assets_and_asset_links
+  - id: static_quality
+    commands:
+      - npm run validate:agent-production-os
+      - npm run quality
+  - id: godot_import
+    command: godot --headless --editor --path . --quit
+    conditional_capability: godot_cli
+  - id: runtime_smoke
+    command: godot --headless --path . --script res://tests/runtime_smoke.gd
+    conditional_capability: godot_cli
+  - id: export
+    action: build_android_and_windows_candidates_using_existing_scripts
+    conditional_capability: godot_cli
+  - id: device_install
+    action: install_candidate_with_adb
+    conditional_capabilities: [adb, physical_android_device]
+  - id: device_playtest
+    action: boot_play_save_combat_result_week_advance_return_and_capture_logs
+    conditional_capabilities: [adb, physical_android_device, human_review]
+  - id: release_ledger
+    action: update_only_with_real_evidence_bound_to_commit_and_build
+
+acceptance:
+  - main_flow_preserved
+  - quality_gate_pass_or_explicit_block
+  - godot_import_pass_for_runtime_claim
+  - runtime_smoke_pass_for_runtime_claim
+  - no_candidate_asset_promoted_without_visual_rights_gates
+  - physical_device_evidence_for_android_release_claim
+  - release_ledger_points_to_actual_artifacts_or_logs
+
+forbidden:
+  - device_pass_from_emulator_only
+  - shipping_claim_from_ci_only
+  - release_ledger_fabrication
+  - bypassing_failed_required_gate
