@@ -129,7 +129,7 @@ def compile_rows(rows: Iterable[dict[str, Any]], shipping_only: bool = True) -> 
         "deterministic_order": "clip_id_ascending",
         "clips": clips,
         "rejected": rejected,
-        "runtime_authority": false,
+        "runtime_authority": False,
     }
 
 
