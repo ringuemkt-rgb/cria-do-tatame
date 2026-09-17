@@ -1,0 +1,71 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://src/ui/card_slot.gd" id="1_slot"]
+
+[node name="CardSlot" type="PanelContainer"]
+custom_minimum_size = Vector2(132, 112)
+mouse_filter = 0
+script = ExtResource("1_slot")
+
+[node name="Margin" type="MarginContainer" parent="."]
+layout_mode = 2
+theme_override_constants/margin_left = 7
+theme_override_constants/margin_top = 6
+theme_override_constants/margin_right = 7
+theme_override_constants/margin_bottom = 6
+
+[node name="VBox" type="VBoxContainer" parent="Margin"]
+layout_mode = 2
+theme_override_constants/separation = 2
+
+[node name="Header" type="HBoxContainer" parent="Margin/VBox"]
+layout_mode = 2
+
+[node name="CardIcon" type="Label" parent="Margin/VBox/Header"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(20, 18)
+layout_mode = 2
+text = "◈"
+
+[node name="RarityBadge" type="Label" parent="Margin/VBox/Header"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 10
+text = "◆"
+horizontal_alignment = 2
+
+[node name="CardName" type="Label" parent="Margin/VBox"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "CARTA"
+text_overrun_behavior = 3
+
+[node name="CardSt" type="Label" parent="Margin/VBox"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "⚡0  F0  ★1"
+
+[node name="CardPos" type="Label" parent="Margin/VBox"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "POS"
+text_overrun_behavior = 3
+
+[node name="CardFmt" type="Label" parent="Margin/VBox"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "GI+NO-GI"
+
+[node name="LockOverlay" type="Label" parent="."]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+text = "🔒"
+horizontal_alignment = 1
+vertical_alignment = 1

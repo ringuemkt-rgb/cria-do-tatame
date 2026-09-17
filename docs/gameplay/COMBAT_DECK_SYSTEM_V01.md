@@ -2,19 +2,20 @@
 
 ## Objetivo
 
-O deck representa estudo, repetição e especialização. Ele não substitui o combate posicional: uma carta só produz bônus se a técnica existir no catálogo, estiver na mão, for compatível com o estado atual e puder pagar seus recursos.
+O deck representa estudo, repetição e especialização. Ele não substitui o combate posicional: uma carta só produz bônus se a técnica existir no catálogo, estiver na mão, for compatível com o estado atual, com o formato atual e puder pagar seus recursos.
 
 ## Contratos
 
 - 5 cartas ativas equipadas;
 - 3 fundamentos passivos;
-- mão determinística de 3 cartas;
+- mão determinística de 4 cartas;
 - níveis 1 a 5 limitados pela faixa;
 - XP individual por uso: 10 no sucesso e 3 na tentativa válida;
 - aperfeiçoamento no Terreiro por XP da técnica ou treino pago com Mestre Dendê;
-- carta usada vai para rotação e a próxima é comprada sem alocação por frame;
+- carta usada volta para a rotação determinística e a próxima é comprada sem alocação por frame;
 - deck e XP persistem no save;
-- técnicas vêm exclusivamente de `data/techniques.json`.
+- técnicas vêm exclusivamente de `data/techniques.json`;
+- `formats` aceita `GI` e/ou `NO-GI`; formato desconhecido falha fechado.
 
 ## Disputa de nível
 
@@ -31,8 +32,8 @@ O bônus total é limitado entre -0,30 e +0,35. Mesmo em domínio técnico, o su
 
 ## Integração
 
-1. `DeckManager` carrega `ruan_deck_inicial.json` e registra a mão.
-2. O HUD permite selecionar uma carta compatível sem pausar.
+1. `DeckManager` carrega `ruan_deck_inicial.json` e registra a mão de quatro cartas.
+2. `CombatDeckHUD` renderiza `CardSlot` e bloqueia visualmente formato, posição, unlock e recursos incompatíveis.
 3. `CombatManager.execute_technique()` procura a carta ligada à técnica.
 4. `TechniqueClashResolver` compara ataque e defesa.
 5. `TechniqueResolver` recebe apenas o modificador limitado.
@@ -41,9 +42,11 @@ O bônus total é limitado entre -0,30 e +0,35. Mesmo em domínio técnico, o su
 
 ## UI
 
-O Terreiro abre o `DeckBuilder`, com coleção à esquerda e slots do Gi à direita. O jogador pode tocar para equipar ou arrastar para substituir um slot. Durante a luta, `CombatDeckHUD` reutiliza três botões fixos e só habilita cartas válidas na posição atual.
+O Terreiro abre o `DeckBuilder`, com coleção à esquerda e slots do Gi à direita. O jogador pode tocar para equipar ou arrastar para substituir um slot. Durante a luta, `CombatDeckHUD` reutiliza quatro `CardSlot`s fixos e só permite seleção quando os gates locais estão satisfeitos.
 
-Atalhos: teclas `1`, `2`, `3`; controle pelo direcional esquerdo, cima e direito; touch pelos três botões fixos. A ativação não pausa a simulação.
+O HUD mostra `DECK 5 · MÃO 4`; não existe `discard_pile` no runtime atual. A rotação usa `draw_cursor` determinístico.
+
+Atalhos: teclas `1`, `2`, `3`, `4`; controle pelo direcional esquerdo, cima, direito e baixo; touch pelos quatro slots. A ativação não pausa a simulação.
 
 ## Segurança e canon
 
@@ -52,12 +55,14 @@ Atalhos: teclas `1`, `2`, `3`; controle pelo direcional esquerdo, cima e direito
 - Finalizações terminam em tap, escape ou intervenção técnica.
 - Não há animação de lesão como prêmio.
 - IA generativa não participa do runtime.
+- Cartas bloqueadas ou incompatíveis permanecem fail-closed.
 
 ## Validação
 
 ```bash
 python tools/validate_lore_output.py data/ruan_deck_inicial.json
+godot --headless --script res://src/tests/test_deck_hand.gd
 npm run quality
 ```
 
-O validador rejeita técnica inexistente, carta duplicada, slot incompatível, carta bloqueada equipada, excesso de slots, nível acima da faixa e identificadores legados.
+O validador rejeita técnica inexistente, carta duplicada, slot incompatível, carta bloqueada equipada, formato inválido, excesso de slots, nível acima da faixa e identificadores legados.

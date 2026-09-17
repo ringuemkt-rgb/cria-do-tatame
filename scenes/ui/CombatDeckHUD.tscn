@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3]
+[gd_scene load_steps=3 format=3]
 
 [ext_resource type="Script" path="res://scenes/ui/CombatDeckHUD.gd" id="1"]
+[ext_resource type="PackedScene" path="res://scenes/ui/card_slot.tscn" id="2_card"]
 
 [node name="CombatDeckHUD" type="CanvasLayer"]
 layer = 4
@@ -8,10 +9,10 @@ script = ExtResource("1")
 
 [node name="Panel" type="Panel" parent="."]
 anchors_preset = 0
-anchor_left = 0.49
-anchor_top = 0.49
-anchor_right = 0.98
-anchor_bottom = 0.655
+anchor_left = 0.43
+anchor_top = 0.46
+anchor_right = 0.985
+anchor_bottom = 0.71
 
 [node name="Layout" type="VBoxContainer" parent="Panel"]
 layout_mode = 1
@@ -32,9 +33,32 @@ layout_mode = 2
 size_flags_horizontal = 3
 text = "MENTE NO TATAME • MÃO ATUAL"
 
+[node name="Format" type="Label" parent="Panel/Layout/Header"]
+layout_mode = 2
+text = "GI"
+
 [node name="Clash" type="Label" parent="Panel/Layout/Header"]
 layout_mode = 2
 text = "AGUARDANDO DISPUTA"
+horizontal_alignment = 2
+
+[node name="Status" type="HBoxContainer" parent="Panel/Layout"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="PositionLabel" type="Label" parent="Panel/Layout/Status"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "POS • EM PÉ"
+
+[node name="PhaseLabel" type="Label" parent="Panel/Layout/Status"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "FASE • DISTANCE"
+
+[node name="DeckCount" type="Label" parent="Panel/Layout/Status"]
+layout_mode = 2
+text = "DECK 5 · MÃO 4"
 horizontal_alignment = 2
 
 [node name="Cards" type="HBoxContainer" parent="Panel/Layout"]
@@ -42,20 +66,18 @@ layout_mode = 2
 size_flags_vertical = 3
 theme_override_constants/separation = 6
 
-[node name="Card1" type="Button" parent="Panel/Layout/Cards"]
-custom_minimum_size = Vector2(0, 68)
+[node name="Card1" parent="Panel/Layout/Cards" instance=ExtResource("2_card")]
 layout_mode = 2
 size_flags_horizontal = 3
-text = "CARTA 1"
 
-[node name="Card2" type="Button" parent="Panel/Layout/Cards"]
-custom_minimum_size = Vector2(0, 68)
+[node name="Card2" parent="Panel/Layout/Cards" instance=ExtResource("2_card")]
 layout_mode = 2
 size_flags_horizontal = 3
-text = "CARTA 2"
 
-[node name="Card3" type="Button" parent="Panel/Layout/Cards"]
-custom_minimum_size = Vector2(0, 68)
+[node name="Card3" parent="Panel/Layout/Cards" instance=ExtResource("2_card")]
 layout_mode = 2
 size_flags_horizontal = 3
-text = "CARTA 3"
+
+[node name="Card4" parent="Panel/Layout/Cards" instance=ExtResource("2_card")]
+layout_mode = 2
+size_flags_horizontal = 3
