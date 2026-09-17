@@ -43,7 +43,7 @@ func _init(
 		if typeof(raw_technique) != TYPE_DICTIONARY:
 			continue
 		var technique: Dictionary = raw_technique
-		var technique_id := str(technique.get("id", ""))
+		var technique_id: String = str(technique.get("id", ""))
 		if technique_id != "":
 			technique_index[technique_id] = technique.duplicate(true)
 
@@ -111,7 +111,7 @@ func step(
 	var base_before: Dictionary = engine_state.get("base", {}).duplicate(true)
 	var base_result: Dictionary = base_runtime.step(base_before, action)
 	var base_after: Dictionary = base_result.get("state", base_before).duplicate(true)
-	var accepted := bool(base_result.get("accepted", false))
+	var accepted: bool = bool(base_result.get("accepted", false))
 	var shadow_before: Dictionary = engine_state.get("shadow", {}).duplicate(true)
 	var grips: Dictionary = shadow_before.get(
 		"grips",
@@ -120,21 +120,21 @@ func step(
 	var interaction_errors: Array = []
 
 	if accepted and not interaction_events.is_empty():
-		var grip_result := grip_graph.apply_events(grips, interaction_events)
+		var grip_result: Dictionary = grip_graph.apply_events(grips, interaction_events)
 		grips = grip_result.get("state", grips)
 		interaction_errors = grip_result.get("errors", []).duplicate(true)
 
 	var motion_request: Dictionary = base_result.get("motion_request", {}).duplicate(true)
-	var technique_id := str(motion_request.get("technique_id", action.get("atk", "")))
+	var technique_id: String = str(motion_request.get("technique_id", action.get("atk", "")))
 	var technique_meta: Dictionary = technique_index.get(technique_id, {})
 	motion_request["technique_type"] = str(technique_meta.get("type", technique_meta.get("tipo", "")))
 
 	var physical_state: Dictionary = base_after.get("physical", {}).duplicate(true)
-	var requested_phase := str(visual_context.get("phase", ""))
+	var requested_phase: String = str(visual_context.get("phase", ""))
 	if accepted and technique_id != "" and requested_phase != "":
 		physical_state = base_runtime.physical_state_for_phase(base_after, technique_id, requested_phase)
 
-	var microstate := MicroStateScript.from_runtime(
+	var microstate: Dictionary = MicroStateScript.from_runtime(
 		base_after,
 		grips,
 		grip_graph,
@@ -143,30 +143,30 @@ func step(
 		str(shadow_before.get("last_clip_id", ""))
 	)
 
-	var attacker := int(action.get("atk_player", 0))
-	var defender := 2 if attacker == 1 else (1 if attacker == 2 else 0)
-	var action_context := {
+	var attacker: int = int(action.get("atk_player", 0))
+	var defender: int = 2 if attacker == 1 else (1 if attacker == 2 else 0)
+	var action_context: Dictionary = {
 		"technique_id": technique_id,
 		"attack_type": str(motion_request.get("technique_type", "")),
 		"outcome": str(base_result.get("outcome_event", {}).get("ev", ""))
 	}
 	var reactions: Array = []
-	var reaction_id := ""
+	var reaction_id: String = ""
 	if accepted and defender in [1, 2]:
 		reactions = reaction_selector.rank(microstate, action_context, defender, 4)
 		if not reactions.is_empty():
 			reaction_id = str(reactions[0].get("reaction_id", ""))
 
-	var motion_selection := {"ok": false, "reason": "NO_SELECTION", "clip_id": ""}
+	var motion_selection: Dictionary = {"ok": false, "reason": "NO_SELECTION", "clip_id": ""}
 	if accepted and attacker in [1, 2] and not motion_clips.is_empty():
-		var query := MicroStateScript.motion_query(microstate, attacker, reaction_id)
-		motion_selection = motion_matcher.select(query, motion_clips)
+		var motion_query: Dictionary = MicroStateScript.motion_query(microstate, attacker, reaction_id)
+		motion_selection = motion_matcher.select(motion_query, motion_clips)
 
-	var last_clip_id := str(shadow_before.get("last_clip_id", ""))
+	var last_clip_id: String = str(shadow_before.get("last_clip_id", ""))
 	if bool(motion_selection.get("ok", false)):
 		last_clip_id = str(motion_selection.get("clip_id", ""))
 
-	var next_state := {
+	var next_state: Dictionary = {
 		"engine_version": "2.0.0",
 		"base": base_after,
 		"shadow": {
@@ -181,7 +181,7 @@ func step(
 		"shipping": false
 	}
 
-	var result := base_result.duplicate(true)
+	var result: Dictionary = base_result.duplicate(true)
 	result["engine_state"] = next_state
 	result["motion_request"] = motion_request
 	result["reaction_candidates"] = reactions
