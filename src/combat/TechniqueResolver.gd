@@ -7,9 +7,10 @@ class_name TechniqueResolver
 const CHAIN_BONUS := 0.08
 const FAKE_COST_RATIO := 0.5
 const OVERLAY_PATH := "res://data/techniques/technique_slice_ouro_v1.json"
+const SliceStateMapperScript = preload("res://src/combat/SliceStateMapper.gd")
 
 var rng: RandomNumberGenerator = RandomNumberGenerator.new()
-var _mapper: SliceStateMapper = SliceStateMapper.new()
+var _mapper = SliceStateMapperScript.new()
 var _overlay_by_id: Dictionary = {}
 var _overlay_loaded: bool = false
 
@@ -39,9 +40,9 @@ func resolve_technique(technique: Dictionary, actor: Dictionary, defender: Dicti
 	var can_pay: bool = _pode_pagar(actor, cost)
 	var commit_frame: int = int(merged.get("commit_frame", 0))
 	var defense_window: float = float(merged.get("defense_window", 0.0))
-	var defense_response: String = SliceStateMapper.canonical_technique_id(str(merged.get("defense_response", "")))
+	var defense_response: String = SliceStateMapperScript.canonical_technique_id(str(merged.get("defense_response", "")))
 	var input_frame: float = float(context.get("frame", context.get("input_frame", 999.0)))
-	var defender_input: String = SliceStateMapper.canonical_technique_id(str(context.get("defense_input", context.get("defender_input", context.get("defense_response", "")))))
+	var defender_input: String = SliceStateMapperScript.canonical_technique_id(str(context.get("defense_input", context.get("defender_input", context.get("defense_response", "")))))
 	var released_early: bool = bool(context.get("released_before_commit", context.get("fake", false)))
 	var faked: bool = released_early and commit_frame > 0 and input_frame < float(commit_frame)
 	if faked:
@@ -147,7 +148,7 @@ func _ensure_overlay() -> void:
 
 func _merge_overlay(technique: Dictionary) -> Dictionary:
 	var merged: Dictionary = technique.duplicate(true)
-	var tid := SliceStateMapper.canonical_technique_id(str(technique.get("id", "")))
+	var tid: String = SliceStateMapperScript.canonical_technique_id(str(technique.get("id", "")))
 	var overlay: Dictionary = _overlay_by_id.get(tid, _overlay_by_id.get(str(technique.get("id", "")), {}))
 	if overlay.is_empty():
 		return merged
