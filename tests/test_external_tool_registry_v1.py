@@ -25,12 +25,15 @@ class ExternalToolRegistryV1Tests(unittest.TestCase):
         self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
         self.assertTrue(json.loads(result.stdout)["ok"])
 
-    def test_only_clear_source_allows_direct_code_reuse(self):
-        direct = [row for row in self.registry["sources"] if row["direct_code_reuse"]]
-        self.assertEqual([row["id"] for row in direct], ["claude_code_game_studios"])
-        self.assertEqual(direct[0]["license_status"], "CLEAR_MIT")
+    def test_direct_code_reuse_is_limited_to_selected_permissive_sources(self):
+        direct = {row["id"]: row for row in self.registry["sources"] if row["direct_code_reuse"]}
+        self.assertEqual(set(direct), {"claude_code_game_studios", "agent_sprite_forge"})
+        for row in direct.values():
+            self.assertEqual(row["license_status"], "CLEAR_MIT")
+            self.assertEqual(row["adoption"], "PORT_SELECTED_PATTERNS")
+            self.assertFalse(row["direct_asset_reuse"])
 
-    def test_noncommercial_and_unknown_sources_are_no_copy(self):
+    def test_noncommercial_unknown_and_copyleft_external_sources_are_no_copy(self):
         for sid in (
             "sprite_animator",
             "blendi_sprite_sheet_creator",
@@ -38,9 +41,36 @@ class ExternalToolRegistryV1Tests(unittest.TestCase):
             "pixel_life_simulator",
             "mia_deepseek_v4_1_html_100",
             "mia_gpt6_astra_html_100",
+            "comfy_mcp_official",
+            "comfyui_official",
         ):
             self.assertFalse(self.sources[sid]["direct_code_reuse"], sid)
             self.assertFalse(self.sources[sid]["direct_asset_reuse"], sid)
+
+    def test_agent_sprite_forge_is_pinned_mit_upstream(self):
+        source = self.sources["agent_sprite_forge"]
+        self.assertEqual(source["revision"], "64fd0b57d3f2ae117ef0a95e4c2decc25b4c9dd2")
+        self.assertEqual(source["license_status"], "CLEAR_MIT")
+        self.assertEqual(source["adoption"], "PORT_SELECTED_PATTERNS")
+        self.assertFalse(source["runtime_dependency"])
+
+    def test_optional_mcp_bridges_never_become_runtime_dependencies(self):
+        for sid in ("godot_mcp_sods2", "blender_mcp_ahujasid"):
+            source = self.sources[sid]
+            self.assertEqual(source["license_status"], "CLEAR_MIT")
+            self.assertEqual(source["adoption"], "OPTIONAL_EXTERNAL_AUTHORING_BRIDGE")
+            self.assertFalse(source["runtime_dependency"])
+            self.assertFalse(source["direct_asset_reuse"])
+
+    def test_comfy_tools_remain_external_and_license_gated(self):
+        mcp = self.sources["comfy_mcp_official"]
+        self.assertEqual(mcp["license_status"], "AGPL_3_OR_COMMERCIAL_DUAL")
+        self.assertEqual(mcp["adoption"], "OPTIONAL_EXTERNAL_AUTHORING_BRIDGE_LICENSE_GATED")
+        self.assertFalse(mcp["runtime_dependency"])
+        ui = self.sources["comfyui_official"]
+        self.assertEqual(ui["license_status"], "GPL_3_0")
+        self.assertEqual(ui["adoption"], "EXTERNAL_AUTHORING_EXECUTABLE_ONLY")
+        self.assertFalse(ui["runtime_dependency"])
 
     def test_blendi_sprite_creator_is_pinned_reference_only(self):
         source = self.sources["blendi_sprite_sheet_creator"]
