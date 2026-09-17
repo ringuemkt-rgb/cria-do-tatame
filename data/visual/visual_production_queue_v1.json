@@ -1,0 +1,70 @@
+{
+  "$schema": "cria.visual_production_queue.v1",
+  "version": "1.0.0",
+  "shipping": false,
+  "status": "READY_TO_AUTHOR",
+  "purpose": "Single ordered queue to build graphic material for the gold slice without merging parallel PRs or promoting PNG to shipping.",
+  "authorities": {
+    "look": "cria-art-direction",
+    "command": "cria-visual-command-os",
+    "factory": "cria-do-tatame-graphics",
+    "p1_contract": "data/visual/p1_visual_build_contract_v2.json",
+    "sprite_forge": "data/visual/sprite_forge_contract_v2.json",
+    "foundry": "data/visual/visual_foundry_profile_v1.json",
+    "scene_combat": "CombatManager",
+    "map_presentation": "MapAtlasPresenter"
+  },
+  "do_not_merge_to_author": [145, 146, 144, 141, 140, 132],
+  "reference_prs": {
+    "145": "grappling engine V2 presentation — HOLD_MERGE",
+    "146": "map atlas runtime — draft",
+    "144": "P1 fight graphics execution",
+    "141": "slice ouro transitions"
+  },
+  "output_root": "production/candidates/p1/",
+  "sidecar_template": "assets/sidecar.template.json",
+  "palette": ["#0B0B0D", "#C9971C", "#EDE6D6", "#1E3A5F", "#2D5016", "#B85C38", "#D4A574", "#8B0000", "#4B0082"],
+  "negative": ["Caio Ravel", "Ruan Cria", "jab", "uppercut", "HUD", "HP bar", "x/10", "real brand", "photo", "3D render", "sixth finger"],
+  "lotes": [
+    {
+      "id": "L01_identity_and_hub",
+      "priority": 1,
+      "files": [
+        {"id": "01", "file": "identity__ruan_macacao__v1.png", "type": "identity", "canvas": "1024x1024", "subject": "ruan_macacao"},
+        {"id": "02", "file": "identity__davi_relampago__v1.png", "type": "identity", "canvas": "1024x1024", "subject": "davi_relampago"},
+        {"id": "03", "file": "idle_world__ruan_macacao__v1.png", "type": "sprite", "canvas": "128x128", "pivot": [64, 96]},
+        {"id": "04", "file": "idle_world__davi_relampago__v1.png", "type": "sprite", "canvas": "128x128", "pivot": [64, 96]},
+        {"id": "05", "file": "idle_combat__ruan_macacao__v1.png", "type": "sprite", "canvas": "128x128", "pivot": [64, 96]},
+        {"id": "06", "file": "prop__kombi_rear__v1.png", "type": "prop", "canvas": "256x256"},
+        {"id": "07", "file": "icon__cacau__v1.png", "type": "ui_icon", "canvas": "64x64"},
+        {"id": "08", "file": "icon__piacava__v1.png", "type": "ui_icon", "canvas": "64x64"},
+        {"id": "09", "file": "icon__pesca__v1.png", "type": "ui_icon", "canvas": "64x64"},
+        {"id": "10", "file": "map_base__itubera_02__v1.png", "type": "map_base", "canvas": "1536x864", "bake_hud": false}
+      ]
+    },
+    {
+      "id": "L02_terreiro_layers",
+      "priority": 2,
+      "files": [
+        {"file": "arena_l0_sky__terreiro__v1.png", "type": "arena_layer", "canvas": "1920x1080"},
+        {"file": "arena_l1_far__terreiro__v1.png", "type": "arena_layer", "canvas": "1920x1080"},
+        {"file": "arena_l2_mid__terreiro__v1.png", "type": "arena_layer", "canvas": "1920x1080"},
+        {"file": "arena_l3_tatame__terreiro__v1.png", "type": "arena_layer", "canvas": "1920x1080"},
+        {"file": "arena_l4_props__terreiro__v1.png", "type": "arena_layer", "canvas": "1920x1080"},
+        {"file": "arena_l5_fg__terreiro__v1.png", "type": "arena_layer", "canvas": "1920x1080"}
+      ]
+    },
+    {
+      "id": "L03_paired_gold",
+      "priority": 3,
+      "requires": ["L01_identity_and_hub human_approved"],
+      "files": [
+        {"file": "paired__baiana__ruan_davi__atk__v1.png", "type": "paired", "canvas": "128x128"},
+        {"file": "paired__baiana__ruan_davi__def__v1.png", "type": "paired", "canvas": "128x128"},
+        {"file": "paired__sprawl__ruan_davi__atk__v1.png", "type": "paired", "canvas": "128x128"},
+        {"file": "paired__sprawl__ruan_davi__def__v1.png", "type": "paired", "canvas": "128x128"}
+      ]
+    }
+  ],
+  "promotion": ["generated", "sidecar_filled", "palette_qa", "human_approved", "godot_scene", "shipping"]
+}
