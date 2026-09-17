@@ -47,6 +47,9 @@ const DATA_FILES := {
 	"characters": "res://data/characters.json",
 	"arenas": "res://data/arenas.json",
 	"techniques": "res://data/techniques.json",
+	"technique_slice_ouro": "res://data/techniques/technique_slice_ouro_v1.json",
+	"state_mapper": "res://data/combat/state_mapper_v1.json",
+	"davi_policy_slice": "res://data/ai/davi_policy_slice_v1.json",
 	"missions": "res://data/missions.json",
 	"factions": "res://data/factions.json",
 	"dialogues": "res://data/dialogues.json",
@@ -94,6 +97,7 @@ func load_all():
 	characters = _load_keyed("characters")
 	arenas = _load_keyed("arenas")
 	techniques = _load_keyed("techniques")
+	_apply_slice_ouro_overlay()
 	missions = _load_keyed("missions")
 	factions = _load_keyed("factions")
 	dialogues = _load_keyed("dialogues")
@@ -227,7 +231,34 @@ func get_arena(id):
 	return arenas.get(str(id), {})
 
 func get_technique(id):
-	return techniques.get(str(id), {})
+	var tid := str(id)
+	var hit = techniques.get(tid, {})
+	if hit.is_empty() and tid == "knee_cut":
+		hit = techniques.get("corte_joelho", {})
+	elif hit.is_empty() and tid == "clinch_entry":
+		hit = techniques.get("grip_de_ferro", {})
+	elif hit.is_empty() and tid == "kimura":
+		hit = techniques.get("chave_braco", {})
+	return hit
+
+func _apply_slice_ouro_overlay() -> void:
+	var parsed = _load_json(DATA_FILES.get("technique_slice_ouro", ""))
+	if typeof(parsed) != TYPE_DICTIONARY:
+		return
+	for raw in parsed.get("techniques", []):
+		if typeof(raw) != TYPE_DICTIONARY or not raw.has("id"):
+			continue
+		var tid := str(raw.get("id"))
+		var base: Dictionary = techniques.get(tid, {})
+		var merged: Dictionary = base.duplicate(true) if typeof(base) == TYPE_DICTIONARY else {}
+		for key in raw.keys():
+			merged[key] = raw[key]
+		if not merged.has("id"):
+			merged["id"] = tid
+		techniques[tid] = merged
+		var alias := str(raw.get("slice_alias", ""))
+		if alias != "":
+			techniques[alias] = merged
 
 func get_lore_character(id):
 	return character_bible.get("characters", {}).get(str(id), {})
