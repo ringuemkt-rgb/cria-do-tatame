@@ -1,10 +1,22 @@
 extends Node
 class_name TechniqueResolver
 
+## Juiz de aresta. Nao substitui CombatManager.
+## Fatia ouro: deny na janela, fake antes do commit, chain_id +0.08.
+
+const CHAIN_BONUS := 0.08
+const FAKE_COST_RATIO := 0.5
+const OVERLAY_PATH := "res://data/techniques/technique_slice_ouro_v1.json"
+const SliceStateMapperScript = preload("res://src/combat/SliceStateMapper.gd")
+
 var rng: RandomNumberGenerator = RandomNumberGenerator.new()
+var _mapper = SliceStateMapperScript.new()
+var _overlay_by_id: Dictionary = {}
+var _overlay_loaded: bool = false
 
 func _ready() -> void:
 	rng.randomize()
+	_ensure_overlay()
 
 func resolver_tecnica(technique_id: String, actor: Dictionary, defender: Dictionary, state_machine: Node, context: Dictionary = {}) -> Dictionary:
 	var registry: Node = get_node_or_null("/root/DataRegistry")
@@ -16,35 +28,81 @@ func resolver_tecnica(technique_id: String, actor: Dictionary, defender: Diction
 	return resolve_technique(technique, actor, defender, _contexto_com_estado(state_machine, context))
 
 func resolve_technique(technique: Dictionary, actor: Dictionary, defender: Dictionary, context: Dictionary = {}) -> Dictionary:
-	var technique_id: String = str(technique.get("id", "unknown"))
-	var current_state: String = str(context.get("state", context.get("estado", "PLAYER_STANDING_NEUTRAL")))
-	var entry_state: String = str(technique.get("entry_state", technique.get("estado_entrada", "")))
-	var exit_state: String = str(technique.get("exit_state", technique.get("estado_saida", current_state)))
+	_ensure_overlay()
+	var merged: Dictionary = _merge_overlay(technique)
+	var technique_id: String = str(merged.get("id", "unknown"))
+	var current_state: String = _mapper.to_runtime(str(context.get("state", context.get("estado", "PLAYER_STANDING_NEUTRAL"))))
+	var entry_state: String = _mapper.to_runtime(str(merged.get("entry_state", merged.get("estado_entrada", ""))))
+	var exit_state: String = _mapper.to_runtime(str(merged.get("exit_state", merged.get("estado_saida", current_state))))
+	var defended_state: String = _mapper.to_runtime(str(merged.get("state_to_defended", current_state)))
 	var state_allowed: bool = entry_state == "" or entry_state == current_state
-	var cost: Dictionary = _custo(technique)
+	var cost: Dictionary = _custo(merged)
 	var can_pay: bool = _pode_pagar(actor, cost)
-	var chance: float = _calcular_chance(technique, actor, defender, state_allowed, can_pay)
-	chance = clampf(chance + float(context.get("chance_modifier", 0.0)), 0.05, 0.95)
+	var commit_frame: int = int(merged.get("commit_frame", 0))
+	var defense_window: float = float(merged.get("defense_window", 0.0))
+	var defense_response: String = SliceStateMapperScript.canonical_technique_id(str(merged.get("defense_response", "")))
+	var input_frame: float = float(context.get("frame", context.get("input_frame", 999.0)))
+	var defender_input: String = SliceStateMapperScript.canonical_technique_id(str(context.get("defense_input", context.get("defender_input", context.get("defense_response", "")))))
+	var released_early: bool = bool(context.get("released_before_commit", context.get("fake", false)))
+	var faked: bool = released_early and commit_frame > 0 and input_frame < float(commit_frame)
+	if faked:
+		var fake_cost: Dictionary = {"gas": cost["gas"] * FAKE_COST_RATIO, "focus": cost["focus"] * FAKE_COST_RATIO, "moral": 0.0}
+		return _pack_result(merged, technique_id, current_state, entry_state, current_state, defended_state, state_allowed, can_pay, fake_cost, 0.0, false, false, true, "", 0.0, commit_frame, defense_window, defense_response, context, "fake_cancel")
+	var window_frames: float = float(commit_frame) * defense_window
+	var in_window: bool = defense_window > 0.0 and commit_frame > 0 and input_frame <= window_frames
+	var denied: bool = state_allowed and can_pay and defense_response != "" and defender_input == defense_response and in_window
+	if denied:
+		return _pack_result(merged, technique_id, current_state, entry_state, defended_state, defended_state, state_allowed, can_pay, cost, 0.0, false, true, false, "", 0.0, commit_frame, defense_window, defense_response, context, "denied")
+	var chance: float = _calcular_chance(merged, actor, defender, state_allowed, can_pay)
+	var clash: Dictionary = context.get("deck_clash", {})
+	var clash_mod: float = float(context.get("chance_modifier", clash.get("modifier", clash.get("m", 0.0))))
+	clash_mod = clampf(clash_mod, -0.30, 0.35)
+	var chain_id: String = str(merged.get("chain_id", ""))
+	var prev_exit: String = _mapper.to_runtime(str(context.get("prev_exit_state", context.get("previous_exit_state", ""))))
+	var prev_chain: String = str(context.get("prev_chain_id", ""))
+	var chain_bonus: float = 0.0
+	if chain_id != "" and prev_chain == chain_id and prev_exit == entry_state:
+		chain_bonus = CHAIN_BONUS
+	chance = clampf(chance + clash_mod + chain_bonus, 0.05, 0.95)
 	var success: bool = state_allowed and can_pay and rng.randf() <= chance
-	var effects: Dictionary = _efeitos(technique, success)
+	var state_to: String = current_state
+	if success:
+		state_to = exit_state
+	elif defended_state != "" and defended_state != current_state:
+		state_to = defended_state
+	var score_event: String = str(merged.get("score_event", "")) if success else ""
+	return _pack_result(merged, technique_id, current_state, entry_state, state_to, defended_state, state_allowed, can_pay, cost, chance, success, false, false, score_event, chain_bonus, commit_frame, defense_window, defense_response, context, _mensagem(merged, success, state_allowed, can_pay))
+
+func _pack_result(merged: Dictionary, technique_id: String, current_state: String, entry_state: String, state_to: String, defended_state: String, state_allowed: bool, can_pay: bool, cost: Dictionary, chance: float, success: bool, denied: bool, faked: bool, score_event: String, chain_bonus: float, commit_frame: int, defense_window: float, defense_response: String, context: Dictionary, message: String) -> Dictionary:
+	var clash = context.get("deck_clash", {})
 	return {
 		"technique_id": technique_id,
-		"nome": technique.get("nome", technique.get("name", technique_id)),
+		"nome": merged.get("nome", merged.get("name", technique_id)),
 		"success": success,
+		"denied": denied,
+		"faked": faked,
 		"state_allowed": state_allowed,
 		"can_pay": can_pay,
 		"entry_state": entry_state,
 		"current_state": current_state,
 		"state_from": current_state,
-		"state_to": exit_state if success else current_state,
-		"exit_state": exit_state if success else current_state,
+		"state_to": state_to,
+		"exit_state": state_to,
+		"state_to_defended": defended_state,
 		"chance": chance,
 		"cost": cost,
-		"effects": effects,
-		"family": technique.get("family", technique.get("familia", "geral")),
-		"deck_clash": context.get("deck_clash", {}).duplicate(true),
-		"frame_data": context.get("frame_data", {}).duplicate(true),
-		"message": _mensagem(technique, success, state_allowed, can_pay)
+		"effects": _efeitos(merged, success),
+		"family": merged.get("family", merged.get("familia", "geral")),
+		"chain_id": str(merged.get("chain_id", "")),
+		"chain_bonus": chain_bonus,
+		"score_event": score_event,
+		"stabilization_seconds": float(merged.get("stabilization_seconds", 0.0)),
+		"commit_frame": commit_frame,
+		"defense_window": defense_window,
+		"defense_response": defense_response,
+		"deck_clash": clash.duplicate(true) if typeof(clash) == TYPE_DICTIONARY else {},
+		"frame_data": context.get("frame_data", {}).duplicate(true) if typeof(context.get("frame_data", {})) == TYPE_DICTIONARY else {},
+		"message": message
 	}
 
 func aplicar_resultado(actor: Dictionary, defender: Dictionary, result: Dictionary) -> Dictionary:
@@ -65,6 +123,38 @@ func aplicar_resultado(actor: Dictionary, defender: Dictionary, result: Dictiona
 		_actor_delta(defender_out, "health", float(effects.get("defender_health", 0)))
 		_actor_delta(defender_out, "control", float(effects.get("defender_control", 0)))
 	return {"actor": actor_out, "defender": defender_out}
+
+func _ensure_overlay() -> void:
+	if _overlay_loaded:
+		return
+	_overlay_loaded = true
+	if not FileAccess.file_exists(OVERLAY_PATH):
+		return
+	var file := FileAccess.open(OVERLAY_PATH, FileAccess.READ)
+	if file == null:
+		return
+	var parsed = JSON.parse_string(file.get_as_text())
+	file.close()
+	if typeof(parsed) != TYPE_DICTIONARY:
+		return
+	for raw in parsed.get("techniques", []):
+		if typeof(raw) != TYPE_DICTIONARY or not raw.has("id"):
+			continue
+		var tid := str(raw.get("id"))
+		_overlay_by_id[tid] = raw
+		var alias := str(raw.get("slice_alias", ""))
+		if alias != "":
+			_overlay_by_id[alias] = raw
+
+func _merge_overlay(technique: Dictionary) -> Dictionary:
+	var merged: Dictionary = technique.duplicate(true)
+	var tid: String = SliceStateMapperScript.canonical_technique_id(str(technique.get("id", "")))
+	var overlay: Dictionary = _overlay_by_id.get(tid, _overlay_by_id.get(str(technique.get("id", "")), {}))
+	if overlay.is_empty():
+		return merged
+	for key in overlay.keys():
+		merged[key] = overlay[key]
+	return merged
 
 func _contexto_com_estado(state_machine: Node, context: Dictionary) -> Dictionary:
 	var copy: Dictionary = context.duplicate(true)
@@ -158,6 +248,8 @@ func _erro(technique_id: String, reason: String) -> Dictionary:
 	return {
 		"technique_id": technique_id,
 		"success": false,
+		"denied": false,
+		"faked": false,
 		"error": reason,
 		"message": reason,
 		"state_to": "PLAYER_STANDING_NEUTRAL",

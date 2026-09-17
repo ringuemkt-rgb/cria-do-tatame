@@ -1,0 +1,24 @@
+{
+  "id": "davi_relampago_slice_v1",
+  "style": "passar",
+  "runtime_authority": false,
+  "notes": "LimboAI / DaviAIController reads families only. CombatManager still scores.",
+  "nodes": [
+    {"state": "PLAYER_STANDING_NEUTRAL", "role": "neutral", "legal_families": ["pegada", "queda", "defesa_queda"], "preferred_ids": ["grip_de_ferro", "baiana", "sprawl"]},
+    {"state": "PLAYER_TOP_CLINCH", "role": "top", "legal_families": ["queda", "controle", "pegada"], "preferred_ids": ["baiana", "pressao_cabeca"]},
+    {"state": "PLAYER_TOP_GUARD", "role": "top", "legal_families": ["passagem", "controle"], "preferred_ids": ["corte_joelho", "torreando"]},
+    {"state": "PLAYER_BOTTOM_GUARD", "role": "bottom", "legal_families": ["raspagem", "finalizacao", "defesa"], "preferred_ids": ["raspagem_tesoura", "triangulo"]},
+    {"state": "PLAYER_TOP_SIDE", "role": "top", "legal_families": ["controle", "dominante", "finalizacao"], "preferred_ids": ["crossface", "montada_pesada"]},
+    {"state": "PLAYER_TOP_MOUNT", "role": "top", "legal_families": ["finalizacao", "controle"], "preferred_ids": ["chave_braco"]},
+    {"state": "PLAYER_BACK_ATTACK", "role": "top", "legal_families": ["finalizacao", "controle"], "preferred_ids": ["mata_leao"]}
+  ],
+  "deny_map": {
+    "baiana": "sprawl",
+    "corte_joelho": "raspagem_tesoura",
+    "chave_braco": "saida_montada",
+    "triangulo": "corte_joelho",
+    "knee_cut": "raspagem_tesoura",
+    "kimura": "saida_montada",
+    "clinch_entry": "sprawl"
+  }
+}

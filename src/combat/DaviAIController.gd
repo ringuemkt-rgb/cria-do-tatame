@@ -8,6 +8,7 @@ var seen_player_families: Dictionary = {}
 var last_action: String = ""
 var last_chosen_technique: String = ""
 var profile: Dictionary = {}
+var slice_policy: Dictionary = {}
 var rng := RandomNumberGenerator.new()
 
 func _ready() -> void:
@@ -22,12 +23,34 @@ func setup(p_rival_id: String = "davi_relampago", p_difficulty: String = "normal
 	var registry: Node = _registry()
 	if registry == null:
 		profile = {}
-		push_warning("[DaviAIController] DataRegistry indisponível durante setup.")
+		push_warning("[DaviAIController] DataRegistry indisponivel durante setup.")
 	else:
 		var profiles: Dictionary = registry.get("rival_ai_profiles")
 		profile = profiles.get("profiles", {}).get(rival_id, {})
 	rng.seed = hash("%s|%s" % [rival_id, difficulty])
+	_load_slice_policy()
 	reset()
+
+func _load_slice_policy() -> void:
+	slice_policy = {}
+	var path := "res://data/ai/davi_policy_slice_v1.json"
+	if not FileAccess.file_exists(path):
+		return
+	var file := FileAccess.open(path, FileAccess.READ)
+	if file == null:
+		return
+	var parsed = JSON.parse_string(file.get_as_text())
+	file.close()
+	if typeof(parsed) == TYPE_DICTIONARY:
+		slice_policy = parsed
+
+func _preferred_ids_for_state(actor_state: String) -> Array:
+	for node_value in slice_policy.get("nodes", []):
+		if typeof(node_value) != TYPE_DICTIONARY:
+			continue
+		if str(node_value.get("state", "")) == actor_state:
+			return node_value.get("preferred_ids", [])
+	return []
 
 func reset() -> void:
 	seen_player_actions.clear()
@@ -74,12 +97,7 @@ func choose_technique(combat_manager: Node) -> Dictionary:
 	last_chosen_technique = str(best.get("id", ""))
 	return best
 
-func _score_technique(
-	technique: Dictionary,
-	actor_state: String,
-	player_resources: Dictionary,
-	rival_resources: Dictionary
-) -> float:
+func _score_technique(technique: Dictionary, actor_state: String, player_resources: Dictionary, rival_resources: Dictionary) -> float:
 	var technique_id: String = str(technique.get("id", ""))
 	var base_chance: float = float(technique.get("base_chance", technique.get("chance_sucesso", 0.5)))
 	var score: float = base_chance * 100.0
@@ -93,6 +111,9 @@ func _score_technique(
 	var preferred_actions: Array = profile.get("preferred_actions", [])
 	if preferred_actions.has(technique_id):
 		score += 18.0
+	var slice_preferred: Array = _preferred_ids_for_state(actor_state)
+	if slice_preferred.has(technique_id):
+		score += 22.0
 	var preferred_states: Array = profile.get("preferred_states", [])
 	if preferred_states.has(actor_state):
 		score += 8.0
@@ -103,7 +124,6 @@ func _score_technique(
 		score += float(technique.get("control_gain", 0)) * 0.6
 	if int(seen_player_actions.get(technique_id, 0)) > 0:
 		score += 2.0
-	# Pequena variação determinística evita repetição quando duas opções empatam.
 	score += rng.randf_range(-1.5, 1.5)
 	return score
 
@@ -153,12 +173,12 @@ func _risk_penalty(technique: Dictionary) -> float:
 
 func pressure_message() -> String:
 	if last_action != "" and int(seen_player_actions.get(last_action, 0)) >= 3:
-		return "Davi leu a repetição. Muda o ritmo."
+		return "Davi leu a repeticao. Muda o ritmo."
 	for family_value in seen_player_families.keys():
 		var family: String = str(family_value)
 		if int(seen_player_families.get(family, 0)) >= 3:
-			return "Davi percebeu seu padrão de %s." % family.replace("_", " ")
-	return "Davi Relâmpago está estudando seu jogo."
+			return "Davi percebeu seu padrao de %s." % family.replace("_", " ")
+	return "Davi Relampago esta estudando seu jogo."
 
 func chosen_action_label() -> String:
 	if last_chosen_technique == "":
@@ -166,7 +186,6 @@ func chosen_action_label() -> String:
 	var technique: Dictionary = _get_technique(last_chosen_technique)
 	return str(technique.get("nome", technique.get("name", last_chosen_technique)))
 
-# Compatibilidade com a interface antiga de dica. A decisão real usa choose_technique().
 func choose_response(combat_phase: String, player_resources: Dictionary) -> String:
 	var gas: float = float(player_resources.get("gas", 100))
 	if _player_is_repeating("baiana"):
