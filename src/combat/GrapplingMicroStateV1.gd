@@ -49,6 +49,7 @@ static func motion_query(microstate: Dictionary, player: int, reaction_id: Strin
 	var opponent_key := "p%d" % (2 if player == 1 else 1)
 	var self_data: Dictionary = players.get(self_key, {})
 	var opponent_data: Dictionary = players.get(opponent_key, {})
+	var reviewed: Dictionary = microstate.get("reviewed_interaction", {})
 	return {
 		"technique_id": str(microstate.get("technique_id", "")),
 		"attack_type": str(microstate.get("attack_type", "")),
@@ -60,6 +61,7 @@ static func motion_query(microstate: Dictionary, player: int, reaction_id: Strin
 		"gas_bucket": str(self_data.get("gas_bucket", "working")),
 		"self_grip_signature": self_data.get("grip_signature", []).duplicate(true),
 		"opponent_grip_signature": opponent_data.get("grip_signature", []).duplicate(true),
+		"reviewed_connection_signature": reviewed.get("connection_signature", []).duplicate(true),
 		"previous_clip_id": str(microstate.get("previous_clip_id", ""))
 	}
 
