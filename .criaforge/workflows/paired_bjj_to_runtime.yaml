@@ -1,0 +1,73 @@
+version: 1.0.0
+workflow: paired_bjj_to_runtime
+purpose: manufacture one attacker/defender BJJ transition as synchronized, reviewable game animation
+minimum_tier_for_art: T2_ASSET_AUTHOR
+minimum_tier_for_motion_capture: T4_MOTION_PRODUCER
+minimum_tier_for_runtime_claim: T3_RUNTIME_INTEGRATOR
+
+skills:
+  required:
+    - .agents/skills/cria-combat-intelligence/SKILL.md
+    - .agents/skills/cria-art-direction/SKILL.md
+    - .agents/skills/cria-sprite-forge/SKILL.md
+  conditional:
+    video_or_mocap: .agents/skills/cria-grappling-motion-lab/SKILL.md
+
+authorities:
+  - data/combat
+  - data/techniques
+  - data/production/motion_factory_v1.json
+  - data/visual/sprite_forge_contract_v2.json
+  - data/visual/visual_foundry_profile_v1.json
+
+steps:
+  - id: combat_edge
+    action: resolve_entry_success_defense_and_exit_states_from_canonical_combat_data
+  - id: motion_contract
+    action: define_anticipation_entry_establish_stabilize_response_recovery
+  - id: physical_binding
+    action: define_visible_grips_base_hip_line_force_direction_contacts_and_unknowns
+  - id: identity_lock
+    action: require_approved_attacker_and_defender_identity_masters
+  - id: shared_space
+    action: define_pair_origin_attacker_pivot_defender_pivot_ground_contact_and_side_swap_rules
+  - id: source_motion
+    choices:
+      - rights_cleared_cria_capture
+      - reviewed_key_pose_authoring
+      - visual_foundry_paired_3d_pose
+      - spec_only_if_motion_evidence_unavailable
+  - id: paired_render
+    action: create_attacker_and_defender_streams_from_same_phase_timeline
+  - id: sync_metadata
+    outputs:
+      - sync_map.json
+      - contact_map.json
+      - phase_map.json
+  - id: sprite_forge
+    action: normalize_both_streams_to_canonical_frame_scale_and_pivots_without_destroying_relative_motion
+  - id: biomechanical_qa
+    action: human_review_contacts_leverage_base_and_response
+  - id: godot_integration
+    action: bind_animation_package_to_canonical_transition_id
+    conditional_capability: godot_cli
+  - id: runtime_capture
+    action: capture_transition_inside_real_combat_flow
+    conditional_capability: godot_cli
+
+acceptance:
+  - canonical_transition_exists
+  - six_phases_present
+  - attacker_and_defender_present
+  - shared_origin_present
+  - sync_map_present
+  - contact_map_present
+  - unknown_occluded_contacts_not_invented
+  - biomechanical_review_recorded
+  - runtime_claim_only_with_godot_evidence
+
+forbidden:
+  - independent_unsynchronized_fighter_gifs
+  - ai_generated_rule_or_score_authority
+  - hidden_grip_invention
+  - automatic_shipping
