@@ -1,0 +1,55 @@
+{
+  "$schema": "cria.grappling_v2_combat_manager_bridge.v1",
+  "version": "1.0.0",
+  "shipping": false,
+  "status": "IMPLEMENTED_ADAPTER",
+  "authorities": {
+    "scene": "CombatManager",
+    "resolver": "TechniqueResolver",
+    "state": "CombatStateMachine",
+    "graph": "BJJGraphReducerV2",
+    "presentation": "CriaGrapplingEngineV2",
+    "bridge": "GrapplingV2CombatBridge"
+  },
+  "forbidden": [
+    "bridge_calls_reducer_instead_of_combat_manager",
+    "bridge_changes_score",
+    "bridge_changes_winner",
+    "bridge_becomes_autoload",
+    "v2_executes_defense",
+    "empty_motion_db_pretends_shipping"
+  ],
+  "clock": {
+    "combat_unit": "frame",
+    "timeline_unit": "ms",
+    "ms_per_frame_default": 16
+  },
+  "resolver_to_reaction": {
+    "denied": "sprawl_or_frame",
+    "faked": "posture_reset",
+    "chained": "keep_connection",
+    "committed": "absorb_or_whizzer",
+    "success": "stabilize"
+  },
+  "slice_ouro_hints": {
+    "baiana": {
+      "attack_type": "takedown",
+      "deny_reaction": "sprawl",
+      "phases": ["anticipation", "entry", "establish", "response", "recovery"]
+    },
+    "knee_cut": {
+      "attack_type": "pass",
+      "deny_reaction": "hip_escape",
+      "phases": ["entry", "establish", "stabilize"]
+    },
+    "mata_leao": {
+      "attack_type": "submission",
+      "deny_reaction": "back_hand_fight",
+      "phases": ["establish", "stabilize", "response"]
+    }
+  },
+  "motion_query_fields": [
+    "technique_id", "attack_type", "position_id", "top_role", "mode",
+    "phase", "reaction_id", "gas_bucket", "resolver_flag"
+  ]
+}
