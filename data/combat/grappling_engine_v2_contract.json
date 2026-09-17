@@ -5,10 +5,13 @@
   "name": "CRIA Grappling Engine V2",
   "goal": "Deliver responsive, varied and positionally coherent gi/no-gi grappling presentation in pixel art while keeping combat outcomes deterministic and mobile-friendly.",
   "authorities": {
+    "scene_authority": "src/autoloads/CombatManager.gd",
+    "resolver_authority": "src/combat/TechniqueResolver.gd",
     "combat_truth": "src/combat/BJJGraphReducerV2.gd",
     "rules_truth": "src/combat/BJJRulesEngineV1.gd",
     "base_runtime": "src/combat/CriaGrapplingRuntimeV1.gd",
     "physical_evidence": "src/combat/GrapplingPhysicalStateV1.gd",
+    "presentation_bridge": "src/combat/GrapplingV2CombatBridge.gd",
     "visual_motion_requirements": "data/visual/golden_chain_motion_requirements_v1.json",
     "motion_factory": "data/production/motion_factory_v1.json",
     "motion_lab": "data/research/grappling_motion_lab_contract_v1.json",
@@ -27,7 +30,8 @@
     "motion_database": "src/animation/GrapplingMotionDBV1.gd",
     "paired_timeline": "src/animation/GrapplingPairedTimelineV1.gd",
     "motion_database_compiler": "tools/motion_factory/compile_grappling_motion_db_v1.py",
-    "engine_facade": "src/combat/CriaGrapplingEngineV2.gd"
+    "engine_facade": "src/combat/CriaGrapplingEngineV2.gd",
+    "combat_manager_bridge": "src/combat/GrapplingV2CombatBridge.gd"
   },
   "authority_firewall": {
     "shadow_runtime_may_change_reducer_position": false,
@@ -38,14 +42,15 @@
     "reaction_selector_may_execute_defense": false,
     "renderer_may_invent_grip": false,
     "expert_reviewed_contact_can_drive_visual_selection": true,
-    "explicit_player_grip_events_can_drive_visual_selection": true
+    "explicit_player_grip_events_can_drive_visual_selection": true,
+    "bridge_may_replace_combat_manager": false
   },
   "runtime_layers": [
     {
       "id": "R0",
       "name": "deterministic_combat",
       "authority": true,
-      "components": ["BJJGraphReducerV2", "BJJRulesEngineV1", "BJJTimingPolicyV1"]
+      "components": ["CombatManager", "TechniqueResolver", "BJJGraphReducerV2", "BJJRulesEngineV1", "BJJTimingPolicyV1"]
     },
     {
       "id": "R1",
@@ -173,7 +178,8 @@
     "GE2_09_GODOT_HEADLESS_SMOKE",
     "GE2_10_EXISTING_RUNTIME_NO_REGRESSION",
     "GE2_11_ANDROID_FRAME_PACING_EVIDENCE_BEFORE_SHIPPING",
-    "GE2_12_RIGHTS_AND_PROVENANCE"
+    "GE2_12_RIGHTS_AND_PROVENANCE",
+    "GE2_13_COMBAT_MANAGER_BRIDGE"
   ],
   "vertical_slice": {
     "fighters": ["ruan_macacao", "davi_relampago"],
