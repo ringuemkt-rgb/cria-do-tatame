@@ -1,0 +1,81 @@
+{
+  "schema_version": 1,
+  "policy": "candidate tools are not considered installed, approved, or executed until validated in this repository",
+  "tools": [
+    {
+      "id": "blender",
+      "name": "Blender",
+      "repository": "https://github.com/blender/blender",
+      "license": "GPL-2.0-or-later",
+      "status": "preferred",
+      "roles": ["dcc", "orthographic_render", "rig_cleanup", "animation", "export_glb"],
+      "runtime_dependency": false
+    },
+    {
+      "id": "triposg",
+      "name": "TripoSG",
+      "repository": "https://github.com/VAST-AI-Research/TripoSG",
+      "license": "MIT",
+      "status": "candidate",
+      "roles": ["image_to_3d_geometry"],
+      "hardware_note": "CUDA GPU; project documentation should be checked before provisioning",
+      "runtime_dependency": false
+    },
+    {
+      "id": "triposr",
+      "name": "TripoSR",
+      "repository": "https://github.com/VAST-AI-Research/TripoSR",
+      "license": "MIT",
+      "status": "candidate",
+      "roles": ["fast_image_to_3d"],
+      "runtime_dependency": false
+    },
+    {
+      "id": "trellis2",
+      "name": "TRELLIS.2",
+      "repository": "https://github.com/microsoft/TRELLIS.2",
+      "license": "MIT for repository code; dependency/model terms must be verified separately",
+      "status": "candidate",
+      "roles": ["image_to_3d", "pbr_texturing"],
+      "hardware_note": "high-VRAM NVIDIA GPU recommended by upstream implementation",
+      "runtime_dependency": false
+    },
+    {
+      "id": "unirig",
+      "name": "UniRig",
+      "repository": "https://github.com/VAST-AI-Research/UniRig",
+      "license": "verify upstream license and model terms before production use",
+      "status": "candidate",
+      "roles": ["auto_rig", "skeleton", "skinning"],
+      "runtime_dependency": false
+    },
+    {
+      "id": "instant_meshes",
+      "name": "Instant Meshes",
+      "repository": "https://github.com/wjakob/instant-meshes",
+      "license": "BSD-3-Clause",
+      "status": "candidate",
+      "roles": ["retopology"],
+      "runtime_dependency": false
+    },
+    {
+      "id": "quadriflow",
+      "name": "QuadriFlow / Blender integration",
+      "repository": "https://github.com/hjwdzh/QuadriFlow",
+      "license": "BSD-style upstream; Blender integration follows Blender distribution terms",
+      "status": "candidate",
+      "roles": ["retopology"],
+      "runtime_dependency": false
+    }
+  ],
+  "approval_gates": [
+    "license_and_model_terms_review",
+    "reproducible_install",
+    "smoke_test",
+    "quality_benchmark",
+    "glb_or_intermediate_export",
+    "provenance_capture",
+    "cost_and_hardware_assessment",
+    "no_runtime_dependency"
+  ]
+}
