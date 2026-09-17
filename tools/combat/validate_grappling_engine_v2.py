@@ -12,11 +12,16 @@ PATHS = {
     "reactions": ROOT / "data/combat/grappling_reaction_policy_v1.json",
     "motion": ROOT / "data/animation/grappling_motion_matching_profile_v1.json",
     "research": ROOT / "data/research/grappling_engine_research_registry_v1.json",
+    "variant_schema": ROOT / "assets/schemas/grappling_motion_variant_v1.schema.json",
+    "sync_schema": ROOT / "assets/schemas/grappling_sync_map_v1.schema.json",
     "grip_runtime": ROOT / "src/combat/GrapplingGripGraphV1.gd",
     "microstate": ROOT / "src/combat/GrapplingMicroStateV1.gd",
     "reaction_runtime": ROOT / "src/combat/GrapplingReactionSelectorV1.gd",
     "matcher": ROOT / "src/animation/GrapplingMotionMatcherV1.gd",
+    "motion_db": ROOT / "src/animation/GrapplingMotionDBV1.gd",
+    "paired_timeline": ROOT / "src/animation/GrapplingPairedTimelineV1.gd",
     "facade": ROOT / "src/combat/CriaGrapplingEngineV2.gd",
+    "compiler": ROOT / "tools/motion_factory/compile_grappling_motion_db_v1.py",
 }
 
 
@@ -92,6 +97,7 @@ def validate_motion(profile: dict) -> None:
     require(profile.get("version") == "1.0.0", "motion matching profile version mismatch")
     runtime = profile.get("runtime", {})
     require(runtime.get("ml_inference") is False, "motion matcher may not require runtime ML")
+    require(runtime.get("native_extension_required") is False, "motion matcher may not require native extension")
     require(runtime.get("deterministic") is True, "motion matcher must be deterministic")
     require(profile.get("pixel_constraints", {}).get("shared_pair_pivot_required") is True, "paired pivot gate missing")
     require(profile.get("pixel_constraints", {}).get("sync_map_required_for_paired_technique") is True, "sync map gate missing")
@@ -101,6 +107,7 @@ def validate_motion(profile: dict) -> None:
             continue
         require(key in weights, f"missing motion weight for {key}")
         require(float(weights[key]) > 0.0, f"motion weight must be positive: {key}")
+    require(float(weights.get("reviewed_connection_signature", 0.0)) >= float(weights.get("self_grip_signature", 0.0)), "reviewed contact should not be weaker than ordinary grip signature")
 
 
 def validate_research(research: dict) -> None:
@@ -114,12 +121,25 @@ def validate_research(research: dict) -> None:
     require({"interagent_cvpr2026", "protomotions3", "mimickit", "godot_motion_matching_guilherme"}.issubset(ids), "high-value research references missing")
 
 
+def validate_schemas() -> None:
+    variant = load_json(PATHS["variant_schema"])
+    sync = load_json(PATHS["sync_schema"])
+    require(variant.get("$id") == "cria.grappling_motion_variant.v1.schema", "variant schema id mismatch")
+    require(sync.get("$id") == "cria.grappling_sync_map.v1.schema", "sync schema id mismatch")
+    variant_features = variant.get("properties", {}).get("features", {}).get("required", [])
+    require("reviewed_connection_signature" in variant_features, "motion variant must carry reviewed connection signature")
+    sync_required = sync.get("required", [])
+    require("sync_points" in sync_required and "shared_pivot" in sync_required, "sync map must require sync points and shared pivot")
+
+
 def validate_gdscript_surfaces() -> None:
     expected_classes = {
         "grip_runtime": "class_name GrapplingGripGraphV1",
         "microstate": "class_name GrapplingMicroStateV1",
         "reaction_runtime": "class_name GrapplingReactionSelectorV1",
         "matcher": "class_name GrapplingMotionMatcherV1",
+        "motion_db": "class_name GrapplingMotionDBV1",
+        "paired_timeline": "class_name GrapplingPairedTimelineV1",
         "facade": "class_name CriaGrapplingEngineV2",
     }
     for key, token in expected_classes.items():
@@ -128,6 +148,10 @@ def validate_gdscript_surfaces() -> None:
     facade = PATHS["facade"].read_text(encoding="utf-8")
     require("authoritative_state_changed_by_grappling_engine_v2" in facade, "facade must explicitly expose authority firewall evidence")
     require("BaseRuntimeScript" in facade and "CriaGrapplingRuntimeV1.gd" in facade, "v2 facade must wrap v1 runtime")
+    microstate = PATHS["microstate"].read_text(encoding="utf-8")
+    matcher = PATHS["matcher"].read_text(encoding="utf-8")
+    require("reviewed_connection_signature" in microstate, "microstate must project reviewed connection signature")
+    require("reviewed_connection_signature" in matcher, "motion matcher must score reviewed connection signature")
 
 
 def main() -> int:
@@ -143,6 +167,7 @@ def main() -> int:
     validate_reactions(reactions)
     validate_motion(motion)
     validate_research(research)
+    validate_schemas()
     validate_gdscript_surfaces()
     print(
         "Grappling Engine V2 contract OK — "
