@@ -1,0 +1,112 @@
+{
+  "$schema": "cria.pixellab_mcp_profile.v1",
+  "version": "1.0.0",
+  "provider_id": "pixellab_mcp",
+  "status": "AUTHORING_PROVIDER_CANDIDATE",
+  "shipping": false,
+  "runtime_dependency": false,
+  "canon_authority": false,
+  "bjj_authority": false,
+  "endpoint": "https://api.pixellab.ai/mcp",
+  "transport": "remote_http_mcp",
+  "authentication": {
+    "scheme": "bearer",
+    "token_env": "PIXELLAB_API_TOKEN",
+    "token_must_never_be_committed": true,
+    "token_must_never_be_written_to_asset_sidecars": true
+  },
+  "official_docs": {
+    "ways_to_use": "https://www.pixellab.ai/docs/ways-to-use-pixellab",
+    "api_docs": "https://api.pixellab.ai/v2/docs",
+    "terms": "https://www.pixellab.ai/termsofservice",
+    "audited_at": "2026-09-12"
+  },
+  "documented_capabilities": [
+    "pixel_art_image_generation",
+    "reference_conditioned_generation",
+    "character_generation",
+    "directional_character_views",
+    "text_driven_animation",
+    "tileset_generation",
+    "ui_asset_generation",
+    "image_editing",
+    "background_removal"
+  ],
+  "preferred_cria_uses": [
+    "character_identity_candidates_after_identity_spec_exists",
+    "directional_world_sprites",
+    "idle_walk_run_and_nonsemantic_locomotion_candidates",
+    "vehicle_sprite_candidates_including_kombi",
+    "world_props_and_resource_icons",
+    "map_tileset_candidates",
+    "hud_and_ui_icon_candidates",
+    "arena_prop_candidates"
+  ],
+  "conditional_uses": [
+    {
+      "use": "combat_animation_candidate",
+      "condition": "only_after_cria_combat_intelligence_and_grappling_motion_lab_define_technique_phases_contacts_roles_and_legality"
+    },
+    {
+      "use": "paired_bjj_sprite_candidate",
+      "condition": "must_follow_authoritative_technique_id_sync_map_pivots_contact_contract_and_human_biomechanical_review"
+    }
+  ],
+  "forbidden_uses": [
+    "define_canon",
+    "invent_bjj_technique",
+    "decide_bjj_legality",
+    "decide_combat_score",
+    "replace_authoritative_motion_contract",
+    "automatic_shipping_promotion",
+    "runtime_required_asset_generation",
+    "train_new_models_on_pixellab_outputs_without_written_permission"
+  ],
+  "sprite_forge_handoff": {
+    "candidate_only": true,
+    "required_metadata": [
+      "provider_id",
+      "generation_tool",
+      "prompt_or_instruction_hash",
+      "reference_asset_ids",
+      "generation_timestamp",
+      "output_sha256",
+      "terms_audit_date",
+      "human_reviewer",
+      "qa_profile"
+    ],
+    "required_gates": [
+      "identity_lock",
+      "palette_and_style",
+      "content_bounds",
+      "pivot_and_scale",
+      "alpha_cleanup",
+      "visual_artifact_review",
+      "rights_and_provenance",
+      "bjj_semantics_when_applicable",
+      "godot_preview",
+      "human_approval"
+    ],
+    "normalized_gameplay_frame": {
+      "width": 128,
+      "height": 128,
+      "pivot": [64, 96],
+      "resampling": "nearest_neighbor",
+      "integer_scale_only": true
+    }
+  },
+  "work_batch_policy": {
+    "default_batch_size": 10,
+    "one_asset_per_output_file": true,
+    "no_collage_for_runtime_assets": true,
+    "qa_before_next_batch": true,
+    "raw_outputs_remain_candidates": true
+  },
+  "commercial_output_policy": {
+    "terms_snapshot": "2025-11-23",
+    "commercial_use_reported_allowed": true,
+    "user_responsible_for_third_party_rights": true,
+    "model_training_on_outputs_without_written_permission": false,
+    "automatic_rights_clearance": false
+  }
+}
