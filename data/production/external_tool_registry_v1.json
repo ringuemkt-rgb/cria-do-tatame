@@ -161,6 +161,31 @@
       "notes": "Comparison corpus only. Model-ranking claims from social posts are subjective benchmark commentary, not engineering evidence for CRIA."
     },
     {
+      "id": "godmodeai_sprite_service",
+      "kind": "external_service",
+      "source": "https://www.godmodeai.co",
+      "revision": "terms_2026-04-21_api_observed_2026-09-12",
+      "license_status": "SERVICE_TERMS_COMMERCIAL_OUTPUT_ALLOWED_REVIEW_REQUIRED",
+      "adoption": "ADOPTED_CANDIDATE_GENERATOR",
+      "direct_code_reuse": false,
+      "direct_asset_reuse": false,
+      "cria_roles": ["sprite_candidate_generation", "action_generation", "background_removal", "animation_upscale", "mcp_authoring_adapter"],
+      "notes": "Provider terms observed 2026-09-12 expressly allow commercial use of Generated Output and assign provider-held rights in Generated Output to the user, but do not guarantee uniqueness or non-infringement. CRIA therefore treats every result as CANDIDATE, preserves input/output provenance, keeps private sharing off, requires human rights review, and never creates a runtime dependency on this service."
+    },
+    {
+      "id": "godmodeai_sprites_skill",
+      "kind": "github_repo",
+      "source": "lyogavin/godmodeai-sprites-skill",
+      "revision": "98199ec3432d670793b6464b3e77c513db902992",
+      "license_status": "CLEAR_MIT",
+      "adoption": "REFERENCE_PINNED_MIT",
+      "direct_code_reuse": false,
+      "direct_asset_reuse": false,
+      "attribution_required": true,
+      "cria_roles": ["provider_action_discovery", "mcp_rest_authoring_workflow_reference"],
+      "notes": "Official God Mode sprite Agent Skill v1.0.0 pinned for workflow/reference only. CRIA does not need to copy it into the repository to use the provider adapter; if code is ever ported later, preserve MIT attribution and review the diff separately."
+    },
+    {
       "id": "old_cria_android_repo",
       "kind": "github_repo",
       "source": "ringuemkt-rgb/Cria-do-tatame-",

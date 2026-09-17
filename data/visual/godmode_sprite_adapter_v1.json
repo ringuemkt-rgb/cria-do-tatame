@@ -1,0 +1,120 @@
+{
+  "$schema": "cria.godmode_sprite_adapter.v1",
+  "version": "1.0.0",
+  "status": "CANDIDATE_AUTHORING_ADAPTER",
+  "shipping": false,
+  "runtime_dependency": false,
+  "canon_authority": false,
+  "combat_authority": false,
+  "purpose": "Use God Mode AI only as an optional external authoring provider for CRIA Sprite Forge candidate sprites and animations. Every output remains a candidate until CRIA normalization, provenance, rights, technical QA and human approval pass.",
+  "authority": {
+    "sprite_forge": "data/visual/sprite_forge_contract_v2.json",
+    "visual": ".agents/skills/cria-art-direction/SKILL.md",
+    "external_tools": "data/production/external_tool_registry_v1.json",
+    "bjj": "authoritative BJJ graph/rules/reducer",
+    "runtime": "Godot"
+  },
+  "provider": {
+    "id": "godmodeai_sprite_service",
+    "service": "God Mode AI",
+    "terms_snapshot": "2026-04-21",
+    "api_observed": "2026-09-12",
+    "official_skill_repo": "lyogavin/godmodeai-sprites-skill",
+    "official_skill_revision": "98199ec3432d670793b6464b3e77c513db902992",
+    "official_skill_license": "MIT",
+    "interfaces": {
+      "rest_api": "https://www.godmodeai.co/get-api",
+      "mcp_endpoint": "https://www.godmodeai.co/api/mcp"
+    },
+    "authentication": {
+      "type": "bearer_token",
+      "environment_variable": "GODMODEAI_API_TOKEN",
+      "must_not_be_committed": true,
+      "must_not_be_written_to_sidecars": true
+    }
+  },
+  "supported_authoring_tools": [
+    "list_actions",
+    "list_models",
+    "upload_image",
+    "generate_sprite",
+    "get_sprite_result",
+    "remove_background",
+    "get_bg_removal_result",
+    "upscale_animation",
+    "get_upscale_result"
+  ],
+  "input_gate": {
+    "approved_identity_master_required_for_character_animation": true,
+    "input_rights_must_be_known": true,
+    "real_person_reference_requires_separate_consent_and_rights_review": true,
+    "production_requirement_id_required": true,
+    "bjj_transition_id_required_for_bjj_animation": true,
+    "generic_attack_prompt_may_define_bjj_motion": false,
+    "paired_bjj_spec_must_define_attacker_defender_sync": true
+  },
+  "generation_policy": {
+    "one_approved_character_seed_is_preferred": true,
+    "whole_action_strip_preferred_over_independent_frame_generation": true,
+    "exact_action_and_camera_view_must_be_recorded": true,
+    "raw_provider_output_status": "CANDIDATE",
+    "raw_provider_output_may_enter_runtime_paths": false,
+    "provider_may_choose_shipping": false,
+    "provider_may_define_canon": false,
+    "provider_may_define_bjj_legality_or_scoring": false,
+    "remote_service_required_for_gameplay": false
+  },
+  "normalization_handoff": {
+    "frame_px": [128, 128],
+    "upright_pivot_px": [64, 96],
+    "resampling": "nearest",
+    "integer_scale_only": true,
+    "binary_alpha_after_normalization": true,
+    "shared_scale_per_strip": true,
+    "shared_anchor_per_strip": true,
+    "identity_comparison_required": true,
+    "preview_harness_required": true,
+    "godot_runtime_evidence_required_before_promotion": true
+  },
+  "rights_policy": {
+    "provider_terms_allow_commercial_generated_output_as_of_snapshot": true,
+    "provider_terms_guarantee_output_uniqueness": false,
+    "provider_terms_guarantee_non_infringement": false,
+    "cria_rights_review_still_required": true,
+    "public_share_opt_in_must_remain_false_for_private_cria_assets": true,
+    "unknown_or_disputed_input_rights_block_generation_for_shipping_use": true
+  },
+  "required_provenance_fields": [
+    "asset_id",
+    "source_requirement_id",
+    "provider_id",
+    "provider_interface",
+    "provider_action",
+    "provider_model_or_tool",
+    "provider_revision_or_observation_date",
+    "identity_master_id",
+    "source_references",
+    "input_rights_status",
+    "terms_snapshot",
+    "raw_output_hash",
+    "normalization_evidence",
+    "qa_evidence",
+    "human_editor",
+    "human_approval",
+    "rights_status",
+    "shipping"
+  ],
+  "promotion_gate": {
+    "default_shipping": false,
+    "requires_sprite_forge_v2_pass": true,
+    "requires_human_visual_review": true,
+    "requires_human_rights_review": true,
+    "requires_biomechanical_review_for_bjj": true,
+    "requires_godot_import_and_runtime_visual_evidence": true,
+    "secret_presence_is_hard_fail": true
+  },
+  "rollback": {
+    "remove_adapter_without_touching_runtime": true,
+    "existing_assets_require_independent_provenance_to_survive_provider_removal": true
+  }
+}
