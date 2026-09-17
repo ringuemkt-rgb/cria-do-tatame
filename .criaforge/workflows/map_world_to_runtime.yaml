@@ -1,0 +1,56 @@
+version: 1.0.0
+workflow: map_world_to_runtime
+purpose: produce one map/world presentation slice without creating a second world simulation
+minimum_tier_for_art: T2_ASSET_AUTHOR
+minimum_tier_for_runtime_claim: T3_RUNTIME_INTEGRATOR
+
+skills:
+  required:
+    - .agents/skills/cria-art-direction/SKILL.md
+  orchestration:
+    - .agents/skills/cria-universal-producer/SKILL.md
+
+authorities:
+  - data/world/world_map_v4.json
+  - src/autoloads/WorldMapManager.gd
+  - src/autoloads/WorldDirectorManager.gd
+  - data/production/canon_contract_v4_1.json
+
+steps:
+  - id: map_scope
+    action: choose_one_page_hub_or_arena_and_resolve_canonical_nodes_routes_and_locks
+  - id: capability_route
+    choices:
+      - native_image_generation
+      - visual_foundry_layered_map
+      - blender_reference_render
+      - manual_pixel_or_map_editor
+      - spec_only
+  - id: layers
+    action: separate_base_ground_water_weather_props_life_nodes_and_hud_as_required_by_existing_presentation_contract
+  - id: world_binding
+    action: bind_visual_state_to_existing_world_state_climate_npc_and_travel_authorities
+  - id: life_cap
+    action: keep_atlas_presence_lightweight_and_move_full_pathfinding_to_walkable_hubs
+  - id: deterministic_qa
+    action: validate_node_ids_routes_locks_asset_paths_and_no_second_manager
+  - id: godot_scene
+    action: integrate_into_existing_world_map_or_hub_scene
+    conditional_capability: godot_cli
+  - id: runtime_smoke
+    action: exercise_open_page_focus_travel_back_and_state_refresh
+    conditional_capability: godot_cli
+
+acceptance:
+  - world_truth_comes_from_existing_data
+  - travel_authority_is_world_map_manager
+  - world_reactivity_is_deterministic
+  - llm_does_not_move_npc_per_frame
+  - art_layers_are_replaceable_candidates_until_promoted
+  - runtime_claim_requires_scene_evidence
+
+forbidden:
+  - second_world_manager
+  - llm_as_world_truth
+  - pathfinding_on_flat_key_art
+  - giant_flat_image_as_only_runtime_state
