@@ -41,6 +41,9 @@ var character_animation_catalog := {}
 var apixel_production_briefs := {}
 var arena_animation_flow := {}
 var combat_deck := {}
+var technique_slice_ouro := {}
+var state_mapper := {}
+var davi_policy_slice := {}
 var validation_report := {}
 
 const DATA_FILES := {
@@ -97,6 +100,9 @@ func load_all():
 	characters = _load_keyed("characters")
 	arenas = _load_keyed("arenas")
 	techniques = _load_keyed("techniques")
+	technique_slice_ouro = _load_raw("technique_slice_ouro")
+	state_mapper = _load_raw("state_mapper")
+	davi_policy_slice = _load_raw("davi_policy_slice")
 	_apply_slice_ouro_overlay()
 	missions = _load_keyed("missions")
 	factions = _load_keyed("factions")
@@ -242,7 +248,7 @@ func get_technique(id):
 	return hit
 
 func _apply_slice_ouro_overlay() -> void:
-	var parsed = _load_json(DATA_FILES.get("technique_slice_ouro", ""))
+	var parsed = technique_slice_ouro
 	if typeof(parsed) != TYPE_DICTIONARY:
 		return
 	for raw in parsed.get("techniques", []):
