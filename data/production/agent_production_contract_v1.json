@@ -1,0 +1,225 @@
+{
+  "$schema": "cria.agent_production_contract.v1",
+  "version": "1.0.0",
+  "status": "ACTIVE_ORCHESTRATION_CONTRACT",
+  "purpose": "Capability-based production routing so any AI agent can contribute safely to Cria do Tatame without assuming provider-specific tools.",
+  "authority": {
+    "repository": "AGENTS.md",
+    "canon": "data/production/canon_contract_v4_1.json",
+    "release": "data/production/supreme_build_contract_v01.json",
+    "production_os": "docs/architecture/CRIA_PRODUCTION_OS_V03.md",
+    "visual_manifest": "data/visual/production_manifest_v03.json",
+    "build_matrix": "data/production/game_build_matrix_v1.json",
+    "coverage": "production/coverage/asset_links_v1.json",
+    "external_tools": "data/production/external_tool_registry_v1.json",
+    "runtime": "Godot",
+    "shipping_authority": false
+  },
+  "invariants": [
+    "Godot is the only game runtime",
+    "No agent may invent a missing capability",
+    "No external tool becomes a runtime dependency by being listed here",
+    "AI output is candidate material until provenance, QA, human review and runtime integration pass",
+    "LLMs never control the frame-by-frame combat loop",
+    "Combat legality and scoring remain reducer/data authority",
+    "Physical Android evidence requires a real device",
+    "Missing capability means fallback, specification-only delivery or an explicit block",
+    "Vertical completion outranks horizontal asset inflation"
+  ],
+  "capabilities": [
+    {"id": "repo_read", "class": "core", "description": "Read repository files and history."},
+    {"id": "repo_write", "class": "core", "description": "Create or modify repository files on a branch."},
+    {"id": "git_cli", "class": "core", "description": "Local Git operations."},
+    {"id": "github_remote", "class": "core", "description": "Issues, pull requests, CI and remote repository actions."},
+    {"id": "shell_exec", "class": "execution", "description": "Execute local commands."},
+    {"id": "python_exec", "class": "execution", "description": "Run Python tooling and tests."},
+    {"id": "node_exec", "class": "execution", "description": "Run Node/npm validation tooling."},
+    {"id": "binary_file_io", "class": "execution", "description": "Read/write binary images, audio, video and archives."},
+    {"id": "web_research", "class": "research", "description": "Inspect current public sources and upstream projects."},
+    {"id": "vision", "class": "media", "description": "Inspect images and visual references."},
+    {"id": "image_generate", "class": "media", "description": "Generate candidate raster art."},
+    {"id": "image_edit", "class": "media", "description": "Reference-guided image editing and variation."},
+    {"id": "video_read", "class": "media", "description": "Inspect rights-cleared video or extracted frames."},
+    {"id": "audio_read", "class": "media", "description": "Inspect audio assets or recordings."},
+    {"id": "godot_cli", "class": "engine", "description": "Godot import, headless test, scene/runtime and export commands."},
+    {"id": "godot_mcp", "class": "engine", "description": "Optional external authoring bridge to Godot; never runtime authority."},
+    {"id": "blender_cli", "class": "dcc", "description": "Blender headless authoring/render/inspection."},
+    {"id": "blender_mcp", "class": "dcc", "description": "Optional Blender authoring bridge; never embedded in game."},
+    {"id": "ffmpeg_cli", "class": "media", "description": "Video/audio normalization and frame extraction."},
+    {"id": "imagemagick_cli", "class": "media", "description": "Optional deterministic raster conversion/inspection."},
+    {"id": "pixel_editor", "class": "dcc", "description": "Optional Pixelorama/Krita-class manual pixel cleanup environment."},
+    {"id": "map_editor", "class": "dcc", "description": "Optional Tiled/LDtk-class map authoring utility when a workflow calls for it."},
+    {"id": "comfyui_external", "class": "media", "description": "Optional external node-based image authoring workflow; license-gated and never shipped with game by default."},
+    {"id": "mocap_pose_stack", "class": "motion", "description": "Optional Pose2Sim/MMPose/SAM2/OpenSim-class research/authoring stack."},
+    {"id": "annotation_stack", "class": "motion", "description": "Optional CVAT/Label Studio/FiftyOne-class review tooling."},
+    {"id": "adb", "class": "release", "description": "Android Debug Bridge for install/log/performance evidence."},
+    {"id": "physical_android_device", "class": "release", "description": "A real supported Android device is connected and testable."},
+    {"id": "human_review", "class": "gate", "description": "Authorized human can approve identity, art, gameplay or release evidence."},
+    {"id": "rights_review", "class": "gate", "description": "Source/license/provenance review is available for promotion decisions."}
+  ],
+  "execution_tiers": [
+    {
+      "id": "T0_OBSERVER",
+      "requires_all": ["repo_read"],
+      "may": ["audit", "plan", "specify", "report_gaps"],
+      "must_not_claim": ["file_changes", "runtime_pass", "asset_integration", "device_pass"]
+    },
+    {
+      "id": "T1_AUTHOR",
+      "requires_all": ["repo_read", "repo_write"],
+      "requires_any": [["python_exec", "node_exec", "github_remote"]],
+      "may": ["edit_code", "edit_data", "edit_docs", "add_tests", "open_pr"],
+      "must_not_claim": ["godot_runtime_pass_without_godot_cli_or_verified_ci", "device_pass"]
+    },
+    {
+      "id": "T2_ASSET_AUTHOR",
+      "requires_all": ["repo_read", "repo_write", "binary_file_io", "vision"],
+      "requires_any": [["image_generate", "image_edit", "comfyui_external"]],
+      "may": ["candidate_art", "sprite_processing", "visual_qa", "provenance_sidecars"],
+      "must_not_claim": ["shipping_asset_without_human_review_and_rights_review", "runtime_pass_without_engine_evidence"]
+    },
+    {
+      "id": "T3_RUNTIME_INTEGRATOR",
+      "requires_all": ["repo_read", "repo_write", "godot_cli"],
+      "may": ["scene_integration", "headless_smoke", "runtime_capture", "export_candidate"],
+      "must_not_claim": ["physical_android_pass_without_device"]
+    },
+    {
+      "id": "T4_MOTION_PRODUCER",
+      "requires_all": ["repo_read", "repo_write", "video_read"],
+      "requires_any": [["ffmpeg_cli", "mocap_pose_stack", "blender_cli"]],
+      "may": ["motion_observation", "paired_motion_candidate", "contact_annotation", "reference_render"],
+      "must_not_claim": ["hidden_contact_certainty", "commercial_rights_without_rights_review", "combat_rule_authority"]
+    },
+    {
+      "id": "T5_RELEASE_OPERATOR",
+      "requires_all": ["repo_read", "repo_write", "godot_cli", "adb", "physical_android_device", "human_review"],
+      "may": ["install_device_build", "collect_device_logs", "measure_device_performance", "release_evidence"],
+      "must_not_claim": ["shipping_without_release_gates"]
+    }
+  ],
+  "domain_routes": {
+    "multi_domain": {
+      "skill": ".agents/skills/cria-universal-producer/SKILL.md",
+      "authorities": ["AGENTS.md", "docs/ROADMAP.md", "data/production/game_build_matrix_v1.json"]
+    },
+    "canon_world_narrative": {
+      "skill": ".agents/skills/cria-universal-producer/SKILL.md",
+      "authorities": ["data/production/canon_contract_v4_1.json", "docs/canon/"]
+    },
+    "combat_bjj": {
+      "skill": ".agents/skills/cria-combat-intelligence/SKILL.md",
+      "authorities": ["data/combat/", "data/techniques/", "src/combat/"]
+    },
+    "grappling_motion": {
+      "skill": ".agents/skills/cria-grappling-motion-lab/SKILL.md",
+      "authorities": ["data/research/motion_tool_registry_v1.json", "data/production/motion_factory_v1.json"]
+    },
+    "visual_art": {
+      "skill": ".agents/skills/cria-art-direction/SKILL.md",
+      "authorities": ["data/visual/production_manifest_v03.json", "docs/art_bible/"]
+    },
+    "sprites_animation": {
+      "skill": ".agents/skills/cria-sprite-forge/SKILL.md",
+      "authorities": ["data/visual/sprite_forge_contract_v1.json", "data/visual/sprite_forge_contract_v2.json"]
+    },
+    "visual_3d_manufacturing": {
+      "skill": ".agents/skills/cria-universal-producer/SKILL.md",
+      "authorities": ["data/visual/visual_foundry_profile_v1.json", "docs/production/VISUAL_FOUNDRY_V1.md"]
+    },
+    "world_map": {
+      "skill": ".agents/skills/cria-art-direction/SKILL.md",
+      "authorities": ["data/world/world_map_v4.json", "src/autoloads/WorldMapManager.gd", "src/autoloads/WorldDirectorManager.gd"]
+    },
+    "runtime_godot": {
+      "skill": ".agents/skills/cria-universal-producer/SKILL.md",
+      "authorities": ["project.godot", "src/", "scenes/", "tests/runtime_smoke.gd"]
+    },
+    "qa_release": {
+      "skill": ".agents/skills/cria-universal-producer/SKILL.md",
+      "authorities": ["package.json", "data/production/release_gate_status_v01.json", "data/production/supreme_build_contract_v01.json"]
+    }
+  },
+  "tool_slots": {
+    "repository": {
+      "preferred": ["local_git", "github_remote"],
+      "fallback": ["repo_read_repo_write_api"],
+      "rule": "Use existing repository; never create a second game repository."
+    },
+    "godot_authoring": {
+      "preferred": ["godot_cli"],
+      "optional_bridges": ["godot_mcp_sods2"],
+      "fallback": ["write_files_and_ci_only"],
+      "rule": "A bridge may operate Godot but never becomes gameplay authority."
+    },
+    "candidate_image_generation": {
+      "preferred": ["agent_native_image_generation"],
+      "optional": ["qwen_2512_pixel_art_lora", "comfyui_external"],
+      "fallback": ["asset_spec_only"],
+      "rule": "All generated art starts as candidate/reference material."
+    },
+    "sprite_processing": {
+      "preferred": ["cria_sprite_forge", "python_pillow_numpy"],
+      "upstream_patterns": ["agent_sprite_forge"],
+      "reference_only": ["sprite_animator", "blendi_sprite_sheet_creator"],
+      "rule": "Use approved seed/master, per-action generation, shared scale profile and canonical pivot."
+    },
+    "visual_3d": {
+      "preferred": ["blender_headless", "cria_visual_foundry"],
+      "optional_bridges": ["blender_mcp_ahujasid"],
+      "candidate_generators": ["triposg", "triposr", "trellis2", "unirig", "instant_meshes", "quadriflow"],
+      "rule": "3D is manufacturing intermediate; gameplay shipping target remains 2D unless canon changes."
+    },
+    "node_visual_workflows": {
+      "optional": ["comfyui", "comfy_mcp_official"],
+      "rule": "External authoring only. Respect GPL/AGPL/commercial terms; do not embed by default."
+    },
+    "motion": {
+      "preferred": ["rights_cleared_cria_capture", "ffmpeg", "pose2sim", "mmpose_rtmpose", "sam2", "cvat_community"],
+      "optional": ["opensim", "label_studio", "fiftyone", "dvc", "mixamo_llm_mocap"],
+      "research_only": ["mujoco", "brax", "genesis"],
+      "rule": "Motion proposes/calibrates physical binding; reducer remains combat authority."
+    },
+    "pixel_cleanup": {
+      "preferred": ["pixelorama", "krita"],
+      "fallback": ["cria_sprite_forge_deterministic_processing"],
+      "rule": "Manual DCC availability is optional; deterministic QA remains mandatory."
+    },
+    "map_authoring": {
+      "preferred": ["cria_world_json", "visual_foundry_layered_map"],
+      "optional": ["tiled", "ldtk"],
+      "rule": "Existing world/map managers remain runtime authority."
+    },
+    "media_processing": {
+      "preferred": ["ffmpeg", "pillow_numpy"],
+      "optional": ["imagemagick"],
+      "rule": "Processing tools may transform approved sources but do not create canon or rights."
+    },
+    "release": {
+      "preferred": ["godot_cli", "github_actions", "adb", "physical_android_device"],
+      "rule": "CI cannot substitute for the required physical Android gate."
+    }
+  },
+  "workflow_files": [
+    ".criaforge/workflows/technique_to_gameplay.yaml",
+    ".criaforge/workflows/visual_asset_to_runtime.yaml",
+    ".criaforge/workflows/paired_bjj_to_runtime.yaml",
+    ".criaforge/workflows/map_world_to_runtime.yaml",
+    ".criaforge/workflows/release_vertical_slice.yaml"
+  ],
+  "bootstrap": {
+    "detector": "tools/agents/detect_capabilities.py",
+    "validator": "tools/ci/validate_agent_production_os_v1.py",
+    "report_path": "reports/agent_bootstrap/capabilities.json",
+    "algorithm": [
+      "Read AGENTS.md and canonical contracts",
+      "Detect or declare capabilities without reading secrets",
+      "Select the highest safe execution tier",
+      "Route request to one or more domain skills",
+      "Choose smallest vertical workflow that can produce observable evidence",
+      "Execute existing validators and engine tests available in the tier",
+      "Record missing gates explicitly",
+      "Never infer shipping from generation, compilation or CI alone"
+    ]
+  }
+}
