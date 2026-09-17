@@ -1,0 +1,35 @@
+name: Godot AI MCP Evaluation
+
+on:
+  pull_request:
+    paths:
+      - 'data/production/godot_ai_mcp_eval_v1.json'
+      - 'tools/experiments/validate_godot_ai_mcp_eval_v1.py'
+      - 'tools/experiments/install_godot_ai_v4.py'
+      - 'tests/test_godot_ai_mcp_eval_v1.py'
+      - '.gitignore'
+      - '.github/workflows/godot-ai-mcp-eval.yml'
+  push:
+    branches:
+      - build/godot-ai-mcp-eval
+
+jobs:
+  validate-experiment-contract:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Validate experiment contract
+        run: python tools/experiments/validate_godot_ai_mcp_eval_v1.py
+
+      - name: Run experiment invariants
+        run: python -m unittest discover -s tests -p 'test_godot_ai_mcp_eval_v1.py'
+
+      - name: Verify installer is syntactically valid
+        run: python -m py_compile tools/experiments/install_godot_ai_v4.py
