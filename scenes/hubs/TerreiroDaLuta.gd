@@ -1,6 +1,6 @@
 extends Control
 
-const COMBAT_SCENE := "res://scenes/combat/CombatArenaBase.tscn"
+const COMBAT_SCENE := "res://scenes/combat/PreFightHub.tscn"
 const CRIA_LIVE_SCENE := "res://scenes/ui/CriaLiveUI.tscn"
 const MAIN_MENU_SCENE := "res://scenes/main_menu/MainMenu.tscn"
 const DECK_SCENE := "res://scenes/ui/DeckBuilder.tscn"

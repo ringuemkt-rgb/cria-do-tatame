@@ -19,6 +19,7 @@ var passive_deck: Array[String] = []
 var hand: Array[String] = []
 var draw_cursor := 0
 var selected_card_id := ""
+var v2_presets: Dictionary = {}
 
 func _ready() -> void:
 	_ensure_input_actions()
@@ -34,6 +35,7 @@ func configure_from_data(source: Dictionary) -> Dictionary:
 	hand.clear()
 	draw_cursor = 0
 	selected_card_id = ""
+	v2_presets = source.get("v2_presets", {}).duplicate(true) if typeof(source.get("v2_presets", {})) == TYPE_DICTIONARY else {}
 	if source.is_empty():
 		return {"ok": false, "error": "deck_data_missing"}
 	owner_id = str(source.get("owner_id", "ruan_macacao"))
@@ -196,6 +198,48 @@ func unlock_card(card_id: String) -> Dictionary:
 	SignalBus.deck_configuration_changed.emit(to_dict())
 	return {"ok": true, "card": card.duplicate(true)}
 
+func get_unlocked_technique_ids() -> Array[String]:
+	var output: Array[String] = []
+	for card_value in cards.values():
+		if typeof(card_value) != TYPE_DICTIONARY:
+			continue
+		var card: Dictionary = card_value
+		if not bool(card.get("unlocked", false)):
+			continue
+		var technique_id := str(card.get("technique_id", ""))
+		if technique_id != "" and not output.has(technique_id):
+			output.append(technique_id)
+	output.sort()
+	return output
+
+func get_default_v2_selection() -> Array[String]:
+	var output: Array[String] = []
+	for card_id in active_deck + passive_deck:
+		var technique_id := str(cards.get(card_id, {}).get("technique_id", ""))
+		if technique_id != "" and not output.has(technique_id):
+			output.append(technique_id)
+	return output.slice(0, 8)
+
+func save_v2_preset(preset_id: String, technique_ids: Array) -> Dictionary:
+	if preset_id not in ["ofensivo", "defensivo", "adaptativo"]:
+		return {"ok": false, "error": "invalid_preset"}
+	if technique_ids.size() < 6 or technique_ids.size() > 8:
+		return {"ok": false, "error": "deck_size_invalid"}
+	var unlocked := get_unlocked_technique_ids()
+	var normalized: Array[String] = []
+	for raw in technique_ids:
+		var technique_id := str(raw)
+		if not unlocked.has(technique_id):
+			return {"ok": false, "error": "technique_locked", "technique_id": technique_id}
+		if not normalized.has(technique_id):
+			normalized.append(technique_id)
+	v2_presets[preset_id] = normalized
+	SignalBus.deck_configuration_changed.emit(to_dict())
+	return {"ok": true, "preset_id": preset_id}
+
+func get_v2_preset(preset_id: String) -> Array:
+	return v2_presets.get(preset_id, []).duplicate()
+
 func passive_modifiers() -> Dictionary:
 	var output: Dictionary = {}
 	for card_id in passive_deck:
@@ -212,7 +256,8 @@ func to_dict() -> Dictionary:
 		"belt": belt,
 		"limits": {"active": ACTIVE_LIMIT, "passive": PASSIVE_LIMIT, "hand": HAND_SIZE},
 		"cards": get_collection(),
-		"equipped": {"active": active_deck.duplicate(), "passive": passive_deck.duplicate()}
+		"equipped": {"active": active_deck.duplicate(), "passive": passive_deck.duplicate()},
+		"v2_presets": v2_presets.duplicate(true)
 	}
 
 func load_from_dict(data: Dictionary) -> void:

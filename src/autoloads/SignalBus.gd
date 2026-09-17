@@ -21,6 +21,13 @@ signal combat_card_selected(card)
 signal technique_clash_resolved(result)
 signal card_xp_changed(card_id, xp, xp_to_next)
 signal deck_configuration_changed(deck_state)
+signal combat_v2_hand_changed(hand)
+signal combat_v2_card_selected(technique_id)
+signal combat_corner_suggestion(suggestion)
+signal combat_virada_used(player, payload)
+signal combat_timer_changed(seconds_remaining, overtime)
+signal combat_timer_expired(payload)
+signal combat_clip_candidate(result)
 
 # Contratos de compatibilidade PT-BR usados por módulos e conteúdo legado.
 # Mantidos explicitamente para que listeners antigos não falhem em silêncio.

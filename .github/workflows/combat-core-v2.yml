@@ -1,0 +1,63 @@
+name: Combat Core V2
+
+on:
+  push:
+    paths:
+      - 'data/combat/combat_core_v2_contract.json'
+      - 'data/combat/combat_state_v2.json'
+      - 'data/combat/ruleset_timers_v1.json'
+      - 'data/combat/scouting_profiles_v1.json'
+      - 'src/combat/CombatDeckRuntimeV2.gd'
+      - 'src/combat/ScoutingSystem.gd'
+      - 'src/combat/CornerSystem.gd'
+      - 'src/combat/ComebackSystem.gd'
+      - 'src/combat/PostFightCombatBridgeV2.gd'
+      - 'src/combat/CombatCoreV2Coordinator.gd'
+      - 'src/autoloads/CombatManager.gd'
+      - 'src/autoloads/DeckManager.gd'
+      - 'src/autoloads/SignalBus.gd'
+      - 'scenes/combat/PreFightHub.gd'
+      - 'scenes/combat/PreFightHub.tscn'
+      - 'scenes/combat/CombatArenaBase.gd'
+      - 'scenes/combat/CombatArenaBase.tscn'
+      - 'scenes/ui/CombatDeckHUD.gd'
+      - 'scenes/ui/CombatDeckHUD.tscn'
+      - 'tools/combat/validate_combat_core_v2.py'
+      - 'tests/test_combat_core_v2_contract.py'
+      - 'tests/combat_core_v2_smoke.gd'
+      - 'package.json'
+      - '.github/workflows/combat-core-v2.yml'
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  contract-and-python:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Validate Combat Core V2
+        run: python tools/combat/validate_combat_core_v2.py
+      - name: Contract tests
+        run: python -m unittest tests.test_combat_core_v2_contract
+
+  godot-smoke:
+    needs: contract-and-python
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Download Godot 4.2.2
+        run: |
+          curl -L --fail --retry 3 -o godot.zip https://github.com/godotengine/godot/releases/download/4.2.2-stable/Godot_v4.2.2-stable_linux.x86_64.zip
+          unzip -q godot.zip
+          mv Godot_v4.2.2-stable_linux.x86_64 godot
+          chmod +x godot
+      - name: Import project
+        run: timeout 180 ./godot --headless --editor --path . --import
+      - name: Run Combat Core V2 smoke
+        run: ./godot --headless --path . --script res://tests/combat_core_v2_smoke.gd

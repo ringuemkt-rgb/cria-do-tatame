@@ -1,0 +1,36 @@
+{
+  "$schema": "cria.combat_state_v2",
+  "version": "2.0.0",
+  "state": {
+    "pos": "standing_neutral",
+    "top": 0,
+    "gi": true,
+    "ruleset": "ibjjf",
+    "seed": 0,
+    "tick": 0,
+    "winner": 0,
+    "timer": 360,
+    "overtime": false,
+    "p1": {
+      "gas": 100,
+      "score": 0,
+      "grip": 0,
+      "guard": 0,
+      "focus": 100,
+      "moral": 100,
+      "health": 100
+    },
+    "p2": {
+      "gas": 100,
+      "score": 0,
+      "grip": 0,
+      "guard": 0,
+      "focus": 100,
+      "moral": 100,
+      "health": 100
+    },
+    "log": [],
+    "virada_disponivel": {"p1": true, "p2": true},
+    "nemesis_counters": {}
+  }
+}
