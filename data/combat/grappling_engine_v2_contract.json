@@ -18,10 +18,15 @@
     "grip_topology": "data/combat/grip_topology_v1.json",
     "reaction_policy": "data/combat/grappling_reaction_policy_v1.json",
     "motion_matching_profile": "data/animation/grappling_motion_matching_profile_v1.json",
+    "motion_variant_schema": "assets/schemas/grappling_motion_variant_v1.schema.json",
+    "sync_map_schema": "assets/schemas/grappling_sync_map_v1.schema.json",
     "grip_runtime": "src/combat/GrapplingGripGraphV1.gd",
     "microstate_runtime": "src/combat/GrapplingMicroStateV1.gd",
     "reaction_runtime": "src/combat/GrapplingReactionSelectorV1.gd",
     "motion_matcher": "src/animation/GrapplingMotionMatcherV1.gd",
+    "motion_database": "src/animation/GrapplingMotionDBV1.gd",
+    "paired_timeline": "src/animation/GrapplingPairedTimelineV1.gd",
+    "motion_database_compiler": "tools/motion_factory/compile_grappling_motion_db_v1.py",
     "engine_facade": "src/combat/CriaGrapplingEngineV2.gd"
   },
   "authority_firewall": {
@@ -60,15 +65,15 @@
       "id": "R3",
       "name": "motion_matching",
       "authority": false,
-      "components": ["GrapplingMotionMatcherV1"],
-      "purpose": "Select best precompiled sprite motion variant."
+      "components": ["GrapplingMotionDBV1", "GrapplingMotionMatcherV1"],
+      "purpose": "Load rights-cleared approved motion metadata and select the best precompiled paired sprite variant."
     },
     {
       "id": "R4",
-      "name": "sprite_playback",
+      "name": "paired_sprite_playback",
       "authority": false,
-      "components": ["BJJMotionBindingV1", "Sprite Forge V2", "Godot AnimationPlayer/AnimatedSprite2D"],
-      "purpose": "Present paired clips using sync maps and shared pivots."
+      "components": ["BJJMotionBindingV1", "GrapplingPairedTimelineV1", "Sprite Forge V2", "Godot AnimationPlayer/AnimatedSprite2D"],
+      "purpose": "Present attacker and defender clips from one reviewed timeline using shared sync points, contacts and pair pivot."
     }
   ],
   "offline_layers": [
@@ -101,6 +106,13 @@
       "name": "pixel_compilation",
       "required_for_shipping": true,
       "outputs": ["spritesheet", "frame_metadata", "contact_sheet", "preview", "qa_report"]
+    },
+    {
+      "id": "O5",
+      "name": "motion_database_compilation",
+      "required_for_shipping": true,
+      "outputs": ["rights_filtered_motion_db"],
+      "policy": "Only COMMERCIAL_DERIVATION_ALLOWED + human-approved + APPROVED_FINAL + shipping=true variants enter the runtime database."
     }
   ],
   "gi_nogi_model": {
@@ -131,6 +143,7 @@
       "entry_angle",
       "side",
       "grip_configuration",
+      "reviewed_contact_configuration",
       "defender_reaction",
       "fatigue_bucket",
       "gi_nogi",
@@ -145,6 +158,7 @@
     "runtime_3d_physics_required": false,
     "large_motion_database_loaded_as_raw_3d": false,
     "clip_metadata_compaction_required": true,
+    "paired_timeline_clock": "integer_milliseconds",
     "atlas_budget_still_owned_by_sprite_forge": true
   },
   "quality_gates": [
@@ -180,6 +194,7 @@
     "Compile multiple physically plausible motion variants into tiny runtime metadata.",
     "Use grip signatures to make gi and no-gi feel mechanically and visually different.",
     "Use deterministic reaction hints to reduce canned-animation repetition without delegating combat truth to AI.",
-    "Collect telemetry on chosen visual variants separately from authoritative combat telemetry to tune presentation safely."
+    "Collect telemetry on chosen visual variants separately from authoritative combat telemetry to tune presentation safely.",
+    "Use active-learning coverage gaps to prioritize the next capture session instead of recording techniques blindly."
   ]
 }
