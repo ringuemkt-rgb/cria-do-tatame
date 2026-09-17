@@ -72,6 +72,7 @@ func _cost(query: Dictionary, candidate: Dictionary) -> float:
 	cost += _categorical_cost(query, candidate, "gas_bucket", float(weights.get("gas_bucket", 1.5)))
 	cost += _array_cost(query, candidate, "self_grip_signature", float(weights.get("self_grip_signature", 2.5)))
 	cost += _array_cost(query, candidate, "opponent_grip_signature", float(weights.get("opponent_grip_signature", 2.5)))
+	cost += _array_cost(query, candidate, "reviewed_connection_signature", float(weights.get("reviewed_connection_signature", 5.0)))
 
 	var previous := str(query.get("previous_clip_id", ""))
 	if previous != "" and previous == str(candidate.get("previous_clip_id", "")):
