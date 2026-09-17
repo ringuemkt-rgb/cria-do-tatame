@@ -22,6 +22,7 @@
     "gas_bucket",
     "self_grip_signature",
     "opponent_grip_signature",
+    "reviewed_connection_signature",
     "previous_clip_id"
   ],
   "weights": {
@@ -35,12 +36,14 @@
     "gas_bucket": 1.5,
     "self_grip_signature": 2.5,
     "opponent_grip_signature": 2.5,
+    "reviewed_connection_signature": 5.0,
     "previous_clip_continuity": 1.0
   },
   "array_distance": "one_minus_jaccard",
   "categorical_distance": "zero_if_equal_else_one",
   "missing_feature_penalty_scale": 0.25,
   "fallback_chain": [
+    "exact_technique_mode_position_contact",
     "exact_technique_mode_position",
     "technique_mode",
     "technique_any_mode",
@@ -55,6 +58,7 @@
     "variation_axes": [
       "entry_angle",
       "grip_configuration",
+      "reviewed_contact_configuration",
       "defender_reaction",
       "fatigue_bucket",
       "left_right_side",
