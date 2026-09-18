@@ -1,0 +1,48 @@
+{
+  "$schema": "cria.open_higgsfield_profile.v1",
+  "version": "1.0.0",
+  "status": "ACTIVE_OPTIONAL_EXTERNAL_GENERATION_ADAPTER",
+  "source": {
+    "repository": "wide-trace/open-higgsfield",
+    "revision": "b16a0efe4d7e2707b56f8ccb02387fd2a9d2eddf",
+    "hosted_url": "https://openhiggsfield.ai",
+    "license_status": "NO_LICENSE_FOUND_AT_AUDIT",
+    "direct_code_reuse": false
+  },
+  "role": "Optional external studio/transport for candidate image and video generation. Never a canon authority and never a shipping bypass.",
+  "api_contract": {
+    "submit": "POST /{model}",
+    "status": "GET /requests/{id}/status",
+    "authorization": "Authorization: Key <id:secret>",
+    "base_url_env": "HF_API_BASE_URL",
+    "api_key_env": "OPEN_HIGGSFIELD_API_KEY"
+  },
+  "security": {
+    "secrets_in_git": false,
+    "fail_closed_on_missing_credentials": true,
+    "browser_cookie_not_reused_by_pipeline": true,
+    "uploads": "Use existing CRIA public/signed asset transport; do not depend on Vercel Blob for the pipeline adapter."
+  },
+  "cria_roles": [
+    "character_concept_candidate",
+    "arena_concept_candidate",
+    "story_scene_candidate",
+    "image_to_video_cutscene_candidate",
+    "reference_conditioned_video_candidate"
+  ],
+  "gates": [
+    "source_and_license_review",
+    "identity_lock",
+    "canon_review",
+    "asset_provenance",
+    "sprite_forge_or_video_qa",
+    "human_approval",
+    "godot_runtime_evidence"
+  ],
+  "non_goals": [
+    "replace Asset Pipeline v2",
+    "replace Visual Foundry",
+    "promote generated media directly to shipping",
+    "store provider credentials in repository"
+  ]
+}
