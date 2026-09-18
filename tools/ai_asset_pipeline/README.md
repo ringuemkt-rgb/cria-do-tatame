@@ -64,3 +64,23 @@ Antes de usar qualquer modelo em produção comercial, verifique a licença do m
 ## Cânone
 
 Ruan Macacão Silva, Gorila Silverback, Baixo Sul da Bahia, Terreiro da Luta e HD Pixel Art 2.5D Regional Premium.
+
+
+## Adaptador OpenHiggsfield
+
+A integração opcional e fail-closed está em:
+
+```text
+tools/ai_asset_pipeline/open_higgsfield/
+```
+
+Perfil e regras:
+
+```text
+data/ai/open_higgsfield_profile_v1.json
+docs/ai/OPEN_HIGGSFIELD_INTEGRATION_V1.md
+```
+
+O adaptador usa apenas variáveis de ambiente, não armazena segredos e não promove
+saídas diretamente para shipping. Como o repositório upstream não apresentou
+LICENSE na revisão auditada, nenhum código upstream é copiado para o CRIA.
