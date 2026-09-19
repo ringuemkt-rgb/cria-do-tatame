@@ -1,0 +1,28 @@
+name: P1 Fight Graphics Execution V1
+
+on:
+  push:
+    paths:
+      - 'production/p1/**'
+      - 'tools/art/validate_p1_fight_graphics_execution_v1.py'
+      - 'tests/test_p1_fight_graphics_execution_v1.py'
+      - '.github/workflows/p1-fight-graphics-v1.yml'
+  pull_request:
+    paths:
+      - 'production/p1/**'
+      - 'tools/art/validate_p1_fight_graphics_execution_v1.py'
+      - 'tests/test_p1_fight_graphics_execution_v1.py'
+      - '.github/workflows/p1-fight-graphics-v1.yml'
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Validate execution board
+        run: python tools/art/validate_p1_fight_graphics_execution_v1.py
+      - name: Test execution board
+        run: python -m unittest tests.test_p1_fight_graphics_execution_v1

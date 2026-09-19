@@ -1,0 +1,196 @@
+{
+  "$schema": "cria.p1_fight_graphics.execution.v1",
+  "version": "1.0.0",
+  "status": "ACTIVE_EXECUTION_BOARD",
+  "shipping": false,
+  "issue": 143,
+  "authorities": {
+    "p1_queue": "production/p1/cria_art_p1_commands_v1.json",
+    "p1_build_contract": "data/visual/p1_visual_build_contract_v2.json",
+    "production_os": "data/visual/production_manifest_v03.json",
+    "visual_foundry": "data/visual/visual_foundry_profile_v1.json",
+    "sprite_forge": "data/visual/sprite_forge_contract_v2.json",
+    "coverage_ledger": "production/coverage/asset_links_v1.json",
+    "asset_manifest": "assets/manifest_v2.json"
+  },
+  "policy": {
+    "single_runtime": "Godot",
+    "candidate_default": true,
+    "shipping_default": false,
+    "active_coverage_link_requires_real_binary": true,
+    "board_may_not_set_shipping_true": true,
+    "human_identity_approval_required_before_action_sheets": true,
+    "paired_bjj_requires_both_identity_masters": true,
+    "paired_bjj_requires_expert_biomechanical_review": true,
+    "godot_handoff_requires": [
+      "qa_passed",
+      "human_approved",
+      "rights_cleared"
+    ],
+    "physical_android_is_release_gate_not_authoring_gate": true
+  },
+  "summary": {
+    "total_commands": 32,
+    "batches": {
+      "P1-CHAR-01": 10,
+      "P1-TECH-01": 7,
+      "P1-ARENA-01": 10,
+      "P1-UI-01": 5
+    },
+    "current_focus": [
+      "P1-CHAR-001",
+      "P1-CHAR-006",
+      "P1-TECH-001"
+    ]
+  },
+  "promotion_phases": [
+    {
+      "id": "identity_masters",
+      "commands": [
+        "P1-CHAR-001",
+        "P1-CHAR-006"
+      ],
+      "exit_gate": "both_identity_masters_have_sha256_and_human_approval"
+    },
+    {
+      "id": "directional_core",
+      "commands": [
+        "P1-CHAR-002",
+        "P1-CHAR-003",
+        "P1-CHAR-007",
+        "P1-CHAR-008"
+      ],
+      "exit_gate": "core_pose_and_locomotion_sprite_qa_pass"
+    },
+    {
+      "id": "terreiro_and_dique",
+      "commands": [
+        "P1-ARENA-001",
+        "P1-ARENA-002",
+        "P1-ARENA-003",
+        "P1-ARENA-004",
+        "P1-ARENA-005",
+        "P1-ARENA-006",
+        "P1-ARENA-007",
+        "P1-ARENA-008",
+        "P1-ARENA-009",
+        "P1-ARENA-010"
+      ],
+      "exit_gate": "both_layered_world_packages_have_runtime_scene_evidence"
+    },
+    {
+      "id": "ground_bases",
+      "commands": [
+        "P1-CHAR-004",
+        "P1-CHAR-005",
+        "P1-CHAR-009",
+        "P1-CHAR-010"
+      ],
+      "exit_gate": "paired_contact_scale_and_ground_base_review_pass"
+    },
+    {
+      "id": "paired_bjj",
+      "commands": [
+        "P1-TECH-001",
+        "P1-TECH-002",
+        "P1-TECH-003",
+        "P1-TECH-004",
+        "P1-TECH-005",
+        "P1-TECH-006",
+        "P1-TECH-007"
+      ],
+      "exit_gate": "all_seven_paired_packages_reviewed_and_bound"
+    },
+    {
+      "id": "fight_ui",
+      "commands": [
+        "P1-UI-001",
+        "P1-UI-002",
+        "P1-UI-003",
+        "P1-UI-004",
+        "P1-UI-005"
+      ],
+      "exit_gate": "mobile_runtime_ui_capture_pass"
+    },
+    {
+      "id": "integration",
+      "commands": [],
+      "exit_gate": "coverage_links_valid_godot_runtime_evidence_and_android_review"
+    }
+  ],
+  "command_status": {
+    "P1-CHAR-001": {
+      "state": "READY_FOR_CANDIDATE_AUTHORING",
+      "depends_on": [],
+      "next_gate": "REFERENCE_INGESTION_SHA256_THEN_HUMAN_IDENTITY_APPROVAL",
+      "work_order": "production/p1/work_orders/ruan_identity_master_v1.json"
+    },
+    "P1-CHAR-006": {
+      "state": "READY_FOR_CANDIDATE_AUTHORING",
+      "depends_on": [],
+      "next_gate": "HUMAN_REFERENCE_SELECTION_INGESTION_SHA256_THEN_IDENTITY_APPROVAL",
+      "work_order": "production/p1/work_orders/davi_identity_master_v1.json"
+    },
+    "P1-CHAR-002": {"state": "BLOCKED_BY_RUAN_IDENTITY_APPROVAL", "depends_on": ["P1-CHAR-001"]},
+    "P1-CHAR-003": {"state": "BLOCKED_BY_RUAN_IDENTITY_APPROVAL", "depends_on": ["P1-CHAR-001"]},
+    "P1-CHAR-004": {"state": "BLOCKED_BY_RUAN_IDENTITY_APPROVAL", "depends_on": ["P1-CHAR-001"]},
+    "P1-CHAR-005": {"state": "BLOCKED_BY_RUAN_IDENTITY_APPROVAL", "depends_on": ["P1-CHAR-001"]},
+    "P1-CHAR-007": {"state": "BLOCKED_BY_DAVI_IDENTITY_APPROVAL", "depends_on": ["P1-CHAR-006"]},
+    "P1-CHAR-008": {"state": "BLOCKED_BY_DAVI_IDENTITY_APPROVAL", "depends_on": ["P1-CHAR-006"]},
+    "P1-CHAR-009": {"state": "BLOCKED_BY_DAVI_IDENTITY_APPROVAL", "depends_on": ["P1-CHAR-006"]},
+    "P1-CHAR-010": {"state": "BLOCKED_BY_DAVI_IDENTITY_APPROVAL", "depends_on": ["P1-CHAR-006"]},
+    "P1-TECH-001": {"state": "BLOCKED_BY_IDENTITY_AND_GROUND_BASES", "depends_on": ["P1-CHAR-001", "P1-CHAR-006", "P1-CHAR-005", "P1-CHAR-010"], "work_order": "production/p1/work_orders/t001_baiana_paired_v1.json", "next_gate": "PAIRED_BLOCKING_EXPERT_REVIEW"},
+    "P1-TECH-002": {"state": "BLOCKED_BY_IDENTITY_AND_GROUND_BASES", "depends_on": ["P1-CHAR-001", "P1-CHAR-006", "P1-CHAR-005", "P1-CHAR-010"]},
+    "P1-TECH-003": {"state": "BLOCKED_BY_IDENTITY_AND_GROUND_BASES", "depends_on": ["P1-CHAR-001", "P1-CHAR-006", "P1-CHAR-005", "P1-CHAR-010"]},
+    "P1-TECH-004": {"state": "BLOCKED_BY_IDENTITY_AND_GROUND_BASES", "depends_on": ["P1-CHAR-001", "P1-CHAR-006", "P1-CHAR-005", "P1-CHAR-010"]},
+    "P1-TECH-005": {"state": "BLOCKED_BY_IDENTITY_AND_GROUND_BASES", "depends_on": ["P1-CHAR-001", "P1-CHAR-006", "P1-CHAR-005", "P1-CHAR-010"]},
+    "P1-TECH-006": {"state": "BLOCKED_BY_IDENTITY_AND_GROUND_BASES", "depends_on": ["P1-CHAR-001", "P1-CHAR-006", "P1-CHAR-005", "P1-CHAR-010"]},
+    "P1-TECH-007": {"state": "BLOCKED_BY_IDENTITY_AND_GROUND_BASES", "depends_on": ["P1-CHAR-001", "P1-CHAR-006", "P1-CHAR-005", "P1-CHAR-010"]},
+    "P1-ARENA-001": {"state": "QUEUED_BY_P1_PROMOTION_ORDER", "depends_on": ["P1-CHAR-003", "P1-CHAR-008"]},
+    "P1-ARENA-002": {"state": "QUEUED_BY_P1_PROMOTION_ORDER", "depends_on": ["P1-CHAR-003", "P1-CHAR-008"]},
+    "P1-ARENA-003": {"state": "QUEUED_BY_P1_PROMOTION_ORDER", "depends_on": ["P1-CHAR-003", "P1-CHAR-008"]},
+    "P1-ARENA-004": {"state": "QUEUED_BY_P1_PROMOTION_ORDER", "depends_on": ["P1-CHAR-003", "P1-CHAR-008"]},
+    "P1-ARENA-005": {"state": "QUEUED_BY_P1_PROMOTION_ORDER", "depends_on": ["P1-CHAR-003", "P1-CHAR-008"]},
+    "P1-ARENA-006": {"state": "QUEUED_BY_P1_PROMOTION_ORDER", "depends_on": ["P1-CHAR-003", "P1-CHAR-008"]},
+    "P1-ARENA-007": {"state": "QUEUED_BY_P1_PROMOTION_ORDER", "depends_on": ["P1-CHAR-003", "P1-CHAR-008"]},
+    "P1-ARENA-008": {"state": "QUEUED_BY_P1_PROMOTION_ORDER", "depends_on": ["P1-CHAR-003", "P1-CHAR-008"]},
+    "P1-ARENA-009": {"state": "QUEUED_BY_P1_PROMOTION_ORDER", "depends_on": ["P1-CHAR-003", "P1-CHAR-008"]},
+    "P1-ARENA-010": {"state": "QUEUED_BY_P1_PROMOTION_ORDER", "depends_on": ["P1-CHAR-003", "P1-CHAR-008"]},
+    "P1-UI-001": {"state": "QUEUED_AFTER_PAIRED_TECHNIQUE_PROOF", "depends_on": ["P1-TECH-001"]},
+    "P1-UI-002": {"state": "QUEUED_AFTER_PAIRED_TECHNIQUE_PROOF", "depends_on": ["P1-TECH-001"]},
+    "P1-UI-003": {"state": "QUEUED_AFTER_PAIRED_TECHNIQUE_PROOF", "depends_on": ["P1-TECH-001"]},
+    "P1-UI-004": {"state": "QUEUED_AFTER_PAIRED_TECHNIQUE_PROOF", "depends_on": ["P1-TECH-001"]},
+    "P1-UI-005": {"state": "QUEUED_AFTER_PAIRED_TECHNIQUE_PROOF", "depends_on": ["P1-TECH-001"]}
+  },
+  "priority_work_orders": [
+    {
+      "command_id": "P1-CHAR-001",
+      "requirement_id": "p1_char:ruan_macacao:char_turnaround",
+      "source_id": "ruan_macacao",
+      "candidate_prefix": "production/candidates/p1/chars/ruan_macacao/turnaround_v1/",
+      "work_order": "production/p1/work_orders/ruan_identity_master_v1.json",
+      "state": "READY_FOR_CANDIDATE_AUTHORING"
+    },
+    {
+      "command_id": "P1-CHAR-006",
+      "requirement_id": "p1_char:davi_relampago:char_turnaround",
+      "source_id": "davi_relampago",
+      "candidate_prefix": "production/candidates/p1/chars/davi_relampago/turnaround_v1/",
+      "work_order": "production/p1/work_orders/davi_identity_master_v1.json",
+      "state": "READY_FOR_CANDIDATE_AUTHORING"
+    },
+    {
+      "command_id": "P1-TECH-001",
+      "requirement_id": "p1_paired:t001:paired_technique",
+      "source_id": "t001",
+      "candidate_prefix": "production/candidates/p1/techniques/t001_ruan_vs_davi_v1/",
+      "work_order": "production/p1/work_orders/t001_baiana_paired_v1.json",
+      "state": "BLOCKED_BY_IDENTITY_AND_GROUND_BASES"
+    }
+  ],
+  "coverage_link_templates": [
+    {"requirement_id": "p1_char:ruan_macacao:char_turnaround", "asset_paths": [], "qa_passed": false, "human_approved": false, "rights_cleared": false, "godot_integrated": false, "shipping": false, "note": "Template only. Do not copy to active ledger until real registered binary paths exist."},
+    {"requirement_id": "p1_char:davi_relampago:char_turnaround", "asset_paths": [], "qa_passed": false, "human_approved": false, "rights_cleared": false, "godot_integrated": false, "shipping": false, "note": "Template only. Do not copy to active ledger until real registered binary paths exist."},
+    {"requirement_id": "p1_paired:t001:paired_technique", "asset_paths": [], "qa_passed": false, "human_approved": false, "rights_cleared": false, "godot_integrated": false, "shipping": false, "note": "Template only. Requires paired attacker/defender package and sync_map before active coverage linkage."}
+  ]
+}
