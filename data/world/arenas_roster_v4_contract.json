@@ -1,0 +1,29 @@
+{
+  "$schema": "cria.arenas_roster.v4",
+  "shipping": false,
+  "content_rating": "17+",
+  "combat_authority": "CombatManager",
+  "factions_playable": ["ALE", "LEM", "NTM"],
+  "lei_is_institution_not_faction": true,
+  "minors_never_enter_CombatManager": true,
+  "gold_slice_arena": "terreiro_da_luta",
+  "gold_slice_opponent": "davi_relampago",
+  "arena_count_candidate": 24,
+  "modifiers_are_bias_not_reducer": true,
+  "strike_is_not_wincon": true,
+  "id_conflicts": [
+    "colonia_nishiuchi_vs_nishimura",
+    "davi_relampago_vs_davi_profeta_santos",
+    "tinker_playable_vs_corner_only"
+  ],
+  "blocked_combatants": ["pipoca", "foguete"],
+  "boss_order_candidate": [
+    "davi_relampago",
+    "oni_ferrugem",
+    "feitor_galpao",
+    "mateus_faro",
+    "ruan_avesso",
+    "george_chupeta",
+    "major_montanha"
+  ]
+}
