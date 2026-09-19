@@ -1,18 +1,46 @@
 {
-  "version": "1.0.0",
+  "version": "1.1.0",
   "weather_states": {
-    "sol_forte": {"label": "Sol forte", "visual": "luz_dura_calor_tremulando", "audio": "cigarras_vento_leve", "gameplay": {"travel_fatigue": 1.08, "visibility": 1.0, "outdoor_activity": 1.0}},
-    "nublado_quente": {"label": "Nublado e quente", "visual": "ceu_cinza_luz_difusa", "audio": "vento_umido", "gameplay": {"travel_fatigue": 1.0, "visibility": 0.96, "outdoor_activity": 1.0}},
-    "chuva_passageira": {"label": "Chuva passageira", "visual": "piso_molhado_reflexos", "audio": "chuva_telhas", "gameplay": {"travel_fatigue": 1.05, "visibility": 0.88, "outdoor_activity": 0.85}},
-    "temporal_tropical": {"label": "Temporal tropical", "visual": "ceu_escuro_raios_agua_forte", "audio": "trovao_chuva_forte", "gameplay": {"travel_fatigue": 1.25, "visibility": 0.62, "outdoor_activity": 0.35}},
-    "garoa_mangue": {"label": "Garoa do mangue", "visual": "gotas_finas_lama_escura", "audio": "garoa_aves_mangue", "gameplay": {"travel_fatigue": 1.12, "visibility": 0.82, "outdoor_activity": 0.72}},
-    "neblina_mangue": {"label": "Neblina do mangue", "visual": "nevoa_baixa_entre_raizes", "audio": "agua_lenta_insetos", "gameplay": {"travel_fatigue": 1.1, "visibility": 0.58, "outdoor_activity": 0.62}}
+    "sol_forte": {"label": "Sol forte", "visual": "luz_dura_calor_tremulando", "audio": "cigarras_vento_leve", "gameplay": {"travel_fatigue": 1.08, "visibility": 1.0, "outdoor_activity": 1.0}, "shader_preset": 1},
+    "nublado_quente": {"label": "Nublado e quente", "visual": "ceu_cinza_luz_difusa", "audio": "vento_umido", "gameplay": {"travel_fatigue": 1.0, "visibility": 0.96, "outdoor_activity": 1.0}, "shader_preset": 0},
+    "chuva_passageira": {"label": "Chuva passageira", "visual": "piso_molhado_reflexos", "audio": "chuva_telhas", "gameplay": {"travel_fatigue": 1.05, "visibility": 0.88, "outdoor_activity": 0.85}, "shader_preset": 3},
+    "temporal_tropical": {"label": "Temporal tropical", "visual": "ceu_escuro_raios_agua_forte", "audio": "trovao_chuva_forte", "gameplay": {"travel_fatigue": 1.25, "visibility": 0.62, "outdoor_activity": 0.35}, "shader_preset": 3},
+    "garoa_mangue": {"label": "Garoa do mangue", "visual": "gotas_finas_lama_escura", "audio": "garoa_aves_mangue", "gameplay": {"travel_fatigue": 1.12, "visibility": 0.82, "outdoor_activity": 0.72}, "shader_preset": 3},
+    "neblina_mangue": {"label": "Neblina do mangue", "visual": "nevoa_baixa_entre_raizes", "audio": "agua_lenta_insetos", "gameplay": {"travel_fatigue": 1.1, "visibility": 0.58, "outdoor_activity": 0.62}, "shader_preset": 2}
   },
   "hub_region_map": {
-    "terreiro_da_luta": "itubera_litoral", "itubera": "itubera_litoral", "mercado": "itubera_litoral", "doca": "itubera_litoral",
-    "salvador": "salvador_urbano", "arena_do_dique": "salvador_urbano", "ferro_velho_da_lapa": "salvador_urbano",
-    "zambiapunga": "zambiapunga_cultural", "palco_cultural": "zambiapunga_cultural",
-    "camamu_manguezal": "camamu_manguezal", "manguezal_profundo": "camamu_manguezal", "doca_camamu": "camamu_manguezal"
+    "terreiro_da_luta": "itubera_litoral",
+    "itubera": "itubera_litoral",
+    "mercado": "itubera_litoral",
+    "doca": "itubera_litoral",
+    "terreiro": "itubera_litoral",
+    "feira": "itubera_litoral",
+    "docas": "itubera_litoral",
+    "arena_do_dique": "itubera_litoral",
+    "salvador": "salvador_urbano",
+    "ferro_velho_da_lapa": "salvador_urbano",
+    "ferro_velho_lapa": "salvador_urbano",
+    "pelourinho": "salvador_urbano",
+    "zambiapunga": "zambiapunga_cultural",
+    "palco_cultural": "zambiapunga_cultural",
+    "nilo_pecanha": "zambiapunga_cultural",
+    "camamu_manguezal": "camamu_manguezal",
+    "camamu": "camamu_manguezal",
+    "manguezal_profundo": "camamu_manguezal",
+    "doca_camamu": "camamu_manguezal",
+    "cais_camamu": "camamu_manguezal",
+    "valenca": "valenca_porto",
+    "terminal_ferry": "valenca_porto",
+    "cairu": "cairu_ilhas",
+    "vila_boipeba": "cairu_ilhas",
+    "ilha_grande": "cairu_ilhas",
+    "itacare": "itacare_costa",
+    "marau": "itacare_costa",
+    "praia_da_concha": "itacare_costa",
+    "taipu_de_fora": "itacare_costa",
+    "teolandia": "interior_cacau",
+    "pirai_do_norte": "interior_cacau",
+    "tancredo_neves": "interior_cacau"
   },
   "regions": {
     "itubera_litoral": {
@@ -50,6 +78,42 @@
         "garoa_mangue": {"nublado_quente": 0.26, "garoa_mangue": 0.36, "neblina_mangue": 0.24, "temporal_tropical": 0.14},
         "neblina_mangue": {"nublado_quente": 0.2, "garoa_mangue": 0.42, "neblina_mangue": 0.28, "temporal_tropical": 0.1},
         "temporal_tropical": {"nublado_quente": 0.3, "garoa_mangue": 0.38, "neblina_mangue": 0.2, "temporal_tropical": 0.12}
+      }
+    },
+    "valenca_porto": {
+      "initial": "nublado_quente",
+      "transitions": {
+        "sol_forte": {"sol_forte": 0.38, "nublado_quente": 0.36, "chuva_passageira": 0.22, "temporal_tropical": 0.04},
+        "nublado_quente": {"sol_forte": 0.22, "nublado_quente": 0.44, "chuva_passageira": 0.26, "temporal_tropical": 0.08},
+        "chuva_passageira": {"sol_forte": 0.16, "nublado_quente": 0.46, "chuva_passageira": 0.28, "temporal_tropical": 0.1},
+        "temporal_tropical": {"nublado_quente": 0.5, "chuva_passageira": 0.36, "temporal_tropical": 0.14}
+      }
+    },
+    "cairu_ilhas": {
+      "initial": "sol_forte",
+      "transitions": {
+        "sol_forte": {"sol_forte": 0.44, "nublado_quente": 0.3, "chuva_passageira": 0.2, "temporal_tropical": 0.06},
+        "nublado_quente": {"sol_forte": 0.28, "nublado_quente": 0.38, "chuva_passageira": 0.26, "temporal_tropical": 0.08},
+        "chuva_passageira": {"sol_forte": 0.2, "nublado_quente": 0.42, "chuva_passageira": 0.26, "temporal_tropical": 0.12},
+        "temporal_tropical": {"nublado_quente": 0.48, "chuva_passageira": 0.36, "temporal_tropical": 0.16}
+      }
+    },
+    "itacare_costa": {
+      "initial": "sol_forte",
+      "transitions": {
+        "sol_forte": {"sol_forte": 0.48, "nublado_quente": 0.3, "chuva_passageira": 0.18, "temporal_tropical": 0.04},
+        "nublado_quente": {"sol_forte": 0.3, "nublado_quente": 0.4, "chuva_passageira": 0.24, "temporal_tropical": 0.06},
+        "chuva_passageira": {"sol_forte": 0.22, "nublado_quente": 0.46, "chuva_passageira": 0.24, "temporal_tropical": 0.08},
+        "temporal_tropical": {"nublado_quente": 0.55, "chuva_passageira": 0.33, "temporal_tropical": 0.12}
+      }
+    },
+    "interior_cacau": {
+      "initial": "nublado_quente",
+      "transitions": {
+        "sol_forte": {"sol_forte": 0.3, "nublado_quente": 0.4, "chuva_passageira": 0.24, "temporal_tropical": 0.06},
+        "nublado_quente": {"sol_forte": 0.18, "nublado_quente": 0.46, "chuva_passageira": 0.28, "temporal_tropical": 0.08},
+        "chuva_passageira": {"sol_forte": 0.14, "nublado_quente": 0.48, "chuva_passageira": 0.28, "temporal_tropical": 0.1},
+        "temporal_tropical": {"nublado_quente": 0.5, "chuva_passageira": 0.36, "temporal_tropical": 0.14}
       }
     }
   }

@@ -1,0 +1,71 @@
+{
+  "version": "1.0.0",
+  "shipping": false,
+  "engine": "NPCEcologyEngineV1",
+  "note": "Atlas uses L1/L2. L3 only inside hub scenes.",
+  "profiles": [
+    {
+      "id": "mestre_dende",
+      "home_node": "terreiro",
+      "schedule_profile": "coach",
+      "knowledge_scopes": ["PUBLIC", "ACADEMY", "PERSONAL"],
+      "goals": [{"id": "formar_ruan", "utility": 0.9}],
+      "relationships": {"ruan_macacao": {"respect": 80, "trust": 75}},
+      "schedule": [
+        {"start_minute": 360, "end_minute": 720, "node": "terreiro", "activity": "abrir_terreiro"},
+        {"start_minute": 720, "end_minute": 1080, "node": "terreiro", "activity": "treino_tecnico"},
+        {"start_minute": 1080, "end_minute": 1320, "node": "terreiro", "activity": "conselho"},
+        {"start_minute": 1320, "end_minute": 1440, "node": "terreiro", "activity": "descanso"}
+      ]
+    },
+    {
+      "id": "nego_mare",
+      "home_node": "cais_camamu",
+      "schedule_profile": "fisher",
+      "knowledge_scopes": ["PUBLIC", "LOCAL"],
+      "goals": [{"id": "ler_mare", "utility": 0.7}],
+      "relationships": {},
+      "schedule": [
+        {"start_minute": 300, "end_minute": 720, "node": "cais_camamu", "activity": "falar_com_quem_escuta"},
+        {"start_minute": 720, "end_minute": 1080, "node": "mercado_peixe", "activity": "comercio"},
+        {"start_minute": 1080, "end_minute": 1440, "node": "cais_camamu", "activity": "vigiar_baia"}
+      ]
+    },
+    {
+      "id": "ze_remo",
+      "home_node": "cais_camamu",
+      "schedule_profile": "fisher",
+      "knowledge_scopes": ["PUBLIC", "LOCAL"],
+      "goals": [{"id": "remar", "utility": 0.6}],
+      "relationships": {},
+      "schedule": [
+        {"start_minute": 360, "end_minute": 1080, "node": "cais_camamu", "activity": "remo_hoje_melhor_amanha"},
+        {"start_minute": 1080, "end_minute": 1440, "node": "cais_camamu", "activity": "descanso"}
+      ]
+    },
+    {
+      "id": "byaku",
+      "home_node": "dojo_tigre_branco",
+      "schedule_profile": "coach",
+      "knowledge_scopes": ["PUBLIC", "ACADEMY", "SECRET"],
+      "goals": [{"id": "disciplina_navega", "utility": 0.8}],
+      "relationships": {"ruan_macacao": {"respect": 40, "trust": 20}},
+      "schedule": [
+        {"start_minute": 360, "end_minute": 1200, "node": "dojo_tigre_branco", "activity": "meditar_e_ensinar"},
+        {"start_minute": 1200, "end_minute": 1440, "node": "dojo_tigre_branco", "activity": "silencio"}
+      ]
+    },
+    {
+      "id": "dona_bela",
+      "home_node": "mercado_porto",
+      "schedule_profile": "merchant",
+      "knowledge_scopes": ["PUBLIC", "LOCAL"],
+      "goals": [{"id": "feira", "utility": 0.65}],
+      "relationships": {},
+      "schedule": [
+        {"start_minute": 360, "end_minute": 1080, "node": "mercado_porto", "activity": "feira"},
+        {"start_minute": 1080, "end_minute": 1440, "node": "mercado_porto", "activity": "fechar_banca"}
+      ]
+    }
+  ]
+}
