@@ -1,0 +1,107 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://criadotatame.local/schemas/ctt_paired_motion_v1.schema.json",
+  "title": "CTT Paired Motion v1",
+  "type": "object",
+  "required": ["schema", "technique_id", "fps", "actors", "joint_set", "frames", "contacts", "events", "provenance"],
+  "properties": {
+    "schema": {"const": "ctt_paired_motion_v1"},
+    "technique_id": {"type": "string", "minLength": 1},
+    "fps": {"type": "integer", "minimum": 12, "maximum": 240},
+    "actors": {
+      "type": "array",
+      "minItems": 2,
+      "maxItems": 2,
+      "items": {
+        "type": "object",
+        "required": ["role", "character_id"],
+        "properties": {
+          "role": {"enum": ["attacker", "defender"]},
+          "character_id": {"type": "string", "minLength": 1}
+        },
+        "additionalProperties": false
+      }
+    },
+    "joint_set": {
+      "type": "array",
+      "minItems": 12,
+      "items": {"type": "string", "minLength": 1},
+      "uniqueItems": true
+    },
+    "frames": {
+      "type": "array",
+      "minItems": 2,
+      "items": {
+        "type": "object",
+        "required": ["frame", "attacker", "defender"],
+        "properties": {
+          "frame": {"type": "integer", "minimum": 0},
+          "attacker": {"$ref": "#/$defs/pose"},
+          "defender": {"$ref": "#/$defs/pose"}
+        },
+        "additionalProperties": false
+      }
+    },
+    "contacts": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["a", "b", "start", "end", "kind"],
+        "properties": {
+          "a": {"type": "string", "pattern": "^(attacker|defender)\\.[A-Za-z0-9_]+$"},
+          "b": {"type": "string", "pattern": "^(attacker|defender|environment)\\.[A-Za-z0-9_]+$"},
+          "start": {"type": "integer", "minimum": 0},
+          "end": {"type": "integer", "minimum": 0},
+          "kind": {"enum": ["grip", "post", "base", "pressure", "ground", "control"]},
+          "tolerance": {"type": "number", "minimum": 0.0}
+        },
+        "additionalProperties": false
+      }
+    },
+    "events": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["frame", "id"],
+        "properties": {
+          "frame": {"type": "integer", "minimum": 0},
+          "id": {"enum": ["anticipation", "entry", "establish", "stabilize", "response", "tap", "escape", "intervention", "recovery"]},
+          "notes": {"type": "string"}
+        },
+        "additionalProperties": false
+      }
+    },
+    "provenance": {
+      "type": "object",
+      "required": ["source_type", "consent_recorded", "restricted_components_used", "shipping_eligible"],
+      "properties": {
+        "source_type": {"enum": ["owned_video", "licensed_video", "synthetic_fixture"]},
+        "consent_recorded": {"type": "boolean"},
+        "restricted_components_used": {"type": "array", "items": {"type": "string"}},
+        "shipping_eligible": {"type": "boolean"},
+        "notes": {"type": "string"}
+      },
+      "additionalProperties": false
+    }
+  },
+  "$defs": {
+    "vec3": {
+      "type": "array",
+      "minItems": 3,
+      "maxItems": 3,
+      "items": {"type": "number"}
+    },
+    "pose": {
+      "type": "object",
+      "required": ["joints"],
+      "properties": {
+        "joints": {
+          "type": "object",
+          "additionalProperties": {"$ref": "#/$defs/vec3"}
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}

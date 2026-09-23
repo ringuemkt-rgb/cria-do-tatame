@@ -1,0 +1,19 @@
+{
+  "schema": "ctt_capture_manifest_v1",
+  "status": "PENDING_CAPTURE",
+  "session_id": "",
+  "capture_date": "",
+  "camera_count": 0,
+  "fps": 0,
+  "calibration_recorded": false,
+  "takes": [
+    {"id": "slow_demo", "captured": false},
+    {"id": "technical_speed", "captured": false},
+    {"id": "defense", "captured": false},
+    {"id": "escape", "captured": false}
+  ],
+  "source_hashes": [],
+  "private_storage_reference": "",
+  "authorization_evidence_recorded": false,
+  "notes": "Raw source video stays outside public Git; record only hashes and non-sensitive storage references."
+}
