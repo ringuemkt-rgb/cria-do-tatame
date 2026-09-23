@@ -123,6 +123,25 @@ def main() -> int:
         if sid == "claude_code_game_studios":
             if license_status != "CLEAR_MIT" or adoption != "PORT_SELECTED_PATTERNS":
                 errors.append("Claude Code Game Studios must remain selected-pattern port only under MIT")
+        elif sid == "pixellab_mcp":
+            if entry.get("kind") != "remote_mcp_service":
+                errors.append("PixelLab must remain a remote MCP authoring service")
+            if entry.get("source") != "https://api.pixellab.ai/mcp":
+                errors.append("PixelLab MCP endpoint must remain the audited official endpoint")
+            if adoption != "ADOPTED_EXTERNAL_AUTHORING_PROVIDER":
+                errors.append("PixelLab must remain an external authoring provider")
+            if direct_code or direct_asset:
+                errors.append("PixelLab registry entry must not imply direct upstream code/asset reuse")
+            if entry.get("runtime_dependency") is not False or entry.get("shipping_default") is not False or entry.get("canon_authority") is not False:
+                errors.append("PixelLab must remain non-runtime, shipping=false and non-canonical")
+            auth = entry.get("authentication", {})
+            if auth.get("scheme") != "bearer" or auth.get("forbid_repository_token") is not True:
+                errors.append("PixelLab bearer token must be secret-store/environment only")
+            output_policy = entry.get("output_policy", {})
+            if output_policy.get("automatic_shipping") is not False or output_policy.get("human_visual_review_required") is not True:
+                errors.append("PixelLab outputs must remain candidate-only and human-reviewed")
+            if output_policy.get("model_training_reuse_without_written_permission") is not False:
+                errors.append("PixelLab outputs must not be authorized for model training without written permission")
         elif sid == "wolfcha":
             if direct_code or license_status != "CONFLICT_README_MIT_LICENSE_FILE_APACHE_2_0":
                 errors.append("Wolfcha must remain no-copy while README/LICENSE discrepancy is unresolved")
@@ -141,6 +160,7 @@ def main() -> int:
 
     required = {
         "qwen_2512_pixel_art_lora",
+        "pixellab_mcp",
         "claude_code_game_studios",
         "wolfcha",
         "cline_qwen_snes_engine",
