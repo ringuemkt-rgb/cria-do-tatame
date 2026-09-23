@@ -1,0 +1,90 @@
+{
+  "schema_version": "2.0.0",
+  "status": "canonical-production",
+  "updated_at": "2026-08-10",
+  "visual_style": "2.5D Pixel Art Premium",
+  "palette": {
+    "background_charcoal": "#0D0F12",
+    "forged_black": "#090B0D",
+    "ivory_text": "#F2E9D3",
+    "aged_gold": "#D4AF37",
+    "attack_orange": "#FF8A00",
+    "tactical_blue": "#2EA7FF",
+    "mangrove_green": "#6DBF67",
+    "elite_purple": "#B16DFF",
+    "danger_red": "#FF4B4B"
+  },
+  "collections": [
+    {
+      "id": "entries_reading",
+      "label": "Entradas e leitura tática",
+      "examples": ["jab_de_medicao", "leitura_inicial", "finta_curta", "troca_de_base", "busca_de_angulo", "inicio_de_pegada"]
+    },
+    {
+      "id": "takedowns",
+      "label": "Quedas e projeções",
+      "examples": ["double_leg", "single_leg_tecnico", "queda_de_quadril", "snapdown", "queda_policial", "bote_rasteiro"]
+    },
+    {
+      "id": "guard_passes",
+      "label": "Passagens de guarda",
+      "examples": ["passagem_de_guarda", "leg_drag", "passagem_lateral", "over_under_pass", "passagem_de_tronco", "passagem_long_step"]
+    },
+    {
+      "id": "top_control",
+      "label": "Controle superior",
+      "examples": ["cem_quilos", "montada_seca", "montada_de_raiz", "costas_dominantes", "pressao_de_peito", "base_de_ferro"]
+    },
+    {
+      "id": "arm_shoulder_submissions",
+      "label": "Finalizações de braço e ombro",
+      "examples": ["armbar_da_guarda", "kimura", "americana", "wrist_lock"]
+    },
+    {
+      "id": "chokes",
+      "label": "Estrangulamentos",
+      "examples": ["mata_leao", "guilhotina", "triangulo", "canto_choke"]
+    },
+    {
+      "id": "leg_attacks",
+      "label": "Ataques de perna",
+      "examples": ["straight_ankle_lock", "heel_hook", "kneebar", "ashi_garami"]
+    },
+    {
+      "id": "defense_counter_elite",
+      "label": "Defesa, contra-ataque e elite",
+      "examples": ["sprawl_preciso", "escape_de_quadril", "contra_ataque_relampago", "protocolo_zero", "conselho_do_mestre", "dominancia_total"]
+    }
+  ],
+  "skill_tree": {
+    "paths": ["pressao", "leitura", "raiz_do_mangue"],
+    "belts": ["branca", "azul", "roxa", "marrom", "preta"],
+    "rule": "skill tree extends DeckManager progression; it does not replace card-level restrictions"
+  },
+  "technique_reference_set": [
+    "armbar_da_guarda",
+    "kimura",
+    "americana",
+    "straight_ankle_lock",
+    "mata_leao",
+    "triangulo",
+    "passagem_long_step",
+    "granby_roll",
+    "canto_choke",
+    "controle_de_perna"
+  ],
+  "quality_gates": [
+    "canon",
+    "biomechanics",
+    "visual_identity",
+    "mobile_legibility",
+    "paired_animation_sync",
+    "godot_runtime"
+  ],
+  "source_asset_policy": {
+    "reference_images": "never imported directly into runtime",
+    "runtime_cards": "must be approved, cleaned, exported and referenced by explicit manifest entries",
+    "sprite_filter": "nearest",
+    "generated_asset_state_default": "candidate"
+  }
+}

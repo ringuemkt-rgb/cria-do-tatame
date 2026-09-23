@@ -1,0 +1,98 @@
+{
+  "schema_version": "1.0.0",
+  "batch_id": "animation_batch_gold_01",
+  "created_at": "2026-08-10T21:22:00-03:00",
+  "branch": "visual/combat-cards-hub-v2",
+  "status": "candidate_only",
+  "visual_canon": "Cria do Tatame 2.5D Pixel Art Premium",
+  "engine_target": "Godot 4.3+",
+  "runtime_resolution_policy": {
+    "combat_sprite_height_px": 72,
+    "hub_sprite_cell_px": 64,
+    "hub_directions": 8,
+    "texture_filter": "nearest",
+    "integer_scaling": true,
+    "pixel_snap": true
+  },
+  "authority_chain": [
+    "GPT: technical_and_art_direction",
+    "Open Pixel Forge: orchestration",
+    "MiniMax-H3: generative_motion_candidate",
+    "Biomechanics QA: final_motion_authority",
+    "Godot: runtime_truth"
+  ],
+  "boards": [
+    {
+      "id": "anim_gold_01_core_motion",
+      "scope": ["idle_combat", "walk_forward", "walk_backward", "dash_forward", "guard_raise", "guard_break", "reaction", "technical_standup"],
+      "actors": ["ruan_macacao"],
+      "review_status": "needs_frame_extraction"
+    },
+    {
+      "id": "anim_gold_02_clinch_pummeling",
+      "scope": ["clinch_entry", "pummeling_left", "pummeling_right", "head_position", "posture_break", "grip_break", "clinch_exit"],
+      "actors": ["ruan_macacao", "davi_relampago"],
+      "paired": true,
+      "review_status": "needs_biomechanics_qa"
+    },
+    {
+      "id": "anim_gold_03_takedown_chain",
+      "scope": ["baiana_single_leg", "double_leg", "sprawl"],
+      "actors": ["ruan_macacao", "davi_relampago"],
+      "paired": true,
+      "review_status": "needs_biomechanics_qa"
+    },
+    {
+      "id": "anim_gold_04_ground_transition",
+      "scope": ["guard_pull", "raspagem_tesoura", "knee_cut_pass", "mount_transition", "back_take"],
+      "actors": ["ruan_macacao", "davi_relampago"],
+      "paired": true,
+      "review_status": "needs_biomechanics_qa"
+    },
+    {
+      "id": "anim_gold_05_position_flow",
+      "scope": ["close_range", "clinch", "player_top_guard", "player_top_half_guard", "player_top_side", "player_top_mount", "player_back_attack"],
+      "actors": ["ruan_macacao", "davi_relampago"],
+      "paired": true,
+      "review_status": "needs_sync_map"
+    },
+    {
+      "id": "anim_gold_06_submissions",
+      "scope": ["armbar", "triangle", "kimura", "guillotine", "mata_leao"],
+      "actors": ["ruan_macacao", "davi_relampago"],
+      "paired": true,
+      "phases": ["setup", "isolation", "lock", "defense_window", "tap_release"],
+      "review_status": "needs_biomechanics_qa"
+    },
+    {
+      "id": "anim_gold_07_defense_escape",
+      "scope": ["sprawl", "grip_break", "bridge_escape", "elbow_escape", "granby_candidate", "technical_standup"],
+      "actors": ["ruan_macacao", "davi_relampago"],
+      "review_status": "needs_biomechanics_qa"
+    },
+    {
+      "id": "anim_gold_08_arena_motion",
+      "scope": ["terreiro_da_luta", "arena_do_dique", "manguezal_profundo", "praia_de_pratigi"],
+      "layers": 5,
+      "loops": ["crowd_three_state", "rain", "water", "leaves", "smoke", "lights", "foreground_motion"],
+      "review_status": "needs_mobile_budget_qa"
+    },
+    {
+      "id": "anim_gold_09_combat_ui_cards",
+      "scope": ["hand_enter", "card_hover", "card_select", "cost_spend", "combo", "cooldown", "rarity_fx", "submission_hud", "tap_release_feedback", "resource_feedback"],
+      "review_status": "needs_android_legibility_qa"
+    },
+    {
+      "id": "anim_gold_10_progression_presentation",
+      "scope": ["skill_unlock", "belt_white_blue", "belt_blue_purple", "belt_purple_brown", "belt_brown_black", "belt_ceremony", "victory", "defeat", "cria_live_result"],
+      "review_status": "needs_canon_qa"
+    }
+  ],
+  "shipping_rules": [
+    "No generated board is a shipping sprite by itself.",
+    "Every paired technique requires attacker and defender frame parity, shared pivot and sync_map.json.",
+    "Biomechanics QA must approve head, spine, shoulder, elbow, hip, knee, ankle, grip, base and center-of-mass relationships.",
+    "Final runtime frames require nearest-neighbor cleanup and palette normalization.",
+    "No asset is promoted without Godot import, runtime smoke and Android device review."
+  ]
+}
