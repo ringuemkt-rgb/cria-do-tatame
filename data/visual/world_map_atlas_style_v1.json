@@ -1,0 +1,81 @@
+{
+  "$schema": "world_map_atlas_style_v1",
+  "version": "1.0.0",
+  "status": "candidate_authoring_contract",
+  "shipping": false,
+  "skill": "cria-world-map-atlas-forge@1.0.0",
+  "parent_skill": "cria-art-direction",
+  "reference_canvas": {"width":1536,"height":864,"aspect":"16:9"},
+  "layout": {
+    "top_nav_norm": [0.0,0.0,1.0,0.081],
+    "map_viewport_norm": [0.0,0.081,1.0,0.833],
+    "bottom_controls_norm": [0.0,0.914,1.0,0.086],
+    "legend_safe_norm": [0.008,0.087,0.115,0.30],
+    "player_hud_safe_norm": [0.008,0.85,0.19,0.13],
+    "region_plate_safe_norm": [0.74,0.82,0.255,0.17]
+  },
+  "ui": {
+    "bg":"#0B0B0D",
+    "border":"#C9971C",
+    "text":"#EDE6D6",
+    "top_nav_order":["MAPA","PERSONAGEM","MISSÕES","FACÇÕES","INVENTÁRIO","DIÁRIO","CONFIGURAÇÕES"],
+    "legend_terms":["Sua posição","Disponível","Bloqueado","Área secreta","Rota terrestre","Rota marítima","Rota bloqueada","Cidade / Ponto"]
+  },
+  "route_visuals": {
+    "terrestrial":{"color":"#EDE6D6","pattern":"dash"},
+    "maritime":{"color":"#3FE3F5","pattern":"dash"},
+    "blocked":{"color":"#C62828","pattern":"dash_x"},
+    "secret":{"color":"#8A2BE2","pattern":"low_opacity_dash","visibility":"discovery_gated"}
+  },
+  "states": {
+    "current":{"ring":"#39FF14","pulse":true},
+    "available":{"ring":"#C9971C","lock":false},
+    "blocked":{"ring":"#C9971C","lock":true},
+    "secret_known":{"ring":"#8A2BE2","icon":"eye","fog":true},
+    "secret_unknown":{"name":"???","fog":true},
+    "completed":{"marker":"check","dynamic":true}
+  },
+  "faction_ceremonial": {
+    "ALE":["#1D4E89","#F3F0EA","#C9971C"],
+    "LEM":["#4B0082","#8B1E3F","#C9971C"],
+    "NTM":["#C62828","#F8BC08","#C9971C"],
+    "LEI":["#1E3A5F","#EDE6D6","#C9971C"]
+  },
+  "layers": [
+    "map_base_art",
+    "ambient_layers",
+    "world_overlay",
+    "ui_overlay",
+    "narrative_overlay"
+  ],
+  "base_art_forbidden": [
+    "node_badge","lock","dynamic_route_state","mission_objective","currency","level","dynamic_text","dynamic_faction_ownership"
+  ],
+  "motion_categories": [
+    "water_flow","sea_wave","boat_idle","boat_route","bird_flock","flag_flutter","crowd_idle","waterfall","fog_secret","fire_light","street_light","vehicle_loop","foliage_wind"
+  ],
+  "pages": {
+    "01":{"name":"Baixo Sul","signature":["overview","intermunicipal_routes","coast","rivers","serra"]},
+    "02":{"name":"Ituberá","signature":["rio","mar","terreiro","feira","dique","pratigi"]},
+    "03":{"name":"Nilo Peçanha","signature":["culture","mangue","zambiapunga","quilombo","barragem"]},
+    "04":{"name":"Valença","signature":["urban_port","historic_center","ferry","bridge","ginásio"]},
+    "05":{"name":"Camamu","signature":["bay","mangue","fish_market","dojo","trails","waterfall"]},
+    "06":{"name":"Cairu","signature":["archipelago","maritime_routes","fort","lighthouse","tourism","submerged_secret"]},
+    "07":{"name":"Itacaré & Maraú","signature":["surf","cliffs","waterfalls","beaches","tourism","open_sea"]},
+    "08":{"name":"Interior Norte","signature":["cacao","BR","trucks","fuel_station","farms","serra"]},
+    "09":{"name":"Interior Sul","signature":["mangue","piacava","marisqueira","nishiuchi_colony","memory"]},
+    "10":{"name":"Salvador","signature":["metropolis","bay","pelourinho","arena","institutional","lapa"]},
+    "11":{"name":"Costa das Marés","signature":["ng_plus","tides","islands","mangroves","ruins","relics"],"status":"candidate"}
+  },
+  "qa_gates": [
+    "M1_canvas","M2_regionality","M3_landmark_hierarchy","M4_route_readability","M5_node_readability","M6_secret_language","M7_ui_consistency","M8_runtime_separability","M9_mobile_readability","M10_color_blindness","M11_canon","M12_rights","M13_engine_proof"
+  ],
+  "generation_rules": {
+    "default_batch_size": 10,
+    "individual_files": true,
+    "composite_is_reference_only": true,
+    "dynamic_text_in_engine": true,
+    "anti_board_drift": true,
+    "shipping_default": false
+  }
+}
