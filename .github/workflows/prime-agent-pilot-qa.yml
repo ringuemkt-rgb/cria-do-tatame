@@ -1,0 +1,48 @@
+name: Prime Agent Pilot QA
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - '.criaforge/executors/prime_agent_v1.json'
+      - 'data/production/prime_agent_pilot_v01.json'
+      - 'tools/agents/prime_agent_adapter.py'
+      - 'tests/agents/test_prime_agent_adapter.py'
+      - 'docs/engineering/PRIME_AGENT_PILOT_V1.md'
+      - '.github/workflows/prime-agent-pilot-qa.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Validate JSON contracts
+        run: |
+          python -m json.tool .criaforge/executors/prime_agent_v1.json > /dev/null
+          python -m json.tool data/production/prime_agent_pilot_v01.json > /dev/null
+      - name: Compile adapter
+        run: python -m py_compile tools/agents/prime_agent_adapter.py
+      - name: Run adapter policy tests
+        run: python -m unittest tests/agents/test_prime_agent_adapter.py
+      - name: Static safety assertions
+        run: |
+          python - <<'PY'
+          import json
+          executor = json.load(open('.criaforge/executors/prime_agent_v1.json', encoding='utf-8'))
+          pilot = json.load(open('data/production/prime_agent_pilot_v01.json', encoding='utf-8'))
+          assert executor['runtime_dependency'] is False
+          assert executor['promotion']['automatic_merge'] is False
+          assert executor['promotion']['automatic_release'] is False
+          assert executor['promotion']['l4_human_required'] is True
+          assert pilot['acceptance']['l4'] == 'PENDING_HUMAN'
+          assert pilot['phase_1']['max_runtime_files_changed'] == 1
+          assert pilot['phase_1']['canon_change_allowed'] is False
+          print({'ok': True, 'executor': executor['executor_id'], 'pilot': pilot['pilot_id']})
+          PY

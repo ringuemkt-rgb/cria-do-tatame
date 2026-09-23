@@ -1,0 +1,62 @@
+{
+  "schema_version": "1.0.0",
+  "pilot_id": "prime_agent_ruan_davi_v01",
+  "status": "DRAFT_PENDING_EXECUTION_AND_L4",
+  "executor_contract": ".criaforge/executors/prime_agent_v1.json",
+  "target": "vertical_slice_ruan_davi",
+  "base_ref": "main",
+  "base_sha": "d99780ffb42aff4f66e71a62f9e24f6f8f8d0a2e",
+  "objective": "Provar o Prime Agent como executor externo do CriaForge em uma tarefa real, pequena e reversivel do vertical slice Ruan x Davi, sem acesso a merge, release ou assets aprovados.",
+  "phase_1": {
+    "mode": "characterize_then_patch",
+    "task": "Auditar o fluxo Menu -> Terreiro -> combate Ruan x Davi -> resultado -> Cria Live -> save/reload; produzir testes de caracterizacao para qualquer falha encontrada e corrigir no maximo um defeito P0/P1 diretamente relacionado ao fluxo.",
+    "allowed_runtime_paths": [
+      "src/autoloads/CombatManager.gd",
+      "src/autoloads/MissionManager.gd",
+      "src/combat/TechniqueClashResolver.gd",
+      "src/autoloads/SaveManager.gd"
+    ],
+    "preferred_paths": [
+      "tests/",
+      "reports/",
+      "docs/qa/"
+    ],
+    "forbidden_paths": [
+      "project.godot",
+      "src/autoloads/AudioManager.gd",
+      "data/production/canon_contract_v4_1.json",
+      "data/production/supreme_build_contract_v01.json",
+      "assets/aprovados/",
+      ".github/workflows/"
+    ],
+    "max_runtime_files_changed": 1,
+    "canon_change_allowed": false,
+    "autoload_change_allowed": false,
+    "dependency_change_allowed": false
+  },
+  "required_validation": [
+    "npm run quality",
+    "godot --headless --editor --path . --quit",
+    "godot --headless --path . --script res://tests/runtime_smoke.gd"
+  ],
+  "acceptance": {
+    "branch_is_not_main": true,
+    "candidate_diff_is_reviewable": true,
+    "tests_added_for_bug_fix": true,
+    "no_secondary_runtime": true,
+    "no_duplicate_manager": true,
+    "no_automatic_submission_finish_introduced": true,
+    "save_roundtrip_preserved": true,
+    "all_available_required_validation_green": true,
+    "l4": "PENDING_HUMAN"
+  },
+  "stop_conditions": [
+    "canon_conflict",
+    "unsafe_biomechanics",
+    "credential_required",
+    "irreversible_action_required",
+    "mandatory_test_unavailable",
+    "scope_requires_more_than_one_runtime_file",
+    "policy_violation_detected"
+  ]
+}
