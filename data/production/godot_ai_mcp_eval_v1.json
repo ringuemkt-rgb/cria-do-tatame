@@ -1,0 +1,82 @@
+{
+  "$schema": "cria.godot_ai_mcp_eval.v1",
+  "version": "1.0.0",
+  "status": "EXPERIMENT_ONLY",
+  "shipping": false,
+  "runtime_dependency": false,
+  "main_engine_version_change_authorized": false,
+  "purpose": "Evaluate Godot AI MCP against CRIA DO TATAME on an isolated branch and a Godot 4.7 toolchain. No result may change the production engine version until every migration gate has explicit evidence.",
+  "baseline": {
+    "repository_branch": "main",
+    "engine_production_version": "4.3+",
+    "engine_minimum_audited": "4.2.2",
+    "mandatory_flow": ["main_menu", "terreiro", "combat", "result", "save", "career_week_advance", "return_to_terreiro"]
+  },
+  "candidate": {
+    "branch": "build/godot-ai-mcp-eval",
+    "engine_version": "4.7",
+    "godot_ai_version": "4.1.0",
+    "godot_ai_source": "hi-godot/godot-ai",
+    "godot_ai_release_tag": "v4.1.0",
+    "godot_ai_release_commit": "7968ada03044473372a8ab4beadd975c60b9d94a",
+    "godot_ai_archive": "godot-ai-v4-plugin.zip",
+    "godot_ai_archive_sha256": "535d8a7541871af8d991b07fe5031550dd6121a31b844400476b334a70612831",
+    "godot_ai_license": "MIT",
+    "godot_ai_v4_minimum_engine": "4.7",
+    "godot_ai_v3_2_5_minimum_engine": "4.5",
+    "plugin_is_local_experiment_dependency": true,
+    "plugin_may_be_required_by_shipping_runtime": false
+  },
+  "isolation": {
+    "do_not_modify_main_during_experiment": true,
+    "do_not_commit_provider_credentials": true,
+    "do_not_commit_local_mcp_client_config": true,
+    "do_not_make_new_gameplay_manager": true,
+    "do_not_change_combat_authority": true,
+    "do_not_change_save_schema_only_for_plugin": true,
+    "plugin_path": "addons/godot_ai",
+    "update_staging_path": "addons/.godot_ai_update",
+    "telemetry_opt_out_recommended_for_private_project_work": true,
+    "telemetry_opt_out_environment_variable": "GODOT_AI_DISABLE_TELEMETRY"
+  },
+  "evaluation_protocol": {
+    "baseline_first": true,
+    "candidate_uses_same_repository_commit_content_except_experiment_files": true,
+    "record_engine_version": true,
+    "record_godot_ai_version": true,
+    "record_commands_and_exit_codes": true,
+    "record_failure_logs": true,
+    "record_android_device_model_and_os_for_physical_gate": true,
+    "performance_comparison_required": true,
+    "rollback_is_branch_deletion_or_plugin_removal": true
+  },
+  "gates": [
+    {"id": "G47-01", "name": "npm_run_quality", "class": "automated", "status": "PENDING"},
+    {"id": "G47-02", "name": "godot_4_7_headless_import_and_parser", "class": "automated", "status": "PENDING"},
+    {"id": "G47-03", "name": "mandatory_flow_runtime_smoke", "class": "automated", "status": "PENDING"},
+    {"id": "G47-04", "name": "forty_mission_data_and_reference_regression", "class": "automated", "status": "PENDING"},
+    {"id": "G47-05", "name": "world_map_routes_nodes_and_travel_regression", "class": "automated", "status": "PENDING"},
+    {"id": "G47-06", "name": "save_load_roundtrip_and_migration_regression", "class": "automated", "status": "PENDING"},
+    {"id": "G47-07", "name": "ruan_davi_combat_determinism_regression", "class": "automated", "status": "PENDING"},
+    {"id": "G47-08", "name": "godot_ai_read_only_scene_and_resource_inspection", "class": "editor_mcp", "status": "PENDING"},
+    {"id": "G47-09", "name": "godot_ai_reversible_test_scene_edit", "class": "editor_mcp", "status": "PENDING"},
+    {"id": "G47-10", "name": "android_arm64_export", "class": "automated_or_local", "status": "PENDING"},
+    {"id": "G47-11", "name": "android_physical_install_touch_full_flow_save_restart", "class": "human_device", "status": "PENDING"},
+    {"id": "G47-12", "name": "windows_export_smoke", "class": "automated_or_local", "status": "PENDING"},
+    {"id": "G47-13", "name": "performance_fps_memory_temperature_battery_comparison", "class": "human_device", "status": "PENDING"},
+    {"id": "G47-14", "name": "plugin_removal_restores_clean_project", "class": "rollback", "status": "PENDING"}
+  ],
+  "decision_rule": {
+    "allowed_statuses": ["PENDING", "PASS", "FAIL", "BLOCKED"],
+    "adopt_engine_4_7_only_if_all_gates_pass": true,
+    "any_fail_blocks_main_migration": true,
+    "blocked_human_device_gate_blocks_release_claim": true,
+    "godot_ai_success_does_not_require_godot_ai_in_shipping": true,
+    "preferred_outcome_if_tooling_is_useful": "keep Godot AI as optional developer tooling, not runtime dependency"
+  },
+  "evidence": {
+    "report_path": "reports/godot_ai_eval/godot_4_7_evidence.json",
+    "human_device_report_path": "reports/godot_ai_eval/android_physical_evidence.md",
+    "current_state": "NOT_EXECUTED_IN_THIS_ENVIRONMENT"
+  }
+}
