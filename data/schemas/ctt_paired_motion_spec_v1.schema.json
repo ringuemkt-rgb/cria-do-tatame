@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://criadotatame.local/schemas/ctt_paired_motion_spec_v1.schema.json",
+  "title": "CTT Paired Motion Authoring Spec v1",
+  "type": "object",
+  "required": ["schema","technique_id","family","safety_class","fps","frame_budget","fighters","phases","contact_intents","sync_map_spec","provenance","shipping","qa","safety_policy"],
+  "properties": {
+    "schema": {"const":"ctt_paired_motion_spec_v1"},
+    "technique_id": {"type":"string","minLength":2},
+    "family": {"enum":["TAKEDOWNS","SWEEPS","GUARD_PASSES","ARM_LOCKS","CHOKES","LEG_ENTANGLEMENTS","ESCAPES"]},
+    "safety_class": {"enum":["STANDARD","HIGH_RISK_JOINT_LOCK","HIGH_RISK_CHOKE","HIGH_RISK_ESCAPE"]},
+    "fps": {"const":12},
+    "frame_budget": {"type":"object","required":["range","target","allocation_sum"],"properties":{"range":{"type":"array","items":{"type":"integer","minimum":6},"minItems":2,"maxItems":2},"target":{"type":"integer","minimum":6},"allocation_sum":{"type":"integer","minimum":6}}},
+    "fighters": {"type":"object","required":["attacker","defender"]},
+    "phases": {"type":"array","minItems":6,"maxItems":6,"items":{"type":"object","required":["name","frames","source_notes","contact_intent_ids","sync_events"],"properties":{"name":{"enum":["anticipation","entry","contact","stabilization","response","recovery"]},"frames":{"type":"integer","minimum":1},"source_notes":{"type":"array","items":{"type":"string"},"minItems":1},"contact_intent_ids":{"type":"array","items":{"type":"string"}},"sync_events":{"type":"array","items":{"type":"string"},"minItems":1}}}},
+    "contact_intents": {"type":"array","items":{"type":"object","required":["id","attacker_region","defender_region","kind","active_phases"],"properties":{"id":{"type":"string"},"attacker_region":{"type":"string"},"defender_region":{"type":"string"},"kind":{"enum":["control","pressure","post","base"]},"active_phases":{"type":"array","items":{"type":"string"}}}}},
+    "sync_map_spec": {"type":"object","required":["pivot_region","frame_align"],"properties":{"pivot_region":{"type":"string"},"frame_align":{"const":true}}},
+    "provenance": {"type":"object","required":["atlas_ref","citation_only","owned_capture_required"],"properties":{"atlas_ref":{"type":"string"},"citation_only":{"const":true},"owned_capture_required":{"const":true}}},
+    "shipping": {"type":"object","required":["eligible","gates"],"properties":{"eligible":{"const":false},"gates":{"type":"array","contains":{"const":"L4"}}}},
+    "qa": {"type":"object","required":["contact_max_frame_error","pivot_drift_px","teleport_threshold","angular_deg_target","thresholds_are_engineering_targets"]},
+    "safety_policy": {"type":"object","required":["dangerous_directional_escape_instruction","high_risk_finish_detail"],"properties":{"dangerous_directional_escape_instruction":{"const":false},"high_risk_finish_detail":{"enum":["STANDARD","ABSTRACTED"]}}}
+  },
+  "additionalProperties": false
+}
