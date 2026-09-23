@@ -1,0 +1,65 @@
+{
+  "schema_version": "1.0.0",
+  "contract_id": "cria_rota_101_v1",
+  "shipping": false,
+  "purpose": "playable_terrestrial_world_travel",
+  "authority": "WorldMapManager_pending_TravelPlan",
+  "simulation": {
+    "world_time_scale": 45.0,
+    "fallback_gameplay_duration_seconds": 60.0,
+    "initial_speed_kmh": 35.0,
+    "nominal_cruise_kmh": 85.0,
+    "max_speed_kmh": 110.0,
+    "acceleration_kmh_per_second": 28.0,
+    "brake_kmh_per_second": 45.0,
+    "coast_loss_kmh_per_second": 7.0,
+    "steer_units_per_second": 1.35,
+    "offroad_threshold": 0.92,
+    "hard_edge_threshold": 1.08,
+    "offroad_speed_multiplier": 0.72,
+    "offroad_condition_loss_per_second": 0.8,
+    "breakdown_condition_loss": 100.0,
+    "collision_progress_window": 0.018,
+    "safe_poi_max_speed_kmh": 28.0,
+    "clean_offroad_seconds_max": 1.0,
+    "base_energy_loss_success": 3.0,
+    "base_energy_loss_failure": 5.0
+  },
+  "hazard_generation": {
+    "count": 8,
+    "min_progress": 0.10,
+    "max_progress": 0.92,
+    "min_spacing": 0.075,
+    "lanes": [-0.62, 0.0, 0.62],
+    "types": [
+      {"id": "slow_cacao_truck", "weight": 3.0, "condition_damage": 8.0, "speed_after_kmh": 35.0, "clean_penalty": 14.0},
+      {"id": "road_hole", "weight": 3.0, "condition_damage": 6.0, "speed_after_kmh": 45.0, "clean_penalty": 10.0},
+      {"id": "fallen_branch", "weight": 2.0, "condition_damage": 10.0, "speed_after_kmh": 30.0, "clean_penalty": 18.0},
+      {"id": "roadworks", "weight": 2.0, "condition_damage": 5.0, "speed_after_kmh": 30.0, "clean_penalty": 8.0},
+      {"id": "safe_pull_off_point_of_interest", "weight": 1.5, "poi": true, "condition_damage": 0.0, "speed_after_kmh": 0.0, "clean_penalty": 0.0},
+      {"id": "fuel_stop", "weight": 1.0, "poi": true, "condition_damage": 0.0, "speed_after_kmh": 0.0, "clean_penalty": 0.0}
+    ]
+  },
+  "safety": {
+    "forbidden_hazard_types": ["pedestrian_target", "child_target", "cyclist_target"],
+    "speed_never_awards_score": true,
+    "collision_never_awards_score": true,
+    "clean_driving_is_primary_performance_signal": true
+  },
+  "outcome": {
+    "fresh_max_condition_loss": 2.0,
+    "steady_max_condition_loss": 10.0,
+    "tired_max_condition_loss": 25.0,
+    "hard_damage_condition_loss_threshold": 35.0,
+    "base_clean_score": 100.0,
+    "offroad_clean_penalty_per_second": 2.0,
+    "minimum_clean_score": 75.0
+  },
+  "accessibility": {
+    "auto_accelerate": true,
+    "lane_assist": true,
+    "reduced_camera_shake": true,
+    "high_contrast_hazards": true,
+    "large_touch_targets": true
+  }
+}
