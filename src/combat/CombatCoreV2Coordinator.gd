@@ -105,6 +105,11 @@ func is_active() -> bool:
 func card_available(technique_id: String) -> bool:
 	return is_active() and deck_runtime.contains_in_hand(technique_id)
 
+func ensure_playable_hand(valid_ids: Array) -> Dictionary:
+	if not is_active() or deck_runtime == null:
+		return {"rescued": false, "reason": "combat_v2_inactive", "hand": []}
+	return deck_runtime.ensure_playable(valid_ids)
+
 func consume_card(technique_id: String) -> Array:
 	if not deck_runtime.play_card(technique_id):
 		return deck_runtime.hand.duplicate()
