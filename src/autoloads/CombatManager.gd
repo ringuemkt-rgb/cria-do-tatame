@@ -244,7 +244,25 @@ func apply_player_action(action_id: String) -> Dictionary:
 func apply_opponent_action(action_id: String) -> Dictionary:
 	return apply_actor_action(opponent_id, action_id)
 
+func apply_opponent_action_with_defense(action_id: String, defense_input: String, input_frame: float = 0.0) -> Dictionary:
+	var context: Dictionary = {}
+	if defense_input != "":
+		var valid_response := false
+		for option_value in get_defense_options(opponent_id, action_id):
+			if typeof(option_value) == TYPE_DICTIONARY and str(option_value.get("id", "")) == defense_input:
+				valid_response = true
+				break
+		if valid_response:
+			context["defense_input"] = defense_input
+			context["input_frame"] = maxf(0.0, input_frame)
+		else:
+			context["defense_input_ignored"] = defense_input
+	return apply_actor_action_with_context(opponent_id, action_id, context)
+
 func apply_actor_action(actor_id: String, action_id: String) -> Dictionary:
+	return apply_actor_action_with_context(actor_id, action_id, {})
+
+func apply_actor_action_with_context(actor_id: String, action_id: String, input_context: Dictionary = {}) -> Dictionary:
 	if not is_running:
 		return {"success": false, "error": "combat_not_running", "action_id": action_id}
 	var defender_id := opponent_id if actor_id == player_id else player_id
@@ -258,9 +276,9 @@ func apply_actor_action(actor_id: String, action_id: String) -> Dictionary:
 			"defender_id": defender_id,
 			"message": "Tecnica nao encontrada no catalogo."
 		}
-	return execute_technique(actor_id, defender_id, technique)
+	return execute_technique(actor_id, defender_id, technique, input_context)
 
-func execute_technique(actor_id: String, defender_id: String, technique: Dictionary) -> Dictionary:
+func execute_technique(actor_id: String, defender_id: String, technique: Dictionary, input_context: Dictionary = {}) -> Dictionary:
 	if not is_running:
 		return {"success": false, "accepted": false, "error": "combat_not_running"}
 	if not fighters.has(actor_id) or not fighters.has(defender_id):
@@ -281,6 +299,8 @@ func execute_technique(actor_id: String, defender_id: String, technique: Diction
 	var actor: Dictionary = fighters.get(actor_id, {})
 	var defender: Dictionary = fighters.get(defender_id, {})
 	var card_context := _build_card_context(actor_id, defender_id, technique, actor, defender, actor_state_before)
+	for context_key in input_context.keys():
+		card_context[context_key] = input_context[context_key]
 	var resolver_result: Dictionary = technique_resolver.call(
 		"resolve_technique",
 		technique,
@@ -298,11 +318,23 @@ func execute_technique(actor_id: String, defender_id: String, technique: Diction
 	elif has_node("/root/DeckManager") and actor_id == player_id:
 		DeckManager.consume_used_card(str(card_context.get("attack_card", {}).get("id", "")), bool(resolver_result.get("success", false)))
 
+	var defense_commit: Dictionary = {}
+	var defense_input := str(input_context.get("defense_input", ""))
+	if defense_input != "":
+		defense_commit = _commit_defense_response(
+			defender_id,
+			defense_input,
+			str(technique.get("id", "")),
+			bool(resolver_result.get("denied", false))
+		)
+
 	last_result = resolver_result.duplicate(true)
 	last_result["actor_id"] = actor_id
 	last_result["defender_id"] = defender_id
 	last_result["state_from"] = player_state_before
 	last_result["actor_state_from"] = actor_state_before
+	if not defense_commit.is_empty():
+		last_result["defense"] = defense_commit.duplicate(true)
 	if _combat_v2_active():
 		combat_core_v2.append_action({
 			"technique_id": str(technique.get("id", "")),
@@ -343,6 +375,21 @@ func execute_technique(actor_id: String, defender_id: String, technique: Diction
 		_apply_state_transition(player_state_to)
 		_change_phase(_phase_from_string(str(technique.get("phase_to", "TRANSITION"))))
 		_register_score_event(actor_id, last_result, player_state_to)
+	elif bool(resolver_result.get("denied", false)) and bool(defense_commit.get("ok", false)):
+		var defense_state_to := str(defense_commit.get("player_state_to", player_state_before))
+		last_result["state_to"] = defense_state_to
+		last_result["countered"] = true
+		_apply_state_transition(defense_state_to)
+		_change_phase(_phase_from_string(str(defense_commit.get("phase_to", "TRANSITION"))))
+		var defense_score_result: Dictionary = {
+			"success": true,
+			"technique_id": str(defense_commit.get("technique_id", "")),
+			"score_event": str(defense_commit.get("score_event", "")),
+			"stabilization_seconds": float(defense_commit.get("stabilization_seconds", 0.0))
+		}
+		_register_score_event(defender_id, defense_score_result, defense_state_to)
+		if not defense_score_result.get("scoring", {}).is_empty():
+			last_result["defense"]["scoring"] = defense_score_result.get("scoring", {}).duplicate(true)
 	else:
 		_adjust(defender_id, "focus", 2.0)
 
@@ -353,6 +400,86 @@ func execute_technique(actor_id: String, defender_id: String, technique: Diction
 	_emit_resources()
 	_check_end(actor_id, defender_id, technique, last_result)
 	return last_result
+
+func get_defense_options(attacker_id: String, action_id: String) -> Array:
+	if not is_running or not fighters.has(attacker_id):
+		return []
+	var defender_id := opponent_id if attacker_id == player_id else player_id
+	var attack: Dictionary = DataRegistry.get_technique(action_id)
+	if attack.is_empty():
+		return []
+	var contract: Dictionary = technique_resolver.call("get_defense_contract", attack)
+	var response_id := str(contract.get("defense_response", ""))
+	if response_id == "":
+		return []
+	var options: Array = []
+	for technique_value in get_available_techniques(defender_id):
+		if typeof(technique_value) != TYPE_DICTIONARY:
+			continue
+		var response: Dictionary = technique_value
+		if str(response.get("id", "")) != response_id or not bool(response.get("affordable", false)):
+			continue
+		options.append({
+			"id": response_id,
+			"name": str(response.get("nome", response.get("name", response_id))),
+			"defender_id": defender_id,
+			"against": action_id,
+			"defense_window": float(contract.get("defense_window", 0.0)),
+			"commit_frame": int(contract.get("commit_frame", 0))
+		})
+	return options
+
+func _commit_defense_response(defender_id: String, defense_input: String, attack_id: String, denied_attack: bool) -> Dictionary:
+	var response: Dictionary = DataRegistry.get_technique(defense_input)
+	if response.is_empty() or not fighters.has(defender_id):
+		return {"ok": false, "reason": "defense_response_missing", "technique_id": defense_input}
+	var legal := false
+	for option_value in get_available_techniques(defender_id):
+		if typeof(option_value) == TYPE_DICTIONARY and str(option_value.get("id", "")) == defense_input and bool(option_value.get("affordable", false)):
+			legal = true
+			break
+	if not legal:
+		return {"ok": false, "reason": "defense_response_unavailable", "technique_id": defense_input}
+
+	var runtime_response: Dictionary = technique_resolver.call("get_runtime_technique", response)
+	var cost: Dictionary = runtime_response.get("cost", runtime_response.get("custo", {}))
+	_adjust(defender_id, "gas", -float(cost.get("gas", runtime_response.get("gas_cost", 0.0))))
+	_adjust(defender_id, "focus", -float(cost.get("focus", cost.get("foco", runtime_response.get("focus_cost", 0.0)))))
+	_adjust(defender_id, "moral", -float(cost.get("moral", runtime_response.get("moral_cost", 0.0))))
+
+	if defender_id == player_id and _combat_v2_active() and combat_core_v2.card_available(defense_input):
+		var next_hand: Array = combat_core_v2.consume_card(defense_input)
+		SignalBus.combat_v2_hand_changed.emit(next_hand)
+	elif defender_id == player_id and has_node("/root/DeckManager"):
+		DeckManager.consume_used_card(defense_input, denied_attack)
+
+	var defender_state_to := str(runtime_response.get("exit_state", runtime_response.get("estado_saida", get_actor_state_name(defender_id))))
+	var player_state_to := _state_to_player_perspective(defender_id, defender_state_to)
+	var committed := {
+		"ok": true,
+		"technique_id": defense_input,
+		"attack_id": attack_id,
+		"defender_id": defender_id,
+		"denied_attack": denied_attack,
+		"defender_state_to": defender_state_to,
+		"player_state_to": player_state_to,
+		"phase_to": str(runtime_response.get("phase_to", "TRANSITION")),
+		"score_event": str(runtime_response.get("score_event", "")),
+		"stabilization_seconds": float(runtime_response.get("stabilization_seconds", 0.0))
+	}
+	if _combat_v2_active():
+		combat_core_v2.append_action({
+			"technique_id": defense_input,
+			"actor_id": defender_id,
+			"role": "defense",
+			"against": attack_id,
+			"success": denied_attack,
+			"denied_attack": denied_attack,
+			"state_to": player_state_to
+		})
+	if SignalBus.has_signal("combat_defense_resolved"):
+		SignalBus.combat_defense_resolved.emit(committed.duplicate(true))
+	return committed
 
 func _build_card_context(
 	actor_id: String,
