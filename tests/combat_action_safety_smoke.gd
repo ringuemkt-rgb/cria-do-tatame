@@ -24,6 +24,7 @@ func _run() -> void:
 	_test_resolver_rejections()
 	_test_plan_atomicity()
 	_test_grappling_scoring_authority()
+	_test_interactive_defense_contract()
 	_test_runtime_guards()
 	_test_seeded_runtime()
 	await _test_scene_input_lock()
@@ -148,6 +149,26 @@ func _on_started(_id, _actor) -> void:
 func _on_resolved(_result) -> void:
 	resolved_events += 1
 
+func _test_interactive_defense_contract() -> void:
+	_prepare()
+	var options: Array = cm.get_defense_options(cm.opponent_id, "baiana")
+	_check(options.size() == 1, "Davi takedown exposes one legal player defense")
+	_check(str(options[0].get("id", "")) == "sprawl", "baiana defense contract resolves to sprawl")
+	var gas_before := float(cm.fighters[cm.player_id].get("gas", 0.0))
+	var focus_before := float(cm.fighters[cm.player_id].get("focus", 0.0))
+	var result: Dictionary = cm.apply_opponent_action_with_defense("baiana", "sprawl", 0.0)
+	_check(bool(result.get("denied", false)), "timed sprawl denies committed takedown")
+	_check(bool(result.get("countered", false)), "successful defense becomes positional counter")
+	_check(cm.get_current_state_name() == "PLAYER_TOP_CLINCH", "sprawl counter transitions player to top clinch")
+	_check(float(cm.fighters[cm.player_id].get("gas", 0.0)) < gas_before, "committed defense spends gas")
+	_check(float(cm.fighters[cm.player_id].get("focus", 0.0)) < focus_before, "committed defense spends focus")
+	var defense_logged := false
+	for event_value in cm.combat_core_v2.action_log:
+		if typeof(event_value) == TYPE_DICTIONARY and str(event_value.get("role", "")) == "defense" and str(event_value.get("technique_id", "")) == "sprawl":
+			defense_logged = true
+			break
+	_check(defense_logged, "defense commitment is persisted in combat action log")
+
 func _test_runtime_guards() -> void:
 	_prepare()
 	var bus := root.get_node("SignalBus")
@@ -209,6 +230,7 @@ func _test_scene_input_lock() -> void:
 	root.add_child(arena)
 	await process_frame
 	arena.ai_turn_delay = 0.05
+	arena.defense_window_seconds = 0.05
 	arena._execute_player_action("baiana")
 	# A second card event can arrive while the first coroutine awaits Davi.
 	arena._on_v2_card_selected("grip_de_ferro")
