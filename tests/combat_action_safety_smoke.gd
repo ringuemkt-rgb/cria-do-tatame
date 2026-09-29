@@ -23,6 +23,7 @@ func _run() -> void:
 	cm = root.get_node("CombatManager")
 	_test_resolver_rejections()
 	_test_plan_atomicity()
+	_test_campaign_golden_chain_preset()
 	_test_grappling_scoring_authority()
 	_test_interactive_defense_contract()
 	_test_runtime_guards()
@@ -62,6 +63,42 @@ func _test_plan_atomicity() -> void:
 	_check(coordinator.snapshot() == before, "invalid ruleset cannot clear live hand or mix plans")
 	coordinator.build_pre_fight_plan("other", SELECTION, SELECTION.slice(0, 2), {}, 3, "ibjjf", true, "other")
 	_check(coordinator.snapshot() == before, "invalid deck cannot mutate plan")
+
+func _test_campaign_golden_chain_preset() -> void:
+	var deck := root.get_node("DeckManager")
+	var preset: Array = deck.get_v2_preset("adaptativo")
+	var required := ["baiana", "sprawl", "raspagem_tesoura", "corte_joelho", "montada_pesada", "chave_braco"]
+	_check(preset.size() >= 6 and preset.size() <= 8, "campaign adaptive preset has valid V2 size")
+	for technique_id in required:
+		_check(preset.has(technique_id), "campaign preset includes golden-chain technique %s" % technique_id)
+	var unlocked: Array = deck.get_unlocked_technique_ids()
+	for technique_id in required:
+		_check(unlocked.has(technique_id), "golden-chain technique is unlocked for Ruan: %s" % technique_id)
+
+	cm.is_running = false
+	cm.clear_combat_v2_plan()
+	var plan: Dictionary = cm.combat_core_v2.build_pre_fight_plan(
+		"davi_relampago",
+		unlocked,
+		preset,
+		{},
+		4242,
+		"ibjjf",
+		true,
+		"arena_do_dique"
+	)
+	_check(bool(plan.get("ok", false)), "real campaign adaptive preset builds a valid pre-fight plan")
+	var start: Dictionary = cm.start_combat("arena_do_dique", "ruan_macacao", "davi_relampago")
+	_check(bool(start.get("ok", false)), "real campaign golden-chain plan starts")
+	if bool(start.get("ok", false)):
+		cm.state_machine.call("forcar_estado", cm.state_machine.call("estado_por_nome", "PLAYER_SUBMISSION_ATTACK"))
+		var available_ids: Array = []
+		for row_value in cm.get_available_techniques():
+			if typeof(row_value) == TYPE_DICTIONARY:
+				available_ids.append(str(row_value.get("id", "")))
+		_check(not preset.has("encerramento_tecnico"), "technical finish is not wasted as a deck slot")
+		_check(available_ids.has("encerramento_tecnico"), "technical finish appears contextually after submission control")
+	cm.is_running = false
 
 func _test_grappling_scoring_authority() -> void:
 	var scoring = load("res://src/combat/ScoringSystem.gd").new()
@@ -153,6 +190,8 @@ func _test_interactive_defense_contract() -> void:
 	_prepare()
 	var options: Array = cm.get_defense_options(cm.opponent_id, "baiana")
 	_check(options.size() == 1, "Davi takedown exposes one legal player defense")
+	if options.is_empty():
+		return
 	_check(str(options[0].get("id", "")) == "sprawl", "baiana defense contract resolves to sprawl")
 	var gas_before := float(cm.fighters[cm.player_id].get("gas", 0.0))
 	var focus_before := float(cm.fighters[cm.player_id].get("focus", 0.0))
