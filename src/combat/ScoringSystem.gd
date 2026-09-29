@@ -102,8 +102,9 @@ func tick_stabilization(delta_sec: float, current_state: String) -> Array:
 			resolved.append(cancelled)
 			pending_events.remove_at(index)
 			continue
-		item["remaining"] = maxf(0.0, float(item.get("remaining", 0.0)) - safe_delta)
-		if float(item["remaining"]) <= 0.0:
+		var remaining := maxf(0.0, float(item.get("remaining", 0.0)) - safe_delta)
+		item["remaining"] = remaining
+		if remaining <= 0.0001 or is_zero_approx(remaining):
 			var awarded := item.duplicate(true)
 			awarded["awarded"] = true
 			awarded["score"] = apply_event(str(item.get("side", "")), str(item.get("event_id", "")))
