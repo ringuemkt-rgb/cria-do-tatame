@@ -339,11 +339,22 @@ func execute_technique(actor_id: String, defender_id: String, technique: Diction
 		combat_core_v2.append_action({
 			"technique_id": str(technique.get("id", "")),
 			"actor_id": actor_id,
+			"role": "attack",
 			"success": bool(resolver_result.get("success", false)),
 			"denied": bool(resolver_result.get("denied", false)),
 			"state_from": player_state_before,
 			"state_to": str(resolver_result.get("state_to", player_state_before))
 		})
+		if bool(defense_commit.get("ok", false)):
+			combat_core_v2.append_action({
+				"technique_id": str(defense_commit.get("technique_id", "")),
+				"actor_id": defender_id,
+				"role": "defense",
+				"against": str(technique.get("id", "")),
+				"success": bool(defense_commit.get("denied_attack", false)),
+				"denied_attack": bool(defense_commit.get("denied_attack", false)),
+				"state_to": str(defense_commit.get("player_state_to", player_state_before))
+			})
 		if actor_id == opponent_id:
 			var observed: Dictionary = combat_core_v2.observe_technique(str(technique.get("id", "")))
 			if bool(observed.get("counter_suggestion_unlocked", false)):
@@ -467,16 +478,6 @@ func _commit_defense_response(defender_id: String, defense_input: String, attack
 		"score_event": str(runtime_response.get("score_event", "")),
 		"stabilization_seconds": float(runtime_response.get("stabilization_seconds", 0.0))
 	}
-	if _combat_v2_active():
-		combat_core_v2.append_action({
-			"technique_id": defense_input,
-			"actor_id": defender_id,
-			"role": "defense",
-			"against": attack_id,
-			"success": denied_attack,
-			"denied_attack": denied_attack,
-			"state_to": player_state_to
-		})
 	if SignalBus.has_signal("combat_defense_resolved"):
 		SignalBus.combat_defense_resolved.emit(committed.duplicate(true))
 	return committed
