@@ -27,6 +27,21 @@ func resolver_tecnica(technique_id: String, actor: Dictionary, defender: Diction
 		return _erro(technique_id, "tecnica_nao_encontrada")
 	return resolve_technique(technique, actor, defender, _contexto_com_estado(state_machine, context))
 
+func get_runtime_technique(technique: Dictionary) -> Dictionary:
+	_ensure_overlay()
+	return _merge_overlay(technique)
+
+func get_defense_contract(technique: Dictionary) -> Dictionary:
+	var merged := get_runtime_technique(technique)
+	var response := SliceStateMapperScript.canonical_technique_id(str(merged.get("defense_response", "")))
+	return {
+		"technique_id": str(merged.get("id", "")),
+		"defense_response": response,
+		"defense_window": float(merged.get("defense_window", 0.0)),
+		"commit_frame": int(merged.get("commit_frame", 0)),
+		"state_to_defended": _mapper.to_runtime(str(merged.get("state_to_defended", "")))
+	}
+
 func resolve_technique(technique: Dictionary, actor: Dictionary, defender: Dictionary, context: Dictionary = {}) -> Dictionary:
 	var rejection := validate_attempt(technique, actor, context)
 	if not rejection.is_empty():
