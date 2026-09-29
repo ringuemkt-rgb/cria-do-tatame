@@ -105,7 +105,11 @@ func start_combat(new_arena_id: String, new_player_id: String, new_opponent_id: 
 		combat_v2_timer_remaining = float(begin_v2.get("timer_sec", 0))
 		combat_v2_overtime = false
 		combat_v2_timer_expired_once = false
-		SignalBus.combat_v2_hand_changed.emit(begin_v2.get("hand", []).duplicate())
+		var opening_hand: Array = begin_v2.get("hand", []).duplicate()
+		var opening_rescue: Dictionary = _ensure_v2_playable_hand()
+		if bool(opening_rescue.get("rescued", false)):
+			opening_hand = opening_rescue.get("hand", opening_hand).duplicate()
+		SignalBus.combat_v2_hand_changed.emit(opening_hand)
 	else:
 		if has_node("/root/DeckManager"):
 			DeckManager.start_combat_hand()
@@ -160,6 +164,49 @@ func _state_to_player_perspective(actor_id: String, actor_state_name: String) ->
 	if actor_id == player_id:
 		return actor_state_name
 	return _mirror_state(actor_state_name)
+
+func _v2_legal_candidates_for_player_state() -> Array:
+	if not is_running or not _combat_v2_active():
+		return []
+	var actor: Dictionary = fighters.get(player_id, {})
+	var actor_state := get_actor_state_name(player_id)
+	var candidates: Array = []
+	for technique_value in DataRegistry.techniques.values():
+		if typeof(technique_value) != TYPE_DICTIONARY:
+			continue
+		var technique: Dictionary = technique_value
+		var technique_id := str(technique.get("id", ""))
+		if technique_id == "" or candidates.has(technique_id):
+			continue
+		var entry_state := str(technique.get("entry_state", technique.get("estado_entrada", "")))
+		if entry_state != "" and entry_state != actor_state:
+			continue
+		var owner := str(technique.get("dono", technique.get("owner", "qualquer")))
+		if owner != "" and owner != "qualquer" and owner != player_id:
+			continue
+		if _is_contextual_action(player_id, technique_id):
+			return [technique_id]
+		var cost: Dictionary = technique.get("cost", technique.get("custo", {}))
+		var affordable := (
+			float(actor.get("gas", 0.0)) >= float(cost.get("gas", technique.get("gas_cost", 0.0)))
+			and float(actor.get("focus", 0.0)) >= float(cost.get("focus", cost.get("foco", technique.get("focus_cost", 0.0))))
+			and float(actor.get("moral", 0.0)) >= float(cost.get("moral", technique.get("moral_cost", 0.0)))
+		)
+		if affordable:
+			candidates.append(technique_id)
+	return candidates
+
+func _ensure_v2_playable_hand() -> Dictionary:
+	if not is_running or not _combat_v2_active():
+		return {"rescued": false}
+	var candidates: Array = _v2_legal_candidates_for_player_state()
+	for technique_id in candidates:
+		if _is_contextual_action(player_id, str(technique_id)):
+			return {"rescued": false, "reason": "contextual_action_available", "hand": combat_core_v2.deck_runtime.hand.duplicate()}
+	var result: Dictionary = combat_core_v2.ensure_playable_hand(candidates)
+	if bool(result.get("rescued", false)):
+		SignalBus.combat_v2_hand_changed.emit(result.get("hand", []).duplicate())
+	return result
 
 func get_available_techniques(actor_id: String = "") -> Array:
 	if not is_running:
@@ -413,6 +460,13 @@ func execute_technique(actor_id: String, defender_id: String, technique: Diction
 			last_result["defense"]["scoring"] = defense_score_result.get("scoring", {}).duplicate(true)
 	else:
 		_adjust(defender_id, "focus", 2.0)
+
+	var hand_rescue: Dictionary = _ensure_v2_playable_hand()
+	if bool(hand_rescue.get("rescued", false)):
+		last_result["hand_rescue"] = {
+			"technique_id": str(hand_rescue.get("technique_id", "")),
+			"swapped_out": str(hand_rescue.get("swapped_out", ""))
+		}
 
 	last_result["phase"] = CombatPhase.keys()[phase]
 	last_result["combat_state"] = get_current_state_name()
