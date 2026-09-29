@@ -24,6 +24,7 @@ func _run() -> void:
 	_test_resolver_rejections()
 	_test_plan_atomicity()
 	_test_campaign_golden_chain_preset()
+	_test_full_golden_chain_runtime()
 	_test_grappling_scoring_authority()
 	_test_interactive_defense_contract()
 	_test_runtime_guards()
@@ -115,6 +116,79 @@ func _test_campaign_golden_chain_preset() -> void:
 		_check(not preset.has("encerramento_tecnico"), "technical finish is not wasted as a deck slot")
 		_check(available_ids.has("encerramento_tecnico"), "technical finish appears contextually after submission control")
 	cm.is_running = false
+
+func _execute_player_until_success(technique_id: String, max_attempts: int = 24) -> Dictionary:
+	var registry := root.get_node("DataRegistry")
+	var technique: Dictionary = registry.get_technique(technique_id)
+	var last: Dictionary = {}
+	for _attempt in range(max_attempts):
+		if not cm.is_running:
+			break
+		cm.fighters[cm.player_id]["gas"] = 100.0
+		cm.fighters[cm.player_id]["focus"] = 100.0
+		cm.fighters[cm.player_id]["moral"] = 100.0
+		if technique_id != "encerramento_tecnico":
+			cm.combat_core_v2.ensure_playable_hand([technique_id])
+		last = cm.execute_technique(cm.player_id, cm.opponent_id, technique)
+		if bool(last.get("success", false)):
+			return last
+	return last
+
+func _test_full_golden_chain_runtime() -> void:
+	var deck := root.get_node("DeckManager")
+	var preset: Array = deck.get_v2_preset("adaptativo")
+	var unlocked: Array = deck.get_unlocked_technique_ids()
+	cm.is_running = false
+	cm.clear_combat_v2_plan()
+	var plan: Dictionary = cm.combat_core_v2.build_pre_fight_plan(
+		"davi_relampago",
+		unlocked,
+		preset,
+		{},
+		1337,
+		"ibjjf",
+		true,
+		"arena_do_dique"
+	)
+	_check(bool(plan.get("ok", false)), "full golden-chain test plan builds")
+	var start: Dictionary = cm.start_combat("arena_do_dique", "ruan_macacao", "davi_relampago")
+	_check(bool(start.get("ok", false)), "full golden-chain runtime starts")
+	if not bool(start.get("ok", false)):
+		return
+
+	var takedown: Dictionary = _execute_player_until_success("baiana")
+	_check(bool(takedown.get("success", false)), "golden chain: takedown succeeds")
+	_check(cm.get_current_state_name() == "PLAYER_TOP_GUARD", "golden chain: takedown reaches top guard")
+	cm.tick_combat_timer(3.0)
+	_check(int(cm.scoring_system.get_score().get("player", 0)) == 2, "golden chain: stabilized takedown scores 2")
+
+	var passing: Dictionary = _execute_player_until_success("corte_joelho")
+	_check(bool(passing.get("success", false)), "golden chain: knee cut succeeds")
+	_check(cm.get_current_state_name() == "PLAYER_TOP_SIDE", "golden chain: pass reaches side control")
+	cm.tick_combat_timer(3.0)
+	_check(int(cm.scoring_system.get_score().get("player", 0)) == 5, "golden chain: stabilized pass brings score to 5")
+
+	var mount: Dictionary = _execute_player_until_success("montada_pesada")
+	_check(bool(mount.get("success", false)), "golden chain: mount transition succeeds")
+	_check(cm.get_current_state_name() == "PLAYER_TOP_MOUNT", "golden chain: control reaches mount")
+	cm.tick_combat_timer(3.0)
+	_check(int(cm.scoring_system.get_score().get("player", 0)) == 9, "golden chain: stabilized mount brings score to 9")
+
+	var submission_entry: Dictionary = _execute_player_until_success("chave_braco")
+	_check(bool(submission_entry.get("success", false)), "golden chain: armbar entry succeeds")
+	_check(cm.get_current_state_name() == "PLAYER_SUBMISSION_ATTACK", "golden chain: armbar enters submission control")
+	var finisher_available := false
+	for row_value in cm.get_available_techniques():
+		if typeof(row_value) == TYPE_DICTIONARY and str(row_value.get("id", "")) == "encerramento_tecnico":
+			finisher_available = true
+			break
+	_check(finisher_available, "golden chain: contextual finish is offered")
+
+	var finish_attempt: Dictionary = _execute_player_until_success("encerramento_tecnico")
+	_check(bool(finish_attempt.get("success", false)), "golden chain: technical finish succeeds")
+	_check(not cm.is_running, "golden chain: successful submission ends combat")
+	_check(str(cm.last_result.get("winner", "")) == cm.player_id, "golden chain: Ruan is recorded as winner")
+	_check(str(cm.last_result.get("method", "")) == "encerramento_tecnico", "golden chain: finish method is submission closure")
 
 func _test_grappling_scoring_authority() -> void:
 	var scoring = load("res://src/combat/ScoringSystem.gd").new()
