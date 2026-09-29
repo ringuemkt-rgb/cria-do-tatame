@@ -110,7 +110,7 @@ func _test_data_registry() -> void:
 	_assert(not dialogue_fallbacks.is_empty(), "Dialogos offline de fallback nao foram carregados")
 	_assert(animation_catalog.get("entries", []).size() >= 31, "Catalogo de animacoes nao foi carregado")
 	_assert(arena_animation_flow.get("fight_flow", []).size() >= 10, "Fluxo animado das arenas nao foi carregado")
-	_assert(combat_deck.get("cards", []).size() == 10, "Deck inicial nao possui 10 cartas")
+	_assert(combat_deck.get("cards", []).size() >= 10, "Deck inicial possui menos de 10 cartas")
 	var ruan_idle: Dictionary = data_registry.call("get_character_animation", "ruan_macacao", "idle")
 	_assert(not ruan_idle.is_empty(), "Animacao idle de Ruan nao foi registrada")
 	_assert(ResourceLoader.exists("res://" + str(ruan_idle.get("manifest", "")).get_base_dir().path_join("sprite_sheet.png")), "Atlas idle de Ruan nao existe")

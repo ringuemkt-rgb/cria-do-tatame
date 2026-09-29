@@ -6,6 +6,9 @@ var card_buttons: Array[Button] = []
 var current_state := "PLAYER_STANDING_NEUTRAL"
 var v2_mode := false
 var v2_hand: Array = []
+var defense_mode := false
+var defense_options: Array = []
+var _actions_enabled := true
 
 func _ready() -> void:
 	card_buttons.clear()
@@ -25,6 +28,7 @@ func _ready() -> void:
 		SignalBus.combat_v2_hand_changed.connect(_on_v2_hand_changed)
 	if not SignalBus.technique_clash_resolved.is_connected(_on_clash):
 		SignalBus.technique_clash_resolved.connect(_on_clash)
+	SignalBus.resources_changed.connect(_on_resources_changed)
 	_on_hand_changed(DeckManager.get_hand(), DeckManager.selected_card_id)
 
 func _on_hand_changed(hand: Array, selected_card_id: String) -> void:
@@ -52,10 +56,14 @@ func _on_hand_changed(hand: Array, selected_card_id: String) -> void:
 func _on_card_pressed(index: int) -> void:
 	if index < 0 or index >= card_buttons.size():
 		return
+	if not _actions_enabled or card_buttons[index].disabled:
+		return
 	var card_id := str(card_buttons[index].get_meta("card_id", ""))
 	if card_id == "":
 		return
-	if v2_mode:
+	if defense_mode:
+		SignalBus.combat_v2_defense_selected.emit(card_id)
+	elif v2_mode:
 		SignalBus.combat_v2_card_selected.emit(card_id)
 	else:
 		DeckManager.select_card(card_id)
@@ -73,6 +81,8 @@ func _unhandled_input(event: InputEvent) -> void:
 
 func _on_state_changed(_old_state, new_state) -> void:
 	current_state = str(new_state)
+	if defense_mode:
+		return
 	if v2_mode:
 		_on_v2_hand_changed(v2_hand)
 	else:
@@ -95,9 +105,11 @@ func _is_compatible(card: Dictionary) -> bool:
 func _on_v2_hand_changed(hand: Array) -> void:
 	v2_mode = true
 	v2_hand = hand.duplicate()
+	if defense_mode:
+		return
 	var available_ids: Dictionary = {}
 	for row_value in CombatManager.get_available_techniques():
-		if typeof(row_value) == TYPE_DICTIONARY:
+		if typeof(row_value) == TYPE_DICTIONARY and bool(row_value.get("affordable", false)):
 			available_ids[str(row_value.get("id", ""))] = true
 	for index in range(card_buttons.size()):
 		var button: Button = card_buttons[index]
@@ -110,5 +122,60 @@ func _on_v2_hand_changed(hand: Array) -> void:
 		var info: Dictionary = DataRegistry.get_technique(technique_id)
 		button.text = str(info.get("nome", info.get("name", technique_id))).replace("_", " ")
 		button.set_meta("card_id", technique_id)
-		button.disabled = not available_ids.has(technique_id)
+		button.disabled = not _actions_enabled or not CombatManager.is_running or not available_ids.has(technique_id)
 		button.modulate = Color.WHITE
+
+func open_defense_window(options: Array, seconds: float) -> void:
+	defense_mode = true
+	defense_options = options.duplicate(true)
+	$Panel/Layout/Header/Title.text = "REACAO • DEFENDA AGORA"
+	$Panel/Layout/Header/Clash.text = "JANELA %.1fs" % maxf(0.0, seconds)
+	for index in range(card_buttons.size()):
+		var button: Button = card_buttons[index]
+		if index >= defense_options.size():
+			button.text = "—"
+			button.disabled = true
+			button.set_meta("card_id", "")
+			continue
+		var option: Dictionary = defense_options[index]
+		var defense_id := str(option.get("id", ""))
+		button.text = "DEFESA\n%s" % str(option.get("name", defense_id)).replace("_", " ")
+		button.set_meta("card_id", defense_id)
+		button.disabled = defense_id == ""
+		button.modulate = Color.WHITE
+
+func set_defense_window_remaining(seconds: float) -> void:
+	if defense_mode:
+		$Panel/Layout/Header/Clash.text = "JANELA %.1fs" % maxf(0.0, seconds)
+
+func close_defense_window() -> void:
+	if not defense_mode:
+		return
+	defense_mode = false
+	defense_options.clear()
+	$Panel/Layout/Header/Title.text = "MENTE NO TATAME • MÃO ATUAL"
+	$Panel/Layout/Header/Clash.text = "AGUARDANDO DISPUTA"
+	if v2_mode:
+		_on_v2_hand_changed(v2_hand)
+	else:
+		_on_hand_changed(DeckManager.get_hand(), DeckManager.selected_card_id)
+
+func set_actions_enabled(enabled: bool) -> void:
+	_actions_enabled = enabled
+	if defense_mode:
+		if not enabled:
+			return
+		close_defense_window()
+	if v2_mode:
+		_on_v2_hand_changed(v2_hand)
+	elif not enabled:
+		for button in card_buttons:
+			button.disabled = true
+	else:
+		_on_hand_changed(DeckManager.get_hand(), DeckManager.selected_card_id)
+
+func _on_resources_changed(fighter_id, _resources) -> void:
+	if defense_mode:
+		return
+	if v2_mode and str(fighter_id) == CombatManager.player_id:
+		_on_v2_hand_changed(v2_hand)

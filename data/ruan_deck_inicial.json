@@ -2,7 +2,11 @@
   "schema_version": "1.0.0",
   "owner_id": "ruan_macacao",
   "belt": "branca",
-  "limits": {"active": 5, "passive": 3, "hand": 3},
+  "limits": {
+    "active": 5,
+    "passive": 3,
+    "hand": 3
+  },
   "cards": [
     {
       "id": "card_grip_de_ferro_01",
@@ -12,11 +16,17 @@
       "technique_id": "grip_de_ferro",
       "level": 1,
       "base_power": 10,
-      "activation_cost": {"focus": 1},
+      "activation_cost": {
+        "focus": 1
+      },
       "passive_effect": {},
-      "clash_effect": {"grip_pressure_bonus": 0.08},
+      "clash_effect": {
+        "grip_pressure_bonus": 0.08
+      },
       "response_to_families": [],
-      "valid_states": ["PLAYER_STANDING_NEUTRAL"],
+      "valid_states": [
+        "PLAYER_STANDING_NEUTRAL"
+      ],
       "xp": 0,
       "xp_to_next": 100,
       "unlocked": true
@@ -29,11 +39,18 @@
       "technique_id": "baiana",
       "level": 1,
       "base_power": 12,
-      "activation_cost": {"focus": 2, "gas": 1},
+      "activation_cost": {
+        "focus": 2,
+        "gas": 1
+      },
       "passive_effect": {},
-      "clash_effect": {"takedown_entry_bonus": 0.08},
+      "clash_effect": {
+        "takedown_entry_bonus": 0.08
+      },
       "response_to_families": [],
-      "valid_states": ["PLAYER_STANDING_NEUTRAL"],
+      "valid_states": [
+        "PLAYER_STANDING_NEUTRAL"
+      ],
       "xp": 0,
       "xp_to_next": 100,
       "unlocked": true
@@ -46,11 +63,19 @@
       "technique_id": "sprawl",
       "level": 2,
       "base_power": 11,
-      "activation_cost": {"focus": 1},
+      "activation_cost": {
+        "focus": 1
+      },
       "passive_effect": {},
-      "clash_effect": {"defense_efficiency_bonus": 0.12},
-      "response_to_families": ["queda"],
-      "valid_states": ["PLAYER_STANDING_NEUTRAL"],
+      "clash_effect": {
+        "defense_efficiency_bonus": 0.12
+      },
+      "response_to_families": [
+        "queda"
+      ],
+      "valid_states": [
+        "PLAYER_STANDING_NEUTRAL"
+      ],
       "xp": 15,
       "xp_to_next": 180,
       "unlocked": true
@@ -63,11 +88,17 @@
       "technique_id": "raspagem_tesoura",
       "level": 1,
       "base_power": 11,
-      "activation_cost": {"focus": 2},
+      "activation_cost": {
+        "focus": 2
+      },
       "passive_effect": {},
-      "clash_effect": {"off_balance_bonus": 0.08},
+      "clash_effect": {
+        "off_balance_bonus": 0.08
+      },
       "response_to_families": [],
-      "valid_states": ["PLAYER_BOTTOM_GUARD"],
+      "valid_states": [
+        "PLAYER_BOTTOM_GUARD"
+      ],
       "xp": 0,
       "xp_to_next": 100,
       "unlocked": true
@@ -80,11 +111,17 @@
       "technique_id": "cem_quilos",
       "level": 1,
       "base_power": 12,
-      "activation_cost": {"gas": 2},
+      "activation_cost": {
+        "gas": 2
+      },
       "passive_effect": {},
-      "clash_effect": {"stabilization_bonus": 0.08},
+      "clash_effect": {
+        "stabilization_bonus": 0.08
+      },
       "response_to_families": [],
-      "valid_states": ["PLAYER_TOP_SIDE"],
+      "valid_states": [
+        "PLAYER_TOP_SIDE"
+      ],
       "xp": 0,
       "xp_to_next": 100,
       "unlocked": true
@@ -98,10 +135,17 @@
       "level": 1,
       "base_power": 8,
       "activation_cost": {},
-      "passive_effect": {"focus_regeneration": 0.03},
+      "passive_effect": {
+        "focus_regeneration": 0.03
+      },
       "clash_effect": {},
-      "response_to_families": ["pegada", "pressao"],
-      "valid_states": ["PLAYER_STANDING_NEUTRAL"],
+      "response_to_families": [
+        "pegada",
+        "pressao"
+      ],
+      "valid_states": [
+        "PLAYER_STANDING_NEUTRAL"
+      ],
       "xp": 0,
       "xp_to_next": 100,
       "unlocked": true
@@ -115,10 +159,19 @@
       "level": 2,
       "base_power": 10,
       "activation_cost": {},
-      "passive_effect": {"mount_defense_bonus": 0.10},
-      "clash_effect": {"defense_efficiency_bonus": 0.10},
-      "response_to_families": ["dominante", "finalizacao"],
-      "valid_states": ["PLAYER_BOTTOM_MOUNT"],
+      "passive_effect": {
+        "mount_defense_bonus": 0.1
+      },
+      "clash_effect": {
+        "defense_efficiency_bonus": 0.1
+      },
+      "response_to_families": [
+        "dominante",
+        "finalizacao"
+      ],
+      "valid_states": [
+        "PLAYER_BOTTOM_MOUNT"
+      ],
       "xp": 20,
       "xp_to_next": 180,
       "unlocked": true
@@ -132,10 +185,19 @@
       "level": 1,
       "base_power": 9,
       "activation_cost": {},
-      "passive_effect": {"side_control_defense_bonus": 0.08},
-      "clash_effect": {"defense_efficiency_bonus": 0.08},
-      "response_to_families": ["controle", "passagem"],
-      "valid_states": ["PLAYER_BOTTOM_SIDE"],
+      "passive_effect": {
+        "side_control_defense_bonus": 0.08
+      },
+      "clash_effect": {
+        "defense_efficiency_bonus": 0.08
+      },
+      "response_to_families": [
+        "controle",
+        "passagem"
+      ],
+      "valid_states": [
+        "PLAYER_BOTTOM_SIDE"
+      ],
       "xp": 0,
       "xp_to_next": 100,
       "unlocked": true
@@ -148,14 +210,21 @@
       "technique_id": "chave_braco",
       "level": 1,
       "base_power": 13,
-      "activation_cost": {"focus": 3, "gas": 2},
+      "activation_cost": {
+        "focus": 3,
+        "gas": 2
+      },
       "passive_effect": {},
-      "clash_effect": {"submission_pressure_bonus": 0.08},
+      "clash_effect": {
+        "submission_pressure_bonus": 0.08
+      },
       "response_to_families": [],
-      "valid_states": ["PLAYER_TOP_MOUNT"],
+      "valid_states": [
+        "PLAYER_TOP_MOUNT"
+      ],
       "xp": 0,
       "xp_to_next": 120,
-      "unlocked": false
+      "unlocked": true
     },
     {
       "id": "card_mata_leao_01",
@@ -165,14 +234,69 @@
       "technique_id": "mata_leao",
       "level": 1,
       "base_power": 14,
-      "activation_cost": {"focus": 3, "gas": 2},
+      "activation_cost": {
+        "focus": 3,
+        "gas": 2
+      },
       "passive_effect": {},
-      "clash_effect": {"submission_pressure_bonus": 0.10},
+      "clash_effect": {
+        "submission_pressure_bonus": 0.1
+      },
       "response_to_families": [],
-      "valid_states": ["PLAYER_BACK_ATTACK"],
+      "valid_states": [
+        "PLAYER_BACK_ATTACK"
+      ],
       "xp": 0,
       "xp_to_next": 120,
       "unlocked": false
+    },
+    {
+      "id": "card_corte_joelho_01",
+      "name": "Corte de Joelho",
+      "kind": "active",
+      "category": "passagem",
+      "technique_id": "corte_joelho",
+      "level": 1,
+      "base_power": 12,
+      "activation_cost": {
+        "focus": 2,
+        "gas": 1
+      },
+      "passive_effect": {},
+      "clash_effect": {
+        "guard_pass_bonus": 0.08
+      },
+      "response_to_families": [],
+      "valid_states": [
+        "PLAYER_TOP_GUARD"
+      ],
+      "xp": 0,
+      "xp_to_next": 100,
+      "unlocked": true
+    },
+    {
+      "id": "card_montada_pesada_01",
+      "name": "Montada Pesada",
+      "kind": "active",
+      "category": "controle",
+      "technique_id": "montada_pesada",
+      "level": 1,
+      "base_power": 13,
+      "activation_cost": {
+        "focus": 2,
+        "gas": 2
+      },
+      "passive_effect": {},
+      "clash_effect": {
+        "dominant_position_bonus": 0.08
+      },
+      "response_to_families": [],
+      "valid_states": [
+        "PLAYER_TOP_SIDE"
+      ],
+      "xp": 0,
+      "xp_to_next": 110,
+      "unlocked": true
     }
   ],
   "equipped": {
@@ -187,6 +311,38 @@
       "card_puxada_guarda_01",
       "card_saida_montada_02",
       "card_saida_cem_quilos_01"
+    ]
+  },
+  "v2_presets": {
+    "adaptativo": [
+      "baiana",
+      "sprawl",
+      "raspagem_tesoura",
+      "corte_joelho",
+      "montada_pesada",
+      "chave_braco",
+      "saida_montada",
+      "grip_de_ferro"
+    ],
+    "ofensivo": [
+      "grip_de_ferro",
+      "baiana",
+      "corte_joelho",
+      "cem_quilos",
+      "montada_pesada",
+      "chave_braco",
+      "raspagem_tesoura",
+      "sprawl"
+    ],
+    "defensivo": [
+      "sprawl",
+      "raspagem_tesoura",
+      "saida_montada",
+      "saida_cem_quilos",
+      "grip_de_ferro",
+      "baiana",
+      "corte_joelho",
+      "chave_braco"
     ]
   }
 }
