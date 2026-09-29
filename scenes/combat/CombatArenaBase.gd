@@ -243,7 +243,9 @@ func _on_resources_changed(fighter_id, resources) -> void:
 	if str(fighter_id) != CombatManager.player_id or typeof(resources) != TYPE_DICTIONARY:
 		return
 	if has_node("Panel/Resources"):
-		$Panel/Resources.text = "Gas %d • Foco %d • Grip %d • Controle %d" % [
+		$Panel/Resources.text = "PTS %d • VANT %d • Gas %d • Foco %d • Grip %d • Controle %d" % [
+			int(resources.get("score", 0)),
+			int(resources.get("advantages", 0)),
 			int(resources.get("gas", 0)),
 			int(resources.get("focus", 0)),
 			int(resources.get("grip_integrity", 0)),
@@ -298,6 +300,15 @@ func _process(delta: float) -> void:
 	if not CombatManager.is_running or not CombatManager.is_combat_v2_active():
 		return
 	var timer_result: Dictionary = CombatManager.tick_combat_timer(delta)
+	if has_node("Panel/Message"):
+		for score_event_value in timer_result.get("scoring_events", []):
+			if typeof(score_event_value) != TYPE_DICTIONARY:
+				continue
+			var score_event: Dictionary = score_event_value
+			if bool(score_event.get("awarded", false)):
+				$Panel/Message.text = "PONTUACAO CONFIRMADA • %s estabilizada." % _score_event_label(str(score_event.get("event_id", "")))
+			elif bool(score_event.get("cancelled", false)):
+				$Panel/Message.text = "PONTUACAO NAO CONSOLIDADA • estabilizacao interrompida."
 	if has_node("Panel/Timer"):
 		var state: Dictionary = CombatManager.get_combat_state_v2()
 		$Panel/Timer.text = "TEMPO %02d:%02d%s" % [
@@ -307,6 +318,16 @@ func _process(delta: float) -> void:
 		]
 	if bool(timer_result.get("expired", false)) and has_node("Panel/Message"):
 		$Panel/Message.text = "Tempo esgotado. A resolução aguarda a autoridade de regras do combate."
+
+func _score_event_label(event_id: String) -> String:
+	match event_id:
+		"takedown": return "queda"
+		"sweep": return "raspagem"
+		"guard_pass": return "passagem"
+		"mount": return "montada"
+		"back_control": return "costas"
+		"advantage": return "vantagem"
+	return event_id.replace("_", " ")
 
 func _on_v2_hand_changed(_hand: Array) -> void:
 	if CombatManager.is_running:
