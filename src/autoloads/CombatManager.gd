@@ -195,10 +195,12 @@ func get_available_techniques(actor_id: String = "") -> Array:
 		)
 		item["actor_state"] = actor_state
 		if resolved_actor == player_id and _combat_v2_active():
-			var v2_available: bool = bool(combat_core_v2.card_available(str(technique.get("id", ""))))
+			var contextual_action := _is_contextual_action(resolved_actor, technique_id)
+			var v2_available: bool = bool(combat_core_v2.card_available(technique_id)) or contextual_action
 			item["deck_card_available"] = v2_available
-			item["deck_card_level"] = 1
-			item["deck_card_id"] = str(technique.get("id", ""))
+			item["contextual_action"] = contextual_action
+			item["deck_card_level"] = 0 if contextual_action else 1
+			item["deck_card_id"] = "" if contextual_action else technique_id
 			if not v2_available:
 				continue
 		elif resolved_actor == player_id and has_node("/root/DeckManager"):
@@ -209,6 +211,13 @@ func get_available_techniques(actor_id: String = "") -> Array:
 		available.append(item)
 	available.sort_custom(_sort_techniques_by_name)
 	return available
+
+func _is_contextual_action(actor_id: String, action_id: String) -> bool:
+	return (
+		action_id == "encerramento_tecnico"
+		and actor_id == player_id
+		and get_actor_state_name(actor_id) == "PLAYER_SUBMISSION_ATTACK"
+	)
 
 func _sort_techniques_by_name(a: Dictionary, b: Dictionary) -> bool:
 	var name_a: String = str(a.get("nome", a.get("name", a.get("id", ""))))
@@ -237,7 +246,7 @@ func apply_player_action(action_id: String) -> Dictionary:
 		SignalBus.technique_resolved.emit(reset_result)
 		_emit_resources()
 		return reset_result
-	if _combat_v2_active() and not combat_core_v2.card_available(action_id):
+	if _combat_v2_active() and not combat_core_v2.card_available(action_id) and not _is_contextual_action(player_id, action_id):
 		return {"success": false, "error": "deck_card_not_in_hand", "action_id": action_id, "hand": combat_core_v2.deck_runtime.hand.duplicate()}
 	return apply_actor_action(player_id, action_id)
 
@@ -288,7 +297,8 @@ func execute_technique(actor_id: String, defender_id: String, technique: Diction
 	var owner := str(technique.get("dono", technique.get("owner", "qualquer")))
 	if owner != "" and owner != "qualquer" and owner != actor_id:
 		return {"success": false, "accepted": false, "error": "technique_owner_mismatch"}
-	if actor_id == player_id and _combat_v2_active() and not combat_core_v2.card_available(str(technique.get("id", ""))):
+	var technique_id := str(technique.get("id", ""))
+	if actor_id == player_id and _combat_v2_active() and not combat_core_v2.card_available(technique_id) and not _is_contextual_action(actor_id, technique_id):
 		return {"success": false, "accepted": false, "error": "deck_card_not_in_hand"}
 	var rejection: Dictionary = technique_resolver.call("validate_attempt", technique, fighters[actor_id], {"state": get_actor_state_name(actor_id)})
 	if not rejection.is_empty():
@@ -312,8 +322,8 @@ func execute_technique(actor_id: String, defender_id: String, technique: Diction
 	fighters[actor_id] = applied.get("actor", actor)
 	fighters[defender_id] = applied.get("defender", defender)
 	_apply_card_activation_cost(actor_id, card_context.get("attack_card", {}))
-	if actor_id == player_id and _combat_v2_active():
-		var next_hand: Array = combat_core_v2.consume_card(str(technique.get("id", "")))
+	if actor_id == player_id and _combat_v2_active() and combat_core_v2.card_available(technique_id):
+		var next_hand: Array = combat_core_v2.consume_card(technique_id)
 		SignalBus.combat_v2_hand_changed.emit(next_hand)
 	elif has_node("/root/DeckManager") and actor_id == player_id:
 		DeckManager.consume_used_card(str(card_context.get("attack_card", {}).get("id", "")), bool(resolver_result.get("success", false)))
