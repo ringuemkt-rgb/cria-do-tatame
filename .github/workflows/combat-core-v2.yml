@@ -25,6 +25,8 @@ on:
       - 'tools/combat/validate_combat_core_v2.py'
       - 'tests/test_combat_core_v2_contract.py'
       - 'tests/combat_core_v2_smoke.gd'
+      - 'tests/combat_action_safety_smoke.gd'
+      - 'src/combat/TechniqueResolver.gd'
       - 'package.json'
       - '.github/workflows/combat-core-v2.yml'
   pull_request:
@@ -61,3 +63,10 @@ jobs:
         run: timeout 180 ./godot --headless --editor --path . --import
       - name: Run Combat Core V2 smoke
         run: ./godot --headless --path . --script res://tests/combat_core_v2_smoke.gd
+      - name: Run integrated action safety and rapid-input regression
+        shell: bash
+        run: |
+          set -o pipefail
+          ./godot --headless --path . --script res://tests/combat_action_safety_smoke.gd 2>&1 | tee action-safety.log
+          if grep -Eq '^(SCRIPT )?ERROR:' action-safety.log; then exit 1; fi
+          grep -q '\[CombatActionSafety\] PASS' action-safety.log

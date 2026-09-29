@@ -50,7 +50,7 @@ def main():
     # An empty working directory prevents missing packed resources from falling
     # back to the source checkout and making a broken distribution look healthy.
     with tempfile.TemporaryDirectory(prefix="cria-packed-test-") as isolated:
-        for name in ("runtime_smoke", "full_game_smoke", "progression_os_smoke"):
+        for name in ("runtime_smoke", "full_game_smoke", "progression_os_smoke", "combat_action_safety_smoke"):
             log = run(name, ["--headless", "--main-pack", str(pack), "--script",
                              f"res://tests/{name}.gd"], isolated)
             if "PASS" not in log:

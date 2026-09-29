@@ -52,7 +52,9 @@ func build_pre_fight_plan(
 ) -> Dictionary:
 	if deck_runtime == null:
 		return {"ok": false, "reason": "coordinator_not_configured"}
-	var deck_result: Dictionary = deck_runtime.build_deck(available_techniques, selection)
+	# Validate into a candidate: a rejected plan must not mutate the live deck.
+	var candidate_deck = DeckRuntimeScript.new()
+	var deck_result: Dictionary = candidate_deck.build_deck(available_techniques, selection)
 	if not bool(deck_result.get("ok", false)):
 		return deck_result
 	var rival_profile: Dictionary = rival_profiles.get(opponent_id, {})
@@ -61,6 +63,7 @@ func build_pre_fight_plan(
 	var timer: Dictionary = timer_profiles.get(ruleset, {})
 	if timer.is_empty():
 		return {"ok": false, "reason": "ruleset_timer_missing", "ruleset": ruleset}
+	deck_runtime = candidate_deck
 	current_plan = {
 		"opponent_id": opponent_id,
 		"arena_id": arena_id,

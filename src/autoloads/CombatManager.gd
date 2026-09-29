@@ -67,6 +67,16 @@ func _ensure_runtime_components() -> void:
 
 func start_combat(new_arena_id: String, new_player_id: String, new_opponent_id: String) -> Dictionary:
 	_ensure_runtime_components()
+	if is_running:
+		return {"ok": false, "error": "combat_already_running"}
+	var requested_player := new_player_id if new_player_id != "" else DEFAULT_PLAYER_ID
+	var requested_opponent := new_opponent_id if new_opponent_id != "" else DEFAULT_OPPONENT_ID
+	if requested_player == requested_opponent:
+		return {"ok": false, "error": "same_fighter"}
+	if _combat_v2_active():
+		var plan: Dictionary = combat_core_v2.current_plan
+		if str(plan.get("opponent_id", "")) != requested_opponent or str(plan.get("arena_id", "")) != new_arena_id:
+			return {"ok": false, "error": "pre_fight_plan_mismatch"}
 	arena_id = new_arena_id if new_arena_id != "" else "terreiro_da_luta"
 	player_id = new_player_id if new_player_id != "" else DEFAULT_PLAYER_ID
 	opponent_id = new_opponent_id if new_opponent_id != "" else DEFAULT_OPPONENT_ID
@@ -78,9 +88,12 @@ func start_combat(new_arena_id: String, new_player_id: String, new_opponent_id: 
 		opponent_id: _create_runtime_stats(opponent_id)
 	}
 	state_machine.call("reiniciar_em_pe")
+	var fight_seed := int(combat_core_v2.current_plan.get("seed", 1)) if _combat_v2_active() else _combat_v2_seed(opponent_id, arena_id)
+	technique_resolver.get("rng").seed = fight_seed
 	if _combat_v2_active():
 		var begin_v2: Dictionary = combat_core_v2.begin_fight()
 		if not bool(begin_v2.get("ok", false)):
+			is_running = false
 			return {"ok": false, "error": begin_v2.get("reason", "combat_v2_begin_failed")}
 		combat_v2_timer_remaining = float(begin_v2.get("timer_sec", 0))
 		combat_v2_overtime = false
@@ -140,14 +153,21 @@ func _state_to_player_perspective(actor_id: String, actor_state_name: String) ->
 	return _mirror_state(actor_state_name)
 
 func get_available_techniques(actor_id: String = "") -> Array:
+	if not is_running:
+		return []
 	var resolved_actor: String = actor_id if actor_id != "" else player_id
 	var actor: Dictionary = fighters.get(resolved_actor, {})
 	var actor_state: String = get_actor_state_name(resolved_actor)
 	var available: Array = []
+	var seen_ids: Dictionary = {}
 	for technique_value in DataRegistry.techniques.values():
 		if typeof(technique_value) != TYPE_DICTIONARY:
 			continue
 		var technique: Dictionary = technique_value
+		var technique_id := str(technique.get("id", ""))
+		if seen_ids.has(technique_id):
+			continue
+		seen_ids[technique_id] = true
 		var entry_state: String = str(technique.get("entry_state", technique.get("estado_entrada", "")))
 		if entry_state != "" and entry_state != actor_state:
 			continue
@@ -232,8 +252,20 @@ func apply_actor_action(actor_id: String, action_id: String) -> Dictionary:
 	return execute_technique(actor_id, defender_id, technique)
 
 func execute_technique(actor_id: String, defender_id: String, technique: Dictionary) -> Dictionary:
+	if not is_running:
+		return {"success": false, "accepted": false, "error": "combat_not_running"}
 	if not fighters.has(actor_id) or not fighters.has(defender_id):
 		return {"success": false, "error": "fighter_not_found", "technique_id": technique.get("id", "unknown")}
+	if actor_id == defender_id:
+		return {"success": false, "accepted": false, "error": "same_fighter"}
+	var owner := str(technique.get("dono", technique.get("owner", "qualquer")))
+	if owner != "" and owner != "qualquer" and owner != actor_id:
+		return {"success": false, "accepted": false, "error": "technique_owner_mismatch"}
+	if actor_id == player_id and _combat_v2_active() and not combat_core_v2.card_available(str(technique.get("id", ""))):
+		return {"success": false, "accepted": false, "error": "deck_card_not_in_hand"}
+	var rejection: Dictionary = technique_resolver.call("validate_attempt", technique, fighters[actor_id], {"state": get_actor_state_name(actor_id)})
+	if not rejection.is_empty():
+		return rejection
 	SignalBus.technique_started.emit(technique.get("id", "unknown"), actor_id)
 	var player_state_before: String = get_current_state_name()
 	var actor_state_before: String = get_actor_state_name(actor_id)
@@ -525,6 +557,8 @@ func prepare_combat_v2(
 	seed: int = 0,
 	social_state: Dictionary = {}
 ) -> Dictionary:
+	if is_running:
+		return {"ok": false, "error": "combat_already_running"}
 	_ensure_combat_core_v2()
 	if combat_core_v2 == null:
 		return {"ok": false, "error": "combat_core_v2_unavailable"}
@@ -556,14 +590,20 @@ func get_pre_fight_plan_v2() -> Dictionary:
 	return combat_core_v2.current_plan.duplicate(true) if combat_core_v2 != null else {}
 
 func get_corner_suggestion() -> Dictionary:
-	if not _combat_v2_active():
+	if not is_running or not _combat_v2_active():
 		return {}
-	var suggestion: Dictionary = combat_core_v2.corner_suggestion(get_combat_state_v2())
+	var legal_hand: Array = []
+	for technique in get_available_techniques():
+		if bool(technique.get("affordable", false)):
+			legal_hand.append(str(technique.get("id", "")))
+	var suggestion: Dictionary = combat_core_v2.corner.suggest_action(get_combat_state_v2(), legal_hand, combat_core_v2.current_plan.get("scouting", {}))
 	if not suggestion.is_empty():
 		SignalBus.combat_corner_suggestion.emit(suggestion.duplicate(true))
 	return suggestion
 
 func activate_virada_do_cria(player: int = 1) -> Dictionary:
+	if not is_running or player not in [1, 2]:
+		return {"ok": false, "reason": "combat_not_running_or_invalid_player"}
 	if not _combat_v2_active():
 		return {"ok": false, "reason": "combat_v2_not_active"}
 	var result: Dictionary = combat_core_v2.activate_virada(get_combat_state_v2(), player)

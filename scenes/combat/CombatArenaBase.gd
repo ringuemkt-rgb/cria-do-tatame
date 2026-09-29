@@ -13,6 +13,7 @@ var ruan_placeholder: Node
 var davi_placeholder: Node
 var action_buttons: Array[Button] = []
 var ai_turn_delay: float = 0.35
+var _turn_in_progress := false
 
 var estados_ptbr: Dictionary = {
 	"DISTANCE": "EM PE - NEUTRO",
@@ -52,6 +53,7 @@ func _ready() -> void:
 	var preflight: Dictionary = CombatManager.get_pre_fight_plan_v2()
 	var fight_arena := str(preflight.get("arena_id", "terreiro_da_luta"))
 	var fight_opponent := str(preflight.get("opponent_id", "davi_relampago"))
+	davi_ai.call("setup", fight_opponent, "normal")
 	var start_result: Dictionary = CombatManager.start_combat(fight_arena, "ruan_macacao", fight_opponent)
 	if not bool(start_result.get("ok", false)):
 		push_error("[CombatArenaBase] Falha ao iniciar combate: %s" % str(start_result))
@@ -161,14 +163,14 @@ func _refresh_action_buttons() -> void:
 			button.text = label_text
 			button.set_meta("action_id", technique_id)
 			button.set_meta("affordable", affordable)
-			button.disabled = not affordable
+			button.disabled = _turn_in_progress or not affordable or not CombatManager.is_running
 			button.tooltip_text = "Gas %d • Foco %d" % [gas_cost, focus_cost]
 		else:
 			var is_reset: bool = index == 0 and available.is_empty()
 			button.text = "REINICIAR POSICAO" if is_reset else "—"
 			button.set_meta("action_id", "reset_position" if is_reset else "")
 			button.set_meta("affordable", is_reset)
-			button.disabled = not is_reset
+			button.disabled = _turn_in_progress or not is_reset or not CombatManager.is_running
 			button.tooltip_text = ""
 
 func _on_action_button_pressed(button: Button) -> void:
@@ -180,15 +182,17 @@ func _on_action_button_pressed(button: Button) -> void:
 	await _execute_player_action(action_id)
 
 func _execute_player_action(action_id: String) -> void:
-	if action_id == "" or not CombatManager.is_running:
+	if _turn_in_progress or action_id == "" or not CombatManager.is_running:
 		return
+	_turn_in_progress = true
 	AudioManager.play_sfx("botao")
 	_set_actions_enabled(false)
 	if ruan_placeholder != null:
 		ruan_placeholder.call("play_action", action_id)
 	var result: Dictionary = CombatManager.apply_player_action(action_id)
-	if not bool(result.get("success", false)) and str(result.get("error", "")) == "deck_card_not_in_hand":
-		_set_ai_hint("Essa técnica não está na tua mão agora.")
+	if result.has("error"):
+		_set_ai_hint(_humanize_message(str(result["error"])))
+		_turn_in_progress = false
 		_refresh_action_buttons()
 		_set_actions_enabled(true)
 		return
@@ -200,6 +204,7 @@ func _execute_player_action(action_id: String) -> void:
 		await _run_davi_turn()
 	if not is_inside_tree():
 		return
+	_turn_in_progress = false
 	if CombatManager.is_running:
 		_refresh_action_buttons()
 		_set_actions_enabled(true)
@@ -224,6 +229,8 @@ func _run_davi_turn() -> void:
 	gamefeel.call("apply_for_technique", technique_id, bool(result.get("success", false)))
 
 func _set_actions_enabled(enabled: bool) -> void:
+	if has_node("CombatDeckHUD"):
+		$CombatDeckHUD.set_actions_enabled(enabled)
 	for button in action_buttons:
 		if enabled:
 			var action_id: String = str(button.get_meta("action_id", ""))
@@ -278,6 +285,7 @@ func _update_state_label(value) -> void:
 func _on_combat_finished(result) -> void:
 	if typeof(result) != TYPE_DICTIONARY:
 		return
+	_set_actions_enabled(false)
 	WorldState.last_combat_result = result
 	SaveManager.save_game(1)
 	AudioManager.play_music_cue("vitoria" if result.get("winner", "") == "ruan_macacao" else "derrota")
@@ -316,6 +324,8 @@ func _on_corner_suggestion(suggestion) -> void:
 		$Panel/Corner.text = "TINKER: %s" % str(suggestion.get("reason", "Lê a resposta antes de forçar."))
 
 func _on_virada_pressed() -> void:
+	if _turn_in_progress:
+		return
 	var result: Dictionary = CombatManager.activate_virada_do_cria(1)
 	if has_node("Panel/Message"):
 		$Panel/Message.text = "VIRADA DO CRIA: foco, moral e gás recuperados." if bool(result.get("ok", false)) else "Virada ainda não está disponível."
