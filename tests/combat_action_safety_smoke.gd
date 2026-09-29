@@ -23,6 +23,7 @@ func _run() -> void:
 	cm = root.get_node("CombatManager")
 	_test_resolver_rejections()
 	_test_plan_atomicity()
+	_test_grappling_scoring_authority()
 	_test_runtime_guards()
 	_test_seeded_runtime()
 	await _test_scene_input_lock()
@@ -60,6 +61,77 @@ func _test_plan_atomicity() -> void:
 	_check(coordinator.snapshot() == before, "invalid ruleset cannot clear live hand or mix plans")
 	coordinator.build_pre_fight_plan("other", SELECTION, SELECTION.slice(0, 2), {}, 3, "ibjjf", true, "other")
 	_check(coordinator.snapshot() == before, "invalid deck cannot mutate plan")
+
+func _test_grappling_scoring_authority() -> void:
+	var scoring = load("res://src/combat/ScoringSystem.gd").new()
+	root.add_child(scoring)
+	scoring.reset()
+	var queued: Dictionary = scoring.queue_event("player", "takedown_clean", 3.0, "PLAYER_TOP_GUARD", "baiana")
+	_check(bool(queued.get("queued", false)), "takedown waits for stabilization")
+	scoring.tick_stabilization(2.9, "PLAYER_TOP_GUARD")
+	_check(int(scoring.get_score().get("player", 0)) == 0, "no points before three seconds")
+	var awarded: Array = scoring.tick_stabilization(0.1, "PLAYER_TOP_GUARD")
+	_check(int(scoring.get_score().get("player", 0)) == 2, "stable takedown awards two points")
+	_check(awarded.size() == 1 and bool(awarded[0].get("awarded", false)), "stabilized event reports award")
+
+	scoring.queue_event("player", "guard_pass", 3.0, "PLAYER_TOP_SIDE", "corte_joelho")
+	scoring.tick_stabilization(1.0, "PLAYER_TOP_SIDE")
+	var cancelled: Array = scoring.tick_stabilization(0.1, "PLAYER_TOP_GUARD")
+	_check(int(scoring.get_score().get("player", 0)) == 2, "lost position cancels pending pass points")
+	_check(cancelled.size() == 1 and bool(cancelled[0].get("cancelled", false)), "broken stabilization is explicit")
+
+	scoring.queue_event("player", "mount", 3.0, "PLAYER_TOP_MOUNT", "montada_pesada")
+	scoring.tick_stabilization(3.0, "PLAYER_TOP_MOUNT")
+	_check(int(scoring.get_score().get("player", 0)) == 6, "mount adds four points after stabilization")
+	scoring.apply_event("rival", "advantage")
+	_check(int(scoring.get_score().get("rival_advantages", 0)) == 1, "advantage alias is scored")
+
+	scoring.reset()
+	scoring.apply_event("player", "advantage")
+	_check(scoring.get_time_decision().get("winner_side") == "player", "advantages break tied points")
+	scoring.reset()
+	scoring.apply_event("rival", "penalty")
+	_check(scoring.get_time_decision().get("winner_side") == "player", "fewer penalties break tied points and advantages")
+	scoring.reset()
+	_check(scoring.get_time_decision().get("winner_side") == "draw", "fully tied regulation requires non-score decision")
+	scoring.queue_free()
+
+	_prepare()
+	cm.fighters[cm.player_id]["health"] = 0.0
+	cm.fighters[cm.player_id]["gas"] = 0.0
+	cm.fighters[cm.opponent_id]["health"] = 0.0
+	cm.fighters[cm.opponent_id]["gas"] = 0.0
+	cm._check_end(cm.player_id, cm.opponent_id, {}, {})
+	_check(cm.is_running, "HP/gas exhaustion no longer ends grappling")
+	var registry := root.get_node("DataRegistry")
+	var finisher: Dictionary = registry.get_technique("encerramento_tecnico")
+	cm.fighters[cm.player_id]["control"] = 0.0
+	cm.fighters[cm.opponent_id]["health"] = 100.0
+	_check(
+		cm._resolve_finisher_before_transition(
+			cm.player_id,
+			cm.opponent_id,
+			finisher,
+			{"success": true},
+			"PLAYER_SUBMISSION_ATTACK"
+		),
+		"successful committed submission can finish without HP/control threshold"
+	)
+
+	_prepare()
+	cm.scoring_system.apply_event("player", "takedown_clean")
+	cm._sync_score_from_system()
+	cm.combat_v2_timer_remaining = 0.01
+	var time_out: Dictionary = cm.tick_combat_timer(0.02)
+	_check(bool(time_out.get("expired", false)) and not cm.is_running, "regulation expiry resolves fight")
+	_check(cm.last_result.get("winner") == cm.player_id, "points decide winner at regulation")
+	_check(cm.last_result.get("method") == "pontos", "time result records points basis")
+	_check(int(cm.last_result.get("scoreboard", {}).get("player", 0)) == 2, "final result preserves scoreboard")
+
+	_prepare()
+	cm.combat_v2_timer_remaining = 0.01
+	cm.tick_combat_timer(0.02)
+	_check(bool(cm.last_result.get("draw", false)), "fully tied score ends as explicit draw instead of false loss")
 
 func _prepare(seed_value: int = 42) -> void:
 	cm.is_running = false
