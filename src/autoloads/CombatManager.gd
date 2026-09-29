@@ -9,6 +9,7 @@ const TechniqueResolverScript = preload("res://src/combat/TechniqueResolver.gd")
 const TechniqueClashResolverScript = preload("res://src/combat/TechniqueClashResolver.gd")
 const FrameDataSystemScript = preload("res://src/combat/FrameDataSystem.gd")
 const CombatCoreV2CoordinatorScript = preload("res://src/combat/CombatCoreV2Coordinator.gd")
+const ScoringSystemScript = preload("res://src/combat/ScoringSystem.gd")
 
 const STATE_MIRROR := {
 	"PLAYER_STANDING_NEUTRAL": "PLAYER_STANDING_NEUTRAL",
@@ -39,6 +40,7 @@ var technique_resolver: Node
 var clash_resolver: Node
 var frame_data_system: Node
 var combat_core_v2
+var scoring_system: Node
 var combat_v2_timer_remaining: float = 0.0
 var combat_v2_overtime := false
 var combat_v2_timer_expired_once := false
@@ -63,6 +65,10 @@ func _ensure_runtime_components() -> void:
 		frame_data_system = FrameDataSystemScript.new()
 		frame_data_system.name = "FrameDataSystemRuntime"
 		add_child(frame_data_system)
+	if scoring_system == null:
+		scoring_system = ScoringSystemScript.new()
+		scoring_system.name = "ScoringSystemRuntime"
+		add_child(scoring_system)
 	_ensure_combat_core_v2()
 
 func start_combat(new_arena_id: String, new_player_id: String, new_opponent_id: String) -> Dictionary:
@@ -83,6 +89,7 @@ func start_combat(new_arena_id: String, new_player_id: String, new_opponent_id: 
 	phase = CombatPhase.DISTANCE
 	is_running = true
 	last_result = {}
+	scoring_system.call("reset")
 	fighters = {
 		player_id: _create_runtime_stats(player_id),
 		opponent_id: _create_runtime_stats(opponent_id)
@@ -130,7 +137,9 @@ func _create_runtime_stats(character_id: String) -> Dictionary:
 		"grip_integrity": 100.0,
 		"control": float(stats.get("control", stats.get("technique", 50))),
 		"moral": float(stats.get("moral", 50)),
-		"score": 0
+		"score": 0,
+		"advantages": 0,
+		"penalties": 0
 	}
 
 func get_current_state_name() -> String:
@@ -333,6 +342,7 @@ func execute_technique(actor_id: String, defender_id: String, technique: Diction
 		last_result["state_to"] = player_state_to
 		_apply_state_transition(player_state_to)
 		_change_phase(_phase_from_string(str(technique.get("phase_to", "TRANSITION"))))
+		_register_score_event(actor_id, last_result, player_state_to)
 	else:
 		_adjust(defender_id, "focus", 2.0)
 
@@ -438,9 +448,7 @@ func _resolve_finisher_before_transition(
 		return false
 	if actor_state_before != "PLAYER_SUBMISSION_ATTACK":
 		return false
-	var actor: Dictionary = fighters.get(actor_id, {})
-	var defender: Dictionary = fighters.get(defender_id, {})
-	return float(actor.get("control", 0)) >= 55.0 or float(defender.get("health", 100)) <= 70.0
+	return actor_state_before == "PLAYER_SUBMISSION_ATTACK"
 
 func _apply_state_transition(state_name: String) -> void:
 	var target_state: int = int(state_machine.call("estado_por_nome", state_name))
@@ -452,32 +460,10 @@ func _apply_state_transition(state_name: String) -> void:
 		push_warning("[CombatManager] Transicao nao catalogada: %s -> %s" % [get_current_state_name(), state_name])
 		state_machine.call("forcar_estado", target_state)
 
-func _check_end(actor_id: String, defender_id: String, technique: Dictionary = {}, result: Dictionary = {}) -> void:
-	if not is_running:
-		return
-	var actor: Dictionary = fighters.get(actor_id, {})
-	var defender: Dictionary = fighters.get(defender_id, {})
-	if float(defender.get("health", 100)) <= 0.0:
-		finish_combat({
-			"winner": actor_id,
-			"loser": defender_id,
-			"method": str(technique.get("id", "encerramento_tecnico")),
-			"technical": true
-		})
-	elif float(defender.get("gas", 100)) <= 0.0 and float(actor.get("control", 0)) >= 65.0:
-		finish_combat({
-			"winner": actor_id,
-			"loser": defender_id,
-			"method": "controle_posicional",
-			"technical": true
-		})
-	elif float(actor.get("gas", 100)) <= 0.0:
-		finish_combat({
-			"winner": defender_id,
-			"loser": actor_id,
-			"method": "cansaco",
-			"technical": false
-		})
+func _check_end(_actor_id: String, _defender_id: String, _technique: Dictionary = {}, _result: Dictionary = {}) -> void:
+	# Grappling nao termina por HP ou gas zerado. Esses recursos modulam
+	# disponibilidade/chance; vitoria vem de tap/finalizacao ou placar no tempo.
+	return
 
 func _adjust(id: String, key: String, delta: float) -> void:
 	if not fighters.has(id):
@@ -524,6 +510,9 @@ func finalizar_combate(result: Dictionary) -> void:
 
 func _apply_post_combat_effects(result: Dictionary) -> void:
 	WorldState.last_combat_result = result
+	if bool(result.get("draw", false)) or str(result.get("winner", "")) == "":
+		WorldState._sync_aliases()
+		return
 	if result.get("winner", "") == player_id:
 		WorldState.fights_won += 1
 		WorldState.money += 200
@@ -630,6 +619,7 @@ func get_combat_state_v2() -> Dictionary:
 		"winner": 0,
 		"timer": maxi(0, int(ceil(combat_v2_timer_remaining))),
 		"overtime": combat_v2_overtime,
+		"scoreboard": scoring_system.call("get_score") if scoring_system != null else {},
 		"p1": _fighter_state_v2(p1),
 		"p2": _fighter_state_v2(p2),
 		"log": combat_core_v2.action_log.duplicate(true) if _combat_v2_active() else [],
@@ -643,33 +633,139 @@ func get_combat_state_v2() -> Dictionary:
 func tick_combat_timer(delta_sec: float) -> Dictionary:
 	if not is_running or not _combat_v2_active():
 		return {"active": false}
+	var safe_delta := maxf(0.0, delta_sec)
+	var scoring_delta := minf(safe_delta, maxf(0.0, combat_v2_timer_remaining))
+	var scoring_events: Array = _tick_scoring(scoring_delta)
 	if combat_v2_timer_remaining <= 0.0:
-		return {"active": true, "expired": combat_v2_timer_expired_once}
-	combat_v2_timer_remaining = maxf(0.0, combat_v2_timer_remaining - maxf(0.0, delta_sec))
+		return {"active": true, "expired": combat_v2_timer_expired_once, "scoring_events": scoring_events}
+	combat_v2_timer_remaining = maxf(0.0, combat_v2_timer_remaining - safe_delta)
 	SignalBus.combat_timer_changed.emit(int(ceil(combat_v2_timer_remaining)), combat_v2_overtime)
 	if combat_v2_timer_remaining > 0.0:
-		return {"active": true, "expired": false, "remaining": combat_v2_timer_remaining}
+		return {
+			"active": true,
+			"expired": false,
+			"remaining": combat_v2_timer_remaining,
+			"scoring_events": scoring_events
+		}
 	if combat_v2_timer_expired_once:
-		return {"active": true, "expired": true}
+		return {"active": true, "expired": true, "scoring_events": scoring_events}
 	combat_v2_timer_expired_once = true
 	var timer_profile: Dictionary = combat_core_v2.current_plan.get("timer_profile", {})
 	if bool(timer_profile.get("overtime", false)) and not combat_v2_overtime:
 		combat_v2_overtime = true
 		combat_v2_timer_expired_once = false
 		combat_v2_timer_remaining = float(timer_profile.get("overtime_duration_sec", 0))
-		return {"active": true, "overtime_started": true, "remaining": combat_v2_timer_remaining}
+		return {
+			"active": true,
+			"overtime_started": true,
+			"remaining": combat_v2_timer_remaining,
+			"scoring_events": scoring_events
+		}
+	if scoring_system != null:
+		scoring_system.call("cancel_pending")
+	var time_result: Dictionary = _resolve_time_result()
 	var payload := {
 		"ruleset": combat_core_v2.current_plan.get("ruleset", ""),
 		"score_p1": int(fighters.get(player_id, {}).get("score", 0)),
 		"score_p2": int(fighters.get(opponent_id, {}).get("score", 0)),
-		"requires_authoritative_resolution": true
+		"scoreboard": scoring_system.call("get_score") if scoring_system != null else {},
+		"decision": time_result.get("decision", {}),
+		"result": time_result,
+		"requires_authoritative_resolution": false
 	}
 	SignalBus.combat_timer_expired.emit(payload)
-	return {"active": true, "expired": true, "payload": payload}
+	finish_combat(time_result)
+	return {"active": false, "expired": true, "payload": payload, "scoring_events": scoring_events}
+
+func _register_score_event(actor_id: String, result: Dictionary, player_state_to: String) -> void:
+	if scoring_system == null or not bool(result.get("success", false)):
+		return
+	var event_id := str(result.get("score_event", ""))
+	if event_id == "":
+		return
+	var side := "player" if actor_id == player_id else "rival"
+	var scoring_result: Dictionary = scoring_system.call(
+		"queue_event",
+		side,
+		event_id,
+		float(result.get("stabilization_seconds", 0.0)),
+		player_state_to,
+		str(result.get("technique_id", ""))
+	)
+	result["scoring"] = scoring_result.duplicate(true)
+	if bool(scoring_result.get("awarded", false)):
+		_sync_score_from_system()
+
+func _tick_scoring(delta_sec: float) -> Array:
+	if scoring_system == null or delta_sec <= 0.0:
+		return []
+	var events: Array = scoring_system.call("tick_stabilization", delta_sec, get_current_state_name())
+	var changed := false
+	for event_value in events:
+		if typeof(event_value) == TYPE_DICTIONARY and bool(event_value.get("awarded", false)):
+			changed = true
+	if changed:
+		_sync_score_from_system()
+	return events
+
+func _sync_score_from_system() -> void:
+	if scoring_system == null:
+		return
+	var scoreboard: Dictionary = scoring_system.call("get_score")
+	if fighters.has(player_id):
+		fighters[player_id]["score"] = int(scoreboard.get("player", 0))
+		fighters[player_id]["advantages"] = int(scoreboard.get("player_advantages", 0))
+		fighters[player_id]["penalties"] = int(scoreboard.get("player_penalties", 0))
+	if fighters.has(opponent_id):
+		fighters[opponent_id]["score"] = int(scoreboard.get("rival", 0))
+		fighters[opponent_id]["advantages"] = int(scoreboard.get("rival_advantages", 0))
+		fighters[opponent_id]["penalties"] = int(scoreboard.get("rival_penalties", 0))
+	_emit_resources()
+
+func _resolve_time_result() -> Dictionary:
+	_sync_score_from_system()
+	var decision: Dictionary = scoring_system.call("get_time_decision") if scoring_system != null else {
+		"winner_side": "draw",
+		"basis": "scoring_unavailable"
+	}
+	var side := str(decision.get("winner_side", "draw"))
+	var basis := str(decision.get("basis", "points"))
+	var method_by_basis := {
+		"points": "pontos",
+		"advantages": "vantagens",
+		"penalties": "penalidades",
+		"referee_decision_required": "empate_tempo",
+		"scoring_unavailable": "empate_tempo"
+	}
+	if side == "draw":
+		return {
+			"winner": "",
+			"loser": "",
+			"method": str(method_by_basis.get(basis, "empate_tempo")),
+			"technical": false,
+			"draw": true,
+			"time_expired": true,
+			"decision": decision.duplicate(true),
+			"scoreboard": scoring_system.call("get_score") if scoring_system != null else {}
+		}
+	var winner_id := player_id if side == "player" else opponent_id
+	var loser_id := opponent_id if side == "player" else player_id
+	return {
+		"winner": winner_id,
+		"loser": loser_id,
+		"method": str(method_by_basis.get(basis, "pontos")),
+		"technical": false,
+		"draw": false,
+		"time_expired": true,
+		"decision": decision.duplicate(true),
+		"scoreboard": scoring_system.call("get_score") if scoring_system != null else {}
+	}
 
 func clear_combat_v2_plan() -> void:
 	if combat_core_v2 != null:
 		combat_core_v2.clear()
+	if scoring_system != null:
+		scoring_system.call("reset")
 	combat_v2_timer_remaining = 0.0
 	combat_v2_overtime = false
 	combat_v2_timer_expired_once = false
@@ -702,6 +798,8 @@ func _fighter_state_v2(raw: Dictionary) -> Dictionary:
 	return {
 		"gas": float(raw.get("gas", 0.0)),
 		"score": int(raw.get("score", 0)),
+		"advantages": int(raw.get("advantages", 0)),
+		"penalties": int(raw.get("penalties", 0)),
 		"grip": _resource_tier(float(raw.get("grip", 0.0))),
 		"guard": _resource_tier(float(raw.get("guard", 0.0))),
 		"focus": float(raw.get("focus", 0.0)),
