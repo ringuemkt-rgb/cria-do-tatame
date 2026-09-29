@@ -91,6 +91,22 @@ func _test_campaign_golden_chain_preset() -> void:
 	var start: Dictionary = cm.start_combat("arena_do_dique", "ruan_macacao", "davi_relampago")
 	_check(bool(start.get("ok", false)), "real campaign golden-chain plan starts")
 	if bool(start.get("ok", false)):
+		var progression_cases := [
+			{"state": "PLAYER_TOP_GUARD", "technique": "corte_joelho"},
+			{"state": "PLAYER_TOP_SIDE", "technique": "montada_pesada"},
+			{"state": "PLAYER_TOP_MOUNT", "technique": "chave_braco"}
+		]
+		for case_value in progression_cases:
+			var case: Dictionary = case_value
+			var target_state := str(case.get("state", ""))
+			var target_technique := str(case.get("technique", ""))
+			cm.state_machine.call("forcar_estado", cm.state_machine.call("estado_por_nome", target_state))
+			cm._ensure_v2_playable_hand()
+			_check(
+				cm.combat_core_v2.card_available(target_technique),
+				"dead-hand rescue exposes %s in %s" % [target_technique, target_state]
+			)
+
 		cm.state_machine.call("forcar_estado", cm.state_machine.call("estado_por_nome", "PLAYER_SUBMISSION_ATTACK"))
 		var available_ids: Array = []
 		for row_value in cm.get_available_techniques():
