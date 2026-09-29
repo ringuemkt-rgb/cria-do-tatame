@@ -367,10 +367,14 @@ func _update_state_label(value) -> void:
 func _on_combat_finished(result) -> void:
 	if typeof(result) != TYPE_DICTIONARY:
 		return
+	_defense_window_open = false
+	if has_node("CombatDeckHUD"):
+		$CombatDeckHUD.close_defense_window()
 	_set_actions_enabled(false)
 	WorldState.last_combat_result = result
 	SaveManager.save_game(1)
-	AudioManager.play_music_cue("vitoria" if result.get("winner", "") == "ruan_macacao" else "derrota")
+	var music_cue := "terreiro" if bool(result.get("draw", false)) else ("vitoria" if result.get("winner", "") == "ruan_macacao" else "derrota")
+	AudioManager.play_music_cue(music_cue)
 	var error: Error = get_tree().change_scene_to_file(RESULT_SCENE)
 	if error != OK:
 		push_error("[CombatArenaBase] Falha ao abrir resultado: %s" % error_string(error))
