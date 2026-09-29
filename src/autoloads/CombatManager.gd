@@ -170,13 +170,15 @@ func _v2_legal_candidates_for_player_state() -> Array:
 		return []
 	var actor: Dictionary = fighters.get(player_id, {})
 	var actor_state := get_actor_state_name(player_id)
-	var candidates: Array = []
+	var selected_deck: Array = combat_core_v2.deck_runtime.deck
+	var progressive: Array = []
+	var fallback: Array = []
 	for technique_value in DataRegistry.techniques.values():
 		if typeof(technique_value) != TYPE_DICTIONARY:
 			continue
 		var technique: Dictionary = technique_value
 		var technique_id := str(technique.get("id", ""))
-		if technique_id == "" or candidates.has(technique_id):
+		if technique_id == "" or progressive.has(technique_id) or fallback.has(technique_id):
 			continue
 		var entry_state := str(technique.get("entry_state", technique.get("estado_entrada", "")))
 		if entry_state != "" and entry_state != actor_state:
@@ -186,15 +188,23 @@ func _v2_legal_candidates_for_player_state() -> Array:
 			continue
 		if _is_contextual_action(player_id, technique_id):
 			return [technique_id]
+		if not selected_deck.has(technique_id):
+			continue
 		var cost: Dictionary = technique.get("cost", technique.get("custo", {}))
 		var affordable := (
 			float(actor.get("gas", 0.0)) >= float(cost.get("gas", technique.get("gas_cost", 0.0)))
 			and float(actor.get("focus", 0.0)) >= float(cost.get("focus", cost.get("foco", technique.get("focus_cost", 0.0))))
 			and float(actor.get("moral", 0.0)) >= float(cost.get("moral", technique.get("moral_cost", 0.0)))
 		)
-		if affordable:
-			candidates.append(technique_id)
-	return candidates
+		if not affordable:
+			continue
+		var runtime_technique: Dictionary = technique_resolver.call("get_runtime_technique", technique)
+		var exit_state := str(runtime_technique.get("exit_state", runtime_technique.get("estado_saida", actor_state)))
+		if exit_state != "" and exit_state != actor_state:
+			progressive.append(technique_id)
+		else:
+			fallback.append(technique_id)
+	return progressive if not progressive.is_empty() else fallback
 
 func _ensure_v2_playable_hand() -> Dictionary:
 	if not is_running or not _combat_v2_active():
