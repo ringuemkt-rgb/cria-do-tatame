@@ -10,6 +10,7 @@ Este arquivo é a porta de entrada da documentação ativa. Antes de criar um do
 - [`DECISIONS.md`](DECISIONS.md) — decisões arquiteturais e canônicas D1–D11;
 - [`REPOSITORY_GOVERNANCE.md`](REPOSITORY_GOVERNANCE.md) — fonte única, branches, PRs e gates;
 - [`ROADMAP.md`](ROADMAP.md) — sequência oficial de construção.
+- [`production/CODEX_GAME_ASSEMBLY_V1.md`](production/CODEX_GAME_ASSEMBLY_V1.md) — ExecPlan operacional para Codex montar o jogo em lotes verticais usando o intake visual auditado.
 
 ## Contratos executáveis
 
@@ -18,6 +19,7 @@ Este arquivo é a porta de entrada da documentação ativa. Antes de criar um do
 - [`../data/production/supreme_build_contract_v01.json`](../data/production/supreme_build_contract_v01.json) — metas e release gates;
 - [`../data/production/release_gate_status_v01.json`](../data/production/release_gate_status_v01.json) — ledger único com evidências e pendências de release;
 - [`../data/production/game_build_matrix_v1.json`](../data/production/game_build_matrix_v1.json) — matriz machine-readable de completude do jogo inteiro, G0–G8;
+- [`../data/production/codex_game_assembly_v1.json`](../data/production/codex_game_assembly_v1.json) — contrato machine-readable do ExecPlan de montagem pelo Codex e cobertura dos 43 assets auditados;
 - [`../data/production/external_tool_registry_v1.json`](../data/production/external_tool_registry_v1.json) — intake auditado de repositórios/modelos/benchmarks externos e políticas de reuso;
 - [`../data/visual/production_manifest_v03.json`](../data/visual/production_manifest_v03.json) — contrato ativo de derivação audiovisual fail-closed;
 - [`../data/visual/production_manifest_v02.json`](../data/visual/production_manifest_v02.json) — inventário audiovisual histórico/compatível usado como entrada do v03;\n- [`../data/visual/session_visual_intake_2026_09_29.json`](../data/visual/session_visual_intake_2026_09_29.json) — catálogo auditado da sessão visual de 2026-09-29; referências e blockers, sem promoção de binários;

@@ -123,6 +123,24 @@ Main Menu
 7. **Documentação:** decisões, migrações, limitações e evidências.
 8. **GitHub:** commit focado, issue e PR atualizados.
 
+## Codex e ExecPlans
+
+Para trabalho que cruza mais de um subsistema, dura vários lotes ou monta uma fatia jogável completa, Codex deve usar um ExecPlan vivo em vez de improvisar uma sequência longa.
+
+Plano ativo de montagem integral:
+
+- `docs/production/CODEX_GAME_ASSEMBLY_V1.md`
+- `data/production/codex_game_assembly_v1.json`
+
+Ao trabalhar sob esse plano:
+
+- consumir `data/visual/session_visual_intake_2026_09_29.json` como inventário auditado dos 43 assets da sessão;
+- verificar o SHA-256 do arquivo visual privado quando os binários estiverem disponíveis no workspace;
+- se o arquivo não estiver disponível, continuar apenas com código/dados/metadados e registrar o bloqueio;
+- nunca substituir imagem ausente por arte inventada;
+- sempre executar o menor lote vertical de maior valor e atualizar PR/issue com evidência real;
+- manter concept art, likeness bloqueado e expansão não-canônica fora de shipping.
+
 ## Branches e commits
 
 Use somente prefixos aprovados:

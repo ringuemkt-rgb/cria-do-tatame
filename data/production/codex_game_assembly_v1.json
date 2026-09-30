@@ -1,0 +1,149 @@
+{
+  "$schema": "cria.codex_game_assembly.v1",
+  "version": "1.0.0",
+  "status": "ACTIVE_EXECUTION_PLAN",
+  "runtime_authority": false,
+  "shipping": false,
+  "source_repository": "ringuemkt-rgb/cria-do-tatame",
+  "agent_entrypoint": "AGENTS.md",
+  "exec_plan": "docs/production/CODEX_GAME_ASSEMBLY_V1.md",
+  "visual_intake": "data/visual/session_visual_intake_2026_09_29.json",
+  "production_manifest": "data/visual/production_manifest_v03.json",
+  "build_contract": "data/production/supreme_build_contract_v01.json",
+  "canon_contract": "data/production/canon_contract_v4_1.json",
+  "external_material_gate": {
+    "archive_filename": "cria_visual_master_pack_2026-09-29.zip",
+    "sha256": "2de0f1cd6b5ea2756a57b4a561d185e98df62b500b6373d284938edad3431e05",
+    "required_for_binary_authoring": true,
+    "missing_archive_behavior": "continue_with_metadata_and_code_only; never fabricate or substitute binaries"
+  },
+  "principles": {
+    "small_vertical_batches": true,
+    "main_bootable": true,
+    "godot_only_runtime": true,
+    "no_duplicate_managers": true,
+    "candidate_never_means_shipping": true,
+    "human_approval_required_for_final_art": true,
+    "rights_required_for_final_art": true,
+    "physical_android_test_required_for_release": true
+  },
+  "material_coverage": [
+    {
+      "category": "map_core",
+      "expected_count": 10,
+      "use": "style_anchor_to_layered_runtime_map",
+      "promotion": "rebuild_without_baked_mutable_ui",
+      "priority": 2
+    },
+    {
+      "category": "map_expansion",
+      "expected_count": 4,
+      "use": "expansion_reference_only",
+      "promotion": "hold_until_canon_decision",
+      "priority": 5
+    },
+    {
+      "category": "map_overlay",
+      "expected_count": 5,
+      "use": "derive_resources_collectables_faction_layers",
+      "promotion": "data_driven_overlay",
+      "priority": 2
+    },
+    {
+      "category": "faction_banner",
+      "expected_count": 6,
+      "use": "ceremonial_and_ui_reference",
+      "promotion": "remove_baked_text_or_regenerate_canon_text",
+      "priority": 3
+    },
+    {
+      "category": "character",
+      "expected_count": 6,
+      "use": "identity_and_pose_reference",
+      "promotion": "identity_lock_then_sprite_forge",
+      "priority": 1
+    },
+    {
+      "category": "character_concept",
+      "expected_count": 2,
+      "use": "reference_only",
+      "promotion": "none_until_roster_and_canon_review",
+      "priority": 5
+    },
+    {
+      "category": "private_likeness",
+      "expected_count": 5,
+      "use": "private_reference_only",
+      "promotion": "blocked_until_explicit_likeness_clearance_and_roster_policy_change",
+      "priority": 6
+    },
+    {
+      "category": "technique_card",
+      "expected_count": 5,
+      "use": "card_layout_and_central_art_reference",
+      "promotion": "runtime_card_renders_stats_and_text_from_data",
+      "priority": 3
+    }
+  ],
+  "milestones": [
+    {
+      "id": "C0",
+      "name": "bootstrap_and_truth",
+      "goal": "verify repository authority, current PRs, archive hash when available, and baseline quality",
+      "done_when": ["npm run quality passes", "no unresolved authority conflict"]
+    },
+    {
+      "id": "C1",
+      "name": "gold_slice_identity",
+      "goal": "lock Ruan and Davi identity masters from preferred audited candidates",
+      "focus_assets": ["ruan_turnaround_v2_beard_pixel", "davi_identity_action_sheet_v1"],
+      "done_when": ["identity lock passes", "human approval recorded", "no real-person likeness"]
+    },
+    {
+      "id": "C2",
+      "name": "gold_slice_combat_art",
+      "goal": "produce and integrate paired BJJ visuals for the current Ruan x Davi fixture",
+      "focus_sources": ["data/bjj/bjj_kg_slice_ruan_davi_v1.json"],
+      "done_when": ["paired sync QA passes", "Godot runtime evidence exists", "CombatManager remains scene authority"]
+    },
+    {
+      "id": "C3",
+      "name": "terreiro_dique_ui",
+      "goal": "finish Terreiro, Arena do Dique, fight HUD, submission HUD and touch controls",
+      "done_when": ["mobile readability passes", "vertical slice flow is playable", "Godot smokes pass"]
+    },
+    {
+      "id": "C4",
+      "name": "layered_world_map",
+      "goal": "convert map references and overlays into dynamic Godot layers for the 10 canonical pages",
+      "done_when": ["mutable UI is not baked into map art", "routes/locks/factions/collectables are data driven", "world map smoke passes"]
+    },
+    {
+      "id": "C5",
+      "name": "factions_and_cards",
+      "goal": "integrate faction visual language and data-driven technique cards",
+      "done_when": ["ALE display name is Os Aleluiado", "t057 card is data bound", "unresolved card references remain non-authoritative"]
+    },
+    {
+      "id": "C6",
+      "name": "campaign_assembly",
+      "goal": "connect narrative, missions, economy, factions, map, save and combat into the mandatory campaign flow",
+      "done_when": ["Main Menu -> Terreiro -> combat -> result -> Cria Live -> week advance -> save -> Terreiro passes"]
+    },
+    {
+      "id": "C7",
+      "name": "release_hardening",
+      "goal": "finish automatic QA and device validation without overstating release readiness",
+      "done_when": ["full CI green", "Android physical-device evidence recorded", "release ledger gates satisfied"]
+    }
+  ],
+  "queue_output": "production/generated/codex_game_assembly_queue_v1.json",
+  "stop_conditions": [
+    "canon_or_precedence_conflict",
+    "unknown_rights_or_provenance",
+    "missing_required_binary_without_authorized_substitute",
+    "unsafe_or_unreviewed_bjj_biomechanics",
+    "duplicate_runtime_manager_or_second_project_godot",
+    "required_test_cannot_run"
+  ]
+}
