@@ -195,3 +195,27 @@ Use this as the default start prompt in Codex:
 ## Progress log
 
 Codex should append a short dated entry here only when a milestone materially advances. Each entry should state commit/PR, tests and remaining blocker. Do not use this file as a substitute for issue/PR history.
+
+### 2026-09-30 — C0 bootstrap quality repair
+
+Batch: `fix/codex-assembly-bootstrap-quality`, based on PR #159 at
+`4cc6aad1df3590fe832540148e06e073f1d15dc2`. Related to #103.
+
+- Reproduced the mandatory baseline failure: Davi's `counter_entry` had no QA
+  profile. `sprawl_response`, `scramble` and `counter_whiff` were also unmapped.
+- Ported only the profile mappings and all-character adapter regression from
+  commit `513822211917acbaf48171e45c608ab43939d8c4` (#138, also reused in #157).
+  Existing thresholds, custom signature overrides and approval gates remain.
+- Repository Quality now runs `npm run quality` and triggers for PRs against
+  any base, including stacked PRs. Nine green workflows on #159 had not run
+  this full gate because Repository Quality only targeted `main`.
+- Validation: full `npm run quality` PASS; workflow YAML parse and checks for
+  stacked-PR trigger/full gate PASS. Runtime and scene files were not changed.
+- External master pack is absent; its expected SHA-256 was not verified.
+  The four accessible JPEG attachments visually correspond to the existing
+  Salvador, Interior Norte, Cairu and Interior Sul style references. They do
+  not supply Ruan/Davi identity masters or separated runtime map layers.
+- C1 remains blocked on the verified master pack and recorded identity,
+  human/rights approval. No visual material was promoted. Next batch is C1
+  when its prerequisites are available; Android/device and release gates
+  remain pending. Rollback: revert this focused bootstrap batch.
