@@ -20,7 +20,7 @@ Este arquivo é a porta de entrada da documentação ativa. Antes de criar um do
 - [`../data/production/game_build_matrix_v1.json`](../data/production/game_build_matrix_v1.json) — matriz machine-readable de completude do jogo inteiro, G0–G8;
 - [`../data/production/external_tool_registry_v1.json`](../data/production/external_tool_registry_v1.json) — intake auditado de repositórios/modelos/benchmarks externos e políticas de reuso;
 - [`../data/visual/production_manifest_v03.json`](../data/visual/production_manifest_v03.json) — contrato ativo de derivação audiovisual fail-closed;
-- [`../data/visual/production_manifest_v02.json`](../data/visual/production_manifest_v02.json) — inventário audiovisual histórico/compatível usado como entrada do v03;
+- [`../data/visual/production_manifest_v02.json`](../data/visual/production_manifest_v02.json) — inventário audiovisual histórico/compatível usado como entrada do v03;\n- [`../data/visual/session_visual_intake_2026_09_29.json`](../data/visual/session_visual_intake_2026_09_29.json) — catálogo auditado da sessão visual de 2026-09-29; referências e blockers, sem promoção de binários;
 - [`../production/coverage/asset_links_v1.json`](../production/coverage/asset_links_v1.json) — vínculo explícito requisito→binário para coverage e shipping;
 - [`../data/visual/sprite_forge_contract_v1.json`](../data/visual/sprite_forge_contract_v1.json) — consistência quantitativa de sprites sobre o Asset Pipeline v2;
 - [`../data/production/repository_governance_v01.json`](../data/production/repository_governance_v01.json) — governança validável por máquina;
@@ -55,7 +55,7 @@ Este arquivo é a porta de entrada da documentação ativa. Antes de criar um do
 - [`production/APK_VISUAL_COMPLETION_PLAN_V09.md`](production/APK_VISUAL_COMPLETION_PLAN_V09.md) — gates de vertical slice e Android;
 - [`production/DRIVE_CLOUD_V1.md`](production/DRIVE_CLOUD_V1.md) — adaptador privado Google Drive, Colab, rclone e provenance Hugging Face;
 - [`production/QWEN_PIXEL_ART_AUTHORING_V1.md`](production/QWEN_PIXEL_ART_AUTHORING_V1.md) — uso auditado do Qwen Pixel Art LoRA como gerador de candidatos, com clone metadata-only e download pinado;
-- [`../data/ai/model_registry_v02.json`](../data/ai/model_registry_v02.json) — auditoria e gates atuais de modelos Hugging Face.
+- [`../data/ai/model_registry_v02.json`](../data/ai/model_registry_v02.json) — auditoria e gates atuais de modelos Hugging Face;\n- [`qa/VISUAL_MATERIAL_REVIEW_2026_09_29.md`](qa/VISUAL_MATERIAL_REVIEW_2026_09_29.md) — revisão completa dos 43 assets construídos da sessão, com decisões de promoção/bloqueio;\n- [`../production/visual/session_2026_09_29/README.md`](../production/visual/session_2026_09_29/README.md) — handoff do arquivo privado para as filas P1 sem transformar concept art em runtime.
 
 ## Engenharia e QA
 
