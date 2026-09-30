@@ -1,0 +1,131 @@
+{
+  "$schema": "cria.visual.session_intake.v1",
+  "version": "1.0.0",
+  "status": "AUDITED_REFERENCE_INTAKE",
+  "session_date": "2026-09-29",
+  "source_scope": "Visual material constructed and reviewed in the ChatGPT production session",
+  "runtime_authority": false,
+  "shipping": false,
+  "issue": 103,
+  "related_prs": [144, 147],
+  "authorities": {
+    "canon": "data/production/canon_contract_v4_1.json",
+    "build": "data/production/supreme_build_contract_v01.json",
+    "art_direction": ".agents/skills/cria-art-direction/SKILL.md",
+    "sprite_forge": "data/visual/sprite_forge_contract_v2.json",
+    "production_manifest": "data/visual/production_manifest_v03.json",
+    "binary_registry": "assets/manifest_v2.json"
+  },
+  "archive": {
+    "public_repo_contains_binary_archive": false,
+    "constructed_unique_assets": 43,
+    "excluded_raw_real_person_photos": 2,
+    "excluded_exact_duplicates": 1,
+    "private_archive_filename": "cria_visual_master_pack_2026-09-29.zip",
+    "private_archive_sha256": "2de0f1cd6b5ea2756a57b4a561d185e98df62b500b6373d284938edad3431e05",
+    "private_archive_size_bytes": 59784243,
+    "full_catalog_filename": "visual_master_catalog_v1.json",
+    "full_catalog_sha256": "ab50e74fef7a9c01694ce5006c720d60561c9c93a4d047e8a367a15df8852c4b",
+    "contact_sheet_filename": "contact_sheet.jpg",
+    "contact_sheet_sha256": "ed7e2ec44ba1276d999652d4d3e2f2f639ebbe743750b4ff46bf4da31c797f7f"
+  },
+  "policies": {
+    "archive_is_not_runtime": true,
+    "archive_is_not_shipping": true,
+    "no_binary_is_promoted_by_this_intake": true,
+    "public_repo_promotion_requires_rights_qa_human_approval": true,
+    "real_person_likeness_publication_blocked_without_explicit_clearance": true,
+    "maps_with_baked_mutable_ui_are_reference_only": true,
+    "generated_card_stats_are_non_authoritative": true,
+    "godot_must_render_mutable_ui_and_state": true
+  },
+  "counts": {
+    "map_core": 10,
+    "map_expansion": 4,
+    "map_overlay": 5,
+    "faction_banner": 6,
+    "character": 6,
+    "character_concept": 2,
+    "private_likeness": 5,
+    "technique_card": 5
+  },
+  "promotion_focus": [
+    {
+      "asset_id": "ruan_turnaround_v2_beard_pixel",
+      "target": "identity_master_candidate",
+      "next_gate": "human_identity_review_then_sprite_normalization"
+    },
+    {
+      "asset_id": "davi_identity_action_sheet_v1",
+      "target": "identity_master_candidate",
+      "next_gate": "human_identity_review_then_sprite_normalization"
+    },
+    {
+      "asset_id": "card_chave_de_braco_t057_v1",
+      "target": "t057_card_art_reference",
+      "next_gate": "extract_central_art_then_biomechanics_and_cards_authority"
+    },
+    {
+      "asset_id": "map_core_02_itubera",
+      "target": "map_style_anchor",
+      "next_gate": "rebuild_as_layered_data_driven_map_without_baked_ui"
+    },
+    {
+      "asset_id": "faction_banner_ale_light_v1",
+      "target": "ceremonial_style_reference",
+      "next_gate": "regenerate_text_as_Os_Aleluiado_or_remove_baked_text"
+    }
+  ],
+  "assets": [
+    {"asset_id":"map_core_01_baixo_sul_overview","category":"map_core","review_status":"STYLE_ANCHOR_REFERENCE","primary_blocker":"runtime_blocked_flattened_ui","public_binary_allowed":false},
+    {"asset_id":"map_core_02_itubera","category":"map_core","review_status":"STYLE_ANCHOR_REFERENCE","primary_blocker":"runtime_blocked_flattened_ui","public_binary_allowed":false},
+    {"asset_id":"map_core_03_nilo_pecanha","category":"map_core","review_status":"STYLE_ANCHOR_REFERENCE","primary_blocker":"runtime_blocked_flattened_ui","public_binary_allowed":false},
+    {"asset_id":"map_core_04_valenca","category":"map_core","review_status":"STYLE_ANCHOR_REFERENCE","primary_blocker":"runtime_blocked_flattened_ui","public_binary_allowed":false},
+    {"asset_id":"map_core_05_camamu","category":"map_core","review_status":"STYLE_ANCHOR_REFERENCE","primary_blocker":"runtime_blocked_flattened_ui","public_binary_allowed":false},
+    {"asset_id":"map_core_06_cairu","category":"map_core","review_status":"STYLE_ANCHOR_REFERENCE","primary_blocker":"runtime_blocked_flattened_ui","public_binary_allowed":false},
+    {"asset_id":"map_core_07_itacare_marau","category":"map_core","review_status":"STYLE_ANCHOR_REFERENCE","primary_blocker":"runtime_blocked_flattened_ui","public_binary_allowed":false},
+    {"asset_id":"map_core_08_interior_norte","category":"map_core","review_status":"STYLE_ANCHOR_REFERENCE","primary_blocker":"runtime_blocked_flattened_ui","public_binary_allowed":false},
+    {"asset_id":"map_core_09_interior_sul","category":"map_core","review_status":"STYLE_ANCHOR_REFERENCE","primary_blocker":"runtime_blocked_flattened_ui","public_binary_allowed":false},
+    {"asset_id":"map_core_10_salvador","category":"map_core","review_status":"STYLE_ANCHOR_REFERENCE","primary_blocker":"runtime_blocked_flattened_ui","public_binary_allowed":false},
+
+    {"asset_id":"costa_das_mares_v1","category":"map_expansion","review_status":"EXPANSION_REFERENCE_ONLY","primary_blocker":"canon_blocked_unpromoted_expansion","public_binary_allowed":false},
+    {"asset_id":"costa_das_mares_v2","category":"map_expansion","review_status":"EXPANSION_REFERENCE_ONLY","primary_blocker":"canon_blocked_unpromoted_expansion","public_binary_allowed":false},
+    {"asset_id":"costa_das_mares_v3","category":"map_expansion","review_status":"EXPANSION_REFERENCE_ONLY","primary_blocker":"canon_blocked_unpromoted_expansion","public_binary_allowed":false},
+    {"asset_id":"costa_das_mares_v4","category":"map_expansion","review_status":"EXPANSION_REFERENCE_ONLY","primary_blocker":"canon_blocked_unpromoted_expansion","public_binary_allowed":false},
+
+    {"asset_id":"map_overlay_baixo_sul_resources_v1","category":"map_overlay","review_status":"STYLE_ANCHOR_REFERENCE","primary_blocker":"runtime_rebuild_as_data_driven_overlay","public_binary_allowed":false},
+    {"asset_id":"map_overlay_interior_sul_resources_v1","category":"map_overlay","review_status":"STYLE_ANCHOR_REFERENCE","primary_blocker":"runtime_rebuild_as_data_driven_overlay","public_binary_allowed":false},
+    {"asset_id":"map_overlay_salvador_collectables_v1","category":"map_overlay","review_status":"STYLE_ANCHOR_REFERENCE","primary_blocker":"runtime_rebuild_as_data_driven_overlay","public_binary_allowed":false},
+    {"asset_id":"map_overlay_interior_norte_resources_v1","category":"map_overlay","review_status":"STYLE_ANCHOR_REFERENCE","primary_blocker":"runtime_rebuild_as_data_driven_overlay","public_binary_allowed":false},
+    {"asset_id":"map_overlay_cairu_factions_v1","category":"map_overlay","review_status":"STYLE_ANCHOR_REFERENCE","primary_blocker":"runtime_rebuild_as_data_driven_overlay","public_binary_allowed":false},
+
+    {"asset_id":"faction_banner_lem_light_v1","category":"faction_banner","review_status":"STYLE_ANCHOR_REFERENCE","primary_blocker":"runtime_rebuild_no_baked_text","public_binary_allowed":false},
+    {"asset_id":"faction_banner_ntm_light_v1","category":"faction_banner","review_status":"STYLE_ANCHOR_REFERENCE","primary_blocker":"runtime_rebuild_no_baked_text","public_binary_allowed":false},
+    {"asset_id":"faction_banner_ale_light_v1","category":"faction_banner","review_status":"REFERENCE_REJECTED_CANON_TEXT","primary_blocker":"wrong_display_name_os_aleluiados","public_binary_allowed":false},
+    {"asset_id":"faction_banner_ale_dark_v1","category":"faction_banner","review_status":"REFERENCE_REJECTED_CANON_TEXT","primary_blocker":"wrong_display_name_os_aleluiados","public_binary_allowed":false},
+    {"asset_id":"faction_banner_lem_dark_v1","category":"faction_banner","review_status":"STYLE_ANCHOR_REFERENCE","primary_blocker":"runtime_rebuild_no_baked_text","public_binary_allowed":false},
+    {"asset_id":"faction_banner_ntm_dark_v1","category":"faction_banner","review_status":"STYLE_ANCHOR_REFERENCE","primary_blocker":"runtime_rebuild_no_baked_text","public_binary_allowed":false},
+
+    {"asset_id":"ruan_turnaround_v1","category":"character","review_status":"IDENTITY_REFERENCE_BACKUP","primary_blocker":"pending_human_identity_lock","public_binary_allowed":false},
+    {"asset_id":"ruan_combat_pose_locs_v1","category":"character","review_status":"REFERENCE_CANDIDATE","primary_blocker":"pending_identity_alignment","public_binary_allowed":false},
+    {"asset_id":"ruan_combat_pose_alt_hair_v1","category":"character","review_status":"REFERENCE_REJECTED_IDENTITY_DRIFT","primary_blocker":"hair_face_drift","public_binary_allowed":false},
+    {"asset_id":"ruan_idle_sheet_board_v1","category":"character","review_status":"REFERENCE_CANDIDATE","primary_blocker":"board_not_raw_frames","public_binary_allowed":false},
+    {"asset_id":"ruan_turnaround_v2_beard_pixel","category":"character","review_status":"PREFERRED_IDENTITY_MASTER_CANDIDATE","primary_blocker":"needs_human_approval_and_sprite_normalization","public_binary_allowed":false},
+    {"asset_id":"davi_identity_action_sheet_v1","category":"character","review_status":"PREFERRED_IDENTITY_MASTER_CANDIDATE","primary_blocker":"needs_human_approval_and_sprite_normalization","public_binary_allowed":false},
+
+    {"asset_id":"irmao_calebe_concept_v1","category":"character_concept","review_status":"REFERENCE_ONLY_NOT_IN_ACTIVE_ROSTER","primary_blocker":"not_in_roster_v3","public_binary_allowed":false},
+    {"asset_id":"roster_concept_board_v1","category":"character_concept","review_status":"REFERENCE_ONLY_SUPERSEDED","primary_blocker":"contains_old_or_unverified_character_designs","public_binary_allowed":false},
+
+    {"asset_id":"adriano_degodo_heavy_pose_v1","category":"private_likeness","review_status":"PRIVATE_REFERENCE_REJECTED_FOR_RUNTIME","primary_blocker":"real_person_likeness_and_roster_guardrail","public_binary_allowed":false},
+    {"asset_id":"adriano_degodo_heavy_turnaround_v1","category":"private_likeness","review_status":"PRIVATE_REFERENCE_REJECTED_FOR_RUNTIME","primary_blocker":"real_person_likeness_and_identity_mismatch","public_binary_allowed":false},
+    {"asset_id":"adriano_degodo_heavy_sheet_v2","category":"private_likeness","review_status":"PRIVATE_REFERENCE_REJECTED_FOR_RUNTIME","primary_blocker":"real_person_likeness_and_identity_mismatch","public_binary_allowed":false},
+    {"asset_id":"adriano_degodo_likeness_sheet_v1","category":"private_likeness","review_status":"PRIVATE_REFERENCE_ONLY","primary_blocker":"real_person_likeness_forbidden_by_roster_guardrail","public_binary_allowed":false},
+    {"asset_id":"adriano_degodo_pixel_likeness_sheet_v2","category":"private_likeness","review_status":"PRIVATE_REFERENCE_ONLY","primary_blocker":"real_person_likeness_forbidden_by_roster_guardrail","public_binary_allowed":false},
+
+    {"asset_id":"card_tesoura_v1","category":"technique_card","review_status":"CARD_LAYOUT_REFERENCE_CANDIDATE","primary_blocker":"unresolved_runtime_technique_id_and_baked_stats","public_binary_allowed":false},
+    {"asset_id":"card_joelho_na_barriga_v1","category":"technique_card","review_status":"CARD_LAYOUT_REFERENCE_CANDIDATE","primary_blocker":"unresolved_runtime_technique_id_and_baked_stats","public_binary_allowed":false},
+    {"asset_id":"card_mata_leao_v1","category":"technique_card","review_status":"CARD_LAYOUT_REFERENCE_CANDIDATE","primary_blocker":"unresolved_runtime_technique_id_and_baked_stats","public_binary_allowed":false},
+    {"asset_id":"card_chave_de_braco_t057_v1","category":"technique_card","review_status":"CARD_ART_CANDIDATE_T057","primary_blocker":"t057_exists_but_cards_data_missing_and_stats_baked","public_binary_allowed":false},
+    {"asset_id":"card_kimura_v1","category":"technique_card","review_status":"CARD_LAYOUT_REFERENCE_CANDIDATE","primary_blocker":"unresolved_runtime_technique_id_and_baked_stats","public_binary_allowed":false}
+  ]
+}
