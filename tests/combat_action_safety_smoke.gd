@@ -376,6 +376,17 @@ func _test_aether_playable_adaptation() -> void:
 	_check(is_equal_approx(ai.get_reaction_delay(), normal_delay), "fallback uses normal reaction profile")
 	ai.queue_free()
 
+	var coordinator = CoordinatorScript.new()
+	coordinator.configure({}, {}, {}, {}, {"ibjjf": {"duration_sec": 360}})
+	var nightmare_plan: Dictionary = coordinator.build_pre_fight_plan(
+		"davi_relampago", SELECTION, SELECTION, {}, 77, "ibjjf", true, "arena_do_dique", "pesadelo"
+	)
+	_check(str(nightmare_plan.get("plan", {}).get("difficulty", "")) == "pesadelo", "pre-fight plan persists selected CPU difficulty")
+	var fallback_plan: Dictionary = coordinator.build_pre_fight_plan(
+		"davi_relampago", SELECTION, SELECTION, {}, 78, "ibjjf", true, "arena_do_dique", "unknown"
+	)
+	_check(str(fallback_plan.get("plan", {}).get("difficulty", "")) == "normal", "pre-fight plan normalizes unknown CPU difficulty")
+
 
 func _test_scene_input_lock() -> void:
 	_prepare()
