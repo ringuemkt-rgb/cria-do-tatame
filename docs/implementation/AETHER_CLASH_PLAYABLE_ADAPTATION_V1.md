@@ -43,9 +43,9 @@ Difficulty does **not** modify points, legal techniques, damage/HP, gas capacity
 
 Cria already seeds combat/runtime decisions. The new difficulty behavior remains inside the existing seeded Davi AI RNG rather than introducing wall-clock randomness.
 
-### 4. Explicit pacing
+### 4. Explicit pacing and real difficulty selection
 
-The arena now reads the pre-fight difficulty and derives Davi's actual turn reaction delay from the AI profile instead of using one fixed delay for every match.
+The pre-fight hub now exposes Fácil / Normal / Difícil / Pesadelo. The selected value is persisted in the pre-fight plan, threaded through CombatManager and read by the arena. Davi's actual turn reaction delay then comes from the selected AI profile instead of one fixed delay for every match.
 
 ## What was deliberately not adopted
 
@@ -74,6 +74,10 @@ The branch inherits the #157 corrections that remove HP/gas exhaustion as grappl
 ## Files changed by this batch
 
 - `src/combat/DaviAIController.gd`
+- `src/combat/CombatCoreV2Coordinator.gd`
+- `src/autoloads/CombatManager.gd`
+- `scenes/combat/PreFightHub.gd`
+- `scenes/combat/PreFightHub.tscn`
 - `scenes/combat/CombatArenaBase.gd`
 - `scenes/ui/CombatDeckHUD.gd`
 - `tests/combat_action_safety_smoke.gd`
@@ -86,6 +90,7 @@ The combat action safety smoke now checks:
 - reaction delay gets progressively shorter from Fácil → Pesadelo;
 - pattern-read strength rises with difficulty;
 - invalid difficulty falls back to Normal;
+- selected difficulty survives pre-fight planning and reaches the fight plan;
 - keyboard 1 maps to card 1;
 - keyboard 6 maps to card 6;
 - unrelated key 7 does not fire a combat card.
