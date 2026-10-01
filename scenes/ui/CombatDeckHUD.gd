@@ -69,6 +69,12 @@ func _on_card_pressed(index: int) -> void:
 		DeckManager.select_card(card_id)
 
 func _unhandled_input(event: InputEvent) -> void:
+	if event is InputEventKey and event.pressed and not event.echo:
+		var direct_index := hotkey_index_from_keycode(event.keycode)
+		if direct_index >= 0:
+			_on_card_pressed(direct_index)
+			get_viewport().set_input_as_handled()
+			return
 	if event.is_action_pressed("deck_card_1"):
 		_on_card_pressed(0)
 		get_viewport().set_input_as_handled()
@@ -78,6 +84,16 @@ func _unhandled_input(event: InputEvent) -> void:
 	elif event.is_action_pressed("deck_card_3"):
 		_on_card_pressed(2)
 		get_viewport().set_input_as_handled()
+
+func hotkey_index_from_keycode(keycode: Key) -> int:
+	match keycode:
+		KEY_1: return 0
+		KEY_2: return 1
+		KEY_3: return 2
+		KEY_4: return 3
+		KEY_5: return 4
+		KEY_6: return 5
+		_: return -1
 
 func _on_state_changed(_old_state, new_state) -> void:
 	current_state = str(new_state)
@@ -120,7 +136,7 @@ func _on_v2_hand_changed(hand: Array) -> void:
 			continue
 		var technique_id := str(v2_hand[index])
 		var info: Dictionary = DataRegistry.get_technique(technique_id)
-		button.text = str(info.get("nome", info.get("name", technique_id))).replace("_", " ")
+		button.text = "%d • %s" % [index + 1, str(info.get("nome", info.get("name", technique_id))).replace("_", " ")]
 		button.set_meta("card_id", technique_id)
 		button.disabled = not _actions_enabled or not CombatManager.is_running or not available_ids.has(technique_id)
 		button.modulate = Color.WHITE
@@ -139,7 +155,7 @@ func open_defense_window(options: Array, seconds: float) -> void:
 			continue
 		var option: Dictionary = defense_options[index]
 		var defense_id := str(option.get("id", ""))
-		button.text = "DEFESA\n%s" % str(option.get("name", defense_id)).replace("_", " ")
+		button.text = "%d • DEFESA\n%s" % [index + 1, str(option.get("name", defense_id)).replace("_", " ")]
 		button.set_meta("card_id", defense_id)
 		button.disabled = defense_id == ""
 		button.modulate = Color.WHITE

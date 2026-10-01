@@ -431,7 +431,8 @@ func execute_technique(actor_id: String, defender_id: String, technique: Diction
 		last_result["phase"] = CombatPhase.keys()[phase]
 		last_result["combat_state"] = player_state_before
 		last_result["fighters"] = fighters
-		SignalBus.technique_resolved.emit(last_result)
+		var finishing_action_result := last_result.duplicate(true)
+		SignalBus.technique_resolved.emit(finishing_action_result)
 		_emit_resources()
 		var finish_result: Dictionary = {
 			"winner": actor_id,
@@ -443,7 +444,9 @@ func execute_technique(actor_id: String, defender_id: String, technique: Diction
 			"actor_state_from": actor_state_before
 		}
 		finish_combat(finish_result)
-		return last_result
+		finishing_action_result["combat_finished"] = true
+		finishing_action_result["finish_result"] = last_result.duplicate(true)
+		return finishing_action_result
 
 	if bool(resolver_result.get("success", false)):
 		var actor_state_to := str(resolver_result.get("state_to", actor_state_before))
@@ -746,7 +749,8 @@ func prepare_combat_v2(
 	gi: bool,
 	selection: Array = [],
 	seed: int = 0,
-	social_state: Dictionary = {}
+	social_state: Dictionary = {},
+	difficulty: String = "normal"
 ) -> Dictionary:
 	if is_running:
 		return {"ok": false, "error": "combat_already_running"}
@@ -773,7 +777,8 @@ func prepare_combat_v2(
 		seed,
 		ruleset,
 		gi,
-		new_arena_id
+		new_arena_id,
+		difficulty
 	)
 
 func get_pre_fight_plan_v2() -> Dictionary:

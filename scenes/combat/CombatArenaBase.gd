@@ -57,7 +57,9 @@ func _ready() -> void:
 	var preflight: Dictionary = CombatManager.get_pre_fight_plan_v2()
 	var fight_arena := str(preflight.get("arena_id", "terreiro_da_luta"))
 	var fight_opponent := str(preflight.get("opponent_id", "davi_relampago"))
-	davi_ai.call("setup", fight_opponent, "normal")
+	var fight_difficulty := str(preflight.get("difficulty", "normal"))
+	davi_ai.call("setup", fight_opponent, fight_difficulty)
+	ai_turn_delay = float(davi_ai.call("get_reaction_delay"))
 	var start_result: Dictionary = CombatManager.start_combat(fight_arena, "ruan_macacao", fight_opponent)
 	if not bool(start_result.get("ok", false)):
 		push_error("[CombatArenaBase] Falha ao iniciar combate: %s" % str(start_result))
