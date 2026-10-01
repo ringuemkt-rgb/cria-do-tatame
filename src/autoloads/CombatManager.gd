@@ -746,7 +746,8 @@ func prepare_combat_v2(
 	gi: bool,
 	selection: Array = [],
 	seed: int = 0,
-	social_state: Dictionary = {}
+	social_state: Dictionary = {},
+	difficulty: String = "normal"
 ) -> Dictionary:
 	if is_running:
 		return {"ok": false, "error": "combat_already_running"}
@@ -773,7 +774,8 @@ func prepare_combat_v2(
 		seed,
 		ruleset,
 		gi,
-		new_arena_id
+		new_arena_id,
+		difficulty
 	)
 
 func get_pre_fight_plan_v2() -> Dictionary:
