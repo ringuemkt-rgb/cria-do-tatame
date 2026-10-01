@@ -48,7 +48,8 @@ func build_pre_fight_plan(
 	seed: int,
 	ruleset: String,
 	gi: bool,
-	arena_id: String
+	arena_id: String,
+	difficulty: String = "normal"
 ) -> Dictionary:
 	if deck_runtime == null:
 		return {"ok": false, "reason": "coordinator_not_configured"}
@@ -63,10 +64,13 @@ func build_pre_fight_plan(
 	var timer: Dictionary = timer_profiles.get(ruleset, {})
 	if timer.is_empty():
 		return {"ok": false, "reason": "ruleset_timer_missing", "ruleset": ruleset}
+	var valid_difficulties := ["facil", "normal", "dificil", "pesadelo"]
+	var resolved_difficulty := difficulty if valid_difficulties.has(difficulty) else "normal"
 	deck_runtime = candidate_deck
 	current_plan = {
 		"opponent_id": opponent_id,
 		"arena_id": arena_id,
+		"difficulty": resolved_difficulty,
 		"ruleset": ruleset,
 		"gi": gi,
 		"seed": seed,
