@@ -83,6 +83,10 @@ The branch inherits the #157 corrections that remove HP/gas exhaustion as grappl
 - `tests/combat_action_safety_smoke.gd`
 - this document
 
+## Runtime defect uncovered during integration
+
+The integrated action-safety gate exposed an existing finisher return-contract bug: a successful `encerramento_tecnico` could end the fight, but `finish_combat()` replaced `last_result` before `execute_technique()` returned, so callers saw no `success=true` on the finishing action. The finisher path now preserves and returns the successful action result, adds `combat_finished=true`, and embeds the authoritative `finish_result`.
+
 ## Validation target
 
 The combat action safety smoke now checks:
