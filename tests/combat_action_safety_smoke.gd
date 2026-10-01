@@ -188,6 +188,8 @@ func _test_full_golden_chain_runtime() -> void:
 
 	var finish_attempt: Dictionary = _execute_player_until_success("encerramento_tecnico")
 	_check(bool(finish_attempt.get("success", false)), "golden chain: technical finish succeeds")
+	_check(bool(finish_attempt.get("combat_finished", false)), "golden chain: finisher response explicitly reports fight end")
+	_check(str(finish_attempt.get("finish_result", {}).get("winner", "")) == cm.player_id, "golden chain: action response carries authoritative finish result")
 	_check(not cm.is_running, "golden chain: successful submission ends combat")
 	_check(str(cm.last_result.get("winner", "")) == cm.player_id, "golden chain: Ruan is recorded as winner")
 	_check(str(cm.last_result.get("method", "")) == "encerramento_tecnico", "golden chain: finish method is submission closure")
