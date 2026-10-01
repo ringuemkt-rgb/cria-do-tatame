@@ -1,6 +1,15 @@
 extends Node
 class_name DaviAIController
 
+# Aether Clash-inspired CPU pacing adapted to turn-based positional grappling.
+# Difficulty changes reading/reaction quality, never player/opponent stats or scoring rules.
+const DIFFICULTY_PROFILES := {
+	"facil": {"reaction_delay": 0.55, "mistake_chance": 0.28, "read_strength": 0.35, "candidate_pool": 4},
+	"normal": {"reaction_delay": 0.35, "mistake_chance": 0.12, "read_strength": 0.65, "candidate_pool": 3},
+	"dificil": {"reaction_delay": 0.22, "mistake_chance": 0.05, "read_strength": 0.85, "candidate_pool": 2},
+	"pesadelo": {"reaction_delay": 0.14, "mistake_chance": 0.01, "read_strength": 1.0, "candidate_pool": 1}
+}
+
 var rival_id: String = "davi_relampago"
 var difficulty: String = "normal"
 var seen_player_actions: Dictionary = {}
@@ -19,7 +28,7 @@ func _registry() -> Node:
 
 func setup(p_rival_id: String = "davi_relampago", p_difficulty: String = "normal") -> void:
 	rival_id = p_rival_id
-	difficulty = p_difficulty
+	difficulty = p_difficulty if DIFFICULTY_PROFILES.has(p_difficulty) else "normal"
 	var registry: Node = _registry()
 	if registry == null:
 		profile = {}
@@ -30,6 +39,18 @@ func setup(p_rival_id: String = "davi_relampago", p_difficulty: String = "normal
 	rng.seed = hash("%s|%s" % [rival_id, difficulty])
 	_load_slice_policy()
 	reset()
+
+func get_difficulty_profile() -> Dictionary:
+	return DIFFICULTY_PROFILES.get(difficulty, DIFFICULTY_PROFILES["normal"]).duplicate(true)
+
+func get_reaction_delay() -> float:
+	return float(get_difficulty_profile().get("reaction_delay", 0.35))
+
+func get_mistake_chance() -> float:
+	return float(get_difficulty_profile().get("mistake_chance", 0.12))
+
+func get_read_strength() -> float:
+	return float(get_difficulty_profile().get("read_strength", 0.65))
 
 func _load_slice_policy() -> void:
 	slice_policy = {}
@@ -87,13 +108,19 @@ func choose_technique(combat_manager: Node) -> Dictionary:
 	var fighters: Dictionary = combat_manager.get("fighters")
 	var player_resources: Dictionary = fighters.get(player_id, {})
 	var rival_resources: Dictionary = fighters.get(rival_id, {})
-	var best: Dictionary = affordable[0]
-	var best_score: float = -INF
+	var ranked: Array[Dictionary] = []
 	for technique in affordable:
-		var score: float = _score_technique(technique, actor_state, player_resources, rival_resources)
-		if score > best_score:
-			best_score = score
-			best = technique
+		ranked.append({
+			"technique": technique,
+			"score": _score_technique(technique, actor_state, player_resources, rival_resources)
+		})
+	ranked.sort_custom(func(a: Dictionary, b: Dictionary) -> bool: return float(a.get("score", 0.0)) > float(b.get("score", 0.0)))
+	var difficulty_profile := get_difficulty_profile()
+	var pool_size := clampi(int(difficulty_profile.get("candidate_pool", 1)), 1, ranked.size())
+	var selected_index := 0
+	if pool_size > 1 and rng.randf() < float(difficulty_profile.get("mistake_chance", 0.0)):
+		selected_index = rng.randi_range(1, pool_size - 1)
+	var best: Dictionary = ranked[selected_index].get("technique", affordable[0])
 	last_chosen_technique = str(best.get("id", ""))
 	return best
 
@@ -129,6 +156,7 @@ func _score_technique(technique: Dictionary, actor_state: String, player_resourc
 
 func _anti_pattern_bonus(technique_id: String, player_resources: Dictionary) -> float:
 	var bonus: float = 0.0
+	var read_strength := get_read_strength()
 	for rule_value in profile.get("anti_patterns", []):
 		if typeof(rule_value) != TYPE_DICTIONARY:
 			continue
@@ -139,11 +167,11 @@ func _anti_pattern_bonus(technique_id: String, player_resources: Dictionary) -> 
 		if rule.has("if_player_repeats_family"):
 			var family: String = str(rule.get("if_player_repeats_family", ""))
 			if int(seen_player_families.get(family, 0)) >= 2:
-				bonus += 32.0 * weight
+				bonus += 32.0 * weight * read_strength
 		if bool(rule.get("if_player_low_gas", false)) and float(player_resources.get("gas", 100)) < 30.0:
-			bonus += 28.0 * weight
+			bonus += 28.0 * weight * read_strength
 		if bool(rule.get("if_player_low_focus", false)) and float(player_resources.get("focus", 100)) < 30.0:
-			bonus += 24.0 * weight
+			bonus += 24.0 * weight * read_strength
 	return bonus
 
 func _difficulty_bonus(technique: Dictionary) -> float:
