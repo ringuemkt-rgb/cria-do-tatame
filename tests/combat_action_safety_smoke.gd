@@ -2,6 +2,8 @@ extends SceneTree
 
 const ResolverScript = preload("res://src/combat/TechniqueResolver.gd")
 const CoordinatorScript = preload("res://src/combat/CombatCoreV2Coordinator.gd")
+const DaviAIControllerScript = preload("res://src/combat/DaviAIController.gd")
+const CombatDeckHUDScript = preload("res://scenes/ui/CombatDeckHUD.gd")
 const SELECTION := ["grip_de_ferro", "baiana", "sprawl", "puxada_guarda", "corte_joelho", "encerramento_tecnico"]
 var checks := 0
 var failures := 0
@@ -29,6 +31,7 @@ func _run() -> void:
 	_test_interactive_defense_contract()
 	_test_runtime_guards()
 	_test_seeded_runtime()
+	_test_aether_playable_adaptation()
 	await _test_scene_input_lock()
 	print("[CombatActionSafety] checks=%d failures=%d" % [checks, failures])
 	print("[CombatActionSafety] PASS" if failures == 0 else "[CombatActionSafety] FAIL")
@@ -350,6 +353,36 @@ func _test_seeded_runtime() -> void:
 	var before: Dictionary = cm.fighters.duplicate(true)
 	_check(not bool(cm.start_combat("wrong_arena", "ruan_macacao", "davi_relampago").get("ok")), "stale preflight mismatch blocked")
 	_check(cm.fighters == before and not cm.is_running, "mismatch does not start or mutate fight")
+
+
+func _test_aether_playable_adaptation() -> void:
+	var ai = DaviAIControllerScript.new()
+	root.add_child(ai)
+	ai.setup("davi_relampago", "facil")
+	var easy_delay := ai.get_reaction_delay()
+	var easy_read := ai.get_read_strength()
+	ai.setup("davi_relampago", "normal")
+	var normal_delay := ai.get_reaction_delay()
+	var normal_read := ai.get_read_strength()
+	ai.setup("davi_relampago", "dificil")
+	var hard_delay := ai.get_reaction_delay()
+	var hard_read := ai.get_read_strength()
+	ai.setup("davi_relampago", "pesadelo")
+	var nightmare_delay := ai.get_reaction_delay()
+	var nightmare_read := ai.get_read_strength()
+	_check(easy_delay > normal_delay and normal_delay > hard_delay and hard_delay > nightmare_delay, "difficulty makes CPU reaction progressively faster")
+	_check(easy_read < normal_read and normal_read < hard_read and hard_read <= nightmare_read, "difficulty increases pattern-read strength without stat buffs")
+	ai.setup("davi_relampago", "invalid")
+	_check(ai.difficulty == "normal", "unknown CPU difficulty safely falls back to normal")
+	_check(is_equal_approx(ai.get_reaction_delay(), normal_delay), "fallback uses normal reaction profile")
+	ai.queue_free()
+
+	var hud = CombatDeckHUDScript.new()
+	_check(hud.hotkey_index_from_keycode(KEY_1) == 0, "keyboard 1 maps to first combat card")
+	_check(hud.hotkey_index_from_keycode(KEY_6) == 5, "keyboard 6 maps to sixth combat card")
+	_check(hud.hotkey_index_from_keycode(KEY_7) == -1, "unmapped keyboard key does not trigger a card")
+	hud.queue_free()
+
 
 func _test_scene_input_lock() -> void:
 	_prepare()
