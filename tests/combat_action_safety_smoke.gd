@@ -3,7 +3,6 @@ extends SceneTree
 const ResolverScript = preload("res://src/combat/TechniqueResolver.gd")
 const CoordinatorScript = preload("res://src/combat/CombatCoreV2Coordinator.gd")
 const DaviAIControllerScript = preload("res://src/combat/DaviAIController.gd")
-const CombatDeckHUDScript = preload("res://scenes/ui/CombatDeckHUD.gd")
 const SELECTION := ["grip_de_ferro", "baiana", "sprawl", "puxada_guarda", "corte_joelho", "encerramento_tecnico"]
 var checks := 0
 var failures := 0
@@ -377,12 +376,6 @@ func _test_aether_playable_adaptation() -> void:
 	_check(is_equal_approx(ai.get_reaction_delay(), normal_delay), "fallback uses normal reaction profile")
 	ai.queue_free()
 
-	var hud = CombatDeckHUDScript.new()
-	_check(hud.hotkey_index_from_keycode(KEY_1) == 0, "keyboard 1 maps to first combat card")
-	_check(hud.hotkey_index_from_keycode(KEY_6) == 5, "keyboard 6 maps to sixth combat card")
-	_check(hud.hotkey_index_from_keycode(KEY_7) == -1, "unmapped keyboard key does not trigger a card")
-	hud.queue_free()
-
 
 func _test_scene_input_lock() -> void:
 	_prepare()
@@ -391,6 +384,10 @@ func _test_scene_input_lock() -> void:
 	var arena = arena_scene.instantiate()
 	root.add_child(arena)
 	await process_frame
+	var combat_hud = arena.get_node("CombatDeckHUD")
+	_check(combat_hud.hotkey_index_from_keycode(KEY_1) == 0, "keyboard 1 maps to first combat card")
+	_check(combat_hud.hotkey_index_from_keycode(KEY_6) == 5, "keyboard 6 maps to sixth combat card")
+	_check(combat_hud.hotkey_index_from_keycode(KEY_7) == -1, "unmapped keyboard key does not trigger a card")
 	arena.ai_turn_delay = 0.05
 	arena.defense_window_seconds = 0.05
 	arena._execute_player_action("baiana")
