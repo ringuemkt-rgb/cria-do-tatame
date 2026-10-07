@@ -10,6 +10,7 @@ Este arquivo é a porta de entrada da documentação ativa. Antes de criar um do
 - [`DECISIONS.md`](DECISIONS.md) — decisões arquiteturais e canônicas D1–D11;
 - [`REPOSITORY_GOVERNANCE.md`](REPOSITORY_GOVERNANCE.md) — fonte única, branches, PRs e gates;
 - [`ROADMAP.md`](ROADMAP.md) — sequência oficial de construção.
+- [`production/GOLD_SLICE_PROFESSIONAL_V1.md`](production/GOLD_SLICE_PROFESSIONAL_V1.md) — plano executável do gold slice Ruan × Davi, Terreiro vivo e certificação Android física.
 
 ## Contratos executáveis
 
@@ -85,3 +86,5 @@ Use um destes estados no início de documentos novos quando o contexto não for 
 - `ARCHIVED` — histórico, não orienta implementação.
 
 Prompts, relatórios antigos, concept arts e branches não são automaticamente fontes canônicas.
+
+- [`../data/visual/graphic_system_master_v1.json`](../data/visual/graphic_system_master_v1.json) — contrato mestre de fabricação gráfica; não é autoridade de runtime.
