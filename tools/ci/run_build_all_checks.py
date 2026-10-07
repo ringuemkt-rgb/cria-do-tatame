@@ -17,7 +17,7 @@ SMOKES = ["runtime_smoke", "full_game_smoke", "bjj_reducer_v2_smoke",
           "combat_manager_bjj_shadow_smoke", "world_route_resolver_smoke",
           "vehicle_service_smoke", "world_travel_two_phase_smoke", "rota_101_simulation_smoke",
           "rota_101_scene_smoke", "travel_detail_panel_smoke", "crialive_v1_smoke",
-          "build_all_integration_smoke", "combat_core_v2_smoke", "progression_os_smoke"]
+          "build_all_integration_smoke", "combat_core_v2_smoke", "progression_os_smoke", "terreiro_living_hub_smoke"]
 ERROR = re.compile(r"^(?:SCRIPT )?ERROR:", re.MULTILINE)
 
 
