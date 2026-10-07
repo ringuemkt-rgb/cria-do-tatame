@@ -1,43 +1,72 @@
 {
   "$schema": "cria.crialive.v1",
   "version": "1.0.0",
-  "shipping": false,
-  "not_autoload": true,
-  "service": "CriaLiveService",
-  "legacy_to_wrap": ["src/autoloads/CriaLiveManager.gd", "src/career/CriaLiveFeedManager.gd"],
-  "authorities": {
+  "status": "SLICE_ACTIVE",
+  "authority": {
     "combat": "CombatManager",
-    "time": "WorldDirectorManager",
-    "ledger": "ProgressionOS",
-    "save": "SaveManager"
+    "progression_ledger": "ProgressionOS",
+    "time": "WorldDirectorManager/WorldState",
+    "money": "WorldState",
+    "save": "SaveManager v6",
+    "social_rules": "CriaLiveService",
+    "feed_surface": "CriaLiveManager",
+    "persistent_social_state": "CriaLiveInteractionManager"
   },
-  "handle": "@ruanmacacao",
-  "tons_post": ["humilde", "confiante", "provocador"],
-  "tipos_post": ["clip_luta", "treino", "vida", "provocacao", "resposta", "patrocinado"],
-  "tiers_seguidores": [
-    {"id": "bairro", "min": 0, "max": 500, "ad_rate": 0.02, "sponsor_tier": 0},
-    {"id": "cidade", "min": 500, "max": 2000, "ad_rate": 0.05, "sponsor_tier": 1},
-    {"id": "regional", "min": 2000, "max": 10000, "ad_rate": 0.10, "sponsor_tier": 2},
-    {"id": "estadual", "min": 10000, "max": 50000, "ad_rate": 0.18, "sponsor_tier": 3},
+  "profile_defaults": {
+    "handle": "@ruanmacacao",
+    "followers": 420,
+    "hype": 20.0,
+    "verified": false,
+    "coverage_risk": 0.0
+  },
+  "follower_tiers": [
+    {"id": "bairro", "min": 0, "max": 499, "ad_rate": 0.02, "sponsor_tier": 0},
+    {"id": "cidade", "min": 500, "max": 1999, "ad_rate": 0.05, "sponsor_tier": 1},
+    {"id": "regional", "min": 2000, "max": 9999, "ad_rate": 0.10, "sponsor_tier": 2},
+    {"id": "estadual", "min": 10000, "max": 49999, "ad_rate": 0.18, "sponsor_tier": 3},
     {"id": "nacional", "min": 50000, "max": 999999, "ad_rate": 0.30, "sponsor_tier": 4}
   ],
-  "viral_limiar": 1.5,
-  "nemesis_learn_after_posts": 2,
-  "decay": {"followers_inactive_week": 0.02, "hype_week": 0.10},
-  "patrocinadores": [
-    {"id": "academia_suplementos", "tier": 1, "coin_semana": 40, "req_seguidores": 500},
-    {"id": "kaka_surf", "tier": 2, "coin_semana": 90, "req_seguidores": 2000, "req_hype": 40},
-    {"id": "ntm_molho", "tier": 3, "coin_semana": 200, "req_seguidores": 10000, "req_rep_ntm": 30}
-  ],
-  "tendencias": [
-    {"id": "desafio_raspagem", "tag": "#RaspagemDoDia", "bonus_hype": 1.5},
-    {"id": "sexta_de_gi", "tag": "#SextaDeGI", "bonus_hype": 1.3}
-  ],
-  "loops": ["post_growth_money", "fight_proposal", "sponsor", "provocation_nemesis", "weekly_decay"],
-  "tone_table": {
-    "humilde": {"hype": "low", "heat": 0, "honra": 1},
-    "confiante": {"hype": "mid", "heat": 1, "honra": 0},
-    "provocador": {"hype": "high", "heat": 3, "cobertura_risk": true}
+  "post_types": ["clip_luta", "treino", "vida", "provocacao", "resposta", "patrocinado"],
+  "tone_rules": {
+    "humilde": {"caption_fit": 0.98, "hype_delta": 2.0, "heat_delta": 0.0, "honra_delta": 3.0, "coverage_multiplier": 0.0},
+    "confiante": {"caption_fit": 1.08, "hype_delta": 5.0, "heat_delta": 1.0, "honra_delta": 0.0, "coverage_multiplier": 1.0},
+    "provocador": {"caption_fit": 1.18, "hype_delta": 9.0, "heat_delta": 3.0, "honra_delta": -2.0, "coverage_multiplier": 1.5}
   },
-  "forbidden": ["new_autoload", "second_CombatManager", "buy_CriaCoin_with_real_money", "crime_howto"]
+  "virality": {
+    "viral_threshold": 1.50,
+    "base_engagement_rate": 0.16,
+    "roll_min": 0.80,
+    "roll_max": 1.20,
+    "novelty_first": 1.20,
+    "novelty_repeat": 0.78,
+    "viral_follower_bonus": 250,
+    "viral_hype_bonus": 12.0
+  },
+  "weekly": {
+    "inactive_follower_multiplier": 0.98,
+    "hype_multiplier": 0.90
+  },
+  "nemesis": {
+    "technique_exposure_threshold": 2
+  },
+  "infiltration": {
+    "risk_types": ["clip_luta", "provocacao"],
+    "lay_low_threshold": 12.0
+  },
+  "trends": [
+    {"id": "desafio_raspagem", "name": "#RaspagemDoDia", "bonus": 1.50},
+    {"id": "sexta_de_gi", "name": "#SextaDeGI", "bonus": 1.30}
+  ],
+  "slice_proposals": [
+    {
+      "id": "fp_davi_dique_v1",
+      "challenger": "davi_relampago",
+      "ruleset": "ibjjf",
+      "venue": "arena_do_dique",
+      "base_purse": 180,
+      "hype_req": 20,
+      "deadline_week_offset": 2,
+      "status": "open"
+    }
+  ]
 }
