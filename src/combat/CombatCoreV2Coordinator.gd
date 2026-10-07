@@ -48,11 +48,14 @@ func build_pre_fight_plan(
 	seed: int,
 	ruleset: String,
 	gi: bool,
-	arena_id: String
+	arena_id: String,
+	difficulty: String = "normal"
 ) -> Dictionary:
 	if deck_runtime == null:
 		return {"ok": false, "reason": "coordinator_not_configured"}
-	var deck_result: Dictionary = deck_runtime.build_deck(available_techniques, selection)
+	# Validate into a candidate: a rejected plan must not mutate the live deck.
+	var candidate_deck = DeckRuntimeScript.new()
+	var deck_result: Dictionary = candidate_deck.build_deck(available_techniques, selection)
 	if not bool(deck_result.get("ok", false)):
 		return deck_result
 	var rival_profile: Dictionary = rival_profiles.get(opponent_id, {})
@@ -61,9 +64,13 @@ func build_pre_fight_plan(
 	var timer: Dictionary = timer_profiles.get(ruleset, {})
 	if timer.is_empty():
 		return {"ok": false, "reason": "ruleset_timer_missing", "ruleset": ruleset}
+	var valid_difficulties := ["facil", "normal", "dificil", "pesadelo"]
+	var resolved_difficulty := difficulty if valid_difficulties.has(difficulty) else "normal"
+	deck_runtime = candidate_deck
 	current_plan = {
 		"opponent_id": opponent_id,
 		"arena_id": arena_id,
+		"difficulty": resolved_difficulty,
 		"ruleset": ruleset,
 		"gi": gi,
 		"seed": seed,
@@ -101,6 +108,11 @@ func is_active() -> bool:
 
 func card_available(technique_id: String) -> bool:
 	return is_active() and deck_runtime.contains_in_hand(technique_id)
+
+func ensure_playable_hand(valid_ids: Array) -> Dictionary:
+	if not is_active() or deck_runtime == null:
+		return {"rescued": false, "reason": "combat_v2_inactive", "hand": []}
+	return deck_runtime.ensure_playable(valid_ids)
 
 func consume_card(technique_id: String) -> Array:
 	if not deck_runtime.play_card(technique_id):
