@@ -7,6 +7,7 @@ const TERREIRO_SCENE := "res://scenes/hubs/TerreiroDaLuta.tscn"
 @export var arena_id := "arena_do_dique"
 
 var _ruleset_ids := ["ibjjf", "adcc", "clandestina"]
+var _difficulty_ids := ["facil", "normal", "dificil", "pesadelo"]
 var _current_plan: Dictionary = {}
 
 func _ready() -> void:
@@ -25,6 +26,10 @@ func _populate_rules() -> void:
 	for id in _ruleset_ids:
 		$Root/GameRow/Rules/Body/Ruleset.add_item(id.to_upper())
 	$Root/GameRow/Rules/Body/Ruleset.select(0)
+	$Root/GameRow/Rules/Body/Difficulty.clear()
+	for id in _difficulty_ids:
+		$Root/GameRow/Rules/Body/Difficulty.add_item(id.to_upper())
+	$Root/GameRow/Rules/Body/Difficulty.select(1)
 	$Root/GameRow/Rules/Body/GiToggle.button_pressed = true
 
 func _populate_presets() -> void:
@@ -64,13 +69,17 @@ func _refresh_plan() -> Dictionary:
 		_set_status("Escolha entre 6 e 8 tecnicas. Atual: %d." % selection.size())
 		return {"ok": false, "reason": "deck_size_invalid"}
 	var ruleset: String = str(_ruleset_ids[$Root/GameRow/Rules/Body/Ruleset.selected])
+	var difficulty: String = str(_difficulty_ids[$Root/GameRow/Rules/Body/Difficulty.selected])
 	var gi: bool = bool($Root/GameRow/Rules/Body/GiToggle.button_pressed)
 	var result: Dictionary = CombatManager.prepare_combat_v2(
 		opponent_id,
 		arena_id,
 		ruleset,
 		gi,
-		selection
+		selection,
+		0,
+		{},
+		difficulty
 	)
 	if not bool(result.get("ok", false)):
 		_set_status("Plano bloqueado: %s" % str(result.get("reason", result.get("error", "erro"))))
@@ -103,10 +112,11 @@ func _render_plan() -> void:
 	$Root/GameRow/Rules/Body/Arena.text = "Arena: %s" % str(_current_plan.get("arena_id", arena_id)).replace("_", " ").capitalize()
 	var corner: Dictionary = _current_plan.get("corner_preview", {})
 	$Root/TinkerPanel/Body/Advice.text = str(corner.get("reason", "Monta teu jogo. Não entrega teu padrão de graça."))
-	_set_status("Plano pronto: %d técnicas • %s • %s" % [
+	_set_status("Plano pronto: %d técnicas • %s • %s • CPU %s" % [
 		_current_plan.get("deck", []).size(),
 		str(_current_plan.get("ruleset", "ibjjf")).to_upper(),
-		"GI" if bool(_current_plan.get("gi", true)) else "NO-GI"
+		"GI" if bool(_current_plan.get("gi", true)) else "NO-GI",
+		str(_current_plan.get("difficulty", "normal")).to_upper()
 	])
 
 func _on_listen_plan() -> void:
