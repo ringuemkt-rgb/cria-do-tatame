@@ -198,12 +198,15 @@ def main() -> int:
 
     if ERRORS:
         print("PHASE1_DATA=FAIL")
+        print("structure_ok=false")
+        print("release_ready=false")
         print("CANON_DIFF=DIRTY")
         for error in ERRORS:
             print(f"- {error}")
         return 1
 
     print("PHASE1_DATA=PASS")
+    print("structure_ok=true")
     print("BACKBONES=10/10")
     print("CANON_DIFF=CLEAN")
     print("WORLD=10_pages/14_municipalities/40_nodes")
@@ -213,6 +216,11 @@ def main() -> int:
     print("AI_CALIBRATION=pending_epic55")
     print("TRAINING_CALIBRATION=pending_epic56")
     print("SHIPPING_PROMOTION=none")
+    sys.path.insert(0, str(pathlib.Path(__file__).resolve().parents[1] / "ci"))
+    from validate_master_release import release_readiness_report
+    readiness = release_readiness_report(pathlib.Path(__file__).resolve().parents[2])
+    print("release_ready=" + str(readiness["release_ready"]).lower())
+    print("RELEASE_BLOCKERS=" + str(len(readiness["blockers"])))
     return 0
 
 
