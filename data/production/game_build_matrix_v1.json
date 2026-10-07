@@ -4,7 +4,11 @@
   "status": "ACTIVE_BUILD_MATRIX",
   "purpose": "Single machine-readable completion matrix for the whole game. It prevents visual, content or CI progress from being confused with playable/shipping completion.",
   "runtime_engine": "Godot",
-  "target_platforms": ["android_arm64", "web", "windows_x86_64"],
+  "target_platforms": [
+    "android_arm64",
+    "web",
+    "windows_x86_64"
+  ],
   "completion_claim_policy": {
     "complete_requires_all_domains": true,
     "shipping_requires_asset_coverage_percent": 100,
@@ -20,7 +24,14 @@
       "name": "Production OS and governance",
       "priority": 0,
       "state": "PASS",
-      "required": ["production_manifest_v03", "game_build_matrix", "deterministic_derivator", "coverage_ledger", "tool_registry", "quality_gate"],
+      "required": [
+        "production_manifest_v03",
+        "game_build_matrix",
+        "deterministic_derivator",
+        "coverage_ledger",
+        "tool_registry",
+        "quality_gate"
+      ],
       "evidence": [
         "data/visual/production_manifest_v03.json",
         ".agents/skills/cria-art-direction/SKILL.md",
@@ -40,7 +51,19 @@
       "name": "Gold vertical slice Ruan x Davi",
       "priority": 1,
       "state": "PARTIAL",
-      "required": ["menu_to_terreiro", "deck_training", "graph_combat", "position_ladder", "counter_telegraph", "result", "cria_live", "week_advance", "save_resume", "web_proof", "android_proof"],
+      "required": [
+        "menu_to_terreiro",
+        "deck_training",
+        "graph_combat",
+        "position_ladder",
+        "counter_telegraph",
+        "result",
+        "cria_live",
+        "week_advance",
+        "save_resume",
+        "web_proof",
+        "android_proof"
+      ],
       "evidence": [
         "data/bjj/bjj_kg_slice_ruan_davi_v1.json",
         "src/combat/BJJGraphReducerV2.gd",
@@ -60,16 +83,37 @@
         "src/combat/CombatManagerBJJShadowAdapterV1.gd",
         "src/autoloads/BJJShadowRuntimeObserver.gd",
         ".github/workflows/bjj-shadow-runtime-v1.yml",
-        ".github/workflows/grappling-golden-chain-v1.yml"
+        ".github/workflows/grappling-golden-chain-v1.yml",
+        "data/production/gold_slice_professional_v1.json",
+        "docs/production/GOLD_SLICE_PROFESSIONAL_V1.md",
+        "data/combat/combat_feedback_v1.json",
+        "data/audio/p1_audio_events_v1.json",
+        "src/world/TerreiroLivingHubV1.gd",
+        "tools/qa/android_gold_slice_probe.py"
       ],
-      "blockers": ["combat_manager_authority_migration_pending", "real_p1_assets_pending", "physical_android_evidence_pending"]
+      "blockers": [
+        "combat_manager_authority_migration_pending",
+        "approved_p1_visual_assets_pending",
+        "final_p1_audio_pending",
+        "physical_android_evidence_pending"
+      ]
     },
     {
       "id": "G2_characters",
       "name": "Characters and animation",
       "priority": 2,
       "state": "PARTIAL",
-      "required": ["roster_identity", "turnarounds", "gi_nogi_variants", "combat_core", "clinch", "ground", "portraits", "emotes", "npc_motion"],
+      "required": [
+        "roster_identity",
+        "turnarounds",
+        "gi_nogi_variants",
+        "combat_core",
+        "clinch",
+        "ground",
+        "portraits",
+        "emotes",
+        "npc_motion"
+      ],
       "evidence": [
         "data/combat/roster_v3.json",
         "data/visual/production_manifest_v02.json",
@@ -89,14 +133,27 @@
         "data/chars/canon/ruan_macacao.json",
         "data/chars/canon/davi_relampago.json"
       ],
-      "blockers": ["identity_master_missing_for_most_roster", "approved_animation_packages_missing", "rights_cleared_motion_capture_evidence_pending"]
+      "blockers": [
+        "identity_master_missing_for_most_roster",
+        "approved_animation_packages_missing",
+        "rights_cleared_motion_capture_evidence_pending"
+      ]
     },
     {
       "id": "G3_bjj_content",
       "name": "BJJ knowledge graph, techniques and balance",
       "priority": 2,
       "state": "BLOCKED_ON_SOURCE",
-      "required": ["40_positions", "120_techniques", "10_chains", "counters", "rules_legality", "paired_animation", "F3_calibration", "F4_balance"],
+      "required": [
+        "40_positions",
+        "120_techniques",
+        "10_chains",
+        "counters",
+        "rules_legality",
+        "paired_animation",
+        "F3_calibration",
+        "F4_balance"
+      ],
       "evidence": [
         "data/combat/bjj_kg_authoring_contract_v1.json",
         "data/combat/bjj_rulesets_verified_v1.json",
@@ -134,14 +191,32 @@
         "tools/combat/validate_grappling_motion_lab_v1.py",
         ".github/workflows/grappling-motion-lab-v1.yml"
       ],
-      "blockers": ["full_kg_t093_t120_and_chains_not_received", "paired_animation_packages_missing", "physical_bindings_expert_review_pending", "F3_calibration_pending", "F4_balance_pending", "combat_manager_authority_migration_pending", "grappling_motion_corpus_empty"]
+      "blockers": [
+        "full_kg_t093_t120_and_chains_not_received",
+        "paired_animation_packages_missing",
+        "physical_bindings_expert_review_pending",
+        "F3_calibration_pending",
+        "F4_balance_pending",
+        "combat_manager_authority_migration_pending",
+        "grappling_motion_corpus_empty"
+      ]
     },
     {
       "id": "G4_world",
       "name": "World, maps, hubs and arenas",
       "priority": 2,
       "state": "PARTIAL",
-      "required": ["core_world_graph", "10_core_map_pages", "resource_overlay", "walkable_hubs", "arena_layers", "collisions", "npc_ecology", "tide_routes", "collectables"],
+      "required": [
+        "core_world_graph",
+        "10_core_map_pages",
+        "resource_overlay",
+        "walkable_hubs",
+        "arena_layers",
+        "collisions",
+        "npc_ecology",
+        "tide_routes",
+        "collectables"
+      ],
       "evidence": [
         "data/world/world_map_v4.json",
         "data/world/arena_info_v1.json",
@@ -151,43 +226,118 @@
         "data/visual/sprite_forge_contract_v2.json",
         "data/visual/sprite_forge_requirements_v2.json",
         "assets/schemas/world_art_package_v2.schema.json",
-        "data/visual/p1_visual_build_contract_v2.json"
+        "data/visual/p1_visual_build_contract_v2.json",
+        "data/world/terreiro_living_hub_v1.json",
+        "src/world/TerreiroLivingHubV1.gd"
       ],
-      "blockers": ["map_atlas_machine_contract_pending_repo_integration", "approved_runtime_map_layers_missing", "npc_population_source_pending", "npc_runtime_scene_evidence_pending"]
+      "blockers": [
+        "map_atlas_machine_contract_pending_repo_integration",
+        "approved_runtime_map_layers_missing",
+        "npc_population_source_pending",
+        "npc_runtime_scene_evidence_pending",
+        "terreiro_final_layered_art_pending"
+      ]
     },
     {
       "id": "G5_narrative",
       "name": "Narrative, missions and endings",
       "priority": 2,
       "state": "PARTIAL",
-      "required": ["canon_authority", "acts", "missions", "dialogues", "prologue", "chorus", "endings", "runtime_scene_mapping", "save_migration"],
-      "evidence": ["data/narrative/canon_v3.json", "data/narrative/acts_v3.json", "data/narrative/endings_v2.json"],
-      "blockers": ["missions_v1_missing", "narrative_v4_candidate_not_runtime_authority", "runtime_scene_mapping_pending"]
+      "required": [
+        "canon_authority",
+        "acts",
+        "missions",
+        "dialogues",
+        "prologue",
+        "chorus",
+        "endings",
+        "runtime_scene_mapping",
+        "save_migration"
+      ],
+      "evidence": [
+        "data/narrative/canon_v3.json",
+        "data/narrative/acts_v3.json",
+        "data/narrative/endings_v2.json"
+      ],
+      "blockers": [
+        "missions_v1_missing",
+        "narrative_v4_candidate_not_runtime_authority",
+        "runtime_scene_mapping_pending"
+      ]
     },
     {
       "id": "G6_progression_economy",
       "name": "Progression, factions and economy",
       "priority": 3,
       "state": "PARTIAL",
-      "required": ["belts", "stripes", "skill_graph", "synergies", "respec", "training", "rust", "faction_rep", "territory", "criacoin", "crialive", "weekly_loop"],
-      "evidence": ["data/progression/skill_graph_v1.json", "data/progression/training_exercises_v2.json", "data/factions/factions_v2.json"],
-      "blockers": ["stripes_system_pending", "synergy_runtime_pending", "rust_replacement_pending"]
+      "required": [
+        "belts",
+        "stripes",
+        "skill_graph",
+        "synergies",
+        "respec",
+        "training",
+        "rust",
+        "faction_rep",
+        "territory",
+        "criacoin",
+        "crialive",
+        "weekly_loop"
+      ],
+      "evidence": [
+        "data/progression/skill_graph_v1.json",
+        "data/progression/training_exercises_v2.json",
+        "data/factions/factions_v2.json"
+      ],
+      "blockers": [
+        "stripes_system_pending",
+        "synergy_runtime_pending",
+        "rust_replacement_pending"
+      ]
     },
     {
       "id": "G7_audio",
       "name": "Music, SFX, ambience and voice",
       "priority": 3,
-      "state": "PLANNED",
-      "required": ["ui_sfx", "combat_foley", "arena_ambience", "music", "voice_optional", "mix", "runtime_import", "rights_sidecars"],
-      "evidence": ["data/visual/production_manifest_v02.json"],
-      "blockers": ["approved_audio_packages_missing"]
+      "state": "PARTIAL",
+      "required": [
+        "ui_sfx",
+        "combat_foley",
+        "arena_ambience",
+        "music",
+        "voice_optional",
+        "mix",
+        "runtime_import",
+        "rights_sidecars"
+      ],
+      "evidence": [
+        "data/visual/production_manifest_v02.json",
+        "data/audio/p1_audio_events_v1.json",
+        "src/autoloads/AudioManager.gd"
+      ],
+      "blockers": [
+        "final_p1_audio_binaries_pending",
+        "audio_rights_sidecars_pending",
+        "audio_loudness_audit_pending"
+      ]
     },
     {
       "id": "G8_qa_release",
       "name": "QA, accessibility and release certification",
       "priority": 0,
       "state": "PARTIAL",
-      "required": ["deterministic_replay", "python_tests", "godot_smokes", "visual_screenshot_qa", "accessibility", "web_export", "android_export", "windows_export", "physical_android", "release_coverage_gate"],
+      "required": [
+        "deterministic_replay",
+        "python_tests",
+        "godot_smokes",
+        "visual_screenshot_qa",
+        "accessibility",
+        "web_export",
+        "android_export",
+        "windows_export",
+        "physical_android",
+        "release_coverage_gate"
+      ],
       "evidence": [
         "tools/validate_complete_game.py",
         "tools/validate_release_readiness.py",
@@ -203,9 +353,16 @@
         ".github/workflows/bjj-shadow-runtime-v1.yml",
         ".github/workflows/grappling-golden-chain-v1.yml",
         ".github/workflows/grappling-motion-lab-v1.yml",
-        "tools/combat/validate_grappling_motion_lab_v1.py"
+        "tools/combat/validate_grappling_motion_lab_v1.py",
+        "tools/qa/android_gold_slice_probe.py",
+        "data/qa/android_gold_slice_manual_checklist_v1.json"
       ],
-      "blockers": ["visual_runtime_qa_pending", "physical_android_evidence_pending", "windows_export_smoke_pending", "release_coverage_gate_pending"]
+      "blockers": [
+        "visual_runtime_qa_pending",
+        "physical_android_evidence_pending",
+        "windows_export_smoke_pending",
+        "release_coverage_gate_pending"
+      ]
     }
   ]
 }
