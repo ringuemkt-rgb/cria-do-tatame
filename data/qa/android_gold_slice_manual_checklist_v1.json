@@ -1,0 +1,32 @@
+{
+  "$schema": "cria.android_gold_slice_manual_checklist.v1",
+  "device_tested_by": "",
+  "build_sha": "",
+  "apk_sha256": "",
+  "checked_at": "",
+  "checks": {
+    "landscape_ok": false,
+    "safe_area_ok": false,
+    "touch_ok": false,
+    "text_readable": false,
+    "menu_to_terreiro_ok": false,
+    "pre_fight_ok": false,
+    "combat_ok": false,
+    "result_ok": false,
+    "cria_live_ok": false,
+    "week_advance_ok": false,
+    "save_restart_ok": false,
+    "sustained_fps_45_or_better": false,
+    "no_severe_thermal": false,
+    "audio_balance_ok": false
+  },
+  "measurements": {
+    "fps_p50": null,
+    "fps_p95": null,
+    "fps_min_sustained": null,
+    "pss_mb_peak": null,
+    "battery_delta_percent": null,
+    "temperature_notes": ""
+  },
+  "notes": []
+}
