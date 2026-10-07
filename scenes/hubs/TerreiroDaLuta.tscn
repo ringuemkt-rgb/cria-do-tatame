@@ -49,6 +49,26 @@ layout_mode = 2
 text = "Semana 1 - Segunda • R$ 0 • Energia 100"
 horizontal_alignment = 1
 
+[node name="WorldPulse" type="Label" parent="Panel"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.788, 0.592, 0.11, 1)
+text = "MANHÃ • NUBLADO QUENTE • ABERTURA"
+horizontal_alignment = 1
+autowrap_mode = 3
+
+[node name="Residents" type="Label" parent="Panel"]
+layout_mode = 2
+text = "Mestre Dendê — abrindo o Terreiro"
+horizontal_alignment = 1
+autowrap_mode = 3
+
+[node name="Ambience" type="Label" parent="Panel"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.72, 0.76, 0.82, 1)
+text = "Ambiente: pássaros, rua distante"
+horizontal_alignment = 1
+autowrap_mode = 3
+
 [node name="NextAction" type="Label" parent="Panel"]
 layout_mode = 2
 text = "Proximo passo: treino tecnico"
