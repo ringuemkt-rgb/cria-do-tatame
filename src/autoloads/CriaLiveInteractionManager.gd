@@ -159,6 +159,10 @@ func _on_week_completed(completed_week: int) -> void:
 		return
 	v1_state = result.get("state", {}).duplicate(true)
 	var payout := int(result.get("payout_coin", 0))
+	var next_hype := float(v1_state.get("profile", {}).get("hype", WorldState.get_reputation("hype")))
+	var hype_delta := next_hype - WorldState.get_reputation("hype")
+	if not is_zero_approx(hype_delta):
+		WorldState.modify_reputation("hype", hype_delta)
 	if payout > 0:
 		WorldState.money += payout
 		WorldState._sync_aliases()

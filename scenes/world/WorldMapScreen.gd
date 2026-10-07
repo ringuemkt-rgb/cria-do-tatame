@@ -42,10 +42,11 @@ func _on_travel_pressed(hub_id: String) -> void:
 func _on_page_changed(page_id: String) -> void:
 	travel_panel.close_panel()
 	message_label.text = "Página %s aberta. Toque em um emblema para planejar ou inspecionar a rota." % page_id
+	_update_status()
 
 func _on_node_focused(node: Dictionary) -> void:
 	var lock_text := "Disponível para descoberta"
-	if node.has("lock"):
+	if node.has("lock") and not bool(node.get("unlocked", false)):
 		lock_text = "Bloqueio: %s" % str(node.get("lock", {}).get("tipo", "progresso"))
 	detail_label.text = "%s\n%s\n%s" % [str(node.get("nome", "Local")), str(node.get("tipo", "interesse")).capitalize(), lock_text]
 	var context := _build_travel_context()
@@ -151,6 +152,8 @@ func _travel_error_text(result: Dictionary) -> String:
 
 func _update_status() -> void:
 	status_label.text = "Hub: %s • Ponto: %s\nR$ %d • Semana %d" % [WorldMapManager.current_hub, WorldMapManager.current_node, WorldState.money, WorldState.week]
+	var atlas: Dictionary = life_layer.get_atlas_snapshot()
+	status_label.text += "\n%s • %s • %s" % [str(atlas.get("moon", {}).get("label", "")), str(atlas.get("tide", "")).replace("_", " "), str(atlas.get("weather", "")).replace("_", " ")]
 
 func get_map_page_count() -> int:
 	return life_layer.get_page_count()

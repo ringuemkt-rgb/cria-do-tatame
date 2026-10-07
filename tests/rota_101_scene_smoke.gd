@@ -1,7 +1,5 @@
 extends SceneTree
 
-const RotaScene = preload("res://scenes/world/Rota101Travel.tscn")
-
 var failures: Array[String] = []
 var checks := 0
 
@@ -9,13 +7,21 @@ func _init() -> void:
 	call_deferred("_run")
 
 func _run() -> void:
-	var scene = RotaScene.instantiate()
+	# Resolve after autoload registration; a preload can compile before their names exist.
+	await process_frame
+	var packed = load("res://scenes/world/Rota101Travel.tscn")
+	_check(packed != null, "ROTA 101 scene loads after autoload registration")
+	if packed == null:
+		_finish()
+		return
+	var scene = packed.instantiate()
 	_check(scene != null, "ROTA 101 scene instantiates")
 	if scene == null:
 		_finish()
 		return
 
 	_check(scene.get_script() != null, "ROTA 101 scene has controller script")
+	_check(scene.get_script() != null and scene.get_script().can_instantiate(), "ROTA 101 controller compiles")
 	_check(scene.get_node_or_null("HUD") != null, "scene has HUD")
 	_check(scene.get_node_or_null("HUD/Top/Route") != null, "scene has route label")
 	_check(scene.get_node_or_null("HUD/Top/Speed") != null, "scene has speed label")

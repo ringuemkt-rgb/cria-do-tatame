@@ -34,3 +34,8 @@ reports/build/
 reports/runtime_audit/
 *.translation
 .android/
+production/generated/
+reports/build-all/local/
+# Retained locally after the requested legacy index cleanup.
+/CRIA_DO_TATAME_COMPLETE_100_MOBILE_GITHUB_APK_READY_v1_2.zip
+/capacitor.config.json

@@ -104,7 +104,7 @@ func node_unlocked(node: Dictionary) -> bool:
 		"composto":
 			return _compound_ok(lock.get("req", []))
 		_:
-			return true
+			return false
 
 func _compound_ok(req) -> bool:
 	if typeof(req) != TYPE_ARRAY:
@@ -138,6 +138,8 @@ func _compound_ok(req) -> bool:
 		elif token == "fragmentos_3":
 			if not bool(WorldState.story_flags.get("fragmentos_3", false)):
 				return false
+		else:
+			return false
 	return true
 
 func sea_route_open(from_id: String, to_id: String) -> bool:
