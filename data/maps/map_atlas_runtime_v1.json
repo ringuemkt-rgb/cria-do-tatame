@@ -1,0 +1,74 @@
+{
+  "$schema": "cria.map_atlas_runtime.v1",
+  "version": "1.0.0",
+  "shipping": false,
+  "status": "IMPLEMENTED_DATA_AND_PRESENTER",
+  "authorities": {
+    "travel": "WorldMapManager",
+    "time_weather_economy": "WorldDirectorManager",
+    "npc_schedule": "NPCEcologyEngineV1",
+    "presentation": "MapAtlasPresenter",
+    "combat": "CombatManager"
+  },
+  "forbidden": [
+    "second CombatManager",
+    "second WorldMapManager",
+    "new autoload",
+    "LLM controlling combat or map frames",
+    "agent pathfinding on painted atlas",
+    "HUD baked into map_base PNG",
+    "Light2D per page",
+    "hint_screen_texture water"
+  ],
+  "pages": [
+    {"id": "01", "page_id": "map_01_baixo_sul", "title": "BAIXO SUL", "plate": "01/10", "climate_region": "itubera_litoral", "default_weather_preset": 0, "max_life_actors": 3},
+    {"id": "02", "page_id": "map_02_itubera", "title": "ITUBERÁ", "plate": "02/10", "climate_region": "itubera_litoral", "default_weather_preset": 0, "max_life_actors": 3},
+    {"id": "03", "page_id": "map_03_nilo_pecanha", "title": "NILO PEÇANHA", "plate": "03/10", "climate_region": "zambiapunga_cultural", "default_weather_preset": 2, "max_life_actors": 3},
+    {"id": "04", "page_id": "map_04_valenca", "title": "VALENÇA", "plate": "04/10", "climate_region": "valenca_porto", "default_weather_preset": 0, "max_life_actors": 3},
+    {"id": "05", "page_id": "map_05_camamu", "title": "CAMAMU", "plate": "05/10", "climate_region": "camamu_manguezal", "default_weather_preset": 0, "max_life_actors": 3},
+    {"id": "06", "page_id": "map_06_cairu", "title": "CAIRU", "plate": "06/10", "climate_region": "cairu_ilhas", "default_weather_preset": 0, "max_life_actors": 4},
+    {"id": "07", "page_id": "map_07_itacare_marau", "title": "ITACARÉ & MARAÚ", "plate": "07/10", "climate_region": "itacare_costa", "default_weather_preset": 0, "max_life_actors": 3},
+    {"id": "08", "page_id": "map_08_interior_norte", "title": "INTERIOR NORTE", "plate": "08/10", "climate_region": "interior_cacau", "default_weather_preset": 2, "max_life_actors": 2},
+    {"id": "09", "page_id": "map_09_interior_sul", "title": "INTERIOR SUL", "plate": "09/10", "climate_region": "camamu_manguezal", "default_weather_preset": 0, "max_life_actors": 3},
+    {"id": "10", "page_id": "map_10_salvador", "title": "SALVADOR", "plate": "10/10", "climate_region": "salvador_urbano", "default_weather_preset": 0, "max_life_actors": 3}
+  ],
+  "layers": {
+    "L0_sky": {"anim": "weather_grade", "shader": "map_weather_grade.gdshader"},
+    "L1_ground": {"anim": "none", "asset": "map_base__{page_id}__v1.png", "bake_hud": false},
+    "L0_water": {"anim": "shader", "shader": "map_water_shimmer.gdshader", "amp_px_max": 2.0},
+    "L0_foam": {"anim": "shader", "shader": "map_foam_edge.gdshader"},
+    "L2_mist": {"anim": "shader", "shader": "map_secret_mist.gdshader", "faction": "LEM"},
+    "L2_life": {"anim": "sprite_loops", "fps": [6, 10], "cap": 4},
+    "L3_graph": {"anim": "tweens", "nodes": true, "routes": true, "pawn": true},
+    "HUD": {"anim": "none", "scene": "MapChrome.tscn"}
+  },
+  "weather_to_preset": {
+    "sol_forte": {"preset": 1, "rain": 0.0, "water_speed": 0.06},
+    "nublado_quente": {"preset": 0, "rain": 0.0, "water_speed": 0.07},
+    "chuva_passageira": {"preset": 3, "rain": 0.35, "water_speed": 0.1},
+    "temporal_tropical": {"preset": 3, "rain": 0.85, "water_speed": 0.16},
+    "garoa_mangue": {"preset": 3, "rain": 0.2, "water_speed": 0.05},
+    "neblina_mangue": {"preset": 2, "rain": 0.05, "water_speed": 0.04, "mist_bonus": 0.2}
+  },
+  "time_block_to_preset_bias": {
+    "manha": 0,
+    "tarde": 0,
+    "noite": 2,
+    "madrugada": 2
+  },
+  "input": {
+    "navigate": "L",
+    "zoom": "R",
+    "select": "A",
+    "detail": "Y",
+    "back": "B"
+  },
+  "states": ["idle", "hover_node", "travel", "enter_hub", "denied", "weather_shift"],
+  "camera": {"zoom_default": 1.0, "zoom_max": 1.35, "pan_margin_px": 24},
+  "performance": {
+    "target_fps_device": 30,
+    "max_shader_samples": 4,
+    "max_particles": 40,
+    "screen_texture_forbidden": true
+  }
+}

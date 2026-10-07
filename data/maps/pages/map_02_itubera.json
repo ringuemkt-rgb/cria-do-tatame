@@ -1,0 +1,21 @@
+{
+  "page": "02",
+  "page_id": "map_02_itubera",
+  "title": "ITUBERÁ",
+  "climate_region": "itubera_litoral",
+  "masks": {
+    "water": "res://assets/maps/masks/map_02_itubera_water.png",
+    "secret": "res://assets/maps/masks/map_02_itubera_secret.png"
+  },
+  "base": "candidate://assets/maps/base/map_base__itubera_02__v1.png",
+  "life": [
+    {"id": "saveiro_serinhaem", "type": "boat", "pos_uv": [0.42, 0.78], "loop": "boat_8f", "hide_if_weather": ["temporal_tropical"]},
+    {"id": "flag_terreiro", "type": "flag", "pos_uv": [0.18, 0.52], "loop": "flag_ale_6f", "always": true},
+    {"id": "feira_idle", "type": "crowd", "pos_uv": [0.48, 0.55], "loop": "crowd_4f", "time_blocks": ["manha", "tarde"], "hide_if_weather": ["temporal_tropical"]}
+  ],
+  "named_presence": [
+    {"npc": "mestre_dende", "node": "terreiro", "blocks": ["manha", "tarde", "noite"]},
+    {"npc": "tinker_bell", "node": "feira", "blocks": ["tarde"]},
+    {"npc": "seu_neco", "node": "docas", "blocks": ["manha", "tarde"]}
+  ]
+}

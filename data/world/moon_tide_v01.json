@@ -1,0 +1,28 @@
+{
+  "version": "1.0.0",
+  "shipping": false,
+  "cycle_days": 8,
+  "formula": "(week * 7 + day_index) % 8",
+  "phases": [
+    {"index": 0, "id": "nova", "label": "Lua nova", "tide_bias": "mare_baixa", "secret_visibility": 0.85},
+    {"index": 1, "id": "crescente", "label": "Crescente", "tide_bias": "enchente", "secret_visibility": 0.35},
+    {"index": 2, "id": "quarto_crescente", "label": "Quarto crescente", "tide_bias": "enchente", "secret_visibility": 0.2},
+    {"index": 3, "id": "gibosa_crescente", "label": "Gibosa crescente", "tide_bias": "mare_alta", "secret_visibility": 0.15},
+    {"index": 4, "id": "cheia", "label": "Lua cheia", "tide_bias": "mare_alta", "secret_visibility": 1.0},
+    {"index": 5, "id": "gibosa_minguante", "label": "Gibosa minguante", "tide_bias": "vazante", "secret_visibility": 0.4},
+    {"index": 6, "id": "quarto_minguante", "label": "Quarto minguante", "tide_bias": "vazante", "secret_visibility": 0.25},
+    {"index": 7, "id": "minguante", "label": "Minguante", "tide_bias": "mare_baixa", "secret_visibility": 0.55}
+  ],
+  "tide_by_block": {
+    "manha": {"mare_alta": "mare_alta", "enchente": "enchente", "vazante": "enchente", "mare_baixa": "enchente"},
+    "tarde": {"mare_alta": "enchente", "enchente": "vazante", "vazante": "mare_baixa", "mare_baixa": "mare_baixa"},
+    "noite": {"mare_alta": "mare_alta", "enchente": "mare_alta", "vazante": "vazante", "mare_baixa": "mare_baixa"},
+    "madrugada": {"mare_alta": "mare_alta", "enchente": "mare_alta", "vazante": "mare_baixa", "mare_baixa": "mare_baixa"}
+  },
+  "gameplay_locks": {
+    "pratigi_do_avesso": {"need": ["ato4", "lua_cheia", "mare_baixa"], "note": "Canon world_map_v4"},
+    "festival_lua_pratigi": {"need": ["ato3", "hype_30"], "bonus_if": "cheia"},
+    "sea_routes_blocked_if": "mare_baixa"
+  },
+  "sea_route_ids": ["valenca:cairu", "valenca:salvador", "camamu:cairu", "camamu:marau"]
+}
