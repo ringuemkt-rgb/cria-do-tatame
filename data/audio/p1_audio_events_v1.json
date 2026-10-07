@@ -1,0 +1,113 @@
+{
+  "$schema": "cria.p1_audio_events.v1",
+  "version": "1.0.0",
+  "status": "P1_AUTHORING",
+  "shipping": false,
+  "policy": {
+    "final_audio_requires_rights": true,
+    "procedural_fallback_is_shipping_audio": false,
+    "missing_binary_falls_back_without_crashing": true
+  },
+  "sfx": {
+    "botao": {
+      "path": null,
+      "fallback_hz": 440,
+      "fallback_ms": 50,
+      "gain_db": -8
+    },
+    "t001": {
+      "path": null,
+      "fallback_hz": 120,
+      "fallback_ms": 160,
+      "gain_db": -4,
+      "semantic": "takedown_contact"
+    },
+    "slice_sprawl": {
+      "path": null,
+      "fallback_hz": 150,
+      "fallback_ms": 110,
+      "gain_db": -5,
+      "semantic": "sprawl_contact"
+    },
+    "t005": {
+      "path": null,
+      "fallback_hz": 175,
+      "fallback_ms": 100,
+      "gain_db": -6,
+      "semantic": "guard_pull_contact"
+    },
+    "t025": {
+      "path": null,
+      "fallback_hz": 205,
+      "fallback_ms": 100,
+      "gain_db": -5,
+      "semantic": "pass_pressure"
+    },
+    "t049": {
+      "path": null,
+      "fallback_hz": 235,
+      "fallback_ms": 75,
+      "gain_db": -7,
+      "semantic": "frame_recovery"
+    },
+    "slice_side_to_mount": {
+      "path": null,
+      "fallback_hz": 190,
+      "fallback_ms": 110,
+      "gain_db": -5,
+      "semantic": "mount_settle"
+    },
+    "t057": {
+      "path": null,
+      "fallback_hz": 260,
+      "fallback_ms": 220,
+      "gain_db": -3,
+      "semantic": "submission_lock"
+    },
+    "cria_live": {
+      "path": null,
+      "fallback_hz": 520,
+      "fallback_ms": 90,
+      "gain_db": -8
+    }
+  },
+  "music": {
+    "terreiro": {
+      "path": null,
+      "fallback_sequence_hz": [
+        110,
+        146
+      ],
+      "fallback_note_ms": 180,
+      "gain_db": -12
+    },
+    "fight_dique": {
+      "path": null,
+      "fallback_sequence_hz": [
+        130,
+        164,
+        196
+      ],
+      "fallback_note_ms": 130,
+      "gain_db": -11
+    },
+    "vitoria": {
+      "path": null,
+      "fallback_sequence_hz": [
+        220,
+        330
+      ],
+      "fallback_note_ms": 150,
+      "gain_db": -9
+    },
+    "derrota": {
+      "path": null,
+      "fallback_sequence_hz": [
+        110,
+        98
+      ],
+      "fallback_note_ms": 190,
+      "gain_db": -10
+    }
+  }
+}
