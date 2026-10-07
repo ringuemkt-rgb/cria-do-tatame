@@ -20,13 +20,14 @@ func suggest_action(state: Dictionary, hand: Array, scouting: Dictionary) -> Dic
 			continue
 		var score := 0.0
 		var from_pos := str(info.get("from", info.get("entry_state", "")))
-		var to_pos := str(info.get("to", info.get("state_to", "")))
+		var to_pos := str(info.get("to", info.get("exit_state", info.get("state_to", ""))))
 		if weaknesses.has(from_pos) or weaknesses.has(to_pos):
 			score += 30.0
 		if counters.has(technique_id):
 			score -= 40.0
 		score += _position_value(to_pos) * 20.0
-		var gas_cost := float(info.get("gas", info.get("gas_cost", 0.0)))
+		var cost: Dictionary = info.get("cost", info.get("custo", {}))
+		var gas_cost := float(cost.get("gas", info.get("gas", info.get("gas_cost", 0.0))))
 		if float(fighter.get("gas", 100.0)) < 30.0:
 			score -= gas_cost * 2.0
 		ranked.append({

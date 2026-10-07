@@ -119,6 +119,8 @@ func reset_new_game():
 		ProgressionOS.reset()
 	if has_node("/root/TrainingManager"):
 		TrainingManager.reset()
+	if has_node("/root/CriaLiveInteractionManager"):
+		CriaLiveInteractionManager.reset()
 	_sync_aliases()
 
 func advance_day():

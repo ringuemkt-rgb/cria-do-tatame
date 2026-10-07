@@ -2,7 +2,7 @@
   "$schema": "cria.external_tool_registry.v1",
   "version": "1.0.0",
   "status": "ACTIVE_RESEARCH_REGISTRY",
-  "audited_at": "2026-09-12",
+  "audited_at": "2026-10-07",
   "default_policy": {
     "runtime_dependency": false,
     "shipping_default": false,
@@ -325,6 +325,113 @@
         "catalog_driven_model_routing_reference"
       ],
       "notes": "Audited 2026-09-18. Upstream documents a catalog-driven Next.js studio and API contract POST /{model}, GET /requests/{id}/status, Authorization: Key id:secret. No LICENSE file/declaration was found, so CRIA does not copy upstream code. Integration is an independent fail-closed transport adapter; credentials stay outside Git and all outputs remain candidates until provenance, canon, QA, human approval and Godot runtime evidence pass."
+    },
+    {
+      "id": "pixelorama",
+      "kind": "external_authoring_tool",
+      "source": "Orama-Interactive/Pixelorama",
+      "revision": "v1.2.3",
+      "license_status": "CLEAR_MIT",
+      "adoption": "ADOPTED_PIXEL_AUTHORING_TOOL",
+      "direct_code_reuse": false,
+      "direct_asset_reuse": false,
+      "cria_roles": [
+        "manual_pixel_cleanup",
+        "sprite_animation_authoring",
+        "tile_authoring",
+        "palette_review"
+      ],
+      "notes": "Latest audited release v1.2.3 (2026-09-15). External authoring tool only; no runtime dependency. Use after candidate generation and before Sprite Forge promotion."
+    },
+    {
+      "id": "gut_9_4",
+      "kind": "godot_test_addon",
+      "source": "bitwes/Gut",
+      "revision": "v9.4.0",
+      "license_status": "CLEAR_MIT",
+      "adoption": "PILOT_GODOT_4_3_UNIT_TESTS",
+      "direct_code_reuse": false,
+      "direct_asset_reuse": false,
+      "cria_roles": [
+        "unit_test_pilot",
+        "pure_component_regression"
+      ],
+      "notes": "Upstream compatibility table pins GUT 9.4.0 to Godot 4.3.x-4.4.x. Pilot alongside, not instead of, existing smoke tests."
+    },
+    {
+      "id": "keychain",
+      "kind": "godot_input_addon",
+      "source": "Orama-Interactive/Keychain",
+      "revision": "main_audited_2026_10_07",
+      "license_status": "CLEAR_MIT",
+      "adoption": "PILOT_AFTER_GOLD_SLICE_INPUT_BASELINE",
+      "direct_code_reuse": false,
+      "direct_asset_reuse": false,
+      "cria_roles": [
+        "input_remapping",
+        "multiple_bindings",
+        "input_profiles"
+      ],
+      "notes": "Potentially useful for accessibility and remapping after the current touch/mouse/keyboard baseline is frozen. Must not create a competing input authority."
+    },
+    {
+      "id": "phantom_camera",
+      "kind": "godot_camera_addon",
+      "source": "ramokz/phantom-camera",
+      "revision": "v0.11.0.3",
+      "license_status": "CLEAR_MIT",
+      "adoption": "DEFER_ENGINE_COMPATIBILITY",
+      "direct_code_reuse": false,
+      "direct_asset_reuse": false,
+      "cria_roles": [
+        "camera_composition_reference"
+      ],
+      "notes": "Current audited release is not adopted on production Godot 4.3; reconsider only inside the engine-upgrade qualification branch."
+    },
+    {
+      "id": "android_gpu_inspector",
+      "kind": "external_profiling_tool",
+      "source": "google/agi",
+      "revision": "main_audited_2026_10_07",
+      "license_status": "CLEAR_APACHE_2_0",
+      "adoption": "ADOPTED_ANDROID_PROFILING_TOOL",
+      "direct_code_reuse": false,
+      "direct_asset_reuse": false,
+      "cria_roles": [
+        "android_gpu_profiling",
+        "frame_bottleneck_diagnosis"
+      ],
+      "notes": "External development/profiling tool only. Use after Godot profiler and ADB evidence identify a GPU-side problem."
+    },
+    {
+      "id": "libresprite",
+      "kind": "external_authoring_tool",
+      "source": "LibreSprite/LibreSprite",
+      "revision": "master_audited_2026_10_07",
+      "license_status": "GPL_2_0_EXTERNAL_TOOL",
+      "adoption": "OPTIONAL_PIXEL_EDITOR",
+      "direct_code_reuse": false,
+      "direct_asset_reuse": false,
+      "cria_roles": [
+        "manual_sprite_cleanup",
+        "animation_review"
+      ],
+      "notes": "External editor; no LibreSprite code is embedded in the game. Pixelorama remains the preferred primary pixel authoring tool."
+    },
+    {
+      "id": "godot_rl_agents",
+      "kind": "offline_research_tool",
+      "source": "edbeeching/godot_rl_agents",
+      "revision": "main_audited_2026_10_07",
+      "license_status": "CLEAR_MIT",
+      "adoption": "F4_ONLY_AFTER_DETERMINISTIC_PARITY",
+      "direct_code_reuse": false,
+      "direct_asset_reuse": false,
+      "cria_roles": [
+        "self_play_balance",
+        "utility_weight_research"
+      ],
+      "notes": "Do not train against a divergent reducer. F4 is blocked until deterministic combat parity and rules tests are accepted."
     }
   ]
 }

@@ -1,0 +1,39 @@
+name: Build All V1 Integration (Godot 4.3)
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: build-all-v1-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  integration:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: npm ci --ignore-scripts --no-audit --no-fund
+      - run: python -m pip install Pillow==10.4.0
+      - name: Fetch pinned Godot 4.3
+        run: |
+          curl -L --fail --retry 3 -o /tmp/godot.zip https://github.com/godotengine/godot/releases/download/4.3-stable/Godot_v4.3-stable_linux.x86_64.zip
+          unzip -q /tmp/godot.zip -d /tmp/cria-godot
+          chmod +x /tmp/cria-godot/Godot_v4.3-stable_linux.x86_64
+      - name: Quality, import, 14 smokes and honest parity diagnostic
+        run: python tools/ci/run_build_all_checks.py --godot /tmp/cria-godot/Godot_v4.3-stable_linux.x86_64
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: cria-build-all-v1-evidence
+          path: reports/build-all/local/
+          if-no-files-found: error

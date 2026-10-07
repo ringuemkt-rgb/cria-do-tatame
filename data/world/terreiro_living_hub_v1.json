@@ -1,0 +1,118 @@
+{
+  "$schema": "cria.terreiro_living_hub.v1",
+  "version": "1.0.0",
+  "status": "ACTIVE_P1_PRESENTATION",
+  "shipping": false,
+  "hub_aliases": [
+    "terreiro_da_luta",
+    "terreiro"
+  ],
+  "time_blocks": {
+    "manha": {
+      "label": "MANHÃ",
+      "focus": "ABERTURA • FUNDAMENTOS • LIMPEZA",
+      "crowd": "baixo",
+      "light": "golden_soft",
+      "ambience": [
+        "passaros",
+        "rua_distante"
+      ]
+    },
+    "tarde": {
+      "label": "TARDE",
+      "focus": "DRILLS • SPARRING • GAMEPLAN",
+      "crowd": "medio",
+      "light": "day_hard",
+      "ambience": [
+        "treino_murmur",
+        "passos_tatame"
+      ]
+    },
+    "noite": {
+      "label": "NOITE",
+      "focus": "CONSELHO • MOBILIDADE • ARRUMAÇÃO",
+      "crowd": "baixo",
+      "light": "warm_lamps",
+      "ambience": [
+        "insetos",
+        "bairro_noturno"
+      ]
+    },
+    "madrugada": {
+      "label": "MADRUGADA",
+      "focus": "TERREIRO FECHADO • RECUPERAÇÃO",
+      "crowd": "vazio",
+      "light": "moon_cool",
+      "ambience": [
+        "vento_noturno"
+      ]
+    }
+  },
+  "weather": {
+    "sol_forte": {
+      "label": "SOL FORTE",
+      "ambience": [
+        "cigarras",
+        "vento_leve"
+      ]
+    },
+    "nublado_quente": {
+      "label": "NUBLADO QUENTE",
+      "ambience": [
+        "vento_umido"
+      ]
+    },
+    "chuva_passageira": {
+      "label": "CHUVA PASSAGEIRA",
+      "ambience": [
+        "chuva_telhas",
+        "pingos_calha"
+      ]
+    },
+    "temporal_tropical": {
+      "label": "TEMPORAL",
+      "ambience": [
+        "chuva_forte",
+        "trovao_distante"
+      ]
+    },
+    "garoa_mangue": {
+      "label": "GAROA",
+      "ambience": [
+        "garoa",
+        "aves_mangue"
+      ]
+    },
+    "neblina_mangue": {
+      "label": "NEBLINA",
+      "ambience": [
+        "agua_lenta",
+        "insetos_mangue"
+      ]
+    }
+  },
+  "npc_display": {
+    "mestre_dende": {
+      "name": "Mestre Dendê",
+      "role": "mentor"
+    },
+    "tinker_bell": {
+      "name": "Tinker Bell",
+      "role": "corner"
+    },
+    "davi_relampago": {
+      "name": "Davi Relâmpago",
+      "role": "rival"
+    }
+  },
+  "activity_labels": {
+    "abrir_terreiro": "abrindo o Terreiro",
+    "treino_tecnico": "conduzindo treino técnico",
+    "conselho_e_limpeza": "orientando e arrumando o espaço",
+    "treino_interno_fundamentos": "treino interno de fundamentos",
+    "analisar_treino": "analisando o treino",
+    "analise_de_video": "analisando vídeo e gameplan"
+  },
+  "empty_presence_text": "Hoje o Terreiro está quieto.",
+  "max_ambience_layers": 4
+}

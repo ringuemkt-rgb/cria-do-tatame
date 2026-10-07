@@ -1,0 +1,314 @@
+{
+  "$schema": "cria.graphic_system_master.v1",
+  "version": "1.0.0",
+  "status": "ACTIVE_AUTHORING_CONTRACT",
+  "shipping": false,
+  "runtime": "godot_4_3_plus_only",
+  "auxiliary_authoring_lab": {
+    "unity_essentials": {
+      "role": "preview_blocking_composition_qa_only",
+      "neutral_exports": [
+        "png",
+        "webp",
+        "glb",
+        "fbx",
+        "json",
+        "transparent_flipbook"
+      ],
+      "forbidden_shipping_dependencies": [
+        "unity_scene",
+        "prefab",
+        "animator_controller",
+        "urp_material",
+        "shader_graph",
+        "vfx_graph",
+        "addressables",
+        "unity_ui_prefab"
+      ]
+    }
+  },
+  "style": {
+    "name": "HD Pixel Art 2.5D Regional Premium",
+    "palette": {
+      "ink": "#0B0B0D",
+      "gold": "#C9971C",
+      "off_white": "#EDE6D6",
+      "river_blue": "#1E3A5F",
+      "mangrove_green": "#2D5016",
+      "terracotta": "#B85C38",
+      "sand_wood": "#D4A574",
+      "danger": "#8B0000",
+      "avesso": "#4B0082"
+    },
+    "sprite_contract": {
+      "frame": [
+        128,
+        128
+      ],
+      "pivot": [
+        64,
+        96
+      ],
+      "filter": "nearest",
+      "integer_scaling": true,
+      "smoothing": false,
+      "outline_px": [
+        1,
+        2
+      ],
+      "shipping_default": false
+    }
+  },
+  "families": {
+    "characters": {
+      "campaign_target": 18,
+      "identity_outputs": [
+        "identity_master",
+        "turnaround_front",
+        "turnaround_3q",
+        "turnaround_side",
+        "turnaround_back",
+        "combat_pose_front",
+        "combat_pose_side",
+        "silhouette",
+        "palette",
+        "identity_anchors"
+      ],
+      "portrait_outputs": [
+        "neutral",
+        "focused",
+        "victory",
+        "defeat",
+        "concern_or_anger"
+      ],
+      "gameplay_outputs": [
+        "world_idle",
+        "walk_front",
+        "walk_back",
+        "walk_side",
+        "combat_idle",
+        "stance",
+        "grip",
+        "defense",
+        "reaction",
+        "clinch",
+        "scramble",
+        "ground_top",
+        "ground_bottom",
+        "win",
+        "loss"
+      ]
+    },
+    "paired_techniques": {
+      "campaign_target": 50,
+      "outputs": [
+        "attacker_sheet",
+        "defender_sheet",
+        "sync_map",
+        "contact_map",
+        "contact_sheet",
+        "preview",
+        "metadata",
+        "hitbox",
+        "camera_recommendation",
+        "qa_report"
+      ]
+    },
+    "arenas": {
+      "campaign_target": 15,
+      "outputs": [
+        "bg_far",
+        "bg_mid",
+        "crowd_back",
+        "play_area",
+        "foreground",
+        "particles",
+        "props",
+        "water_or_weather_masks",
+        "light_masks",
+        "collision_metadata",
+        "camera_bounds",
+        "spawn_points",
+        "preview"
+      ]
+    },
+    "world_maps": {
+      "core_pages": [
+        "baixo_sul",
+        "itubera",
+        "nilo_pecanha",
+        "valenca",
+        "camamu",
+        "cairu",
+        "itacare_marau",
+        "interior_norte",
+        "interior_sul",
+        "salvador"
+      ],
+      "layers": [
+        "map_base_art",
+        "world_overlay",
+        "ui_overlay",
+        "narrative_overlay"
+      ]
+    },
+    "factions": {
+      "ids": [
+        "LEM",
+        "NTM",
+        "ALE"
+      ],
+      "outputs": [
+        "emblem_master",
+        "icon_48",
+        "icon_24",
+        "banner_light",
+        "banner_dark",
+        "badge_round",
+        "background_pattern",
+        "map_marker",
+        "ui_header"
+      ]
+    },
+    "ui": {
+      "campaign_target_screens": 18,
+      "atoms": [
+        "panels",
+        "frames",
+        "nine_slice",
+        "buttons",
+        "button_states",
+        "toggles",
+        "tabs",
+        "badges",
+        "meters",
+        "icons",
+        "portraits",
+        "tooltips",
+        "map_markers",
+        "touch",
+        "hud",
+        "cards",
+        "dialogue"
+      ]
+    },
+    "cards": {
+      "campaign_target": 50,
+      "outputs": [
+        "card_shell",
+        "central_art",
+        "type_icon",
+        "rarity_frame",
+        "data_binding",
+        "preview",
+        "qa_report"
+      ]
+    },
+    "vfx": {
+      "core_families": [
+        "grip_confirmation",
+        "cloth_snap",
+        "mat_impact",
+        "dust",
+        "sweat",
+        "focus_glow",
+        "counter_flash",
+        "submission_danger",
+        "crowd_camera_flash",
+        "rain_splash",
+        "mangrove_mist",
+        "secret_violet_mist",
+        "water_shimmer",
+        "leaf_particles"
+      ]
+    },
+    "marketing": {
+      "outputs": [
+        "key_art_16x9",
+        "cover_vertical_4x5",
+        "store_banner_1920x1080",
+        "app_icon_1024",
+        "poster_character_ruan",
+        "move_list_infographic",
+        "social_carousel_techniques",
+        "trailer_storyboard_frames",
+        "thumbnail_pack",
+        "press_kit_character_sheets",
+        "press_kit_arena_sheets"
+      ]
+    }
+  },
+  "p1": {
+    "characters": [
+      "ruan_macacao:turnaround",
+      "ruan_macacao:combat_pose_gi",
+      "ruan_macacao:fighter_core",
+      "ruan_macacao:fighter_clinch",
+      "ruan_macacao:fighter_ground",
+      "davi_relampago:turnaround",
+      "davi_relampago:combat_pose_gi",
+      "davi_relampago:fighter_core",
+      "davi_relampago:fighter_clinch",
+      "davi_relampago:fighter_ground"
+    ],
+    "paired_techniques": [
+      "t001",
+      "slice_sprawl",
+      "t005",
+      "t025",
+      "t049",
+      "slice_side_to_mount",
+      "t057"
+    ],
+    "arenas": [
+      "arena_do_dique:bg_far",
+      "arena_do_dique:bg_mid",
+      "arena_do_dique:play_area",
+      "arena_do_dique:foreground",
+      "arena_do_dique:particles",
+      "terreiro:bg_far",
+      "terreiro:bg_mid",
+      "terreiro:play_area",
+      "terreiro:foreground",
+      "terreiro:particles"
+    ],
+    "ui": [
+      "combat_hud_mobile",
+      "position_ladder",
+      "counter_telegraph",
+      "submission_hud",
+      "combat_touch_controls"
+    ],
+    "promotion_order": [
+      "ruan_identity_master",
+      "davi_identity_master",
+      "p1_directional_locomotion",
+      "terreiro_layered_package",
+      "arena_do_dique_layered_package",
+      "p1_ground_position_bases",
+      "p1_paired_bjj_techniques",
+      "p1_ui",
+      "godot_integration",
+      "runtime_visual_capture",
+      "physical_android_review"
+    ]
+  },
+  "promotion_gates": [
+    "canon",
+    "provenance",
+    "rights_license",
+    "human_approval",
+    "identity_lock",
+    "cultural_review_if_applicable",
+    "gi_nogi",
+    "bjj_biomechanics",
+    "scale_pivot_anchor",
+    "alpha_edge_frame",
+    "paired_sync",
+    "mobile_readability",
+    "safe_area_touch",
+    "godot_scene_integration",
+    "runtime_capture",
+    "android_physical_evidence"
+  ]
+}

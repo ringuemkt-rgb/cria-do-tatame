@@ -75,6 +75,50 @@ func refill_hand() -> Array:
 func contains_in_hand(technique_id: String) -> bool:
 	return hand.has(technique_id)
 
+func ensure_playable(valid_ids: Array) -> Dictionary:
+	var candidates: Array[String] = []
+	for raw in valid_ids:
+		var technique_id := str(raw)
+		if technique_id != "" and deck.has(technique_id) and not candidates.has(technique_id):
+			candidates.append(technique_id)
+	for technique_id in candidates:
+		if hand.has(technique_id):
+			return {"rescued": false, "hand": hand.duplicate(), "technique_id": technique_id}
+	if candidates.is_empty():
+		return {"rescued": false, "hand": hand.duplicate(), "reason": "no_selected_candidate"}
+
+	var rescued_id := ""
+	for technique_id in candidates:
+		if draw_pile.has(technique_id) or discard.has(technique_id):
+			rescued_id = technique_id
+			break
+	if rescued_id == "":
+		return {"rescued": false, "hand": hand.duplicate(), "reason": "candidate_not_drawable"}
+
+	if draw_pile.has(rescued_id):
+		draw_pile.erase(rescued_id)
+	else:
+		discard.erase(rescued_id)
+
+	var swapped_out := ""
+	for index in range(hand.size() - 1, -1, -1):
+		var current := str(hand[index])
+		if not candidates.has(current):
+			swapped_out = current
+			hand.remove_at(index)
+			break
+	if swapped_out == "" and not hand.is_empty():
+		swapped_out = str(hand.pop_back())
+	if swapped_out != "":
+		draw_pile.append(swapped_out)
+	hand.append(rescued_id)
+	return {
+		"rescued": true,
+		"technique_id": rescued_id,
+		"swapped_out": swapped_out,
+		"hand": hand.duplicate()
+	}
+
 func to_dict() -> Dictionary:
 	return {
 		"version": "2.0.0",

@@ -4,8 +4,10 @@ const COMBAT_SCENE := "res://scenes/combat/PreFightHub.tscn"
 const CRIA_LIVE_SCENE := "res://scenes/ui/CriaLiveUI.tscn"
 const MAIN_MENU_SCENE := "res://scenes/main_menu/MainMenu.tscn"
 const DECK_SCENE := "res://scenes/ui/DeckBuilder.tscn"
+const TerreiroLivingHubV1 = preload("res://src/world/TerreiroLivingHubV1.gd")
 
 var _transitioning := false
+var _living_hub = TerreiroLivingHubV1.new()
 
 func _ready() -> void:
 	_connect_if_exists("Panel/TrainBtn", _on_train)
@@ -18,7 +20,10 @@ func _ready() -> void:
 	_connect_if_exists("Panel/MainMenuBtn", _on_main_menu)
 	if not SignalBus.day_advanced.is_connected(_on_day_changed):
 		SignalBus.day_advanced.connect(_on_day_changed)
+	if has_node("/root/WorldDirectorManager") and not WorldDirectorManager.tick_completed.is_connected(_on_world_tick):
+		WorldDirectorManager.tick_completed.connect(_on_world_tick)
 	_update_ui()
+	_update_world_pulse()
 
 func _connect_if_exists(path: String, callback: Callable) -> void:
 	if not has_node(path):
@@ -44,6 +49,18 @@ func _update_ui() -> void:
 		$Panel/TrainBtn.disabled = WorldState.energy < 20.0
 	if has_node("Panel/FightDaviBtn"):
 		$Panel/FightDaviBtn.disabled = WorldState.energy < 30.0
+	_update_world_pulse()
+
+func _update_world_pulse() -> void:
+	if not has_node("/root/WorldDirectorManager"):
+		return
+	var composed: Dictionary = _living_hub.compose(WorldDirectorManager.get_snapshot())
+	if has_node("Panel/WorldPulse"):
+		$Panel/WorldPulse.text = str(composed.get("headline", "TERREIRO"))
+	if has_node("Panel/Residents"):
+		$Panel/Residents.text = _living_hub.presence_text(composed)
+	if has_node("Panel/Ambience"):
+		$Panel/Ambience.text = _living_hub.ambience_text(composed)
 
 func _recommendation_text(data: Dictionary) -> String:
 	var kind := str(data.get("type", "atividade"))
@@ -109,6 +126,9 @@ func _change_scene(path: String) -> void:
 		_transitioning = false
 		_show_message("Falha ao abrir a proxima tela.")
 		push_error("[TerreiroDaLuta] Falha ao trocar para %s: %s" % [path, error_string(error)])
+
+func _on_world_tick(_snapshot: Dictionary) -> void:
+	_update_world_pulse()
 
 func _on_day_changed(_day, _week) -> void:
 	_update_ui()

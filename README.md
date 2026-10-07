@@ -122,6 +122,21 @@ res://scenes/main_menu/MainMenu.tscn
 
 ## Builds
 
+### Pacote leve para teste em desktop
+
+Sem baixar templates de exportação, usando Godot Standard 4.2.2:
+
+```bash
+npm run quality
+python tools/build/build_playtest_pack.py --godot /caminho/para/godot
+```
+
+O ZIP em `reports/build/playtest/CriaDoTatame-playtest.zip` contém o PCK,
+instruções e logs de testes executados no pacote fora da árvore de fontes.
+Requer o executável Godot da versão indicada em `validation.json`; não é APK
+nem release final. O workflow **Cria Runtime Audit** também publica esse artefato.
+Revisão visual e teste Android físico continuam pendentes.
+
 ### Android no Windows
 
 ```powershell

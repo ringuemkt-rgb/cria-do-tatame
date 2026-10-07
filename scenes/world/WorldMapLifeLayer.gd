@@ -6,6 +6,8 @@ signal node_focused(node: Dictionary)
 const MAP_DATA_PATH := "res://data/world/world_map_v4.json"
 const LIFE_CONTRACT_PATH := "res://data/visual/world_map_life_v1.json"
 const DESIGN_SIZE := Vector2(1920.0, 1080.0)
+const AtlasScript = preload("res://src/world/MapAtlasPresenter.gd")
+var _atlas = AtlasScript.new()
 
 var active_page_id := "01"
 var selected_node_id := "itubera"
@@ -39,6 +41,7 @@ func _gui_input(event: InputEvent) -> void:
 	queue_redraw()
 
 func _load_contracts() -> void:
+	_atlas.load_defs()
 	_map_data = _load_json(MAP_DATA_PATH)
 	_life_contract = _load_json(LIFE_CONTRACT_PATH)
 	for asset_value in _life_contract.get("candidate_assets", []):
@@ -62,6 +65,7 @@ func open_page(page_id: String) -> bool:
 	for page_value in _map_data.get("pages", []):
 		if str(page_value.get("id", "")) == page_id:
 			active_page_id = page_id
+			_atlas.set_page(page_id)
 			page_changed.emit(active_page_id)
 			queue_redraw()
 			return true
@@ -75,6 +79,9 @@ func get_node_count() -> int:
 
 func get_visual_contract() -> Dictionary:
 	return _life_contract.duplicate(true)
+
+func get_atlas_snapshot() -> Dictionary:
+	return _atlas.snapshot(active_page_id)
 
 func _draw() -> void:
 	var bounds := Rect2(Vector2.ZERO, size)
@@ -141,7 +148,7 @@ func _draw_page_nodes() -> void:
 			_draw_dashed_route(point_by_id[from_id], point_by_id[to_id], route_color)
 	for node_value in nodes:
 		var node: Dictionary = node_value
-		var locked := node.has("lock")
+		var locked := not bool(node.get("unlocked", false))
 		var color := Color("916eac") if str(node.get("tipo", "")) == "secreta" else _faction_color(str(node.get("faccao", "neutral")))
 		if locked: color = color.darkened(0.45)
 		var point := _node_screen_position(node)
@@ -198,10 +205,8 @@ func _find_hit(local: Vector2) -> Dictionary:
 	return {}
 
 func _nodes_for_active_page() -> Array:
-	var output: Array = []
-	for node_value in _map_data.get("nodes", []):
-		if str(node_value.get("pagina", "")) == active_page_id: output.append(node_value)
-	return output
+	# Presentation only; route eligibility still belongs to WorldMapManager.
+	return _atlas.nodes_on_page(active_page_id)
 
 func _node_screen_position(node: Dictionary) -> Vector2:
 	var pos_data: Array = node.get("pos", [960, 540])

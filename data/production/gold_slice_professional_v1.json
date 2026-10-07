@@ -1,0 +1,199 @@
+{
+  "$schema": "cria.gold_slice_professional.v1",
+  "version": "1.0.0",
+  "status": "ACTIVE_EXECUTION_CONTRACT",
+  "shipping": false,
+  "scope": {
+    "fight": "ruan_macacao_vs_davi_relampago",
+    "hub": "terreiro_da_luta",
+    "arena": "arena_do_dique",
+    "android_package": "com.criadotatame.pressao",
+    "abi": "arm64-v8a"
+  },
+  "principle": "One exceptional fight, one living Terreiro and one excellent physical Android build take priority over breadth.",
+  "authorities": {
+    "combat": "CombatManager",
+    "bjj_shadow": "BJJGraphReducerV2",
+    "world": "WorldDirectorManager",
+    "map": "WorldMapManager",
+    "audio": "AudioManager",
+    "save": "SaveManager"
+  },
+  "fight_acceptance": {
+    "required_techniques": [
+      "t001",
+      "slice_sprawl",
+      "t005",
+      "t025",
+      "t049",
+      "slice_side_to_mount",
+      "t057"
+    ],
+    "touch_counter_floor_ms": 250,
+    "cards_visible_max": 6,
+    "input_paths": [
+      "touch",
+      "mouse",
+      "keyboard_1_to_6"
+    ],
+    "cpu_difficulties": [
+      "facil",
+      "normal",
+      "dificil",
+      "pesadelo"
+    ],
+    "difficulty_may_buff_stats": false,
+    "submission_must_end_authoritatively": true,
+    "deterministic_core_required": true,
+    "paired_motion_required_for_visual_ready": true,
+    "position_ladder_required": true,
+    "counter_telegraph_required": true,
+    "reduced_motion_required": true
+  },
+  "terreiro_acceptance": {
+    "offline_core_required": true,
+    "time_blocks": [
+      "manha",
+      "tarde",
+      "noite",
+      "madrugada"
+    ],
+    "weather_reactivity_required": true,
+    "npc_presence_from_world_director": true,
+    "contextual_activity_required": true,
+    "minimum_presentable_npc_slots": 2,
+    "minimum_ambient_layers": 3,
+    "save_and_week_loop_visible": true,
+    "llm_required": false
+  },
+  "android_acceptance": {
+    "target_fps": 60,
+    "sustained_floor_fps": 45,
+    "physical_device_required": true,
+    "install_required": true,
+    "landscape_required": true,
+    "touch_required": true,
+    "flow_required": [
+      "menu",
+      "terreiro",
+      "pre_fight",
+      "combat",
+      "result",
+      "cria_live",
+      "week_advance",
+      "save",
+      "restart",
+      "terreiro"
+    ],
+    "save_after_restart_required": true,
+    "no_fatal_logcat_required": true,
+    "thermal_severe_allowed": false,
+    "metrics_required": [
+      "device",
+      "android",
+      "abi",
+      "display",
+      "memory",
+      "gfxinfo",
+      "battery",
+      "thermal",
+      "logcat"
+    ],
+    "release_ready_default": false
+  },
+  "toolchain": {
+    "pixel_authoring": [
+      {
+        "id": "pixelorama",
+        "target": "1.2.3",
+        "license": "MIT",
+        "adoption": "ADOPT_AUTHORING"
+      },
+      {
+        "id": "libresprite",
+        "license": "GPL-2.0",
+        "adoption": "OPTIONAL_EDITOR"
+      }
+    ],
+    "godot_test": [
+      {
+        "id": "gut",
+        "target": "9.4.0",
+        "compatibility": "Godot 4.3-4.4",
+        "license": "MIT",
+        "adoption": "PILOT"
+      }
+    ],
+    "camera": [
+      {
+        "id": "phantom_camera",
+        "license": "MIT",
+        "minimum_godot": "4.4",
+        "adoption": "DEFER_UNTIL_ENGINE_QUALIFICATION"
+      }
+    ],
+    "input": [
+      {
+        "id": "keychain",
+        "license": "MIT",
+        "godot": "4.x",
+        "adoption": "PILOT_AFTER_GOLD_SLICE_INPUT_BASELINE"
+      }
+    ],
+    "profiling": [
+      {
+        "id": "renderdoc",
+        "adoption": "ADOPT_DEV_TOOL"
+      },
+      {
+        "id": "android_gpu_inspector",
+        "license": "Apache-2.0",
+        "adoption": "ADOPT_ANDROID_PROFILING"
+      }
+    ],
+    "audio": [
+      {
+        "id": "audacity",
+        "license": "GPL",
+        "adoption": "ADOPT_AUDIO_EDIT"
+      },
+      {
+        "id": "lmms",
+        "license": "GPL",
+        "adoption": "ADOPT_MUSIC_AUTHORING"
+      }
+    ],
+    "offline_ai": [
+      {
+        "id": "comfyui",
+        "adoption": "EXTERNAL_CANDIDATE_GENERATOR_ONLY"
+      },
+      {
+        "id": "qwen_image_2512_pixel_art_lora",
+        "adoption": "EXTERNAL_CANDIDATE_GENERATOR_ONLY"
+      },
+      {
+        "id": "mmpose",
+        "license": "Apache-2.0",
+        "adoption": "F3_RESEARCH_ONLY"
+      },
+      {
+        "id": "mmaction2",
+        "license": "Apache-2.0",
+        "adoption": "F3_RESEARCH_ONLY"
+      },
+      {
+        "id": "godot_rl_agents",
+        "license": "MIT",
+        "adoption": "F4_ONLY_AFTER_PARITY"
+      }
+    ]
+  },
+  "stop_conditions": [
+    "combat_parity_regression",
+    "duplicate_manager",
+    "missing_rights",
+    "unreviewed_bjj_motion_promoted",
+    "physical_android_evidence_missing_for_release_claim"
+  ]
+}
