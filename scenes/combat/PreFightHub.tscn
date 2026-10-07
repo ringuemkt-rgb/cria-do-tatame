@@ -92,6 +92,11 @@ text = "REGRAS & ARENA"
 custom_minimum_size = Vector2(0, 52)
 layout_mode = 2
 
+[node name="Difficulty" type="OptionButton" parent="Root/GameRow/Rules/Body"]
+custom_minimum_size = Vector2(0, 52)
+layout_mode = 2
+tooltip_text = "Dificuldade altera leitura, reação e margem de erro da CPU; não muda atributos nem pontuação."
+
 [node name="GiToggle" type="CheckButton" parent="Root/GameRow/Rules/Body"]
 custom_minimum_size = Vector2(0, 52)
 layout_mode = 2
