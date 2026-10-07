@@ -67,7 +67,7 @@ func _ready() -> void:
 	_refresh_v2_panel()
 	_update_state_label(CombatManager.get_current_state_name())
 	_refresh_action_buttons()
-	AudioManager.play_music_cue("terreiro")
+	AudioManager.play_music_cue("fight_dique")
 
 func _build_arena_visuals() -> void:
 	var backdrop := ArenaBackdropScript.new()
