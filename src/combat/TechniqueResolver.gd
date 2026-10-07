@@ -27,12 +27,31 @@ func resolver_tecnica(technique_id: String, actor: Dictionary, defender: Diction
 		return _erro(technique_id, "tecnica_nao_encontrada")
 	return resolve_technique(technique, actor, defender, _contexto_com_estado(state_machine, context))
 
+func get_runtime_technique(technique: Dictionary) -> Dictionary:
+	_ensure_overlay()
+	return _merge_overlay(technique)
+
+func get_defense_contract(technique: Dictionary) -> Dictionary:
+	var merged := get_runtime_technique(technique)
+	var response := SliceStateMapperScript.canonical_technique_id(str(merged.get("defense_response", "")))
+	return {
+		"technique_id": str(merged.get("id", "")),
+		"defense_response": response,
+		"defense_window": float(merged.get("defense_window", 0.0)),
+		"commit_frame": int(merged.get("commit_frame", 0)),
+		"state_to_defended": _mapper.to_runtime(str(merged.get("state_to_defended", "")))
+	}
+
 func resolve_technique(technique: Dictionary, actor: Dictionary, defender: Dictionary, context: Dictionary = {}) -> Dictionary:
+	var rejection := validate_attempt(technique, actor, context)
+	if not rejection.is_empty():
+		return rejection
 	_ensure_overlay()
 	var merged: Dictionary = _merge_overlay(technique)
 	var technique_id: String = str(merged.get("id", "unknown"))
 	var current_state: String = _mapper.to_runtime(str(context.get("state", context.get("estado", "PLAYER_STANDING_NEUTRAL"))))
-	var entry_state: String = _mapper.to_runtime(str(merged.get("entry_state", merged.get("estado_entrada", ""))))
+	var raw_entry: String = str(merged.get("entry_state", merged.get("estado_entrada", "")))
+	var entry_state: String = _mapper.to_runtime(raw_entry) if raw_entry != "" else ""
 	var exit_state: String = _mapper.to_runtime(str(merged.get("exit_state", merged.get("estado_saida", current_state))))
 	var defended_state: String = _mapper.to_runtime(str(merged.get("state_to_defended", current_state)))
 	var state_allowed: bool = entry_state == "" or entry_state == current_state
@@ -44,12 +63,12 @@ func resolve_technique(technique: Dictionary, actor: Dictionary, defender: Dicti
 	var input_frame: float = float(context.get("frame", context.get("input_frame", 999.0)))
 	var defender_input: String = SliceStateMapperScript.canonical_technique_id(str(context.get("defense_input", context.get("defender_input", context.get("defense_response", "")))))
 	var released_early: bool = bool(context.get("released_before_commit", context.get("fake", false)))
-	var faked: bool = released_early and commit_frame > 0 and input_frame < float(commit_frame)
+	var faked: bool = released_early and commit_frame > 0 and input_frame >= 0.0 and input_frame < float(commit_frame)
 	if faked:
 		var fake_cost: Dictionary = {"gas": cost["gas"] * FAKE_COST_RATIO, "focus": cost["focus"] * FAKE_COST_RATIO, "moral": 0.0}
 		return _pack_result(merged, technique_id, current_state, entry_state, current_state, defended_state, state_allowed, can_pay, fake_cost, 0.0, false, false, true, "", 0.0, commit_frame, defense_window, defense_response, context, "fake_cancel")
 	var window_frames: float = float(commit_frame) * defense_window
-	var in_window: bool = defense_window > 0.0 and commit_frame > 0 and input_frame <= window_frames
+	var in_window: bool = defense_window > 0.0 and commit_frame > 0 and input_frame >= 0.0 and input_frame <= window_frames
 	var denied: bool = state_allowed and can_pay and defense_response != "" and defender_input == defense_response and in_window
 	if denied:
 		return _pack_result(merged, technique_id, current_state, entry_state, defended_state, defended_state, state_allowed, can_pay, cost, 0.0, false, true, false, "", 0.0, commit_frame, defense_window, defense_response, context, "denied")
@@ -77,6 +96,7 @@ func _pack_result(merged: Dictionary, technique_id: String, current_state: Strin
 	var clash = context.get("deck_clash", {})
 	return {
 		"technique_id": technique_id,
+		"accepted": true,
 		"nome": merged.get("nome", merged.get("name", technique_id)),
 		"success": success,
 		"denied": denied,
@@ -108,6 +128,8 @@ func _pack_result(merged: Dictionary, technique_id: String, current_state: Strin
 func aplicar_resultado(actor: Dictionary, defender: Dictionary, result: Dictionary) -> Dictionary:
 	var actor_out: Dictionary = actor.duplicate(true)
 	var defender_out: Dictionary = defender.duplicate(true)
+	if not bool(result.get("accepted", true)) or not bool(result.get("state_allowed", true)) or not bool(result.get("can_pay", true)):
+		return {"actor": actor_out, "defender": defender_out}
 	var cost: Dictionary = result.get("cost", {})
 	_actor_delta(actor_out, "gas", -float(cost.get("gas", 0)))
 	_actor_delta(actor_out, "focus", -float(cost.get("focus", 0)))
@@ -123,6 +145,23 @@ func aplicar_resultado(actor: Dictionary, defender: Dictionary, result: Dictiona
 		_actor_delta(defender_out, "health", float(effects.get("defender_health", 0)))
 		_actor_delta(defender_out, "control", float(effects.get("defender_control", 0)))
 	return {"actor": actor_out, "defender": defender_out}
+
+func validate_attempt(technique: Dictionary, actor: Dictionary, context: Dictionary = {}) -> Dictionary:
+	_ensure_overlay()
+	var merged := _merge_overlay(technique)
+	var state := _mapper.to_runtime(str(context.get("state", context.get("estado", "PLAYER_STANDING_NEUTRAL"))))
+	var raw_entry := str(merged.get("entry_state", merged.get("estado_entrada", "")))
+	var state_allowed := raw_entry == "" or _mapper.to_runtime(raw_entry) == state
+	var can_pay := _pode_pagar(actor, _custo(merged))
+	if state_allowed and can_pay:
+		return {}
+	var reason := "estado_posicional_incorreto" if not state_allowed else "recurso_insuficiente"
+	var result := _erro(str(merged.get("id", "unknown")), reason)
+	result["state_from"] = state
+	result["state_to"] = state
+	result["state_allowed"] = state_allowed
+	result["can_pay"] = can_pay
+	return result
 
 func _ensure_overlay() -> void:
 	if _overlay_loaded:
@@ -247,6 +286,7 @@ func _mensagem(technique: Dictionary, success: bool, state_allowed: bool, can_pa
 func _erro(technique_id: String, reason: String) -> Dictionary:
 	return {
 		"technique_id": technique_id,
+		"accepted": false,
 		"success": false,
 		"denied": false,
 		"faked": false,
