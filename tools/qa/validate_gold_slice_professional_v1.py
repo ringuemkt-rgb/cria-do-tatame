@@ -18,6 +18,7 @@ def main() -> int:
     timing = load("data/combat/bjj_timing_windows_v1.json")
     living = load("data/world/terreiro_living_hub_v1.json")
     checklist = load("data/qa/android_gold_slice_manual_checklist_v1.json")
+    audio = load("data/audio/p1_audio_events_v1.json")
     golden = load("data/combat/golden_chain_ruan_davi_v1.json")
     settings = load("data/settings.json")
 
@@ -42,6 +43,14 @@ def main() -> int:
     feedback_ids = set(feedback.get("profiles", {}))
     if feedback_ids != required:
         errors.append(f"feedback_profiles_mismatch:{sorted(feedback_ids ^ required)}")
+    audio_ids = set(audio.get("sfx", {}))
+    missing_audio = sorted(required - audio_ids)
+    if missing_audio:
+        errors.append(f"p1_audio_events_missing:{missing_audio}")
+    if "fight_dique" not in audio.get("music", {}):
+        errors.append("fight_dique_music_cue_missing")
+    if audio.get("shipping") is True:
+        errors.append("p1_audio_contract_must_remain_nonshipping_until_final_audio")
 
     touch_floor = int(timing.get("input_profiles", {}).get("touch", {}).get("minimum_counter_window_ms", 0))
     contract_floor = int(contract.get("fight_acceptance", {}).get("touch_counter_floor_ms", 0))
