@@ -55,6 +55,9 @@ func _build_slots(container: HBoxContainer, kind: String, count: int, equipped: 
 		var slot := DeckSlotScript.new()
 		slot.set("slot_kind", kind)
 		slot.set("slot_index", index)
+		slot.set_meta("occupied", index < equipped.size())
+		slot.focus_mode = Control.FOCUS_ALL
+		slot.tooltip_text = "Cartas equipadas: clique com o botão direito ou pressione Voltar para remover." if index < equipped.size() else "Arraste uma carta da coleção para este espaço."
 		slot.custom_minimum_size = Vector2(132, 88)
 		slot.add_theme_stylebox_override("panel", VisualTheme.panel_style(0.72, VisualTheme.GOLD if kind == "active" else VisualTheme.CYAN, 1, 8))
 		var label := Label.new()
@@ -66,8 +69,10 @@ func _build_slots(container: HBoxContainer, kind: String, count: int, equipped: 
 			label.text = "%s\nNv.%d" % [str(card.get("name", "Carta")), int(card.get("level", 1))]
 		else:
 			label.text = "%s %d\nARRASTE AQUI" % [kind.to_upper(), index + 1]
+		label.mouse_filter = Control.MOUSE_FILTER_IGNORE
 		slot.add_child(label)
 		slot.connect("card_dropped", _on_card_dropped)
+		slot.connect("remove_requested", _on_remove_slot)
 		container.add_child(slot)
 
 func _on_collection_card_pressed(card_id: String) -> void:
@@ -90,6 +95,11 @@ func _on_upgrade(payment: String) -> void:
 		SaveManager.save_game(1)
 	else:
 		_set_status(_error_text(str(result.get("error", "erro"))), true)
+	_refresh_all()
+
+func _on_remove_slot(kind: String, index: int) -> void:
+	var result: Dictionary = DeckManager.unequip_card(kind, index)
+	_set_status("Carta removida do Gi." if result.get("ok", false) else _error_text(str(result.get("error", "erro"))), not bool(result.get("ok", false)))
 	_refresh_all()
 
 func _on_card_dropped(card_id: String, kind: String, index: int) -> void:
@@ -116,6 +126,8 @@ func _error_text(error: String) -> String:
 		"card_xp_insufficient": return "XP técnico insuficiente para aperfeiçoar esta carta."
 		"money_insufficient": return "Dinheiro insuficiente para o treino particular."
 		"belt_level_limit": return "Sua faixa atual limita o nível desta carta."
+		"last_active_card": return "Mantenha pelo menos uma técnica ativa equipada."
+		"invalid_slot": return "Este espaço de carta é inválido."
 	return error.replace("_", " ")
 
 func _clear_children(node: Node) -> void:
