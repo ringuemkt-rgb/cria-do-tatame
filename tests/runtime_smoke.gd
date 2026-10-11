@@ -238,6 +238,13 @@ func _test_save_roundtrip() -> void:
 		_assert(int(world_state.get("money")) == 321, "Backup nao restaurou snapshot anterior")
 		_assert(FileAccess.file_exists(slot_path + ".bak"), "Recuperacao apagou backup valido")
 		_assert(not FileAccess.file_exists(slot_path + ".tmp"), "Recuperacao deixou arquivo temporario")
+
+	# Simulate interruption after primary -> backup, before temp -> primary.
+	_assert(DirAccess.remove_absolute(slot_path) == OK, "Falha ao simular save principal ausente")
+	_assert(bool(save_manager.call("has_save", SLOT)), "Menu nao reconheceu backup recuperavel sem principal")
+	world_state.set("money", 0)
+	_assert(bool(save_manager.call("load_game", SLOT)), "Save ausente nao recuperou backup preservado")
+	_assert(int(world_state.get("money")) == 321, "Backup nao recuperou estado quando principal sumiu")
 	save_manager.call("delete_save", SLOT)
 
 func _test_combat_domain() -> void:
