@@ -183,7 +183,8 @@ func _test_hub_travel_and_activities() -> void:
 	world_state.set("money", 2000)
 	world_state.set("energy", 100.0)
 	world_map.call("reset")
-	for hub_id in ["itubera", "salvador", "zambiapunga", "camamu_manguezal"]:
+	_assert(not bool(world_map.call("travel_to", "salvador").get("ok", false)), "Hub externo Salvador deve ser apenas contexto historico")
+	for hub_id in ["itubera", "zambiapunga", "camamu_manguezal"]:
 		var travel: Dictionary = world_map.call("travel_to", hub_id)
 		_assert(bool(travel.get("ok", false)), "Falha ao viajar para %s: %s" % [hub_id, travel.get("message", "")])
 		if not bool(travel.get("ok", false)):
