@@ -156,7 +156,12 @@ func _reduce_stabilization(s: Dictionary, action: Dictionary) -> Dictionary:
 	if pending.is_empty():
 		return s
 	var player := int(action.get("player", 0))
-	if player != int(pending.get("player", 0)):
+	if player not in [1, 2] or player != int(pending.get("player", 0)):
+		return s
+	# A pending score is valid only while the same fighter controls the
+	# exact position that created it. Never score stale or restored events.
+	if str(s.get("pos", "")) != str(pending.get("position", "")) or int(s.get("top", 0)) != player:
+		s["pending_score"] = {}
 		return s
 	var seconds := maxf(0.0, float(action.get("seconds", 0.0)))
 	if seconds <= 0.0:
