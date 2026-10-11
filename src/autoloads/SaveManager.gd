@@ -202,7 +202,9 @@ func get_slot_path(slot_id := 1) -> String:
 	return SAVE_PREFIX + str(slot_id) + SAVE_SUFFIX
 
 func has_save(slot_id := 1) -> bool:
-	return FileAccess.file_exists(get_slot_path(slot_id))
+	var path := get_slot_path(slot_id)
+	# An interrupted rename may leave only the recoverable backup.
+	return FileAccess.file_exists(path) or FileAccess.file_exists(path + ".bak")
 
 func delete_save(slot_id := 1) -> void:
 	var path := get_slot_path(slot_id)
