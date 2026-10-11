@@ -10,15 +10,30 @@ class_name FighterRigPreviewV1
 @export var trim_color := Color("23282c")
 @export var belt_color := Color("ece9d9")
 var pose_id := "stance"
+var _previous_points: Dictionary = {}
+var _blend_elapsed := 1.0
+const POSE_BLEND_SECONDS := 0.085
+
+func _ready() -> void:
+	set_process(false)
+
+func _process(delta: float) -> void:
+	_blend_elapsed = minf(POSE_BLEND_SECONDS, _blend_elapsed + maxf(0.0, delta))
+	queue_redraw()
+	if _blend_elapsed >= POSE_BLEND_SECONDS:
+		set_process(false)
 
 func set_visual_pose(value: String) -> void:
 	var normalized := value if value in ["idle", "stance", "guard", "grip", "shot", "sprawl", "top", "bottom", "pass", "mount", "submission", "defense", "impact", "victory"] else "stance"
 	if normalized == pose_id:
 		return
+	_previous_points = _blended_points()
 	pose_id = normalized
+	_blend_elapsed = 0.0
+	set_process(true)
 	queue_redraw()
 
-func _points() -> Dictionary:
+func _points_for_pose(target_pose: String) -> Dictionary:
 	var p := {
 		"head": Vector2(0, -36),
 		"ls": Vector2(-19, -12), "rs": Vector2(19, -12),
@@ -28,7 +43,7 @@ func _points() -> Dictionary:
 		"lk": Vector2(-18, 51), "rk": Vector2(18, 50),
 		"lf": Vector2(-28, 72), "rf": Vector2(31, 72)
 	}
-	match pose_id:
+	match target_pose:
 		"idle":
 			p["le"] = Vector2(-22, 20)
 			p["re"] = Vector2(23, 18)
@@ -116,8 +131,18 @@ func _points() -> Dictionary:
 			p["rh"] = Vector2(47, -75)
 	return p
 
+func _blended_points() -> Dictionary:
+	var target := _points_for_pose(pose_id)
+	if _previous_points.is_empty() or _blend_elapsed >= POSE_BLEND_SECONDS:
+		return target
+	var alpha := smoothstep(0.0, POSE_BLEND_SECONDS, _blend_elapsed)
+	var intermediate := {}
+	for key in target.keys():
+		intermediate[key] = _previous_points.get(key, target[key]).lerp(target[key], alpha)
+	return intermediate
+
 func _draw() -> void:
-	var p: Dictionary = _points()
+	var p: Dictionary = _blended_points()
 	var outline := Color("18191e")
 	var gi_shade := gi_color.darkened(0.25)
 	var skin_shade := skin_color.darkened(0.27)
