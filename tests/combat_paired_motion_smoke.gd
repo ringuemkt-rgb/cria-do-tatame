@@ -5,6 +5,10 @@ const PairScript = preload("res://src/animation/CombatPairTimelineV1.gd")
 
 var checks := 0
 var failures: Array[String] = []
+var phase_events: Array[String] = []
+
+func _on_phase(_technique_id: String, _actor_id: String, phase_name: String, _success: bool) -> void:
+	phase_events.append(phase_name)
 
 func _initialize() -> void:
 	call_deferred("_run")
@@ -33,6 +37,7 @@ func _run() -> void:
 	root.add_child(pair)
 	_check(pair.configure_views(ruan, davi), "paired preview contract loads")
 	_check(pair.is_ready(), "views and preview contract ready")
+	pair.phase_started.connect(_on_phase)
 	if not pair.is_ready():
 		quit(1)
 		return
@@ -71,6 +76,7 @@ func _run() -> void:
 	_check(ok, "accepted takedown plays a complete paired sequence")
 	_check(not pair.busy, "motion releases busy lock")
 	_check(pair.last_sequence.size() == 6, "all six phases were visited")
+	_check(phase_events == ["anticipation", "entry", "establish", "stabilize", "response", "recovery"], "one shared ordered phase clock drives both fighters")
 	_check(str(pair.last_sequence[0].get("name", "")) == "anticipation", "preview starts at anticipation")
 	_check(str(pair.last_sequence[5].get("name", "")) == "recovery", "preview ends at recovery")
 	_check(ruan.position.distance_to(Vector2(587.0, 388.0)) < 0.01, "Ruan reaches authoritative top-stage projection")
@@ -80,6 +86,7 @@ func _run() -> void:
 	_check(defended, "Davi failed action still has defensive response frames")
 	_check(str(pair.last_sequence[0].get("davi_pose", "")) == "stance", "defended branch animates real attacking actor")
 	_check(pair.playback_count == 2, "two independent action animations completed")
+	_check(phase_events.size() == 12, "six synchronized markers per accepted move")
 	pair.queue_free()
 	ruan.queue_free()
 	davi.queue_free()
