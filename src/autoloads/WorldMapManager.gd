@@ -1,21 +1,25 @@
 extends Node
 
+# Existing runtime hubs in the approved playable Baixo Sul region.
+# Story hubs outside this set remain readable for legacy save history.
+const PLAYABLE_HUB_IDS := ["itubera", "zambiapunga", "camamu_manguezal"]
+
 var current_hub := "itubera"
 var visited_hubs := ["itubera"]
 var travel_log := []
-var unlocked_hubs := ["itubera", "salvador", "zambiapunga", "camamu_manguezal"]
+var unlocked_hubs := PLAYABLE_HUB_IDS.duplicate()
 
 func reset() -> void:
 	current_hub = "itubera"
 	visited_hubs = ["itubera"]
 	travel_log = []
-	unlocked_hubs = ["itubera", "salvador", "zambiapunga", "camamu_manguezal"]
+	unlocked_hubs = PLAYABLE_HUB_IDS.duplicate()
 
 func get_hub_data(hub_id: String) -> Dictionary:
 	return DataRegistry.hubs_dense.get("hubs", {}).get(hub_id, {})
 
 func can_travel_to(hub_id: String) -> bool:
-	return unlocked_hubs.has(hub_id) and not get_hub_data(hub_id).is_empty()
+	return PLAYABLE_HUB_IDS.has(hub_id) and unlocked_hubs.has(hub_id) and not get_hub_data(hub_id).is_empty()
 
 func travel_to(hub_id: String) -> Dictionary:
 	if not can_travel_to(hub_id):
@@ -55,7 +59,21 @@ func to_dict() -> Dictionary:
 	return {"current_hub": current_hub, "visited_hubs": visited_hubs, "travel_log": travel_log, "unlocked_hubs": unlocked_hubs}
 
 func load_from_dict(data: Dictionary) -> void:
-	current_hub = str(data.get("current_hub", "itubera"))
-	visited_hubs = data.get("visited_hubs", ["itubera"])
-	travel_log = data.get("travel_log", [])
-	unlocked_hubs = data.get("unlocked_hubs", unlocked_hubs)
+	var saved_hub := str(data.get("current_hub", "itubera"))
+	# Preserve old travel history without retaining a playable destination
+	# outside Baixo Sul. Historical Salvador save loads safely into Ituberá.
+	current_hub = saved_hub if PLAYABLE_HUB_IDS.has(saved_hub) and not get_hub_data(saved_hub).is_empty() else "itubera"
+	var previous_visits = data.get("visited_hubs", ["itubera"])
+	visited_hubs = previous_visits.duplicate() if typeof(previous_visits) == TYPE_ARRAY else ["itubera"]
+	if not visited_hubs.has("itubera"):
+		visited_hubs.append("itubera")
+	var historical_travel = data.get("travel_log", [])
+	travel_log = historical_travel.duplicate(true) if typeof(historical_travel) == TYPE_ARRAY else []
+	var previously_unlocked = data.get("unlocked_hubs", PLAYABLE_HUB_IDS)
+	unlocked_hubs = ["itubera"]
+	if typeof(previously_unlocked) == TYPE_ARRAY:
+		for hub_id_value in previously_unlocked:
+			var id := str(hub_id_value)
+			if PLAYABLE_HUB_IDS.has(id) and not unlocked_hubs.has(id):
+				unlocked_hubs.append(id)
+	WorldState.current_hub = current_hub
