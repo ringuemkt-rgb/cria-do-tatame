@@ -2,6 +2,7 @@ extends Control
 
 const RESULT_SCENE: String = "res://scenes/result/ResultScreen.tscn"
 const FighterPlaceholderScript = preload("res://src/characters/FighterPlaceholder.gd")
+const PairTimelineScript = preload("res://src/animation/CombatPairTimelineV1.gd")
 const GameFeelManagerScript = preload("res://src/gamefeel/GameFeelManager.gd")
 const DaviAIControllerScript = preload("res://src/combat/DaviAIController.gd")
 const VisualTheme = preload("res://src/ui/CriaVisualTheme.gd")
@@ -11,6 +12,9 @@ var gamefeel: Node
 var davi_ai: Node
 var ruan_placeholder: Node
 var davi_placeholder: Node
+var pair_timeline: Node
+var _pending_finish: Dictionary = {}
+var _result_transition_started := false
 var action_buttons: Array[Button] = []
 var ai_turn_delay: float = 0.35
 var defense_window_seconds: float = 1.15
@@ -52,6 +56,11 @@ func _ready() -> void:
 	add_child(davi_ai)
 	davi_ai.call("setup", "davi_relampago", "normal")
 	_build_placeholder_fighters()
+	pair_timeline = PairTimelineScript.new()
+	pair_timeline.name = "CombatPairTimeline"
+	add_child(pair_timeline)
+	if not pair_timeline.configure_views(ruan_placeholder, davi_placeholder):
+		push_warning("[CombatArenaBase] Paired motion preview unavailable; gameplay unaffected.")
 	_connect_buttons()
 	_connect_runtime_signals()
 	var preflight: Dictionary = CombatManager.get_pre_fight_plan_v2()
@@ -61,6 +70,8 @@ func _ready() -> void:
 	var start_result: Dictionary = CombatManager.start_combat(fight_arena, "ruan_macacao", fight_opponent)
 	if not bool(start_result.get("ok", false)):
 		push_error("[CombatArenaBase] Falha ao iniciar combate: %s" % str(start_result))
+	elif pair_timeline.is_ready():
+		pair_timeline.set_stage_state(CombatManager.get_current_state_name())
 	_ensure_ai_hint()
 	_refresh_v2_panel()
 	_update_state_label(CombatManager.get_current_state_name())
@@ -125,8 +136,9 @@ func _build_placeholder_fighters() -> void:
 	davi_placeholder = FighterPlaceholderScript.new()
 	davi_placeholder.fighter_id = "davi_relampago"
 	davi_placeholder.display_name = "Davi Relampago"
-	davi_placeholder.primary_color = Color(0.22, 0.28, 0.34)
+	davi_placeholder.primary_color = Color("174f9b")
 	davi_placeholder.accent_color = Color(0.55, 0.75, 1.0)
+	davi_placeholder.skin_color = Color("986640")
 	davi_placeholder.position = Vector2(850, 385)
 	davi_placeholder.scale = Vector2(-1, 1)
 	add_child(davi_placeholder)
@@ -193,8 +205,7 @@ func _execute_player_action(action_id: String) -> void:
 	_turn_in_progress = true
 	AudioManager.play_sfx("botao")
 	_set_actions_enabled(false)
-	if ruan_placeholder != null:
-		ruan_placeholder.call("play_action", action_id)
+	var visual_state_before := CombatManager.get_current_state_name()
 	var result: Dictionary = CombatManager.apply_player_action(action_id)
 	if result.has("error"):
 		_set_ai_hint(_humanize_message(str(result["error"])))
@@ -206,9 +217,19 @@ func _execute_player_action(action_id: String) -> void:
 	var success: bool = bool(result.get("success", false))
 	AudioManager.play_sfx(action_id)
 	gamefeel.call("apply_for_technique", action_id, success)
+	if pair_timeline != null and pair_timeline.is_ready():
+		await pair_timeline.play_resolution(action_id, CombatManager.player_id, result, visual_state_before, CombatManager.get_current_state_name())
+	if not is_inside_tree():
+		return
+	if not _pending_finish.is_empty():
+		_finish_after_motion()
+		return
 	if CombatManager.is_running:
 		await _run_davi_turn()
 	if not is_inside_tree():
+		return
+	if not _pending_finish.is_empty():
+		_finish_after_motion()
 		return
 	_turn_in_progress = false
 	if CombatManager.is_running:
@@ -228,8 +249,7 @@ func _run_davi_turn() -> void:
 	var technique_id := str(technique.get("id", ""))
 	var technique_name := str(technique.get("nome", technique.get("name", technique_id)))
 	_set_ai_hint("%s Davi comprometeu: %s." % [str(davi_ai.call("pressure_message")), technique_name])
-	if davi_placeholder != null:
-		davi_placeholder.call("play_action", technique_id)
+	var visual_state_before := CombatManager.get_current_state_name()
 	AudioManager.play_sfx(technique_id)
 
 	var defense_options: Array = CombatManager.get_defense_options(CombatManager.opponent_id, technique_id)
@@ -255,6 +275,8 @@ func _run_davi_turn() -> void:
 	elif defense_context.get("timed_out", false):
 		_set_ai_hint("Janela fechou. Davi completou a acao.")
 	gamefeel.call("apply_for_technique", technique_id, bool(result.get("success", false)))
+	if pair_timeline != null and pair_timeline.is_ready():
+		await pair_timeline.play_resolution(technique_id, CombatManager.opponent_id, result, visual_state_before, CombatManager.get_current_state_name())
 
 func _await_player_defense(attack_id: String, attack_name: String, options: Array) -> Dictionary:
 	if options.is_empty() or not has_node("CombatDeckHUD"):
@@ -371,17 +393,28 @@ func _on_combat_finished(result) -> void:
 	if has_node("CombatDeckHUD"):
 		$CombatDeckHUD.close_defense_window()
 	_set_actions_enabled(false)
+	_pending_finish = result.duplicate(true)
 	WorldState.last_combat_result = result
 	SaveManager.save_game(1)
 	var music_cue := "terreiro" if bool(result.get("draw", false)) else ("vitoria" if result.get("winner", "") == "ruan_macacao" else "derrota")
 	AudioManager.play_music_cue(music_cue)
+	# A submission outcome is authoritative immediately, but the visual
+	# closure finishes before the result scene replaces the combat scene.
+	if not _turn_in_progress and (pair_timeline == null or not pair_timeline.is_busy()):
+		call_deferred("_finish_after_motion")
+
+func _finish_after_motion() -> void:
+	if _result_transition_started or _pending_finish.is_empty() or not is_inside_tree():
+		return
+	_result_transition_started = true
 	var error: Error = get_tree().change_scene_to_file(RESULT_SCENE)
 	if error != OK:
+		_result_transition_started = false
 		push_error("[CombatArenaBase] Falha ao abrir resultado: %s" % error_string(error))
 
 
 func _process(delta: float) -> void:
-	if not CombatManager.is_running or not CombatManager.is_combat_v2_active():
+	if _turn_in_progress or not CombatManager.is_running or not CombatManager.is_combat_v2_active():
 		return
 	var timer_result: Dictionary = CombatManager.tick_combat_timer(delta)
 	if has_node("Panel/Message"):

@@ -366,7 +366,11 @@ func _test_scene_input_lock() -> void:
 	_check(arena._turn_in_progress, "arena locks while awaiting rival")
 	for button in arena.get_node("CombatDeckHUD").card_buttons:
 		_check(button.disabled, "HUD card locked during rival turn")
-	await create_timer(0.4).timeout
+	# Visual paired playback takes longer than the old instant placeholder.
+	# Wait for the real turn boundary rather than asserting an arbitrary 0.4 s.
+	var deadline_msec := Time.get_ticks_msec() + 5000
+	while arena._turn_in_progress and Time.get_ticks_msec() < deadline_msec:
+		await process_frame
 	var player_actions := 0
 	for event in cm.combat_core_v2.action_log:
 		if event.get("actor_id") == cm.player_id:
