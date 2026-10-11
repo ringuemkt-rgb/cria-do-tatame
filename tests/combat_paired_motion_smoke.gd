@@ -70,6 +70,15 @@ func _run() -> void:
 		_check(str(finish_steps[5]["ruan_pose"]) == "victory", "finisher shows Ruan's victory before scene change")
 		_check(str(finish_steps[5]["davi_pose"]) == "bottom", "finisher leaves defender on mat")
 		_check((finish_steps[5]["ruan_pos"] as Vector2).x < 680.0, "finisher stays on the grappling stage")
+	var blocked_entry: Dictionary = pair.plan_for("baiana", "ruan_macacao", true, false, "PLAYER_STANDING_NEUTRAL", "PLAYER_STANDING_NEUTRAL")
+	var blocked_steps: Array = blocked_entry.get("phases", [])
+	_check(blocked_steps.size() == 6, "defended shot has paired key phases")
+	if blocked_steps.size() == 6:
+		var approach_ruan: Vector2 = blocked_steps[2]["ruan_pos"]
+		var approach_davi: Vector2 = blocked_steps[2]["davi_pos"]
+		var retreat_ruan: Vector2 = blocked_steps[5]["ruan_pos"]
+		_check(approach_ruan.x > 500.0 and approach_davi.x < 780.0, "defended standing entry actually approaches opponent")
+		_check(is_equal_approx(retreat_ruan.x, 435.0), "failed entry resets stage separation")
 	var main_snapshot := {"pos": "standing_neutral", "score": 2, "winner": 0}
 	var snapshot_copy := main_snapshot.duplicate(true)
 	var ok: bool = await pair.play_resolution("baiana", "ruan_macacao", {"accepted": true, "success": true}, "PLAYER_STANDING_NEUTRAL", "PLAYER_TOP_GUARD")
