@@ -24,6 +24,11 @@ jobs:
     timeout-minutes: 15
     steps:
       - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Repository quality gate
+        run: npm run quality
       - name: Get Godot 4.2.2
         shell: bash
         run: |
