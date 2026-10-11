@@ -1,0 +1,70 @@
+name: Paired Combat Preview V1
+
+on:
+  pull_request:
+    branches:
+      - main
+      - fix/positional-combat-audit-20260929
+    paths:
+      - 'src/animation/CombatPairTimelineV1.gd'
+      - 'src/characters/FighterRigPreviewV1.gd'
+      - 'src/characters/FighterPlaceholder.gd'
+      - 'data/animation/combat_pair_preview_v1.json'
+      - 'scenes/combat/CombatArenaBase.gd'
+      - 'tests/combat_paired_motion_smoke.gd'
+      - '.github/workflows/paired-combat-preview-v1.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  godot-paired-preview:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - name: Get Godot 4.2.2
+        shell: bash
+        run: |
+          set -euo pipefail
+          curl -L --fail --retry 3 -o godot.zip \
+            https://github.com/godotengine/godot/releases/download/4.2.2-stable/Godot_v4.2.2-stable_linux.x86_64.zip
+          unzip -q godot.zip
+          mv Godot_v4.2.2-stable_linux.x86_64 godot
+          chmod +x godot
+      - name: Import resources and check GDScript parser
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p reports/paired_preview
+          timeout 180 ./godot --headless --editor --path . --import 2>&1 | tee reports/paired_preview/import.log
+          if grep -Eq 'SCRIPT ERROR|Parse Error|Failed loading resource' reports/paired_preview/import.log; then exit 1; fi
+      - name: Play and verify paired animation
+        shell: bash
+        run: |
+          set -euo pipefail
+          ./godot --headless --path . --script res://tests/combat_paired_motion_smoke.gd 2>&1 | tee reports/paired_preview/paired_smoke.log
+          grep -q '\[CombatPairedMotion\] PASS' reports/paired_preview/paired_smoke.log
+          if grep -Eq 'SCRIPT ERROR|Parse Error|ERROR:' reports/paired_preview/paired_smoke.log; then exit 1; fi
+      - name: Existing combat safety regressions
+        shell: bash
+        run: |
+          set -euo pipefail
+          ./godot --headless --path . --script res://tests/combat_action_safety_smoke.gd 2>&1 | tee reports/paired_preview/combat_smoke.log
+          grep -q '\[CombatActionSafety\] PASS' reports/paired_preview/combat_smoke.log
+          if grep -Eq 'SCRIPT ERROR|Parse Error|ERROR:' reports/paired_preview/combat_smoke.log; then exit 1; fi
+      - name: Main runtime smoke
+        shell: bash
+        run: |
+          set -euo pipefail
+          ./godot --headless --path . --script res://tests/runtime_smoke.gd 2>&1 | tee reports/paired_preview/runtime_smoke.log
+          grep -q '\[RuntimeSmoke\] PASS' reports/paired_preview/runtime_smoke.log
+          if grep -Eq 'SCRIPT ERROR|Parse Error|ERROR:' reports/paired_preview/runtime_smoke.log; then exit 1; fi
+      - name: Upload evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: paired-combat-preview-v1-logs
+          path: reports/paired_preview/
+          if-no-files-found: warn
