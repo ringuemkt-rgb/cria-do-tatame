@@ -4,7 +4,7 @@ const RulesScript = preload("res://src/progression/SkillTreeRulesV1.gd")
 const VisualTheme = preload("res://src/ui/CriaVisualTheme.gd")
 const HUB_SCENE := "res://scenes/hubs/TerreiroDaLuta.tscn"
 
-var rules: RefCounted
+var rules
 var path_id := "pressure"
 var selected_skill := ""
 var header: Label
