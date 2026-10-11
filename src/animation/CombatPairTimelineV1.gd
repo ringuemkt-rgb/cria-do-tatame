@@ -1,6 +1,9 @@
 extends Node
 class_name CombatPairTimelineV1
 
+signal phase_started(technique_id: String, actor_id: String, phase_name: String, success: bool)
+signal paired_motion_finished(technique_id: String, actor_id: String)
+
 ## Shared six-phase animation clock for the existing CombatArenaBase.
 ## VISUAL ONLY: CombatManager decides actions, positions, score and winner.
 ## Procedural poses are preview placeholders and never count as final BJJ art.
@@ -182,6 +185,7 @@ func play_resolution(technique_id: String, actor_id: String, result: Dictionary,
 			return false
 		var step: Dictionary = raw_step
 		last_sequence.append(step.duplicate(true))
+		phase_started.emit(technique_id, actor_id, str(step["name"]), success)
 		_apply_poses({"ruan": step["ruan_pose"], "davi": step["davi_pose"]})
 		var tween := create_tween()
 		tween.set_parallel(true)
@@ -193,4 +197,5 @@ func play_resolution(technique_id: String, actor_id: String, result: Dictionary,
 		ruan.call("end_visual_action", str(final_step["ruan_pose"]))
 		davi.call("end_visual_action", str(final_step["davi_pose"]))
 	busy = false
+	paired_motion_finished.emit(technique_id, actor_id)
 	return true
