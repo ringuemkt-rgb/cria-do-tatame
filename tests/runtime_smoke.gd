@@ -205,6 +205,8 @@ func _test_save_roundtrip() -> void:
 	if save_manager == null or world_state == null:
 		return
 	const SLOT := 9876
+	# A previous interrupted smoke must not contaminate this isolated slot.
+	save_manager.call("delete_save", SLOT)
 	world_state.call("reset_new_game")
 	world_state.set("money", 321)
 	world_state.set("energy", 77.0)
@@ -218,6 +220,24 @@ func _test_save_roundtrip() -> void:
 	_assert(bool(save_manager.call("load_game", SLOT)), "SaveManager falhou ao carregar slot de teste")
 	_assert(int(world_state.get("money")) == 321, "Roundtrip de save nao restaurou dinheiro")
 	_assert(is_equal_approx(float(world_state.get("energy")), 77.0), "Roundtrip de save nao restaurou energia")
+
+	# A second save must keep the previous valid snapshot as .bak.
+	world_state.set("money", 777)
+	_assert(bool(save_manager.call("save_game", SLOT)), "Segundo save do slot de teste falhou")
+	_assert(FileAccess.file_exists(slot_path + ".bak"), "Segundo save deve manter backup recuperavel")
+
+	# Simulate a corrupted primary and prove that the valid backup survives
+	# the restore path instead of being overwritten with corrupt JSON.
+	var damaged: FileAccess = FileAccess.open(slot_path, FileAccess.WRITE)
+	_assert(damaged != null, "Nao foi possivel corromper save de teste")
+	if damaged != null:
+		damaged.store_string("{corrupted-json")
+		damaged.close()
+		world_state.set("money", 0)
+		_assert(bool(save_manager.call("load_game", SLOT)), "Backup valido nao recuperou save corrompido")
+		_assert(int(world_state.get("money")) == 321, "Backup nao restaurou snapshot anterior")
+		_assert(FileAccess.file_exists(slot_path + ".bak"), "Recuperacao apagou backup valido")
+		_assert(not FileAccess.file_exists(slot_path + ".tmp"), "Recuperacao deixou arquivo temporario")
 	save_manager.call("delete_save", SLOT)
 
 func _test_combat_domain() -> void:
