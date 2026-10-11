@@ -442,8 +442,11 @@ func execute_technique(actor_id: String, defender_id: String, technique: Diction
 			"state_from": player_state_before,
 			"actor_state_from": actor_state_before
 		}
+		# finish_combat() replaces last_result with the match summary.
+		# Return the successful technique result to the caller, not the summary.
+		var resolved_action: Dictionary = last_result.duplicate(true)
 		finish_combat(finish_result)
-		return last_result
+		return resolved_action
 
 	if bool(resolver_result.get("success", false)):
 		var actor_state_to := str(resolver_result.get("state_to", actor_state_before))
