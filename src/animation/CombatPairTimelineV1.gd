@@ -148,11 +148,21 @@ func plan_for(technique_id: String, actor_id: String, accepted: bool, success: b
 		var amount := float(step["interpolation"])
 		var attack_pose := str(profile["attacker"][i])
 		var defense_pose := str(profile["defender"][i])
+		var ruan_frame: Vector2 = first.lerp(finish["ruan"], amount)
+		var davi_frame: Vector2 = second.lerp(finish["davi"], amount)
+		# A defended standing entry still approaches contact and retreats;
+		# when start=end, a plain lerp would make the two fighters shadowbox
+		# 400 px apart with no readable defensive exchange.
+		if from_state == to_state and from_state == "PLAYER_STANDING_NEUTRAL":
+			var clinch: Dictionary = _positions_for_state("PLAYER_TOP_CLINCH")
+			var approach := sin(PI * amount) * 0.88
+			ruan_frame = ruan_frame.lerp(clinch["ruan"], approach)
+			davi_frame = davi_frame.lerp(clinch["davi"], approach)
 		var p := {
 			"name": PHASES[i],
 			"duration": float(step["duration_ms"]) / 1000.0,
-			"ruan_pos": first.lerp(finish["ruan"], amount),
-			"davi_pos": second.lerp(finish["davi"], amount),
+			"ruan_pos": ruan_frame,
+			"davi_pos": davi_frame,
 			"ruan_pose": attack_pose if is_player else defense_pose,
 			"davi_pose": defense_pose if is_player else attack_pose
 		}
