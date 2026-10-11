@@ -58,6 +58,13 @@ func _run() -> void:
 	_check(rejected.is_empty(), "rejected attempts never start motion")
 	var unknown := pair.plan_for("baiana", "unknown_character", true, true, "PLAYER_STANDING_NEUTRAL", "PLAYER_TOP_GUARD")
 	_check(unknown.is_empty(), "unknown actor never owns paired playback")
+	var finish_plan: Dictionary = pair.plan_for("encerramento_tecnico", "ruan_macacao", true, true, "PLAYER_SUBMISSION_ATTACK", "PLAYER_STANDING_NEUTRAL")
+	var finish_steps: Array = finish_plan.get("phases", [])
+	_check(finish_steps.size() == 6, "technical finish has six phases")
+	if finish_steps.size() == 6:
+		_check(str(finish_steps[5]["ruan_pose"]) == "victory", "finisher shows Ruan's victory before scene change")
+		_check(str(finish_steps[5]["davi_pose"]) == "bottom", "finisher leaves defender on mat")
+		_check((finish_steps[5]["ruan_pos"] as Vector2).x < 680.0, "finisher stays on the grappling stage")
 	var main_snapshot := {"pos": "standing_neutral", "score": 2, "winner": 0}
 	var snapshot_copy := main_snapshot.duplicate(true)
 	var ok: bool = await pair.play_resolution("baiana", "ruan_macacao", {"accepted": true, "success": true}, "PLAYER_STANDING_NEUTRAL", "PLAYER_TOP_GUARD")
