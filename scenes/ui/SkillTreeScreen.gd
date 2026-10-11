@@ -177,7 +177,7 @@ func _show_selected() -> void:
 	var reward := str(node.get("card_reward", ""))
 	var effect := "Carta de técnica: %s" % reward if reward != "" else "Progresso registrado; bônus numérico ainda não está balanceado."
 	var requirement := str(node.get("requires", ""))
-	var requirement_text := "Início do caminho" if requirement == "" else rules.display_name(requirement)
+	var requirement_text: String = "Início do caminho" if requirement == "" else str(rules.display_name(requirement))
 	var state := "DESBLOQUEADA" if owned else ("DISPONÍVEL" if result.get("ok", false) else "BLOQUEADA")
 	details.text = "%s\n\nCAMINHO: %s\nESTADO: %s\nPRÉ-REQUISITO: %s\nCUSTO PROVISÓRIO: %d PONTO\n\nRECOMPENSA\n%s\n\nO combate não recebe atributos inventados. Pontos e desbloqueios persistem no save." % [
 		rules.display_name(selected_skill).to_upper(),
