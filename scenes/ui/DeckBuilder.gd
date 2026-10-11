@@ -70,7 +70,17 @@ func _build_slots(container: HBoxContainer, kind: String, count: int, equipped: 
 		else:
 			label.text = "%s %d\nARRASTE AQUI" % [kind.to_upper(), index + 1]
 		label.mouse_filter = Control.MOUSE_FILTER_IGNORE
-		slot.add_child(label)
+		var slot_content := VBoxContainer.new()
+		slot_content.add_theme_constant_override("separation", 4)
+		slot_content.add_child(label)
+		if index < equipped.size():
+			var remove_btn := Button.new()
+			remove_btn.text = "REMOVER"
+			remove_btn.custom_minimum_size = Vector2(0, 32)
+			VisualTheme.apply_action_button(remove_btn, VisualTheme.CONFLICT)
+			remove_btn.pressed.connect(_on_remove_slot.bind(kind, index))
+			slot_content.add_child(remove_btn)
+		slot.add_child(slot_content)
 		slot.connect("card_dropped", _on_card_dropped)
 		slot.connect("remove_requested", _on_remove_slot)
 		container.add_child(slot)
