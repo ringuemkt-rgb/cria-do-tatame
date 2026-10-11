@@ -150,19 +150,63 @@ func equip_card(card_id: String, slot_kind: String, slot_index: int = -1) -> Dic
 		return {"ok": false, "error": "card_locked_or_missing"}
 	if str(card.get("kind", "")) != slot_kind:
 		return {"ok": false, "error": "slot_kind_mismatch"}
-	var target: Array[String] = active_deck if slot_kind == "active" else passive_deck
+	if slot_kind not in ["active", "passive"]:
+		return {"ok": false, "error": "slot_kind_mismatch"}
+	var original: Array[String] = active_deck if slot_kind == "active" else passive_deck
+	var next: Array[String] = original.duplicate()
 	var limit := ACTIVE_LIMIT if slot_kind == "active" else PASSIVE_LIMIT
-	active_deck.erase(card_id)
-	passive_deck.erase(card_id)
-	if slot_index >= 0 and slot_index < target.size():
-		target[slot_index] = card_id
-	elif target.size() < limit:
-		target.append(card_id)
+	if slot_index < -1 or slot_index >= limit:
+		return {"ok": false, "error": "invalid_slot"}
+	if slot_index == -1:
+		if next.has(card_id):
+			return {"ok": true, "unchanged": true}
+		if next.size() >= limit:
+			return {"ok": false, "error": "deck_full"}
+		next.append(card_id)
 	else:
-		return {"ok": false, "error": "deck_full"}
+		if next.has(card_id):
+			var old_index := next.find(card_id)
+			if old_index < next.size() and slot_index < next.size():
+				var displaced := next[slot_index]
+				next[slot_index] = card_id
+				next[old_index] = displaced
+			elif slot_index == next.size():
+				next.remove_at(old_index)
+				next.append(card_id)
+			else:
+				return {"ok": false, "error": "invalid_slot"}
+		elif slot_index < next.size():
+			next[slot_index] = card_id
+		elif slot_index == next.size() and next.size() < limit:
+			next.append(card_id)
+		else:
+			return {"ok": false, "error": "invalid_slot"}
+	if slot_kind == "active":
+		active_deck = next
+	else:
+		passive_deck = next
 	start_combat_hand()
 	SignalBus.deck_configuration_changed.emit(to_dict())
 	return {"ok": true}
+
+func unequip_card(slot_kind: String, slot_index: int) -> Dictionary:
+	if slot_kind not in ["active", "passive"]:
+		return {"ok": false, "error": "slot_kind_mismatch"}
+	var original: Array[String] = active_deck if slot_kind == "active" else passive_deck
+	if slot_index < 0 or slot_index >= original.size():
+		return {"ok": false, "error": "invalid_slot"}
+	if slot_kind == "active" and original.size() <= 1:
+		return {"ok": false, "error": "last_active_card"}
+	var next: Array[String] = original.duplicate()
+	var removed := next[slot_index]
+	next.remove_at(slot_index)
+	if slot_kind == "active":
+		active_deck = next
+	else:
+		passive_deck = next
+	start_combat_hand()
+	SignalBus.deck_configuration_changed.emit(to_dict())
+	return {"ok": true, "removed": removed}
 
 func upgrade_card(card_id: String, payment: String = "xp") -> Dictionary:
 	var card: Dictionary = cards.get(card_id, {})
