@@ -133,6 +133,12 @@ func plan_for(technique_id: String, actor_id: String, accepted: bool, success: b
 	if to_state != from_state:
 		finish = _positions_for_state(to_state)
 	var final_poses: Dictionary = _final_poses(to_state)
+	# CombatManager resets its state machine as soon as the match ends.
+	# Keep the visual closure on the mat and let the winner celebrate instead
+	# of teleporting both fighters to standing before ResultScreen appears.
+	if success and technique_id == "encerramento_tecnico":
+		finish = _positions_for_state("PLAYER_SUBMISSION_ATTACK")
+		final_poses = {"ruan": "victory" if is_player else "bottom", "davi": "bottom" if is_player else "victory"}
 	var steps: Array[Dictionary] = []
 	for i in range(PHASES.size()):
 		var step: Dictionary = config["phases"][i]
@@ -183,8 +189,8 @@ func play_resolution(technique_id: String, actor_id: String, result: Dictionary,
 		tween.tween_property(davi, "position", step["davi_pos"], float(step["duration"])).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
 		await tween.finished
 	if is_instance_valid(ruan) and is_instance_valid(davi):
-		var final_pose: Dictionary = _final_poses(to_state)
-		ruan.call("end_visual_action", str(final_pose["ruan"]))
-		davi.call("end_visual_action", str(final_pose["davi"]))
+		var final_step: Dictionary = planned["phases"][-1]
+		ruan.call("end_visual_action", str(final_step["ruan_pose"]))
+		davi.call("end_visual_action", str(final_step["davi_pose"]))
 	busy = false
 	return true
