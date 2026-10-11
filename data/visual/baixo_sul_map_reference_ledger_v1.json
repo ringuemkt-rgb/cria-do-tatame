@@ -1,0 +1,115 @@
+{
+  "$schema": "cria.baixo_sul_map_reference_ledger.v1",
+  "version": "1.0.0",
+  "status": "RECONCILIATION_CANDIDATE_NOT_GEOVALIDATED",
+  "shipping": false,
+  "world_data_authority": "data/world/world_map_v4.json",
+  "runtime_map": "scenes/world/WorldMapScreen.tscn",
+  "source_refs": [
+    {
+      "name": "Mapa do Baixo Sul da Bahia.png",
+      "type": "user_library_concept",
+      "role": "regional_composition",
+      "georeference_verified": false,
+      "shipping": false
+    },
+    {
+      "name": "Mapa pixelado da Costa do Dendê.png",
+      "type": "user_library_concept",
+      "role": "pixel_landscape_style",
+      "georeference_verified": false,
+      "shipping": false
+    },
+    {
+      "name": "Baixo Sul: mapa de rotas e arenas.png",
+      "type": "user_library_concept",
+      "role": "routes_arena_visual_reference",
+      "georeference_verified": false,
+      "shipping": false
+    },
+    {
+      "name": "Cria do Tatame: Mapa e Combate.png",
+      "type": "user_library_concept",
+      "role": "map_navigation_and_combat_panel_visual_reference",
+      "georeference_verified": false,
+      "shipping": false
+    },
+    {
+      "name": "Mapa tático Cria do Tatame.png",
+      "type": "user_library_concept",
+      "role": "hierarchical_district_and_hub_visual_reference",
+      "georeference_verified": false,
+      "shipping": false
+    },
+    {
+      "name": "Atlas Pixel do Cria do Tatame.png",
+      "type": "user_library_concept",
+      "role": "game_visual_identity",
+      "georeference_verified": false,
+      "shipping": false
+    }
+  ],
+  "world_scope": {
+    "playable_region": "Baixo Sul da Bahia",
+    "primary_hub": "itubera",
+    "region_anchors": [
+      "itubera",
+      "nilo_pecanha",
+      "valenca",
+      "taperoa",
+      "camamu",
+      "cairu",
+      "igrapiuna",
+      "marau",
+      "pirai_do_norte",
+      "ibirapitanga",
+      "tancredo_neves",
+      "teolandia"
+    ],
+    "itubera_landmarks": [
+      "terreiro_da_luta",
+      "arena_do_dique",
+      "ponte_do_saici",
+      "pancada_grande",
+      "praia_do_pratigi"
+    ],
+    "context_only_not_playable": [
+      "salvador",
+      "itacare"
+    ]
+  },
+  "map_pages_in_legacy_contract": 10,
+  "node_count_in_legacy_contract": 40,
+  "candidate_painted_pages": [
+    "01",
+    "02",
+    "03",
+    "04",
+    "05"
+  ],
+  "pending_painted_pages": [
+    "06",
+    "07",
+    "08",
+    "09",
+    "10"
+  ],
+  "playable_routes_must_be_verified_against": "official_IBGE_geometry_and_local_road_ferry_sources",
+  "conflicts_pending_migration": [
+    "legacy_page_10_salvador_is_nonplayable_story_context",
+    "legacy_page_07_itacare_and_marau_must_separate_itacare_context_from_playable_marau",
+    "WorldMapManager.current_unlocked_hubs_contains_legacy_salvador_until_save_migration",
+    "regional_map_concept_positions_are_not_validated_GPS_coordinates"
+  ],
+  "promotion_requirements": [
+    "rights_and_provenance",
+    "geo_IBGE_validation",
+    "authored_route_topology",
+    "regional_visual_human_review",
+    "sprite_layer_normalization",
+    "Godot_runtime_capture",
+    "Android_physical_QA"
+  ],
+  "fallback": "data_driven_procedural_map_layer",
+  "cannot_claim": "geographically_verified_final_map"
+}
