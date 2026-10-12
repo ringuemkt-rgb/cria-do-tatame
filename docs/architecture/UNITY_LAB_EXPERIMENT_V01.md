@@ -68,3 +68,22 @@ Pacote descartável **fora deste repositório** atualizado em artefato de conver
 **Evidência real:** `25` testes Python locais passaram e o ZIP foi validado quanto à integridade. **Não executados:** compilação no Unity Editor, Test Runner, PlayMode, Android e medição comparativa. Esses itens permanecem bloqueadores; o sucesso da CI documental no GitHub não é evidência de Unity funcionando. O pacote Unity não foi comitado para respeitar `secondary_runtime_forbidden` e decisões D1/D9.
 
 **Próximo gate humano:** abrir projeto temporário com Unity 6.3 LTS e Unity Test Framework, importar os JSON do clone oficial, executar testes C# e PlayMode, capturar log/screenshot 1280×720. Não autoriza migração.
+
+## Atualização experimental v0.3 — 12/10/2026
+
+**Natureza:** artefato local descartável, apenas documentação neste GitHub. Nenhum projeto Unity foi incluído na árvore oficial. Godot, `main`, saves e contratos canônicos permanecem inalterados.
+
+**Correção real do kit v0.2:** o importador exigia `Assets/CriaUnityLab/Resources/Canon` previamente criada, mas o ZIP não a incluía; a v0.3 passa a criá-la após validar origem/destino e recusar estruturas não-Univeral-2D.
+
+**Infraestrutura entregue para executar fora deste repo:**
+
+- `tools/install_overlay.py` confere um projeto real gerado por Unity Hub (manifest, ProjectVersion, URP, 2D e Test Framework), sem substituir arquivos ou editar `Packages`/`ProjectSettings`;
+- importador Python preserva bytes e hashes de cinco JSON e produz lista serializável no `source_manifest`;
+- `CriaSnapshotGuard.cs` revalida os cinco SHA-256 e a fingerprint agregada em runtime C#, recusando snapshot inválido antes de visualização;
+- Editor asmdef explícito e menus para criação de cena, validação, captura real de Game View e futura exportação Android debug ARM64/IL2CPP; a captura só é reconhecida depois de confirmar PNG e suas dimensões reais;
+- `tools/run_unity_checks.py` executa Editor de verdade quando instalado e exige marcador de importação e arquivos XML NUnit >0 testes, sem falha nem skip;
+- validação sintética/instalador/guardas: **37 testes Python passaram**; estrutura com **4 assemblies** passou em verificador offline.
+
+**Bloqueios explícitos:** não há Unity Editor, Unity Hub, compilador C#, Android SDK, clone local completo dos cinco JSON ou aparelho conectado no ambiente que montou o kit. Portanto, **não executados**: importação dos cinco arquivos oficiais em Unity real, compilação de C#, EditMode, PlayMode, screenshot verdadeiro, build Android ou benchmark Godot × Unity. Não existem evidências válidas para qualquer um desses gates. Scripts prontos não são resultados.
+
+**Critério de próxima entrega:** em projeto Unity Universal 2D temporário: importar cinco JSON do clone Godot, rodar hash guard e NUnit/PlayMode com logs reais, capturar PNG efetivo da Game View, só então considerar APK experimental. A política `secondary_runtime_forbidden=true` continua vigente e não foi excepcionalizada por este PR.
