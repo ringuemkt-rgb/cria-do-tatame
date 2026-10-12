@@ -82,7 +82,7 @@ Pacote descartável **fora deste repositório** atualizado em artefato de conver
 - `CriaSnapshotGuard.cs` revalida os cinco SHA-256 e a fingerprint agregada em runtime C#, recusando snapshot inválido antes de visualização;
 - Editor asmdef explícito e menus para criação de cena, validação, captura real de Game View e futura exportação Android debug ARM64/IL2CPP; a captura só é reconhecida depois de confirmar PNG e suas dimensões reais;
 - `tools/run_unity_checks.py` executa Editor de verdade quando instalado e exige marcador de importação e arquivos XML NUnit >0 testes, sem falha nem skip;
-- validação sintética/instalador/guardas: **37 testes Python passaram**; estrutura com **4 assemblies** passou em verificador offline.
+- validação sintética/instalador/guardas: **39 testes Python passaram** (incluindo duas verificações do instalador único com fixtures sintéticas); estrutura com **4 assemblies** passou em verificador offline.
 
 **Bloqueios explícitos:** não há Unity Editor, Unity Hub, compilador C#, Android SDK, clone local completo dos cinco JSON ou aparelho conectado no ambiente que montou o kit. Portanto, **não executados**: importação dos cinco arquivos oficiais em Unity real, compilação de C#, EditMode, PlayMode, screenshot verdadeiro, build Android ou benchmark Godot × Unity. Não existem evidências válidas para qualquer um desses gates. Scripts prontos não são resultados.
 
