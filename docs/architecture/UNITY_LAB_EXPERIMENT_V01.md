@@ -53,3 +53,18 @@ Confirmados por GitHub: fonte Godot, golden chain 4x6, deck 5/3/3, skills 5/51, 
 ### Rollback
 
 Fechar PR e descartar o projeto experimental externo; não há schema de save, autoload, project.godot ou dependência alterada.
+
+## Atualização experimental v0.2 (11/10/2026)
+
+Pacote descartável **fora deste repositório** atualizado em artefato de conversa `cria_unity_lab_v02.zip`, sem edição de `main` ou dependências Godot.
+
+- Código C# de **replay visual não autoritativo** isolado em `CriaReplayTimeline`, seis fases e quatro etapas, pausa/retomada, reprodução sequencial e retorno a checkpoints do fixture.
+- Projeções visuais de meia-guarda, controle lateral, montada e finalização sem reset artificial para posição de pé, com sprites/fundo procedurais identificados como **LAB ONLY** (não arte final, não biomecânica homologada).
+- HUD de inspeção somente leitura do deck, mapa e skills. Não foi criado engine de regras, IA, save, pontuação ou vencedor em Unity.
+- Integridade reforçada: cinco arquivos JSON copiados sem edição, fingerprint SHA-256 agregada, verificação pós-importação, checagem de 5+3/3, 5 caminhos/51 nós e 10 páginas/40 pontos.
+- Três `asmdef` propostos no kit externo (runtime, EditMode, PlayMode) e probe Editor não mutável; proteção contra sobrescrita de cena existente.
+- Comparador proposto rejeita falta de `parity_approved=yes`, drift nos artefatos/snapshots/Android, crashes, métricas ausentes e menos de três runs.
+
+**Evidência real:** `25` testes Python locais passaram e o ZIP foi validado quanto à integridade. **Não executados:** compilação no Unity Editor, Test Runner, PlayMode, Android e medição comparativa. Esses itens permanecem bloqueadores; o sucesso da CI documental no GitHub não é evidência de Unity funcionando. O pacote Unity não foi comitado para respeitar `secondary_runtime_forbidden` e decisões D1/D9.
+
+**Próximo gate humano:** abrir projeto temporário com Unity 6.3 LTS e Unity Test Framework, importar os JSON do clone oficial, executar testes C# e PlayMode, capturar log/screenshot 1280×720. Não autoriza migração.
