@@ -1,0 +1,55 @@
+name: World Atlas Navigation V1
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - 'scenes/world/WorldMapScreen.*'
+      - 'scenes/world/WorldMapLifeLayer.gd'
+      - 'data/visual/baixo_sul_map_reference_ledger_v1.json'
+      - 'tests/world_atlas_navigation_smoke.gd'
+      - '.github/workflows/world-atlas-navigation-v1.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  world-map:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install Godot 4.2.2
+        run: |
+          set -euo pipefail
+          curl --retry 3 -L --fail -o godot.zip https://github.com/godotengine/godot/releases/download/4.2.2-stable/Godot_v4.2.2-stable_linux.x86_64.zip
+          unzip -q godot.zip
+          mv Godot_v4.2.2-stable_linux.x86_64 godot
+          chmod +x godot
+      - name: Import project and parse map scene
+        run: |
+          set -euo pipefail
+          ./godot --headless --editor --path . --import 2>&1 | tee import_map.log
+          if grep -Eq 'SCRIPT ERROR|Parse Error|Failed loading resource' import_map.log; then exit 1; fi
+      - name: Ten-page navigation and device-scale smoke
+        run: |
+          set -euo pipefail
+          ./godot --headless --path . --script res://tests/world_atlas_navigation_smoke.gd 2>&1 | tee map_nav.log
+          grep -q '\[WorldAtlasNav\].*failures=0' map_nav.log
+          if grep -Eq 'SCRIPT ERROR|Parse Error|ERROR:' map_nav.log; then exit 1; fi
+      - name: Original world-map life regressions
+        run: |
+          set -euo pipefail
+          ./godot --headless --path . --script res://tests/world_map_life_smoke.gd 2>&1 | tee map_life.log
+          grep -q '\[WorldMapLifeSmoke\] PASS' map_life.log
+          if grep -Eq 'SCRIPT ERROR|Parse Error|ERROR:' map_life.log; then exit 1; fi
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: world-atlas-navigation-v1-logs
+          path: |
+            import_map.log
+            map_nav.log
+            map_life.log
+          if-no-files-found: warn

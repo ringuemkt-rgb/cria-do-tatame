@@ -14,11 +14,13 @@ script = ExtResource("1_screen")
 
 [node name="WorldMapLifeLayer" type="Control" parent="."]
 layout_mode = 1
-anchors_preset = 15
+anchors_preset = 0
+anchor_top = 0.205
 anchor_right = 1.0
-anchor_bottom = 1.0
+anchor_bottom = 0.765
 grow_horizontal = 2
 grow_vertical = 2
+clip_contents = true
 script = ExtResource("2_life")
 
 [node name="HUD" type="Control" parent="."]
@@ -30,12 +32,15 @@ mouse_filter = 2
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="LeftPanel" type="VBoxContainer" parent="HUD"]
-layout_mode = 0
-offset_left = 34.0
-offset_top = 116.0
-offset_right = 330.0
-offset_bottom = 342.0
+[node name="LeftPanel" type="GridContainer" parent="HUD"]
+layout_mode = 1
+anchor_left = 0.02
+anchor_top = 0.012
+anchor_right = 0.98
+anchor_bottom = 0.19
+columns = 4
+theme_override_constants/h_separation = 12
+theme_override_constants/v_separation = 6
 mouse_filter = 2
 theme_override_colors/font_color = Color(0.96, 0.91, 0.7, 1)
 theme_override_font_sizes/font_size = 16
@@ -60,17 +65,36 @@ layout_mode = 2
 autowrap_mode = 2
 text = "Rotas, locais e segredos usam estado canônico do jogo."
 
+[node name="PageIndex" type="Label" parent="HUD/LeftPanel"]
+layout_mode = 2
+text = "PÁGINA 01/10 • BAIXO SUL"
+autowrap_mode = 3
+theme_override_font_sizes/font_size = 14
+
+[node name="PreviousPage" type="Button" parent="HUD/LeftPanel"]
+layout_mode = 2
+custom_minimum_size = Vector2(0, 42)
+mouse_filter = 0
+text = "◀ PÁGINA ANTERIOR"
+
+[node name="NextPage" type="Button" parent="HUD/LeftPanel"]
+layout_mode = 2
+custom_minimum_size = Vector2(0, 42)
+mouse_filter = 0
+text = "PRÓXIMA PÁGINA ▶"
+
 [node name="Regional" type="Button" parent="HUD/LeftPanel"]
 layout_mode = 2
 mouse_filter = 0
 text = "VOLTAR AO BAIXO SUL"
 
-[node name="RightPanel" type="VBoxContainer" parent="HUD"]
-layout_mode = 0
-offset_left = 1510.0
-offset_top = 120.0
-offset_right = 1880.0
-offset_bottom = 470.0
+[node name="RightPanel" type="HBoxContainer" parent="HUD"]
+layout_mode = 1
+anchor_left = 0.02
+anchor_top = 0.79
+anchor_right = 0.98
+anchor_bottom = 0.885
+theme_override_constants/separation = 8
 mouse_filter = 2
 theme_override_colors/font_color = Color(0.96, 0.91, 0.7, 1)
 theme_override_font_sizes/font_size = 16
@@ -89,7 +113,7 @@ text = "ITUBERÁ"
 [node name="Salvador" type="Button" parent="HUD/RightPanel"]
 layout_mode = 2
 mouse_filter = 0
-text = "SALVADOR"
+text = "SALVADOR • CONTEXTO"
 
 [node name="Zambiapunga" type="Button" parent="HUD/RightPanel"]
 layout_mode = 2
@@ -107,11 +131,13 @@ mouse_filter = 0
 text = "VOLTAR AO TERREIRO"
 
 [node name="Footer" type="Label" parent="HUD"]
-layout_mode = 0
-offset_left = 34.0
-offset_top = 1008.0
-offset_right = 1250.0
-offset_bottom = 1052.0
+layout_mode = 1
+anchor_left = 0.025
+anchor_top = 0.91
+anchor_right = 0.98
+anchor_bottom = 0.985
+autowrap_mode = 3
+theme_override_font_sizes/font_size = 14
 mouse_filter = 2
 theme_override_colors/font_color = Color(0.87, 0.78, 0.48, 1)
-text = "TOQUE EM UM MUNICÍPIO • ROTAS PONTILHADAS INDICAM CAMINHOS • ANÉIS VIOLETAS GUARDAM SEGREDOS"
+text = "TOQUE EM UM MUNICÍPIO • ROTAS TERRESTRES DOURADAS / MARÍTIMAS CIANO • SEGREDOS VIOLETA • BASES VISUAIS EM REVISÃO"
