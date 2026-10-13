@@ -7,6 +7,9 @@ on:
       - 'scenes/world/WorldMapScreen.*'
       - 'scenes/world/WorldMapLifeLayer.gd'
       - 'data/visual/baixo_sul_map_reference_ledger_v1.json'
+      - 'data/world/world_map_v4.json'
+      - 'data/visual/world_map_life_v1.json'
+      - 'assets/world/maps/candidate/**'
       - 'tests/world_atlas_navigation_smoke.gd'
       - '.github/workflows/world-atlas-navigation-v1.yml'
   workflow_dispatch:
