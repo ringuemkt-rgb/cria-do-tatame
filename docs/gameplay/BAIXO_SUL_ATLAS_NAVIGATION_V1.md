@@ -47,3 +47,9 @@ npm run quality
 Este PR não altera o schema de save. **Conflito conhecido:** `WorldMapManager` ainda contém Salvador como hub legado liberado e `tests/progression_os_smoke.gd` o usa; um port de escopo regional completo terá de migrar dados e testes em um lote separado, sem apagar o save anterior. O botão do atlas não deverá oferecer tal destino.
 
 **Rollback:** reverter código/TS CN/testes/ledger deste PR, sem migração de dados.
+
+## Correção de toque e seleção (2026-10-13; não aprovada para shipping)
+
+O atlas reserva uma faixa superior para status e navegação, uma faixa inferior para viagem, e mantém a camada de mapa em área própria. O hit-test escolhe **a âncora mais próxima** dentro do raio de 48 px: âncoras vizinhas como Ituberá/Igrapiúna deixam de depender da ordem do JSON. O smoke percorre os centros das 14 âncoras e dos 40 nós, verifica a área livre de botões e simula um toque de panorama sem cobrança nem viagem.
+
+O workflow passa a observar `data/world/world_map_v4.json`, `data/visual/world_map_life_v1.json` e `assets/world/maps/candidate/**`. **Gate de merge:** PR #168 continua dependente da migração de viagem e save do PR #169; não reabilitar Salvador sem essa reconciliação. A interface é provisória e precisa de screenshot, revisão de legibilidade/touch e Android físico. Imagens permanecem candidatas sob Sprite Forge, sem promoção automática.

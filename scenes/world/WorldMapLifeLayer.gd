@@ -215,16 +215,29 @@ func _draw_map_header(bounds: Rect2) -> void:
 	draw_string(ThemeDB.fallback_font, plaque.position + Vector2(16.0, 35.0), "MAPA • %s" % page_name.to_upper(), HORIZONTAL_ALIGNMENT_LEFT, -1.0, 20, Color("f7e8ad"))
 
 func _find_hit(local: Vector2) -> Dictionary:
+	# Nearby overview anchors overlap at 1280x720. Select the nearest hit,
+	# never the first entry in canonical data order.
+	var nearest: Dictionary = {}
+	var nearest_distance := 48.0
 	if active_page_id == "01":
 		for anchor_value in _map_data.get("municipal_anchors", []):
 			var anchor: Dictionary = anchor_value
 			var pos_data: Array = anchor.get("pos", [0.5, 0.5])
-			if pos_data.size() >= 2 and local.distance_to(_normalized_to_screen(Vector2(float(pos_data[0]), float(pos_data[1])))) < 48.0: return anchor
-		return {}
+			if pos_data.size() < 2:
+				continue
+			var point := _normalized_to_screen(Vector2(float(pos_data[0]), float(pos_data[1])))
+			var distance := local.distance_to(point)
+			if distance < nearest_distance:
+				nearest = anchor
+				nearest_distance = distance
+		return nearest
 	for node_value in _nodes_for_active_page():
 		var node: Dictionary = node_value
-		if local.distance_to(_node_screen_position(node)) < 48.0: return node
-	return {}
+		var distance := local.distance_to(_node_screen_position(node))
+		if distance < nearest_distance:
+			nearest = node
+			nearest_distance = distance
+	return nearest
 
 func _nodes_for_active_page() -> Array:
 	var output: Array = []
