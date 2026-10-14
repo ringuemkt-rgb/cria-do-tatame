@@ -64,6 +64,7 @@ func _write_atomic_json(final_path: String, data: Dictionary, preserve_backup: b
 	var temp_name := temp_path.get_file()
 	var backup_name := backup_path.get_file()
 	var had_final := dir.file_exists(final_name)
+	var had_backup := dir.file_exists(backup_name)
 	# Recovery must never overwrite the last known-good backup with a
 	# corrupted primary file. Keep .bak available if promotion is interrupted.
 	if preserve_backup:
@@ -77,6 +78,11 @@ func _write_atomic_json(final_path: String, data: Dictionary, preserve_backup: b
 			return false
 		return true
 	if had_final:
+		# Never replace a known-good backup with a corrupt primary during normal saves.
+		# A primary loaded from an interrupted write must be validated first.
+		if had_backup and _read_json_dictionary(final_path).is_empty():
+			dir.remove(temp_name)
+			return false
 		if dir.file_exists(backup_name) and dir.remove(backup_name) != OK:
 			dir.remove(temp_name)
 			return false
