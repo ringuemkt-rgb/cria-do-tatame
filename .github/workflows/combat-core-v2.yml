@@ -29,6 +29,7 @@ on:
       - 'tests/test_combat_core_v2_contract.py'
       - 'tests/combat_core_v2_smoke.gd'
       - 'tests/combat_action_safety_smoke.gd'
+      - 'tests/combat_hud_defense_regression.gd'
       - 'src/combat/TechniqueResolver.gd'
       - 'package.json'
       - '.github/workflows/combat-core-v2.yml'
@@ -73,3 +74,10 @@ jobs:
           ./godot --headless --path . --script res://tests/combat_action_safety_smoke.gd 2>&1 | tee action-safety.log
           if grep -Eq '^(SCRIPT )?ERROR:' action-safety.log; then exit 1; fi
           grep -q '\[CombatActionSafety\] PASS' action-safety.log
+      - name: Run timed defense HUD touch regression
+        shell: bash
+        run: |
+          set -o pipefail
+          ./godot --headless --path . --script res://tests/combat_hud_defense_regression.gd 2>&1 | tee combat-hud-defense.log
+          if grep -Eq '^(SCRIPT )?ERROR:' combat-hud-defense.log; then exit 1; fi
+          grep -q '\[CombatHudDefenseTouch\] PASS' combat-hud-defense.log
