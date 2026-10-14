@@ -1,0 +1,25 @@
+name: Save backup integrity smoke
+on:
+  pull_request:
+    paths:
+      - 'src/autoloads/SaveManager.gd'
+      - 'tests/save_backup_atomic_integrity_smoke.gd'
+      - 'tests/save_backup_failed_restore_migration_smoke.gd'
+      - '.github/workflows/save-backup-integrity-smoke.yml'
+  workflow_dispatch:
+jobs:
+  save-backup-integrity:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: chickensoft-games/setup-godot@v2
+        with:
+          version: 4.3.0
+          use-dotnet: false
+      - name: Import Godot project
+        run: godot --headless --path . --editor --quit
+      - name: Test isolated backup I/O
+        run: godot --headless --path . --script res://tests/save_backup_atomic_integrity_smoke.gd
+      - name: Test migration guard
+        run: godot --headless --path . --script res://tests/save_backup_failed_restore_migration_smoke.gd
