@@ -1,8 +1,2 @@
-extends SceneTree
-
-func _init() -> void:
-	call_deferred("_run")
-
-func _run() -> void:
-	print("[CombatHudDefenseTouch] PENDING CI")
-	quit(0)
+# Compatibility entrypoint for the focused HUD smoke.
+extends "res://tests/combat_hud_defense_regression.gd"
