@@ -56,7 +56,7 @@ func _on_hand_changed(hand: Array, selected_card_id: String) -> void:
 func _on_card_pressed(index: int) -> void:
 	if index < 0 or index >= card_buttons.size():
 		return
-	if not _actions_enabled or card_buttons[index].disabled:
+	if card_buttons[index].disabled or (not _actions_enabled and not defense_mode):
 		return
 	var card_id := str(card_buttons[index].get_meta("card_id", ""))
 	if card_id == "":
