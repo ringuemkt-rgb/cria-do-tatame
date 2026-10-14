@@ -98,12 +98,14 @@ func _write_atomic_json(final_path: String, data: Dictionary, preserve_backup: b
 func load_game(slot_id := 1) -> bool:
 	var path := get_slot_path(slot_id)
 	var parsed := _read_json_dictionary(path)
+	var backup_restore_failed := false
 	if parsed.is_empty():
 		var backup_path := path + ".bak"
 		parsed = _read_json_dictionary(backup_path)
 		if parsed.is_empty():
 			return false
 		if not _write_atomic_json(path, parsed, true):
+			backup_restore_failed = true
 			push_warning("[SaveManager] Backup carregado, mas nao foi possivel restaurar o arquivo principal.")
 	var original_version := int(parsed.get("save_version", 1))
 	var migration_required := original_version < SAVE_VERSION or not parsed.has("progression_state") or _contains_legacy_faction_state(parsed)
@@ -143,7 +145,10 @@ func load_game(slot_id := 1) -> bool:
 	if has_node("/root/DeckManager"):
 		DeckManager.load_from_dict(parsed.get("combat_deck_state", {}))
 	if migration_required:
-		_persist_migrated_save(path, parsed, original_version)
+		if backup_restore_failed:
+			push_warning("[SaveManager] Migracao mantida somente em memoria; backup integro preservado.")
+		else:
+			_persist_migrated_save(path, parsed, original_version)
 	SignalBus.save_loaded.emit(slot_id)
 	return true
 
