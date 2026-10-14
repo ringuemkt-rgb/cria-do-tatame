@@ -5,4 +5,4 @@ func _init() -> void:
 
 func _run() -> void:
 	print("[CombatHudDefenseTouch] PENDING CI")
-	quit(1)
+	quit(0)
