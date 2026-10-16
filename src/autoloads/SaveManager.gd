@@ -47,7 +47,7 @@ func save_game(slot_id := 1) -> bool:
 	SignalBus.save_completed.emit(slot_id)
 	return true
 
-func _write_atomic_json(final_path: String, data: Dictionary) -> bool:
+func _write_atomic_json(final_path: String, data: Dictionary, preserve_backup: bool = false) -> bool:
 	var temp_path := final_path + ".tmp"
 	var backup_path := final_path + ".bak"
 	var file := FileAccess.open(temp_path, FileAccess.WRITE)
@@ -63,11 +63,29 @@ func _write_atomic_json(final_path: String, data: Dictionary) -> bool:
 	var final_name := final_path.get_file()
 	var temp_name := temp_path.get_file()
 	var backup_name := backup_path.get_file()
-	if dir.file_exists(backup_name) and dir.remove(backup_name) != OK:
-		dir.remove(temp_name)
-		return false
 	var had_final := dir.file_exists(final_name)
+	var had_backup := dir.file_exists(backup_name)
+	# Recovery must never overwrite the last known-good backup with a
+	# corrupted primary file. Keep .bak available if promotion is interrupted.
+	if preserve_backup:
+		if had_final and dir.remove(final_name) != OK:
+			dir.remove(temp_name)
+			return false
+		var restore_error := dir.rename(temp_name, final_name)
+		if restore_error != OK:
+			if dir.file_exists(temp_name):
+				dir.remove(temp_name)
+			return false
+		return true
 	if had_final:
+		# Never replace a known-good backup with a corrupt primary during normal saves.
+		# A primary loaded from an interrupted write must be validated first.
+		if had_backup and _read_json_dictionary(final_path).is_empty():
+			dir.remove(temp_name)
+			return false
+		if dir.file_exists(backup_name) and dir.remove(backup_name) != OK:
+			dir.remove(temp_name)
+			return false
 		var backup_error := dir.rename(final_name, backup_name)
 		if backup_error != OK:
 			dir.remove(temp_name)
@@ -79,19 +97,21 @@ func _write_atomic_json(final_path: String, data: Dictionary) -> bool:
 		if dir.file_exists(temp_name):
 			dir.remove(temp_name)
 		return false
-	if dir.file_exists(backup_name):
-		dir.remove(backup_name)
+	# On successful replacement, .bak contains the previous usable save.
+	# Removing it here would eliminate recovery after a later corruption.
 	return true
 
 func load_game(slot_id := 1) -> bool:
 	var path := get_slot_path(slot_id)
 	var parsed := _read_json_dictionary(path)
+	var backup_restore_failed := false
 	if parsed.is_empty():
 		var backup_path := path + ".bak"
 		parsed = _read_json_dictionary(backup_path)
 		if parsed.is_empty():
 			return false
-		if not _write_atomic_json(path, parsed):
+		if not _write_atomic_json(path, parsed, true):
+			backup_restore_failed = true
 			push_warning("[SaveManager] Backup carregado, mas nao foi possivel restaurar o arquivo principal.")
 	var original_version := int(parsed.get("save_version", 1))
 	var migration_required := original_version < SAVE_VERSION or not parsed.has("progression_state") or _contains_legacy_faction_state(parsed)
@@ -131,7 +151,10 @@ func load_game(slot_id := 1) -> bool:
 	if has_node("/root/DeckManager"):
 		DeckManager.load_from_dict(parsed.get("combat_deck_state", {}))
 	if migration_required:
-		_persist_migrated_save(path, parsed, original_version)
+		if backup_restore_failed:
+			push_warning("[SaveManager] Migracao mantida somente em memoria; backup integro preservado.")
+		else:
+			_persist_migrated_save(path, parsed, original_version)
 	SignalBus.save_loaded.emit(slot_id)
 	return true
 
@@ -190,7 +213,9 @@ func get_slot_path(slot_id := 1) -> String:
 	return SAVE_PREFIX + str(slot_id) + SAVE_SUFFIX
 
 func has_save(slot_id := 1) -> bool:
-	return FileAccess.file_exists(get_slot_path(slot_id))
+	var path := get_slot_path(slot_id)
+	# An interrupted rename may leave only the recoverable backup.
+	return FileAccess.file_exists(path) or FileAccess.file_exists(path + ".bak")
 
 func delete_save(slot_id := 1) -> void:
 	var path := get_slot_path(slot_id)
