@@ -1,14 +1,12 @@
 extends SceneTree
 
 # Isolated I/O regression. Never touches player slots.
-const TEST_DIR := "user://qa_save_backup_integrity/"
-const PRIMARY := TEST_DIR + "save.json"
+const PRIMARY := "user://qa_save_backup_integrity_20261016.json"
 
 func _initialize() -> void:
 	call_deferred("_run")
 
 func _run() -> void:
-	DirAccess.make_dir_recursive_absolute(ProjectSettings.globalize_path(TEST_DIR))
 	var backup := PRIMARY + ".bak"
 	var tmp := PRIMARY + ".tmp"
 	for path in [PRIMARY, backup, tmp]:
@@ -34,11 +32,10 @@ func _run() -> void:
 	var accepted: bool = manager.call("_write_atomic_json", PRIMARY, {"save_version": 6, "proof": "replacement"})
 	var backup_data = JSON.parse_string(FileAccess.get_file_as_string(backup))
 	var primary_data := FileAccess.get_file_as_string(PRIMARY)
-	var valid := not accepted and typeof(backup_data) == TYPE_DICTIONARY and backup_data == original and primary_data == "{broken json"
+	var valid: bool = not accepted and typeof(backup_data) == TYPE_DICTIONARY and backup_data == original and primary_data == "{broken json"
 	for path in [PRIMARY, backup, tmp]:
 		if FileAccess.file_exists(path):
 			DirAccess.remove_absolute(path)
-	DirAccess.remove_absolute(ProjectSettings.globalize_path(TEST_DIR))
 	if not valid:
 		_fail("corrupt primary overwrote valid backup")
 		return
