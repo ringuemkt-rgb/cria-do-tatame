@@ -20,8 +20,9 @@ func _run() -> void:
 		_finish()
 		return
 	var screen: Control = scene.instantiate()
+	root.size = Vector2i(1280, 720)
 	root.add_child(screen)
-	screen.size = Vector2(1280.0, 720.0)
+	await process_frame
 	await process_frame
 	var layer: Control = screen.get_node("WorldMapLifeLayer")
 	var left: Control = screen.get_node("HUD/LeftPanel")
@@ -87,7 +88,7 @@ func _run() -> void:
 				var anchor: Dictionary = anchor_value
 				var pos_data: Array = anchor.get("pos", [0.5, 0.5])
 				var local_point := Vector2(float(pos_data[0]) * layer.size.x, float(pos_data[1]) * layer.size.y)
-				var center := layer.to_global(local_point)
+				var center: Vector2 = layer.get_global_transform() * local_point
 				var hit: Dictionary = layer.call("_find_hit", local_point)
 				_check(canvas_rect.has_point(center), "anchor center inside atlas: " + str(anchor.get("id", "?")))
 				_check(str(hit.get("id", "")) == str(anchor.get("id", "")), "nearest hit resolves anchor: " + str(anchor.get("id", "?")))
@@ -97,13 +98,13 @@ func _run() -> void:
 				var node: Dictionary = node_value
 				layer.open_page(str(node.get("pagina", "02")))
 				var local_point: Vector2 = layer.call("_node_screen_position", node)
-				var center := layer.to_global(local_point)
+				var center: Vector2 = layer.get_global_transform() * local_point
 				var hit: Dictionary = layer.call("_find_hit", local_point)
 				_check(canvas_rect.has_point(center), "node center inside atlas: " + str(node.get("id", "?")))
 				_check(str(hit.get("id", "")) == str(node.get("id", "")), "nearest hit resolves node: " + str(node.get("id", "?")))
 				for button in touch_buttons:
 					_check(not button.get_global_rect().has_point(center), "node not covered: " + str(node.get("id", "?")))
-			var travel_before := root.get_node("WorldMapManager").get("travel_log").size()
+			var travel_before: int = root.get_node("WorldMapManager").get("travel_log").size()
 			var money_before := int(root.get_node("WorldState").get("money"))
 			layer.open_page("01")
 			var first_anchor: Dictionary = anchors[0]
@@ -117,6 +118,22 @@ func _run() -> void:
 			_check(int(root.get_node("WorldState").get("money")) == money_before, "map tap does not debit money")
 			_check(root.get_node("WorldMapManager").get("travel_log").size() == travel_before, "map tap does not create travel")
 			layer.open_page("01")
+	# Exercise the same fit rectangle used by the renderer for every loaded candidate.
+	var art_by_page: Dictionary = layer.get("_base_art_by_page")
+	for texture_value in art_by_page.values():
+		var texture: Texture2D = texture_value
+		for canvas_size in [Vector2(1280, 403.2), Vector2(1600, 403.2), Vector2(1280, 448)]:
+			var bounds := Rect2(Vector2.ZERO, canvas_size)
+			var fitted: Rect2 = layer.call("_fit_base_art_rect", bounds, texture.get_size())
+			_check(fitted.size.x > 0.0 and fitted.size.y > 0.0, "candidate has a nonempty art rect")
+			_check(bounds.grow(-41.9).encloses(fitted), "candidate stays inside canvas inset")
+			_check(is_equal_approx(fitted.size.x / fitted.size.y, texture.get_size().x / texture.get_size().y), "candidate aspect ratio preserved")
+			_check(fitted.get_center().is_equal_approx(bounds.get_center()), "candidate centered inside canvas")
+	for texture_size in [Vector2.ZERO, Vector2(512, 0), Vector2(0, 288)]:
+		var empty: Rect2 = layer.call("_fit_base_art_rect", Rect2(Vector2.ZERO, Vector2(1280, 720)), texture_size)
+		_check(empty.size == Vector2.ZERO, "invalid texture size has empty rectangle")
+	var tiny: Rect2 = layer.call("_fit_base_art_rect", Rect2(Vector2.ZERO, Vector2(40, 40)), Vector2(512, 288))
+	_check(tiny.size == Vector2.ZERO, "tiny canvas has empty art rectangle")
 	var source_pending: Dictionary = layer.call("get_page_source_state", "10")
 	_check(not bool(source_pending.get("candidate_loaded", true)), "unpainted tenth page uses procedural fallback")
 	var contract_file := FileAccess.open("res://data/visual/baixo_sul_map_reference_ledger_v1.json", FileAccess.READ)
@@ -131,6 +148,19 @@ func _run() -> void:
 	var old_hub := str(world_map.get("current_hub"))
 	screen._on_travel_pressed("salvador")
 	_check(str(world_map.get("current_hub")) == old_hub, "UI must not travel outside the declared playable region")
+	# Resize the viewport itself: an anchored Control overrides manual size writes.
+	for viewport_size in [Vector2i(1280, 720), Vector2i(1600, 720), Vector2i(1280, 800)]:
+		root.size = viewport_size
+		for page_id in names:
+			layer.open_page(str(page_id))
+			await process_frame
+			await process_frame
+			var current_canvas := layer.get_global_rect()
+			_check(current_canvas.position.y >= left.get_global_rect().end.y, "top controls clear atlas: %s %s" % [viewport_size, page_id])
+			_check(current_canvas.end.y <= right.get_global_rect().position.y, "bottom controls clear atlas: %s %s" % [viewport_size, page_id])
+			for button in touch_buttons:
+				_check(screen.get_global_rect().encloses(button.get_global_rect()), "button stays onscreen: %s %s" % [viewport_size, button.name])
+				_check(not button.get_global_rect().intersects(current_canvas), "button clears atlas: %s %s" % [viewport_size, button.name])
 	screen.queue_free()
 	await process_frame
 	_finish()

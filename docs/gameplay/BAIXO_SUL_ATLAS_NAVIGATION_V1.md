@@ -53,3 +53,20 @@ Este PR não altera o schema de save. **Conflito conhecido:** `WorldMapManager` 
 O atlas reserva uma faixa superior para status e navegação, uma faixa inferior para viagem, e mantém a camada de mapa em área própria. O hit-test escolhe **a âncora mais próxima** dentro do raio de 48 px: âncoras vizinhas como Ituberá/Igrapiúna deixam de depender da ordem do JSON. O smoke percorre os centros das 14 âncoras e dos 40 nós, verifica a área livre de botões e simula um toque de panorama sem cobrança nem viagem.
 
 O workflow passa a observar `data/world/world_map_v4.json`, `data/visual/world_map_life_v1.json` e `assets/world/maps/candidate/**`. **Gate de merge:** PR #168 continua dependente da migração de viagem e save do PR #169; não reabilitar Salvador sem essa reconciliação. A interface é provisória e precisa de screenshot, revisão de legibilidade/touch e Android físico. Imagens permanecem candidatas sob Sprite Forge, sem promoção automática.
+## Regressão de layout — 2026-10-17
+
+O teste antigo exigia controles à direita apesar da barra inferior. A validação de limites também revelou que o `GridContainer` superior crescia sobre o canvas: suas colunas não repartiam a largura disponível e o texto multilinha elevava a altura mínima. Os quatro campos da primeira linha agora expandem horizontalmente, preservando a faixa reservada.
+
+O smoke ajusta o viewport real antes de instanciar a cena e testa as dez páginas em 1280×720, 1600×720 e 1280×800. Verifica limites, altura dos botões e ausência de sobreposição com o mapa. Os filtros da CI incluem o mapa JSON, o contrato visual e as imagens candidatas consumidos.
+
+Godot 4.3 stable oficial `77dcf97d8`, Linux headless: importação sem erros; navegação **584 verificações, zero falhas**; `world_map_life_smoke.gd` **14 verificações aprovadas**. `npm run quality` executado: bloqueado no perfil ausente `counter_entry` de Davi em Sprite Forge Phase 1, também reproduzido na main sem alterações `099c060`. Esse gate não foi dispensado. Revisão visual humana, geografia, #169 e Android físico continuam pendentes. Rollback: reverter este commit focado.
+
+## Proporção e CI do stack #171 — 2026-10-17
+
+As imagens candidatas agora usam um retângulo centralizado que preserva a proporção e cabe no inset do canvas; pintura e tint usam o mesmo retângulo. O mapa e seus nós continuam com as coordenadas existentes, sem reivindicação de georreferenciamento.
+
+O workflow de atlas observa PRs contra qualquer base, mantendo os filtros de caminhos e a permissão `contents: read`; isso inclui o stack #171 → #168. O smoke também usa transformação de `Control` via `get_global_transform()` e tipagem explícita, corrigindo erros de parser que a ausência do workflow havia ocultado.
+
+Evidência local no head combinado, Godot 4.3 `77dcf97d8`: importação sem erros; navegação, 14 âncoras, 40 nós, toque sem viagem, limites e proporção das cinco imagens candidatas: **1194 verificações, zero falhas**. `world_map_life_smoke.gd`: **14 verificações aprovadas**; `runtime_smoke.gd`: **115 verificações, zero falhas**. `npm run quality` segue bloqueado no perfil `counter_entry` de Davi; o workflow chamado Repository Quality executa um subconjunto diferente e não substitui esse comando.
+
+Base ativa: #168, atualização `3771cd1`. Incorporar #171 somente após revisão; reconciliar #169 antes de integrar atlas à main. Sem merge, promoção de assets, exportação Android ou teste físico neste lote. Rollback: reverter o commit de proporção e, se necessário, a reconciliação da base.

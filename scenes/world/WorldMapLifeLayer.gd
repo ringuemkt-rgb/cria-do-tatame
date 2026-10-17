@@ -121,8 +121,9 @@ func _draw_map_backdrop(bounds: Rect2) -> void:
 	var inset := bounds.grow(-42.0)
 	var base_art: Texture2D = _base_art_by_page.get(active_page_id, null)
 	if base_art != null:
-		draw_texture_rect(base_art, inset, false)
-		draw_rect(inset, Color(0.01, 0.05, 0.07, 0.16))
+		var art_rect := _fit_base_art_rect(bounds, base_art.get_size())
+		draw_texture_rect(base_art, art_rect, false)
+		draw_rect(art_rect, Color(0.01, 0.05, 0.07, 0.16))
 		_draw_ambient_boat(bounds)
 		return
 	var phase := sin(_time * 0.7) if motion_enabled else 0.0
@@ -133,6 +134,14 @@ func _draw_map_backdrop(bounds: Rect2) -> void:
 	draw_colored_polygon(coast, Color("234c39"))
 	draw_polyline(coast, Color("5ca97c"), 7.0, true)
 	_draw_ambient_boat(bounds)
+
+func _fit_base_art_rect(bounds: Rect2, texture_size: Vector2) -> Rect2:
+	var inset := bounds.grow(-42.0)
+	if inset.size.x <= 0.0 or inset.size.y <= 0.0 or texture_size.x <= 0.0 or texture_size.y <= 0.0:
+		return Rect2(bounds.get_center(), Vector2.ZERO)
+	var scale_factor := minf(inset.size.x / texture_size.x, inset.size.y / texture_size.y)
+	var fitted_size := texture_size * scale_factor
+	return Rect2(inset.get_center() - fitted_size * 0.5, fitted_size)
 
 func _draw_ambient_boat(bounds: Rect2) -> void:
 	if not motion_enabled:
