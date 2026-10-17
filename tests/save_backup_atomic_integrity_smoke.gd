@@ -29,17 +29,22 @@ func _run() -> void:
 	if manager == null:
 		_fail("SaveManager autoload missing")
 		return
-	var accepted: bool = manager.call("_write_atomic_json", PRIMARY, {"save_version": 6, "proof": "replacement"})
-	var backup_data = JSON.parse_string(FileAccess.get_file_as_string(backup))
-	var primary_data := FileAccess.get_file_as_string(PRIMARY)
-	var valid: bool = not accepted and typeof(backup_data) == TYPE_DICTIONARY and backup_data == original and primary_data == "{broken json"
+	var backup_bytes := FileAccess.get_file_as_string(backup)
+	var replacement := {"save_version": 6, "proof": "replacement"}
+	var accepted: bool = manager.call("_write_atomic_json", PRIMARY, replacement)
+	var preserved := FileAccess.get_file_as_string(backup) == backup_bytes
+	var primary_data: Variant = JSON.parse_string(FileAccess.get_file_as_string(PRIMARY))
+	var valid: bool = accepted and preserved and typeof(primary_data) == TYPE_DICTIONARY
+	if typeof(primary_data) == TYPE_DICTIONARY:
+		valid = valid and int(primary_data.get("save_version", 0)) == 6 and primary_data.get("proof") == "replacement"
+	valid = valid and not FileAccess.file_exists(tmp)
 	for path in [PRIMARY, backup, tmp]:
 		if FileAccess.file_exists(path):
 			DirAccess.remove_absolute(path)
 	if not valid:
-		_fail("corrupt primary overwrote valid backup")
+		_fail("replacement failed, backup changed, or temporary file leaked")
 		return
-	print("PASS: valid backup preserved and corrupt primary not promoted")
+	print("PASS: valid backup bytes preserved and replacement primary promoted")
 	quit(0)
 
 func _fail(message: String) -> void:

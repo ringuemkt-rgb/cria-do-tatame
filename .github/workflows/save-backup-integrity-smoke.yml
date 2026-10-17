@@ -5,6 +5,7 @@ on:
       - 'src/autoloads/SaveManager.gd'
       - 'tests/save_backup_atomic_integrity_smoke.gd'
       - 'tests/save_backup_failed_restore_migration_smoke.gd'
+      - 'tests/save_backup_failed_restore_runtime_smoke.gd'
       - '.github/workflows/save-backup-integrity-smoke.yml'
   workflow_dispatch:
 jobs:
@@ -23,3 +24,5 @@ jobs:
         run: godot --headless --path . --script res://tests/save_backup_atomic_integrity_smoke.gd
       - name: Test migration guard
         run: godot --headless --path . --script res://tests/save_backup_failed_restore_migration_smoke.gd
+      - name: Test failed restore with real file I/O
+        run: godot --headless --path . --script res://tests/save_backup_failed_restore_runtime_smoke.gd
