@@ -121,8 +121,9 @@ func _draw_map_backdrop(bounds: Rect2) -> void:
 	var inset := bounds.grow(-42.0)
 	var base_art: Texture2D = _base_art_by_page.get(active_page_id, null)
 	if base_art != null:
-		draw_texture_rect(base_art, inset, false)
-		draw_rect(inset, Color(0.01, 0.05, 0.07, 0.16))
+		var art_rect := _fit_base_art_rect(bounds, base_art.get_size())
+		draw_texture_rect(base_art, art_rect, false)
+		draw_rect(art_rect, Color(0.01, 0.05, 0.07, 0.16))
 		_draw_ambient_boat(bounds)
 		return
 	var phase := sin(_time * 0.7) if motion_enabled else 0.0
@@ -133,6 +134,14 @@ func _draw_map_backdrop(bounds: Rect2) -> void:
 	draw_colored_polygon(coast, Color("234c39"))
 	draw_polyline(coast, Color("5ca97c"), 7.0, true)
 	_draw_ambient_boat(bounds)
+
+func _fit_base_art_rect(bounds: Rect2, texture_size: Vector2) -> Rect2:
+	var inset := bounds.grow(-42.0)
+	if inset.size.x <= 0.0 or inset.size.y <= 0.0 or texture_size.x <= 0.0 or texture_size.y <= 0.0:
+		return Rect2(bounds.get_center(), Vector2.ZERO)
+	var scale_factor := minf(inset.size.x / texture_size.x, inset.size.y / texture_size.y)
+	var fitted_size := texture_size * scale_factor
+	return Rect2(inset.get_center() - fitted_size * 0.5, fitted_size)
 
 func _draw_ambient_boat(bounds: Rect2) -> void:
 	if not motion_enabled:
@@ -215,16 +224,29 @@ func _draw_map_header(bounds: Rect2) -> void:
 	draw_string(ThemeDB.fallback_font, plaque.position + Vector2(16.0, 35.0), "MAPA • %s" % page_name.to_upper(), HORIZONTAL_ALIGNMENT_LEFT, -1.0, 20, Color("f7e8ad"))
 
 func _find_hit(local: Vector2) -> Dictionary:
+	# Nearby overview anchors overlap at 1280x720. Select the nearest hit,
+	# never the first entry in canonical data order.
+	var nearest: Dictionary = {}
+	var nearest_distance := 48.0
 	if active_page_id == "01":
 		for anchor_value in _map_data.get("municipal_anchors", []):
 			var anchor: Dictionary = anchor_value
 			var pos_data: Array = anchor.get("pos", [0.5, 0.5])
-			if pos_data.size() >= 2 and local.distance_to(_normalized_to_screen(Vector2(float(pos_data[0]), float(pos_data[1])))) < 48.0: return anchor
-		return {}
+			if pos_data.size() < 2:
+				continue
+			var point := _normalized_to_screen(Vector2(float(pos_data[0]), float(pos_data[1])))
+			var distance := local.distance_to(point)
+			if distance < nearest_distance:
+				nearest = anchor
+				nearest_distance = distance
+		return nearest
 	for node_value in _nodes_for_active_page():
 		var node: Dictionary = node_value
-		if local.distance_to(_node_screen_position(node)) < 48.0: return node
-	return {}
+		var distance := local.distance_to(_node_screen_position(node))
+		if distance < nearest_distance:
+			nearest = node
+			nearest_distance = distance
+	return nearest
 
 func _nodes_for_active_page() -> Array:
 	var output: Array = []

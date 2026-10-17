@@ -2,7 +2,6 @@ name: World Atlas Navigation V1
 
 on:
   pull_request:
-    branches: [main]
     paths:
       - 'scenes/world/WorldMapScreen.*'
       - 'scenes/world/WorldMapLifeLayer.gd'
@@ -11,6 +10,7 @@ on:
       - 'data/visual/world_map_life_v1.json'
       - 'assets/world/maps/candidate/**'
       - 'tests/world_atlas_navigation_smoke.gd'
+      - 'tests/world_map_life_smoke.gd'
       - '.github/workflows/world-atlas-navigation-v1.yml'
   workflow_dispatch:
 

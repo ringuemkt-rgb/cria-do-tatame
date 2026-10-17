@@ -73,6 +73,67 @@ func _run() -> void:
 	_check(not bool(source.get("final_art_approved", true)), "visual proof cannot be faked")
 	_check(not bool(source.get("georeference_verified", true)), "concept coordinates are not labeled georeferenced")
 	_check(bool(source.get("candidate_loaded", false)), "first reference image remains loaded")
+	var map_file := FileAccess.open("res://data/world/world_map_v4.json", FileAccess.READ)
+	_check(map_file != null, "canonical world map data exists")
+	if map_file != null:
+		var map_data: Variant = JSON.parse_string(map_file.get_as_text())
+		map_file.close()
+		_check(typeof(map_data) == TYPE_DICTIONARY, "canonical world map JSON parses")
+		if typeof(map_data) == TYPE_DICTIONARY:
+			var anchors: Array = map_data.get("municipal_anchors", [])
+			var nodes: Array = map_data.get("nodes", [])
+			_check(anchors.size() == 14 and nodes.size() == 40, "14 regional anchors and 40 map nodes")
+			layer.open_page("01")
+			for anchor_value in anchors:
+				var anchor: Dictionary = anchor_value
+				var pos_data: Array = anchor.get("pos", [0.5, 0.5])
+				var local_point := Vector2(float(pos_data[0]) * layer.size.x, float(pos_data[1]) * layer.size.y)
+				var center: Vector2 = layer.get_global_transform() * local_point
+				var hit: Dictionary = layer.call("_find_hit", local_point)
+				_check(canvas_rect.has_point(center), "anchor center inside atlas: " + str(anchor.get("id", "?")))
+				_check(str(hit.get("id", "")) == str(anchor.get("id", "")), "nearest hit resolves anchor: " + str(anchor.get("id", "?")))
+				for button in touch_buttons:
+					_check(not button.get_global_rect().has_point(center), "anchor not covered: " + str(anchor.get("id", "?")))
+			for node_value in nodes:
+				var node: Dictionary = node_value
+				layer.open_page(str(node.get("pagina", "02")))
+				var local_point: Vector2 = layer.call("_node_screen_position", node)
+				var center: Vector2 = layer.get_global_transform() * local_point
+				var hit: Dictionary = layer.call("_find_hit", local_point)
+				_check(canvas_rect.has_point(center), "node center inside atlas: " + str(node.get("id", "?")))
+				_check(str(hit.get("id", "")) == str(node.get("id", "")), "nearest hit resolves node: " + str(node.get("id", "?")))
+				for button in touch_buttons:
+					_check(not button.get_global_rect().has_point(center), "node not covered: " + str(node.get("id", "?")))
+			var travel_before: int = root.get_node("WorldMapManager").get("travel_log").size()
+			var money_before := int(root.get_node("WorldState").get("money"))
+			layer.open_page("01")
+			var first_anchor: Dictionary = anchors[0]
+			var first_pos: Array = first_anchor.get("pos", [0.5, 0.5])
+			var tap := InputEventMouseButton.new()
+			tap.button_index = MOUSE_BUTTON_LEFT
+			tap.pressed = true
+			tap.position = Vector2(float(first_pos[0]) * layer.size.x, float(first_pos[1]) * layer.size.y)
+			layer._gui_input(tap)
+			_check(str(layer.active_page_id) == str(first_anchor.get("target_page", "")), "tap opens nearest regional page")
+			_check(int(root.get_node("WorldState").get("money")) == money_before, "map tap does not debit money")
+			_check(root.get_node("WorldMapManager").get("travel_log").size() == travel_before, "map tap does not create travel")
+			layer.open_page("01")
+	# Exercise the same fit rectangle used by the renderer for every loaded candidate.
+	var art_by_page: Dictionary = layer.get("_base_art_by_page")
+	for texture_value in art_by_page.values():
+		var texture: Texture2D = texture_value
+		for canvas_size in [Vector2(1280, 403.2), Vector2(1600, 403.2), Vector2(1280, 448)]:
+			var bounds := Rect2(Vector2.ZERO, canvas_size)
+			var fitted: Rect2 = layer.call("_fit_base_art_rect", bounds, texture.get_size())
+			_check(fitted.size.x > 0.0 and fitted.size.y > 0.0, "candidate has a nonempty art rect")
+			_check(bounds.grow(-41.9).encloses(fitted), "candidate stays inside canvas inset")
+			_check(is_equal_approx(fitted.size.x / fitted.size.y, texture.get_size().x / texture.get_size().y), "candidate aspect ratio preserved")
+			_check(fitted.get_center().is_equal_approx(bounds.get_center()), "candidate centered inside canvas")
+	for texture_size in [Vector2.ZERO, Vector2(512, 0), Vector2(0, 288)]:
+		var empty: Rect2 = layer.call("_fit_base_art_rect", Rect2(Vector2.ZERO, Vector2(1280, 720)), texture_size)
+		_check(empty.size == Vector2.ZERO, "invalid texture size has empty rectangle")
+	var tiny: Rect2 = layer.call("_fit_base_art_rect", Rect2(Vector2.ZERO, Vector2(40, 40)), Vector2(512, 288))
+	_check(tiny.size == Vector2.ZERO, "tiny canvas has empty art rectangle")
 	var source_pending: Dictionary = layer.call("get_page_source_state", "10")
 	_check(not bool(source_pending.get("candidate_loaded", true)), "unpainted tenth page uses procedural fallback")
 	var contract_file := FileAccess.open("res://data/visual/baixo_sul_map_reference_ledger_v1.json", FileAccess.READ)
