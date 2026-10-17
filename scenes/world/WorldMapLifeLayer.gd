@@ -70,6 +70,35 @@ func open_page(page_id: String) -> bool:
 func get_page_count() -> int:
 	return _map_data.get("pages", []).size()
 
+func get_page_ids() -> Array[String]:
+	var output: Array[String] = []
+	for raw in _map_data.get("pages", []):
+		var id := str(raw.get("id", ""))
+		if id != "":
+			output.append(id)
+	return output
+
+func get_page_name(page_id: String) -> String:
+	for raw in _map_data.get("pages", []):
+		if str(raw.get("id", "")) == page_id:
+			return str(raw.get("nome", "Baixo Sul"))
+	return "Baixo Sul"
+
+func get_page_source_state(page_id: String) -> Dictionary:
+	var candidate := ""
+	for asset_value in _life_contract.get("candidate_assets", []):
+		var asset: Dictionary = asset_value
+		if str(asset.get("page_id", "")) == page_id:
+			candidate = str(asset.get("path", ""))
+			break
+	return {
+		"page_id": page_id,
+		"candidate_path": candidate,
+		"candidate_loaded": _base_art_by_page.has(page_id),
+		"final_art_approved": false,
+		"georeference_verified": false
+	}
+
 func get_node_count() -> int:
 	return _map_data.get("nodes", []).size()
 
