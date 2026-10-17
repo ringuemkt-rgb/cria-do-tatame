@@ -47,3 +47,11 @@ npm run quality
 Este PR não altera o schema de save. **Conflito conhecido:** `WorldMapManager` ainda contém Salvador como hub legado liberado e `tests/progression_os_smoke.gd` o usa; um port de escopo regional completo terá de migrar dados e testes em um lote separado, sem apagar o save anterior. O botão do atlas não deverá oferecer tal destino.
 
 **Rollback:** reverter código/TS CN/testes/ledger deste PR, sem migração de dados.
+
+## Regressão de layout — 2026-10-17
+
+O teste antigo exigia controles à direita apesar da barra inferior. A validação de limites também revelou que o `GridContainer` superior crescia sobre o canvas: suas colunas não repartiam a largura disponível e o texto multilinha elevava a altura mínima. Os quatro campos da primeira linha agora expandem horizontalmente, preservando a faixa reservada.
+
+O smoke ajusta o viewport real antes de instanciar a cena e testa as dez páginas em 1280×720, 1600×720 e 1280×800. Verifica limites, altura dos botões e ausência de sobreposição com o mapa. Os filtros da CI incluem o mapa JSON, o contrato visual e as imagens candidatas consumidos.
+
+Godot 4.3 stable oficial `77dcf97d8`, Linux headless: importação sem erros; navegação **584 verificações, zero falhas**; `world_map_life_smoke.gd` **14 verificações aprovadas**. `npm run quality` executado: bloqueado no perfil ausente `counter_entry` de Davi em Sprite Forge Phase 1, também reproduzido na main sem alterações `099c060`. Esse gate não foi dispensado. Revisão visual humana, geografia, #169 e Android físico continuam pendentes. Rollback: reverter este commit focado.

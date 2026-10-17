@@ -47,21 +47,25 @@ theme_override_font_sizes/font_size = 16
 
 [node name="Title" type="Label" parent="HUD/LeftPanel"]
 layout_mode = 2
+size_flags_horizontal = 3
 text = "ROTA DO CRIA"
 theme_override_colors/font_color = Color(0.94, 0.79, 0.39, 1)
 theme_override_font_sizes/font_size = 22
 
 [node name="Status" type="Label" parent="HUD/LeftPanel"]
 layout_mode = 2
+size_flags_horizontal = 3
 text = "Hub atual"
 
 [node name="Message" type="Label" parent="HUD/LeftPanel"]
 layout_mode = 2
+size_flags_horizontal = 3
 autowrap_mode = 2
 text = "Escolha uma região no mapa."
 
 [node name="Detail" type="Label" parent="HUD/LeftPanel"]
 layout_mode = 2
+size_flags_horizontal = 3
 autowrap_mode = 2
 text = "Rotas, locais e segredos usam estado canônico do jogo."
 
