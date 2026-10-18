@@ -1,0 +1,52 @@
+name: Grappling GIF authoring integrity
+
+on:
+  pull_request:
+    paths:
+      - 'assets/candidates/grappling/gifs_v1/**'
+      - 'production/grappling_gifs_v1/**'
+      - 'tools/art/*grappling*'
+      - 'tools/art/GrapplingGifReview*'
+      - 'tests/grappling_gif_review_smoke.gd'
+      - 'data/bjj/bjj_kg_slice_ruan_davi_v1.json'
+      - 'data/combat/golden_chain_ruan_davi_v1.json'
+      - 'export_presets.cfg'
+      - '.github/workflows/grappling-gif-authoring-v1.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  review-integrity:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install 'Pillow>=10.2,<13'
+      - run: python tools/art/validate_grappling_gifs.py
+      - uses: chickensoft-games/setup-godot@v2
+        with:
+          version: 4.3.0
+          use-dotnet: false
+      - name: Import project
+        run: |
+          set -euo pipefail
+          godot --headless --editor --path . --quit 2>&1 | tee gif_import.log
+          if grep -Eq 'SCRIPT ERROR|Parse Error|Failed loading resource' gif_import.log; then exit 1; fi
+      - name: Review playback stops at recovery
+        run: |
+          set -euo pipefail
+          godot --headless --path . --script res://tests/grappling_gif_review_smoke.gd 2>&1 | tee gif_smoke.log
+          grep -q 'Grappling GIF review:.*0 failures' gif_smoke.log
+          if grep -Eq 'SCRIPT ERROR|Parse Error|ERROR:' gif_smoke.log; then exit 1; fi
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: grappling-gif-authoring-logs
+          path: |
+            gif_import.log
+            gif_smoke.log

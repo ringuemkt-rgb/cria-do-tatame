@@ -1,0 +1,1466 @@
+{
+  "schema_version": 1,
+  "status": "AUTHORING_REVIEW_ONLY",
+  "shipping": false,
+  "encoder_version": "ffmpeg version 6.1.1-3ubuntu5 Copyright (c) 2000-2023 the FFmpeg developers",
+  "frame_extraction": "ffmpeg crop, no drawn intermediate frames",
+  "runtime_authority": false,
+  "full_graph_claim": false,
+  "graph_source": "data/bjj/bjj_kg_slice_ruan_davi_v1.json",
+  "graph_status": "SLICE_FIXTURE_NONCANONICAL",
+  "rules_authority": "data/combat/bjj_rulesets_verified_v1.json",
+  "clips": [
+    {
+      "id": "armbar_mount",
+      "name": "Chave de braço da montada",
+      "family": "arm_lock",
+      "from": "mount_high",
+      "to": "submission",
+      "bind": [
+        "t057"
+      ],
+      "source_image": "assets/candidates/grappling/gifs_v1/sheets/armbar_mount.png",
+      "gif": "assets/candidates/grappling/gifs_v1/gifs/armbar_mount.gif",
+      "original_generated_asset": "exec-245ac05d-87d7-4f82-9b79-7e5c59c768e3.png",
+      "visual_observations": [
+        "Variação de barba e identidade de Ruan; pé encosta no limite do quadro 3.",
+        "Confirmar eixo do braço e continuidade dos contatos nos quadros 2–4."
+      ],
+      "source_sha256": "15aba5410ef51fb4619219053c5f0983342ee5326859a7293946dd03fa2af89b",
+      "gif_sha256": "a63f00a88f2a7e17298e681224a3258a37e7d42e4def0a11a6b645383b368a4c",
+      "source_size": [
+        1536,
+        1024
+      ],
+      "frame_rects": [
+        [
+          2,
+          2,
+          508,
+          508
+        ],
+        [
+          514,
+          2,
+          508,
+          508
+        ],
+        [
+          1026,
+          2,
+          508,
+          508
+        ],
+        [
+          2,
+          514,
+          508,
+          508
+        ],
+        [
+          514,
+          514,
+          508,
+          508
+        ],
+        [
+          1026,
+          514,
+          508,
+          508
+        ]
+      ],
+      "duration_ms": [
+        700,
+        700,
+        900,
+        1000,
+        800,
+        1400
+      ],
+      "intended_duration_ms": [
+        700,
+        700,
+        900,
+        1000,
+        800,
+        1400
+      ],
+      "phases": [
+        "anticipation",
+        "entry",
+        "establish",
+        "stabilize",
+        "response",
+        "recovery"
+      ],
+      "phase_evidence": "PLANNED_ONLY_NOT_MEASURED",
+      "planned_poses": [
+        "Ruan in high mount isolates Davi's right arm.",
+        "Ruan pivots ninety degrees beside Davi's RIGHT shoulder, stepping his LEFT leg completely over Davi's head.",
+        "CRITICAL: Ruan is now seated ON THE MAT BESIDE Davi's shoulder, NOT sitting on his chest. Ruan's thighs clamp Davi's right upper arm. One leg lies across Davi's face, the other across chest. Their torso axes are PERPENDICULAR. Davi remains supine.",
+        "Same side-seated perpendicular juji-gatame position; Davi links hands, trapped elbow stays softly flexed, no extension.",
+        "Davi taps Ruan's leg with free left hand; Ruan releases wrist and opens knees immediately.",
+        "Both sit separately safely with arms free."
+      ],
+      "gi": false,
+      "nogi": true,
+      "actors": [
+        "ruan_macacao",
+        "davi_relampago"
+      ],
+      "animation_class": "DISCRETE_SIX_POSE_ANIMATIC_NOT_FLUID_ANIMATION",
+      "visual_triage": "REDRAW_REQUIRED",
+      "biomechanics_review": "PENDING",
+      "expert_reviewer": null,
+      "rights_review": "PENDING_GENERATED_ORIGINAL",
+      "runtime_binding": "BLOCKED_PENDING_REVIEW",
+      "runtime_authority": false,
+      "shipping": false,
+      "rules": {
+        "championship_reference": "adcc_championship_web_2026_10_18",
+        "opens_category_legality": "UNRESOLVED_BLOCKED",
+        "runtime_rules_change": false
+      },
+      "loop_semantics": "Presentation reset only; no continuous combat transition from final to first pose."
+    },
+    {
+      "id": "armbar_closed_guard",
+      "name": "Chave de braço da guarda fechada",
+      "family": "arm_lock",
+      "from": "closed_guard",
+      "to": "submission",
+      "bind": [],
+      "source_image": "assets/candidates/grappling/gifs_v1/sheets/armbar_closed_guard.png",
+      "gif": "assets/candidates/grappling/gifs_v1/gifs/armbar_closed_guard.gif",
+      "original_generated_asset": "exec-9da8ea7d-6616-437b-941a-2c025c378559.png",
+      "visual_observations": [
+        "Cabelo e rosto de Davi variam entre quadros.",
+        "Linha do cotovelo e passagem da perna sobre a cabeça precisam de revisão."
+      ],
+      "source_sha256": "d54542f4b56834a498a19cfede14f75a50de6e0fa070b9140d4c4271b1d99ffe",
+      "gif_sha256": "c8122de4e96a88bd21621ba76421c2d943b5ee85b656951bbbcda6a7e5cdfaf1",
+      "source_size": [
+        1536,
+        1024
+      ],
+      "frame_rects": [
+        [
+          2,
+          2,
+          508,
+          508
+        ],
+        [
+          514,
+          2,
+          508,
+          508
+        ],
+        [
+          1026,
+          2,
+          508,
+          508
+        ],
+        [
+          2,
+          514,
+          508,
+          508
+        ],
+        [
+          514,
+          514,
+          508,
+          508
+        ],
+        [
+          1026,
+          514,
+          508,
+          508
+        ]
+      ],
+      "duration_ms": [
+        700,
+        700,
+        900,
+        1000,
+        800,
+        1400
+      ],
+      "intended_duration_ms": [
+        700,
+        700,
+        900,
+        1000,
+        800,
+        1400
+      ],
+      "phases": [
+        "anticipation",
+        "entry",
+        "establish",
+        "stabilize",
+        "response",
+        "recovery"
+      ],
+      "phase_evidence": "PLANNED_ONLY_NOT_MEASURED",
+      "planned_poses": [
+        "Ruan lies on his back in closed guard around kneeling Davi, holding Davi right wrist and upper arm without cloth grips.",
+        "Ruan opens guard, turns hips sideways toward Davi right shoulder, raises one knee past Davi shoulder.",
+        "Ruan swings leg across Davi head to form bottom juji-gatame, his other leg across upper back, Davi remains kneeling.",
+        "Ruan controls Davi right arm between thighs, hips lightly raised, elbow still flexed; Davi postures carefully and clasps hands.",
+        "Davi taps with free hand; Ruan immediately opens legs and releases.",
+        "Ruan sits up, Davi kneels separately, all hands free."
+      ],
+      "gi": false,
+      "nogi": true,
+      "actors": [
+        "ruan_macacao",
+        "davi_relampago"
+      ],
+      "animation_class": "DISCRETE_SIX_POSE_ANIMATIC_NOT_FLUID_ANIMATION",
+      "visual_triage": "REDRAW_REQUIRED",
+      "biomechanics_review": "PENDING",
+      "expert_reviewer": null,
+      "rights_review": "PENDING_GENERATED_ORIGINAL",
+      "runtime_binding": "BLOCKED_SOURCE_GRAPH_EXTENSION_REQUIRED",
+      "runtime_authority": false,
+      "shipping": false,
+      "rules": {
+        "championship_reference": "adcc_championship_web_2026_10_18",
+        "opens_category_legality": "UNRESOLVED_BLOCKED",
+        "runtime_rules_change": false
+      },
+      "loop_semantics": "Presentation reset only; no continuous combat transition from final to first pose."
+    },
+    {
+      "id": "kimura",
+      "name": "Kimura do controle lateral",
+      "family": "shoulder_lock",
+      "from": "side_control",
+      "to": "submission",
+      "bind": [],
+      "source_image": "assets/candidates/grappling/gifs_v1/sheets/kimura.png",
+      "gif": "assets/candidates/grappling/gifs_v1/gifs/kimura.gif",
+      "original_generated_asset": "exec-963b3ec4-a15a-4da1-8d5b-2716049f39a4.png",
+      "visual_observations": [
+        "A figura de quatro e a rotação do ombro não estão suficientemente legíveis."
+      ],
+      "source_sha256": "f70f43db9f7b35eabb3d713fbf790b8d27946ecac9ed3f651af278a167b9431f",
+      "gif_sha256": "276ec985471c5e2ad84e54f4dabccd0fe3a57b7da8112360b40aa93cc10d3dff",
+      "source_size": [
+        1536,
+        1024
+      ],
+      "frame_rects": [
+        [
+          2,
+          2,
+          508,
+          508
+        ],
+        [
+          514,
+          2,
+          508,
+          508
+        ],
+        [
+          1026,
+          2,
+          508,
+          508
+        ],
+        [
+          2,
+          514,
+          508,
+          508
+        ],
+        [
+          514,
+          514,
+          508,
+          508
+        ],
+        [
+          1026,
+          514,
+          508,
+          508
+        ]
+      ],
+      "duration_ms": [
+        700,
+        700,
+        900,
+        1000,
+        800,
+        1400
+      ],
+      "intended_duration_ms": [
+        700,
+        700,
+        900,
+        1000,
+        800,
+        1400
+      ],
+      "phases": [
+        "anticipation",
+        "entry",
+        "establish",
+        "stabilize",
+        "response",
+        "recovery"
+      ],
+      "phase_evidence": "PLANNED_ONLY_NOT_MEASURED",
+      "planned_poses": [
+        "Ruan top perpendicular side control beside supine Davi, Davi near arm bent ninety degrees on the mat.",
+        "Ruan catches Davi wrist and threads other arm under upper arm into figure-four wrist grip.",
+        "Clearly visible two-on-one kimura grip; Davi elbow supported and bent, Ruan chest stays beside Davi.",
+        "Davi grasps shorts-free body lock for defense; Ruan stabilizes without rotating shoulder to end range.",
+        "Davi taps with free hand and Ruan opens figure four immediately.",
+        "Release to relaxed side-by-side seated pose."
+      ],
+      "gi": false,
+      "nogi": true,
+      "actors": [
+        "ruan_macacao",
+        "davi_relampago"
+      ],
+      "animation_class": "DISCRETE_SIX_POSE_ANIMATIC_NOT_FLUID_ANIMATION",
+      "visual_triage": "REDRAW_REQUIRED",
+      "biomechanics_review": "PENDING",
+      "expert_reviewer": null,
+      "rights_review": "PENDING_GENERATED_ORIGINAL",
+      "runtime_binding": "BLOCKED_SOURCE_GRAPH_EXTENSION_REQUIRED",
+      "runtime_authority": false,
+      "shipping": false,
+      "rules": {
+        "championship_reference": "adcc_championship_web_2026_10_18",
+        "opens_category_legality": "UNRESOLVED_BLOCKED",
+        "runtime_rules_change": false
+      },
+      "loop_semantics": "Presentation reset only; no continuous combat transition from final to first pose."
+    },
+    {
+      "id": "americana",
+      "name": "Americana da montada",
+      "family": "shoulder_lock",
+      "from": "mount_high",
+      "to": "submission",
+      "bind": [],
+      "source_image": "assets/candidates/grappling/gifs_v1/sheets/americana.png",
+      "gif": "assets/candidates/grappling/gifs_v1/gifs/americana.gif",
+      "original_generated_asset": "exec-870b5a03-b39f-4d3d-81f4-c016987c5c0a.png",
+      "visual_observations": [
+        "Quadro 2 aproxima mãos do rosto; redesenhar o apoio para manter contato apenas no punho.",
+        "Confirmar figura de quatro e apoio do cotovelo."
+      ],
+      "source_sha256": "10af81dda68d65799844a72e4bf7b234e93d7af81ccff76507338ff2d6ca9787",
+      "gif_sha256": "1771c02c827e81446e81dfe2ceb76c2f1a20f4f8cc70df3461c1e5fa619e7569",
+      "source_size": [
+        1536,
+        1024
+      ],
+      "frame_rects": [
+        [
+          2,
+          2,
+          508,
+          508
+        ],
+        [
+          514,
+          2,
+          508,
+          508
+        ],
+        [
+          1026,
+          2,
+          508,
+          508
+        ],
+        [
+          2,
+          514,
+          508,
+          508
+        ],
+        [
+          514,
+          514,
+          508,
+          508
+        ],
+        [
+          1026,
+          514,
+          508,
+          508
+        ]
+      ],
+      "duration_ms": [
+        700,
+        700,
+        900,
+        1000,
+        800,
+        1400
+      ],
+      "intended_duration_ms": [
+        700,
+        700,
+        900,
+        1000,
+        800,
+        1400
+      ],
+      "phases": [
+        "anticipation",
+        "entry",
+        "establish",
+        "stabilize",
+        "response",
+        "recovery"
+      ],
+      "phase_evidence": "PLANNED_ONLY_NOT_MEASURED",
+      "planned_poses": [
+        "Ruan mounts supine Davi with stable knees.",
+        "Ruan places Davi RIGHT wrist on mat beside Davi head, elbow bent ninety degrees like goalpost.",
+        "Ruan threads his other forearm under Davi upper arm and grasps his own wrist for figure four; both athletes fully visible.",
+        "Ruan keeps the wrist and elbow gently supported without forcing shoulder; Davi reaches his free hand toward Ruan hip in defense.",
+        "Davi taps with free hand, Ruan releases all pressure and grip.",
+        "Ruan dismounts to kneeling beside Davi, both relaxed."
+      ],
+      "gi": false,
+      "nogi": true,
+      "actors": [
+        "ruan_macacao",
+        "davi_relampago"
+      ],
+      "animation_class": "DISCRETE_SIX_POSE_ANIMATIC_NOT_FLUID_ANIMATION",
+      "visual_triage": "REDRAW_REQUIRED",
+      "biomechanics_review": "PENDING",
+      "expert_reviewer": null,
+      "rights_review": "PENDING_GENERATED_ORIGINAL",
+      "runtime_binding": "BLOCKED_SOURCE_GRAPH_EXTENSION_REQUIRED",
+      "runtime_authority": false,
+      "shipping": false,
+      "rules": {
+        "championship_reference": "adcc_championship_web_2026_10_18",
+        "opens_category_legality": "UNRESOLVED_BLOCKED",
+        "runtime_rules_change": false
+      },
+      "loop_semantics": "Presentation reset only; no continuous combat transition from final to first pose."
+    },
+    {
+      "id": "omoplata",
+      "name": "Omoplata sem kimono",
+      "family": "shoulder_lock",
+      "from": "proposal_open_guard",
+      "to": "submission",
+      "bind": [],
+      "source_image": "assets/candidates/grappling/gifs_v1/sheets/omoplata.png",
+      "gif": "assets/candidates/grappling/gifs_v1/gifs/omoplata.gif",
+      "original_generated_asset": "exec-4f9b84a9-7457-49c5-94f9-b4f7204e7ed2.png",
+      "visual_observations": [
+        "Confirmar qual perna cruza o ombro e a continuidade do braço preso."
+      ],
+      "source_sha256": "7c4eda14cbd8a2c2572fdae742b75a10bc893d30eaa55348f818d0473c66cdd1",
+      "gif_sha256": "f575b8a7fb97495c1d6443ae5a9be8dc44e8c2ffbb52a13db1b5661d10da15b9",
+      "source_size": [
+        1536,
+        1024
+      ],
+      "frame_rects": [
+        [
+          2,
+          2,
+          508,
+          508
+        ],
+        [
+          514,
+          2,
+          508,
+          508
+        ],
+        [
+          1026,
+          2,
+          508,
+          508
+        ],
+        [
+          2,
+          514,
+          508,
+          508
+        ],
+        [
+          514,
+          514,
+          508,
+          508
+        ],
+        [
+          1026,
+          514,
+          508,
+          508
+        ]
+      ],
+      "duration_ms": [
+        700,
+        700,
+        900,
+        1000,
+        800,
+        1400
+      ],
+      "intended_duration_ms": [
+        700,
+        700,
+        900,
+        1000,
+        800,
+        1400
+      ],
+      "phases": [
+        "anticipation",
+        "entry",
+        "establish",
+        "stabilize",
+        "response",
+        "recovery"
+      ],
+      "phase_evidence": "PLANNED_ONLY_NOT_MEASURED",
+      "planned_poses": [
+        "Ruan bottom open guard facing kneeling Davi, controlling Davi right wrist.",
+        "Ruan rotates onto left hip and threads his left leg over Davi right shoulder, right arm remains caught between legs.",
+        "Ruan sits up facing same direction as Davi with Davi right arm folded by Ruan thigh, Davi kneels and inclines forward safely.",
+        "Ruan lightly holds Davi waist to prevent roll; Davi posts free hand; shoulder stays in comfortable range.",
+        "Davi taps mat with free hand and Ruan unlocks legs immediately.",
+        "Both reset sitting separately, arms released."
+      ],
+      "gi": false,
+      "nogi": true,
+      "actors": [
+        "ruan_macacao",
+        "davi_relampago"
+      ],
+      "animation_class": "DISCRETE_SIX_POSE_ANIMATIC_NOT_FLUID_ANIMATION",
+      "visual_triage": "REDRAW_REQUIRED",
+      "biomechanics_review": "PENDING",
+      "expert_reviewer": null,
+      "rights_review": "PENDING_GENERATED_ORIGINAL",
+      "runtime_binding": "BLOCKED_SOURCE_GRAPH_EXTENSION_REQUIRED",
+      "runtime_authority": false,
+      "shipping": false,
+      "rules": {
+        "championship_reference": "adcc_championship_web_2026_10_18",
+        "opens_category_legality": "UNRESOLVED_BLOCKED",
+        "runtime_rules_change": false
+      },
+      "loop_semantics": "Presentation reset only; no continuous combat transition from final to first pose."
+    },
+    {
+      "id": "straight_ankle",
+      "name": "Chave de tornozelo reta",
+      "family": "leg_lock",
+      "from": "inside_ashi_garami",
+      "to": "submission",
+      "bind": [],
+      "source_image": "assets/candidates/grappling/gifs_v1/sheets/straight_ankle.png",
+      "gif": "assets/candidates/grappling/gifs_v1/gifs/straight_ankle.gif",
+      "original_generated_asset": "exec-45c45cb9-db66-4731-9a8f-6a6240bcaa83.png",
+      "visual_observations": [
+        "A fixação do tornozelo sob a axila não está clara; pode ser confundida com outro ataque.",
+        "Revisar continuidade do entrelaçamento e identidade de Ruan."
+      ],
+      "source_sha256": "a8bc2716561b435dff4fcb58135c2ee1fbc4b81fca5524ac8031c524ae21167c",
+      "gif_sha256": "9a690d5ce251f429e11a1cfbd83bccf9fb5563057be3f049066eb80fd85e8a91",
+      "source_size": [
+        1536,
+        1024
+      ],
+      "frame_rects": [
+        [
+          2,
+          2,
+          508,
+          508
+        ],
+        [
+          514,
+          2,
+          508,
+          508
+        ],
+        [
+          1026,
+          2,
+          508,
+          508
+        ],
+        [
+          2,
+          514,
+          508,
+          508
+        ],
+        [
+          514,
+          514,
+          508,
+          508
+        ],
+        [
+          1026,
+          514,
+          508,
+          508
+        ]
+      ],
+      "duration_ms": [
+        700,
+        700,
+        900,
+        1000,
+        800,
+        1400
+      ],
+      "intended_duration_ms": [
+        700,
+        700,
+        900,
+        1000,
+        800,
+        1400
+      ],
+      "phases": [
+        "anticipation",
+        "entry",
+        "establish",
+        "stabilize",
+        "response",
+        "recovery"
+      ],
+      "phase_evidence": "PLANNED_ONLY_NOT_MEASURED",
+      "planned_poses": [
+        "Both sit facing; Ruan controls Davi right leg and encloses it in ordinary straight ashi garami.",
+        "Ruan puts Davi right heel gently beneath Ruan right armpit; one Ruan foot posts on hip, other hooks behind thigh, no twisting reap.",
+        "Ruan lies on his side maintaining a straight line through Davi knee and toes, forearm beneath ankle.",
+        "Davi bends his knee and hand-fights the grip, Ruan holds without spinal arch or foot rotation.",
+        "Davi taps Ruan thigh; Ruan opens arms and legs immediately.",
+        "Both sit separately with all legs free."
+      ],
+      "gi": false,
+      "nogi": true,
+      "actors": [
+        "ruan_macacao",
+        "davi_relampago"
+      ],
+      "animation_class": "DISCRETE_SIX_POSE_ANIMATIC_NOT_FLUID_ANIMATION",
+      "visual_triage": "REDRAW_REQUIRED",
+      "biomechanics_review": "PENDING",
+      "expert_reviewer": null,
+      "rights_review": "PENDING_GENERATED_ORIGINAL",
+      "runtime_binding": "BLOCKED_SOURCE_GRAPH_EXTENSION_REQUIRED",
+      "runtime_authority": false,
+      "shipping": false,
+      "rules": {
+        "championship_reference": "adcc_championship_web_2026_10_18",
+        "opens_category_legality": "UNRESOLVED_BLOCKED",
+        "runtime_rules_change": false
+      },
+      "loop_semantics": "Presentation reset only; no continuous combat transition from final to first pose."
+    },
+    {
+      "id": "kneebar",
+      "name": "Chave de joelho — kneebar",
+      "family": "leg_lock",
+      "from": "proposal_kneebar_entanglement",
+      "to": "submission",
+      "bind": [],
+      "source_image": "assets/candidates/grappling/gifs_v1/sheets/kneebar.png",
+      "gif": "assets/candidates/grappling/gifs_v1/gifs/kneebar.gif",
+      "original_generated_asset": "exec-42c1b2cd-aba3-4c3b-87b0-4ed591e9d96c.png",
+      "visual_observations": [
+        "A linha joelho-quadril do kneebar não está demonstrada; não usar como referência biomecânica."
+      ],
+      "source_sha256": "726ab95c0d14eae498c2a3130cb2a2c79f0abff48ab3cc84de0deacc3ac25242",
+      "gif_sha256": "f7a1ffd2ad7ca7f163ebcc6874dc6105d468acbffb2e07d34f3e1e2b4bd0d017",
+      "source_size": [
+        1536,
+        1024
+      ],
+      "frame_rects": [
+        [
+          2,
+          2,
+          508,
+          508
+        ],
+        [
+          514,
+          2,
+          508,
+          508
+        ],
+        [
+          1026,
+          2,
+          508,
+          508
+        ],
+        [
+          2,
+          514,
+          508,
+          508
+        ],
+        [
+          514,
+          514,
+          508,
+          508
+        ],
+        [
+          1026,
+          514,
+          508,
+          508
+        ]
+      ],
+      "duration_ms": [
+        700,
+        700,
+        900,
+        1000,
+        800,
+        1400
+      ],
+      "intended_duration_ms": [
+        700,
+        700,
+        900,
+        1000,
+        800,
+        1400
+      ],
+      "phases": [
+        "anticipation",
+        "entry",
+        "establish",
+        "stabilize",
+        "response",
+        "recovery"
+      ],
+      "phase_evidence": "PLANNED_ONLY_NOT_MEASURED",
+      "planned_poses": [
+        "Ruan sits alongside Davi's RIGHT hip and controls Davi right leg.",
+        "Ruan pivots to face away from Davi head and captures right thigh between knees.",
+        "Side-seated kneebar alignment: Davi's right kneecap faces toward Ruan hip, foot held to Ruan chest, leg stays slightly flexed.",
+        "Davi links legs in defense while Ruan maintains soft flexion with no hip extension.",
+        "Davi taps Ruan forearm; Ruan immediately releases the foot and knee line.",
+        "Both sit separately, knees free and relaxed."
+      ],
+      "gi": false,
+      "nogi": true,
+      "actors": [
+        "ruan_macacao",
+        "davi_relampago"
+      ],
+      "animation_class": "DISCRETE_SIX_POSE_ANIMATIC_NOT_FLUID_ANIMATION",
+      "visual_triage": "REDRAW_REQUIRED",
+      "biomechanics_review": "PENDING",
+      "expert_reviewer": null,
+      "rights_review": "PENDING_GENERATED_ORIGINAL",
+      "runtime_binding": "BLOCKED_SOURCE_GRAPH_EXTENSION_REQUIRED",
+      "runtime_authority": false,
+      "shipping": false,
+      "rules": {
+        "championship_reference": "adcc_championship_web_2026_10_18",
+        "opens_category_legality": "UNRESOLVED_BLOCKED",
+        "runtime_rules_change": false
+      },
+      "loop_semantics": "Presentation reset only; no continuous combat transition from final to first pose."
+    },
+    {
+      "id": "inside_heel_hook",
+      "name": "Heel hook interno",
+      "family": "restricted_leg_lock",
+      "from": "inside_ashi_garami",
+      "to": "submission",
+      "bind": [
+        "slice_heel_hook"
+      ],
+      "source_image": "assets/candidates/grappling/gifs_v1/sheets/inside_heel_hook.png",
+      "gif": "assets/candidates/grappling/gifs_v1/gifs/inside_heel_hook.gif",
+      "original_generated_asset": "exec-faa2e60d-386b-4192-a240-3f62b1833664.png",
+      "visual_observations": [
+        "A captura interna do calcanhar não está demonstrada com clareza; não usar como referência biomecânica."
+      ],
+      "source_sha256": "fcfea7f14156a95fe9387f963788d7eb7fc0dfbefb51f20f001dfb35912df205",
+      "gif_sha256": "277d66d40bfa0a1a5c0a7b418686da5ea7480136378c2a322158641a43d92417",
+      "source_size": [
+        1536,
+        1024
+      ],
+      "frame_rects": [
+        [
+          2,
+          2,
+          508,
+          508
+        ],
+        [
+          514,
+          2,
+          508,
+          508
+        ],
+        [
+          1026,
+          2,
+          508,
+          508
+        ],
+        [
+          2,
+          514,
+          508,
+          508
+        ],
+        [
+          514,
+          514,
+          508,
+          508
+        ],
+        [
+          1026,
+          514,
+          508,
+          508
+        ]
+      ],
+      "duration_ms": [
+        700,
+        700,
+        900,
+        1000,
+        800,
+        1400
+      ],
+      "intended_duration_ms": [
+        700,
+        700,
+        900,
+        1000,
+        800,
+        1400
+      ],
+      "phases": [
+        "anticipation",
+        "entry",
+        "establish",
+        "stabilize",
+        "response",
+        "recovery"
+      ],
+      "phase_evidence": "PLANNED_ONLY_NOT_MEASURED",
+      "planned_poses": [
+        "Both seated with controlled inside leg entanglement, Ruan holds Davi RIGHT thigh above knee.",
+        "Ruan stabilizes Davi knee line gently using his legs while Davi lies partly on his side.",
+        "Close but full-body clear pose: Ruan forearm cups the INSIDE of Davi exposed right heel, toes are near armpit; no twist.",
+        "Davi hand-fights and tries to withdraw knee line; Ruan keeps neutral ankle with zero rotational finish.",
+        "Davi taps on Ruan leg; Ruan immediately releases heel and unclamps legs.",
+        "Both seated separately with legs fully free."
+      ],
+      "gi": false,
+      "nogi": true,
+      "actors": [
+        "ruan_macacao",
+        "davi_relampago"
+      ],
+      "animation_class": "DISCRETE_SIX_POSE_ANIMATIC_NOT_FLUID_ANIMATION",
+      "visual_triage": "REDRAW_REQUIRED",
+      "biomechanics_review": "PENDING",
+      "expert_reviewer": null,
+      "rights_review": "PENDING_GENERATED_ORIGINAL",
+      "runtime_binding": "BLOCKED_PENDING_REVIEW",
+      "runtime_authority": false,
+      "shipping": false,
+      "rules": {
+        "championship_reference": "adcc_championship_web_2026_10_18",
+        "opens_category_legality": "UNRESOLVED_BLOCKED",
+        "runtime_rules_change": false
+      },
+      "loop_semantics": "Presentation reset only; no continuous combat transition from final to first pose."
+    },
+    {
+      "id": "toe_hold",
+      "name": "Mata-leão no pé — toe hold",
+      "family": "restricted_leg_lock",
+      "from": "proposal_leg_entanglement",
+      "to": "submission",
+      "bind": [],
+      "source_image": "assets/candidates/grappling/gifs_v1/sheets/toe_hold.png",
+      "gif": "assets/candidates/grappling/gifs_v1/gifs/toe_hold.gif",
+      "original_generated_asset": "exec-c04946ca-fd39-4320-ab83-4d8b6b8b84dc.png",
+      "visual_observations": [
+        "Figura de quatro pouco legível; redesenhar posição das mãos antes de aprovar."
+      ],
+      "source_sha256": "21e4735d7b5184f2deb5113eec7fdf6fc9dc20ffd6271a49c972c44a84827d0f",
+      "gif_sha256": "bac06d691b795463068eb825374ac2da84f30b41e05e1cd549a26daa22e5d7dd",
+      "source_size": [
+        1536,
+        1024
+      ],
+      "frame_rects": [
+        [
+          2,
+          2,
+          508,
+          508
+        ],
+        [
+          514,
+          2,
+          508,
+          508
+        ],
+        [
+          1026,
+          2,
+          508,
+          508
+        ],
+        [
+          2,
+          514,
+          508,
+          508
+        ],
+        [
+          514,
+          514,
+          508,
+          508
+        ],
+        [
+          1026,
+          514,
+          508,
+          508
+        ]
+      ],
+      "duration_ms": [
+        700,
+        700,
+        900,
+        1000,
+        800,
+        1400
+      ],
+      "intended_duration_ms": [
+        700,
+        700,
+        900,
+        1000,
+        800,
+        1400
+      ],
+      "phases": [
+        "anticipation",
+        "entry",
+        "establish",
+        "stabilize",
+        "response",
+        "recovery"
+      ],
+      "phase_evidence": "PLANNED_ONLY_NOT_MEASURED",
+      "planned_poses": [
+        "Both seated facing with Davi right knee comfortably bent and Ruan beside right foot.",
+        "Ruan cradles forefoot with one hand, other arm passes around ankle to catch his own wrist in figure four.",
+        "Ruan holds foot close to chest, knee bent, ankle neutral, no forcing rotation.",
+        "Davi hand-fights and starts pulling knee away; Ruan maintains loose stationary grip.",
+        "Davi taps Ruan shoulder with free hand; Ruan opens figure four immediately.",
+        "Both seated separately, all feet released."
+      ],
+      "gi": false,
+      "nogi": true,
+      "actors": [
+        "ruan_macacao",
+        "davi_relampago"
+      ],
+      "animation_class": "DISCRETE_SIX_POSE_ANIMATIC_NOT_FLUID_ANIMATION",
+      "visual_triage": "REDRAW_REQUIRED",
+      "biomechanics_review": "PENDING",
+      "expert_reviewer": null,
+      "rights_review": "PENDING_GENERATED_ORIGINAL",
+      "runtime_binding": "BLOCKED_SOURCE_GRAPH_EXTENSION_REQUIRED",
+      "runtime_authority": false,
+      "shipping": false,
+      "rules": {
+        "championship_reference": "adcc_championship_web_2026_10_18",
+        "opens_category_legality": "UNRESOLVED_BLOCKED",
+        "runtime_rules_change": false
+      },
+      "loop_semantics": "Presentation reset only; no continuous combat transition from final to first pose."
+    },
+    {
+      "id": "de_la_riva",
+      "name": "De La Riva NO-GI → desequilíbrio",
+      "family": "open_guard",
+      "from": "proposal_open_guard",
+      "to": "proposal_dlr_sweep_top",
+      "bind": [],
+      "source_image": "assets/candidates/grappling/gifs_v1/sheets/de_la_riva.png",
+      "gif": "assets/candidates/grappling/gifs_v1/gifs/de_la_riva.gif",
+      "original_generated_asset": "exec-0b603670-c2cd-44de-abe7-f1eeeede9ce7.png",
+      "visual_observations": [
+        "Confirmar orientação do gancho externo e direção da raspagem.",
+        "Há corte de braço no limite do quadro 4 e variação de barba."
+      ],
+      "source_sha256": "ed1bb7b23d5760b391654cd26f34dfb70cdc1ed5e1262fb258a92431e8a92d68",
+      "gif_sha256": "4b50631e5407afd818519491c17ee76620f0dfa25a950aef38be737ef2887bc3",
+      "source_size": [
+        1536,
+        1024
+      ],
+      "frame_rects": [
+        [
+          2,
+          2,
+          508,
+          508
+        ],
+        [
+          514,
+          2,
+          508,
+          508
+        ],
+        [
+          1026,
+          2,
+          508,
+          508
+        ],
+        [
+          2,
+          514,
+          508,
+          508
+        ],
+        [
+          514,
+          514,
+          508,
+          508
+        ],
+        [
+          1026,
+          514,
+          508,
+          508
+        ]
+      ],
+      "duration_ms": [
+        700,
+        700,
+        900,
+        1000,
+        800,
+        1400
+      ],
+      "intended_duration_ms": [
+        700,
+        700,
+        900,
+        1000,
+        800,
+        1400
+      ],
+      "phases": [
+        "anticipation",
+        "entry",
+        "establish",
+        "stabilize",
+        "response",
+        "recovery"
+      ],
+      "phase_evidence": "PLANNED_ONLY_NOT_MEASURED",
+      "planned_poses": [
+        "Ruan on back in open guard, Davi stands in staggered stance facing him.",
+        "Ruan loops left leg OUTSIDE Davi RIGHT thigh with instep hook behind inner thigh; right foot on far hip, one hand controls ankle and other wrist, never clothes.",
+        "Ruan keeps DLR hook visible and uses foot on hip to tilt Davi balance; Davi bends knees and posts hand.",
+        "Ruan follows a controlled tipping sweep as Davi lowers to seated hip, no head spike.",
+        "Davi frames to recover guard while Ruan comes to knees as top player.",
+        "Both settle with Ruan top in Davi open guard, no submission."
+      ],
+      "gi": false,
+      "nogi": true,
+      "actors": [
+        "ruan_macacao",
+        "davi_relampago"
+      ],
+      "animation_class": "DISCRETE_SIX_POSE_ANIMATIC_NOT_FLUID_ANIMATION",
+      "visual_triage": "REDRAW_REQUIRED",
+      "biomechanics_review": "PENDING",
+      "expert_reviewer": null,
+      "rights_review": "PENDING_GENERATED_ORIGINAL",
+      "runtime_binding": "BLOCKED_SOURCE_GRAPH_EXTENSION_REQUIRED",
+      "runtime_authority": false,
+      "shipping": false,
+      "rules": {
+        "championship_reference": "adcc_championship_web_2026_10_18",
+        "opens_category_legality": "UNRESOLVED_BLOCKED",
+        "runtime_rules_change": false
+      },
+      "loop_semantics": "Presentation reset only; no continuous combat transition from final to first pose."
+    },
+    {
+      "id": "reverse_de_la_riva",
+      "name": "Reverse De La Riva NO-GI → retenção",
+      "family": "open_guard",
+      "from": "proposal_open_guard",
+      "to": "proposal_recovered_open_guard",
+      "bind": [],
+      "source_image": "assets/candidates/grappling/gifs_v1/sheets/reverse_de_la_riva.png",
+      "gif": "assets/candidates/grappling/gifs_v1/gifs/reverse_de_la_riva.gif",
+      "original_generated_asset": "exec-933078d6-6076-433f-a114-c1961b494ce4.png",
+      "visual_observations": [
+        "Gancho interno pouco legível; diferenciar de guarda aberta genérica."
+      ],
+      "source_sha256": "93640ca46c0f7d45acfa1549b455a10640275c9da5606fa298da121cca4e533c",
+      "gif_sha256": "57707595efd0a7419ddb84c3665946f2111db90194658f07179904e9744f6a9a",
+      "source_size": [
+        1536,
+        1024
+      ],
+      "frame_rects": [
+        [
+          2,
+          2,
+          508,
+          508
+        ],
+        [
+          514,
+          2,
+          508,
+          508
+        ],
+        [
+          1026,
+          2,
+          508,
+          508
+        ],
+        [
+          2,
+          514,
+          508,
+          508
+        ],
+        [
+          514,
+          514,
+          508,
+          508
+        ],
+        [
+          1026,
+          514,
+          508,
+          508
+        ]
+      ],
+      "duration_ms": [
+        700,
+        700,
+        900,
+        1000,
+        800,
+        1400
+      ],
+      "intended_duration_ms": [
+        700,
+        700,
+        900,
+        1000,
+        800,
+        1400
+      ],
+      "phases": [
+        "anticipation",
+        "entry",
+        "establish",
+        "stabilize",
+        "response",
+        "recovery"
+      ],
+      "phase_evidence": "PLANNED_ONLY_NOT_MEASURED",
+      "planned_poses": [
+        "Ruan supine open guard facing standing Davi; Davi begins gentle knee-cut entry.",
+        "Ruan threads inside leg around Davi leading leg to create REVERSE De La Riva hook, forearm frame at knee and hand ankle grip, no fabric grips.",
+        "Ruan turns onto side keeping inside RDLR hook, far foot frames at Davi hip.",
+        "Davi tries to clear hook; Ruan follows hip movement rather than forcing knee.",
+        "Ruan withdraws hook and squares hips with two shin frames between bodies.",
+        "Stable recovered open guard, Davi standing at comfortable distance."
+      ],
+      "gi": false,
+      "nogi": true,
+      "actors": [
+        "ruan_macacao",
+        "davi_relampago"
+      ],
+      "animation_class": "DISCRETE_SIX_POSE_ANIMATIC_NOT_FLUID_ANIMATION",
+      "visual_triage": "REDRAW_REQUIRED",
+      "biomechanics_review": "PENDING",
+      "expert_reviewer": null,
+      "rights_review": "PENDING_GENERATED_ORIGINAL",
+      "runtime_binding": "BLOCKED_SOURCE_GRAPH_EXTENSION_REQUIRED",
+      "runtime_authority": false,
+      "shipping": false,
+      "rules": {
+        "championship_reference": "adcc_championship_web_2026_10_18",
+        "opens_category_legality": "UNRESOLVED_BLOCKED",
+        "runtime_rules_change": false
+      },
+      "loop_semantics": "Presentation reset only; no continuous combat transition from final to first pose."
+    },
+    {
+      "id": "berimbolo",
+      "name": "Berimbolo NO-GI → tomada das costas",
+      "family": "inversion_back_take",
+      "from": "proposal_de_la_riva",
+      "to": "back_mount_seatbelt",
+      "bind": [],
+      "source_image": "assets/candidates/grappling/gifs_v1/sheets/berimbolo.png",
+      "gif": "assets/candidates/grappling/gifs_v1/gifs/berimbolo.gif",
+      "original_generated_asset": "exec-21b63c17-cba3-4d0b-8531-62c2a66f3d58.png",
+      "visual_observations": [
+        "Quadros 2–3 parecem apoiar a cabeça no solo; redesenhar inversão sobre ombros com cabeça livre.",
+        "Revisar continuidade dos ganchos e conexão até o seatbelt."
+      ],
+      "source_sha256": "8d4bc872acb03eb8b15466e2beb93dea6ee1bf709c2b863c484175a7832189b5",
+      "gif_sha256": "df00e51b843ab550fc844a0ba90e664230dac2b9281a4e036a820bcb412aa551",
+      "source_size": [
+        1536,
+        1024
+      ],
+      "frame_rects": [
+        [
+          2,
+          2,
+          508,
+          508
+        ],
+        [
+          514,
+          2,
+          508,
+          508
+        ],
+        [
+          1026,
+          2,
+          508,
+          508
+        ],
+        [
+          2,
+          514,
+          508,
+          508
+        ],
+        [
+          514,
+          514,
+          508,
+          508
+        ],
+        [
+          1026,
+          514,
+          508,
+          508
+        ]
+      ],
+      "duration_ms": [
+        700,
+        700,
+        900,
+        1000,
+        800,
+        1400
+      ],
+      "intended_duration_ms": [
+        700,
+        700,
+        900,
+        1000,
+        800,
+        1400
+      ],
+      "phases": [
+        "anticipation",
+        "entry",
+        "establish",
+        "stabilize",
+        "response",
+        "recovery"
+      ],
+      "phase_evidence": "PLANNED_ONLY_NOT_MEASURED",
+      "planned_poses": [
+        "Ruan bottom De La Riva guard with outside hook on Davi right leg and ankle control, Davi standing.",
+        "Davi lowers to hip, Ruan starts controlled shoulder inversion alongside Davi legs, head never bears weight.",
+        "Ruan rolls across SHOULDERS under Davi leg line, hips lifted, both legs clearly separate from Davi, no neck compression.",
+        "Ruan emerges behind Davi hips, controls waist with arms and crab-ride style hooks without clothing grips.",
+        "Davi turns away and hand-fights while Ruan follows behind into seated seatbelt chest-to-back control.",
+        "Both seated with Ruan behind Davi, two light hooks inside thighs, no choke and no neck crank."
+      ],
+      "gi": false,
+      "nogi": true,
+      "actors": [
+        "ruan_macacao",
+        "davi_relampago"
+      ],
+      "animation_class": "DISCRETE_SIX_POSE_ANIMATIC_NOT_FLUID_ANIMATION",
+      "visual_triage": "REDRAW_REQUIRED",
+      "biomechanics_review": "PENDING",
+      "expert_reviewer": null,
+      "rights_review": "PENDING_GENERATED_ORIGINAL",
+      "runtime_binding": "BLOCKED_SOURCE_GRAPH_EXTENSION_REQUIRED",
+      "runtime_authority": false,
+      "shipping": false,
+      "rules": {
+        "championship_reference": "adcc_championship_web_2026_10_18",
+        "opens_category_legality": "UNRESOLVED_BLOCKED",
+        "runtime_rules_change": false
+      },
+      "loop_semantics": "Presentation reset only; no continuous combat transition from final to first pose."
+    },
+    {
+      "id": "combat_flow",
+      "name": "Fluxo de combate — queda até soltura",
+      "family": "combat_flow",
+      "from": "standing_neutral",
+      "to": "submission",
+      "bind": [
+        "t001",
+        "t025",
+        "slice_side_to_mount",
+        "t057"
+      ],
+      "source_image": "assets/candidates/grappling/gifs_v1/sheets/combat_flow.png",
+      "gif": "assets/candidates/grappling/gifs_v1/gifs/combat_flow.gif",
+      "original_generated_asset": "exec-64b5362e-6095-4098-b09d-e3119be8ac2c.png",
+      "visual_observations": [
+        "Quadro 3 não demonstra passagem completa ao controle lateral; redesenhar antes de associar à cadeia de sucesso.",
+        "Confirmar posição da chave de braço e manter identidade de Ruan."
+      ],
+      "source_sha256": "6c1c03fea7551796cac1b7f5551a85a1643088b82316ad68b87a9ea429e8817b",
+      "gif_sha256": "cef72e775694796892dec52d836a07970d96cdde3b22148fd096eae811cc6f07",
+      "source_size": [
+        1536,
+        1024
+      ],
+      "frame_rects": [
+        [
+          2,
+          2,
+          508,
+          508
+        ],
+        [
+          514,
+          2,
+          508,
+          508
+        ],
+        [
+          1026,
+          2,
+          508,
+          508
+        ],
+        [
+          2,
+          514,
+          508,
+          508
+        ],
+        [
+          514,
+          514,
+          508,
+          508
+        ],
+        [
+          1026,
+          514,
+          508,
+          508
+        ]
+      ],
+      "duration_ms": [
+        700,
+        700,
+        900,
+        1000,
+        800,
+        1400
+      ],
+      "intended_duration_ms": [
+        700,
+        700,
+        900,
+        1000,
+        800,
+        1400
+      ],
+      "phases": [],
+      "phase_evidence": "PLANNED_ONLY_NOT_MEASURED",
+      "planned_poses": [
+        "Both standing in no-gi wrestling stance, Ruan hand-fights Davi wrist and collar tie WITHOUT clothing grip.",
+        "Ruan finishes a controlled double-leg and lands top in Davi half guard, Davi back on mat, no slam.",
+        "Ruan clears half guard into perpendicular top side control while Davi frames.",
+        "Ruan transitions to high mount on supine Davi; both knees stable beside torso.",
+        "Ruan performs perpendicular side-seated mounted armbar: Ruan now sits on MAT beside Davi right shoulder, legs across head and chest, Davi right arm between thighs, elbow softly flexed.",
+        "Davi taps; Ruan has released all grips and both sit apart safely."
+      ],
+      "gi": false,
+      "nogi": true,
+      "actors": [
+        "ruan_macacao",
+        "davi_relampago"
+      ],
+      "animation_class": "DISCRETE_SIX_POSE_ANIMATIC_NOT_FLUID_ANIMATION",
+      "visual_triage": "REDRAW_REQUIRED",
+      "biomechanics_review": "PENDING",
+      "expert_reviewer": null,
+      "rights_review": "PENDING_GENERATED_ORIGINAL",
+      "runtime_binding": "BLOCKED_PENDING_REVIEW",
+      "runtime_authority": false,
+      "shipping": false,
+      "rules": {
+        "championship_reference": "adcc_championship_web_2026_10_18",
+        "opens_category_legality": "UNRESOLVED_BLOCKED",
+        "runtime_rules_change": false
+      },
+      "loop_semantics": "Presentation reset only; no continuous combat transition from final to first pose."
+    }
+  ]
+}

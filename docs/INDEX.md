@@ -41,6 +41,7 @@ Este arquivo é a porta de entrada da documentação ativa. Antes de criar um do
 
 ## Arte e produção
 
+- [`art/GRAPPLING_GIFS_V1.md`](art/GRAPPLING_GIFS_V1.md) — 13 animáticos NO-GI candidatos, GIFs e revisão de fluxo; redesenho e aprovação técnica pendentes.
 - [`architecture/CRIA_PRODUCTION_OS_V03.md`](architecture/CRIA_PRODUCTION_OS_V03.md) — derivação data-driven, coverage ledger e gates de promoção até shipping;
 - [`architecture/EXTERNAL_GAME_STUDIO_INTAKE_V1.md`](architecture/EXTERNAL_GAME_STUDIO_INTAKE_V1.md) — regras de ADOPT/PORT/REIMPLEMENT/REFERENCE/BLOCK para fontes externas;
 - [`../.agents/skills/cria-art-direction/SKILL.md`](../.agents/skills/cria-art-direction/SKILL.md) — skill mestre de direção visual; cânone, paleta, personagens, facções, arenas, mapas, UI, cartas, QA, rights e protocolo COMMAND;

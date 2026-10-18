@@ -1,0 +1,36 @@
+{
+  "schema_version": 1,
+  "status": "RESEARCH_NOT_RUNTIME_RULESET",
+  "verified_on": "2026-10-18",
+  "runtime_authority": false,
+  "shipping": false,
+  "sources": [
+    {
+      "id": "adcc_championship_web_2026_10_18",
+      "url": "https://adcombat.com/adcc-rules-regulations/",
+      "scope": "Championship web regulations; do not infer Opens beginner/intermediate eligibility.",
+      "summary": "Arm/shoulder/wrist and leg/ankle lock families are listed; clothing holds and striking are forbidden. Scoring depends on position, stabilization and point phase."
+    },
+    {
+      "id": "adcc_opens_legal_grid_2026_07_20",
+      "url": "https://cdn.shopify.com/s/files/1/0679/7950/9959/files/2026_Grid_ADCC_Legal_Techs_720_26.pdf?v=1784553461",
+      "linked_from": "https://adcc-official.com/pages/adcc-rules",
+      "status": "SOURCE_IDENTIFIED_CATEGORY_MATRIX_NOT_IMPLEMENTED",
+      "scope": "2026 Opens category grid. Age, skill and event edition must be reviewed before eligibility."
+    }
+  ],
+  "rules_engine_unchanged": true,
+  "required_context": [
+    "event",
+    "edition",
+    "age_division",
+    "skill_division",
+    "gi_or_nogi",
+    "point_phase"
+  ],
+  "missing_context_policy": "BLOCK_LEGALITY_DECISION",
+  "notes": [
+    "Technical animation review and rules review are separate approvals.",
+    "Source citations do not prove anatomy or approve gameplay bindings."
+  ]
+}

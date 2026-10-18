@@ -1,0 +1,64 @@
+{
+  "schema_version": 1,
+  "status": "PROPOSAL_AND_SLICE_REFERENCES_ONLY",
+  "runtime_authority": false,
+  "shipping": false,
+  "existing_flow": {
+    "source": "data/combat/golden_chain_ruan_davi_v1.json",
+    "source_status": "SLICE_ONLY_FAIL_CLOSED",
+    "success_chain_ids": [
+      "t001",
+      "t025",
+      "slice_side_to_mount",
+      "t057"
+    ],
+    "states": [
+      "standing_neutral",
+      "half_guard_top",
+      "side_control",
+      "mount_high",
+      "submission"
+    ],
+    "defenses": [
+      {
+        "attack": "t001",
+        "counter": "slice_sprawl",
+        "to": "front_headlock"
+      },
+      {
+        "attack": "t025",
+        "counter": "t049",
+        "to": "knee_shield_half"
+      }
+    ],
+    "animation_binding": "BLOCKED_VISUAL_REDRAW_AND_PHYSICAL_REVIEW",
+    "preview": "combat_flow"
+  },
+  "proposed_guard_flow": {
+    "status": "UNREGISTERED_DRAFT_NOT_EXECUTABLE",
+    "steps": [
+      {
+        "clip": "de_la_riva",
+        "from": "proposal_open_guard",
+        "to": "proposal_dlr_sweep_top",
+        "role": "bottom_to_top"
+      },
+      {
+        "clip": "reverse_de_la_riva",
+        "from": "proposal_open_guard",
+        "to": "proposal_recovered_open_guard",
+        "role": "bottom_retains_guard"
+      },
+      {
+        "clip": "berimbolo",
+        "from": "proposal_de_la_riva",
+        "to": "back_mount_seatbelt",
+        "role": "bottom_to_back_controller"
+      }
+    ],
+    "note": "Independent branches, not a continuous executable chain. New from/to states and techniques require canonical source authoring and actor-perspective review."
+  },
+  "scoring_policy": "Reducer and versioned rules only. No animation callback may award score or finish combat. Seatbelt alone is not scoring back control.",
+  "completion_gate": "data/combat/bjj_completion_gate_v1.json",
+  "full_graph_claim": false
+}

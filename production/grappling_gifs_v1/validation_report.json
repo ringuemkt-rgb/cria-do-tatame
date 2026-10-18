@@ -1,0 +1,39 @@
+{
+  "schema_version": 1,
+  "date": "2026-10-18",
+  "scope": "Authoring media integrity and isolated Godot review, not biomechanical certification",
+  "media_validation": {
+    "command": "python tools/art/validate_grappling_gifs.py",
+    "checks": 424,
+    "failures": 0
+  },
+  "godot_validation": {
+    "version": "4.3.stable.official.77dcf97d8",
+    "command": "godot --headless --path . --script res://tests/grappling_gif_review_smoke.gd",
+    "checks": 94,
+    "failures": 0
+  },
+  "existing_character_integrity": {
+    "command": "python tools/art/character_identity_atlases.py",
+    "characters": 39,
+    "frames": 117,
+    "ok": true,
+    "shipping_ready": false
+  },
+  "generated_media": {
+    "gifs": 13,
+    "source_poses": 78,
+    "frames_per_gif": 6,
+    "width": 384,
+    "height": 384,
+    "duration_ms": 5500
+  },
+  "visual_review": {
+    "approved": 0,
+    "redraw_required": 13,
+    "expert_approval": false
+  },
+  "shipping": false,
+  "runtime_authority": false,
+  "full_graph_claim": false
+}

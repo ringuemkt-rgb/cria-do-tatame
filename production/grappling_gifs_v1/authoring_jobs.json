@@ -1,0 +1,367 @@
+{
+  "schema_version": 1,
+  "created": "2026-10-18",
+  "tool": "image_gen.imagegen",
+  "model_revision": "not_exposed_by_tool",
+  "shipping": false,
+  "jobs": [
+    {
+      "id": "armbar_mount",
+      "name": "Chave de braço da montada",
+      "family": "arm_lock",
+      "from": "mount_high",
+      "to": "submission",
+      "bind": [
+        "t057"
+      ],
+      "poses": [
+        "Ruan in high mount isolates Davi's right arm.",
+        "Ruan pivots ninety degrees beside Davi's RIGHT shoulder, stepping his LEFT leg completely over Davi's head.",
+        "CRITICAL: Ruan is now seated ON THE MAT BESIDE Davi's shoulder, NOT sitting on his chest. Ruan's thighs clamp Davi's right upper arm. One leg lies across Davi's face, the other across chest. Their torso axes are PERPENDICULAR. Davi remains supine.",
+        "Same side-seated perpendicular juji-gatame position; Davi links hands, trapped elbow stays softly flexed, no extension.",
+        "Davi taps Ruan's leg with free left hand; Ruan releases wrist and opens knees immediately.",
+        "Both sit separately safely with arms free."
+      ],
+      "prompt": "CRIA DO TATAME paired adult NO-GI animation keyframe sheet, exactly SIX equal panels in 3 columns x 2 rows, landscape 1536x1024. No text or labels. Fixed orthographic three-quarter side camera, same scale and floor plane in each cell. Thin panel dividers at exact thirds/half. Flat pale gray-green mat background #d5ddd8. Crisp cel-shaded retro game concept art with dark outlines, anatomically clear hands, shoulders, hips and knees. Attacker RUAN: adult dark brown skin, short black curls, dark forest-green rashguard with ivory shoulder stripe, black grappling shorts, barefoot. Partner DAVI: adult medium tan skin, short close dark fade NOT same curls as Ruan, cobalt blue rashguard, navy shorts, barefoot. No gi, no belts, no cloth grips, no gloves. Two complete separate bodies per panel, all limbs visible where possible, generous 10% margins. Consistent original fictional identities. Controlled cooperative training demonstration, no end-range force, no injury. Six key poses read left to right, top row then bottom row:\n1. Ruan in high mount isolates Davi's right arm.\n2. Ruan pivots ninety degrees beside Davi's RIGHT shoulder, stepping his LEFT leg completely over Davi's head.\n3. CRITICAL: Ruan is now seated ON THE MAT BESIDE Davi's shoulder, NOT sitting on his chest. Ruan's thighs clamp Davi's right upper arm. One leg lies across Davi's face, the other across chest. Their torso axes are PERPENDICULAR. Davi remains supine.\n4. Same side-seated perpendicular juji-gatame position; Davi links hands, trapped elbow stays softly flexed, no extension.\n5. Davi taps Ruan's leg with free left hand; Ruan releases wrist and opens knees immediately.\n6. Both sit separately safely with arms free.\nDistinct biomechanics are essential: draw the specific technique, not a generic mount. New original composition, precise leg/arm positions per keyframe.",
+      "status": "GENERATED_RAW_REQUIRES_REDRAW",
+      "shipping": false,
+      "visual_observations": [
+        "Variação de barba e identidade de Ruan; pé encosta no limite do quadro 3.",
+        "Confirmar eixo do braço e continuidade dos contatos nos quadros 2–4."
+      ],
+      "original_generated_asset": "exec-245ac05d-87d7-4f82-9b79-7e5c59c768e3.png",
+      "source_image": "assets/candidates/grappling/gifs_v1/sheets/armbar_mount.png",
+      "gif": "assets/candidates/grappling/gifs_v1/gifs/armbar_mount.gif",
+      "reference_images": []
+    },
+    {
+      "id": "armbar_closed_guard",
+      "name": "Chave de braço da guarda fechada",
+      "family": "arm_lock",
+      "from": "closed_guard",
+      "to": "submission",
+      "bind": [],
+      "poses": [
+        "Ruan lies on his back in closed guard around kneeling Davi, holding Davi right wrist and upper arm without cloth grips.",
+        "Ruan opens guard, turns hips sideways toward Davi right shoulder, raises one knee past Davi shoulder.",
+        "Ruan swings leg across Davi head to form bottom juji-gatame, his other leg across upper back, Davi remains kneeling.",
+        "Ruan controls Davi right arm between thighs, hips lightly raised, elbow still flexed; Davi postures carefully and clasps hands.",
+        "Davi taps with free hand; Ruan immediately opens legs and releases.",
+        "Ruan sits up, Davi kneels separately, all hands free."
+      ],
+      "prompt": "CRIA DO TATAME paired adult NO-GI animation keyframe sheet, exactly SIX equal panels in 3 columns x 2 rows, landscape 1536x1024. No text or labels. Fixed orthographic three-quarter side camera, same scale and floor plane in each cell. Thin panel dividers at exact thirds/half. Flat pale gray-green mat background #d5ddd8. Crisp cel-shaded retro game concept art with dark outlines, anatomically clear hands, shoulders, hips and knees. Attacker RUAN: adult dark brown skin, short black curls, dark forest-green rashguard with ivory shoulder stripe, black grappling shorts, barefoot. Partner DAVI: adult medium tan skin, short close dark fade NOT same curls as Ruan, cobalt blue rashguard, navy shorts, barefoot. No gi, no belts, no cloth grips, no gloves. Two complete separate bodies per panel, all limbs visible where possible, generous 10% margins. Consistent original fictional identities. Controlled cooperative training demonstration, no end-range force, no injury. Six key poses read left to right, top row then bottom row:\n1. Ruan lies on his back in closed guard around kneeling Davi, holding Davi right wrist and upper arm without cloth grips.\n2. Ruan opens guard, turns hips sideways toward Davi right shoulder, raises one knee past Davi shoulder.\n3. Ruan swings leg across Davi head to form bottom juji-gatame, his other leg across upper back, Davi remains kneeling.\n4. Ruan controls Davi right arm between thighs, hips lightly raised, elbow still flexed; Davi postures carefully and clasps hands.\n5. Davi taps with free hand; Ruan immediately opens legs and releases.\n6. Ruan sits up, Davi kneels separately, all hands free.",
+      "status": "GENERATED_RAW_REQUIRES_REDRAW",
+      "shipping": false,
+      "visual_observations": [
+        "Cabelo e rosto de Davi variam entre quadros.",
+        "Linha do cotovelo e passagem da perna sobre a cabeça precisam de revisão."
+      ],
+      "original_generated_asset": "exec-9da8ea7d-6616-437b-941a-2c025c378559.png",
+      "source_image": "assets/candidates/grappling/gifs_v1/sheets/armbar_closed_guard.png",
+      "gif": "assets/candidates/grappling/gifs_v1/gifs/armbar_closed_guard.gif",
+      "reference_images": [
+        "exec-4865ff07-0165-4de4-b533-d73053196538.png"
+      ]
+    },
+    {
+      "id": "kimura",
+      "name": "Kimura do controle lateral",
+      "family": "shoulder_lock",
+      "from": "side_control",
+      "to": "submission",
+      "bind": [],
+      "poses": [
+        "Ruan top perpendicular side control beside supine Davi, Davi near arm bent ninety degrees on the mat.",
+        "Ruan catches Davi wrist and threads other arm under upper arm into figure-four wrist grip.",
+        "Clearly visible two-on-one kimura grip; Davi elbow supported and bent, Ruan chest stays beside Davi.",
+        "Davi grasps shorts-free body lock for defense; Ruan stabilizes without rotating shoulder to end range.",
+        "Davi taps with free hand and Ruan opens figure four immediately.",
+        "Release to relaxed side-by-side seated pose."
+      ],
+      "prompt": "CRIA DO TATAME paired adult NO-GI animation keyframe sheet, exactly SIX equal panels in 3 columns x 2 rows, landscape 1536x1024. No text or labels. Fixed orthographic three-quarter side camera, same scale and floor plane in each cell. Thin panel dividers at exact thirds/half. Flat pale gray-green mat background #d5ddd8. Crisp cel-shaded retro game concept art with dark outlines, anatomically clear hands, shoulders, hips and knees. Attacker RUAN: adult dark brown skin, short black curls, dark forest-green rashguard with ivory shoulder stripe, black grappling shorts, barefoot. Partner DAVI: adult medium tan skin, short close dark fade NOT same curls as Ruan, cobalt blue rashguard, navy shorts, barefoot. No gi, no belts, no cloth grips, no gloves. Two complete separate bodies per panel, all limbs visible where possible, generous 10% margins. Consistent original fictional identities. Controlled cooperative training demonstration, no end-range force, no injury. Six key poses read left to right, top row then bottom row:\n1. Ruan top perpendicular side control beside supine Davi, Davi near arm bent ninety degrees on the mat.\n2. Ruan catches Davi wrist and threads other arm under upper arm into figure-four wrist grip.\n3. Clearly visible two-on-one kimura grip; Davi elbow supported and bent, Ruan chest stays beside Davi.\n4. Davi grasps shorts-free body lock for defense; Ruan stabilizes without rotating shoulder to end range.\n5. Davi taps with free hand and Ruan opens figure four immediately.\n6. Release to relaxed side-by-side seated pose.\nDistinct biomechanics are essential: draw the specific technique, not a generic mount. New original composition, precise leg/arm positions per keyframe.",
+      "status": "GENERATED_RAW_REQUIRES_REDRAW",
+      "shipping": false,
+      "visual_observations": [
+        "A figura de quatro e a rotação do ombro não estão suficientemente legíveis."
+      ],
+      "original_generated_asset": "exec-963b3ec4-a15a-4da1-8d5b-2716049f39a4.png",
+      "source_image": "assets/candidates/grappling/gifs_v1/sheets/kimura.png",
+      "gif": "assets/candidates/grappling/gifs_v1/gifs/kimura.gif",
+      "reference_images": []
+    },
+    {
+      "id": "americana",
+      "name": "Americana da montada",
+      "family": "shoulder_lock",
+      "from": "mount_high",
+      "to": "submission",
+      "bind": [],
+      "poses": [
+        "Ruan mounts supine Davi with stable knees.",
+        "Ruan places Davi RIGHT wrist on mat beside Davi head, elbow bent ninety degrees like goalpost.",
+        "Ruan threads his other forearm under Davi upper arm and grasps his own wrist for figure four; both athletes fully visible.",
+        "Ruan keeps the wrist and elbow gently supported without forcing shoulder; Davi reaches his free hand toward Ruan hip in defense.",
+        "Davi taps with free hand, Ruan releases all pressure and grip.",
+        "Ruan dismounts to kneeling beside Davi, both relaxed."
+      ],
+      "prompt": "CRIA DO TATAME paired adult NO-GI animation keyframe sheet, exactly SIX equal panels in 3 columns x 2 rows, landscape 1536x1024. No text or labels. Fixed orthographic three-quarter side camera, same scale and floor plane in each cell. Thin panel dividers at exact thirds/half. Flat pale gray-green mat background #d5ddd8. Crisp cel-shaded retro game concept art with dark outlines, anatomically clear hands, shoulders, hips and knees. Attacker RUAN: adult dark brown skin, short black curls, dark forest-green rashguard with ivory shoulder stripe, black grappling shorts, barefoot. Partner DAVI: adult medium tan skin, short close dark fade NOT same curls as Ruan, cobalt blue rashguard, navy shorts, barefoot. No gi, no belts, no cloth grips, no gloves. Two complete separate bodies per panel, all limbs visible where possible, generous 10% margins. Consistent original fictional identities. Controlled cooperative training demonstration, no end-range force, no injury. Six key poses read left to right, top row then bottom row:\n1. Ruan mounts supine Davi with stable knees.\n2. Ruan places Davi RIGHT wrist on mat beside Davi head, elbow bent ninety degrees like goalpost.\n3. Ruan threads his other forearm under Davi upper arm and grasps his own wrist for figure four; both athletes fully visible.\n4. Ruan keeps the wrist and elbow gently supported without forcing shoulder; Davi reaches his free hand toward Ruan hip in defense.\n5. Davi taps with free hand, Ruan releases all pressure and grip.\n6. Ruan dismounts to kneeling beside Davi, both relaxed.",
+      "status": "GENERATED_RAW_REQUIRES_REDRAW",
+      "shipping": false,
+      "visual_observations": [
+        "Quadro 2 aproxima mãos do rosto; redesenhar o apoio para manter contato apenas no punho.",
+        "Confirmar figura de quatro e apoio do cotovelo."
+      ],
+      "original_generated_asset": "exec-870b5a03-b39f-4d3d-81f4-c016987c5c0a.png",
+      "source_image": "assets/candidates/grappling/gifs_v1/sheets/americana.png",
+      "gif": "assets/candidates/grappling/gifs_v1/gifs/americana.gif",
+      "reference_images": [
+        "exec-4865ff07-0165-4de4-b533-d73053196538.png"
+      ]
+    },
+    {
+      "id": "omoplata",
+      "name": "Omoplata sem kimono",
+      "family": "shoulder_lock",
+      "from": "proposal_open_guard",
+      "to": "submission",
+      "bind": [],
+      "poses": [
+        "Ruan bottom open guard facing kneeling Davi, controlling Davi right wrist.",
+        "Ruan rotates onto left hip and threads his left leg over Davi right shoulder, right arm remains caught between legs.",
+        "Ruan sits up facing same direction as Davi with Davi right arm folded by Ruan thigh, Davi kneels and inclines forward safely.",
+        "Ruan lightly holds Davi waist to prevent roll; Davi posts free hand; shoulder stays in comfortable range.",
+        "Davi taps mat with free hand and Ruan unlocks legs immediately.",
+        "Both reset sitting separately, arms released."
+      ],
+      "prompt": "CRIA DO TATAME paired adult NO-GI animation keyframe sheet, exactly SIX equal panels in 3 columns x 2 rows, landscape 1536x1024. No text or labels. Fixed orthographic three-quarter side camera, same scale and floor plane in each cell. Thin panel dividers at exact thirds/half. Flat pale gray-green mat background #d5ddd8. Crisp cel-shaded retro game concept art with dark outlines, anatomically clear hands, shoulders, hips and knees. Attacker RUAN: adult dark brown skin, short black curls, dark forest-green rashguard with ivory shoulder stripe, black grappling shorts, barefoot. Partner DAVI: adult medium tan skin, short close dark fade NOT same curls as Ruan, cobalt blue rashguard, navy shorts, barefoot. No gi, no belts, no cloth grips, no gloves. Two complete separate bodies per panel, all limbs visible where possible, generous 10% margins. Consistent original fictional identities. Controlled cooperative training demonstration, no end-range force, no injury. Six key poses read left to right, top row then bottom row:\n1. Ruan bottom open guard facing kneeling Davi, controlling Davi right wrist.\n2. Ruan rotates onto left hip and threads his left leg over Davi right shoulder, right arm remains caught between legs.\n3. Ruan sits up facing same direction as Davi with Davi right arm folded by Ruan thigh, Davi kneels and inclines forward safely.\n4. Ruan lightly holds Davi waist to prevent roll; Davi posts free hand; shoulder stays in comfortable range.\n5. Davi taps mat with free hand and Ruan unlocks legs immediately.\n6. Both reset sitting separately, arms released.\nDistinct biomechanics are essential: draw the specific technique, not a generic mount. New original composition, precise leg/arm positions per keyframe.",
+      "status": "GENERATED_RAW_REQUIRES_REDRAW",
+      "shipping": false,
+      "visual_observations": [
+        "Confirmar qual perna cruza o ombro e a continuidade do braço preso."
+      ],
+      "original_generated_asset": "exec-4f9b84a9-7457-49c5-94f9-b4f7204e7ed2.png",
+      "source_image": "assets/candidates/grappling/gifs_v1/sheets/omoplata.png",
+      "gif": "assets/candidates/grappling/gifs_v1/gifs/omoplata.gif",
+      "reference_images": []
+    },
+    {
+      "id": "straight_ankle",
+      "name": "Chave de tornozelo reta",
+      "family": "leg_lock",
+      "from": "inside_ashi_garami",
+      "to": "submission",
+      "bind": [],
+      "poses": [
+        "Both sit facing; Ruan controls Davi right leg and encloses it in ordinary straight ashi garami.",
+        "Ruan puts Davi right heel gently beneath Ruan right armpit; one Ruan foot posts on hip, other hooks behind thigh, no twisting reap.",
+        "Ruan lies on his side maintaining a straight line through Davi knee and toes, forearm beneath ankle.",
+        "Davi bends his knee and hand-fights the grip, Ruan holds without spinal arch or foot rotation.",
+        "Davi taps Ruan thigh; Ruan opens arms and legs immediately.",
+        "Both sit separately with all legs free."
+      ],
+      "prompt": "CRIA DO TATAME paired adult NO-GI animation keyframe sheet, exactly SIX equal panels in 3 columns x 2 rows, landscape 1536x1024. No text or labels. Fixed orthographic three-quarter side camera, same scale and floor plane in each cell. Thin panel dividers at exact thirds/half. Flat pale gray-green mat background #d5ddd8. Crisp cel-shaded retro game concept art with dark outlines, anatomically clear hands, shoulders, hips and knees. Attacker RUAN: adult dark brown skin, short black curls, dark forest-green rashguard with ivory shoulder stripe, black grappling shorts, barefoot. Partner DAVI: adult medium tan skin, short close dark fade NOT same curls as Ruan, cobalt blue rashguard, navy shorts, barefoot. No gi, no belts, no cloth grips, no gloves. Two complete separate bodies per panel, all limbs visible where possible, generous 10% margins. Consistent original fictional identities. Controlled cooperative training demonstration, no end-range force, no injury. Six key poses read left to right, top row then bottom row:\n1. Both sit facing; Ruan controls Davi right leg and encloses it in ordinary straight ashi garami.\n2. Ruan puts Davi right heel gently beneath Ruan right armpit; one Ruan foot posts on hip, other hooks behind thigh, no twisting reap.\n3. Ruan lies on his side maintaining a straight line through Davi knee and toes, forearm beneath ankle.\n4. Davi bends his knee and hand-fights the grip, Ruan holds without spinal arch or foot rotation.\n5. Davi taps Ruan thigh; Ruan opens arms and legs immediately.\n6. Both sit separately with all legs free.\nDistinct biomechanics are essential: draw the specific technique, not a generic mount. New original composition, precise leg/arm positions per keyframe.",
+      "status": "GENERATED_RAW_REQUIRES_REDRAW",
+      "shipping": false,
+      "visual_observations": [
+        "A fixação do tornozelo sob a axila não está clara; pode ser confundida com outro ataque.",
+        "Revisar continuidade do entrelaçamento e identidade de Ruan."
+      ],
+      "original_generated_asset": "exec-45c45cb9-db66-4731-9a8f-6a6240bcaa83.png",
+      "source_image": "assets/candidates/grappling/gifs_v1/sheets/straight_ankle.png",
+      "gif": "assets/candidates/grappling/gifs_v1/gifs/straight_ankle.gif",
+      "reference_images": []
+    },
+    {
+      "id": "kneebar",
+      "name": "Chave de joelho — kneebar",
+      "family": "leg_lock",
+      "from": "proposal_kneebar_entanglement",
+      "to": "submission",
+      "bind": [],
+      "poses": [
+        "Ruan sits alongside Davi's RIGHT hip and controls Davi right leg.",
+        "Ruan pivots to face away from Davi head and captures right thigh between knees.",
+        "Side-seated kneebar alignment: Davi's right kneecap faces toward Ruan hip, foot held to Ruan chest, leg stays slightly flexed.",
+        "Davi links legs in defense while Ruan maintains soft flexion with no hip extension.",
+        "Davi taps Ruan forearm; Ruan immediately releases the foot and knee line.",
+        "Both sit separately, knees free and relaxed."
+      ],
+      "prompt": "CRIA DO TATAME paired adult NO-GI animation keyframe sheet, exactly SIX equal panels in 3 columns x 2 rows, landscape 1536x1024. No text or labels. Fixed orthographic three-quarter side camera, same scale and floor plane in each cell. Thin panel dividers at exact thirds/half. Flat pale gray-green mat background #d5ddd8. Crisp cel-shaded retro game concept art with dark outlines, anatomically clear hands, shoulders, hips and knees. Attacker RUAN: adult dark brown skin, short black curls, dark forest-green rashguard with ivory shoulder stripe, black grappling shorts, barefoot. Partner DAVI: adult medium tan skin, short close dark fade NOT same curls as Ruan, cobalt blue rashguard, navy shorts, barefoot. No gi, no belts, no cloth grips, no gloves. Two complete separate bodies per panel, all limbs visible where possible, generous 10% margins. Consistent original fictional identities. Controlled cooperative training demonstration, no end-range force, no injury. Six key poses read left to right, top row then bottom row:\n1. Ruan sits alongside Davi's RIGHT hip and controls Davi right leg.\n2. Ruan pivots to face away from Davi head and captures right thigh between knees.\n3. Side-seated kneebar alignment: Davi's right kneecap faces toward Ruan hip, foot held to Ruan chest, leg stays slightly flexed.\n4. Davi links legs in defense while Ruan maintains soft flexion with no hip extension.\n5. Davi taps Ruan forearm; Ruan immediately releases the foot and knee line.\n6. Both sit separately, knees free and relaxed.\nKeep every full body well INSIDE each panel, including feet. Ruan clean-shaven. Technical positions must be distinct. Six discrete chronological poses.",
+      "status": "GENERATED_RAW_REQUIRES_REDRAW",
+      "shipping": false,
+      "visual_observations": [
+        "A linha joelho-quadril do kneebar não está demonstrada; não usar como referência biomecânica."
+      ],
+      "original_generated_asset": "exec-42c1b2cd-aba3-4c3b-87b0-4ed591e9d96c.png",
+      "source_image": "assets/candidates/grappling/gifs_v1/sheets/kneebar.png",
+      "gif": "assets/candidates/grappling/gifs_v1/gifs/kneebar.gif",
+      "reference_images": []
+    },
+    {
+      "id": "inside_heel_hook",
+      "name": "Heel hook interno",
+      "family": "restricted_leg_lock",
+      "from": "inside_ashi_garami",
+      "to": "submission",
+      "bind": [
+        "slice_heel_hook"
+      ],
+      "poses": [
+        "Both seated with controlled inside leg entanglement, Ruan holds Davi RIGHT thigh above knee.",
+        "Ruan stabilizes Davi knee line gently using his legs while Davi lies partly on his side.",
+        "Close but full-body clear pose: Ruan forearm cups the INSIDE of Davi exposed right heel, toes are near armpit; no twist.",
+        "Davi hand-fights and tries to withdraw knee line; Ruan keeps neutral ankle with zero rotational finish.",
+        "Davi taps on Ruan leg; Ruan immediately releases heel and unclamps legs.",
+        "Both seated separately with legs fully free."
+      ],
+      "prompt": "CRIA DO TATAME paired adult NO-GI animation keyframe sheet, exactly SIX equal panels in 3 columns x 2 rows, landscape 1536x1024. No text or labels. Fixed orthographic three-quarter side camera, same scale and floor plane in each cell. Thin panel dividers at exact thirds/half. Flat pale gray-green mat background #d5ddd8. Crisp cel-shaded retro game concept art with dark outlines, anatomically clear hands, shoulders, hips and knees. Attacker RUAN: adult dark brown skin, short black curls, dark forest-green rashguard with ivory shoulder stripe, black grappling shorts, barefoot. Partner DAVI: adult medium tan skin, short close dark fade NOT same curls as Ruan, cobalt blue rashguard, navy shorts, barefoot. No gi, no belts, no cloth grips, no gloves. Two complete separate bodies per panel, all limbs visible where possible, generous 10% margins. Consistent original fictional identities. Controlled cooperative training demonstration, no end-range force, no injury. Six key poses read left to right, top row then bottom row:\n1. Both seated with controlled inside leg entanglement, Ruan holds Davi RIGHT thigh above knee.\n2. Ruan stabilizes Davi knee line gently using his legs while Davi lies partly on his side.\n3. Close but full-body clear pose: Ruan forearm cups the INSIDE of Davi exposed right heel, toes are near armpit; no twist.\n4. Davi hand-fights and tries to withdraw knee line; Ruan keeps neutral ankle with zero rotational finish.\n5. Davi taps on Ruan leg; Ruan immediately releases heel and unclamps legs.\n6. Both seated separately with legs fully free.\nKeep every full body well INSIDE each panel, including feet. Ruan clean-shaven. Technical positions must be distinct. Six discrete chronological poses.",
+      "status": "GENERATED_RAW_REQUIRES_REDRAW",
+      "shipping": false,
+      "visual_observations": [
+        "A captura interna do calcanhar não está demonstrada com clareza; não usar como referência biomecânica."
+      ],
+      "original_generated_asset": "exec-faa2e60d-386b-4192-a240-3f62b1833664.png",
+      "source_image": "assets/candidates/grappling/gifs_v1/sheets/inside_heel_hook.png",
+      "gif": "assets/candidates/grappling/gifs_v1/gifs/inside_heel_hook.gif",
+      "reference_images": []
+    },
+    {
+      "id": "toe_hold",
+      "name": "Mata-leão no pé — toe hold",
+      "family": "restricted_leg_lock",
+      "from": "proposal_leg_entanglement",
+      "to": "submission",
+      "bind": [],
+      "poses": [
+        "Both seated facing with Davi right knee comfortably bent and Ruan beside right foot.",
+        "Ruan cradles forefoot with one hand, other arm passes around ankle to catch his own wrist in figure four.",
+        "Ruan holds foot close to chest, knee bent, ankle neutral, no forcing rotation.",
+        "Davi hand-fights and starts pulling knee away; Ruan maintains loose stationary grip.",
+        "Davi taps Ruan shoulder with free hand; Ruan opens figure four immediately.",
+        "Both seated separately, all feet released."
+      ],
+      "prompt": "CRIA DO TATAME paired adult NO-GI animation keyframe sheet, exactly SIX equal panels in 3 columns x 2 rows, landscape 1536x1024. No text or labels. Fixed orthographic three-quarter side camera, same scale and floor plane in each cell. Thin panel dividers at exact thirds/half. Flat pale gray-green mat background #d5ddd8. Crisp cel-shaded retro game concept art with dark outlines, anatomically clear hands, shoulders, hips and knees. Attacker RUAN: adult dark brown skin, short black curls, dark forest-green rashguard with ivory shoulder stripe, black grappling shorts, barefoot. Partner DAVI: adult medium tan skin, short close dark fade NOT same curls as Ruan, cobalt blue rashguard, navy shorts, barefoot. No gi, no belts, no cloth grips, no gloves. Two complete separate bodies per panel, all limbs visible where possible, generous 10% margins. Consistent original fictional identities. Controlled cooperative training demonstration, no end-range force, no injury. Six key poses read left to right, top row then bottom row:\n1. Both seated facing with Davi right knee comfortably bent and Ruan beside right foot.\n2. Ruan cradles forefoot with one hand, other arm passes around ankle to catch his own wrist in figure four.\n3. Ruan holds foot close to chest, knee bent, ankle neutral, no forcing rotation.\n4. Davi hand-fights and starts pulling knee away; Ruan maintains loose stationary grip.\n5. Davi taps Ruan shoulder with free hand; Ruan opens figure four immediately.\n6. Both seated separately, all feet released.\nKeep every full body well INSIDE each panel, including feet. Ruan clean-shaven. Technical positions must be distinct. Six discrete chronological poses.",
+      "status": "GENERATED_RAW_REQUIRES_REDRAW",
+      "shipping": false,
+      "visual_observations": [
+        "Figura de quatro pouco legível; redesenhar posição das mãos antes de aprovar."
+      ],
+      "original_generated_asset": "exec-c04946ca-fd39-4320-ab83-4d8b6b8b84dc.png",
+      "source_image": "assets/candidates/grappling/gifs_v1/sheets/toe_hold.png",
+      "gif": "assets/candidates/grappling/gifs_v1/gifs/toe_hold.gif",
+      "reference_images": []
+    },
+    {
+      "id": "de_la_riva",
+      "name": "De La Riva NO-GI → desequilíbrio",
+      "family": "open_guard",
+      "from": "proposal_open_guard",
+      "to": "proposal_dlr_sweep_top",
+      "bind": [],
+      "poses": [
+        "Ruan on back in open guard, Davi stands in staggered stance facing him.",
+        "Ruan loops left leg OUTSIDE Davi RIGHT thigh with instep hook behind inner thigh; right foot on far hip, one hand controls ankle and other wrist, never clothes.",
+        "Ruan keeps DLR hook visible and uses foot on hip to tilt Davi balance; Davi bends knees and posts hand.",
+        "Ruan follows a controlled tipping sweep as Davi lowers to seated hip, no head spike.",
+        "Davi frames to recover guard while Ruan comes to knees as top player.",
+        "Both settle with Ruan top in Davi open guard, no submission."
+      ],
+      "prompt": "CRIA DO TATAME paired adult NO-GI animation keyframe sheet, exactly SIX equal panels in 3 columns x 2 rows, landscape 1536x1024. No text or labels. Fixed orthographic three-quarter side camera, same scale and floor plane in each cell. Thin panel dividers at exact thirds/half. Flat pale gray-green mat background #d5ddd8. Crisp cel-shaded retro game concept art with dark outlines, anatomically clear hands, shoulders, hips and knees. Attacker RUAN: adult dark brown skin, short black curls, dark forest-green rashguard with ivory shoulder stripe, black grappling shorts, barefoot. Partner DAVI: adult medium tan skin, short close dark fade NOT same curls as Ruan, cobalt blue rashguard, navy shorts, barefoot. No gi, no belts, no cloth grips, no gloves. Two complete separate bodies per panel, all limbs visible where possible, generous 10% margins. Consistent original fictional identities. Controlled cooperative training demonstration, no end-range force, no injury. Six key poses read left to right, top row then bottom row:\n1. Ruan on back in open guard, Davi stands in staggered stance facing him.\n2. Ruan loops left leg OUTSIDE Davi RIGHT thigh with instep hook behind inner thigh; right foot on far hip, one hand controls ankle and other wrist, never clothes.\n3. Ruan keeps DLR hook visible and uses foot on hip to tilt Davi balance; Davi bends knees and posts hand.\n4. Ruan follows a controlled tipping sweep as Davi lowers to seated hip, no head spike.\n5. Davi frames to recover guard while Ruan comes to knees as top player.\n6. Both settle with Ruan top in Davi open guard, no submission.\nKeep every full body well INSIDE each panel, including feet. Ruan clean-shaven. Technical positions must be distinct. Six discrete chronological poses.",
+      "status": "GENERATED_RAW_REQUIRES_REDRAW",
+      "shipping": false,
+      "visual_observations": [
+        "Confirmar orientação do gancho externo e direção da raspagem.",
+        "Há corte de braço no limite do quadro 4 e variação de barba."
+      ],
+      "original_generated_asset": "exec-0b603670-c2cd-44de-abe7-f1eeeede9ce7.png",
+      "source_image": "assets/candidates/grappling/gifs_v1/sheets/de_la_riva.png",
+      "gif": "assets/candidates/grappling/gifs_v1/gifs/de_la_riva.gif",
+      "reference_images": []
+    },
+    {
+      "id": "reverse_de_la_riva",
+      "name": "Reverse De La Riva NO-GI → retenção",
+      "family": "open_guard",
+      "from": "proposal_open_guard",
+      "to": "proposal_recovered_open_guard",
+      "bind": [],
+      "poses": [
+        "Ruan supine open guard facing standing Davi; Davi begins gentle knee-cut entry.",
+        "Ruan threads inside leg around Davi leading leg to create REVERSE De La Riva hook, forearm frame at knee and hand ankle grip, no fabric grips.",
+        "Ruan turns onto side keeping inside RDLR hook, far foot frames at Davi hip.",
+        "Davi tries to clear hook; Ruan follows hip movement rather than forcing knee.",
+        "Ruan withdraws hook and squares hips with two shin frames between bodies.",
+        "Stable recovered open guard, Davi standing at comfortable distance."
+      ],
+      "prompt": "CRIA DO TATAME paired adult NO-GI animation keyframe sheet, exactly SIX equal panels in 3 columns x 2 rows, landscape 1536x1024. No text or labels. Fixed orthographic three-quarter side camera, same scale and floor plane in each cell. Thin panel dividers at exact thirds/half. Flat pale gray-green mat background #d5ddd8. Crisp cel-shaded retro game concept art with dark outlines, anatomically clear hands, shoulders, hips and knees. Attacker RUAN: adult dark brown skin, short black curls, dark forest-green rashguard with ivory shoulder stripe, black grappling shorts, barefoot. Partner DAVI: adult medium tan skin, short close dark fade NOT same curls as Ruan, cobalt blue rashguard, navy shorts, barefoot. No gi, no belts, no cloth grips, no gloves. Two complete separate bodies per panel, all limbs visible where possible, generous 10% margins. Consistent original fictional identities. Controlled cooperative training demonstration, no end-range force, no injury. Six key poses read left to right, top row then bottom row:\n1. Ruan supine open guard facing standing Davi; Davi begins gentle knee-cut entry.\n2. Ruan threads inside leg around Davi leading leg to create REVERSE De La Riva hook, forearm frame at knee and hand ankle grip, no fabric grips.\n3. Ruan turns onto side keeping inside RDLR hook, far foot frames at Davi hip.\n4. Davi tries to clear hook; Ruan follows hip movement rather than forcing knee.\n5. Ruan withdraws hook and squares hips with two shin frames between bodies.\n6. Stable recovered open guard, Davi standing at comfortable distance.\nDo not repeat the same pose: these six keyframes must clearly show a chronological CHANGE OF POSITION. Keep full bodies inside each cell with 15 percent margins. Ruan clean shaven, Davi short close hair. Center the pair at each phase.",
+      "status": "GENERATED_RAW_REQUIRES_REDRAW",
+      "shipping": false,
+      "visual_observations": [
+        "Gancho interno pouco legível; diferenciar de guarda aberta genérica."
+      ],
+      "original_generated_asset": "exec-933078d6-6076-433f-a114-c1961b494ce4.png",
+      "source_image": "assets/candidates/grappling/gifs_v1/sheets/reverse_de_la_riva.png",
+      "gif": "assets/candidates/grappling/gifs_v1/gifs/reverse_de_la_riva.gif",
+      "reference_images": []
+    },
+    {
+      "id": "berimbolo",
+      "name": "Berimbolo NO-GI → tomada das costas",
+      "family": "inversion_back_take",
+      "from": "proposal_de_la_riva",
+      "to": "back_mount_seatbelt",
+      "bind": [],
+      "poses": [
+        "Ruan bottom De La Riva guard with outside hook on Davi right leg and ankle control, Davi standing.",
+        "Davi lowers to hip, Ruan starts controlled shoulder inversion alongside Davi legs, head never bears weight.",
+        "Ruan rolls across SHOULDERS under Davi leg line, hips lifted, both legs clearly separate from Davi, no neck compression.",
+        "Ruan emerges behind Davi hips, controls waist with arms and crab-ride style hooks without clothing grips.",
+        "Davi turns away and hand-fights while Ruan follows behind into seated seatbelt chest-to-back control.",
+        "Both seated with Ruan behind Davi, two light hooks inside thighs, no choke and no neck crank."
+      ],
+      "prompt": "CRIA DO TATAME paired adult NO-GI animation keyframe sheet, exactly SIX equal panels in 3 columns x 2 rows, landscape 1536x1024. No text or labels. Fixed orthographic three-quarter side camera, same scale and floor plane in each cell. Thin panel dividers at exact thirds/half. Flat pale gray-green mat background #d5ddd8. Crisp cel-shaded retro game concept art with dark outlines, anatomically clear hands, shoulders, hips and knees. Attacker RUAN: adult dark brown skin, short black curls, dark forest-green rashguard with ivory shoulder stripe, black grappling shorts, barefoot. Partner DAVI: adult medium tan skin, short close dark fade NOT same curls as Ruan, cobalt blue rashguard, navy shorts, barefoot. No gi, no belts, no cloth grips, no gloves. Two complete separate bodies per panel, all limbs visible where possible, generous 10% margins. Consistent original fictional identities. Controlled cooperative training demonstration, no end-range force, no injury. Six key poses read left to right, top row then bottom row:\n1. Ruan bottom De La Riva guard with outside hook on Davi right leg and ankle control, Davi standing.\n2. Davi lowers to hip, Ruan starts controlled shoulder inversion alongside Davi legs, head never bears weight.\n3. Ruan rolls across SHOULDERS under Davi leg line, hips lifted, both legs clearly separate from Davi, no neck compression.\n4. Ruan emerges behind Davi hips, controls waist with arms and crab-ride style hooks without clothing grips.\n5. Davi turns away and hand-fights while Ruan follows behind into seated seatbelt chest-to-back control.\n6. Both seated with Ruan behind Davi, two light hooks inside thighs, no choke and no neck crank.\nDo not repeat the same pose: these six keyframes must clearly show a chronological CHANGE OF POSITION. Keep full bodies inside each cell with 15 percent margins. Ruan clean shaven, Davi short close hair. Center the pair at each phase.",
+      "status": "GENERATED_RAW_REQUIRES_REDRAW",
+      "shipping": false,
+      "visual_observations": [
+        "Quadros 2–3 parecem apoiar a cabeça no solo; redesenhar inversão sobre ombros com cabeça livre.",
+        "Revisar continuidade dos ganchos e conexão até o seatbelt."
+      ],
+      "original_generated_asset": "exec-21b63c17-cba3-4d0b-8531-62c2a66f3d58.png",
+      "source_image": "assets/candidates/grappling/gifs_v1/sheets/berimbolo.png",
+      "gif": "assets/candidates/grappling/gifs_v1/gifs/berimbolo.gif",
+      "reference_images": []
+    },
+    {
+      "id": "combat_flow",
+      "name": "Fluxo de combate — queda até soltura",
+      "family": "combat_flow",
+      "from": "standing_neutral",
+      "to": "submission",
+      "bind": [
+        "t001",
+        "t025",
+        "slice_side_to_mount",
+        "t057"
+      ],
+      "poses": [
+        "Both standing in no-gi wrestling stance, Ruan hand-fights Davi wrist and collar tie WITHOUT clothing grip.",
+        "Ruan finishes a controlled double-leg and lands top in Davi half guard, Davi back on mat, no slam.",
+        "Ruan clears half guard into perpendicular top side control while Davi frames.",
+        "Ruan transitions to high mount on supine Davi; both knees stable beside torso.",
+        "Ruan performs perpendicular side-seated mounted armbar: Ruan now sits on MAT beside Davi right shoulder, legs across head and chest, Davi right arm between thighs, elbow softly flexed.",
+        "Davi taps; Ruan has released all grips and both sit apart safely."
+      ],
+      "prompt": "CRIA DO TATAME paired adult NO-GI animation keyframe sheet, exactly SIX equal panels in 3 columns x 2 rows, landscape 1536x1024. No text or labels. Fixed orthographic three-quarter side camera, same scale and floor plane in each cell. Thin panel dividers at exact thirds/half. Flat pale gray-green mat background #d5ddd8. Crisp cel-shaded retro game concept art with dark outlines, anatomically clear hands, shoulders, hips and knees. Attacker RUAN: adult dark brown skin, short black curls, dark forest-green rashguard with ivory shoulder stripe, black grappling shorts, barefoot. Partner DAVI: adult medium tan skin, short close dark fade NOT same curls as Ruan, cobalt blue rashguard, navy shorts, barefoot. No gi, no belts, no cloth grips, no gloves. Two complete separate bodies per panel, all limbs visible where possible, generous 10% margins. Consistent original fictional identities. Controlled cooperative training demonstration, no end-range force, no injury. Six key poses read left to right, top row then bottom row:\n1. Both standing in no-gi wrestling stance, Ruan hand-fights Davi wrist and collar tie WITHOUT clothing grip.\n2. Ruan finishes a controlled double-leg and lands top in Davi half guard, Davi back on mat, no slam.\n3. Ruan clears half guard into perpendicular top side control while Davi frames.\n4. Ruan transitions to high mount on supine Davi; both knees stable beside torso.\n5. Ruan performs perpendicular side-seated mounted armbar: Ruan now sits on MAT beside Davi right shoulder, legs across head and chest, Davi right arm between thighs, elbow softly flexed.\n6. Davi taps; Ruan has released all grips and both sit apart safely.\nDo not repeat the same pose: these six keyframes must clearly show a chronological CHANGE OF POSITION. Keep full bodies inside each cell with 15 percent margins. Ruan clean shaven, Davi short close hair. Center the pair at each phase.",
+      "status": "GENERATED_RAW_REQUIRES_REDRAW",
+      "shipping": false,
+      "visual_observations": [
+        "Quadro 3 não demonstra passagem completa ao controle lateral; redesenhar antes de associar à cadeia de sucesso.",
+        "Confirmar posição da chave de braço e manter identidade de Ruan."
+      ],
+      "original_generated_asset": "exec-64b5362e-6095-4098-b09d-e3119be8ac2c.png",
+      "source_image": "assets/candidates/grappling/gifs_v1/sheets/combat_flow.png",
+      "gif": "assets/candidates/grappling/gifs_v1/gifs/combat_flow.gif",
+      "reference_images": []
+    }
+  ]
+}
