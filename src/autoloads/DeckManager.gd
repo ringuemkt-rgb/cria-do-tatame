@@ -275,8 +275,11 @@ func save_v2_preset(preset_id: String, technique_ids: Array) -> Dictionary:
 		var technique_id := str(raw)
 		if not unlocked.has(technique_id):
 			return {"ok": false, "error": "technique_locked", "technique_id": technique_id}
-		if not normalized.has(technique_id):
-			normalized.append(technique_id)
+		if normalized.has(technique_id):
+			return {"ok": false, "error": "duplicate_technique", "technique_id": technique_id}
+		normalized.append(technique_id)
+	if normalized.size() < 6 or normalized.size() > 8:
+		return {"ok": false, "error": "deck_size_invalid"}
 	v2_presets[preset_id] = normalized
 	SignalBus.deck_configuration_changed.emit(to_dict())
 	return {"ok": true, "preset_id": preset_id}
