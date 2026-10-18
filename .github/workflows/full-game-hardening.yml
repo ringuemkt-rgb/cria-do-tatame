@@ -50,15 +50,19 @@ jobs:
   godot-runtime:
     needs: static-and-python
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        engine: ['4.2.2', '4.3']
     steps:
       - uses: actions/checkout@v4
-      - name: Download Godot 4.2.2
+      - name: Download pinned Godot
         run: |
           curl -L --fail --retry 3 \
             -o godot.zip \
-            https://github.com/godotengine/godot/releases/download/4.2.2-stable/Godot_v4.2.2-stable_linux.x86_64.zip
+            https://github.com/godotengine/godot/releases/download/${{ matrix.engine }}-stable/Godot_v${{ matrix.engine }}-stable_linux.x86_64.zip
           unzip -q godot.zip
-          mv Godot_v4.2.2-stable_linux.x86_64 godot
+          mv Godot_v${{ matrix.engine }}-stable_linux.x86_64 godot
           chmod +x godot
           ./godot --version
       - name: Prepare logs
@@ -68,26 +72,8 @@ jobs:
         run: |
           set -o pipefail
           timeout 180 ./godot --headless --editor --path . --import 2>&1 | tee reports/full_game_audit/godot_import.log
-      - name: Existing runtime smoke
-        shell: bash
-        run: |
-          set -o pipefail
-          ./godot --headless --path . --script res://tests/runtime_smoke.gd 2>&1 | tee reports/full_game_audit/runtime_smoke.log
-      - name: Faction runtime smoke
-        shell: bash
-        run: |
-          set -o pipefail
-          ./godot --headless --path . --script res://tests/faction_director_smoke.gd 2>&1 | tee reports/full_game_audit/faction_smoke.log
-      - name: Full game smoke
-        shell: bash
-        run: |
-          set -o pipefail
-          ./godot --headless --path . --script res://tests/full_game_smoke.gd 2>&1 | tee reports/full_game_audit/full_game_smoke.log
-      - name: Progression OS smoke
-        shell: bash
-        run: |
-          set -o pipefail
-          ./godot --headless --path . --script res://tests/progression_os_smoke.gd 2>&1 | tee reports/full_game_audit/progression_os_smoke.log
+      - name: All isolated Godot smoke regressions
+        run: bash tools/ci/run_godot_smokes.sh ./godot reports/full_game_audit
       - name: Reject hidden Godot runtime errors
         if: always()
         shell: bash
@@ -100,7 +86,7 @@ jobs:
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: full-game-godot-logs
+          name: full-game-godot-logs-${{ matrix.engine }}
           path: reports/full_game_audit/
           if-no-files-found: warn
 

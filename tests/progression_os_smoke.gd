@@ -117,10 +117,10 @@ func _run() -> void:
 	if world_map != null:
 		world_state.set("money", 99999)
 		var exploration_before := float(progression.call("get_domain_xp", "exploration"))
-		var travel_result: Dictionary = world_map.call("travel_to", "salvador")
-		_assert(bool(travel_result.get("ok", false)), "Viagem smoke para Salvador falhou")
+		var travel_result: Dictionary = world_map.call("travel_to", "zambiapunga")
+		_assert(bool(travel_result.get("ok", false)), "Viagem smoke para Zambiapunga falhou")
 		_assert(float(progression.call("get_domain_xp", "exploration")) > exploration_before, "WorldMapManager nao gerou progresso de exploracao")
-		_assert(progression.get("discoveries").has("hub:salvador"), "Primeira visita nao entrou nas descobertas")
+		_assert(progression.get("discoveries").has("hub:zambiapunga"), "Primeira visita nao entrou nas descobertas")
 
 	if save_manager != null:
 		save_manager.call("delete_save", 1)

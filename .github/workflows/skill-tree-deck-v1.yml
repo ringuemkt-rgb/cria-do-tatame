@@ -1,0 +1,60 @@
+name: Skill Tree and Deck V1
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - 'src/progression/SkillTreeRulesV1.gd'
+      - 'src/autoloads/DeckManager.gd'
+      - 'scenes/ui/SkillTreeScreen.*'
+      - 'scenes/ui/DeckBuilder.gd'
+      - 'scenes/ui/DeckSlot.gd'
+      - 'scenes/hubs/TerreiroDaLuta.*'
+      - 'data/progression/skill_tree_playable_slice_v1.json'
+      - 'tests/skill_tree_deck_smoke.gd'
+      - '.github/workflows/skill-tree-deck-v1.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  gameplay:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install Godot 4.2.2
+        run: |
+          set -euo pipefail
+          curl --retry 3 -L --fail -o godot.zip https://github.com/godotengine/godot/releases/download/4.2.2-stable/Godot_v4.2.2-stable_linux.x86_64.zip
+          unzip -q godot.zip
+          mv Godot_v4.2.2-stable_linux.x86_64 godot
+          chmod +x godot
+      - name: Import and parse
+        run: |
+          set -euo pipefail
+          ./godot --headless --editor --path . --import 2>&1 | tee godot_import.log
+          if grep -E 'SCRIPT ERROR|Parse Error|Failed loading resource' godot_import.log; then exit 1; fi
+      - name: Skill tree and deck regression
+        run: |
+          set -euo pipefail
+          ./godot --headless --path . --script res://tests/skill_tree_deck_smoke.gd 2>&1 | tee skill_deck_smoke.log
+          grep -q '\[SkillDeckSmoke\].*failures=0' skill_deck_smoke.log
+          if grep -E 'SCRIPT ERROR|Parse Error|ERROR:' skill_deck_smoke.log; then exit 1; fi
+      - name: Main runtime regression
+        run: |
+          set -euo pipefail
+          ./godot --headless --path . --script res://tests/runtime_smoke.gd 2>&1 | tee runtime_smoke.log
+          grep -q '\[RuntimeSmoke\] PASS' runtime_smoke.log
+          if grep -E 'SCRIPT ERROR|Parse Error|ERROR:' runtime_smoke.log; then exit 1; fi
+      - name: Evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: skill-tree-deck-v1-logs
+          path: |
+            godot_import.log
+            skill_deck_smoke.log
+            runtime_smoke.log
+          if-no-files-found: warn

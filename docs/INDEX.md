@@ -59,6 +59,7 @@ Este arquivo é a porta de entrada da documentação ativa. Antes de criar um do
 
 ## Engenharia e QA
 
+- [`qa/BUGFIX_INTEGRATION_20261018.md`](qa/BUGFIX_INTEGRATION_20261018.md) — integração das correções de combate, save, atlas/touch, viagens e deck; evidência em duas versões do Godot.
 - `architecture/` — decisões e integrações técnicas;
 - `qa/` — auditorias e evidências;
 - [`qa/RUNTIME_AUDIT_V08.md`](qa/RUNTIME_AUDIT_V08.md) — auditoria do fluxo central;

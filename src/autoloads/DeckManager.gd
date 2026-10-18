@@ -3,6 +3,7 @@ extends Node
 const ACTIVE_LIMIT := 5
 const PASSIVE_LIMIT := 3
 const HAND_SIZE := 3
+const V2_PRESET_IDS := ["ofensivo", "defensivo", "adaptativo"]
 const BELT_LEVEL_LIMIT := {
 	"branca": 2,
 	"azul": 3,
@@ -35,7 +36,7 @@ func configure_from_data(source: Dictionary) -> Dictionary:
 	hand.clear()
 	draw_cursor = 0
 	selected_card_id = ""
-	v2_presets = source.get("v2_presets", {}).duplicate(true) if typeof(source.get("v2_presets", {})) == TYPE_DICTIONARY else {}
+	v2_presets = {}
 	if source.is_empty():
 		return {"ok": false, "error": "deck_data_missing"}
 	owner_id = str(source.get("owner_id", "ruan_macacao"))
@@ -50,6 +51,15 @@ func configure_from_data(source: Dictionary) -> Dictionary:
 	var equipped: Dictionary = source.get("equipped", {})
 	active_deck = _valid_equipped(equipped.get("active", []), "active", ACTIVE_LIMIT)
 	passive_deck = _valid_equipped(equipped.get("passive", []), "passive", PASSIVE_LIMIT)
+	var saved_presets: Variant = source.get("v2_presets", {})
+	if typeof(saved_presets) == TYPE_DICTIONARY:
+		for preset_id in V2_PRESET_IDS:
+			var values: Variant = saved_presets.get(preset_id)
+			if typeof(values) != TYPE_ARRAY:
+				continue
+			var validation: Dictionary = _validate_v2_selection(values)
+			if bool(validation.get("ok", false)):
+				v2_presets[preset_id] = validation["techniques"]
 	start_combat_hand()
 	return {"ok": true, "cards": cards.size(), "active": active_deck.size(), "passive": passive_deck.size()}
 
@@ -150,19 +160,63 @@ func equip_card(card_id: String, slot_kind: String, slot_index: int = -1) -> Dic
 		return {"ok": false, "error": "card_locked_or_missing"}
 	if str(card.get("kind", "")) != slot_kind:
 		return {"ok": false, "error": "slot_kind_mismatch"}
-	var target: Array[String] = active_deck if slot_kind == "active" else passive_deck
+	if slot_kind not in ["active", "passive"]:
+		return {"ok": false, "error": "slot_kind_mismatch"}
+	var original: Array[String] = active_deck if slot_kind == "active" else passive_deck
+	var next: Array[String] = original.duplicate()
 	var limit := ACTIVE_LIMIT if slot_kind == "active" else PASSIVE_LIMIT
-	active_deck.erase(card_id)
-	passive_deck.erase(card_id)
-	if slot_index >= 0 and slot_index < target.size():
-		target[slot_index] = card_id
-	elif target.size() < limit:
-		target.append(card_id)
+	if slot_index < -1 or slot_index >= limit:
+		return {"ok": false, "error": "invalid_slot"}
+	if slot_index == -1:
+		if next.has(card_id):
+			return {"ok": true, "unchanged": true}
+		if next.size() >= limit:
+			return {"ok": false, "error": "deck_full"}
+		next.append(card_id)
 	else:
-		return {"ok": false, "error": "deck_full"}
+		if next.has(card_id):
+			var old_index := next.find(card_id)
+			if old_index < next.size() and slot_index < next.size():
+				var displaced := next[slot_index]
+				next[slot_index] = card_id
+				next[old_index] = displaced
+			elif slot_index == next.size():
+				next.remove_at(old_index)
+				next.append(card_id)
+			else:
+				return {"ok": false, "error": "invalid_slot"}
+		elif slot_index < next.size():
+			next[slot_index] = card_id
+		elif slot_index == next.size() and next.size() < limit:
+			next.append(card_id)
+		else:
+			return {"ok": false, "error": "invalid_slot"}
+	if slot_kind == "active":
+		active_deck = next
+	else:
+		passive_deck = next
 	start_combat_hand()
 	SignalBus.deck_configuration_changed.emit(to_dict())
 	return {"ok": true}
+
+func unequip_card(slot_kind: String, slot_index: int) -> Dictionary:
+	if slot_kind not in ["active", "passive"]:
+		return {"ok": false, "error": "slot_kind_mismatch"}
+	var original: Array[String] = active_deck if slot_kind == "active" else passive_deck
+	if slot_index < 0 or slot_index >= original.size():
+		return {"ok": false, "error": "invalid_slot"}
+	if slot_kind == "active" and original.size() <= 1:
+		return {"ok": false, "error": "last_active_card"}
+	var next: Array[String] = original.duplicate()
+	var removed := next[slot_index]
+	next.remove_at(slot_index)
+	if slot_kind == "active":
+		active_deck = next
+	else:
+		passive_deck = next
+	start_combat_hand()
+	SignalBus.deck_configuration_changed.emit(to_dict())
+	return {"ok": true, "removed": removed}
 
 func upgrade_card(card_id: String, payment: String = "xp") -> Dictionary:
 	var card: Dictionary = cards.get(card_id, {})
@@ -221,8 +275,16 @@ func get_default_v2_selection() -> Array[String]:
 	return output.slice(0, 8)
 
 func save_v2_preset(preset_id: String, technique_ids: Array) -> Dictionary:
-	if preset_id not in ["ofensivo", "defensivo", "adaptativo"]:
+	if preset_id not in V2_PRESET_IDS:
 		return {"ok": false, "error": "invalid_preset"}
+	var validation: Dictionary = _validate_v2_selection(technique_ids)
+	if not bool(validation.get("ok", false)):
+		return validation
+	v2_presets[preset_id] = validation["techniques"]
+	SignalBus.deck_configuration_changed.emit(to_dict())
+	return {"ok": true, "preset_id": preset_id}
+
+func _validate_v2_selection(technique_ids: Array) -> Dictionary:
 	if technique_ids.size() < 6 or technique_ids.size() > 8:
 		return {"ok": false, "error": "deck_size_invalid"}
 	var unlocked := get_unlocked_technique_ids()
@@ -231,11 +293,12 @@ func save_v2_preset(preset_id: String, technique_ids: Array) -> Dictionary:
 		var technique_id := str(raw)
 		if not unlocked.has(technique_id):
 			return {"ok": false, "error": "technique_locked", "technique_id": technique_id}
-		if not normalized.has(technique_id):
-			normalized.append(technique_id)
-	v2_presets[preset_id] = normalized
-	SignalBus.deck_configuration_changed.emit(to_dict())
-	return {"ok": true, "preset_id": preset_id}
+		if normalized.has(technique_id):
+			return {"ok": false, "error": "duplicate_technique", "technique_id": technique_id}
+		normalized.append(technique_id)
+	if normalized.size() < 6 or normalized.size() > 8:
+		return {"ok": false, "error": "deck_size_invalid"}
+	return {"ok": true, "techniques": normalized}
 
 func get_v2_preset(preset_id: String) -> Array:
 	return v2_presets.get(preset_id, []).duplicate()

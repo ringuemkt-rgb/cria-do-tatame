@@ -1,0 +1,109 @@
+{
+  "schema_version": 1,
+  "date": "2026-10-18",
+  "status": "INTEGRATION_BRANCH_VALIDATED_NOT_RELEASE_CERTIFIED",
+  "base_main": "099c060092f94065afafd331e785472cc254e06f",
+  "integrated_sources": [
+    {
+      "pr": 157,
+      "head": "fix/positional-combat-audit-20260929",
+      "sha": "5090bd65d2d69e86e684a5413edca34194391f16"
+    },
+    {
+      "pr": 165,
+      "head": "fix/save-backup-recovery-20261011",
+      "sha": "8ef869d92eb82c331632661c06f71a3c87036221"
+    },
+    {
+      "pr": 166,
+      "head": "feat/paired-combat-visual-runtime-v1",
+      "sha": "dc8d46eb7a6f1ce24fed786f34cc114c82d4c940"
+    },
+    {
+      "pr": 169,
+      "head": "fix/baixosul-travel-scope-save-migration-v1",
+      "sha": "2e2f4fc07968faa7980e04c846c01b3f661d3316"
+    },
+    {
+      "pr": 171,
+      "head": "fix/atlas-touch-hit-regression-20261013",
+      "sha": "05486c83f5668527ea5a680e7f74f224d3deba61"
+    },
+    {
+      "pr": 173,
+      "head": "fix/deck-v2-preset-unique-touch-20261018",
+      "sha": "9a51352feff819dddedc1ce0ffdc75287ced3ff9"
+    }
+  ],
+  "new_fix": "Validate persisted V2 presets through the same pure validator used for save_v2_preset; discard invalid preset entries without deleting valid siblings or collection.",
+  "regression_proof": {
+    "test": "tests/deck_v2_preset_load_smoke.gd",
+    "before": {
+      "checks": 33,
+      "failures": 12
+    },
+    "after": {
+      "checks": 43,
+      "failures": 0
+    },
+    "cases": [
+      "null",
+      "number",
+      "string",
+      "dictionary",
+      "duplicate technique",
+      "fewer than six",
+      "more than eight",
+      "locked or unknown technique",
+      "unknown preset ID"
+    ],
+    "valid_siblings_preserved": true,
+    "input_unchanged": true,
+    "collection_preserved": true
+  },
+  "validation": {
+    "npm_quality": {
+      "exit_code": 0
+    },
+    "pytest": {
+      "passed": 154,
+      "subtests_passed": 5,
+      "failed": 0
+    },
+    "godot_4_2_2": {
+      "engine": "4.2.2.stable.official.15073afe3",
+      "smoke_scripts": 21,
+      "failures": 0,
+      "hidden_errors": 0
+    },
+    "godot_4_3": {
+      "engine": "4.3.stable.official.77dcf97d8",
+      "smoke_scripts": 21,
+      "failures": 0,
+      "hidden_errors": 0
+    },
+    "structural_audit": {
+      "errors": 0,
+      "warnings": 13
+    },
+    "critical_ruff": {
+      "errors": 0
+    },
+    "workflow_yaml": {
+      "valid": true
+    }
+  },
+  "ci_change": "Full Game Hardening runs all smoke scripts with isolated user data on both 4.2.2 and 4.3.",
+  "not_claimed": [
+    "No main merge",
+    "No absence-of-all-bugs guarantee",
+    "No full BJJ graph completion",
+    "No final animation or biomechanical approval",
+    "No Android physical test certification"
+  ],
+  "visual_work": {
+    "character_pr": 172,
+    "gif_pr": 174,
+    "gif_status": "13 six-pose animatics require redraw and expert review"
+  }
+}
