@@ -1,0 +1,47 @@
+{
+  "character_id": "galvao",
+  "canon_refs": [
+    "data/narrative/canon_v3.json",
+    "data/narrative/character_bible_v1.json#mestre_galvao_arquetipo",
+    "data/combat/roster_v3.json#galvao"
+  ],
+  "master_status": "PENDING",
+  "palette_signature": {
+    "colors": [
+      "#303030",
+      "#101010",
+      "#D07030",
+      "#B05030",
+      "#301010",
+      "#905010",
+      "#703010",
+      "#B07030"
+    ],
+    "notes": "Sampled proposal; no pixel palette normalization."
+  },
+  "silhouette_signature": {
+    "reference_asset": "assets/candidates/characters/identity_v1/atlas05.png",
+    "body_ratio_notes": "forte e atletica; sem referencia a pessoa real"
+  },
+  "asymmetry_contract": {
+    "horizontal_mirror_safe": false,
+    "notes": "Use authored right-facing view only. Review patches, props, knee support, towel and grips before authoring left."
+  },
+  "variants": {
+    "gi": {
+      "turnaround": null,
+      "front_combat_pose": null,
+      "back_view": null,
+      "side_view": null
+    },
+    "nogi": {
+      "turnaround": "assets/candidates/characters/identity_v1/atlas05.png",
+      "front_combat_pose": null,
+      "back_view": "assets/candidates/characters/identity_v1/atlas05.png",
+      "side_view": "assets/candidates/characters/identity_v1/atlas05.png"
+    }
+  },
+  "human_reviewer": null,
+  "rights_status": "PENDING",
+  "shipping": false
+}
