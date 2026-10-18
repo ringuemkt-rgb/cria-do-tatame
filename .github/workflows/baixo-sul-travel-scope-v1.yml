@@ -1,0 +1,54 @@
+name: Baixo Sul Travel Scope V1
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - 'src/autoloads/WorldMapManager.gd'
+      - 'tests/baixo_sul_travel_migration_smoke.gd'
+      - 'tests/progression_os_smoke.gd'
+      - '.github/workflows/baixo-sul-travel-scope-v1.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  regional-travel:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install Godot 4.2.2
+        run: |
+          set -euo pipefail
+          curl --retry 3 -L --fail -o godot.zip https://github.com/godotengine/godot/releases/download/4.2.2-stable/Godot_v4.2.2-stable_linux.x86_64.zip
+          unzip -q godot.zip
+          mv Godot_v4.2.2-stable_linux.x86_64 godot
+          chmod +x godot
+      - name: Import and parse
+        run: |
+          set -euo pipefail
+          ./godot --headless --editor --path . --import 2>&1 | tee travel_import.log
+          if grep -Eq 'SCRIPT ERROR|Parse Error|Failed loading resource' travel_import.log; then exit 1; fi
+      - name: Travel scope and legacy save regression
+        run: |
+          set -euo pipefail
+          ./godot --headless --path . --script res://tests/baixo_sul_travel_migration_smoke.gd 2>&1 | tee travel_scope.log
+          grep -q '\[BaixoSulTravel\].*failures=0' travel_scope.log
+          if grep -Eq 'SCRIPT ERROR|Parse Error|ERROR:' travel_scope.log; then exit 1; fi
+      - name: Progression and exploration regression
+        run: |
+          set -euo pipefail
+          ./godot --headless --path . --script res://tests/progression_os_smoke.gd 2>&1 | tee progression_smoke.log
+          grep -q '\[ProgressionOSSmoke\] PASS' progression_smoke.log
+          if grep -Eq 'SCRIPT ERROR|Parse Error|ERROR:' progression_smoke.log; then exit 1; fi
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: baixo-sul-travel-scope-v1-logs
+          path: |
+            travel_import.log
+            travel_scope.log
+            progression_smoke.log
+          if-no-files-found: warn

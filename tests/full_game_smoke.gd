@@ -109,6 +109,11 @@ func _collect_scene_paths(directory: String, output: Array[String]) -> void:
 				_collect_scene_paths(full_path, output)
 			elif item.ends_with(".tscn"):
 				output.append(full_path)
+			elif item.ends_with(".tscn.remap"):
+				# Exported packs expose remap sidecars; load the original resource path.
+				var original_path := full_path.trim_suffix(".remap")
+				if not output.has(original_path):
+					output.append(original_path)
 		item = dir.get_next()
 	dir.list_dir_end()
 
@@ -183,7 +188,8 @@ func _test_hub_travel_and_activities() -> void:
 	world_state.set("money", 2000)
 	world_state.set("energy", 100.0)
 	world_map.call("reset")
-	for hub_id in ["itubera", "salvador", "zambiapunga", "camamu_manguezal"]:
+	_assert(not bool(world_map.call("travel_to", "salvador").get("ok", false)), "Hub externo Salvador deve ser apenas contexto historico")
+	for hub_id in ["itubera", "zambiapunga", "camamu_manguezal"]:
 		var travel: Dictionary = world_map.call("travel_to", hub_id)
 		_assert(bool(travel.get("ok", false)), "Falha ao viajar para %s: %s" % [hub_id, travel.get("message", "")])
 		if not bool(travel.get("ok", false)):

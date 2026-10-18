@@ -1,0 +1,25 @@
+{
+  "$schema": "cria.skill_tree_playable_slice.v1",
+  "version": "1.0.0",
+  "status": "PROVISIONAL_GAMEPLAY_BALANCE_NOT_FINAL",
+  "shipping": false,
+  "graph_source": "data/progression/skill_graph_v1.json",
+  "persistence_authority": "WorldState.unlocked_skills + WorldState.skill_points",
+  "card_authority": "DeckManager",
+  "cost_per_node": 1,
+  "unlock_order": "sequential_within_each_path",
+  "note": "This vertical slice implements a usable skill-point spend and two catalog-backed technique-card rewards. It does not claim final balancing or invisible combat attribute bonuses.",
+  "card_unlock_rewards": {
+    "ataque_de_braco": "card_chave_braco_01",
+    "caca_ao_pescoco": "card_mata_leao_01"
+  },
+  "other_nodes_effect": "progression_tracking_only_pending_balancing",
+  "capstones_effect": "progression_tracking_only_pending_balancing",
+  "forbidden_runtime_effects": [
+    "combat_score",
+    "combat_legal_rules",
+    "fake_stats",
+    "automatically_awarded_skill_points"
+  ],
+  "rollback": "Restoring original unlocked_skills and skill_points from previous save restores prior state. No schema migration."
+}
