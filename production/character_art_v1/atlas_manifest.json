@@ -1,0 +1,4135 @@
+{
+  "schema_version": 1,
+  "status": "CANDIDATE_AUTHORING_PACKAGE",
+  "shipping": false,
+  "source_authority": "data/narrative/canon_v3.json",
+  "gameplay_authority": false,
+  "consumer": "tools/art/CharacterAtlasReview.tscn",
+  "directions": [
+    "front",
+    "side_right",
+    "back"
+  ],
+  "character_count": 39,
+  "fighter_count": 17,
+  "frame_count": 117,
+  "atlases": [
+    {
+      "id": "atlas01",
+      "image": "assets/candidates/characters/identity_v1/atlas01.png",
+      "size_px": [
+        1086,
+        1448
+      ],
+      "sha256": "60bc7528bf76403b2e57b36e08e2c7b6898da7766906648d2d8a212526a987ad",
+      "grid": [
+        3,
+        4
+      ],
+      "shipping": false
+    },
+    {
+      "id": "atlas02",
+      "image": "assets/candidates/characters/identity_v1/atlas02.png",
+      "size_px": [
+        1086,
+        1448
+      ],
+      "sha256": "d451e881065f9827334c2e0cf804ae66151cbbb24eed21dd4019ba98998d187d",
+      "grid": [
+        3,
+        4
+      ],
+      "shipping": false
+    },
+    {
+      "id": "atlas03",
+      "image": "assets/candidates/characters/identity_v1/atlas03.png",
+      "size_px": [
+        1086,
+        1448
+      ],
+      "sha256": "c1f661e981c168f0c9973fb0793073e5d703612bb82796729d0f3ae9bd50dce4",
+      "grid": [
+        3,
+        4
+      ],
+      "shipping": false
+    },
+    {
+      "id": "atlas04",
+      "image": "assets/candidates/characters/identity_v1/atlas04.png",
+      "size_px": [
+        1086,
+        1448
+      ],
+      "sha256": "1814474a1fe44f29b0e104f955b488cd5ba04468bef9a9f8bad86d843c9094c2",
+      "grid": [
+        3,
+        4
+      ],
+      "shipping": false
+    },
+    {
+      "id": "atlas05",
+      "image": "assets/candidates/characters/identity_v1/atlas05.png",
+      "size_px": [
+        1086,
+        1448
+      ],
+      "sha256": "21336ba8f59e4cbea745142fc99c1c64de8877879a8a2a2c4c91595c1de94fce",
+      "grid": [
+        3,
+        4
+      ],
+      "shipping": false
+    },
+    {
+      "id": "atlas06",
+      "image": "assets/candidates/characters/identity_v1/atlas06.png",
+      "size_px": [
+        1087,
+        1447
+      ],
+      "sha256": "8aa9d0a9270e8b530e39f2a7ba286203295eeaa9dd92f0427e4ed9c27d04367c",
+      "grid": [
+        3,
+        4
+      ],
+      "shipping": false
+    },
+    {
+      "id": "atlas07",
+      "image": "assets/candidates/characters/identity_v1/atlas07.png",
+      "size_px": [
+        1086,
+        1448
+      ],
+      "sha256": "e5d1f432cea211453f70ee28e81e1629e4e783db430fa8b8c1d91a48095dc33f",
+      "grid": [
+        3,
+        4
+      ],
+      "shipping": false
+    },
+    {
+      "id": "atlas08",
+      "image": "assets/candidates/characters/identity_v1/atlas08.png",
+      "size_px": [
+        1086,
+        1448
+      ],
+      "sha256": "ec212e0bce023e46360255c423d6fb2e61b56bc532d1d879c8f15b91e9ab88b2",
+      "grid": [
+        3,
+        4
+      ],
+      "shipping": false
+    },
+    {
+      "id": "atlas09",
+      "image": "assets/candidates/characters/identity_v1/atlas09.png",
+      "size_px": [
+        1086,
+        1448
+      ],
+      "sha256": "cd1b67a56e90189ae0b10ecde3506d977c76194cd3254bf244bea8cf8e60fd66",
+      "grid": [
+        3,
+        4
+      ],
+      "shipping": false
+    },
+    {
+      "id": "atlas10",
+      "image": "assets/candidates/characters/identity_v1/atlas10.png",
+      "size_px": [
+        1254,
+        1254
+      ],
+      "sha256": "ce6562e4202ac80614bf28fb2a62133a0621e149d7a952123de3c50e0379553f",
+      "grid": [
+        3,
+        3
+      ],
+      "shipping": false
+    }
+  ],
+  "excluded_non_corporeal": {
+    "teruko_nishiuchi": "memory_fragments_only",
+    "coro": "no_fixed_body"
+  },
+  "characters": [
+    {
+      "character_id": "ruan_macacao",
+      "aliases": [],
+      "display_name": "Ruan Macacão Silva",
+      "kind": "fighter",
+      "narrative_role": "protagonista",
+      "source_character_id": "ruan_macacao",
+      "canon_refs": [
+        "data/narrative/canon_v3.json",
+        "data/narrative/character_bible_v1.json#ruan_macacao",
+        "data/combat/roster_v3.json#ruan_macacao"
+      ],
+      "atlas_id": "atlas01",
+      "image": "assets/candidates/characters/identity_v1/atlas01.png",
+      "row": 0,
+      "appearance_variant": "gi",
+      "frames": [
+        {
+          "direction": "front",
+          "source_rect": [
+            170,
+            16,
+            184,
+            341
+          ],
+          "content_rect": [
+            172,
+            18,
+            180,
+            337
+          ],
+          "segmentation": "isolated_opaque_body_component",
+          "measurement_alpha_threshold": 192,
+          "partial_alpha_fraction": 0.688895,
+          "source_edge_touch": false
+        },
+        {
+          "direction": "side_right",
+          "source_rect": [
+            493,
+            15,
+            93,
+            342
+          ],
+          "content_rect": [
+            495,
+            17,
+            89,
+            338
+          ],
+          "segmentation": "isolated_opaque_body_component",
+          "measurement_alpha_threshold": 192,
+          "partial_alpha_fraction": 0.769855,
+          "source_edge_touch": false
+        },
+        {
+          "direction": "back",
+          "source_rect": [
+            730,
+            13,
+            180,
+            344
+          ],
+          "content_rect": [
+            732,
+            15,
+            176,
+            340
+          ],
+          "segmentation": "isolated_opaque_body_component",
+          "measurement_alpha_threshold": 192,
+          "partial_alpha_fraction": 0.681008,
+          "source_edge_touch": false
+        }
+      ],
+      "preview_frame_px": [
+        128,
+        128
+      ],
+      "preview_pivot_px": [
+        64,
+        96
+      ],
+      "preview_body_height_px": 72,
+      "identity_master": "production/character_art_v1/identities/ruan_macacao.json",
+      "palette_proposal": [
+        "#F0D0B0",
+        "#D0B090",
+        "#101010",
+        "#B09070",
+        "#F0F0D0",
+        "#905030",
+        "#D0D0B0",
+        "#301010"
+      ],
+      "master_status": "PENDING",
+      "rights_status": "PENDING",
+      "human_review": "PENDING",
+      "animation_status": "NOT_AUTHORED",
+      "normalization_status": "PENDING_PIXEL_CLEANUP",
+      "shipping": false
+    },
+    {
+      "character_id": "davi_relampago",
+      "aliases": [],
+      "display_name": "Davi Relâmpago",
+      "kind": "fighter",
+      "narrative_role": "rival tecnico que vira aliado",
+      "source_character_id": "davi_relampago",
+      "canon_refs": [
+        "data/narrative/canon_v3.json",
+        "data/narrative/character_bible_v1.json#davi_relampago",
+        "data/combat/roster_v3.json#davi_relampago"
+      ],
+      "atlas_id": "atlas01",
+      "image": "assets/candidates/characters/identity_v1/atlas01.png",
+      "row": 1,
+      "appearance_variant": "gi",
+      "frames": [
+        {
+          "direction": "front",
+          "source_rect": [
+            167,
+            370,
+            182,
+            347
+          ],
+          "content_rect": [
+            169,
+            372,
+            178,
+            343
+          ],
+          "segmentation": "isolated_opaque_body_component",
+          "measurement_alpha_threshold": 192,
+          "partial_alpha_fraction": 0.666134,
+          "source_edge_touch": false
+        },
+        {
+          "direction": "side_right",
+          "source_rect": [
+            491,
+            369,
+            98,
+            348
+          ],
+          "content_rect": [
+            493,
+            371,
+            94,
+            344
+          ],
+          "segmentation": "isolated_opaque_body_component",
+          "measurement_alpha_threshold": 192,
+          "partial_alpha_fraction": 0.763283,
+          "source_edge_touch": false
+        },
+        {
+          "direction": "back",
+          "source_rect": [
+            731,
+            369,
+            186,
+            348
+          ],
+          "content_rect": [
+            733,
+            371,
+            182,
+            344
+          ],
+          "segmentation": "isolated_opaque_body_component",
+          "measurement_alpha_threshold": 192,
+          "partial_alpha_fraction": 0.672244,
+          "source_edge_touch": false
+        }
+      ],
+      "preview_frame_px": [
+        128,
+        128
+      ],
+      "preview_pivot_px": [
+        64,
+        96
+      ],
+      "preview_body_height_px": 72,
+      "identity_master": "production/character_art_v1/identities/davi_relampago.json",
+      "palette_proposal": [
+        "#103090",
+        "#103070",
+        "#101010",
+        "#101050",
+        "#101030",
+        "#D07030",
+        "#101070",
+        "#3050B0"
+      ],
+      "master_status": "PENDING",
+      "rights_status": "PENDING",
+      "human_review": "PENDING",
+      "animation_status": "NOT_AUTHORED",
+      "normalization_status": "PENDING_PIXEL_CLEANUP",
+      "shipping": false
+    },
+    {
+      "character_id": "leoa",
+      "aliases": [
+        "leoa_quilombola"
+      ],
+      "display_name": "Leoa",
+      "kind": "fighter",
+      "narrative_role": "aliada e rival de raiz",
+      "source_character_id": "leoa",
+      "canon_refs": [
+        "data/narrative/canon_v3.json",
+        "data/narrative/character_bible_v1.json#leoa",
+        "data/combat/roster_v3.json#leoa"
+      ],
+      "atlas_id": "atlas01",
+      "image": "assets/candidates/characters/identity_v1/atlas01.png",
+      "row": 2,
+      "appearance_variant": "gi",
+      "frames": [
+        {
+          "direction": "front",
+          "source_rect": [
+            164,
+            720,
+            192,
+            362
+          ],
+          "content_rect": [
+            166,
+            722,
+            188,
+            358
+          ],
+          "segmentation": "isolated_opaque_body_component",
+          "measurement_alpha_threshold": 192,
+          "partial_alpha_fraction": 0.651445,
+          "source_edge_touch": false
+        },
+        {
+          "direction": "side_right",
+          "source_rect": [
+            489,
+            726,
+            100,
+            356
+          ],
+          "content_rect": [
+            491,
+            728,
+            96,
+            352
+          ],
+          "segmentation": "isolated_opaque_body_component",
+          "measurement_alpha_threshold": 192,
+          "partial_alpha_fraction": 0.755618,
+          "source_edge_touch": false
+        },
+        {
+          "direction": "back",
+          "source_rect": [
+            727,
+            721,
+            195,
+            361
+          ],
+          "content_rect": [
+            729,
+            723,
+            191,
+            357
+          ],
+          "segmentation": "isolated_opaque_body_component",
+          "measurement_alpha_threshold": 192,
+          "partial_alpha_fraction": 0.653271,
+          "source_edge_touch": false
+        }
+      ],
+      "preview_frame_px": [
+        128,
+        128
+      ],
+      "preview_pivot_px": [
+        64,
+        96
+      ],
+      "preview_body_height_px": 72,
+      "identity_master": "production/character_art_v1/identities/leoa.json",
+      "palette_proposal": [
+        "#505030",
+        "#101010",
+        "#303010",
+        "#707050",
+        "#707030",
+        "#303030",
+        "#705030",
+        "#301010"
+      ],
+      "master_status": "PENDING",
+      "rights_status": "PENDING",
+      "human_review": "PENDING",
+      "animation_status": "NOT_AUTHORED",
+      "normalization_status": "PENDING_PIXEL_CLEANUP",
+      "shipping": false
+    },
+    {
+      "character_id": "oni_da_lapa",
+      "aliases": [],
+      "display_name": "Oni da Lapa",
+      "kind": "fighter",
+      "narrative_role": "rival clandestino",
+      "source_character_id": "oni_da_lapa",
+      "canon_refs": [
+        "data/narrative/canon_v3.json",
+        "data/narrative/character_bible_v1.json#oni_da_lapa",
+        "data/combat/roster_v3.json#oni_da_lapa"
+      ],
+      "atlas_id": "atlas01",
+      "image": "assets/candidates/characters/identity_v1/atlas01.png",
+      "row": 3,
+      "appearance_variant": "nogi",
+      "frames": [
+        {
+          "direction": "front",
+          "source_rect": [
+            150,
+            1077,
+            220,
+            357
+          ],
+          "content_rect": [
+            152,
+            1079,
+            216,
+            353
+          ],
+          "segmentation": "isolated_opaque_body_component",
+          "measurement_alpha_threshold": 192,
+          "partial_alpha_fraction": 0.629743,
+          "source_edge_touch": false
+        },
+        {
+          "direction": "side_right",
+          "source_rect": [
+            488,
+            1083,
+            98,
+            351
+          ],
+          "content_rect": [
+            490,
+            1085,
+            94,
+            347
+          ],
+          "segmentation": "isolated_opaque_body_component",
+          "measurement_alpha_threshold": 192,
+          "partial_alpha_fraction": 0.800163,
+          "source_edge_touch": false
+        },
+        {
+          "direction": "back",
+          "source_rect": [
+            717,
+            1080,
+            214,
+            352
+          ],
+          "content_rect": [
+            719,
+            1082,
+            210,
+            348
+          ],
+          "segmentation": "isolated_opaque_body_component",
+          "measurement_alpha_threshold": 192,
+          "partial_alpha_fraction": 0.642364,
+          "source_edge_touch": false
+        }
+      ],
+      "preview_frame_px": [
+        128,
+        128
+      ],
+      "preview_pivot_px": [
+        64,
+        96
+      ],
+      "preview_body_height_px": 72,
+      "identity_master": "production/character_art_v1/identities/oni_da_lapa.json",
+      "palette_proposal": [
+        "#101010",
+        "#303030",
+        "#703010",
+        "#905030",
+        "#503010",
+        "#301010",
+        "#501010",
+        "#905010"
+      ],
+      "master_status": "PENDING",
+      "rights_status": "PENDING",
+      "human_review": "PENDING",
+      "animation_status": "NOT_AUTHORED",
+      "normalization_status": "PENDING_PIXEL_CLEANUP",
+      "shipping": false
+    },
+    {
+      "character_id": "mestre_dende",
+      "aliases": [],
+      "display_name": "Mestre Dende",
+      "kind": "support",
+      "narrative_role": "mentor",
+      "source_character_id": "mestre_dende",
+      "canon_refs": [
+        "data/narrative/canon_v3.json",
+        "data/narrative/character_bible_v1.json#mestre_dende"
+      ],
+      "atlas_id": "atlas02",
+      "image": "assets/candidates/characters/identity_v1/atlas02.png",
+      "row": 0,
+      "appearance_variant": "gi",
+      "frames": [
+        {
+          "direction": "front",
+          "source_rect": [
+            165,
+            11,
+            203,
+            361
+          ],
+          "content_rect": [
+            167,
+            13,
+            199,
+            357
+          ],
+          "segmentation": "isolated_opaque_body_component",
+          "measurement_alpha_threshold": 192,
+          "partial_alpha_fraction": 0.671779,
+          "source_edge_touch": false
+        },
+        {
+          "direction": "side_right",
+          "source_rect": [
+            502,
+            11,
+            100,
+            361
+          ],
+          "content_rect": [
+            504,
+            13,
+            96,
+            357
+          ],
+          "segmentation": "isolated_opaque_body_component",
+          "measurement_alpha_threshold": 192,
+          "partial_alpha_fraction": 0.784765,
+          "source_edge_touch": false
+        },
+        {
+          "direction": "back",
+          "source_rect": [
+            732,
+            11,
+            197,
+            360
+          ],
+          "content_rect": [
+            734,
+            13,
+            193,
+            356
+          ],
+          "segmentation": "isolated_opaque_body_component",
+          "measurement_alpha_threshold": 192,
+          "partial_alpha_fraction": 0.679301,
+          "source_edge_touch": false
+        }
+      ],
+      "preview_frame_px": [
+        128,
+        128
+      ],
+      "preview_pivot_px": [
+        64,
+        96
+      ],
+      "preview_body_height_px": 72,
+      "identity_master": "production/character_art_v1/identities/mestre_dende.json",
+      "palette_proposal": [
+        "#F0D0B0",
+        "#D0B090",
+        "#101010",
+        "#B09070",
+        "#905030",
+        "#F0D0D0",
+        "#D0D0B0",
+        "#303030"
+      ],
+      "master_status": "PENDING",
+      "rights_status": "PENDING",
+      "human_review": "PENDING",
+      "animation_status": "NOT_AUTHORED",
+      "normalization_status": "PENDING_PIXEL_CLEANUP",
+      "shipping": false
+    },
+    {
+      "character_id": "tinker_bell",
+      "aliases": [],
+      "display_name": "Tinker Bell",
+      "kind": "support",
+      "narrative_role": "irmao, empresario e co-arquiteto civil da queda de Chupeta; nao e policial",
+      "source_character_id": "tinker_bell",
+      "canon_refs": [
+        "data/narrative/canon_v3.json",
+        "data/narrative/character_bible_v1.json#tinker_bell",
+        "data/narrative/narrative_v3_fixes_characters.json#character_overrides/tinker_bell"
+      ],
+      "atlas_id": "atlas02",
+      "image": "assets/candidates/characters/identity_v1/atlas02.png",
+      "row": 1,
+      "appearance_variant": "civil",
+      "frames": [
+        {
+          "direction": "front",
+          "source_rect": [
+            173,
+            377,
+            183,
+            360
+          ],
+          "content_rect": [
+            175,
+            379,
+            179,
+            356
+          ],
+          "segmentation": "isolated_opaque_body_component",
+          "measurement_alpha_threshold": 192,
+          "partial_alpha_fraction": 0.697647,
+          "source_edge_touch": false
+        },
+        {
+          "direction": "side_right",
+          "source_rect": [
+            482,
+            377,
+            120,
+            360
+          ],
+          "content_rect": [
+            484,
+            379,
+            116,
+            356
+          ],
+          "segmentation": "isolated_opaque_body_component",
+          "measurement_alpha_threshold": 192,
+          "partial_alpha_fraction": 0.717708,
+          "source_edge_touch": false
+        },
+        {
+          "direction": "back",
+          "source_rect": [
+            750,
+            377,
+            172,
+            359
+          ],
+          "content_rect": [
+            752,
+            379,
+            168,
+            355
+          ],
+          "segmentation": "isolated_opaque_body_component",
+          "measurement_alpha_threshold": 192,
+          "partial_alpha_fraction": 0.735246,
+          "source_edge_touch": false
+        }
+      ],
+      "preview_frame_px": [
+        128,
+        128
+      ],
+      "preview_pivot_px": [
+        64,
+        96
+      ],
+      "preview_body_height_px": 72,
+      "identity_master": "production/character_art_v1/identities/tinker_bell.json",
+      "palette_proposal": [
+        "#303030",
+        "#101010",
+        "#305070",
+        "#103070",
+        "#103050",
+        "#303070",
+        "#301010",
+        "#B05030"
+      ],
+      "master_status": "PENDING",
+      "rights_status": "PENDING",
+      "human_review": "PENDING",
+      "animation_status": "NOT_AUTHORED",
+      "normalization_status": "PENDING_PIXEL_CLEANUP",
+      "shipping": false
+    },
+    {
+      "character_id": "cassio_molho",
+      "aliases": [],
+      "display_name": "Cássio Molho",
+      "kind": "fighter",
+      "narrative_role": "tentador NTM",
+      "source_character_id": "cassio_molho",
+      "canon_refs": [
+        "data/narrative/canon_v3.json",
+        "data/narrative/character_bible_v1.json#cassio_molho",
+        "data/combat/roster_v3.json#cassio_molho"
+      ],
+      "atlas_id": "atlas02",
+      "image": "assets/candidates/characters/identity_v1/atlas02.png",
+      "row": 2,
+      "appearance_variant": "civil",
+      "frames": [
+        {
+          "direction": "front",
+          "source_rect": [
+            168,
+            736,
+            194,
+            360
+          ],
+          "content_rect": [
+            170,
+            738,
+            190,
+            356
+          ],
+          "segmentation": "isolated_opaque_body_component",
+          "measurement_alpha_threshold": 192,
+          "partial_alpha_fraction": 0.689648,
+          "source_edge_touch": false
+        },
+        {
+          "direction": "side_right",
+          "source_rect": [
+            502,
+            739,
+            103,
+            357
+          ],
+          "content_rect": [
+            504,
+            741,
+            99,
+            353
+          ],
+          "segmentation": "isolated_opaque_body_component",
+          "measurement_alpha_threshold": 192,
+          "partial_alpha_fraction": 0.811999,
+          "source_edge_touch": false
+        },
+        {
+          "direction": "back",
+          "source_rect": [
+            741,
+            738,
+            191,
+            357
+          ],
+          "content_rect": [
+            743,
+            740,
+            187,
+            353
+          ],
+          "segmentation": "isolated_opaque_body_component",
+          "measurement_alpha_threshold": 192,
+          "partial_alpha_fraction": 0.700031,
+          "source_edge_touch": false
+        }
+      ],
+      "preview_frame_px": [
+        128,
+        128
+      ],
+      "preview_pivot_px": [
+        64,
+        96
+      ],
+      "preview_body_height_px": 72,
+      "identity_master": "production/character_art_v1/identities/cassio_molho.json",
+      "palette_proposal": [
+        "#303030",
+        "#101010",
+        "#B05010",
+        "#301010",
+        "#B03010",
+        "#903010",
+        "#B05030",
+        "#703010"
+      ],
+      "master_status": "PENDING",
+      "rights_status": "PENDING",
+      "human_review": "PENDING",
+      "animation_status": "NOT_AUTHORED",
+      "normalization_status": "PENDING_PIXEL_CLEANUP",
+      "shipping": false
+    },
+    {
+      "character_id": "kenzo_kuroi",
+      "aliases": [],
+      "display_name": "Kenzo Kuroi",
+      "kind": "fighter",
+      "narrative_role": "sombra japonesa e rival de informacao",
+      "source_character_id": "kenzo_kuroi",
+      "canon_refs": [
+        "data/narrative/canon_v3.json",
+        "data/narrative/character_bible_v1.json#kenzo_kuroi",
+        "data/combat/roster_v3.json#kenzo_kuroi"
+      ],
+      "atlas_id": "atlas02",
+      "image": "assets/candidates/characters/identity_v1/atlas02.png",
+      "row": 3,
+      "appearance_variant": "gi",
+      "frames": [
+        {
+          "direction": "front",
+          "source_rect": [
+            160,
+            1088,
+            204,
+            353
+          ],
+          "content_rect": [
+            162,
+            1090,
+            200,
+            349
+          ],
+          "segmentation": "isolated_opaque_body_component",
+          "measurement_alpha_threshold": 192,
+          "partial_alpha_fraction": 0.665695,
+          "source_edge_touch": false
+        },
+        {
+          "direction": "side_right",
+          "source_rect": [
+            506,
+            1093,
+            97,
+            348
+          ],
+          "content_rect": [
+            508,
+            1095,
+            93,
+            344
+          ],
+          "segmentation": "isolated_opaque_body_component",
+          "measurement_alpha_threshold": 192,
+          "partial_alpha_fraction": 0.769345,
+          "source_edge_touch": false
+        },
+        {
+          "direction": "back",
+          "source_rect": [
+            731,
+            1088,
+            198,
+            353
+          ],
+          "content_rect": [
+            733,
+            1090,
+            194,
+            349
+          ],
+          "segmentation": "isolated_opaque_body_component",
+          "measurement_alpha_threshold": 192,
+          "partial_alpha_fraction": 0.677354,
+          "source_edge_touch": false
+        }
+      ],
+      "preview_frame_px": [
+        128,
+        128
+      ],
+      "preview_pivot_px": [
+        64,
+        96
+      ],
+      "preview_body_height_px": 72,
+      "identity_master": "production/character_art_v1/identities/kenzo_kuroi.json",
+      "palette_proposal": [
+        "#303030",
+        "#101010",
+        "#303050",
+        "#101030",
+        "#301030",
+        "#D09050",
+        "#F09050",
+        "#D07030"
+      ],
+      "master_status": "PENDING",
+      "rights_status": "PENDING",
+      "human_review": "PENDING",
+      "animation_status": "NOT_AUTHORED",
+      "normalization_status": "PENDING_PIXEL_CLEANUP",
+      "shipping": false
+    },
+    {
+      "character_id": "jacare_do_mangue",
+      "aliases": [
+        "jacare_mangue"
+      ],
+      "display_name": "Jacaré",
+      "kind": "fighter",
+      "narrative_role": "rival de mangue",
+      "source_character_id": "jacare_mangue",
+      "canon_refs": [
+        "data/narrative/canon_v3.json",
+        "data/narrative/character_bible_v1.json#jacare_mangue",
+        "data/combat/roster_v3.json#jacare_do_mangue"
+      ],
+      "atlas_id": "atlas03",
+      "image": "assets/candidates/characters/identity_v1/atlas03.png",
+      "row": 0,
+      "appearance_variant": "gi",
+      "frames": [
+        {
+          "direction": "front",
+          "source_rect": [
+            133,
+            123,
+            175,
+            264
+          ],
+          "content_rect": [
+            135,
+            125,
+            171,
+            260
+          ],
+          "segmentation": "isolated_opaque_body_component",
+          "measurement_alpha_threshold": 192,
+          "partial_alpha_fraction": 0.651104,
+          "source_edge_touch": false
+        },
+        {
+          "direction": "side_right",
+          "source_rect": [
+            505,
+            123,
+            88,
+            264
+          ],
+          "content_rect": [
+            507,
+            125,
+            84,
+            260
+          ],
+          "segmentation": "isolated_opaque_body_component",
+          "measurement_alpha_threshold": 192,
+          "partial_alpha_fraction": 0.723571,
+          "source_edge_touch": false
+        },
+        {
+          "direction": "back",
+          "source_rect": [
+            784,
+            123,
+            174,
+            264
+          ],
+          "content_rect": [
+            786,
+            125,
+            170,
+            260
+          ],
+          "segmentation": "isolated_opaque_body_component",
+          "measurement_alpha_threshold": 192,
+          "partial_alpha_fraction": 0.660506,
+          "source_edge_touch": false
+        }
+      ],
+      "preview_frame_px": [
+        128,
+        128
+      ],
+      "preview_pivot_px": [
+        64,
+        96
+      ],
+      "preview_body_height_px": 72,
+      "identity_master": "production/character_art_v1/identities/jacare_do_mangue.json",
+      "palette_proposal": [
+        "#505030",
+        "#101010",
+        "#303030",
+        "#303010",
+        "#905030",
+        "#301010",
+        "#703010",
+        "#D07030"
+      ],
+      "master_status": "PENDING",
+      "rights_status": "PENDING",
+      "human_review": "PENDING",
+      "animation_status": "NOT_AUTHORED",
+      "normalization_status": "PENDING_PIXEL_CLEANUP",
+      "shipping": false
+    },
+    {
+      "character_id": "oni_do_sul",
+      "aliases": [],
+      "display_name": "Oni do Sul",
+      "kind": "fighter",
+      "narrative_role": "rival de pressao",
+      "source_character_id": "oni_do_sul",
+      "canon_refs": [
+        "data/narrative/canon_v3.json",
+        "data/narrative/character_bible_v1.json#oni_do_sul",
+        "data/combat/roster_v3.json#oni_do_sul"
+      ],
+      "atlas_id": "atlas03",
+      "image": "assets/candidates/characters/identity_v1/atlas03.png",
+      "row": 1,
+      "appearance_variant": "nogi",
+      "frames": [
+        {
+          "direction": "front",
+          "source_rect": [
+            137,
+            450,
+            166,
+            277
+          ],
+          "content_rect": [
+            139,
+            452,
+            162,
+            273
+          ],
+          "segmentation": "isolated_opaque_body_component",
+          "measurement_alpha_threshold": 192,
+          "partial_alpha_fraction": 0.647232,
+          "source_edge_touch": false
+        },
+        {
+          "direction": "side_right",
+          "source_rect": [
+            509,
+            450,
+            72,
+            279
+          ],
+          "content_rect": [
+            511,
+            452,
+            68,
+            275
+          ],
+          "segmentation": "isolated_opaque_body_component",
+          "measurement_alpha_threshold": 192,
+          "partial_alpha_fraction": 0.782308,
+          "source_edge_touch": false
+        },
+        {
+          "direction": "back",
+          "source_rect": [
+            790,
+            450,
+            162,
+            278
+          ],
+          "content_rect": [
+            792,
+            452,
+            158,
+            274
+          ],
+          "segmentation": "isolated_opaque_body_component",
+          "measurement_alpha_threshold": 192,
+          "partial_alpha_fraction": 0.654876,
+          "source_edge_touch": false
+        }
+      ],
+      "preview_frame_px": [
+        128,
+        128
+      ],
+      "preview_pivot_px": [
+        64,
+        96
+      ],
+      "preview_body_height_px": 72,
+      "identity_master": "production/character_art_v1/identities/oni_do_sul.json",
+      "palette_proposal": [
+        "#303030",
+        "#303050",
+        "#D07030",
+        "#301010",
+        "#B05030",
+        "#101010",
+        "#501010",
+        "#905010"
+      ],
+      "master_status": "PENDING",
+      "rights_status": "PENDING",
+      "human_review": "PENDING",
+      "animation_status": "NOT_AUTHORED",
+      "normalization_status": "PENDING_PIXEL_CLEANUP",
+      "shipping": false
+    },
+    {
+      "character_id": "mateus_predador",
+      "aliases": [],
+      "display_name": "Mateus Predador",
+      "kind": "fighter",
+      "narrative_role": "rival competitivo",
+      "source_character_id": "mateus_predador",
+      "canon_refs": [
+        "data/narrative/canon_v3.json",
+        "data/narrative/character_bible_v1.json#mateus_predador",
+        "data/combat/roster_v3.json#mateus_predador"
+      ],
+      "atlas_id": "atlas03",
+      "image": "assets/candidates/characters/identity_v1/atlas03.png",
+      "row": 2,
+      "appearance_variant": "gi",
+      "frames": [
+        {
+          "direction": "front",
+          "source_rect": [
+            134,
+            794,
+            171,
+            274
+          ],
+          "content_rect": [
+            136,
+            796,
+            167,
+            270
+          ],
+          "segmentation": "isolated_opaque_body_component",
+          "measurement_alpha_threshold": 192,
+          "partial_alpha_fraction": 0.653455,
+          "source_edge_touch": false
+        },
+        {
+          "direction": "side_right",
+          "source_rect": [
+            505,
+            795,
+            83,
+            272
+          ],
+          "content_rect": [
+            507,
+            797,
+            79,
+            268
+          ],
+          "segmentation": "isolated_opaque_body_component",
+          "measurement_alpha_threshold": 192,
+          "partial_alpha_fraction": 0.788625,
+          "source_edge_touch": false
+        },
+        {
+          "direction": "back",
+          "source_rect": [
+            786,
+            796,
+            170,
+            271
+          ],
+          "content_rect": [
+            788,
+            798,
+            166,
+            267
+          ],
+          "segmentation": "isolated_opaque_body_component",
+          "measurement_alpha_threshold": 192,
+          "partial_alpha_fraction": 0.659366,
+          "source_edge_touch": false
+        }
+      ],
+      "preview_frame_px": [
+        128,
+        128
+      ],
+      "preview_pivot_px": [
+        64,
+        96
+      ],
+      "preview_body_height_px": 72,
+      "identity_master": "production/character_art_v1/identities/mateus_predador.json",
+      "palette_proposal": [
+        "#103070",
+        "#103050",
+        "#101010",
+        "#303070",
+        "#101030",
+        "#101050",
+        "#D07030",
+        "#303030"
+      ],
+      "master_status": "PENDING",
+      "rights_status": "PENDING",
+      "human_review": "PENDING",
+      "animation_status": "NOT_AUTHORED",
+      "normalization_status": "PENDING_PIXEL_CLEANUP",
+      "shipping": false
+    },
+    {
+      "character_id": "verao_velho",
+      "aliases": [],
+      "display_name": "Verão Velho",
+      "kind": "fighter",
+      "narrative_role": "rival veterano",
+      "source_character_id": "verao_velho",
+      "canon_refs": [
+        "data/narrative/canon_v3.json",
+        "data/narrative/character_bible_v1.json#verao_velho",
+        "data/combat/roster_v3.json#verao_velho"
+      ],
+      "atlas_id": "atlas03",
+      "image": "assets/candidates/characters/identity_v1/atlas03.png",
+      "row": 3,
+      "appearance_variant": "gi",
+      "frames": [
+        {
+          "direction": "front",
+          "source_rect": [
+            134,
+            1119,
+            168,
+            269
+          ],
+          "content_rect": [
+            136,
+            1121,
+            164,
+            265
+          ],
+          "segmentation": "isolated_opaque_body_component",
+          "measurement_alpha_threshold": 192,
+          "partial_alpha_fraction": 0.677022,
+          "source_edge_touch": false
+        },
+        {
+          "direction": "side_right",
+          "source_rect": [
+            505,
+            1120,
+            85,
+            268
+          ],
+          "content_rect": [
+            507,
+            1122,
+            81,
+            264
+          ],
+          "segmentation": "isolated_opaque_body_component",
+          "measurement_alpha_threshold": 192,
+          "partial_alpha_fraction": 0.799956,
+          "source_edge_touch": false
+        },
+        {
+          "direction": "back",
+          "source_rect": [
+            786,
+            1120,
+            169,
+            268
+          ],
+          "content_rect": [
+            788,
+            1122,
+            165,
+            264
+          ],
+          "segmentation": "isolated_opaque_body_component",
+          "measurement_alpha_threshold": 192,
+          "partial_alpha_fraction": 0.679745,
+          "source_edge_touch": false
+        }
+      ],
+      "preview_frame_px": [
+        128,
+        128
+      ],
+      "preview_pivot_px": [
+        64,
+        96
+      ],
+      "preview_body_height_px": 72,
+      "identity_master": "production/character_art_v1/identities/verao_velho.json",
+      "palette_proposal": [
+        "#F0D0B0",
+        "#D0B090",
+        "#F0D090",
+        "#B09070",
+        "#101010",
+        "#D07030",
+        "#D0B070",
+        "#303030"
+      ],
+      "master_status": "PENDING",
+      "rights_status": "PENDING",
+      "human_review": "PENDING",
+      "animation_status": "NOT_AUTHORED",
+      "normalization_status": "PENDING_PIXEL_CLEANUP",
+      "shipping": false
+    },
+    {
+      "character_id": "byaku",
+      "aliases": [],
+      "display_name": "Byaku",
+      "kind": "fighter",
+      "narrative_role": "adversario, aliado e mestre NO-GI",
+      "source_character_id": "byaku",
+      "canon_refs": [
+        "data/narrative/canon_v3.json",
+        "data/narrative/character_bible_v1.json#byaku",
+        "data/combat/roster_v3.json#byaku"
+      ],
+      "atlas_id": "atlas04",
+      "image": "assets/candidates/characters/identity_v1/atlas04.png",
+      "row": 0,
+      "appearance_variant": "nogi",
+      "frames": [
+        {
+          "direction": "front",
+          "source_rect": [
+            169,
+            15,
+            185,
+            348
+          ],
+          "content_rect": [
+            171,
+            17,
+            181,
+            344
+          ],
+          "segmentation": "isolated_opaque_body_component",
+          "measurement_alpha_threshold": 192,
+          "partial_alpha_fraction": 0.65772,
+          "source_edge_touch": false
+        },
+        {
+          "direction": "side_right",
+          "source_rect": [
+            504,
+            13,
+            88,
+            350
+          ],
+          "content_rect": [
+            506,
+            15,
+            84,
+            346
+          ],
+          "segmentation": "isolated_opaque_body_component",
+          "measurement_alpha_threshold": 192,
+          "partial_alpha_fraction": 0.780325,
+          "source_edge_touch": false
+        },
+        {
+          "direction": "back",
+          "source_rect": [
+            733,
+            13,
+            181,
+            346
+          ],
+          "content_rect": [
+            735,
+            15,
+            177,
+            342
+          ],
+          "segmentation": "isolated_opaque_body_component",
+          "measurement_alpha_threshold": 192,
+          "partial_alpha_fraction": 0.659247,
+          "source_edge_touch": false
+        }
+      ],
+      "preview_frame_px": [
+        128,
+        128
+      ],
+      "preview_pivot_px": [
+        64,
+        96
+      ],
+      "preview_body_height_px": 72,
+      "identity_master": "production/character_art_v1/identities/byaku.json",
+      "palette_proposal": [
+        "#F09050",
+        "#F0D0D0",
+        "#303030",
+        "#101010",
+        "#D0D0D0",
+        "#303050",
+        "#D07030",
+        "#F0B050"
+      ],
+      "master_status": "PENDING",
+      "rights_status": "PENDING",
+      "human_review": "PENDING",
+      "animation_status": "NOT_AUTHORED",
+      "normalization_status": "PENDING_PIXEL_CLEANUP",
+      "shipping": false
+    },
+    {
+      "character_id": "ubira",
+      "aliases": [],
+      "display_name": "Ubirá",
+      "kind": "fighter",
+      "narrative_role": "PM Cacaueira ficcional",
+      "source_character_id": "ubira",
+      "canon_refs": [
+        "data/narrative/canon_v3.json",
+        "data/narrative/character_bible_v1.json#ubira",
+        "data/combat/roster_v3.json#ubira"
+      ],
+      "atlas_id": "atlas04",
+      "image": "assets/candidates/characters/identity_v1/atlas04.png",
+      "row": 1,
+      "appearance_variant": "civil",
+      "frames": [
+        {
+          "direction": "front",
+          "source_rect": [
+            162,
+            369,
+            188,
+            354
+          ],
+          "content_rect": [
+            164,
+            371,
+            184,
+            350
+          ],
+          "segmentation": "isolated_opaque_body_component",
+          "measurement_alpha_threshold": 192,
+          "partial_alpha_fraction": 0.670543,
+          "source_edge_touch": false
+        },
+        {
+          "direction": "side_right",
+          "source_rect": [
+            499,
+            370,
+            89,
+            353
+          ],
+          "content_rect": [
+            501,
+            372,
+            85,
+            349
+          ],
+          "segmentation": "isolated_opaque_body_component",
+          "measurement_alpha_threshold": 192,
+          "partial_alpha_fraction": 0.795939,
+          "source_edge_touch": false
+        },
+        {
+          "direction": "back",
+          "source_rect": [
+            736,
+            369,
+            182,
+            353
+          ],
+          "content_rect": [
+            738,
+            371,
+            178,
+            349
+          ],
+          "segmentation": "isolated_opaque_body_component",
+          "measurement_alpha_threshold": 192,
+          "partial_alpha_fraction": 0.693055,
+          "source_edge_touch": false
+        }
+      ],
+      "preview_frame_px": [
+        128,
+        128
+      ],
+      "preview_pivot_px": [
+        64,
+        96
+      ],
+      "preview_body_height_px": 72,
+      "identity_master": "production/character_art_v1/identities/ubira.json",
+      "palette_proposal": [
+        "#303030",
+        "#101010",
+        "#707050",
+        "#505030",
+        "#B05030",
+        "#B07030",
+        "#505050",
+        "#905010"
+      ],
+      "master_status": "PENDING",
+      "rights_status": "PENDING",
+      "human_review": "PENDING",
+      "animation_status": "NOT_AUTHORED",
+      "normalization_status": "PENDING_PIXEL_CLEANUP",
+      "shipping": false
+    },
+    {
+      "character_id": "montenegro",
+      "aliases": [
+        "delegado_montenegro"
+      ],
+      "display_name": "Montenegro",
+      "kind": "fighter",
+      "narrative_role": "pressao institucional falsa",
+      "source_character_id": "delegado_montenegro",
+      "canon_refs": [
+        "data/narrative/canon_v3.json",
+        "data/narrative/character_bible_v1.json#delegado_montenegro",
+        "data/combat/roster_v3.json#montenegro"
+      ],
+      "atlas_id": "atlas04",
+      "image": "assets/candidates/characters/identity_v1/atlas04.png",
+      "row": 2,
+      "appearance_variant": "civil",
+      "frames": [
+        {
+          "direction": "front",
+          "source_rect": [
+            158,
+            723,
+            200,
+            359
+          ],
+          "content_rect": [
+            160,
+            725,
+            196,
+            355
+          ],
+          "segmentation": "isolated_opaque_body_component",
+          "measurement_alpha_threshold": 192,
+          "partial_alpha_fraction": 0.657019,
+          "source_edge_touch": false
+        },
+        {
+          "direction": "side_right",
+          "source_rect": [
+            499,
+            724,
+            91,
+            357
+          ],
+          "content_rect": [
+            501,
+            726,
+            87,
+            353
+          ],
+          "segmentation": "isolated_opaque_body_component",
+          "measurement_alpha_threshold": 192,
+          "partial_alpha_fraction": 0.79875,
+          "source_edge_touch": false
+        },
+        {
+          "direction": "back",
+          "source_rect": [
+            733,
+            725,
+            192,
+            356
+          ],
+          "content_rect": [
+            735,
+            727,
+            188,
+            352
+          ],
+          "segmentation": "isolated_opaque_body_component",
+          "measurement_alpha_threshold": 192,
+          "partial_alpha_fraction": 0.681897,
+          "source_edge_touch": false
+        }
+      ],
+      "preview_frame_px": [
+        128,
+        128
+      ],
+      "preview_pivot_px": [
+        64,
+        96
+      ],
+      "preview_body_height_px": 72,
+      "identity_master": "production/character_art_v1/identities/montenegro.json",
+      "palette_proposal": [
+        "#303030",
+        "#101010",
+        "#303050",
+        "#F09050",
+        "#101030",
+        "#505050",
+        "#D07030",
+        "#301030"
+      ],
+      "master_status": "PENDING",
+      "rights_status": "PENDING",
+      "human_review": "PENDING",
+      "animation_status": "NOT_AUTHORED",
+      "normalization_status": "PENDING_PIXEL_CLEANUP",
+      "shipping": false
+    },
+    {
+      "character_id": "ruan_do_avesso",
+      "aliases": [],
+      "display_name": "Ruan do Avesso",
+      "kind": "fighter",
+      "narrative_role": "manifestacao de realidade magica da divida moral de Ruan; espelho, nunca demonio",
+      "source_character_id": "ruan_do_avesso",
+      "canon_refs": [
+        "data/narrative/canon_v3.json",
+        "data/narrative/character_bible_v1.json#ruan_do_avesso",
+        "data/narrative/narrative_v3_fixes_characters.json#character_overrides/ruan_do_avesso",
+        "data/combat/roster_v3.json#ruan_do_avesso"
+      ],
+      "atlas_id": "atlas04",
+      "image": "assets/candidates/characters/identity_v1/atlas04.png",
+      "row": 3,
+      "appearance_variant": "gi",
+      "frames": [
+        {
+          "direction": "front",
+          "source_rect": [
+            160,
+            1080,
+            203,
+            351
+          ],
+          "content_rect": [
+            162,
+            1082,
+            199,
+            347
+          ],
+          "segmentation": "isolated_opaque_body_component",
+          "measurement_alpha_threshold": 192,
+          "partial_alpha_fraction": 0.660898,
+          "source_edge_touch": false
+        },
+        {
+          "direction": "side_right",
+          "source_rect": [
+            502,
+            1081,
+            95,
+            352
+          ],
+          "content_rect": [
+            504,
+            1083,
+            91,
+            348
+          ],
+          "segmentation": "isolated_opaque_body_component",
+          "measurement_alpha_threshold": 192,
+          "partial_alpha_fraction": 0.796023,
+          "source_edge_touch": false
+        },
+        {
+          "direction": "back",
+          "source_rect": [
+            728,
+            1078,
+            203,
+            352
+          ],
+          "content_rect": [
+            730,
+            1080,
+            199,
+            348
+          ],
+          "segmentation": "isolated_opaque_body_component",
+          "measurement_alpha_threshold": 192,
+          "partial_alpha_fraction": 0.661008,
+          "source_edge_touch": false
+        }
+      ],
+      "preview_frame_px": [
+        128,
+        128
+      ],
+      "preview_pivot_px": [
+        64,
+        96
+      ],
+      "preview_body_height_px": 72,
+      "identity_master": "production/character_art_v1/identities/ruan_do_avesso.json",
+      "palette_proposal": [
+        "#303030",
+        "#101010",
+        "#101030",
+        "#D07030",
+        "#B05030",
+        "#301030",
+        "#703010",
+        "#303050"
+      ],
+      "master_status": "PENDING",
+      "rights_status": "PENDING",
+      "human_review": "PENDING",
+      "animation_status": "NOT_AUTHORED",
+      "normalization_status": "PENDING_PIXEL_CLEANUP",
+      "shipping": false
+    },
+    {
+      "character_id": "viera",
+      "aliases": [
+        "mestre_viera_arquetipo"
+      ],
+      "display_name": "Viera",
+      "kind": "fighter",
+      "narrative_role": "mestre NO-GI arquétipo ficcional",
+      "source_character_id": "mestre_viera_arquetipo",
+      "canon_refs": [
+        "data/narrative/canon_v3.json",
+        "data/narrative/character_bible_v1.json#mestre_viera_arquetipo",
+        "data/combat/roster_v3.json#viera"
+      ],
+      "atlas_id": "atlas05",
+      "image": "assets/candidates/characters/identity_v1/atlas05.png",
+      "row": 0,
+      "appearance_variant": "nogi",
+      "frames": [
+        {
+          "direction": "front",
+          "source_rect": [
+            127,
+            97,
+            172,
+            300
+          ],
+          "content_rect": [
+            129,
+            99,
+            168,
+            296
+          ],
+          "segmentation": "isolated_opaque_body_component",
+          "measurement_alpha_threshold": 192,
+          "partial_alpha_fraction": 0.701744,
+          "source_edge_touch": false
+        },
+        {
+          "direction": "side_right",
+          "source_rect": [
+            498,
+            98,
+            85,
+            299
+          ],
+          "content_rect": [
+            500,
+            100,
+            81,
+            295
+          ],
+          "segmentation": "isolated_opaque_body_component",
+          "measurement_alpha_threshold": 192,
+          "partial_alpha_fraction": 0.81688,
+          "source_edge_touch": false
+        },
+        {
+          "direction": "back",
+          "source_rect": [
+            796,
+            98,
+            173,
+            298
+          ],
+          "content_rect": [
+            798,
+            100,
+            169,
+            294
+          ],
+          "segmentation": "isolated_opaque_body_component",
+          "measurement_alpha_threshold": 192,
+          "partial_alpha_fraction": 0.707666,
+          "source_edge_touch": false
+        }
+      ],
+      "preview_frame_px": [
+        128,
+        128
+      ],
+      "preview_pivot_px": [
+        64,
+        96
+      ],
+      "preview_body_height_px": 72,
+      "identity_master": "production/character_art_v1/identities/viera.json",
+      "palette_proposal": [
+        "#303030",
+        "#101010",
+        "#D07030",
+        "#B05030",
+        "#505030",
+        "#301010",
+        "#303010",
+        "#905010"
+      ],
+      "master_status": "PENDING",
+      "rights_status": "PENDING",
+      "human_review": "PENDING",
+      "animation_status": "NOT_AUTHORED",
+      "normalization_status": "PENDING_PIXEL_CLEANUP",
+      "shipping": false
+    },
+    {
+      "character_id": "miyao",
+      "aliases": [
+        "mestre_miyao_arquetipo"
+      ],
+      "display_name": "Miyao",
+      "kind": "fighter",
+      "narrative_role": "mestre NO-GI arquétipo ficcional",
+      "source_character_id": "mestre_miyao_arquetipo",
+      "canon_refs": [
+        "data/narrative/canon_v3.json",
+        "data/narrative/character_bible_v1.json#mestre_miyao_arquetipo",
+        "data/combat/roster_v3.json#miyao"
+      ],
+      "atlas_id": "atlas05",
+      "image": "assets/candidates/characters/identity_v1/atlas05.png",
+      "row": 1,
+      "appearance_variant": "nogi",
+      "frames": [
+        {
+          "direction": "front",
+          "source_rect": [
+            131,
+            451,
+            155,
+            293
+          ],
+          "content_rect": [
+            133,
+            453,
+            151,
+            289
+          ],
+          "segmentation": "isolated_opaque_body_component",
+          "measurement_alpha_threshold": 192,
+          "partial_alpha_fraction": 0.705626,
+          "source_edge_touch": false
+        },
+        {
+          "direction": "side_right",
+          "source_rect": [
+            505,
+            452,
+            82,
+            291
+          ],
+          "content_rect": [
+            507,
+            454,
+            78,
+            287
+          ],
+          "segmentation": "isolated_opaque_body_component",
+          "measurement_alpha_threshold": 192,
+          "partial_alpha_fraction": 0.830567,
+          "source_edge_touch": false
+        },
+        {
+          "direction": "back",
+          "source_rect": [
+            808,
+            452,
+            151,
+            291
+          ],
+          "content_rect": [
+            810,
+            454,
+            147,
+            287
+          ],
+          "segmentation": "isolated_opaque_body_component",
+          "measurement_alpha_threshold": 192,
+          "partial_alpha_fraction": 0.700621,
+          "source_edge_touch": false
+        }
+      ],
+      "preview_frame_px": [
+        128,
+        128
+      ],
+      "preview_pivot_px": [
+        64,
+        96
+      ],
+      "preview_body_height_px": 72,
+      "identity_master": "production/character_art_v1/identities/miyao.json",
+      "palette_proposal": [
+        "#303030",
+        "#101010",
+        "#1030B0",
+        "#F09050",
+        "#F0B070",
+        "#103090",
+        "#1050B0",
+        "#301010"
+      ],
+      "master_status": "PENDING",
+      "rights_status": "PENDING",
+      "human_review": "PENDING",
+      "animation_status": "NOT_AUTHORED",
+      "normalization_status": "PENDING_PIXEL_CLEANUP",
+      "shipping": false
+    },
+    {
+      "character_id": "galvao",
+      "aliases": [
+        "mestre_galvao_arquetipo"
+      ],
+      "display_name": "Galvão",
+      "kind": "fighter",
+      "narrative_role": "mestre NO-GI arquétipo ficcional",
+      "source_character_id": "mestre_galvao_arquetipo",
+      "canon_refs": [
+        "data/narrative/canon_v3.json",
+        "data/narrative/character_bible_v1.json#mestre_galvao_arquetipo",
+        "data/combat/roster_v3.json#galvao"
+      ],
+      "atlas_id": "atlas05",
+      "image": "assets/candidates/characters/identity_v1/atlas05.png",
+      "row": 2,
+      "appearance_variant": "nogi",
+      "frames": [
+        {
+          "direction": "front",
+          "source_rect": [
+            120,
+            802,
+            180,
+            295
+          ],
+          "content_rect": [
+            122,
+            804,
+            176,
+            291
+          ],
+          "segmentation": "isolated_opaque_body_component",
+          "measurement_alpha_threshold": 192,
+          "partial_alpha_fraction": 0.68533,
+          "source_edge_touch": false
+        },
+        {
+          "direction": "side_right",
+          "source_rect": [
+            498,
+            803,
+            87,
+            296
+          ],
+          "content_rect": [
+            500,
+            805,
+            83,
+            292
+          ],
+          "segmentation": "isolated_opaque_body_component",
+          "measurement_alpha_threshold": 192,
+          "partial_alpha_fraction": 0.832401,
+          "source_edge_touch": false
+        },
+        {
+          "direction": "back",
+          "source_rect": [
+            794,
+            802,
+            176,
+            295
+          ],
+          "content_rect": [
+            796,
+            804,
+            172,
+            291
+          ],
+          "segmentation": "isolated_opaque_body_component",
+          "measurement_alpha_threshold": 192,
+          "partial_alpha_fraction": 0.69871,
+          "source_edge_touch": false
+        }
+      ],
+      "preview_frame_px": [
+        128,
+        128
+      ],
+      "preview_pivot_px": [
+        64,
+        96
+      ],
+      "preview_body_height_px": 72,
+      "identity_master": "production/character_art_v1/identities/galvao.json",
+      "palette_proposal": [
+        "#303030",
+        "#101010",
+        "#D07030",
+        "#B05030",
+        "#301010",
+        "#905010",
+        "#703010",
+        "#B07030"
+      ],
+      "master_status": "PENDING",
+      "rights_status": "PENDING",
+      "human_review": "PENDING",
+      "animation_status": "NOT_AUTHORED",
+      "normalization_status": "PENDING_PIXEL_CLEANUP",
+      "shipping": false
+    },
+    {
+      "character_id": "degodo",
+      "aliases": [],
+      "display_name": "Adriano 'Degodo'",
+      "kind": "support",
+      "narrative_role": "adulto do Terreiro e instrutor relutante da molecada",
+      "source_character_id": "degodo",
+      "canon_refs": [
+        "data/narrative/canon_v3.json",
+        "data/narrative/narrative_v3_fixes_characters.json#degodo"
+      ],
+      "atlas_id": "atlas05",
+      "image": "assets/candidates/characters/identity_v1/atlas05.png",
+      "row": 3,
+      "appearance_variant": "gi",
+      "frames": [
+        {
+          "direction": "front",
+          "source_rect": [
+            117,
+            1145,
+            187,
+            254
+          ],
+          "content_rect": [
+            119,
+            1147,
+            183,
+            250
+          ],
+          "segmentation": "isolated_opaque_body_component",
+          "measurement_alpha_threshold": 192,
+          "partial_alpha_fraction": 0.717609,
+          "source_edge_touch": false
+        },
+        {
+          "direction": "side_right",
+          "source_rect": [
+            483,
+            1147,
+            110,
+            252
+          ],
+          "content_rect": [
+            485,
+            1149,
+            106,
+            248
+          ],
+          "segmentation": "isolated_opaque_body_component",
+          "measurement_alpha_threshold": 192,
+          "partial_alpha_fraction": 0.759416,
+          "source_edge_touch": false
+        },
+        {
+          "direction": "back",
+          "source_rect": [
+            793,
+            1146,
+            183,
+            253
+          ],
+          "content_rect": [
+            795,
+            1148,
+            179,
+            249
+          ],
+          "segmentation": "isolated_opaque_body_component",
+          "measurement_alpha_threshold": 192,
+          "partial_alpha_fraction": 0.720685,
+          "source_edge_touch": false
+        }
+      ],
+      "preview_frame_px": [
+        128,
+        128
+      ],
+      "preview_pivot_px": [
+        64,
+        96
+      ],
+      "preview_body_height_px": 72,
+      "identity_master": "production/character_art_v1/identities/degodo.json",
+      "palette_proposal": [
+        "#B09070",
+        "#907050",
+        "#101010",
+        "#303030",
+        "#D07030",
+        "#301010",
+        "#705030",
+        "#505050"
+      ],
+      "master_status": "PENDING",
+      "rights_status": "PENDING",
+      "human_review": "PENDING",
+      "animation_status": "NOT_AUTHORED",
+      "normalization_status": "PENDING_PIXEL_CLEANUP",
+      "shipping": false
+    },
+    {
+      "character_id": "biel",
+      "aliases": [],
+      "display_name": "Biel",
+      "kind": "support",
+      "narrative_role": "amigo jovem e espelho de risco",
+      "source_character_id": "biel",
+      "canon_refs": [
+        "data/narrative/canon_v3.json",
+        "data/narrative/character_bible_v1.json#biel"
+      ],
+      "atlas_id": "atlas06",
+      "image": "assets/candidates/characters/identity_v1/atlas06.png",
+      "row": 0,
+      "appearance_variant": "civil",
+      "frames": [
+        {
+          "direction": "front",
+          "source_rect": [
+            178,
+            8,
+            154,
+            366
+          ],
+          "content_rect": [
+            180,
+            10,
+            150,
+            362
+          ],
+          "segmentation": "isolated_opaque_body_component",
+          "measurement_alpha_threshold": 192,
+          "partial_alpha_fraction": 0.681712,
+          "source_edge_touch": false
+        },
+        {
+          "direction": "side_right",
+          "source_rect": [
+            506,
+            8,
+            87,
+            366
+          ],
+          "content_rect": [
+            508,
+            10,
+            83,
+            362
+          ],
+          "segmentation": "isolated_opaque_body_component",
+          "measurement_alpha_threshold": 192,
+          "partial_alpha_fraction": 0.812261,
+          "source_edge_touch": false
+        },
+        {
+          "direction": "back",
+          "source_rect": [
+            757,
+            8,
+            150,
+            364
+          ],
+          "content_rect": [
+            759,
+            10,
+            146,
+            360
+          ],
+          "segmentation": "isolated_opaque_body_component",
+          "measurement_alpha_threshold": 192,
+          "partial_alpha_fraction": 0.718571,
+          "source_edge_touch": false
+        }
+      ],
+      "preview_frame_px": [
+        128,
+        128
+      ],
+      "preview_pivot_px": [
+        64,
+        96
+      ],
+      "preview_body_height_px": 64,
+      "identity_master": "production/character_art_v1/identities/biel.json",
+      "palette_proposal": [
+        "#103090",
+        "#101010",
+        "#103070",
+        "#303050",
+        "#505050",
+        "#B05030",
+        "#B07030",
+        "#303030"
+      ],
+      "master_status": "PENDING",
+      "rights_status": "PENDING",
+      "human_review": "PENDING",
+      "animation_status": "NOT_AUTHORED",
+      "normalization_status": "PENDING_PIXEL_CLEANUP",
+      "shipping": false
+    },
+    {
+      "character_id": "dandara",
+      "aliases": [],
+      "display_name": "Dandara",
+      "kind": "support",
+      "narrative_role": "crianca do Terreiro e ancora de presenca",
+      "source_character_id": "dandara",
+      "canon_refs": [
+        "data/narrative/canon_v3.json",
+        "data/narrative/character_bible_v1.json#dandara"
+      ],
+      "atlas_id": "atlas06",
+      "image": "assets/candidates/characters/identity_v1/atlas06.png",
+      "row": 1,
+      "appearance_variant": "civil",
+      "frames": [
+        {
+          "direction": "front",
+          "source_rect": [
+            187,
+            389,
+            146,
+            345
+          ],
+          "content_rect": [
+            189,
+            391,
+            142,
+            341
+          ],
+          "segmentation": "isolated_opaque_body_component",
+          "measurement_alpha_threshold": 192,
+          "partial_alpha_fraction": 0.739508,
+          "source_edge_touch": false
+        },
+        {
+          "direction": "side_right",
+          "source_rect": [
+            490,
+            389,
+            109,
+            343
+          ],
+          "content_rect": [
+            492,
+            391,
+            105,
+            339
+          ],
+          "segmentation": "isolated_opaque_body_component",
+          "measurement_alpha_threshold": 192,
+          "partial_alpha_fraction": 0.736486,
+          "source_edge_touch": false
+        },
+        {
+          "direction": "back",
+          "source_rect": [
+            758,
+            388,
+            143,
+            343
+          ],
+          "content_rect": [
+            760,
+            390,
+            139,
+            339
+          ],
+          "segmentation": "isolated_opaque_body_component",
+          "measurement_alpha_threshold": 192,
+          "partial_alpha_fraction": 0.763379,
+          "source_edge_touch": false
+        }
+      ],
+      "preview_frame_px": [
+        128,
+        128
+      ],
+      "preview_pivot_px": [
+        64,
+        96
+      ],
+      "preview_body_height_px": 48,
+      "identity_master": "production/character_art_v1/identities/dandara.json",
+      "palette_proposal": [
+        "#303050",
+        "#101010",
+        "#303030",
+        "#B0D0F0",
+        "#D07030",
+        "#90B0D0",
+        "#301010",
+        "#101030"
+      ],
+      "master_status": "PENDING",
+      "rights_status": "PENDING",
+      "human_review": "PENDING",
+      "animation_status": "NOT_AUTHORED",
+      "normalization_status": "PENDING_PIXEL_CLEANUP",
+      "shipping": false
+    },
+    {
+      "character_id": "pedro_bala",
+      "aliases": [],
+      "display_name": "Pedro 'Bala'",
+      "kind": "support",
+      "narrative_role": "Capitao da molecada e fiscal de confianca",
+      "source_character_id": "pedro_bala",
+      "canon_refs": [
+        "data/narrative/canon_v3.json",
+        "data/narrative/narrative_v3_fixes_characters.json#pedro_bala"
+      ],
+      "atlas_id": "atlas06",
+      "image": "assets/candidates/characters/identity_v1/atlas06.png",
+      "row": 2,
+      "appearance_variant": "civil",
+      "frames": [
+        {
+          "direction": "front",
+          "source_rect": [
+            176,
+            738,
+            163,
+            379
+          ],
+          "content_rect": [
+            178,
+            740,
+            159,
+            375
+          ],
+          "segmentation": "isolated_opaque_body_component",
+          "measurement_alpha_threshold": 192,
+          "partial_alpha_fraction": 0.692814,
+          "source_edge_touch": false
+        },
+        {
+          "direction": "side_right",
+          "source_rect": [
+            509,
+            739,
+            87,
+            378
+          ],
+          "content_rect": [
+            511,
+            741,
+            83,
+            374
+          ],
+          "segmentation": "isolated_opaque_body_component",
+          "measurement_alpha_threshold": 192,
+          "partial_alpha_fraction": 0.838533,
+          "source_edge_touch": false
+        },
+        {
+          "direction": "back",
+          "source_rect": [
+            748,
+            741,
+            164,
+            372
+          ],
+          "content_rect": [
+            750,
+            743,
+            160,
+            368
+          ],
+          "segmentation": "isolated_opaque_body_component",
+          "measurement_alpha_threshold": 192,
+          "partial_alpha_fraction": 0.696319,
+          "source_edge_touch": false
+        }
+      ],
+      "preview_frame_px": [
+        128,
+        128
+      ],
+      "preview_pivot_px": [
+        64,
+        96
+      ],
+      "preview_body_height_px": 66,
+      "identity_master": "production/character_art_v1/identities/pedro_bala.json",
+      "palette_proposal": [
+        "#101010",
+        "#303030",
+        "#B05030",
+        "#103070",
+        "#303070",
+        "#103050",
+        "#703010",
+        "#B07030"
+      ],
+      "master_status": "PENDING",
+      "rights_status": "PENDING",
+      "human_review": "PENDING",
+      "animation_status": "NOT_AUTHORED",
+      "normalization_status": "PENDING_PIXEL_CLEANUP",
+      "shipping": false
+    },
+    {
+      "character_id": "pipoca",
+      "aliases": [],
+      "display_name": "Pipoca",
+      "kind": "support",
+      "narrative_role": "crianca do Terreiro e arco de transmissao",
+      "source_character_id": "pipoca",
+      "canon_refs": [
+        "data/narrative/canon_v3.json",
+        "data/narrative/narrative_v3_fixes_characters.json#pipoca"
+      ],
+      "atlas_id": "atlas06",
+      "image": "assets/candidates/characters/identity_v1/atlas06.png",
+      "row": 3,
+      "appearance_variant": "gi",
+      "frames": [
+        {
+          "direction": "front",
+          "source_rect": [
+            169,
+            1124,
+            166,
+            316
+          ],
+          "content_rect": [
+            171,
+            1126,
+            162,
+            312
+          ],
+          "segmentation": "isolated_opaque_body_component",
+          "measurement_alpha_threshold": 192,
+          "partial_alpha_fraction": 0.70114,
+          "source_edge_touch": false
+        },
+        {
+          "direction": "side_right",
+          "source_rect": [
+            495,
+            1124,
+            106,
+            316
+          ],
+          "content_rect": [
+            497,
+            1126,
+            102,
+            312
+          ],
+          "segmentation": "isolated_opaque_body_component",
+          "measurement_alpha_threshold": 192,
+          "partial_alpha_fraction": 0.791438,
+          "source_edge_touch": false
+        },
+        {
+          "direction": "back",
+          "source_rect": [
+            751,
+            1122,
+            162,
+            317
+          ],
+          "content_rect": [
+            753,
+            1124,
+            158,
+            313
+          ],
+          "segmentation": "isolated_opaque_body_component",
+          "measurement_alpha_threshold": 192,
+          "partial_alpha_fraction": 0.714531,
+          "source_edge_touch": false
+        }
+      ],
+      "preview_frame_px": [
+        128,
+        128
+      ],
+      "preview_pivot_px": [
+        64,
+        96
+      ],
+      "preview_body_height_px": 46,
+      "identity_master": "production/character_art_v1/identities/pipoca.json",
+      "palette_proposal": [
+        "#F0D0B0",
+        "#101010",
+        "#F0F0D0",
+        "#F0D0D0",
+        "#D0B090",
+        "#D0D0B0",
+        "#D07030",
+        "#301010"
+      ],
+      "master_status": "PENDING",
+      "rights_status": "PENDING",
+      "human_review": "PENDING",
+      "animation_status": "NOT_AUTHORED",
+      "normalization_status": "PENDING_PIXEL_CLEANUP",
+      "shipping": false
+    },
+    {
+      "character_id": "foguete",
+      "aliases": [],
+      "display_name": "Foguete",
+      "kind": "support",
+      "narrative_role": "Capitao cooptado que retorna",
+      "source_character_id": "foguete",
+      "canon_refs": [
+        "data/narrative/canon_v3.json",
+        "data/narrative/narrative_v3_fixes_characters.json#foguete"
+      ],
+      "atlas_id": "atlas07",
+      "image": "assets/candidates/characters/identity_v1/atlas07.png",
+      "row": 0,
+      "appearance_variant": "civil",
+      "frames": [
+        {
+          "direction": "front",
+          "source_rect": [
+            181,
+            18,
+            155,
+            336
+          ],
+          "content_rect": [
+            183,
+            20,
+            151,
+            332
+          ],
+          "segmentation": "isolated_opaque_body_component",
+          "measurement_alpha_threshold": 192,
+          "partial_alpha_fraction": 0.708487,
+          "source_edge_touch": false
+        },
+        {
+          "direction": "side_right",
+          "source_rect": [
+            484,
+            18,
+            114,
+            336
+          ],
+          "content_rect": [
+            486,
+            20,
+            110,
+            332
+          ],
+          "segmentation": "isolated_opaque_body_component",
+          "measurement_alpha_threshold": 192,
+          "partial_alpha_fraction": 0.685803,
+          "source_edge_touch": false
+        },
+        {
+          "direction": "back",
+          "source_rect": [
+            767,
+            17,
+            148,
+            332
+          ],
+          "content_rect": [
+            769,
+            19,
+            144,
+            328
+          ],
+          "segmentation": "isolated_opaque_body_component",
+          "measurement_alpha_threshold": 192,
+          "partial_alpha_fraction": 0.743732,
+          "source_edge_touch": false
+        }
+      ],
+      "preview_frame_px": [
+        128,
+        128
+      ],
+      "preview_pivot_px": [
+        64,
+        96
+      ],
+      "preview_body_height_px": 56,
+      "identity_master": "production/character_art_v1/identities/foguete.json",
+      "palette_proposal": [
+        "#303030",
+        "#707050",
+        "#101010",
+        "#301010",
+        "#505030",
+        "#F09050",
+        "#707030",
+        "#D07030"
+      ],
+      "master_status": "PENDING",
+      "rights_status": "PENDING",
+      "human_review": "PENDING",
+      "animation_status": "NOT_AUTHORED",
+      "normalization_status": "PENDING_PIXEL_CLEANUP",
+      "shipping": false
+    },
+    {
+      "character_id": "tiago_bomfim",
+      "aliases": [],
+      "display_name": "Tiago Bomfim",
+      "kind": "support",
+      "narrative_role": "espelho de Biel 2.0",
+      "source_character_id": "tiago_bomfim",
+      "canon_refs": [
+        "data/narrative/canon_v3.json",
+        "data/narrative/character_bible_v1.json#tiago_bomfim"
+      ],
+      "atlas_id": "atlas07",
+      "image": "assets/candidates/characters/identity_v1/atlas07.png",
+      "row": 1,
+      "appearance_variant": "civil",
+      "frames": [
+        {
+          "direction": "front",
+          "source_rect": [
+            166,
+            363,
+            175,
+            371
+          ],
+          "content_rect": [
+            168,
+            365,
+            171,
+            367
+          ],
+          "segmentation": "isolated_opaque_body_component",
+          "measurement_alpha_threshold": 192,
+          "partial_alpha_fraction": 0.723281,
+          "source_edge_touch": false
+        },
+        {
+          "direction": "side_right",
+          "source_rect": [
+            506,
+            363,
+            93,
+            371
+          ],
+          "content_rect": [
+            508,
+            365,
+            89,
+            367
+          ],
+          "segmentation": "isolated_opaque_body_component",
+          "measurement_alpha_threshold": 192,
+          "partial_alpha_fraction": 0.799467,
+          "source_edge_touch": false
+        },
+        {
+          "direction": "back",
+          "source_rect": [
+            759,
+            363,
+            170,
+            367
+          ],
+          "content_rect": [
+            761,
+            365,
+            166,
+            363
+          ],
+          "segmentation": "isolated_opaque_body_component",
+          "measurement_alpha_threshold": 192,
+          "partial_alpha_fraction": 0.733323,
+          "source_edge_touch": false
+        }
+      ],
+      "preview_frame_px": [
+        128,
+        128
+      ],
+      "preview_pivot_px": [
+        64,
+        96
+      ],
+      "preview_body_height_px": 72,
+      "identity_master": "production/character_art_v1/identities/tiago_bomfim.json",
+      "palette_proposal": [
+        "#F0D0B0",
+        "#707050",
+        "#101010",
+        "#505030",
+        "#D0B090",
+        "#B05030",
+        "#B07030",
+        "#707030"
+      ],
+      "master_status": "PENDING",
+      "rights_status": "PENDING",
+      "human_review": "PENDING",
+      "animation_status": "NOT_AUTHORED",
+      "normalization_status": "PENDING_PIXEL_CLEANUP",
+      "shipping": false
+    },
+    {
+      "character_id": "vera_salles",
+      "aliases": [],
+      "display_name": "Vera Salles",
+      "kind": "support",
+      "narrative_role": "agente federal ficcional e eixo institucional da infiltracao",
+      "source_character_id": "vera_salles",
+      "canon_refs": [
+        "data/narrative/canon_v3.json",
+        "data/narrative/character_bible_v1.json#vera_salles",
+        "data/narrative/narrative_v3_fixes_characters.json#character_overrides/vera_salles"
+      ],
+      "atlas_id": "atlas07",
+      "image": "assets/candidates/characters/identity_v1/atlas07.png",
+      "row": 2,
+      "appearance_variant": "civil",
+      "frames": [
+        {
+          "direction": "front",
+          "source_rect": [
+            162,
+            738,
+            180,
+            370
+          ],
+          "content_rect": [
+            164,
+            740,
+            176,
+            366
+          ],
+          "segmentation": "isolated_opaque_body_component",
+          "measurement_alpha_threshold": 192,
+          "partial_alpha_fraction": 0.696066,
+          "source_edge_touch": false
+        },
+        {
+          "direction": "side_right",
+          "source_rect": [
+            504,
+            737,
+            101,
+            372
+          ],
+          "content_rect": [
+            506,
+            739,
+            97,
+            368
+          ],
+          "segmentation": "isolated_opaque_body_component",
+          "measurement_alpha_threshold": 192,
+          "partial_alpha_fraction": 0.795406,
+          "source_edge_touch": false
+        },
+        {
+          "direction": "back",
+          "source_rect": [
+            766,
+            736,
+            172,
+            372
+          ],
+          "content_rect": [
+            768,
+            738,
+            168,
+            368
+          ],
+          "segmentation": "isolated_opaque_body_component",
+          "measurement_alpha_threshold": 192,
+          "partial_alpha_fraction": 0.698456,
+          "source_edge_touch": false
+        }
+      ],
+      "preview_frame_px": [
+        128,
+        128
+      ],
+      "preview_pivot_px": [
+        64,
+        96
+      ],
+      "preview_body_height_px": 72,
+      "identity_master": "production/character_art_v1/identities/vera_salles.json",
+      "palette_proposal": [
+        "#303030",
+        "#101010",
+        "#507090",
+        "#503030",
+        "#505090",
+        "#505050",
+        "#305070",
+        "#301010"
+      ],
+      "master_status": "PENDING",
+      "rights_status": "PENDING",
+      "human_review": "PENDING",
+      "animation_status": "NOT_AUTHORED",
+      "normalization_status": "PENDING_PIXEL_CLEANUP",
+      "shipping": false
+    },
+    {
+      "character_id": "raimundo",
+      "aliases": [],
+      "display_name": "Raimundo",
+      "kind": "support",
+      "narrative_role": "PM honesto em conflito",
+      "source_character_id": "raimundo",
+      "canon_refs": [
+        "data/narrative/canon_v3.json",
+        "data/narrative/character_bible_v1.json#raimundo"
+      ],
+      "atlas_id": "atlas07",
+      "image": "assets/candidates/characters/identity_v1/atlas07.png",
+      "row": 3,
+      "appearance_variant": "civil",
+      "frames": [
+        {
+          "direction": "front",
+          "source_rect": [
+            160,
+            1108,
+            187,
+            334
+          ],
+          "content_rect": [
+            162,
+            1110,
+            183,
+            330
+          ],
+          "segmentation": "isolated_opaque_body_component",
+          "measurement_alpha_threshold": 192,
+          "partial_alpha_fraction": 0.700455,
+          "source_edge_touch": false
+        },
+        {
+          "direction": "side_right",
+          "source_rect": [
+            499,
+            1110,
+            102,
+            332
+          ],
+          "content_rect": [
+            501,
+            1112,
+            98,
+            328
+          ],
+          "segmentation": "isolated_opaque_body_component",
+          "measurement_alpha_threshold": 192,
+          "partial_alpha_fraction": 0.804483,
+          "source_edge_touch": false
+        },
+        {
+          "direction": "back",
+          "source_rect": [
+            755,
+            1109,
+            184,
+            333
+          ],
+          "content_rect": [
+            757,
+            1111,
+            180,
+            329
+          ],
+          "segmentation": "isolated_opaque_body_component",
+          "measurement_alpha_threshold": 192,
+          "partial_alpha_fraction": 0.696501,
+          "source_edge_touch": false
+        }
+      ],
+      "preview_frame_px": [
+        128,
+        128
+      ],
+      "preview_pivot_px": [
+        64,
+        96
+      ],
+      "preview_body_height_px": 72,
+      "identity_master": "production/character_art_v1/identities/raimundo.json",
+      "palette_proposal": [
+        "#303030",
+        "#305070",
+        "#101010",
+        "#505050",
+        "#303050",
+        "#503030",
+        "#B05030",
+        "#505070"
+      ],
+      "master_status": "PENDING",
+      "rights_status": "PENDING",
+      "human_review": "PENDING",
+      "animation_status": "NOT_AUTHORED",
+      "normalization_status": "PENDING_PIXEL_CLEANUP",
+      "shipping": false
+    },
+    {
+      "character_id": "dona_chie",
+      "aliases": [],
+      "display_name": "Dona Chie",
+      "kind": "support",
+      "narrative_role": "guardia de memoria e acolhimento",
+      "source_character_id": "dona_chie",
+      "canon_refs": [
+        "data/narrative/canon_v3.json",
+        "data/narrative/character_bible_v1.json#dona_chie"
+      ],
+      "atlas_id": "atlas08",
+      "image": "assets/candidates/characters/identity_v1/atlas08.png",
+      "row": 0,
+      "appearance_variant": "civil",
+      "frames": [
+        {
+          "direction": "front",
+          "source_rect": [
+            181,
+            12,
+            150,
+            351
+          ],
+          "content_rect": [
+            183,
+            14,
+            146,
+            347
+          ],
+          "segmentation": "isolated_opaque_body_component",
+          "measurement_alpha_threshold": 192,
+          "partial_alpha_fraction": 0.774416,
+          "source_edge_touch": false
+        },
+        {
+          "direction": "side_right",
+          "source_rect": [
+            490,
+            10,
+            131,
+            353
+          ],
+          "content_rect": [
+            492,
+            12,
+            127,
+            349
+          ],
+          "segmentation": "isolated_opaque_body_component",
+          "measurement_alpha_threshold": 192,
+          "partial_alpha_fraction": 0.70123,
+          "source_edge_touch": false
+        },
+        {
+          "direction": "back",
+          "source_rect": [
+            790,
+            10,
+            143,
+            353
+          ],
+          "content_rect": [
+            792,
+            12,
+            139,
+            349
+          ],
+          "segmentation": "isolated_opaque_body_component",
+          "measurement_alpha_threshold": 192,
+          "partial_alpha_fraction": 0.776561,
+          "source_edge_touch": false
+        }
+      ],
+      "preview_frame_px": [
+        128,
+        128
+      ],
+      "preview_pivot_px": [
+        64,
+        96
+      ],
+      "preview_body_height_px": 72,
+      "identity_master": "production/character_art_v1/identities/dona_chie.json",
+      "palette_proposal": [
+        "#505030",
+        "#303010",
+        "#F0D0D0",
+        "#101010",
+        "#503010",
+        "#F0D0B0",
+        "#301010",
+        "#D0D0B0"
+      ],
+      "master_status": "PENDING",
+      "rights_status": "PENDING",
+      "human_review": "PENDING",
+      "animation_status": "NOT_AUTHORED",
+      "normalization_status": "PENDING_PIXEL_CLEANUP",
+      "shipping": false
+    },
+    {
+      "character_id": "dona_zefa",
+      "aliases": [],
+      "display_name": "Dona Zefa",
+      "kind": "support",
+      "narrative_role": "mae de Chupeta e ponto de humanidade, nunca refem",
+      "source_character_id": "dona_zefa",
+      "canon_refs": [
+        "data/narrative/canon_v3.json",
+        "data/narrative/narrative_v3_fixes_characters.json#dona_zefa"
+      ],
+      "atlas_id": "atlas08",
+      "image": "assets/candidates/characters/identity_v1/atlas08.png",
+      "row": 1,
+      "appearance_variant": "civil",
+      "frames": [
+        {
+          "direction": "front",
+          "source_rect": [
+            159,
+            369,
+            179,
+            338
+          ],
+          "content_rect": [
+            161,
+            371,
+            175,
+            334
+          ],
+          "segmentation": "isolated_opaque_body_component",
+          "measurement_alpha_threshold": 192,
+          "partial_alpha_fraction": 0.799379,
+          "source_edge_touch": false
+        },
+        {
+          "direction": "side_right",
+          "source_rect": [
+            472,
+            370,
+            214,
+            336
+          ],
+          "content_rect": [
+            474,
+            372,
+            210,
+            332
+          ],
+          "segmentation": "isolated_opaque_body_component",
+          "measurement_alpha_threshold": 192,
+          "partial_alpha_fraction": 0.566923,
+          "source_edge_touch": false
+        },
+        {
+          "direction": "back",
+          "source_rect": [
+            779,
+            369,
+            164,
+            336
+          ],
+          "content_rect": [
+            781,
+            371,
+            160,
+            332
+          ],
+          "segmentation": "isolated_opaque_body_component",
+          "measurement_alpha_threshold": 192,
+          "partial_alpha_fraction": 0.812482,
+          "source_edge_touch": false
+        }
+      ],
+      "preview_frame_px": [
+        128,
+        128
+      ],
+      "preview_pivot_px": [
+        64,
+        96
+      ],
+      "preview_body_height_px": 56,
+      "identity_master": "production/character_art_v1/identities/dona_zefa.json",
+      "palette_proposal": [
+        "#F0D0D0",
+        "#7090B0",
+        "#101010",
+        "#303030",
+        "#9090B0",
+        "#D0D0B0",
+        "#505050",
+        "#F0D0B0"
+      ],
+      "master_status": "PENDING",
+      "rights_status": "PENDING",
+      "human_review": "PENDING",
+      "animation_status": "NOT_AUTHORED",
+      "normalization_status": "PENDING_PIXEL_CLEANUP",
+      "shipping": false
+    },
+    {
+      "character_id": "mestre_quirino",
+      "aliases": [],
+      "display_name": "Mestre Quirino",
+      "kind": "support",
+      "narrative_role": "mestre de Zambiapunga",
+      "source_character_id": "mestre_quirino",
+      "canon_refs": [
+        "data/narrative/canon_v3.json",
+        "data/narrative/character_bible_v1.json#mestre_quirino"
+      ],
+      "atlas_id": "atlas08",
+      "image": "assets/candidates/characters/identity_v1/atlas08.png",
+      "row": 2,
+      "appearance_variant": "civil",
+      "frames": [
+        {
+          "direction": "front",
+          "source_rect": [
+            159,
+            711,
+            182,
+            369
+          ],
+          "content_rect": [
+            161,
+            713,
+            178,
+            365
+          ],
+          "segmentation": "isolated_opaque_body_component",
+          "measurement_alpha_threshold": 192,
+          "partial_alpha_fraction": 0.70014,
+          "source_edge_touch": false
+        },
+        {
+          "direction": "side_right",
+          "source_rect": [
+            505,
+            711,
+            95,
+            370
+          ],
+          "content_rect": [
+            507,
+            713,
+            91,
+            366
+          ],
+          "segmentation": "isolated_opaque_body_component",
+          "measurement_alpha_threshold": 192,
+          "partial_alpha_fraction": 0.83027,
+          "source_edge_touch": false
+        },
+        {
+          "direction": "back",
+          "source_rect": [
+            771,
+            711,
+            183,
+            369
+          ],
+          "content_rect": [
+            773,
+            713,
+            179,
+            365
+          ],
+          "segmentation": "isolated_opaque_body_component",
+          "measurement_alpha_threshold": 192,
+          "partial_alpha_fraction": 0.702075,
+          "source_edge_touch": false
+        }
+      ],
+      "preview_frame_px": [
+        128,
+        128
+      ],
+      "preview_pivot_px": [
+        64,
+        96
+      ],
+      "preview_body_height_px": 72,
+      "identity_master": "production/character_art_v1/identities/mestre_quirino.json",
+      "palette_proposal": [
+        "#303050",
+        "#907030",
+        "#905030",
+        "#B07030",
+        "#101010",
+        "#503010",
+        "#101030",
+        "#705030"
+      ],
+      "master_status": "PENDING",
+      "rights_status": "PENDING",
+      "human_review": "PENDING",
+      "animation_status": "NOT_AUTHORED",
+      "normalization_status": "PENDING_PIXEL_CLEANUP",
+      "shipping": false
+    },
+    {
+      "character_id": "seu_neco",
+      "aliases": [],
+      "display_name": "Seu Neco",
+      "kind": "support",
+      "narrative_role": "NPC de lore pescador",
+      "source_character_id": "seu_neco",
+      "canon_refs": [
+        "data/narrative/canon_v3.json",
+        "data/narrative/character_bible_v1.json#seu_neco"
+      ],
+      "atlas_id": "atlas08",
+      "image": "assets/candidates/characters/identity_v1/atlas08.png",
+      "row": 3,
+      "appearance_variant": "civil",
+      "frames": [
+        {
+          "direction": "front",
+          "source_rect": [
+            164,
+            1077,
+            182,
+            356
+          ],
+          "content_rect": [
+            166,
+            1079,
+            178,
+            352
+          ],
+          "segmentation": "isolated_opaque_body_component",
+          "measurement_alpha_threshold": 192,
+          "partial_alpha_fraction": 0.687153,
+          "source_edge_touch": false
+        },
+        {
+          "direction": "side_right",
+          "source_rect": [
+            499,
+            1081,
+            128,
+            355
+          ],
+          "content_rect": [
+            501,
+            1083,
+            124,
+            351
+          ],
+          "segmentation": "isolated_opaque_body_component",
+          "measurement_alpha_threshold": 192,
+          "partial_alpha_fraction": 0.723944,
+          "source_edge_touch": false
+        },
+        {
+          "direction": "back",
+          "source_rect": [
+            766,
+            1079,
+            177,
+            354
+          ],
+          "content_rect": [
+            768,
+            1081,
+            173,
+            350
+          ],
+          "segmentation": "isolated_opaque_body_component",
+          "measurement_alpha_threshold": 192,
+          "partial_alpha_fraction": 0.680743,
+          "source_edge_touch": false
+        }
+      ],
+      "preview_frame_px": [
+        128,
+        128
+      ],
+      "preview_pivot_px": [
+        64,
+        96
+      ],
+      "preview_body_height_px": 72,
+      "identity_master": "production/character_art_v1/identities/seu_neco.json",
+      "palette_proposal": [
+        "#303030",
+        "#905030",
+        "#101010",
+        "#507070",
+        "#505070",
+        "#703010",
+        "#301010",
+        "#503010"
+      ],
+      "master_status": "PENDING",
+      "rights_status": "PENDING",
+      "human_review": "PENDING",
+      "animation_status": "NOT_AUTHORED",
+      "normalization_status": "PENDING_PIXEL_CLEANUP",
+      "shipping": false
+    },
+    {
+      "character_id": "cigana_iara",
+      "aliases": [],
+      "display_name": "Cigana Iara",
+      "kind": "support",
+      "narrative_role": "NPC de lore simbolico",
+      "source_character_id": "cigana_iara",
+      "canon_refs": [
+        "data/narrative/canon_v3.json",
+        "data/narrative/character_bible_v1.json#cigana_iara"
+      ],
+      "atlas_id": "atlas09",
+      "image": "assets/candidates/characters/identity_v1/atlas09.png",
+      "row": 0,
+      "appearance_variant": "civil",
+      "frames": [
+        {
+          "direction": "front",
+          "source_rect": [
+            160,
+            14,
+            172,
+            356
+          ],
+          "content_rect": [
+            162,
+            16,
+            168,
+            352
+          ],
+          "segmentation": "isolated_opaque_body_component",
+          "measurement_alpha_threshold": 192,
+          "partial_alpha_fraction": 0.734469,
+          "source_edge_touch": false
+        },
+        {
+          "direction": "side_right",
+          "source_rect": [
+            482,
+            14,
+            116,
+            357
+          ],
+          "content_rect": [
+            484,
+            16,
+            112,
+            353
+          ],
+          "segmentation": "isolated_opaque_body_component",
+          "measurement_alpha_threshold": 192,
+          "partial_alpha_fraction": 0.77719,
+          "source_edge_touch": false
+        },
+        {
+          "direction": "back",
+          "source_rect": [
+            776,
+            13,
+            172,
+            357
+          ],
+          "content_rect": [
+            778,
+            15,
+            168,
+            353
+          ],
+          "segmentation": "isolated_opaque_body_component",
+          "measurement_alpha_threshold": 192,
+          "partial_alpha_fraction": 0.699238,
+          "source_edge_touch": false
+        }
+      ],
+      "preview_frame_px": [
+        128,
+        128
+      ],
+      "preview_pivot_px": [
+        64,
+        96
+      ],
+      "preview_body_height_px": 72,
+      "identity_master": "production/character_art_v1/identities/cigana_iara.json",
+      "palette_proposal": [
+        "#501010",
+        "#301010",
+        "#101010",
+        "#903030",
+        "#703030",
+        "#701030",
+        "#D07030",
+        "#503010"
+      ],
+      "master_status": "PENDING",
+      "rights_status": "PENDING",
+      "human_review": "PENDING",
+      "animation_status": "NOT_AUTHORED",
+      "normalization_status": "PENDING_PIXEL_CLEANUP",
+      "shipping": false
+    },
+    {
+      "character_id": "mae_santinha",
+      "aliases": [],
+      "display_name": "Mae Santinha",
+      "kind": "support",
+      "narrative_role": "NPC de cuidado comunitario",
+      "source_character_id": "mae_santinha",
+      "canon_refs": [
+        "data/narrative/canon_v3.json",
+        "data/narrative/character_bible_v1.json#mae_santinha"
+      ],
+      "atlas_id": "atlas09",
+      "image": "assets/candidates/characters/identity_v1/atlas09.png",
+      "row": 1,
+      "appearance_variant": "civil",
+      "frames": [
+        {
+          "direction": "front",
+          "source_rect": [
+            151,
+            379,
+            186,
+            344
+          ],
+          "content_rect": [
+            153,
+            381,
+            182,
+            340
+          ],
+          "segmentation": "isolated_opaque_body_component",
+          "measurement_alpha_threshold": 192,
+          "partial_alpha_fraction": 0.776319,
+          "source_edge_touch": false
+        },
+        {
+          "direction": "side_right",
+          "source_rect": [
+            471,
+            379,
+            156,
+            345
+          ],
+          "content_rect": [
+            473,
+            381,
+            152,
+            341
+          ],
+          "segmentation": "isolated_opaque_body_component",
+          "measurement_alpha_threshold": 192,
+          "partial_alpha_fraction": 0.756132,
+          "source_edge_touch": false
+        },
+        {
+          "direction": "back",
+          "source_rect": [
+            767,
+            378,
+            193,
+            345
+          ],
+          "content_rect": [
+            769,
+            380,
+            189,
+            341
+          ],
+          "segmentation": "isolated_opaque_body_component",
+          "measurement_alpha_threshold": 192,
+          "partial_alpha_fraction": 0.748232,
+          "source_edge_touch": false
+        }
+      ],
+      "preview_frame_px": [
+        128,
+        128
+      ],
+      "preview_pivot_px": [
+        64,
+        96
+      ],
+      "preview_body_height_px": 72,
+      "identity_master": "production/character_art_v1/identities/mae_santinha.json",
+      "palette_proposal": [
+        "#103070",
+        "#103050",
+        "#F0D0B0",
+        "#303070",
+        "#D0B090",
+        "#101010",
+        "#101030",
+        "#305070"
+      ],
+      "master_status": "PENDING",
+      "rights_status": "PENDING",
+      "human_review": "PENDING",
+      "animation_status": "NOT_AUTHORED",
+      "normalization_status": "PENDING_PIXEL_CLEANUP",
+      "shipping": false
+    },
+    {
+      "character_id": "nego_mare",
+      "aliases": [],
+      "display_name": "Nego Mare",
+      "kind": "support",
+      "narrative_role": "NPC barqueiro",
+      "source_character_id": "nego_mare",
+      "canon_refs": [
+        "data/narrative/canon_v3.json",
+        "data/narrative/character_bible_v1.json#nego_mare"
+      ],
+      "atlas_id": "atlas09",
+      "image": "assets/candidates/characters/identity_v1/atlas09.png",
+      "row": 2,
+      "appearance_variant": "civil",
+      "frames": [
+        {
+          "direction": "front",
+          "source_rect": [
+            129,
+            729,
+            214,
+            355
+          ],
+          "content_rect": [
+            131,
+            731,
+            210,
+            351
+          ],
+          "segmentation": "isolated_opaque_body_component",
+          "measurement_alpha_threshold": 192,
+          "partial_alpha_fraction": 0.659313,
+          "source_edge_touch": false
+        },
+        {
+          "direction": "side_right",
+          "source_rect": [
+            492,
+            731,
+            102,
+            353
+          ],
+          "content_rect": [
+            494,
+            733,
+            98,
+            349
+          ],
+          "segmentation": "isolated_opaque_body_component",
+          "measurement_alpha_threshold": 192,
+          "partial_alpha_fraction": 0.810782,
+          "source_edge_touch": false
+        },
+        {
+          "direction": "back",
+          "source_rect": [
+            766,
+            729,
+            209,
+            355
+          ],
+          "content_rect": [
+            768,
+            731,
+            205,
+            351
+          ],
+          "segmentation": "isolated_opaque_body_component",
+          "measurement_alpha_threshold": 192,
+          "partial_alpha_fraction": 0.671056,
+          "source_edge_touch": false
+        }
+      ],
+      "preview_frame_px": [
+        128,
+        128
+      ],
+      "preview_pivot_px": [
+        64,
+        96
+      ],
+      "preview_body_height_px": 72,
+      "identity_master": "production/character_art_v1/identities/nego_mare.json",
+      "palette_proposal": [
+        "#303050",
+        "#705030",
+        "#101010",
+        "#503010",
+        "#703010",
+        "#103030",
+        "#905010",
+        "#101030"
+      ],
+      "master_status": "PENDING",
+      "rights_status": "PENDING",
+      "human_review": "PENDING",
+      "animation_status": "NOT_AUTHORED",
+      "normalization_status": "PENDING_PIXEL_CLEANUP",
+      "shipping": false
+    },
+    {
+      "character_id": "caique",
+      "aliases": [],
+      "display_name": "Caique",
+      "kind": "support",
+      "narrative_role": "NPC pescador/barqueiro",
+      "source_character_id": "caique",
+      "canon_refs": [
+        "data/narrative/canon_v3.json",
+        "data/narrative/character_bible_v1.json#caique"
+      ],
+      "atlas_id": "atlas09",
+      "image": "assets/candidates/characters/identity_v1/atlas09.png",
+      "row": 3,
+      "appearance_variant": "civil",
+      "frames": [
+        {
+          "direction": "front",
+          "source_rect": [
+            155,
+            1086,
+            188,
+            351
+          ],
+          "content_rect": [
+            157,
+            1088,
+            184,
+            347
+          ],
+          "segmentation": "isolated_opaque_body_component",
+          "measurement_alpha_threshold": 192,
+          "partial_alpha_fraction": 0.639889,
+          "source_edge_touch": false
+        },
+        {
+          "direction": "side_right",
+          "source_rect": [
+            504,
+            1087,
+            89,
+            351
+          ],
+          "content_rect": [
+            506,
+            1089,
+            85,
+            347
+          ],
+          "segmentation": "isolated_opaque_body_component",
+          "measurement_alpha_threshold": 192,
+          "partial_alpha_fraction": 0.780115,
+          "source_edge_touch": false
+        },
+        {
+          "direction": "back",
+          "source_rect": [
+            772,
+            1085,
+            187,
+            351
+          ],
+          "content_rect": [
+            774,
+            1087,
+            183,
+            347
+          ],
+          "segmentation": "isolated_opaque_body_component",
+          "measurement_alpha_threshold": 192,
+          "partial_alpha_fraction": 0.643265,
+          "source_edge_touch": false
+        }
+      ],
+      "preview_frame_px": [
+        128,
+        128
+      ],
+      "preview_pivot_px": [
+        64,
+        96
+      ],
+      "preview_body_height_px": 72,
+      "identity_master": "production/character_art_v1/identities/caique.json",
+      "palette_proposal": [
+        "#505050",
+        "#709070",
+        "#101010",
+        "#709090",
+        "#507070",
+        "#B05030",
+        "#303030",
+        "#503030"
+      ],
+      "master_status": "PENDING",
+      "rights_status": "PENDING",
+      "human_review": "PENDING",
+      "animation_status": "NOT_AUTHORED",
+      "normalization_status": "PENDING_PIXEL_CLEANUP",
+      "shipping": false
+    },
+    {
+      "character_id": "ze_de_barro",
+      "aliases": [],
+      "display_name": "Ze de Barro",
+      "kind": "support",
+      "narrative_role": "NPC de oficios e memoria",
+      "source_character_id": "ze_de_barro",
+      "canon_refs": [
+        "data/narrative/canon_v3.json",
+        "data/narrative/character_bible_v1.json#ze_de_barro"
+      ],
+      "atlas_id": "atlas10",
+      "image": "assets/candidates/characters/identity_v1/atlas10.png",
+      "row": 0,
+      "appearance_variant": "civil",
+      "frames": [
+        {
+          "direction": "front",
+          "source_rect": [
+            177,
+            13,
+            202,
+            393
+          ],
+          "content_rect": [
+            179,
+            15,
+            198,
+            389
+          ],
+          "segmentation": "isolated_opaque_body_component",
+          "measurement_alpha_threshold": 192,
+          "partial_alpha_fraction": 0.686519,
+          "source_edge_touch": false
+        },
+        {
+          "direction": "side_right",
+          "source_rect": [
+            574,
+            13,
+            100,
+            393
+          ],
+          "content_rect": [
+            576,
+            15,
+            96,
+            389
+          ],
+          "segmentation": "isolated_opaque_body_component",
+          "measurement_alpha_threshold": 192,
+          "partial_alpha_fraction": 0.816107,
+          "source_edge_touch": false
+        },
+        {
+          "direction": "back",
+          "source_rect": [
+            875,
+            13,
+            197,
+            393
+          ],
+          "content_rect": [
+            877,
+            15,
+            193,
+            389
+          ],
+          "segmentation": "isolated_opaque_body_component",
+          "measurement_alpha_threshold": 192,
+          "partial_alpha_fraction": 0.714315,
+          "source_edge_touch": false
+        }
+      ],
+      "preview_frame_px": [
+        128,
+        128
+      ],
+      "preview_pivot_px": [
+        64,
+        96
+      ],
+      "preview_body_height_px": 72,
+      "identity_master": "production/character_art_v1/identities/ze_de_barro.json",
+      "palette_proposal": [
+        "#505030",
+        "#101010",
+        "#D09050",
+        "#303030",
+        "#905030",
+        "#303010",
+        "#503010",
+        "#301010"
+      ],
+      "master_status": "PENDING",
+      "rights_status": "PENDING",
+      "human_review": "PENDING",
+      "animation_status": "NOT_AUTHORED",
+      "normalization_status": "PENDING_PIXEL_CLEANUP",
+      "shipping": false
+    },
+    {
+      "character_id": "dr_sombra",
+      "aliases": [],
+      "display_name": "Dr. Sombra",
+      "kind": "support",
+      "narrative_role": "especulador ficcional",
+      "source_character_id": "dr_sombra",
+      "canon_refs": [
+        "data/narrative/canon_v3.json",
+        "data/narrative/character_bible_v1.json#dr_sombra"
+      ],
+      "atlas_id": "atlas10",
+      "image": "assets/candidates/characters/identity_v1/atlas10.png",
+      "row": 1,
+      "appearance_variant": "civil",
+      "frames": [
+        {
+          "direction": "front",
+          "source_rect": [
+            172,
+            425,
+            205,
+            405
+          ],
+          "content_rect": [
+            174,
+            427,
+            201,
+            401
+          ],
+          "segmentation": "isolated_opaque_body_component",
+          "measurement_alpha_threshold": 192,
+          "partial_alpha_fraction": 0.642373,
+          "source_edge_touch": false
+        },
+        {
+          "direction": "side_right",
+          "source_rect": [
+            575,
+            425,
+            102,
+            406
+          ],
+          "content_rect": [
+            577,
+            427,
+            98,
+            402
+          ],
+          "segmentation": "isolated_opaque_body_component",
+          "measurement_alpha_threshold": 192,
+          "partial_alpha_fraction": 0.782817,
+          "source_edge_touch": false
+        },
+        {
+          "direction": "back",
+          "source_rect": [
+            886,
+            425,
+            183,
+            405
+          ],
+          "content_rect": [
+            888,
+            427,
+            179,
+            401
+          ],
+          "segmentation": "isolated_opaque_body_component",
+          "measurement_alpha_threshold": 192,
+          "partial_alpha_fraction": 0.695149,
+          "source_edge_touch": false
+        }
+      ],
+      "preview_frame_px": [
+        128,
+        128
+      ],
+      "preview_pivot_px": [
+        64,
+        96
+      ],
+      "preview_body_height_px": 72,
+      "identity_master": "production/character_art_v1/identities/dr_sombra.json",
+      "palette_proposal": [
+        "#303030",
+        "#101010",
+        "#301010",
+        "#301030",
+        "#503030",
+        "#505050",
+        "#707050",
+        "#909050"
+      ],
+      "master_status": "PENDING",
+      "rights_status": "PENDING",
+      "human_review": "PENDING",
+      "animation_status": "NOT_AUTHORED",
+      "normalization_status": "PENDING_PIXEL_CLEANUP",
+      "shipping": false
+    },
+    {
+      "character_id": "george_chupeta",
+      "aliases": [],
+      "display_name": "George 'Chupeta'",
+      "kind": "support",
+      "narrative_role": "antagonista humano da rede e ex-aluno de Dende",
+      "source_character_id": "george_chupeta",
+      "canon_refs": [
+        "data/narrative/canon_v3.json",
+        "data/narrative/narrative_v3_fixes_characters.json#george_chupeta"
+      ],
+      "atlas_id": "atlas10",
+      "image": "assets/candidates/characters/identity_v1/atlas10.png",
+      "row": 2,
+      "appearance_variant": "civil",
+      "frames": [
+        {
+          "direction": "front",
+          "source_rect": [
+            178,
+            844,
+            201,
+            396
+          ],
+          "content_rect": [
+            180,
+            846,
+            197,
+            392
+          ],
+          "segmentation": "isolated_opaque_body_component",
+          "measurement_alpha_threshold": 192,
+          "partial_alpha_fraction": 0.643148,
+          "source_edge_touch": false
+        },
+        {
+          "direction": "side_right",
+          "source_rect": [
+            573,
+            844,
+            107,
+            399
+          ],
+          "content_rect": [
+            575,
+            846,
+            103,
+            395
+          ],
+          "segmentation": "isolated_opaque_body_component",
+          "measurement_alpha_threshold": 192,
+          "partial_alpha_fraction": 0.757876,
+          "source_edge_touch": false
+        },
+        {
+          "direction": "back",
+          "source_rect": [
+            873,
+            843,
+            202,
+            397
+          ],
+          "content_rect": [
+            875,
+            845,
+            198,
+            393
+          ],
+          "segmentation": "isolated_opaque_body_component",
+          "measurement_alpha_threshold": 192,
+          "partial_alpha_fraction": 0.668192,
+          "source_edge_touch": false
+        }
+      ],
+      "preview_frame_px": [
+        128,
+        128
+      ],
+      "preview_pivot_px": [
+        64,
+        96
+      ],
+      "preview_body_height_px": 72,
+      "identity_master": "production/character_art_v1/identities/george_chupeta.json",
+      "palette_proposal": [
+        "#303030",
+        "#101010",
+        "#301010",
+        "#301030",
+        "#501010",
+        "#701030",
+        "#905010",
+        "#B05030"
+      ],
+      "master_status": "PENDING",
+      "rights_status": "PENDING",
+      "human_review": "PENDING",
+      "animation_status": "NOT_AUTHORED",
+      "normalization_status": "PENDING_PIXEL_CLEANUP",
+      "shipping": false
+    }
+  ]
+}

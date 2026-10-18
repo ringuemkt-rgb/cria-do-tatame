@@ -85,3 +85,5 @@ Use um destes estados no início de documentos novos quando o contexto não for 
 - `ARCHIVED` — histórico, não orienta implementação.
 
 Prompts, relatórios antigos, concept arts e branches não são automaticamente fontes canônicas.
+
+- [`art/CHARACTER_IDENTITY_ATLASES_V1.md`](art/CHARACTER_IDENTITY_ATLASES_V1.md) — 39 identidades candidatas, 117 vistas e visualizador de autoria Godot; não shipping.

@@ -1,0 +1,47 @@
+{
+  "character_id": "ruan_macacao",
+  "canon_refs": [
+    "data/narrative/canon_v3.json",
+    "data/narrative/character_bible_v1.json#ruan_macacao",
+    "data/combat/roster_v3.json#ruan_macacao"
+  ],
+  "master_status": "PENDING",
+  "palette_signature": {
+    "colors": [
+      "#F0D0B0",
+      "#D0B090",
+      "#101010",
+      "#B09070",
+      "#F0F0D0",
+      "#905030",
+      "#D0D0B0",
+      "#301010"
+    ],
+    "notes": "Sampled proposal; no pixel palette normalization."
+  },
+  "silhouette_signature": {
+    "reference_asset": "assets/candidates/characters/identity_v1/atlas01.png",
+    "body_ratio_notes": "compacta, pesada, centro de gravidade baixo"
+  },
+  "asymmetry_contract": {
+    "horizontal_mirror_safe": false,
+    "notes": "Use authored right-facing view only. Review patches, props, knee support, towel and grips before authoring left."
+  },
+  "variants": {
+    "gi": {
+      "turnaround": "assets/candidates/characters/identity_v1/atlas01.png",
+      "front_combat_pose": null,
+      "back_view": "assets/candidates/characters/identity_v1/atlas01.png",
+      "side_view": "assets/candidates/characters/identity_v1/atlas01.png"
+    },
+    "nogi": {
+      "turnaround": null,
+      "front_combat_pose": null,
+      "back_view": null,
+      "side_view": null
+    }
+  },
+  "human_reviewer": null,
+  "rights_status": "PENDING",
+  "shipping": false
+}

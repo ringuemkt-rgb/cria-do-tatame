@@ -1,0 +1,46 @@
+{
+  "character_id": "dandara",
+  "canon_refs": [
+    "data/narrative/canon_v3.json",
+    "data/narrative/character_bible_v1.json#dandara"
+  ],
+  "master_status": "PENDING",
+  "palette_signature": {
+    "colors": [
+      "#303050",
+      "#101010",
+      "#303030",
+      "#B0D0F0",
+      "#D07030",
+      "#90B0D0",
+      "#301010",
+      "#101030"
+    ],
+    "notes": "Sampled proposal; no pixel palette normalization."
+  },
+  "silhouette_signature": {
+    "reference_asset": "assets/candidates/characters/identity_v1/atlas06.png",
+    "body_ratio_notes": "pequena e muito legivel"
+  },
+  "asymmetry_contract": {
+    "horizontal_mirror_safe": false,
+    "notes": "Use authored right-facing view only. Review patches, props, knee support, towel and grips before authoring left."
+  },
+  "variants": {
+    "gi": {
+      "turnaround": null,
+      "front_combat_pose": null,
+      "back_view": null,
+      "side_view": null
+    },
+    "nogi": {
+      "turnaround": null,
+      "front_combat_pose": null,
+      "back_view": null,
+      "side_view": null
+    }
+  },
+  "human_reviewer": null,
+  "rights_status": "PENDING",
+  "shipping": false
+}
