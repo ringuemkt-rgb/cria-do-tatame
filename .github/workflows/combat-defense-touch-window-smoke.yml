@@ -1,0 +1,28 @@
+name: Combat defense touch window
+on:
+  pull_request:
+    paths:
+      - 'scenes/ui/CombatDeckHUD.gd'
+      - 'scenes/ui/CombatDeckHUD.tscn'
+      - 'scenes/combat/CombatArenaBase.gd'
+      - 'tests/combat_defense_touch_window_smoke.gd'
+      - '.github/workflows/combat-defense-touch-window-smoke.yml'
+  workflow_dispatch:
+jobs:
+  defense-touch:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    strategy:
+      fail-fast: false
+      matrix:
+        godot: ['4.2.2', '4.3.0']
+    steps:
+      - uses: actions/checkout@v4
+      - uses: chickensoft-games/setup-godot@v2
+        with:
+          version: ${{ matrix.godot }}
+          use-dotnet: false
+      - name: Import Godot project
+        run: godot --headless --editor --path . --quit
+      - name: Exercise timed defense buttons
+        run: godot --headless --path . --script res://tests/combat_defense_touch_window_smoke.gd
