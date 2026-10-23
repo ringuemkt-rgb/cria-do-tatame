@@ -24,8 +24,14 @@ func _run() -> void:
 	root.add_child(hud)
 	await process_frame
 	var selected: Array[String] = []
+	var bus: Node = root.get_node_or_null("SignalBus")
+	_check(bus != null, "canonical SignalBus autoload exists")
+	if bus == null:
+		hud.queue_free()
+		_finish()
+		return
 	var on_choice: Callable = func(id): selected.append(str(id))
-	SignalBus.combat_v2_defense_selected.connect(on_choice)
+	bus.connect("combat_v2_defense_selected", on_choice)
 
 	hud.call("set_actions_enabled", false)
 	hud.call("open_defense_window", [
@@ -47,7 +53,7 @@ func _run() -> void:
 	hud.call("close_defense_window")
 	first.pressed.emit()
 	_check(selected.size() == 1, "closed defense window cannot emit another defense")
-	SignalBus.combat_v2_defense_selected.disconnect(on_choice)
+	bus.disconnect("combat_v2_defense_selected", on_choice)
 	hud.queue_free()
 	await process_frame
 	_finish()
