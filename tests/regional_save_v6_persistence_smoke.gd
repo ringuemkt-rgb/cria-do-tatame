@@ -55,7 +55,10 @@ func _run() -> void:
 		else:
 			valid = false
 		if not valid:
-			push_error("regional migration regression at v%d" % version)
+			var regional_debug: Dictionary = parsed.get("world_map_state", {}) if typeof(parsed) == TYPE_DICTIONARY else {}
+			var backup_debug: Variant = JSON.parse_string(FileAccess.get_file_as_string(backup)) if FileAccess.file_exists(backup) else {}
+			var previous_map: Dictionary = backup_debug.get("world_map_state", {}) if typeof(backup_debug) == TYPE_DICTIONARY else {}
+			push_error("regional migration regression v%d: loaded=%s map=%s backup_exists=%s backup_map=%s" % [version, str(loaded), JSON.stringify(regional_debug), str(FileAccess.file_exists(backup)), JSON.stringify(previous_map)])
 		for candidate in [path, backup, temp]:
 			if FileAccess.file_exists(candidate):
 				DirAccess.remove_absolute(candidate)
@@ -63,7 +66,6 @@ func _run() -> void:
 		progression.load_from_dict(original_progression)
 		map.load_from_dict(original_map)
 		if not valid:
-			push_error("regional migration regression at v%d: loaded=%s persisted=%s backup_exists=%s" % [version, str(loaded), JSON.stringify(parsed), str(FileAccess.file_exists(backup))])
 			failed = true
 			break
 	if failed:
