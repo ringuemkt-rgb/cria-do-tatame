@@ -38,6 +38,7 @@ func _run() -> void:
 			break
 		file.store_string(JSON.stringify(fixture))
 		file.close()
+		var original_bytes: String = FileAccess.get_file_as_string(path)
 		var loaded: bool = save.load_game(slot)
 		var parsed: Variant = JSON.parse_string(FileAccess.get_file_as_string(path))
 		var valid := loaded and typeof(parsed) == TYPE_DICTIONARY
@@ -51,14 +52,14 @@ func _run() -> void:
 		valid = valid and not map.can_travel_to("salvador") and not map.can_travel_to("itacare")
 		if FileAccess.file_exists(backup):
 			var previous: Variant = JSON.parse_string(FileAccess.get_file_as_string(backup))
-			valid = valid and typeof(previous) == TYPE_DICTIONARY and previous.get("world_map_state", {}) == history
+			valid = valid and typeof(previous) == TYPE_DICTIONARY and FileAccess.get_file_as_string(backup) == original_bytes
 		else:
 			valid = false
 		if not valid:
 			var regional_debug: Dictionary = parsed.get("world_map_state", {}) if typeof(parsed) == TYPE_DICTIONARY else {}
 			var backup_debug: Variant = JSON.parse_string(FileAccess.get_file_as_string(backup)) if FileAccess.file_exists(backup) else {}
 			var previous_map: Dictionary = backup_debug.get("world_map_state", {}) if typeof(backup_debug) == TYPE_DICTIONARY else {}
-			push_error("regional migration regression v%d: loaded=%s map=%s backup_exists=%s backup_map=%s" % [version, str(loaded), JSON.stringify(regional_debug), str(FileAccess.file_exists(backup)), JSON.stringify(previous_map)])
+			push_error("regional migration regression v%d: loaded=%s map=%s backup_exists=%s backup_bytes_unchanged=%s backup_map=%s external_travel=%s" % [version, str(loaded), JSON.stringify(regional_debug), str(FileAccess.file_exists(backup)), str(FileAccess.file_exists(backup) and FileAccess.get_file_as_string(backup) == original_bytes), JSON.stringify(previous_map), str(map.can_travel_to("salvador") or map.can_travel_to("itacare"))])
 		for candidate in [path, backup, temp]:
 			if FileAccess.file_exists(candidate):
 				DirAccess.remove_absolute(candidate)
