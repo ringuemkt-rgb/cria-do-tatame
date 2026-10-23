@@ -18,7 +18,7 @@ func _run() -> void:
 	var original_progression: Dictionary = progression.to_dict()
 	var failed := false
 	for version in [5, 6]:
-		var slot := -int(Time.get_ticks_usec()) - version
+		var slot: int = -int(Time.get_ticks_usec()) - int(version)
 		var path: String = save.get_slot_path(slot)
 		var backup := path + ".bak"
 		var temp := path + ".tmp"
