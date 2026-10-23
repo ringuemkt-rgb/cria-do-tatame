@@ -1,0 +1,23 @@
+name: Regional save v6 regression
+on:
+  pull_request:
+    paths:
+      - 'src/autoloads/SaveManager.gd'
+      - 'src/autoloads/WorldMapManager.gd'
+      - 'tests/regional_save_v6_persistence_smoke.gd'
+      - '.github/workflows/regional-save-v6-smoke.yml'
+  workflow_dispatch:
+jobs:
+  regional-save:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: chickensoft-games/setup-godot@v2
+        with:
+          version: 4.3.0
+          use-dotnet: false
+      - name: Import Godot project
+        run: godot --headless --editor --path . --quit
+      - name: Check regional save migrations
+        run: godot --headless --path . --script res://tests/regional_save_v6_persistence_smoke.gd
