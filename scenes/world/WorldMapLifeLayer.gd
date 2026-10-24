@@ -14,6 +14,10 @@ var _time := 0.0
 var _map_data: Dictionary = {}
 var _life_contract: Dictionary = {}
 var _base_art_by_page: Dictionary = {}
+# Godot can emit a synthetic mouse click after a native screen touch.
+# Ignore only that duplicate so a page switch cannot trigger a second marker.
+var _last_touch_msec := -10000
+var _last_touch_position := Vector2(-10000.0, -10000.0)
 
 func _ready() -> void:
 	_load_contracts()
@@ -26,9 +30,23 @@ func _process(delta: float) -> void:
 		queue_redraw()
 
 func _gui_input(event: InputEvent) -> void:
-	if not (event is InputEventMouseButton) or not event.pressed or event.button_index != MOUSE_BUTTON_LEFT:
+	var local_position: Vector2
+	if event is InputEventScreenTouch:
+		if not event.pressed:
+			return
+		local_position = event.position
+		_last_touch_position = local_position
+		_last_touch_msec = Time.get_ticks_msec()
+	elif event is InputEventMouseButton:
+		if not event.pressed or event.button_index != MOUSE_BUTTON_LEFT:
+			return
+		local_position = event.position
+		# A synthetic mouse press follows the touch at the same location.
+		if Time.get_ticks_msec() - _last_touch_msec < 250 and local_position.distance_to(_last_touch_position) <= 24.0:
+			return
+	else:
 		return
-	var hit := _find_hit(event.position)
+	var hit := _find_hit(local_position)
 	if hit.is_empty():
 		return
 	if hit.has("target_page"):
@@ -114,7 +132,8 @@ func _draw() -> void:
 		_draw_regional_anchors()
 	else:
 		_draw_page_nodes()
-	_draw_map_header(bounds)
+	# The current page name is already in HUD/LeftPanel/PageIndex above the map.
+	# An opaque map plaque hid playable badges near the upper-left corner.
 
 func _draw_map_backdrop(bounds: Rect2) -> void:
 	draw_rect(bounds.grow(-18.0), Color("0c4157"))
@@ -213,15 +232,6 @@ func _draw_ornamental_frame(bounds: Rect2) -> void:
 	var frame := bounds.grow(-12.0)
 	draw_rect(frame, Color("e2c46e"), false, 3.0)
 	for corner in [frame.position, Vector2(frame.end.x, frame.position.y), Vector2(frame.position.x, frame.end.y), frame.end]: draw_circle(corner, 8.0, Color("e2c46e"))
-
-func _draw_map_header(bounds: Rect2) -> void:
-	var page_name := "Baixo Sul"
-	for page_value in _map_data.get("pages", []):
-		if str(page_value.get("id", "")) == active_page_id: page_name = str(page_value.get("nome", page_name))
-	var plaque := Rect2(bounds.position + Vector2(34.0, 30.0), Vector2(345.0, 56.0))
-	draw_rect(plaque, Color(0.02, 0.04, 0.05, 0.88))
-	draw_rect(plaque, Color("e2c46e"), false, 2.0)
-	draw_string(ThemeDB.fallback_font, plaque.position + Vector2(16.0, 35.0), "MAPA • %s" % page_name.to_upper(), HORIZONTAL_ALIGNMENT_LEFT, -1.0, 20, Color("f7e8ad"))
 
 func _find_hit(local: Vector2) -> Dictionary:
 	# Nearby overview anchors overlap at 1280x720. Select the nearest hit,
