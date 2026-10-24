@@ -28,6 +28,20 @@ func advance_to(step_id: String) -> void:
 	current_step = step_id
 	flow_step_changed.emit(step_id)
 
+func complete_step(step_id: String) -> bool:
+	if step_id.strip_edges() == "":
+		return false
+	var changed := false
+	if not completed_steps.has(step_id):
+		completed_steps.append(step_id)
+		changed = true
+	if current_step != step_id:
+		current_step = step_id
+		changed = true
+	if changed:
+		flow_step_changed.emit(step_id)
+	return changed
+
 func set_act(act_id: String) -> void:
 	current_act = act_id
 	act_changed.emit(act_id)
@@ -43,7 +57,7 @@ func next_recommended_action() -> Dictionary:
 		if not completed_steps.has("intro_terreiro"):
 			return {"type": "cutscene", "id": "intro_terreiro"}
 		if not completed_steps.has("primeiro_treino_basico"):
-			return {"type": "training", "id": "repeticao_drill"}
+			return {"type": "training", "id": "rolagem_tecnica"}
 		if not completed_steps.has("primeira_luta_davi"):
 			return {"type": "combat", "opponent": "davi_relampago", "arena": "terreiro_da_luta"}
 		if not completed_steps.has("primeiro_post_cria_live"):
