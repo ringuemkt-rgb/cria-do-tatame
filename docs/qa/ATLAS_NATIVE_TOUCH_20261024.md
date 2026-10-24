@@ -7,6 +7,7 @@
 1. `WorldMapLifeLayer._gui_input()` aceitava somente `InputEventMouseButton`. Em Android, `InputEventScreenTouch` é um evento nativo e a emulação de mouse pode estar desativada; o toque no atlas precisava funcionar diretamente.
 2. Quando o dispositivo gera um mouse sintético logo após um toque, o mesmo gesto poderia acionar duas vezes a seleção ou navegar para outra página. O atlas agora descarta apenas o mouse pressionado no mesmo ponto (24 px) nos 250 ms seguintes ao toque nativo. O clique de mouse independente continua suportado.
 3. A placa opaca de título era desenhada **sobre** os nós do canto superior esquerdo, inclusive `pancada_grande` na página 02. O título da página já existe no `HUD/LeftPanel/PageIndex`, fora do canvas. Remover a placa duplicada mantém o emblema visível sem mudar posições dos dados.
+4. O smoke revelou um defeito adicional de layout: após focar um nó, o texto de detalhes expandia a grade superior e seus botões invadiam o canvas. A cena agora reserva uma faixa superior maior e reposiciona o rodapé de viagem, mantendo um canvas de ~392 px no viewport 1280×720, sem alterar coordenadas de conteúdo.
 
 ## Consumidor e regressão
 
