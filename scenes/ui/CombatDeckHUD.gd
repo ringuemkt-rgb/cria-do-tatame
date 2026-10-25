@@ -33,7 +33,9 @@ func _ready() -> void:
 	_on_hand_changed(DeckManager.get_hand(), DeckManager.selected_card_id)
 
 func _on_hand_changed(hand: Array, selected_card_id: String) -> void:
-	if defense_mode:
+	# Legacy deck signals may still arrive during a V2 fight. Never replace
+	# the authoritative technique hand or the active defense choices.
+	if defense_mode or v2_mode:
 		return
 	for index in range(card_buttons.size()):
 		var button := card_buttons[index]
@@ -53,7 +55,7 @@ func _on_hand_changed(hand: Array, selected_card_id: String) -> void:
 			int(cost.get("gas", 0))
 		]
 		button.set_meta("card_id", card_id)
-		button.disabled = not _is_compatible(card)
+		button.disabled = not _actions_enabled or not _is_compatible(card)
 		button.modulate = Color("ffd45a") if card_id == selected_card_id else Color.WHITE
 
 func _on_card_pressed(index: int) -> void:
