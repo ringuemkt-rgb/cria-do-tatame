@@ -158,7 +158,7 @@ func open_defense_window(options: Array, seconds: float) -> void:
 		button.modulate = Color.WHITE
 
 func set_defense_window_remaining(seconds: float) -> void:
-	if defense_mode:
+	if defense_mode and not _defense_choice_submitted:
 		$Panel/Layout/Header/Clash.text = "JANELA %.1fs" % maxf(0.0, seconds)
 
 func close_defense_window() -> void:
