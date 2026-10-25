@@ -55,6 +55,8 @@ func _run() -> void:
 	first.pressed.emit()
 	_check(selected.size() == 1 and selected[0] == "defesa_frame_qa", "first press emits one defense")
 	_check(first.disabled and third.disabled, "all defense buttons lock after selection")
+	hud.call("set_defense_window_remaining", 0.5)
+	_check(str(hud.get_node("Panel/Layout/Header/Clash").text) == "DEFESA ENVIADA", "submitted feedback survives countdown update")
 	first.pressed.emit()
 	third.pressed.emit()
 	hud.call("_on_card_pressed", 2)
