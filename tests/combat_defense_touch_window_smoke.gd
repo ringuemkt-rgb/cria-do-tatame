@@ -33,6 +33,24 @@ func _run() -> void:
 	var on_choice: Callable = func(id): selected.append(str(id))
 	bus.connect("combat_v2_defense_selected", on_choice)
 
+	# A legacy deck refresh must respect a locked turn and must not replace
+	# the V2 technique hand once combat switches modes.
+	var legacy_card: Dictionary = {"id": "legacy_card_qa", "name": "Legacy QA", "activation_cost": {}, "level": 1}
+	var legacy_button := hud.get_node("Panel/Layout/Cards/Card1") as Button
+	hud.call("_on_hand_changed", [legacy_card], "")
+	_check(not legacy_button.disabled, "legacy card is usable on an unlocked turn")
+	hud.call("set_actions_enabled", false)
+	hud.call("_on_hand_changed", [legacy_card], "")
+	_check(legacy_button.disabled, "legacy hand refresh cannot visually unlock the AI turn")
+	hud.call("set_actions_enabled", true)
+	hud.call("_on_hand_changed", [legacy_card], "")
+	_check(not legacy_button.disabled, "legacy hand is restored when the turn unlocks")
+	hud.call("_on_v2_hand_changed", ["v2_technique_qa"])
+	_check(str(legacy_button.get_meta("card_id", "")) == "v2_technique_qa", "V2 technique binds to HUD")
+	hud.call("_on_hand_changed", [legacy_card], "")
+	_check(str(legacy_button.get_meta("card_id", "")) == "v2_technique_qa", "late legacy hand cannot replace V2 technique")
+	_check(hud.get("v2_hand") == ["v2_technique_qa"], "V2 hand remains authoritative")
+
 	hud.call("set_actions_enabled", false)
 	hud.call("open_defense_window", [
 		{"id": "defesa_frame_qa", "name": "Frame"},
