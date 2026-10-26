@@ -90,6 +90,40 @@ func _run() -> void:
 	first.pressed.emit()
 	_check(selected.size() == 2 and selected[1] == "defesa_esquiva_qa", "new window emits exactly one new defense")
 	hud.call("close_defense_window")
+
+	# The V2 hand exposes six buttons; keyboard actions 4-6 must be bound
+	# and use the same guarded path as native touch, including defense locks.
+	for slot in range(4, 7):
+		var action := StringName("deck_card_%d" % slot)
+		_check(InputMap.has_action(action), "shortcut for card %d registered" % slot)
+		var bound := false
+		for input_event in InputMap.action_get_events(action):
+			if input_event is InputEventKey and input_event.physical_keycode == KEY_1 + slot - 1:
+				bound = true
+		_check(bound, "card %d has physical number-key binding" % slot)
+		var six_options: Array = []
+		for option_slot in range(1, 7):
+			six_options.append({"id": "defense_slot_%d" % option_slot, "name": "Base"})
+		hud.call("open_defense_window", six_options, 1.0)
+		var before := selected.size()
+		var shortcut := InputEventAction.new()
+		shortcut.action = action
+		shortcut.pressed = true
+		hud.call("_unhandled_input", shortcut)
+		_check(selected.size() == before + 1 and selected[-1] == "defense_slot_%d" % slot, "slot %d selects the matching defense" % slot)
+		hud.call("_unhandled_input", shortcut)
+		_check(selected.size() == before + 1, "slot %d cannot submit twice in one reaction" % slot)
+		hud.call("close_defense_window")
+
+	# Empty and disabled slots must never become actions through shortcuts.
+	hud.call("open_defense_window", [{"id": "only_one", "name": "Frame"}], 1.0)
+	var before_invalid := selected.size()
+	var missing_shortcut := InputEventAction.new()
+	missing_shortcut.action = "deck_card_6"
+	missing_shortcut.pressed = true
+	hud.call("_unhandled_input", missing_shortcut)
+	_check(selected.size() == before_invalid, "unavailable sixth defense shortcut is ignored")
+	hud.call("close_defense_window")
 	bus.disconnect("combat_v2_defense_selected", on_choice)
 	hud.queue_free()
 	await process_frame
