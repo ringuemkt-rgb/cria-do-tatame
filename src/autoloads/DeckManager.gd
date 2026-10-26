@@ -366,10 +366,15 @@ func _on_belt_promoted(new_belt) -> void:
 		SignalBus.deck_configuration_changed.emit(to_dict())
 
 func _ensure_input_actions() -> void:
+	# Keep the original three gamepad bindings. The V2 HUD has six slots,
+	# so keyboard slots 4-6 must be addressable without stealing pad buttons.
 	var bindings := [
 		{"action": "deck_card_1", "key": KEY_1, "joy": JOY_BUTTON_DPAD_LEFT},
 		{"action": "deck_card_2", "key": KEY_2, "joy": JOY_BUTTON_DPAD_UP},
-		{"action": "deck_card_3", "key": KEY_3, "joy": JOY_BUTTON_DPAD_RIGHT}
+		{"action": "deck_card_3", "key": KEY_3, "joy": JOY_BUTTON_DPAD_RIGHT},
+		{"action": "deck_card_4", "key": KEY_4, "joy": -1},
+		{"action": "deck_card_5", "key": KEY_5, "joy": -1},
+		{"action": "deck_card_6", "key": KEY_6, "joy": -1}
 	]
 	for binding in bindings:
 		var action := StringName(binding["action"])
@@ -379,7 +384,8 @@ func _ensure_input_actions() -> void:
 		key_event.physical_keycode = int(binding["key"])
 		if not InputMap.action_has_event(action, key_event):
 			InputMap.action_add_event(action, key_event)
-		var joy_event := InputEventJoypadButton.new()
-		joy_event.button_index = int(binding["joy"])
-		if not InputMap.action_has_event(action, joy_event):
-			InputMap.action_add_event(action, joy_event)
+		if int(binding["joy"]) >= 0:
+			var joy_event := InputEventJoypadButton.new()
+			joy_event.button_index = int(binding["joy"])
+			if not InputMap.action_has_event(action, joy_event):
+				InputMap.action_add_event(action, joy_event)
