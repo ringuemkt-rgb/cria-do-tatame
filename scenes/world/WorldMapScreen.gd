@@ -2,6 +2,9 @@ extends Control
 
 const HUB_SCENE := "res://scenes/hubs/TerreiroDaLuta.tscn"
 
+# Lock before the world mutation: repeated Android taps must not charge twice.
+var _travel_pending := false
+
 @onready var life_layer: Control = $WorldMapLifeLayer
 @onready var status_label: Label = $HUD/LeftPanel/Status
 @onready var message_label: Label = $HUD/LeftPanel/Message
@@ -30,15 +33,48 @@ func _connect(path: String, hub_id: String) -> void:
 		get_node(path).pressed.connect(_on_travel_pressed.bind(hub_id))
 
 func _on_travel_pressed(hub_id: String) -> void:
+	if _travel_pending:
+		return
 	if hub_id not in ["itubera", "zambiapunga", "camamu_manguezal"]:
 		message_label.text = "Fora do circuito regional jogável nesta etapa."
 		return
-	var result := WorldMapManager.travel_to(hub_id)
+	# Validate the destination scene before WorldMapManager debits currency,
+	# advances time, writes a save or broadcasts the travel event.
+	if WorldMapManager.can_travel_to(hub_id):
+		var hub: Dictionary = WorldMapManager.get_hub_data(hub_id)
+		var entry_scene := str(hub.get("entry_scene", HUB_SCENE))
+		if entry_scene == "" or not ResourceLoader.exists(entry_scene):
+			message_label.text = "Cena regional indisponível. Nenhum valor debitado."
+			return
+	_travel_pending = true
+	_set_travel_controls_enabled(false)
+	var result: Dictionary = _perform_travel(hub_id)
 	message_label.text = str(result.get("message", ""))
 	_update_status()
-	if result.get("ok", false):
-		await get_tree().create_timer(0.5).timeout
-		get_tree().change_scene_to_file(str(result.get("hub", {}).get("entry_scene", HUB_SCENE)))
+	if not bool(result.get("ok", false)):
+		_travel_pending = false
+		_set_travel_controls_enabled(true)
+		return
+	await get_tree().create_timer(0.5).timeout
+	if not is_inside_tree():
+		return
+	var destination := str(result.get("hub", {}).get("entry_scene", HUB_SCENE))
+	var error: Error = get_tree().change_scene_to_file(destination)
+	if error != OK:
+		# Travel has already been committed and saved. Keep controls locked
+		# instead of charging the player a second time on another tap.
+		message_label.text = "Viagem registrada, mas o destino não abriu. Reabra o jogo para recuperar o save."
+		push_error("[WorldMapScreen] Falha ao abrir destino: %s" % error_string(error))
+
+func _perform_travel(hub_id: String) -> Dictionary:
+	return WorldMapManager.travel_to(hub_id)
+
+func _set_travel_controls_enabled(enabled: bool) -> void:
+	for button_name in ["Itubera", "Zambiapunga", "Camamu", "Back"]:
+		var button := get_node_or_null("HUD/RightPanel/" + button_name) as Button
+		if button != null:
+			button.disabled = not enabled
+	# Salvador remains a context-only location regardless of travel state.
 
 func _on_page_changed(page_id: String) -> void:
 	message_label.text = "Página %s: %s. Toque em um emblema para detalhes." % [page_id, life_layer.get_page_name(page_id)]
