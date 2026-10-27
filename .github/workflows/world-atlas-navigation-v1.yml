@@ -11,6 +11,8 @@ on:
       - 'assets/world/maps/candidate/**'
       - 'tests/world_atlas_navigation_smoke.gd'
       - 'tests/world_map_life_smoke.gd'
+      - 'tests/world_map_travel_ui_smoke.gd'
+      - 'tests/helpers/WorldMapTravelScreenStub.gd'
       - '.github/workflows/world-atlas-navigation-v1.yml'
   workflow_dispatch:
 
@@ -41,6 +43,12 @@ jobs:
           ./godot --headless --path . --script res://tests/world_atlas_navigation_smoke.gd 2>&1 | tee map_nav.log
           grep -q '\[WorldAtlasNav\].*failures=0' map_nav.log
           if grep -Eq 'SCRIPT ERROR|Parse Error|ERROR:' map_nav.log; then exit 1; fi
+      - name: Regional travel UI transaction regression
+        run: |
+          set -euo pipefail
+          ./godot --headless --path . --script res://tests/world_map_travel_ui_smoke.gd 2>&1 | tee travel_ui.log
+          grep -q '\[TravelUI\].*failures=0' travel_ui.log
+          if grep -Eq 'SCRIPT ERROR|Parse Error|ERROR:' travel_ui.log; then exit 1; fi
       - name: Original world-map life regressions
         run: |
           set -euo pipefail
@@ -55,4 +63,5 @@ jobs:
             import_map.log
             map_nav.log
             map_life.log
+            travel_ui.log
           if-no-files-found: warn
