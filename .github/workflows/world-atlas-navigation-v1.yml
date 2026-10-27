@@ -25,6 +25,8 @@ jobs:
     timeout-minutes: 15
     steps:
       - uses: actions/checkout@v4
+      - name: Mandatory full quality gate
+        run: npm run quality
       - name: Install Godot 4.2.2
         run: |
           set -euo pipefail
