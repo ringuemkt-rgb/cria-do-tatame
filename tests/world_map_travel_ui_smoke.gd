@@ -29,7 +29,7 @@ func _run() -> void:
 		_finish()
 		return
 	var money_before := int(world.get("money"))
-	var log_before := world_map.get("travel_log").size()
+	var log_before: int = (world_map.get("travel_log") as Array).size()
 	var hub_before := str(world_map.get("current_hub"))
 	var screen: Control = scene.instantiate()
 	screen.set_script(stub)
@@ -59,7 +59,7 @@ func _run() -> void:
 	var modified: Dictionary = original_registry.duplicate(true)
 	var hubs: Dictionary = modified.get("hubs", {}).duplicate(true)
 	var target: Dictionary = hubs.get("zambiapunga", {}).duplicate(true)
-	target["entry_scene"] = "res://scenes/hubs/__nonexistent_travel_qa__.tscn"
+	target["entry_scene"] = str(target.get("entry_scene", "")) + ".missing"
 	hubs["zambiapunga"] = target
 	modified["hubs"] = hubs
 	registry.set("hubs_dense", modified)
