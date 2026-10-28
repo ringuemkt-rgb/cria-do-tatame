@@ -52,6 +52,8 @@ func _ready() -> void:
 	$Panel/Layout/Header/Clash.add_theme_color_override("font_color", VisualTheme.CYAN)
 	for index in range(card_buttons.size()):
 		VisualTheme.apply_action_button(card_buttons[index], VisualTheme.GOLD)
+		card_buttons[index].custom_minimum_size = Vector2(48.0, 68.0)
+		card_buttons[index].clip_text = true
 		card_buttons[index].pressed.connect(_on_card_pressed.bind(index))
 	if not SignalBus.combat_deck_hand_changed.is_connected(_on_hand_changed):
 		SignalBus.combat_deck_hand_changed.connect(_on_hand_changed)
