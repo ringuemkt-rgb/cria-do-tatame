@@ -11,6 +11,38 @@ var defense_options: Array = []
 var _defense_choice_submitted := false
 var _actions_enabled := true
 
+# Keep six card hit targets usable when the Android viewport becomes narrow.
+# This is layout only: the same buttons and guarded input path remain active.
+func _apply_responsive_layout() -> void:
+	_apply_responsive_layout_for_size(get_viewport().get_visible_rect().size)
+
+func _apply_responsive_layout_for_size(viewport_size: Vector2) -> void:
+	var panel: Panel = $Panel
+	var grid: GridContainer = $Panel/Layout/Cards
+	var compact: bool = viewport_size.x < 960.0 or viewport_size.y < 600.0
+	var three_columns: bool = viewport_size.y > viewport_size.x or viewport_size.x < 720.0
+	grid.columns = 3 if three_columns else 6
+	if compact:
+		var panel_height := 202.0 if three_columns else 126.0
+		panel.anchor_left = 0.02
+		panel.anchor_right = 0.98
+		panel.anchor_top = 1.0
+		panel.anchor_bottom = 1.0
+		panel.offset_left = 0.0
+		panel.offset_right = 0.0
+		panel.offset_top = -panel_height - 12.0
+		panel.offset_bottom = -12.0
+	else:
+		# Preserve the approved desktop composition at 1280x720.
+		panel.anchor_left = 0.49
+		panel.anchor_right = 0.98
+		panel.anchor_top = 0.49
+		panel.anchor_bottom = 0.655
+		panel.offset_left = 0.0
+		panel.offset_right = 0.0
+		panel.offset_top = 0.0
+		panel.offset_bottom = 0.0
+
 func _ready() -> void:
 	card_buttons.clear()
 	for index in range(1, 7):
@@ -30,6 +62,8 @@ func _ready() -> void:
 	if not SignalBus.technique_clash_resolved.is_connected(_on_clash):
 		SignalBus.technique_clash_resolved.connect(_on_clash)
 	SignalBus.resources_changed.connect(_on_resources_changed)
+	get_viewport().size_changed.connect(_apply_responsive_layout)
+	_apply_responsive_layout()
 	_on_hand_changed(DeckManager.get_hand(), DeckManager.selected_card_id)
 
 func _on_hand_changed(hand: Array, selected_card_id: String) -> void:
