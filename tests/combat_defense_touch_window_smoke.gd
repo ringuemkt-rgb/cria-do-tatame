@@ -33,6 +33,32 @@ func _run() -> void:
 	var on_choice: Callable = func(id): selected.append(str(id))
 	bus.connect("combat_v2_defense_selected", on_choice)
 
+	# The real HUD must keep six selectable cards at mobile landscape and
+	# switch to a 3x2 grid on portrait without changing card IDs or signals.
+	var panel := hud.get_node("Panel") as Panel
+	var grid := hud.get_node("Panel/Layout/Cards") as GridContainer
+	_check(grid != null, "combat cards use a responsive GridContainer")
+	if grid == null:
+		bus.disconnect("combat_v2_defense_selected", on_choice)
+		hud.queue_free()
+		_finish()
+		return
+	hud.call("_apply_responsive_layout_for_size", Vector2(360, 800))
+	_check(grid.columns == 3, "portrait phone uses three columns and two rows")
+	_check(is_equal_approx(panel.anchor_left, 0.02) and is_equal_approx(panel.anchor_right, 0.98), "portrait HUD uses wide safe horizontal anchors")
+	_check(is_equal_approx(panel.offset_bottom, -12.0) and panel.offset_top <= -200.0, "portrait HUD keeps a bottom inset and two-row height")
+	for slot in range(1, 7):
+		var target := hud.get_node("Panel/Layout/Cards/Card%d" % slot) as Button
+		_check(target.custom_minimum_size.x >= 48.0 and target.custom_minimum_size.y >= 68.0, "slot %d has minimum mobile touch target" % slot)
+		_check(target.clip_text, "slot %d clips oversized technique labels" % slot)
+	hud.call("_apply_responsive_layout_for_size", Vector2(640, 360))
+	_check(grid.columns == 3, "small landscape viewport also uses two rows")
+	hud.call("_apply_responsive_layout_for_size", Vector2(854, 480))
+	_check(grid.columns == 6, "standard Android landscape shows all six cards in one row")
+	_check(is_equal_approx(panel.offset_bottom, -12.0), "landscape HUD respects bottom inset")
+	hud.call("_apply_responsive_layout_for_size", Vector2(1280, 720))
+	_check(grid.columns == 6 and is_equal_approx(panel.anchor_left, 0.49), "desktop HUD restores original placement")
+
 	# A legacy deck refresh must respect a locked turn and must not replace
 	# the V2 technique hand once combat switches modes.
 	var legacy_card: Dictionary = {"id": "legacy_card_qa", "name": "Legacy QA", "activation_cost": {}, "level": 1}
