@@ -156,10 +156,12 @@ func _run() -> void:
 	# Instantiate without adding to the tree: no combat start, save or scene swap.
 	var arena_script := load("res://scenes/combat/CombatArenaBase.gd") as Script
 	_check(arena_script != null, "combat arena script loads for defense signal guard")
-	if arena_script != null:
+	var combat_manager: Node = root.get_node_or_null("CombatManager")
+	_check(combat_manager != null, "canonical CombatManager autoload exists for arena signal guard")
+	if arena_script != null and combat_manager != null:
 		var arena := arena_script.new() as Control
-		var previous_running: bool = CombatManager.is_running
-		CombatManager.is_running = true
+		var previous_running: bool = bool(combat_manager.get("is_running"))
+		combat_manager.set("is_running", true)
 		arena.set("_defense_window_open", true)
 		arena.set("_defense_elapsed", 0.2)
 		arena.call("_configure_defense_options", [
@@ -183,10 +185,10 @@ func _run() -> void:
 		_check(str(arena.get("_selected_defense")) == "defense_allowed", "late second signal cannot replace accepted defense")
 		arena.set("_selected_defense", "")
 		arena.set("_defense_window_open", true)
-		CombatManager.is_running = false
+		combat_manager.set("is_running", false)
 		arena.call("_on_v2_defense_selected", "defense_allowed")
 		_check(str(arena.get("_selected_defense")) == "", "finished combat rejects a valid-looking defense signal")
-		CombatManager.is_running = previous_running
+		combat_manager.set("is_running", previous_running)
 		arena.free()
 	bus.disconnect("combat_v2_defense_selected", on_choice)
 	hud.queue_free()
