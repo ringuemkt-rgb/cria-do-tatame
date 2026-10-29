@@ -22,6 +22,8 @@ var _turn_in_progress := false
 var _defense_window_open := false
 var _selected_defense := ""
 var _defense_elapsed := 0.0
+var _defense_allowed_ids: Dictionary = {}
+var _defense_window_duration := 0.0
 
 var estados_ptbr: Dictionary = {
 	"DISTANCE": "EM PE - NEUTRO",
@@ -278,6 +280,17 @@ func _run_davi_turn() -> void:
 	if pair_timeline != null and pair_timeline.is_ready():
 		await pair_timeline.play_resolution(technique_id, CombatManager.opponent_id, result, visual_state_before, CombatManager.get_current_state_name())
 
+func _configure_defense_options(options: Array, window: float) -> void:
+	# SignalBus is shared: only IDs offered by this specific reaction may commit.
+	_defense_allowed_ids.clear()
+	_defense_window_duration = window
+	for option_value in options:
+		if typeof(option_value) != TYPE_DICTIONARY:
+			continue
+		var defense_id := str(option_value.get("id", ""))
+		if defense_id != "":
+			_defense_allowed_ids[defense_id] = true
+
 func _await_player_defense(attack_id: String, attack_name: String, options: Array) -> Dictionary:
 	if options.is_empty() or not has_node("CombatDeckHUD"):
 		return {}
@@ -285,6 +298,7 @@ func _await_player_defense(attack_id: String, attack_name: String, options: Arra
 	_selected_defense = ""
 	_defense_elapsed = 0.0
 	var window := maxf(0.15, defense_window_seconds)
+	_configure_defense_options(options, window)
 	var payload := {
 		"attack_id": attack_id,
 		"attack_name": attack_name,
@@ -305,6 +319,8 @@ func _await_player_defense(attack_id: String, attack_name: String, options: Arra
 	var selected := _selected_defense
 	var elapsed := minf(_defense_elapsed, window)
 	_defense_window_open = false
+	_defense_allowed_ids.clear()
+	_defense_window_duration = 0.0
 	if has_node("CombatDeckHUD"):
 		$CombatDeckHUD.close_defense_window()
 	var close_payload := {
@@ -390,6 +406,8 @@ func _on_combat_finished(result) -> void:
 	if typeof(result) != TYPE_DICTIONARY:
 		return
 	_defense_window_open = false
+	_defense_allowed_ids.clear()
+	_defense_window_duration = 0.0
 	if has_node("CombatDeckHUD"):
 		$CombatDeckHUD.close_defense_window()
 	_set_actions_enabled(false)
@@ -457,9 +475,13 @@ func _on_v2_card_selected(technique_id) -> void:
 		_execute_player_action(str(technique_id))
 
 func _on_v2_defense_selected(technique_id) -> void:
+	var defense_id := str(technique_id)
 	if not CombatManager.is_running or not _defense_window_open or _selected_defense != "":
 		return
-	_selected_defense = str(technique_id)
+	# Ignore forged/stale signals and choices received after the deadline.
+	if _defense_elapsed >= _defense_window_duration or not _defense_allowed_ids.has(defense_id):
+		return
+	_selected_defense = defense_id
 	_defense_window_open = false
 
 func _on_corner_suggestion(suggestion) -> void:
