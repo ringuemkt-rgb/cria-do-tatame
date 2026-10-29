@@ -157,7 +157,7 @@ func _run() -> void:
 	var arena_script := load("res://scenes/combat/CombatArenaBase.gd") as Script
 	_check(arena_script != null, "combat arena script loads for defense signal guard")
 	if arena_script != null:
-		var arena: Control = arena_script.new()
+		var arena := arena_script.new() as Control
 		var previous_running: bool = CombatManager.is_running
 		CombatManager.is_running = true
 		arena.set("_defense_window_open", true)
