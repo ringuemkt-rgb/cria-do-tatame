@@ -100,7 +100,7 @@ func _build_slots(container: GridContainer, kind: String, count: int, equipped: 
 		slot.set_meta("occupied", index < equipped.size())
 		slot.focus_mode = Control.FOCUS_ALL
 		slot.tooltip_text = "Cartas equipadas: clique com o botão direito ou pressione Voltar para remover." if index < equipped.size() else "Arraste uma carta da coleção para este espaço."
-		slot.custom_minimum_size = Vector2(96, 88) if _compact_layout else Vector2(132, 88)
+		slot.custom_minimum_size = Vector2(96, 100) if _compact_layout else Vector2(132, 88)
 		slot.add_theme_stylebox_override("panel", VisualTheme.panel_style(0.72, VisualTheme.GOLD if kind == "active" else VisualTheme.CYAN, 1, 8))
 		var label := Label.new()
 		label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
@@ -118,7 +118,7 @@ func _build_slots(container: GridContainer, kind: String, count: int, equipped: 
 		if index < equipped.size():
 			var remove_btn := Button.new()
 			remove_btn.text = "REMOVER"
-			remove_btn.custom_minimum_size = Vector2(0, 32)
+			remove_btn.custom_minimum_size = Vector2(0, 48 if _compact_layout else 32)
 			VisualTheme.apply_action_button(remove_btn, VisualTheme.CONFLICT)
 			remove_btn.pressed.connect(_on_remove_slot.bind(kind, index))
 			slot_content.add_child(remove_btn)
