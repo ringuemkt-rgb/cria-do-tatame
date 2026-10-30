@@ -1,0 +1,101 @@
+{
+  "$schema": "cria.world_story_ecosystem.v1",
+  "version": "1.0.0",
+  "shipping": false,
+  "status": "CANDIDATE_OVERLAY",
+  "thesis": "Ser forte é ser gentil.",
+  "authorities": {
+    "scene_combat": "CombatManager",
+    "world_travel": "WorldMapManager",
+    "climate_time": "WorldDirectorManager",
+    "npc_agenda": "NPCEcologyEngineV1",
+    "map_present": "MapAtlasPresenter",
+    "canon_lock": "data/narrative/canon_v3.json",
+    "acts_lock": "data/narrative/acts_v3.json",
+    "bible_lock": "data/narrative/character_bible_v1.json",
+    "missions_lock": "data/narrative/missions_v1.json",
+    "endings_lock": "data/narrative/endings_v2.json",
+    "teruko_lock": "data/narrative/tekuro_fragments_v2.json",
+    "briefing_candidate": "docs/narrative/WORLD_STORY_ECOSYSTEM_V1.md"
+  },
+  "loop": [
+    "main_menu",
+    "terreiro_da_luta",
+    "treino_ou_deck",
+    "combate",
+    "resultado",
+    "cria_live",
+    "avanco_semana",
+    "save",
+    "retorno_terreiro"
+  ],
+  "meters": {
+    "honra": {"min": 0, "max": 100, "win_ending": "heroi_da_comunidade"},
+    "sombra": {"min": 0, "max": 100, "win_ending": "rei_das_sombras"},
+    "heat": {"max_ends_fight_safe": true},
+    "cobertura": {"unlocks": "infiltracao_pf"},
+    "fragmentos_teruko": {"gate_verdade": 8}
+  },
+  "factions": {
+    "active_cultural": ["ALE", "LEM", "NTM"],
+    "institutional": ["LEI"],
+    "home": "TERREIRO"
+  },
+  "acts": [
+    {"id": "P0", "title": "O Carro de Mão", "hub": "itubera_feira", "belt": "none", "gold_playable": false},
+    {"id": "A1", "title": "Raiz", "hub": "terreiro", "belt": "white_to_blue", "gold_playable": true, "setpiece": "arena_do_dique"},
+    {"id": "A2", "title": "Circuito", "hub": "valenca_camamu", "belt": "blue_to_purple", "setpiece": "praia_da_concha"},
+    {"id": "A3", "title": "Sombra", "hub": "clandestinas", "belt": "purple_to_brown", "setpiece": "ferro_velho_lapa"},
+    {"id": "A4", "title": "Território", "hub": "mapa_guerra", "belt": "brown_to_black", "setpiece": "pratigi_avesso"},
+    {"id": "A5", "title": "Verdade", "hub": "salvador", "belt": "black", "setpiece": "arena_estadual"}
+  ],
+  "roster_lock": [
+    {"id": "ruan_macacao", "role": "protagonist", "art": "identity_master"},
+    {"id": "davi_relampago", "role": "rival_redemption", "art": "identity_master"},
+    {"id": "mestre_dende", "role": "mentor_alma", "art": "identity_later"}
+  ],
+  "roster_candidate": [
+    {"id": "joaquim_tinker_bell", "role": "co_protagonist_analyst", "art": "concept"},
+    {"id": "adriano_degodo", "role": "mentor_corpo", "art": "concept"},
+    {"id": "leoa_aliada", "role": "ally", "art": "concept"},
+    {"id": "george_chupeta", "role": "act5_boss", "art": "concept"},
+    {"id": "ramiro_sombra", "role": "act4_expose", "art": "concept"},
+    {"id": "oni_ferrugem", "role": "act3_boss", "maps_to": "oni_da_lapa"}
+  ],
+  "npc_ecology": {
+    "cap_visible_on_atlas": 3,
+    "schedules_owned_by": "NPCEcologyEngineV1",
+    "hub_cast": [
+      {"id": "dona_filo", "place": "terreiro", "blocks": ["morning", "noon"]},
+      {"id": "seu_doro", "place": "pier_dique", "blocks": ["dawn", "dusk"]},
+      {"id": "pipoca", "place": "terreiro", "blocks": ["afternoon"]},
+      {"id": "andre_brinquedo", "place": "arenas", "blocks": ["fight_night"]},
+      {"id": "dona_sumiko", "place": "colonia_nishiuchi", "blocks": ["evening"]}
+    ]
+  },
+  "open_world": {
+    "not_sandbox_sim": true,
+    "atlas_pages": 10,
+    "gold_page": "itubera_02",
+    "travel": "WorldMapManager",
+    "time": "week + day_index + time_block",
+    "moon": "(week*7+day_index)%8",
+    "rain_and_tide": "WorldDirectorManager snapshot",
+    "no_pathfinding_on_painted_plate": true
+  },
+  "progress_unlocks": [
+    {"from": "P0", "to": "A1", "gate": "aceitar_terceiro_jeito"},
+    {"from": "A1", "to": "A2", "gate": "vencer_dique + faixa_azul"},
+    {"from": "A2", "to": "A3", "gate": "concha_resolvida + porta_faccao"},
+    {"from": "A3", "to": "A4", "gate": "faixa_marrom + heat_ok"},
+    {"from": "A4", "to": "A5", "gate": "avesso_aceito + queda_sombra"},
+    {"from": "A5", "to": "ending", "gate": "chupeta_ou_estadual + meters"}
+  ],
+  "forbidden": [
+    "second_CombatManager",
+    "LEI_as_fourth_cultural_faction",
+    "full_agent_sim_on_map_png",
+    "bake_hud_on_terreiro",
+    "promote_candidate_ids_to_identity_without_human"
+  ]
+}
