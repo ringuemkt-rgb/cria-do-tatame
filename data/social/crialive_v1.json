@@ -1,0 +1,43 @@
+{
+  "$schema": "cria.crialive.v1",
+  "version": "1.0.0",
+  "shipping": false,
+  "not_autoload": true,
+  "service": "CriaLiveService",
+  "legacy_to_wrap": ["src/autoloads/CriaLiveManager.gd", "src/career/CriaLiveFeedManager.gd"],
+  "authorities": {
+    "combat": "CombatManager",
+    "time": "WorldDirectorManager",
+    "ledger": "ProgressionOS",
+    "save": "SaveManager"
+  },
+  "handle": "@ruanmacacao",
+  "tons_post": ["humilde", "confiante", "provocador"],
+  "tipos_post": ["clip_luta", "treino", "vida", "provocacao", "resposta", "patrocinado"],
+  "tiers_seguidores": [
+    {"id": "bairro", "min": 0, "max": 500, "ad_rate": 0.02, "sponsor_tier": 0},
+    {"id": "cidade", "min": 500, "max": 2000, "ad_rate": 0.05, "sponsor_tier": 1},
+    {"id": "regional", "min": 2000, "max": 10000, "ad_rate": 0.10, "sponsor_tier": 2},
+    {"id": "estadual", "min": 10000, "max": 50000, "ad_rate": 0.18, "sponsor_tier": 3},
+    {"id": "nacional", "min": 50000, "max": 999999, "ad_rate": 0.30, "sponsor_tier": 4}
+  ],
+  "viral_limiar": 1.5,
+  "nemesis_learn_after_posts": 2,
+  "decay": {"followers_inactive_week": 0.02, "hype_week": 0.10},
+  "patrocinadores": [
+    {"id": "academia_suplementos", "tier": 1, "coin_semana": 40, "req_seguidores": 500},
+    {"id": "kaka_surf", "tier": 2, "coin_semana": 90, "req_seguidores": 2000, "req_hype": 40},
+    {"id": "ntm_molho", "tier": 3, "coin_semana": 200, "req_seguidores": 10000, "req_rep_ntm": 30}
+  ],
+  "tendencias": [
+    {"id": "desafio_raspagem", "tag": "#RaspagemDoDia", "bonus_hype": 1.5},
+    {"id": "sexta_de_gi", "tag": "#SextaDeGI", "bonus_hype": 1.3}
+  ],
+  "loops": ["post_growth_money", "fight_proposal", "sponsor", "provocation_nemesis", "weekly_decay"],
+  "tone_table": {
+    "humilde": {"hype": "low", "heat": 0, "honra": 1},
+    "confiante": {"hype": "mid", "heat": 1, "honra": 0},
+    "provocador": {"hype": "high", "heat": 3, "cobertura_risk": true}
+  },
+  "forbidden": ["new_autoload", "second_CombatManager", "buy_CriaCoin_with_real_money", "crime_howto"]
+}
