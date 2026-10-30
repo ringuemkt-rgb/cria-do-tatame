@@ -150,6 +150,46 @@ func _run() -> void:
 	hud.call("_unhandled_input", missing_shortcut)
 	_check(selected.size() == before_invalid, "unavailable sixth defense shortcut is ignored")
 	hud.call("close_defense_window")
+
+	# The arena is the final consumer of the shared defense signal. A stale or
+	# synthetic SignalBus event must not commit a choice absent from this attack.
+	# Instantiate without adding to the tree: no combat start, save or scene swap.
+	var arena_script := load("res://scenes/combat/CombatArenaBase.gd") as Script
+	_check(arena_script != null, "combat arena script loads for defense signal guard")
+	var combat_manager: Node = root.get_node_or_null("CombatManager")
+	_check(combat_manager != null, "canonical CombatManager autoload exists for arena signal guard")
+	if arena_script != null and combat_manager != null:
+		var arena := arena_script.new() as Control
+		var previous_running: bool = bool(combat_manager.get("is_running"))
+		combat_manager.set("is_running", true)
+		arena.set("_defense_window_open", true)
+		arena.set("_defense_elapsed", 0.2)
+		arena.call("_configure_defense_options", [
+			{"id": "defense_allowed", "name": "Frame"},
+			{"id": "", "name": "Empty"},
+			"malformed_option"
+		], 1.0)
+		var allowed: Dictionary = arena.get("_defense_allowed_ids")
+		_check(allowed.size() == 1 and allowed.has("defense_allowed"), "arena accepts only nonempty dictionary option IDs")
+		arena.call("_on_v2_defense_selected", "forged_option")
+		_check(str(arena.get("_selected_defense")) == "" and bool(arena.get("_defense_window_open")), "forged defense signal is rejected without closing reaction")
+		arena.call("_on_v2_defense_selected", "")
+		_check(str(arena.get("_selected_defense")) == "", "empty defense signal is rejected")
+		arena.set("_defense_elapsed", 1.0)
+		arena.call("_on_v2_defense_selected", "defense_allowed")
+		_check(str(arena.get("_selected_defense")) == "" and bool(arena.get("_defense_window_open")), "expired defense signal cannot commit")
+		arena.set("_defense_elapsed", 0.2)
+		arena.call("_on_v2_defense_selected", "defense_allowed")
+		_check(str(arena.get("_selected_defense")) == "defense_allowed" and not bool(arena.get("_defense_window_open")), "offered defense commits once before deadline")
+		arena.call("_on_v2_defense_selected", "forged_option")
+		_check(str(arena.get("_selected_defense")) == "defense_allowed", "late second signal cannot replace accepted defense")
+		arena.set("_selected_defense", "")
+		arena.set("_defense_window_open", true)
+		combat_manager.set("is_running", false)
+		arena.call("_on_v2_defense_selected", "defense_allowed")
+		_check(str(arena.get("_selected_defense")) == "", "finished combat rejects a valid-looking defense signal")
+		combat_manager.set("is_running", previous_running)
+		arena.free()
 	bus.disconnect("combat_v2_defense_selected", on_choice)
 	hud.queue_free()
 	await process_frame
