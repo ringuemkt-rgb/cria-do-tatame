@@ -65,7 +65,8 @@ func _apply_responsive_layout_for_size(viewport_size: Vector2) -> void:
 	actions.columns = 2 if _compact_layout else 4
 	for child in actions.get_children():
 		if child is Button:
-			child.custom_minimum_size = Vector2(136 if _compact_layout else 190, 52)
+			var button: Button = child as Button
+			button.custom_minimum_size = Vector2(136 if _compact_layout else 190, 52)
 	for label in [
 		$Margin/Scroll/Layout/Body/GiPanel/Gi/ActiveLabel,
 		$Margin/Scroll/Layout/Body/GiPanel/Gi/PassiveLabel
