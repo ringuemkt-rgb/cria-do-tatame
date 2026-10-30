@@ -53,7 +53,7 @@ jobs:
         run: |
           set -euo pipefail
           ./godot --headless --path . --script res://tests/deck_builder_mobile_touch_smoke.gd 2>&1 | tee deck_mobile_touch_smoke.log
-          grep -q '\\[DeckMobileTouch\\].*failures=0' deck_mobile_touch_smoke.log
+          grep -q '\[DeckMobileTouch\].*failures=0' deck_mobile_touch_smoke.log
           if grep -E 'SCRIPT ERROR|Parse Error|ERROR:' deck_mobile_touch_smoke.log; then exit 1; fi
       - name: Main runtime regression
         run: |
