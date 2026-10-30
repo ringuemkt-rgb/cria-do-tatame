@@ -82,15 +82,14 @@ func _on_card_pressed(index: int) -> void:
 		DeckManager.select_card(card_id)
 
 func _unhandled_input(event: InputEvent) -> void:
-	if event.is_action_pressed("deck_card_1"):
-		_on_card_pressed(0)
-		get_viewport().set_input_as_handled()
-	elif event.is_action_pressed("deck_card_2"):
-		_on_card_pressed(1)
-		get_viewport().set_input_as_handled()
-	elif event.is_action_pressed("deck_card_3"):
-		_on_card_pressed(2)
-		get_viewport().set_input_as_handled()
+	# One input path for all six visible V2 slots, including timed defenses.
+	# Touch remains bound to each Button.pressed; invalid/locked slots still
+	# pass through _on_card_pressed and cannot bypass its guards.
+	for index in range(card_buttons.size()):
+		if event.is_action_pressed("deck_card_%d" % (index + 1)):
+			_on_card_pressed(index)
+			get_viewport().set_input_as_handled()
+			return
 
 func _on_state_changed(_old_state, new_state) -> void:
 	current_state = str(new_state)
