@@ -59,6 +59,7 @@ def validate_sponsor(data: dict) -> None:
 def validate_code() -> None:
     service = PATHS["service"].read_text(encoding="utf-8")
     require("class_name CriaLiveService" in service, "CriaLiveService class missing")
+    require("extends RefCounted" in service, "CriaLiveService must remain RefCounted/non-autoload")
     for forbidden in ("WorldState.", "ProgressionOS.", "CombatManager."):
         require(forbidden not in service, f"service crossed authority firewall: {forbidden}")
     require("func publish_post" in service, "publish loop missing")
