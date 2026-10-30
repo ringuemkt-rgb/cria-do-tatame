@@ -32,6 +32,8 @@ func _ready() -> void:
 	_on_hand_changed(DeckManager.get_hand(), DeckManager.selected_card_id)
 
 func _on_hand_changed(hand: Array, selected_card_id: String) -> void:
+	if defense_mode:
+		return
 	for index in range(card_buttons.size()):
 		var button := card_buttons[index]
 		if index >= hand.size():
@@ -56,7 +58,9 @@ func _on_hand_changed(hand: Array, selected_card_id: String) -> void:
 func _on_card_pressed(index: int) -> void:
 	if index < 0 or index >= card_buttons.size():
 		return
-	if not _actions_enabled or card_buttons[index].disabled:
+	# The player turn remains locked while Davi acts. Defense taps are
+	# permitted only while the dedicated reaction window is visible.
+	if card_buttons[index].disabled or (not defense_mode and not _actions_enabled):
 		return
 	var card_id := str(card_buttons[index].get_meta("card_id", ""))
 	if card_id == "":
