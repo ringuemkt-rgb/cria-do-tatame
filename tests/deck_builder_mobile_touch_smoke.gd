@@ -45,17 +45,21 @@ func _run() -> void:
 		_check(collection.columns == 1 and active.columns == 3 and passive.columns == 3, "compact deck wraps cards and equipped slots at %s" % viewport)
 		_check(actions.columns == 2 and gi_panel.custom_minimum_size.x == 0.0, "compact actions and Gi panel fit portrait widths at %s" % viewport)
 		for slot in active.get_children():
-			_check(slot.custom_minimum_size.x >= 96.0, "active touch slot has compact minimum width")
+			var slot_control: Control = slot as Control
+			_check(slot_control != null and slot_control.custom_minimum_size.x >= 96.0, "active touch slot has compact minimum width")
 		for button in actions.get_children():
-			_check(button.custom_minimum_size.x >= 136.0 and button.custom_minimum_size.y >= 52.0, "action button retains mobile touch target")
+			var action_button: Button = button as Button
+			_check(action_button != null and action_button.custom_minimum_size.x >= 136.0 and action_button.custom_minimum_size.y >= 52.0, "action button retains mobile touch target")
 	# Rebuild once in compact mode to verify actual slot and removal sizes.
 	screen.call("_refresh_all")
 	for slot in active.get_children():
-		_check(slot.custom_minimum_size.y >= 100.0, "compact equipped slot has readable height")
+		var slot_control: Control = slot as Control
+		_check(slot_control != null and slot_control.custom_minimum_size.y >= 100.0, "compact equipped slot has readable height")
 		for child in slot.get_children():
 			for button in child.get_children():
 				if button is Button:
-					_check(button.custom_minimum_size.y >= 48.0, "remove button has 48 px mobile touch target")
+					var remove_button: Button = button as Button
+					_check(remove_button.custom_minimum_size.y >= 48.0, "remove button has 48 px mobile touch target")
 	screen.call("_apply_responsive_layout_for_size", Vector2(1280, 720))
 	_check(body.orientation == BoxContainer.HORIZONTAL, "desktop keeps side-by-side deck panels")
 	_check(collection.columns == 2 and active.columns == 5, "desktop restores two-column collection and five-card row")
