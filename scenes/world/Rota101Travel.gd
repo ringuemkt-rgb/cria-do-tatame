@@ -37,7 +37,11 @@ func _ready() -> void:
 	auto_accelerate.button_pressed = false
 	lane_assist.button_pressed = false
 	reduced_shake.button_pressed = false
-	plan = WorldMapManager.get_pending_travel_plan()
+	var world_map := _world_map_manager()
+	if world_map == null:
+		_fail_before_start("WorldMapManager indisponível. Voltando ao mapa.")
+		return
+	plan = world_map.call("get_pending_travel_plan")
 	if plan.is_empty():
 		_fail_before_start("Nenhuma viagem preparada. Voltando ao mapa.")
 		return
@@ -211,7 +215,11 @@ func _finish_route(outcome: Dictionary) -> void:
 		return
 	_running = false
 	_committed = true
-	commit_result = WorldMapManager.commit_travel_outcome(str(plan.get("plan_id", "")), outcome)
+	var world_map := _world_map_manager()
+	if world_map == null:
+		commit_result = {"ok": false, "error": "world_map_manager_missing"}
+	else:
+		commit_result = world_map.call("commit_travel_outcome", str(plan.get("plan_id", "")), outcome)
 	result_panel.visible = true
 	if bool(commit_result.get("ok", false)):
 		var success := bool(commit_result.get("travel_success", false))
@@ -239,7 +247,8 @@ func _continue_after_result() -> void:
 	if bool(commit_result.get("ok", false)) and bool(commit_result.get("travel_success", false)):
 		var destination_hub := str(commit_result.get("travel_entry", {}).get("destination_hub", ""))
 		if destination_hub != "":
-			var hub: Dictionary = WorldMapManager.get_hub_data(destination_hub)
+			var world_map := _world_map_manager()
+			var hub: Dictionary = world_map.call("get_hub_data", destination_hub) if world_map != null else {}
 			var scene_path := str(hub.get("entry_scene", ""))
 			if scene_path != "" and ResourceLoader.exists(scene_path):
 				get_tree().change_scene_to_file(scene_path)
@@ -263,3 +272,6 @@ func _bind_controls() -> void:
 func _bind_hold_button(button: Button, setter: Callable) -> void:
 	button.button_down.connect(func(): setter.call(true))
 	button.button_up.connect(func(): setter.call(false))
+
+func _world_map_manager() -> Node:
+	return get_node_or_null("/root/WorldMapManager")
