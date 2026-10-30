@@ -41,7 +41,7 @@ func _run() -> void:
 	_check(active.get_child_count() == 5 and passive.get_child_count() == 3, "all five active and three passive slots exist")
 	for viewport in [Vector2(360, 800), Vector2(640, 360), Vector2(854, 480)]:
 		screen.call("_apply_responsive_layout_for_size", viewport)
-		_check(body.orientation == BoxContainer.VERTICAL, "compact deck stacks collection and Gi at %s" % viewport)
+		_check(body.orientation == 1, "compact deck stacks collection and Gi at %s" % viewport)
 		_check(collection.columns == 1 and active.columns == 3 and passive.columns == 3, "compact deck wraps cards and equipped slots at %s" % viewport)
 		_check(actions.columns == 2 and gi_panel.custom_minimum_size.x == 0.0, "compact actions and Gi panel fit portrait widths at %s" % viewport)
 		for slot in active.get_children():
@@ -62,7 +62,7 @@ func _run() -> void:
 					var remove_button: Button = button as Button
 					_check(remove_button.custom_minimum_size.y >= 48.0, "remove button has 48 px mobile touch target")
 	screen.call("_apply_responsive_layout_for_size", Vector2(1280, 720))
-	_check(body.orientation == BoxContainer.HORIZONTAL, "desktop keeps side-by-side deck panels")
+	_check(body.orientation == 0, "desktop keeps side-by-side deck panels")
 	_check(collection.columns == 2 and active.columns == 5, "desktop restores two-column collection and five-card row")
 	_check(actions.columns == 4 and gi_panel.custom_minimum_size.x == 720.0, "desktop restores four actions and Gi width")
 	_check(deck.call("to_dict") == original, "layout and smoke do not mutate deck state")
