@@ -29,122 +29,134 @@ theme_override_constants/margin_top = 24
 theme_override_constants/margin_right = 40
 theme_override_constants/margin_bottom = 24
 
-[node name="Layout" type="VBoxContainer" parent="Margin"]
+[node name="Scroll" type="ScrollContainer" parent="Margin"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+horizontal_scroll_mode = 0
+follow_focus = true
+
+[node name="Layout" type="VBoxContainer" parent="Margin/Scroll"]
+size_flags_horizontal = 3
 layout_mode = 2
 theme_override_constants/separation = 8
 
-[node name="Title" type="Label" parent="Margin/Layout"]
+[node name="Title" type="Label" parent="Margin/Scroll/Layout"]
 layout_mode = 2
 text = "GI DE COMBATE"
 horizontal_alignment = 1
 
-[node name="Subtitle" type="Label" parent="Margin/Layout"]
+[node name="Subtitle" type="Label" parent="Margin/Scroll/Layout"]
 layout_mode = 2
+autowrap_mode = 3
 text = "A mente entra no tatame antes do corpo. Monte 5 técnicas ativas e 3 fundamentos passivos."
 horizontal_alignment = 1
 
-[node name="Belt" type="Label" parent="Margin/Layout"]
+[node name="Belt" type="Label" parent="Margin/Scroll/Layout"]
 layout_mode = 2
+autowrap_mode = 3
 text = "FAIXA BRANCA • LIMITE DE CARTA Nv.2"
 horizontal_alignment = 1
 
-[node name="Body" type="HBoxContainer" parent="Margin/Layout"]
+[node name="Body" type="BoxContainer" parent="Margin/Scroll/Layout"]
+orientation = 0
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_constants/separation = 14
 
-[node name="CollectionPanel" type="PanelContainer" parent="Margin/Layout/Body"]
+[node name="CollectionPanel" type="PanelContainer" parent="Margin/Scroll/Layout/Body"]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="Collection" type="VBoxContainer" parent="Margin/Layout/Body/CollectionPanel"]
+[node name="Collection" type="VBoxContainer" parent="Margin/Scroll/Layout/Body/CollectionPanel"]
 layout_mode = 2
 theme_override_constants/separation = 8
 
-[node name="Title" type="Label" parent="Margin/Layout/Body/CollectionPanel/Collection"]
+[node name="Title" type="Label" parent="Margin/Scroll/Layout/Body/CollectionPanel/Collection"]
 layout_mode = 2
 text = "COLEÇÃO DE TÉCNICAS"
 horizontal_alignment = 1
 
-[node name="Scroll" type="ScrollContainer" parent="Margin/Layout/Body/CollectionPanel/Collection"]
+[node name="Scroll" type="ScrollContainer" parent="Margin/Scroll/Layout/Body/CollectionPanel/Collection"]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="CollectionGrid" type="GridContainer" parent="Margin/Layout/Body/CollectionPanel/Collection/Scroll"]
+[node name="CollectionGrid" type="GridContainer" parent="Margin/Scroll/Layout/Body/CollectionPanel/Collection/Scroll"]
 layout_mode = 2
 size_flags_horizontal = 3
 columns = 2
 theme_override_constants/h_separation = 8
 theme_override_constants/v_separation = 8
 
-[node name="GiPanel" type="PanelContainer" parent="Margin/Layout/Body"]
+[node name="GiPanel" type="PanelContainer" parent="Margin/Scroll/Layout/Body"]
 custom_minimum_size = Vector2(720, 0)
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="Gi" type="VBoxContainer" parent="Margin/Layout/Body/GiPanel"]
+[node name="Gi" type="VBoxContainer" parent="Margin/Scroll/Layout/Body/GiPanel"]
 layout_mode = 2
 alignment = 1
 theme_override_constants/separation = 18
 
-[node name="Title" type="Label" parent="Margin/Layout/Body/GiPanel/Gi"]
+[node name="Title" type="Label" parent="Margin/Scroll/Layout/Body/GiPanel/Gi"]
 layout_mode = 2
 text = "SLOTS DO GI VIRTUAL"
 horizontal_alignment = 1
 
-[node name="ActiveLabel" type="Label" parent="Margin/Layout/Body/GiPanel/Gi"]
+[node name="ActiveLabel" type="Label" parent="Margin/Scroll/Layout/Body/GiPanel/Gi"]
 layout_mode = 2
 text = "OMBROS • PEITO • BRAÇOS — CARTAS ATIVAS"
 horizontal_alignment = 1
 
-[node name="ActiveSlots" type="HBoxContainer" parent="Margin/Layout/Body/GiPanel/Gi"]
+[node name="ActiveSlots" type="GridContainer" parent="Margin/Scroll/Layout/Body/GiPanel/Gi"]
 layout_mode = 2
-alignment = 1
+columns = 5
 theme_override_constants/separation = 8
 
-[node name="PassiveLabel" type="Label" parent="Margin/Layout/Body/GiPanel/Gi"]
+[node name="PassiveLabel" type="Label" parent="Margin/Scroll/Layout/Body/GiPanel/Gi"]
 layout_mode = 2
 text = "CINTURÃO — FUNDAMENTOS PASSIVOS"
 horizontal_alignment = 1
 
-[node name="PassiveSlots" type="HBoxContainer" parent="Margin/Layout/Body/GiPanel/Gi"]
+[node name="PassiveSlots" type="GridContainer" parent="Margin/Scroll/Layout/Body/GiPanel/Gi"]
 layout_mode = 2
-alignment = 1
+columns = 3
 theme_override_constants/separation = 10
 
-[node name="Hint" type="Label" parent="Margin/Layout/Body/GiPanel/Gi"]
+[node name="Hint" type="Label" parent="Margin/Scroll/Layout/Body/GiPanel/Gi"]
 layout_mode = 2
 text = "Arraste uma carta para o slot ou toque para equipar no primeiro espaço disponível."
 horizontal_alignment = 1
 autowrap_mode = 3
 
-[node name="Status" type="Label" parent="Margin/Layout"]
+[node name="Status" type="Label" parent="Margin/Scroll/Layout"]
 custom_minimum_size = Vector2(0, 30)
 layout_mode = 2
+autowrap_mode = 3
 text = "Deck pronto para revisão."
 horizontal_alignment = 1
 
-[node name="Actions" type="HBoxContainer" parent="Margin/Layout"]
+[node name="Actions" type="GridContainer" parent="Margin/Scroll/Layout"]
 layout_mode = 2
-alignment = 1
+columns = 4
 theme_override_constants/separation = 12
 
-[node name="Back" type="Button" parent="Margin/Layout/Actions"]
+[node name="Back" type="Button" parent="Margin/Scroll/Layout/Actions"]
 custom_minimum_size = Vector2(190, 52)
 layout_mode = 2
 text = "VOLTAR AO TERREIRO"
 
-[node name="UpgradeXP" type="Button" parent="Margin/Layout/Actions"]
+[node name="UpgradeXP" type="Button" parent="Margin/Scroll/Layout/Actions"]
 custom_minimum_size = Vector2(190, 52)
 layout_mode = 2
 text = "APERFEIÇOAR COM XP"
 
-[node name="UpgradeMoney" type="Button" parent="Margin/Layout/Actions"]
+[node name="UpgradeMoney" type="Button" parent="Margin/Scroll/Layout/Actions"]
 custom_minimum_size = Vector2(190, 52)
 layout_mode = 2
 text = "TREINAR COM DENDÊ • R$"
 
-[node name="Save" type="Button" parent="Margin/Layout/Actions"]
+[node name="Save" type="Button" parent="Margin/Scroll/Layout/Actions"]
 custom_minimum_size = Vector2(190, 52)
 layout_mode = 2
 text = "SALVAR DECK"
