@@ -52,6 +52,7 @@ func _run() -> void:
 			_check(action_button != null and action_button.custom_minimum_size.x >= 136.0 and action_button.custom_minimum_size.y >= 52.0, "action button retains mobile touch target")
 	# Rebuild once in compact mode to verify actual slot and removal sizes.
 	screen.call("_refresh_all")
+	await process_frame # Flush queue_free from the prior layout before inspecting slots.
 	for slot in active.get_children():
 		var slot_control: Control = slot as Control
 		_check(slot_control != null and slot_control.custom_minimum_size.y >= 100.0, "compact equipped slot has readable height")
