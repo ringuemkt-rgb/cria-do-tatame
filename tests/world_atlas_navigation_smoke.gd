@@ -118,6 +118,53 @@ func _run() -> void:
 			_check(int(root.get_node("WorldState").get("money")) == money_before, "map tap does not debit money")
 			_check(root.get_node("WorldMapManager").get("travel_log").size() == travel_before, "map tap does not create travel")
 			layer.open_page("01")
+			# Android sends InputEventScreenTouch; some devices also synthesize
+			# InputEventMouseButton. Both must resolve as one intentional tap.
+			var focused_ids: Array[String] = []
+			layer.node_focused.connect(func(node: Dictionary) -> void:
+				focused_ids.append(str(node.get("id", "")))
+			)
+			var native_touch := InputEventScreenTouch.new()
+			native_touch.index = 0
+			native_touch.pressed = true
+			native_touch.position = tap.position
+			layer._gui_input(native_touch)
+			_check(str(layer.active_page_id) == str(first_anchor.get("target_page", "")), "native Android touch opens regional page")
+			var synthetic_mouse := InputEventMouseButton.new()
+			synthetic_mouse.button_index = MOUSE_BUTTON_LEFT
+			synthetic_mouse.pressed = true
+			synthetic_mouse.position = native_touch.position
+			layer._gui_input(synthetic_mouse)
+			_check(str(layer.active_page_id) == str(first_anchor.get("target_page", "")), "synthetic mouse cannot navigate twice")
+			_check(focused_ids.is_empty(), "synthetic mouse does not focus a second marker")
+			var touch_node: Dictionary = {}
+			for candidate_value in nodes:
+				var candidate: Dictionary = candidate_value
+				if str(candidate.get("pagina", "")) == "02":
+					touch_node = candidate
+					break
+			_check(not touch_node.is_empty(), "Ituberá has an atlas marker for native touch")
+			if not touch_node.is_empty():
+				layer.open_page("02")
+				var node_touch := InputEventScreenTouch.new()
+				node_touch.index = 0
+				node_touch.pressed = true
+				node_touch.position = layer.call("_node_screen_position", touch_node)
+				var before_focus := focused_ids.size()
+				layer._gui_input(node_touch)
+				_check(focused_ids.size() == before_focus + 1, "native touch focuses exactly one atlas node")
+				_check(str(layer.selected_node_id) == str(touch_node.get("id", "")), "native touch selects intended node")
+				var duplicate := InputEventMouseButton.new()
+				duplicate.button_index = MOUSE_BUTTON_LEFT
+				duplicate.pressed = true
+				duplicate.position = node_touch.position
+				layer._gui_input(duplicate)
+				_check(focused_ids.size() == before_focus + 1, "touch-generated mouse does not duplicate node focus")
+				_check(screen.get_node("HUD/LeftPanel/PageIndex").text.contains("Ituberá"), "page title remains visible in top HUD")
+				_check(not screen.get_node("HUD/LeftPanel/PageIndex").get_global_rect().intersects(layer.get_global_rect()), "page title never overlays map emblems")
+			_check(int(root.get_node("WorldState").get("money")) == money_before, "native touch cannot debit travel currency")
+			_check(root.get_node("WorldMapManager").get("travel_log").size() == travel_before, "native touch cannot initiate travel")
+			layer.open_page("01")
 	# Exercise the same fit rectangle used by the renderer for every loaded candidate.
 	var art_by_page: Dictionary = layer.get("_base_art_by_page")
 	for texture_value in art_by_page.values():
