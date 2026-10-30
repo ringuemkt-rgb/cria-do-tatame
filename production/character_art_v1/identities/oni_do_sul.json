@@ -1,0 +1,47 @@
+{
+  "character_id": "oni_do_sul",
+  "canon_refs": [
+    "data/narrative/canon_v3.json",
+    "data/narrative/character_bible_v1.json#oni_do_sul",
+    "data/combat/roster_v3.json#oni_do_sul"
+  ],
+  "master_status": "PENDING",
+  "palette_signature": {
+    "colors": [
+      "#303030",
+      "#303050",
+      "#D07030",
+      "#301010",
+      "#B05030",
+      "#101010",
+      "#501010",
+      "#905010"
+    ],
+    "notes": "Sampled proposal; no pixel palette normalization."
+  },
+  "silhouette_signature": {
+    "reference_asset": "assets/candidates/characters/identity_v1/atlas03.png",
+    "body_ratio_notes": "alta e densa"
+  },
+  "asymmetry_contract": {
+    "horizontal_mirror_safe": false,
+    "notes": "Use authored right-facing view only. Review patches, props, knee support, towel and grips before authoring left."
+  },
+  "variants": {
+    "gi": {
+      "turnaround": null,
+      "front_combat_pose": null,
+      "back_view": null,
+      "side_view": null
+    },
+    "nogi": {
+      "turnaround": "assets/candidates/characters/identity_v1/atlas03.png",
+      "front_combat_pose": null,
+      "back_view": "assets/candidates/characters/identity_v1/atlas03.png",
+      "side_view": "assets/candidates/characters/identity_v1/atlas03.png"
+    }
+  },
+  "human_reviewer": null,
+  "rights_status": "PENDING",
+  "shipping": false
+}

@@ -1,0 +1,58 @@
+name: Character identity atlas authoring integrity
+
+on:
+  pull_request:
+    paths:
+      - 'assets/candidates/characters/identity_v1/**'
+      - 'production/character_art_v1/**'
+      - 'data/narrative/character_bible_v1.json'
+      - 'data/narrative/narrative_v3_fixes_characters.json'
+      - 'data/combat/roster_v3.json'
+      - 'assets/schemas/character_identity_master_v2.schema.json'
+      - 'tools/art/CharacterAtlas*'
+      - 'tools/art/character_identity_atlases.py'
+      - 'tools/art/requirements-character-review.txt'
+      - 'tests/character_identity_atlas_smoke.gd'
+      - 'export_presets.cfg'
+      - '.github/workflows/character-identity-atlases-v1.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  authoring-integrity:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install authoring measurement dependencies
+        run: python -m pip install -r tools/art/requirements-character-review.txt
+      - name: Validate identity, regions, hashes and nonshipping boundaries
+        run: python tools/art/character_identity_atlases.py
+      - uses: chickensoft-games/setup-godot@v2
+        with:
+          version: 4.3.0
+          use-dotnet: false
+      - name: Import project
+        run: |
+          set -euo pipefail
+          godot --headless --editor --path . --quit 2>&1 | tee character_import.log
+          if grep -Eq 'SCRIPT ERROR|Parse Error|Failed loading resource' character_import.log; then exit 1; fi
+      - name: Exercise every candidate in the Godot review scene
+        run: |
+          set -euo pipefail
+          godot --headless --path . --script res://tests/character_identity_atlas_smoke.gd 2>&1 | tee character_smoke.log
+          grep -q '\[CharacterAtlas\].*failures=0' character_smoke.log
+          if grep -Eq 'SCRIPT ERROR|Parse Error|ERROR:' character_smoke.log; then exit 1; fi
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: character-identity-authoring-logs
+          path: |
+            character_import.log
+            character_smoke.log
+          if-no-files-found: warn

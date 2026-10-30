@@ -1,0 +1,206 @@
+{
+  "schema_version": 1,
+  "source_authority": "data/narrative/canon_v3.json",
+  "shipping": false,
+  "atlases": [
+    {
+      "id": "atlas01",
+      "image": "assets/candidates/characters/identity_v1/atlas01.png",
+      "members": [
+        "ruan_macacao",
+        "davi_relampago",
+        "leoa",
+        "oni_da_lapa"
+      ],
+      "columns": 3,
+      "rows": 4,
+      "prompt": null,
+      "prompt_capture": "session_only",
+      "tool": "image_gen.imagegen",
+      "model_revision": "not_exposed_by_tool",
+      "reference_asset": "assets/candidates/characters/identity_v1/references/ensemble_board.png",
+      "authoring_date": "2026-10-17",
+      "shipping": false
+    },
+    {
+      "id": "atlas02",
+      "image": "assets/candidates/characters/identity_v1/atlas02.png",
+      "members": [
+        "mestre_dende",
+        "tinker_bell",
+        "cassio_molho",
+        "kenzo_kuroi"
+      ],
+      "columns": 3,
+      "rows": 4,
+      "prompt": null,
+      "prompt_capture": "session_only",
+      "tool": "image_gen.imagegen",
+      "model_revision": "not_exposed_by_tool",
+      "reference_asset": "assets/candidates/characters/identity_v1/atlas01.png",
+      "authoring_date": "2026-10-17",
+      "shipping": false
+    },
+    {
+      "id": "atlas03",
+      "image": "assets/candidates/characters/identity_v1/atlas03.png",
+      "members": [
+        "jacare_do_mangue",
+        "oni_do_sul",
+        "mateus_predador",
+        "verao_velho"
+      ],
+      "columns": 3,
+      "rows": 4,
+      "prompt": null,
+      "prompt_capture": "session_only",
+      "tool": "image_gen.imagegen",
+      "model_revision": "not_exposed_by_tool",
+      "reference_asset": "assets/candidates/characters/identity_v1/atlas01.png",
+      "authoring_date": "2026-10-17",
+      "shipping": false,
+      "spacing_revision": 2,
+      "spacing_edit_prompt": "production/character_art_v1/atlas03_spacing_edit_prompt.txt",
+      "source_revision_note": "Replaces overlapping raw candidate with regenerated spaced source, same identity and attire."
+    },
+    {
+      "id": "atlas04",
+      "image": "assets/candidates/characters/identity_v1/atlas04.png",
+      "members": [
+        "byaku",
+        "ubira",
+        "montenegro",
+        "ruan_do_avesso"
+      ],
+      "columns": 3,
+      "rows": 4,
+      "prompt": "production/character_art_v1/atlas04_prompt.txt",
+      "prompt_capture": "complete",
+      "tool": "image_gen.imagegen",
+      "model_revision": "not_exposed_by_tool",
+      "reference_asset": "assets/candidates/characters/identity_v1/atlas01.png",
+      "authoring_date": "2026-10-17",
+      "shipping": false
+    },
+    {
+      "id": "atlas05",
+      "image": "assets/candidates/characters/identity_v1/atlas05.png",
+      "members": [
+        "viera",
+        "miyao",
+        "galvao",
+        "degodo"
+      ],
+      "columns": 3,
+      "rows": 4,
+      "prompt": "production/character_art_v1/atlas05_prompt.txt",
+      "prompt_capture": "complete",
+      "tool": "image_gen.imagegen",
+      "model_revision": "not_exposed_by_tool",
+      "reference_asset": "assets/candidates/characters/identity_v1/atlas01.png",
+      "authoring_date": "2026-10-17",
+      "shipping": false,
+      "spacing_revision": 2,
+      "spacing_edit_prompt": "production/character_art_v1/atlas05_spacing_edit_prompt.txt",
+      "source_revision_note": "Replaces overlapping raw candidate with regenerated spaced source, same identity and attire."
+    },
+    {
+      "id": "atlas06",
+      "image": "assets/candidates/characters/identity_v1/atlas06.png",
+      "members": [
+        "biel",
+        "dandara",
+        "pedro_bala",
+        "pipoca"
+      ],
+      "columns": 3,
+      "rows": 4,
+      "prompt": "production/character_art_v1/atlas06_prompt.txt",
+      "prompt_capture": "complete",
+      "tool": "image_gen.imagegen",
+      "model_revision": "not_exposed_by_tool",
+      "reference_asset": "assets/candidates/characters/identity_v1/atlas01.png",
+      "authoring_date": "2026-10-17",
+      "shipping": false
+    },
+    {
+      "id": "atlas07",
+      "image": "assets/candidates/characters/identity_v1/atlas07.png",
+      "members": [
+        "foguete",
+        "tiago_bomfim",
+        "vera_salles",
+        "raimundo"
+      ],
+      "columns": 3,
+      "rows": 4,
+      "prompt": "production/character_art_v1/atlas07_prompt.txt",
+      "prompt_capture": "complete",
+      "tool": "image_gen.imagegen",
+      "model_revision": "not_exposed_by_tool",
+      "reference_asset": "assets/candidates/characters/identity_v1/atlas01.png",
+      "authoring_date": "2026-10-17",
+      "shipping": false
+    },
+    {
+      "id": "atlas08",
+      "image": "assets/candidates/characters/identity_v1/atlas08.png",
+      "members": [
+        "dona_chie",
+        "dona_zefa",
+        "mestre_quirino",
+        "seu_neco"
+      ],
+      "columns": 3,
+      "rows": 4,
+      "prompt": "production/character_art_v1/atlas08_prompt.txt",
+      "prompt_capture": "complete",
+      "tool": "image_gen.imagegen",
+      "model_revision": "not_exposed_by_tool",
+      "reference_asset": "assets/candidates/characters/identity_v1/atlas01.png",
+      "authoring_date": "2026-10-17",
+      "shipping": false
+    },
+    {
+      "id": "atlas09",
+      "image": "assets/candidates/characters/identity_v1/atlas09.png",
+      "members": [
+        "cigana_iara",
+        "mae_santinha",
+        "nego_mare",
+        "caique"
+      ],
+      "columns": 3,
+      "rows": 4,
+      "prompt": "production/character_art_v1/atlas09_prompt.txt",
+      "prompt_capture": "complete",
+      "tool": "image_gen.imagegen",
+      "model_revision": "not_exposed_by_tool",
+      "reference_asset": "assets/candidates/characters/identity_v1/atlas01.png",
+      "authoring_date": "2026-10-17",
+      "shipping": false
+    },
+    {
+      "id": "atlas10",
+      "image": "assets/candidates/characters/identity_v1/atlas10.png",
+      "members": [
+        "ze_de_barro",
+        "dr_sombra",
+        "george_chupeta"
+      ],
+      "columns": 3,
+      "rows": 3,
+      "prompt": "production/character_art_v1/atlas10_prompt.txt",
+      "prompt_capture": "complete",
+      "tool": "image_gen.imagegen",
+      "model_revision": "not_exposed_by_tool",
+      "reference_asset": "assets/candidates/characters/identity_v1/atlas01.png",
+      "authoring_date": "2026-10-17",
+      "shipping": false
+    }
+  ],
+  "legacy_reference_corrections": {
+    "davi_model_sheet_superseded_belt.png": "Reference only: initial slice uses blue belt. The atlas01 blue belt supersedes the old white-belt proposal.",
+    "ensemble_board.png": "Reference only: Oni da Lapa uses NO-GI in atlas01, not the old gi proposal."
+  }
+}
