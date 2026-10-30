@@ -52,7 +52,7 @@ func _apply_responsive_layout_for_size(viewport_size: Vector2) -> void:
 	for side in ["top", "bottom"]:
 		margin.add_theme_constant_override("margin_" + side, vertical_margin)
 	var body: BoxContainer = $Margin/Scroll/Layout/Body
-	body.orientation = BoxContainer.VERTICAL if _compact_layout else BoxContainer.HORIZONTAL
+	body.orientation = 1 if _compact_layout else 0 # Godot Orientation: 1 vertical, 0 horizontal.
 	body.size_flags_vertical = Control.SIZE_SHRINK_BEGIN if _compact_layout else Control.SIZE_EXPAND_FILL
 	var collection_panel: PanelContainer = $Margin/Scroll/Layout/Body/CollectionPanel
 	collection_panel.custom_minimum_size = Vector2(0, 180) if _compact_layout else Vector2.ZERO
