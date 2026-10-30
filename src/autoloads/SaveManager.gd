@@ -112,6 +112,7 @@ func load_game(slot_id := 1) -> bool:
 			push_warning("[SaveManager] Backup carregado, mas nao foi possivel restaurar o arquivo principal.")
 	var original_version := int(parsed.get("save_version", 1))
 	var migration_required := original_version < SAVE_VERSION or not parsed.has("progression_state") or _contains_legacy_faction_state(parsed)
+	var progression_import_required := migration_required
 	if parsed.has("faction_director_state") and typeof(parsed["faction_director_state"]) == TYPE_DICTIONARY:
 		parsed["faction_director_state"] = FactionIdentityV4.migrate_director_state(parsed["faction_director_state"])
 	WorldState.load_from_dict(parsed)
@@ -127,13 +128,18 @@ func load_game(slot_id := 1) -> bool:
 		FactionDirectorManager.load_from_dict(parsed.get("faction_director_state", {}))
 	if has_node("/root/CriaLiveManager"):
 		CriaLiveManager.load_from_dict(parsed.get("cria_live_state", {}))
-	if parsed.has("world_map_state") and has_node("/root/WorldMapManager"):
-		WorldMapManager.load_from_dict(parsed["world_map_state"])
+	if parsed.has("world_map_state") and typeof(parsed["world_map_state"]) == TYPE_DICTIONARY and has_node("/root/WorldMapManager"):
+		var saved_map: Dictionary = parsed["world_map_state"]
+		WorldMapManager.load_from_dict(saved_map)
+		var normalized_map: Dictionary = WorldMapManager.to_dict()
+		for map_key in ["current_hub", "unlocked_hubs", "visited_hubs", "travel_log"]:
+			if saved_map.get(map_key) != normalized_map.get(map_key):
+				migration_required = true
 	if parsed.has("gear_state") and has_node("/root/GearManager"):
 		GearManager.load_from_dict(parsed["gear_state"])
 	if parsed.has("training_state") and has_node("/root/TrainingManager"):
 		TrainingManager.load_from_dict(parsed["training_state"])
-	if has_node("/root/ProgressionOS") and migration_required:
+	if has_node("/root/ProgressionOS") and progression_import_required:
 		ProgressionOS.import_legacy_learned_techniques(WorldState.techniques_learned)
 	if parsed.has("hub_activity_state") and has_node("/root/HubActivityManager"):
 		HubActivityManager.load_from_dict(parsed["hub_activity_state"])
@@ -173,6 +179,12 @@ func _persist_migrated_save(path: String, source: Dictionary, original_version: 
 		migrated["faction_director_state"] = FactionDirectorManager.to_dict()
 	if has_node("/root/TrainingManager"):
 		migrated["training_state"] = TrainingManager.to_dict()
+	if typeof(source.get("world_map_state")) == TYPE_DICTIONARY and has_node("/root/WorldMapManager"):
+		var regional_state: Dictionary = source["world_map_state"].duplicate(true)
+		var authoritative_map: Dictionary = WorldMapManager.to_dict()
+		for map_key in authoritative_map.keys():
+			regional_state[map_key] = authoritative_map[map_key]
+		migrated["world_map_state"] = regional_state
 	if not _write_atomic_json(path, migrated):
 		push_warning("[SaveManager] Save carregado, mas a persistencia da migracao v6 falhou.")
 
