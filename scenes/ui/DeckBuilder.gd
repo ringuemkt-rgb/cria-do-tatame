@@ -75,11 +75,11 @@ func _apply_responsive_layout_for_size(viewport_size: Vector2) -> void:
 			var button: Button = child as Button
 			button.custom_minimum_size = Vector2(136 if _compact_layout else 190, 52)
 	for label in [
-		$Margin/Scroll/Layout/Body/GiPanel/Gi/ActiveLabel,
-		$Margin/Scroll/Layout/Body/GiPanel/Gi/PassiveLabel
+		gi_panel.get_node("Gi/ActiveLabel"),
+		gi_panel.get_node("Gi/PassiveLabel")
 	]:
 		label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-	var hint: Label = $Margin/Scroll/Layout/Body/GiPanel/Gi/Hint
+	var hint: Label = gi_panel.get_node("Gi/Hint")
 	hint.text = "Toque na carta para equipar; REMOVER libera um slot. Arrastar é opcional." if _compact_layout else "Arraste uma carta para o slot ou toque para equipar no primeiro espaço disponível."
 
 func _refresh_all() -> void:
