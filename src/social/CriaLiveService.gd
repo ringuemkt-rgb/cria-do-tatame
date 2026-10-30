@@ -1,5 +1,5 @@
 class_name CriaLiveService
-extends Node
+extends RefCounted
 
 const ViralityEngineScript = preload("res://src/social/CriaLiveViralityEngine.gd")
 const FeedGeneratorScript = preload("res://src/social/CriaLiveFeedGenerator.gd")
