@@ -11,6 +11,8 @@ on:
       - 'assets/world/maps/candidate/**'
       - 'tests/world_atlas_navigation_smoke.gd'
       - 'tests/world_map_life_smoke.gd'
+      - 'tests/world_map_travel_ui_smoke.gd'
+      - 'tests/helpers/WorldMapTravelScreenStub.gd'
       - '.github/workflows/world-atlas-navigation-v1.yml'
   workflow_dispatch:
 
@@ -23,6 +25,10 @@ jobs:
     timeout-minutes: 15
     steps:
       - uses: actions/checkout@v4
+      - name: Install quality-gate image dependency
+        run: python -m pip install --disable-pip-version-check 'Pillow>=10.2.0'
+      - name: Mandatory full quality gate
+        run: npm run quality
       - name: Install Godot 4.2.2
         run: |
           set -euo pipefail
@@ -41,6 +47,23 @@ jobs:
           ./godot --headless --path . --script res://tests/world_atlas_navigation_smoke.gd 2>&1 | tee map_nav.log
           grep -q '\[WorldAtlasNav\].*failures=0' map_nav.log
           if grep -Eq 'SCRIPT ERROR|Parse Error|ERROR:' map_nav.log; then exit 1; fi
+      - name: Regional travel UI transaction regression
+        run: |
+          set -euo pipefail
+          ./godot --headless --path . --script res://tests/world_map_travel_ui_smoke.gd 2>&1 | tee travel_ui.log
+          grep -q '\[TravelUI\].*failures=0' travel_ui.log
+          if grep -Eq 'SCRIPT ERROR|Parse Error|ERROR:' travel_ui.log; then exit 1; fi
+      - name: Godot 4.3 regional travel compatibility
+        run: |
+          set -euo pipefail
+          curl --retry 3 -L --fail -o godot43.zip https://github.com/godotengine/godot/releases/download/4.3-stable/Godot_v4.3-stable_linux.x86_64.zip
+          unzip -q godot43.zip
+          mv Godot_v4.3-stable_linux.x86_64 godot43
+          chmod +x godot43
+          ./godot43 --headless --editor --path . --import 2>&1 | tee import_map_43.log
+          ./godot43 --headless --path . --script res://tests/world_map_travel_ui_smoke.gd 2>&1 | tee travel_ui_43.log
+          grep -q '\[TravelUI\].*failures=0' travel_ui_43.log
+          if grep -Eq 'SCRIPT ERROR|Parse Error|ERROR:' import_map_43.log travel_ui_43.log; then exit 1; fi
       - name: Original world-map life regressions
         run: |
           set -euo pipefail
@@ -55,4 +78,7 @@ jobs:
             import_map.log
             map_nav.log
             map_life.log
+            travel_ui.log
+            import_map_43.log
+            travel_ui_43.log
           if-no-files-found: warn
