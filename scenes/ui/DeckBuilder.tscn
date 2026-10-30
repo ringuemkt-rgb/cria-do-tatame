@@ -58,8 +58,7 @@ autowrap_mode = 3
 text = "FAIXA BRANCA • LIMITE DE CARTA Nv.2"
 horizontal_alignment = 1
 
-[node name="Body" type="BoxContainer" parent="Margin/Scroll/Layout"]
-orientation = 0
+[node name="Body" type="HBoxContainer" parent="Margin/Scroll/Layout"]
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_constants/separation = 14
@@ -130,6 +129,12 @@ layout_mode = 2
 text = "Arraste uma carta para o slot ou toque para equipar no primeiro espaço disponível."
 horizontal_alignment = 1
 autowrap_mode = 3
+
+[node name="BodyCompact" type="VBoxContainer" parent="Margin/Scroll/Layout"]
+visible = false
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 14
 
 [node name="Status" type="Label" parent="Margin/Scroll/Layout"]
 custom_minimum_size = Vector2(0, 30)
