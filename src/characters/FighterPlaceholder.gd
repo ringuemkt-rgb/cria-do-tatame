@@ -2,17 +2,20 @@ extends Node2D
 class_name FighterPlaceholder
 
 const CharacterAnimationFactory = preload("res://src/animation/CharacterAnimationLibrary.gd")
+const FighterRigPreviewScript = preload("res://src/characters/FighterRigPreviewV1.gd")
 
 @export var fighter_id := "ruan_macacao"
 @export var display_name := "Ruan Macacao"
 @export var primary_color := Color(0.95, 0.95, 0.92)
 @export var accent_color := Color(0.85, 0.65, 0.15)
+@export var skin_color := Color("a96e48")
 
 var body: ColorRect
 var head: ColorRect
 var name_label: Label
 var shadow: ColorRect
 var animated_sprite: AnimatedSprite2D
+var preview_rig: Node2D
 var _base_position := Vector2.ZERO
 var _base_scale := Vector2.ONE
 
@@ -51,16 +54,15 @@ func _build() -> void:
 	add_child(name_label)
 
 func _build_fallback_body() -> void:
-	body = ColorRect.new()
-	body.color = primary_color
-	body.size = Vector2(48, 86)
-	body.position = Vector2(-24, -16)
-	add_child(body)
-	head = ColorRect.new()
-	head.color = accent_color
-	head.size = Vector2(36, 30)
-	head.position = Vector2(-18, -52)
-	add_child(head)
+	# Animated procedural fallback until a licensed, reviewed sprite atlas exists.
+	preview_rig = FighterRigPreviewScript.new()
+	preview_rig.name = "ProceduralRigPreview"
+	preview_rig.gi_color = primary_color
+	preview_rig.skin_color = skin_color
+	preview_rig.trim_color = Color("25272d")
+	add_child(preview_rig)
+	body = null
+	head = null
 
 func _manifest_path(action: String) -> String:
 	return "res://assets/sprites/%s/%s/manifest.json" % [fighter_id, action]
@@ -76,6 +78,21 @@ func _load_clip(action: String) -> bool:
 	animated_sprite.animation = action
 	animated_sprite.play()
 	return true
+
+func begin_visual_action(action_id: String) -> void:
+	# The paired animator owns synchronization; do not start unsynchronized
+	# root-position tweens or asynchronous idle restoration here.
+	if preview_rig == null and animated_sprite != null:
+		_load_clip(_clip_for_action(action_id))
+
+func set_preview_pose(pose: String) -> void:
+	if preview_rig != null and is_instance_valid(preview_rig):
+		preview_rig.set_visual_pose(pose)
+
+func end_visual_action(pose: String = "stance") -> void:
+	if preview_rig == null:
+		_load_clip("idle")
+	set_preview_pose(pose)
 
 func _clip_for_action(action_id: String) -> String:
 	match action_id:

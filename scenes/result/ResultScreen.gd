@@ -23,16 +23,19 @@ func _connect_buttons() -> void:
 func _update_result() -> void:
 	var data: Dictionary = WorldState.last_combat_result
 	var winner := str(data.get("winner", ""))
-	var won := winner == WorldState.player_id
-	var title := "VITORIA" if won else "DERROTA"
-	var method := _humanize_method(str(data.get("method", "controle_posicional")))
+	var draw := bool(data.get("draw", false)) or winner == ""
+	var won := not draw and winner == WorldState.player_id
+	var title := "EMPATE" if draw else ("VITORIA" if won else "DERROTA")
+	var method := _humanize_method(str(data.get("method", "pontos")))
 	if has_node("Panel/Result"):
 		$Panel/Result.text = "%s • %s" % [title, method]
 	if has_node("Panel/Details"):
 		var final_state := str(data.get("final_state", "RESET")).replace("_", " ")
 		$Panel/Details.text = "O combate terminou por %s. Estado final: %s." % [method.to_lower(), final_state]
 	if has_node("Panel/Reward"):
-		if won:
+		if draw:
+			$Panel/Reward.text = "Empate • sem alteracao de vitorias/derrotas"
+		elif won:
 			$Panel/Reward.text = "+ R$ 200 • Honra +5 • Hype +3 • Vitorias: %d" % WorldState.fights_won
 		else:
 			$Panel/Reward.text = "Honra -3 • Hype -2 • Derrotas: %d" % WorldState.fights_lost
@@ -41,6 +44,10 @@ func _update_result() -> void:
 
 func _humanize_method(method: String) -> String:
 	match method:
+		"pontos": return "Pontos"
+		"vantagens": return "Vantagens"
+		"penalidades": return "Penalidades"
+		"empate_tempo": return "Empate no tempo"
 		"controle_posicional": return "Controle Posicional"
 		"encerramento_tecnico": return "Encerramento Tecnico"
 		"mata_leao": return "Mata-leao com tap"

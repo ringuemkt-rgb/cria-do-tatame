@@ -1,0 +1,137 @@
+name: Paired Combat Preview V1
+
+on:
+  pull_request:
+    branches:
+      - main
+      - fix/positional-combat-audit-20260929
+    paths:
+      - 'src/animation/CombatPairTimelineV1.gd'
+      - 'src/characters/FighterRigPreviewV1.gd'
+      - 'src/characters/FighterPlaceholder.gd'
+      - 'data/animation/combat_pair_preview_v1.json'
+      - 'scenes/combat/CombatArenaBase.gd'
+      - 'tests/combat_paired_motion_smoke.gd'
+      - '.github/workflows/paired-combat-preview-v1.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  godot-paired-preview:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install repository quality tools
+        run: python -m pip install --upgrade pip pytest ruff Pillow
+      - name: Repository quality gate
+        run: npm run quality
+      - name: Get Godot 4.2.2
+        shell: bash
+        run: |
+          set -euo pipefail
+          curl -L --fail --retry 3 -o godot.zip \
+            https://github.com/godotengine/godot/releases/download/4.2.2-stable/Godot_v4.2.2-stable_linux.x86_64.zip
+          unzip -q godot.zip
+          mv Godot_v4.2.2-stable_linux.x86_64 godot
+          chmod +x godot
+      - name: Import resources and check GDScript parser
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p reports/paired_preview
+          timeout 180 ./godot --headless --editor --path . --import 2>&1 | tee reports/paired_preview/import.log
+          if grep -Eq 'SCRIPT ERROR|Parse Error|Failed loading resource' reports/paired_preview/import.log; then exit 1; fi
+      - name: Play and verify paired animation
+        shell: bash
+        run: |
+          set -euo pipefail
+          ./godot --headless --path . --script res://tests/combat_paired_motion_smoke.gd 2>&1 | tee reports/paired_preview/paired_smoke.log
+          grep -q '\[CombatPairedMotion\] PASS' reports/paired_preview/paired_smoke.log
+          if grep -Eq 'SCRIPT ERROR|Parse Error|ERROR:' reports/paired_preview/paired_smoke.log; then exit 1; fi
+      - name: Existing combat safety regressions
+        shell: bash
+        run: |
+          set -euo pipefail
+          ./godot --headless --path . --script res://tests/combat_action_safety_smoke.gd 2>&1 | tee reports/paired_preview/combat_smoke.log
+          grep -q '\[CombatActionSafety\] PASS' reports/paired_preview/combat_smoke.log
+          if grep -Eq 'SCRIPT ERROR|Parse Error|ERROR:' reports/paired_preview/combat_smoke.log; then exit 1; fi
+      - name: Main runtime smoke
+        shell: bash
+        run: |
+          set -euo pipefail
+          ./godot --headless --path . --script res://tests/runtime_smoke.gd 2>&1 | tee reports/paired_preview/runtime_smoke.log
+          grep -q '\[RuntimeSmoke\] PASS' reports/paired_preview/runtime_smoke.log
+          if grep -Eq 'SCRIPT ERROR|Parse Error|ERROR:' reports/paired_preview/runtime_smoke.log; then exit 1; fi
+      - name: Upload evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: paired-combat-preview-v1-logs
+          path: reports/paired_preview/
+          if-no-files-found: warn
+
+  android-paired-debug:
+    needs: godot-paired-preview
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - name: Download Godot 4.2.2 and matching export templates
+        shell: bash
+        run: |
+          set -euo pipefail
+          curl -L --fail --retry 3 -o godot.zip \
+            https://github.com/godotengine/godot/releases/download/4.2.2-stable/Godot_v4.2.2-stable_linux.x86_64.zip
+          unzip -q godot.zip
+          mv Godot_v4.2.2-stable_linux.x86_64 godot
+          chmod +x godot
+          curl -L --fail --retry 3 -o templates.tpz \
+            https://github.com/godotengine/godot/releases/download/4.2.2-stable/Godot_v4.2.2-stable_export_templates.tpz
+          mkdir -p "$HOME/.local/share/godot/export_templates/4.2.2.stable"
+          unzip -q templates.tpz -d templates_unpack
+          cp -a templates_unpack/templates/. "$HOME/.local/share/godot/export_templates/4.2.2.stable/"
+          test -s "$HOME/.local/share/godot/export_templates/4.2.2.stable/android_debug.apk"
+      - name: Configure Android SDK paths and debug keystore
+        run: bash tools/build/configure_godot_android_ci.sh
+      - name: Godot resource import
+        run: timeout 180 ./godot --headless --editor --path . --import
+      - name: Export paired motion debug APK
+        shell: bash
+        env:
+          GODOT_ANDROID_KEYSTORE_DEBUG_PATH: /home/runner/.local/share/godot/keystores/debug.keystore
+          GODOT_ANDROID_KEYSTORE_DEBUG_USER: androiddebugkey
+          GODOT_ANDROID_KEYSTORE_DEBUG_PASSWORD: android
+        run: |
+          set -euo pipefail
+          mkdir -p builds/android reports/paired_preview
+          ./godot --headless --path . --export-debug "Android Debug" \
+            builds/android/CriaDoTatame-paired-debug.apk 2>&1 | tee reports/paired_preview/android_export.log
+          if grep -Eq 'SCRIPT ERROR|Parse Error|^ERROR:' reports/paired_preview/android_export.log; then exit 1; fi
+          test -s builds/android/CriaDoTatame-paired-debug.apk
+          test "$(stat -c%s builds/android/CriaDoTatame-paired-debug.apk)" -gt 1048576
+          unzip -t builds/android/CriaDoTatame-paired-debug.apk
+          unzip -l builds/android/CriaDoTatame-paired-debug.apk | grep -q 'lib/arm64-v8a/libgodot_android.so'
+          sha256sum builds/android/CriaDoTatame-paired-debug.apk > builds/android/CriaDoTatame-paired-debug.apk.sha256.txt
+      - name: Upload playable Android preview candidate
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: CriaDoTatame-PairedMotion-Android-Debug-Candidate
+          path: |
+            builds/android/CriaDoTatame-paired-debug.apk
+            builds/android/CriaDoTatame-paired-debug.apk.sha256.txt
+            reports/paired_preview/android_export.log
+          if-no-files-found: warn

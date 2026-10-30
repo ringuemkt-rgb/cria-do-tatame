@@ -1,0 +1,254 @@
+{
+  "$schema": "cria.combat_pair_preview.v1",
+  "version": "1.0.0",
+  "status": "INTEGRATED_VISUAL_PREVIEW_NOT_FINAL_ANIMATION",
+  "shipping": false,
+  "authority": "VISUAL_ONLY_NON_AUTHORITATIVE",
+  "source_catalog": "data/techniques.json",
+  "note": "Motion staging is an illustrative animation fallback. It is not mocap, reviewed biomechanics or an IBJJF score/rules source.",
+  "phases": [
+    {
+      "name": "anticipation",
+      "duration_ms": 95,
+      "interpolation": 0.08
+    },
+    {
+      "name": "entry",
+      "duration_ms": 140,
+      "interpolation": 0.35
+    },
+    {
+      "name": "establish",
+      "duration_ms": 165,
+      "interpolation": 0.68
+    },
+    {
+      "name": "stabilize",
+      "duration_ms": 130,
+      "interpolation": 0.85
+    },
+    {
+      "name": "response",
+      "duration_ms": 120,
+      "interpolation": 0.96
+    },
+    {
+      "name": "recovery",
+      "duration_ms": 155,
+      "interpolation": 1
+    }
+  ],
+  "profiles": {
+    "grip": {
+      "attacker": [
+        "stance",
+        "grip",
+        "grip",
+        "grip",
+        "guard",
+        "stance"
+      ],
+      "defender": [
+        "guard",
+        "defense",
+        "guard",
+        "guard",
+        "guard",
+        "stance"
+      ]
+    },
+    "takedown": {
+      "attacker": [
+        "stance",
+        "shot",
+        "shot",
+        "top",
+        "top",
+        "top"
+      ],
+      "defender": [
+        "guard",
+        "defense",
+        "impact",
+        "bottom",
+        "bottom",
+        "bottom"
+      ]
+    },
+    "sprawl": {
+      "attacker": [
+        "guard",
+        "sprawl",
+        "sprawl",
+        "top",
+        "guard",
+        "guard"
+      ],
+      "defender": [
+        "shot",
+        "shot",
+        "impact",
+        "bottom",
+        "guard",
+        "guard"
+      ]
+    },
+    "pass": {
+      "attacker": [
+        "top",
+        "grip",
+        "pass",
+        "top",
+        "top",
+        "top"
+      ],
+      "defender": [
+        "bottom",
+        "defense",
+        "bottom",
+        "bottom",
+        "bottom",
+        "bottom"
+      ]
+    },
+    "mount": {
+      "attacker": [
+        "top",
+        "grip",
+        "pass",
+        "mount",
+        "mount",
+        "mount"
+      ],
+      "defender": [
+        "bottom",
+        "defense",
+        "bottom",
+        "bottom",
+        "bottom",
+        "bottom"
+      ]
+    },
+    "guard_pull": {
+      "attacker": [
+        "guard",
+        "shot",
+        "bottom",
+        "bottom",
+        "bottom",
+        "bottom"
+      ],
+      "defender": [
+        "stance",
+        "defense",
+        "top",
+        "top",
+        "top",
+        "top"
+      ]
+    },
+    "sweep": {
+      "attacker": [
+        "bottom",
+        "grip",
+        "shot",
+        "top",
+        "top",
+        "top"
+      ],
+      "defender": [
+        "top",
+        "defense",
+        "impact",
+        "bottom",
+        "bottom",
+        "bottom"
+      ]
+    },
+    "submission": {
+      "attacker": [
+        "top",
+        "grip",
+        "submission",
+        "submission",
+        "submission",
+        "submission"
+      ],
+      "defender": [
+        "bottom",
+        "defense",
+        "bottom",
+        "bottom",
+        "bottom",
+        "bottom"
+      ]
+    },
+    "escape": {
+      "attacker": [
+        "bottom",
+        "defense",
+        "shot",
+        "guard",
+        "guard",
+        "guard"
+      ],
+      "defender": [
+        "top",
+        "grip",
+        "defense",
+        "top",
+        "top",
+        "top"
+      ]
+    },
+    "defended": {
+      "attacker": [
+        "stance",
+        "shot",
+        "impact",
+        "guard",
+        "guard",
+        "stance"
+      ],
+      "defender": [
+        "guard",
+        "defense",
+        "sprawl",
+        "guard",
+        "guard",
+        "stance"
+      ]
+    }
+  },
+  "technique_profiles": {
+    "grip_de_ferro": "grip",
+    "pressao_cabeca": "grip",
+    "quebra_base": "grip",
+    "crossface": "grip",
+    "silverback_grip": "pass",
+    "baiana": "takedown",
+    "sprawl": "sprawl",
+    "corte_joelho": "pass",
+    "torreando": "pass",
+    "montada_pesada": "mount",
+    "puxada_guarda": "guard_pull",
+    "raspagem_tesoura": "sweep",
+    "raspagem_borboleta": "sweep",
+    "arm_drag": "pass",
+    "mata_leao": "submission",
+    "chave_braco": "submission",
+    "triangulo": "submission",
+    "encerramento_tecnico": "submission",
+    "saida_montada": "escape",
+    "saida_cem_quilos": "escape",
+    "cem_quilos": "mount"
+  },
+  "fallback_profile": "grip",
+  "asset_promotion": {
+    "approved_pixel_atlas_required": true,
+    "approved_paired_physical_binding_required": true,
+    "human_review_required": true,
+    "rights_approval_required": true,
+    "stage_motion_does_not_prove_contact_continuity": true
+  }
+}
