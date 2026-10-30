@@ -5,32 +5,82 @@ const CardButtonScript = preload("res://scenes/ui/DeckCardButton.gd")
 const DeckSlotScript = preload("res://scenes/ui/DeckSlot.gd")
 const VisualTheme = preload("res://src/ui/CriaVisualTheme.gd")
 
-@onready var collection_grid: GridContainer = $Margin/Layout/Body/CollectionPanel/Collection/Scroll/CollectionGrid
-@onready var active_slots: HBoxContainer = $Margin/Layout/Body/GiPanel/Gi/ActiveSlots
-@onready var passive_slots: HBoxContainer = $Margin/Layout/Body/GiPanel/Gi/PassiveSlots
-@onready var status_label: Label = $Margin/Layout/Status
-@onready var belt_label: Label = $Margin/Layout/Belt
+@onready var collection_grid: GridContainer = $Margin/Scroll/Layout/Body/CollectionPanel/Collection/Scroll/CollectionGrid
+@onready var active_slots: GridContainer = $Margin/Scroll/Layout/Body/GiPanel/Gi/ActiveSlots
+@onready var passive_slots: GridContainer = $Margin/Scroll/Layout/Body/GiPanel/Gi/PassiveSlots
+@onready var status_label: Label = $Margin/Scroll/Layout/Status
+@onready var belt_label: Label = $Margin/Scroll/Layout/Belt
+@onready var body_desktop: HBoxContainer = $Margin/Scroll/Layout/Body
+@onready var body_compact: VBoxContainer = $Margin/Scroll/Layout/BodyCompact
+@onready var collection_panel: PanelContainer = $Margin/Scroll/Layout/Body/CollectionPanel
+@onready var gi_panel: PanelContainer = $Margin/Scroll/Layout/Body/GiPanel
 
 var selected_card_id := ""
+var _compact_layout := false
 
 func _ready() -> void:
 	_style_screen()
-	$Margin/Layout/Actions/Back.pressed.connect(_on_back)
-	$Margin/Layout/Actions/Save.pressed.connect(_on_save)
-	$Margin/Layout/Actions/UpgradeXP.pressed.connect(_on_upgrade.bind("xp"))
-	$Margin/Layout/Actions/UpgradeMoney.pressed.connect(_on_upgrade.bind("money"))
+	_apply_responsive_layout()
+	get_viewport().size_changed.connect(_apply_responsive_layout)
+	$Margin/Scroll/Layout/Actions/Back.pressed.connect(_on_back)
+	$Margin/Scroll/Layout/Actions/Save.pressed.connect(_on_save)
+	$Margin/Scroll/Layout/Actions/UpgradeXP.pressed.connect(_on_upgrade.bind("xp"))
+	$Margin/Scroll/Layout/Actions/UpgradeMoney.pressed.connect(_on_upgrade.bind("money"))
 	_refresh_all()
 
 func _style_screen() -> void:
-	VisualTheme.style_heading($Margin/Layout/Title, 34, VisualTheme.HONOR)
-	$Margin/Layout/Subtitle.add_theme_color_override("font_color", VisualTheme.OFF_WHITE)
-	$Margin/Layout/Belt.add_theme_color_override("font_color", VisualTheme.CYAN)
-	$Margin/Layout/Body/CollectionPanel.add_theme_stylebox_override("panel", VisualTheme.panel_style(0.94, VisualTheme.RIVER, 1, 10))
-	$Margin/Layout/Body/GiPanel.add_theme_stylebox_override("panel", VisualTheme.panel_style(0.94, VisualTheme.GOLD, 2, 10))
-	VisualTheme.apply_primary_button($Margin/Layout/Actions/Save)
-	VisualTheme.apply_action_button($Margin/Layout/Actions/Back, VisualTheme.RIVER)
-	VisualTheme.apply_action_button($Margin/Layout/Actions/UpgradeXP, VisualTheme.GOLD)
-	VisualTheme.apply_action_button($Margin/Layout/Actions/UpgradeMoney, VisualTheme.CYAN)
+	VisualTheme.style_heading($Margin/Scroll/Layout/Title, 34, VisualTheme.HONOR)
+	$Margin/Scroll/Layout/Subtitle.add_theme_color_override("font_color", VisualTheme.OFF_WHITE)
+	$Margin/Scroll/Layout/Belt.add_theme_color_override("font_color", VisualTheme.CYAN)
+	$Margin/Scroll/Layout/Body/CollectionPanel.add_theme_stylebox_override("panel", VisualTheme.panel_style(0.94, VisualTheme.RIVER, 1, 10))
+	$Margin/Scroll/Layout/Body/GiPanel.add_theme_stylebox_override("panel", VisualTheme.panel_style(0.94, VisualTheme.GOLD, 2, 10))
+	VisualTheme.apply_primary_button($Margin/Scroll/Layout/Actions/Save)
+	VisualTheme.apply_action_button($Margin/Scroll/Layout/Actions/Back, VisualTheme.RIVER)
+	VisualTheme.apply_action_button($Margin/Scroll/Layout/Actions/UpgradeXP, VisualTheme.GOLD)
+	VisualTheme.apply_action_button($Margin/Scroll/Layout/Actions/UpgradeMoney, VisualTheme.CYAN)
+
+
+# The deck builder must remain operable on portrait phones: all five active
+# slots, three passive slots, collection and actions are reachable by scroll.
+# No change to DeckManager authority, card IDs, or save schema.
+func _apply_responsive_layout() -> void:
+	_apply_responsive_layout_for_size(get_viewport().get_visible_rect().size)
+
+func _apply_responsive_layout_for_size(viewport_size: Vector2) -> void:
+	_compact_layout = viewport_size.x < 1200.0
+	var margin: MarginContainer = $Margin
+	var horizontal_margin := 12 if _compact_layout else 40
+	var vertical_margin := 12 if _compact_layout else 24
+	for side in ["left", "right"]:
+		margin.add_theme_constant_override("margin_" + side, horizontal_margin)
+	for side in ["top", "bottom"]:
+		margin.add_theme_constant_override("margin_" + side, vertical_margin)
+	# HBoxContainer/VBoxContainer have fixed orientation in Godot 4.2/4.3.
+	# Move the SAME panels between layouts; never duplicate deck consumers.
+	var target: Container = body_compact if _compact_layout else body_desktop
+	if collection_panel.get_parent() != target:
+		collection_panel.reparent(target, false)
+		gi_panel.reparent(target, false)
+	body_desktop.visible = not _compact_layout
+	body_compact.visible = _compact_layout
+	collection_panel.custom_minimum_size = Vector2(0, 180) if _compact_layout else Vector2.ZERO
+	gi_panel.custom_minimum_size = Vector2.ZERO if _compact_layout else Vector2(720, 0)
+	collection_grid.columns = 1 if _compact_layout else 2
+	active_slots.columns = 3 if _compact_layout else 5
+	passive_slots.columns = 3
+	var actions: GridContainer = $Margin/Scroll/Layout/Actions
+	actions.columns = 2 if _compact_layout else 4
+	for child in actions.get_children():
+		if child is Button:
+			var button: Button = child as Button
+			button.custom_minimum_size = Vector2(136 if _compact_layout else 190, 52)
+	for label in [
+		gi_panel.get_node("Gi/ActiveLabel"),
+		gi_panel.get_node("Gi/PassiveLabel")
+	]:
+		label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	var hint: Label = gi_panel.get_node("Gi/Hint")
+	hint.text = "Toque na carta para equipar; REMOVER libera um slot. Arrastar é opcional." if _compact_layout else "Arraste uma carta para o slot ou toque para equipar no primeiro espaço disponível."
 
 func _refresh_all() -> void:
 	belt_label.text = "FAIXA %s • LIMITE DE CARTA Nv.%d" % [
@@ -49,7 +99,7 @@ func _refresh_all() -> void:
 	_build_slots(active_slots, "active", DeckManager.ACTIVE_LIMIT, DeckManager.active_deck)
 	_build_slots(passive_slots, "passive", DeckManager.PASSIVE_LIMIT, DeckManager.passive_deck)
 
-func _build_slots(container: HBoxContainer, kind: String, count: int, equipped: Array[String]) -> void:
+func _build_slots(container: GridContainer, kind: String, count: int, equipped: Array[String]) -> void:
 	_clear_children(container)
 	for index in range(count):
 		var slot := DeckSlotScript.new()
@@ -58,7 +108,7 @@ func _build_slots(container: HBoxContainer, kind: String, count: int, equipped: 
 		slot.set_meta("occupied", index < equipped.size())
 		slot.focus_mode = Control.FOCUS_ALL
 		slot.tooltip_text = "Cartas equipadas: clique com o botão direito ou pressione Voltar para remover." if index < equipped.size() else "Arraste uma carta da coleção para este espaço."
-		slot.custom_minimum_size = Vector2(132, 88)
+		slot.custom_minimum_size = Vector2(96, 100) if _compact_layout else Vector2(132, 88)
 		slot.add_theme_stylebox_override("panel", VisualTheme.panel_style(0.72, VisualTheme.GOLD if kind == "active" else VisualTheme.CYAN, 1, 8))
 		var label := Label.new()
 		label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
@@ -76,7 +126,7 @@ func _build_slots(container: HBoxContainer, kind: String, count: int, equipped: 
 		if index < equipped.size():
 			var remove_btn := Button.new()
 			remove_btn.text = "REMOVER"
-			remove_btn.custom_minimum_size = Vector2(0, 32)
+			remove_btn.custom_minimum_size = Vector2(0, 48 if _compact_layout else 32)
 			VisualTheme.apply_action_button(remove_btn, VisualTheme.CONFLICT)
 			remove_btn.pressed.connect(_on_remove_slot.bind(kind, index))
 			slot_content.add_child(remove_btn)
@@ -118,11 +168,15 @@ func _on_card_dropped(card_id: String, kind: String, index: int) -> void:
 	_refresh_all()
 
 func _on_save() -> void:
-	_set_status("Deck salvo." if SaveManager.save_game(1) else "Falha ao salvar o deck.", false)
+	var saved := SaveManager.save_game(1)
+	_set_status("Deck salvo." if saved else "Falha ao salvar o deck.", not saved)
 
 func _on_back() -> void:
-	SaveManager.save_game(1)
-	get_tree().change_scene_to_file(HUB_SCENE)
+	if not SaveManager.save_game(1):
+		_set_status("Falha ao salvar. Permanecendo no editor de deck.", true)
+		return
+	if get_tree().change_scene_to_file(HUB_SCENE) != OK:
+		_set_status("Não foi possível voltar ao Terreiro.", true)
 
 func _set_status(message: String, is_error: bool) -> void:
 	status_label.text = message
