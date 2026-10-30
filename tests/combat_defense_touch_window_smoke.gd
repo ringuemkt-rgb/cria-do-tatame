@@ -36,23 +36,42 @@ func _run() -> void:
 	hud.call("set_actions_enabled", false)
 	hud.call("open_defense_window", [
 		{"id": "defesa_frame_qa", "name": "Frame"},
-		{"id": "", "name": "Invalid"}
+		{"id": "", "name": "Invalid"},
+		{"id": "defesa_base_qa", "name": "Base"},
+		"malformed_option"
 	], 1.15)
 	var first := hud.get_node("Panel/Layout/Cards/Card1") as Button
 	var second := hud.get_node("Panel/Layout/Cards/Card2") as Button
+	var third := hud.get_node("Panel/Layout/Cards/Card3") as Button
+	var fourth := hud.get_node("Panel/Layout/Cards/Card4") as Button
 	_check(not first.disabled, "valid defense remains touch-enabled during AI lock")
 	_check(second.disabled, "empty defense ID is disabled")
+	_check(not third.disabled, "second valid defense available before selection")
+	_check(fourth.disabled, "malformed defense option fails closed")
 	_check(str(first.get_meta("card_id", "")) == "defesa_frame_qa", "defense ID bound to button")
 	# A deck update must not replace reaction buttons before the window closes.
 	hud.call("_on_hand_changed", [], "")
 	_check(str(first.get_meta("card_id", "")) == "defesa_frame_qa", "defense survives ordinary hand refresh")
 	first.pressed.emit()
-	_check(selected.size() == 1 and selected[0] == "defesa_frame_qa", "touch press emits defense selection")
+	_check(selected.size() == 1 and selected[0] == "defesa_frame_qa", "first press emits one defense")
+	_check(first.disabled and third.disabled, "all defense buttons lock after selection")
+	hud.call("set_defense_window_remaining", 0.5)
+	_check(str(hud.get_node("Panel/Layout/Header/Clash").text) == "DEFESA ENVIADA", "submitted feedback survives countdown update")
+	first.pressed.emit()
+	third.pressed.emit()
+	hud.call("_on_card_pressed", 2)
+	_check(selected.size() == 1, "queued double tap and second option cannot emit again")
 	second.pressed.emit()
-	_check(selected.size() == 1, "disabled option cannot emit a selection")
+	_check(selected.size() == 1, "invalid option cannot emit a selection")
 	hud.call("close_defense_window")
 	first.pressed.emit()
 	_check(selected.size() == 1, "closed defense window cannot emit another defense")
+	# A distinct AI attack must be able to open a fresh reaction window.
+	hud.call("open_defense_window", [{"id": "defesa_esquiva_qa", "name": "Esquiva"}], 0.9)
+	_check(not first.disabled, "new defense window re-enables its valid option")
+	first.pressed.emit()
+	_check(selected.size() == 2 and selected[1] == "defesa_esquiva_qa", "new window emits exactly one new defense")
+	hud.call("close_defense_window")
 	bus.disconnect("combat_v2_defense_selected", on_choice)
 	hud.queue_free()
 	await process_frame

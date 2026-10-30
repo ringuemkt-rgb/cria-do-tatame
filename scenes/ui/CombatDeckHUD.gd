@@ -8,6 +8,7 @@ var v2_mode := false
 var v2_hand: Array = []
 var defense_mode := false
 var defense_options: Array = []
+var _defense_choice_submitted := false
 var _actions_enabled := true
 
 func _ready() -> void:
@@ -60,12 +61,18 @@ func _on_card_pressed(index: int) -> void:
 		return
 	# The player turn remains locked while Davi acts. Defense taps are
 	# permitted only while the dedicated reaction window is visible.
-	if card_buttons[index].disabled or (not defense_mode and not _actions_enabled):
+	if card_buttons[index].disabled or (defense_mode and _defense_choice_submitted) or (not defense_mode and not _actions_enabled):
 		return
 	var card_id := str(card_buttons[index].get_meta("card_id", ""))
 	if card_id == "":
 		return
 	if defense_mode:
+		# Consume the reaction before notifying listeners: queued/double taps must
+		# never submit a second defense for the same AI attack.
+		_defense_choice_submitted = true
+		for button in card_buttons:
+			button.disabled = true
+		$Panel/Layout/Header/Clash.text = "DEFESA ENVIADA"
 		SignalBus.combat_v2_defense_selected.emit(card_id)
 	elif v2_mode:
 		SignalBus.combat_v2_card_selected.emit(card_id)
@@ -130,6 +137,7 @@ func _on_v2_hand_changed(hand: Array) -> void:
 		button.modulate = Color.WHITE
 
 func open_defense_window(options: Array, seconds: float) -> void:
+	_defense_choice_submitted = false
 	defense_mode = true
 	defense_options = options.duplicate(true)
 	$Panel/Layout/Header/Title.text = "REACAO • DEFENDA AGORA"
@@ -141,7 +149,8 @@ func open_defense_window(options: Array, seconds: float) -> void:
 			button.disabled = true
 			button.set_meta("card_id", "")
 			continue
-		var option: Dictionary = defense_options[index]
+		# Treat malformed reaction payloads as unavailable, never as actions.
+		var option: Dictionary = defense_options[index] if typeof(defense_options[index]) == TYPE_DICTIONARY else {}
 		var defense_id := str(option.get("id", ""))
 		button.text = "DEFESA\n%s" % str(option.get("name", defense_id)).replace("_", " ")
 		button.set_meta("card_id", defense_id)
@@ -149,13 +158,14 @@ func open_defense_window(options: Array, seconds: float) -> void:
 		button.modulate = Color.WHITE
 
 func set_defense_window_remaining(seconds: float) -> void:
-	if defense_mode:
+	if defense_mode and not _defense_choice_submitted:
 		$Panel/Layout/Header/Clash.text = "JANELA %.1fs" % maxf(0.0, seconds)
 
 func close_defense_window() -> void:
 	if not defense_mode:
 		return
 	defense_mode = false
+	_defense_choice_submitted = false
 	defense_options.clear()
 	$Panel/Layout/Header/Title.text = "MENTE NO TATAME • MÃO ATUAL"
 	$Panel/Layout/Header/Clash.text = "AGUARDANDO DISPUTA"
