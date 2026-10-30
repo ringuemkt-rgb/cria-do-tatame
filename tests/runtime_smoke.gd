@@ -10,6 +10,8 @@ const REQUIRED_SCENES := [
 	"res://scenes/combat/CombatArenaBase.tscn",
 	"res://scenes/result/ResultScreen.tscn",
 	"res://scenes/ui/CriaLiveUI.tscn",
+	"res://scenes/ui/CutsceneOverlay.tscn",
+	"res://scenes/training/TrainingScreen.tscn",
 	"res://scenes/ui/DeckBuilder.tscn",
 	"res://scenes/ui/CombatDeckHUD.tscn"
 ]

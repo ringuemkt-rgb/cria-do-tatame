@@ -395,6 +395,9 @@ func _on_combat_finished(result) -> void:
 	_set_actions_enabled(false)
 	_pending_finish = result.duplicate(true)
 	WorldState.last_combat_result = result
+	if CombatManager.player_id == "ruan_macacao" and CombatManager.opponent_id == "davi_relampago":
+		GameFlowManager.complete_step("primeira_luta_davi")
+		GameFlowManager.mark_flag("first_davi_combat_post_pending", true)
 	SaveManager.save_game(1)
 	var music_cue := "terreiro" if bool(result.get("draw", false)) else ("vitoria" if result.get("winner", "") == "ruan_macacao" else "derrota")
 	AudioManager.play_music_cue(music_cue)

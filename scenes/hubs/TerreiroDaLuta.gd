@@ -6,6 +6,8 @@ const MAIN_MENU_SCENE := "res://scenes/main_menu/MainMenu.tscn"
 const DECK_SCENE := "res://scenes/ui/DeckBuilder.tscn"
 const SKILL_TREE_SCENE := "res://scenes/ui/SkillTreeScreen.tscn"
 const MAP_SCENE := "res://scenes/world/WorldMapScreen.tscn"
+const TRAINING_SCENE := "res://scenes/training/TrainingScreen.tscn"
+const CUTSCENE_OVERLAY := preload("res://scenes/ui/CutsceneOverlay.tscn")
 
 var _transitioning := false
 
@@ -23,6 +25,7 @@ func _ready() -> void:
 	if not SignalBus.day_advanced.is_connected(_on_day_changed):
 		SignalBus.day_advanced.connect(_on_day_changed)
 	_update_ui()
+	_start_recommended_cutscene()
 
 func _connect_if_exists(path: String, callback: Callable) -> void:
 	if not has_node(path):
@@ -64,14 +67,31 @@ func _show_message(message: String) -> void:
 		$Panel/Message.text = message
 
 func _on_train() -> void:
+	var recommendation: Dictionary = GameFlowManager.next_recommended_action()
+	if str(recommendation.get("type", "")) == "cutscene":
+		_start_recommended_cutscene()
+		return
+	if str(recommendation.get("type", "")) == "training":
+		_change_scene(TRAINING_SCENE)
+		return
 	if WorldState.energy < 20.0:
 		_show_message("Energia insuficiente para treinar.")
 		return
 	var result: Dictionary = CareerLoop.execute_activity(CareerLoop.get_today_activity())
-	GameFlowManager.advance_to("primeiro_treino_basico")
 	_show_message(str(result.get("message", "Treino concluido.")))
 	SaveManager.save_game(1)
 	_update_ui()
+
+func _start_recommended_cutscene() -> void:
+	var recommendation: Dictionary = GameFlowManager.next_recommended_action()
+	if str(recommendation.get("type", "")) != "cutscene" or CutsceneRuntime.current_cutscene != "":
+		return
+	var overlay: Control = CUTSCENE_OVERLAY.instantiate()
+	overlay.name = "CutsceneOverlay"
+	add_child(overlay)
+	if not bool(overlay.call("start_cutscene", str(recommendation.get("id", "intro_terreiro")))):
+		push_warning("[TerreiroDaLuta] Nao foi possivel iniciar a cutscene recomendada.")
+		overlay.queue_free()
 
 func _on_fight_davi() -> void:
 	if WorldState.energy < 30.0:

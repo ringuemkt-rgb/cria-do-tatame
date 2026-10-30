@@ -37,8 +37,8 @@ func finish_current() -> void:
 	current_index = 0
 	active_beats = []
 	if finished != "":
+		GameFlowManager.complete_step(finished)
 		cutscene_finished.emit(finished)
-		GameFlowManager.advance_to(finished)
 
 func _emit_current_line() -> void:
 	var beat: Dictionary = active_beats[current_index]
