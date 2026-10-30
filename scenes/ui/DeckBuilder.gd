@@ -10,6 +10,10 @@ const VisualTheme = preload("res://src/ui/CriaVisualTheme.gd")
 @onready var passive_slots: GridContainer = $Margin/Scroll/Layout/Body/GiPanel/Gi/PassiveSlots
 @onready var status_label: Label = $Margin/Scroll/Layout/Status
 @onready var belt_label: Label = $Margin/Scroll/Layout/Belt
+@onready var body_desktop: HBoxContainer = $Margin/Scroll/Layout/Body
+@onready var body_compact: VBoxContainer = $Margin/Scroll/Layout/BodyCompact
+@onready var collection_panel: PanelContainer = $Margin/Scroll/Layout/Body/CollectionPanel
+@onready var gi_panel: PanelContainer = $Margin/Scroll/Layout/Body/GiPanel
 
 var selected_card_id := ""
 var _compact_layout := false
@@ -51,12 +55,15 @@ func _apply_responsive_layout_for_size(viewport_size: Vector2) -> void:
 		margin.add_theme_constant_override("margin_" + side, horizontal_margin)
 	for side in ["top", "bottom"]:
 		margin.add_theme_constant_override("margin_" + side, vertical_margin)
-	var body: BoxContainer = $Margin/Scroll/Layout/Body
-	body.orientation = 1 if _compact_layout else 0 # Godot Orientation: 1 vertical, 0 horizontal.
-	body.size_flags_vertical = Control.SIZE_SHRINK_BEGIN if _compact_layout else Control.SIZE_EXPAND_FILL
-	var collection_panel: PanelContainer = $Margin/Scroll/Layout/Body/CollectionPanel
+	# HBoxContainer/VBoxContainer have fixed orientation in Godot 4.2/4.3.
+	# Move the SAME panels between layouts; never duplicate deck consumers.
+	var target: Container = body_compact if _compact_layout else body_desktop
+	if collection_panel.get_parent() != target:
+		collection_panel.reparent(target, false)
+		gi_panel.reparent(target, false)
+	body_desktop.visible = not _compact_layout
+	body_compact.visible = _compact_layout
 	collection_panel.custom_minimum_size = Vector2(0, 180) if _compact_layout else Vector2.ZERO
-	var gi_panel: PanelContainer = $Margin/Scroll/Layout/Body/GiPanel
 	gi_panel.custom_minimum_size = Vector2.ZERO if _compact_layout else Vector2(720, 0)
 	collection_grid.columns = 1 if _compact_layout else 2
 	active_slots.columns = 3 if _compact_layout else 5
