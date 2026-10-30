@@ -1,0 +1,17 @@
+{
+  "version": "1.0.0",
+  "shipping": false,
+  "asset_status": "CANDIDATE",
+  "file": "",
+  "type": "",
+  "subject_id": "",
+  "canvas": "",
+  "pivot": [64, 96],
+  "palette_snap": true,
+  "filter": "nearest",
+  "bake_hud": false,
+  "human_approval": false,
+  "rights_status": "COMMERCIAL_DERIVATION_ALLOWED",
+  "lote": "L01_identity_and_hub",
+  "notes": ""
+}
