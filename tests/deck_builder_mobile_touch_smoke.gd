@@ -31,17 +31,18 @@ func _run() -> void:
 	root.add_child(screen)
 	await process_frame
 	var scroll: ScrollContainer = screen.get_node("Margin/Scroll") as ScrollContainer
-	var body: BoxContainer = screen.get_node("Margin/Scroll/Layout/Body") as BoxContainer
-	var collection: GridContainer = screen.get_node("Margin/Scroll/Layout/Body/CollectionPanel/Collection/Scroll/CollectionGrid") as GridContainer
-	var active: GridContainer = screen.get_node("Margin/Scroll/Layout/Body/GiPanel/Gi/ActiveSlots") as GridContainer
-	var passive: GridContainer = screen.get_node("Margin/Scroll/Layout/Body/GiPanel/Gi/PassiveSlots") as GridContainer
+	var body_desktop: HBoxContainer = screen.get("body_desktop") as HBoxContainer
+	var body_compact: VBoxContainer = screen.get("body_compact") as VBoxContainer
+	var collection: GridContainer = screen.get("collection_grid") as GridContainer
+	var active: GridContainer = screen.get("active_slots") as GridContainer
+	var passive: GridContainer = screen.get("passive_slots") as GridContainer
 	var actions: GridContainer = screen.get_node("Margin/Scroll/Layout/Actions") as GridContainer
-	var gi_panel: PanelContainer = screen.get_node("Margin/Scroll/Layout/Body/GiPanel") as PanelContainer
+	var gi_panel: PanelContainer = screen.get("gi_panel") as PanelContainer
 	_check(scroll != null and scroll.horizontal_scroll_mode == ScrollContainer.SCROLL_MODE_DISABLED, "entire deck can scroll vertically without horizontal clipping")
 	_check(active.get_child_count() == 5 and passive.get_child_count() == 3, "all five active and three passive slots exist")
 	for viewport in [Vector2(360, 800), Vector2(640, 360), Vector2(854, 480)]:
 		screen.call("_apply_responsive_layout_for_size", viewport)
-		_check(body.orientation == 1, "compact deck stacks collection and Gi at %s" % viewport)
+		_check(body_compact.visible and not body_desktop.visible and gi_panel.get_parent() == body_compact, "compact deck stacks the original panels at %s" % viewport)
 		_check(collection.columns == 1 and active.columns == 3 and passive.columns == 3, "compact deck wraps cards and equipped slots at %s" % viewport)
 		_check(actions.columns == 2 and gi_panel.custom_minimum_size.x == 0.0, "compact actions and Gi panel fit portrait widths at %s" % viewport)
 		for slot in active.get_children():
@@ -62,7 +63,7 @@ func _run() -> void:
 					var remove_button: Button = button as Button
 					_check(remove_button.custom_minimum_size.y >= 48.0, "remove button has 48 px mobile touch target")
 	screen.call("_apply_responsive_layout_for_size", Vector2(1280, 720))
-	_check(body.orientation == 0, "desktop keeps side-by-side deck panels")
+	_check(body_desktop.visible and not body_compact.visible and gi_panel.get_parent() == body_desktop, "desktop restores the original horizontal panel layout")
 	_check(collection.columns == 2 and active.columns == 5, "desktop restores two-column collection and five-card row")
 	_check(actions.columns == 4 and gi_panel.custom_minimum_size.x == 720.0, "desktop restores four actions and Gi width")
 	_check(deck.call("to_dict") == original, "layout and smoke do not mutate deck state")
