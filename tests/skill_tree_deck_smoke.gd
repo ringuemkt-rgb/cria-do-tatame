@@ -88,6 +88,8 @@ func _run() -> void:
 				var top_mobile: VBoxContainer = ui.get("top_compact") as VBoxContainer
 				var paths: PanelContainer = ui.get("path_panel") as PanelContainer
 				var nodes: ScrollContainer = ui.get("node_scroll") as ScrollContainer
+				var path_scroll: ScrollContainer = ui.get("path_scroll") as ScrollContainer
+				var detail_column: VBoxContainer = ui.get("detail_column") as VBoxContainer
 				var detail: PanelContainer = ui.get("detail_panel") as PanelContainer
 				var back: Button = ui.get("back_button") as Button
 				var unlock: Button = ui.get("unlock_btn") as Button
@@ -99,7 +101,9 @@ func _run() -> void:
 					_check(tabs.get_tab_count() == 3 and tabs.get_tab_title(0) == "CAMINHOS" and tabs.get_tab_title(2) == "DETALHES", "mobile path, skill and detail tabs at %s" % viewport)
 					_check(paths.custom_minimum_size.x == 0.0 and detail.custom_minimum_size.x == 0.0, "fixed desktop widths removed at %s" % viewport)
 					_check(back.custom_minimum_size.y >= 48.0 and unlock.custom_minimum_size.y >= 48.0, "touch targets remain reachable at %s" % viewport)
-					_check(nodes.horizontal_scroll_mode == ScrollContainer.SCROLL_MODE_DISABLED, "node list scrolls vertically at %s" % viewport)
+					_check(nodes.horizontal_scroll_mode == ScrollContainer.SCROLL_MODE_DISABLED and path_scroll.horizontal_scroll_mode == ScrollContainer.SCROLL_MODE_DISABLED, "paths and node list scroll vertically at %s" % viewport)
+					_check(path_scroll.get_parent() == paths and path_scroll.get_child_count() == 1, "five paths stay in one scroll container at %s" % viewport)
+					_check(detail_column.get_theme_constant("separation") == 8, "compact details preserve unlock button space at %s" % viewport)
 				var first_path: Dictionary = rules.list_paths()[0]
 				ui.call("_choose_path", str(first_path["id"]))
 				_check(tabs.current_tab == 1, "choosing a path opens skill nodes on mobile")
@@ -110,6 +114,7 @@ func _run() -> void:
 				_check(desktop.visible and not tabs.visible and not top_mobile.visible, "desktop layout restored")
 				_check(paths.get_parent() == desktop and nodes.get_parent() == desktop and detail.get_parent() == desktop, "same panels return to desktop without duplicates")
 				_check(paths.custom_minimum_size.x == 202.0 and detail.custom_minimum_size.x == 320.0, "desktop panel widths restored")
+				_check(detail_column.get_theme_constant("separation") == 18, "desktop details spacing restored")
 			if scene_path.ends_with("TerreiroDaLuta.tscn"):
 				_check(instance.has_node("Panel/ProgressionLinks/SkillsBtn"), "hub exposes skill tree")
 				_check(instance.has_node("Panel/ProgressionLinks/MapBtn"), "hub exposes world atlas")
