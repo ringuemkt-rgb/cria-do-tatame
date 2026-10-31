@@ -24,6 +24,9 @@ var path_panel: PanelContainer
 var node_scroll: ScrollContainer
 var detail_panel: PanelContainer
 var back_button: Button
+var subtitle: Label
+var path_scroll: ScrollContainer
+var detail_column: VBoxContainer
 
 func _ready() -> void:
 	rules = RulesScript.new()
@@ -75,12 +78,12 @@ func _build_ui() -> void:
 	VisualTheme.apply_action_button(back_button, VisualTheme.RIVER)
 	back_button.pressed.connect(_back_to_hub)
 	top_desktop.add_child(back_button)
-	var sub := Label.new()
-	sub.text = "5 CAMINHOS • 51 NÓS • DESBLOQUEIO SEQUENCIAL • EFEITOS DE ATRIBUTO PENDENTES DE BALANCEAMENTO"
-	sub.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-	sub.add_theme_font_size_override("font_size", 13)
-	sub.add_theme_color_override("font_color", VisualTheme.OFF_WHITE)
-	layout.add_child(sub)
+	subtitle = Label.new()
+	subtitle.text = "5 CAMINHOS • 51 NÓS • DESBLOQUEIO SEQUENCIAL • EFEITOS DE ATRIBUTO PENDENTES DE BALANCEAMENTO"
+	subtitle.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	subtitle.add_theme_font_size_override("font_size", 13)
+	subtitle.add_theme_color_override("font_color", VisualTheme.OFF_WHITE)
+	layout.add_child(subtitle)
 	content_desktop = HBoxContainer.new()
 	content_desktop.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	content_desktop.add_theme_constant_override("separation", 12)
@@ -95,9 +98,14 @@ func _build_ui() -> void:
 	path_panel.custom_minimum_size = Vector2(202, 0)
 	path_panel.add_theme_stylebox_override("panel", VisualTheme.panel_style(0.96, VisualTheme.GOLD, 1, 9))
 	content_desktop.add_child(path_panel)
+	path_scroll = ScrollContainer.new()
+	path_scroll.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	path_scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
+	path_panel.add_child(path_scroll)
 	paths_box = VBoxContainer.new()
+	paths_box.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	paths_box.add_theme_constant_override("separation", 8)
-	path_panel.add_child(paths_box)
+	path_scroll.add_child(paths_box)
 	node_scroll = ScrollContainer.new()
 	node_scroll.name = "HABILIDADES"
 	node_scroll.size_flags_horizontal = Control.SIZE_EXPAND_FILL
@@ -113,18 +121,18 @@ func _build_ui() -> void:
 	detail_panel.custom_minimum_size = Vector2(320, 0)
 	detail_panel.add_theme_stylebox_override("panel", VisualTheme.panel_style(0.94, VisualTheme.RIVER, 2, 9))
 	content_desktop.add_child(detail_panel)
-	var detail_col := VBoxContainer.new()
-	detail_col.add_theme_constant_override("separation", 18)
-	detail_panel.add_child(detail_col)
+	detail_column = VBoxContainer.new()
+	detail_column.add_theme_constant_override("separation", 18)
+	detail_panel.add_child(detail_column)
 	var title := Label.new()
 	title.text = "DETALHES DA HABILIDADE"
 	VisualTheme.style_heading(title, 18, VisualTheme.HONOR)
-	detail_col.add_child(title)
+	detail_column.add_child(title)
 	var detail_scroll := ScrollContainer.new()
 	detail_scroll.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	detail_scroll.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	detail_scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
-	detail_col.add_child(detail_scroll)
+	detail_column.add_child(detail_scroll)
 	details = Label.new()
 	details.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	details.size_flags_horizontal = Control.SIZE_EXPAND_FILL
@@ -136,7 +144,7 @@ func _build_ui() -> void:
 	unlock_btn.custom_minimum_size = Vector2(0, 60)
 	VisualTheme.apply_primary_button(unlock_btn)
 	unlock_btn.pressed.connect(_purchase_selected)
-	detail_col.add_child(unlock_btn)
+	detail_column.add_child(unlock_btn)
 	status_label = Label.new()
 	status_label.text = "Escolha um caminho. O progresso é salvo com o personagem."
 	status_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
@@ -164,6 +172,8 @@ func _apply_responsive_layout_for_size(viewport_size: Vector2) -> void:
 	header.add_theme_font_size_override("font_size", 22 if _compact_layout else 27)
 	points_label.add_theme_font_size_override("font_size", 15 if _compact_layout else 18)
 	back_button.custom_minimum_size = Vector2(0, 48) if _compact_layout else Vector2(180, 52)
+	subtitle.text = "5 CAMINHOS • 51 NÓS • REGRAS PROVISÓRIAS" if _compact_layout else "5 CAMINHOS • 51 NÓS • DESBLOQUEIO SEQUENCIAL • EFEITOS DE ATRIBUTO PENDENTES DE BALANCEAMENTO"
+	detail_column.add_theme_constant_override("separation", 8 if _compact_layout else 18)
 	var panel_target: Container = mobile_tabs if _compact_layout else content_desktop
 	for panel in [path_panel, node_scroll, detail_panel]:
 		if panel.get_parent() != panel_target:
