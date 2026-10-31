@@ -1,6 +1,6 @@
 # QA — Árvore de habilidades em Android (31/10/2026)
 
-**Status:** IMPLEMENTED_ON_BRANCH / AUTOMATED_QA_PENDING / PHYSICAL_ANDROID_PENDING  
+**Status:** IMPLEMENTED_ON_BRANCH / AUTOMATED_QA_IN_CI / PHYSICAL_ANDROID_PENDING  
 **Base:** `main`  
 **Escopo:** `scenes/ui/SkillTreeScreen.gd` + `tests/skill_tree_deck_smoke.gd`.
 
@@ -12,7 +12,7 @@ A tela da árvore usava um único `HBoxContainer` com painel de caminhos de 202 
 
 - Em larguras menores que 980 px, os **mesmos** controles de caminhos, nós e detalhes passam para três abas `TabContainer`. Não há duplicação de nós, lógica de compra, managers ou dados.
 - Selecionar um caminho abre a aba de habilidades; selecionar uma habilidade abre os detalhes e o botão de desbloqueio.
-- Lista de nós e detalhes têm rolagem vertical independente, sem scroll horizontal. Alvos de toque de retorno, seleção e compra mantêm no mínimo 48 px de altura.
+- Caminhos, lista de nós e detalhes têm rolagem vertical independente, sem scroll horizontal; a lista de cinco caminhos não fica cortada em paisagem curta. Alvos de toque de retorno, seleção e compra mantêm no mínimo 48 px de altura.
 - Em desktop, os três painéis retornam à organização horizontal original; a mudança de orientação é reversível.
 - A saída para o Terreiro é interrompida se a gravação do save falhar, mantendo o jogador na árvore para nova tentativa.
 - `SkillTreeRulesV1`, `DeckManager`, `WorldState`, IDs dos 51 nós, recompensas, economia provisória e schema de saves permanecem inalterados.
@@ -26,7 +26,7 @@ godot --headless --path . --script res://tests/skill_tree_deck_smoke.gd
 godot --headless --path . --script res://tests/runtime_smoke.gd
 ```
 
-O smoke exercita 360×800, 640×360, 854×480 e retorno a 1280×720; confere abas, pais originais dos painéis, larguras mínimas, alvos de toque, navegação caminho→nó→detalhes e restauração desktop. Não escreve saves reais.
+O smoke exercita 360×800, 640×360, 854×480 e retorno a 1280×720; confere abas, pais originais dos painéis, scroll dos caminhos/nós, espaço do botão de compra, larguras mínimas, alvos de toque, navegação caminho→nó→detalhes e restauração desktop. Não escreve saves reais.
 
 ## Gates pendentes
 
