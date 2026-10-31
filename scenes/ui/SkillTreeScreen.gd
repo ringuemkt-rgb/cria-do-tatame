@@ -15,10 +15,24 @@ var nodes_box: VBoxContainer
 var details: Label
 var unlock_btn: Button
 var _transitioning := false
+var _compact_layout := false
+var top_desktop: HBoxContainer
+var top_compact: VBoxContainer
+var content_desktop: HBoxContainer
+var mobile_tabs: TabContainer
+var path_panel: PanelContainer
+var node_scroll: ScrollContainer
+var detail_panel: PanelContainer
+var back_button: Button
+var subtitle: Label
+var path_scroll: ScrollContainer
+var detail_column: VBoxContainer
 
 func _ready() -> void:
 	rules = RulesScript.new()
 	_build_ui()
+	_apply_responsive_layout()
+	get_viewport().size_changed.connect(_apply_responsive_layout)
 	if not rules.is_valid():
 		status_label.text = "ERRO: contrato da árvore indisponível."
 		unlock_btn.disabled = true
@@ -39,79 +53,139 @@ func _build_ui() -> void:
 	var layout := VBoxContainer.new()
 	layout.add_theme_constant_override("separation", 12)
 	margin.add_child(layout)
-	var top := HBoxContainer.new()
-	top.add_theme_constant_override("separation", 18)
-	layout.add_child(top)
+	top_desktop = HBoxContainer.new()
+	top_desktop.add_theme_constant_override("separation", 18)
+	layout.add_child(top_desktop)
+	top_compact = VBoxContainer.new()
+	top_compact.add_theme_constant_override("separation", 6)
+	top_compact.visible = false
+	layout.add_child(top_compact)
 	header = Label.new()
 	header.text = "FORJA DE HABILIDADES"
 	header.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	header.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	VisualTheme.style_heading(header, 27, VisualTheme.HONOR)
-	top.add_child(header)
+	top_desktop.add_child(header)
 	points_label = Label.new()
 	points_label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+	points_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	points_label.add_theme_font_size_override("font_size", 18)
 	points_label.add_theme_color_override("font_color", VisualTheme.CYAN)
-	top.add_child(points_label)
-	var back := Button.new()
-	back.text = "VOLTAR AO TERREIRO"
-	back.custom_minimum_size = Vector2(180, 52)
-	VisualTheme.apply_action_button(back, VisualTheme.RIVER)
-	back.pressed.connect(_back_to_hub)
-	top.add_child(back)
-	var sub := Label.new()
-	sub.text = "5 CAMINHOS • 51 NÓS • DESBLOQUEIO SEQUENCIAL • EFEITOS DE ATRIBUTO PENDENTES DE BALANCEAMENTO"
-	sub.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-	sub.add_theme_font_size_override("font_size", 13)
-	sub.add_theme_color_override("font_color", VisualTheme.OFF_WHITE)
-	layout.add_child(sub)
-	var content := HBoxContainer.new()
-	content.size_flags_vertical = Control.SIZE_EXPAND_FILL
-	content.add_theme_constant_override("separation", 12)
-	layout.add_child(content)
-	var selector := PanelContainer.new()
-	selector.custom_minimum_size = Vector2(202, 0)
-	selector.add_theme_stylebox_override("panel", VisualTheme.panel_style(0.96, VisualTheme.GOLD, 1, 9))
-	content.add_child(selector)
+	top_desktop.add_child(points_label)
+	back_button = Button.new()
+	back_button.text = "VOLTAR AO TERREIRO"
+	back_button.custom_minimum_size = Vector2(180, 52)
+	VisualTheme.apply_action_button(back_button, VisualTheme.RIVER)
+	back_button.pressed.connect(_back_to_hub)
+	top_desktop.add_child(back_button)
+	subtitle = Label.new()
+	subtitle.text = "5 CAMINHOS • 51 NÓS • DESBLOQUEIO SEQUENCIAL • EFEITOS DE ATRIBUTO PENDENTES DE BALANCEAMENTO"
+	subtitle.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	subtitle.add_theme_font_size_override("font_size", 13)
+	subtitle.add_theme_color_override("font_color", VisualTheme.OFF_WHITE)
+	layout.add_child(subtitle)
+	content_desktop = HBoxContainer.new()
+	content_desktop.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	content_desktop.add_theme_constant_override("separation", 12)
+	layout.add_child(content_desktop)
+	mobile_tabs = TabContainer.new()
+	mobile_tabs.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	mobile_tabs.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	mobile_tabs.visible = false
+	layout.add_child(mobile_tabs)
+	path_panel = PanelContainer.new()
+	path_panel.name = "CAMINHOS"
+	path_panel.custom_minimum_size = Vector2(202, 0)
+	path_panel.add_theme_stylebox_override("panel", VisualTheme.panel_style(0.96, VisualTheme.GOLD, 1, 9))
+	content_desktop.add_child(path_panel)
+	path_scroll = ScrollContainer.new()
+	path_scroll.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	path_scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
+	path_panel.add_child(path_scroll)
 	paths_box = VBoxContainer.new()
+	paths_box.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	paths_box.add_theme_constant_override("separation", 8)
-	selector.add_child(paths_box)
-	var scroll := ScrollContainer.new()
-	scroll.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	scroll.size_flags_vertical = Control.SIZE_EXPAND_FILL
-	content.add_child(scroll)
+	path_scroll.add_child(paths_box)
+	node_scroll = ScrollContainer.new()
+	node_scroll.name = "HABILIDADES"
+	node_scroll.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	node_scroll.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	node_scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
+	content_desktop.add_child(node_scroll)
 	nodes_box = VBoxContainer.new()
 	nodes_box.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	nodes_box.add_theme_constant_override("separation", 8)
-	scroll.add_child(nodes_box)
-	var detail_panel := PanelContainer.new()
+	node_scroll.add_child(nodes_box)
+	detail_panel = PanelContainer.new()
+	detail_panel.name = "DETALHES"
 	detail_panel.custom_minimum_size = Vector2(320, 0)
 	detail_panel.add_theme_stylebox_override("panel", VisualTheme.panel_style(0.94, VisualTheme.RIVER, 2, 9))
-	content.add_child(detail_panel)
-	var detail_col := VBoxContainer.new()
-	detail_col.add_theme_constant_override("separation", 18)
-	detail_panel.add_child(detail_col)
+	content_desktop.add_child(detail_panel)
+	detail_column = VBoxContainer.new()
+	detail_column.add_theme_constant_override("separation", 18)
+	detail_panel.add_child(detail_column)
 	var title := Label.new()
 	title.text = "DETALHES DA HABILIDADE"
 	VisualTheme.style_heading(title, 18, VisualTheme.HONOR)
-	detail_col.add_child(title)
+	detail_column.add_child(title)
+	var detail_scroll := ScrollContainer.new()
+	detail_scroll.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	detail_scroll.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	detail_scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
+	detail_column.add_child(detail_scroll)
 	details = Label.new()
 	details.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-	details.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	details.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	details.add_theme_color_override("font_color", VisualTheme.OFF_WHITE)
 	details.add_theme_font_size_override("font_size", 16)
-	detail_col.add_child(details)
+	detail_scroll.add_child(details)
 	unlock_btn = Button.new()
 	unlock_btn.text = "DESBLOQUEAR"
 	unlock_btn.custom_minimum_size = Vector2(0, 60)
 	VisualTheme.apply_primary_button(unlock_btn)
 	unlock_btn.pressed.connect(_purchase_selected)
-	detail_col.add_child(unlock_btn)
+	detail_column.add_child(unlock_btn)
 	status_label = Label.new()
 	status_label.text = "Escolha um caminho. O progresso é salvo com o personagem."
 	status_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	status_label.add_theme_font_size_override("font_size", 14)
 	status_label.add_theme_color_override("font_color", VisualTheme.HONOR)
 	layout.add_child(status_label)
+
+# Mobile uses three tabs instead of squeezing 202px + 320px panels around
+# the node list. The SAME controls move between layouts; no duplicated state.
+func _apply_responsive_layout() -> void:
+	_apply_responsive_layout_for_size(get_viewport().get_visible_rect().size)
+
+func _apply_responsive_layout_for_size(viewport_size: Vector2) -> void:
+	_compact_layout = viewport_size.x < 980.0
+	var margin: MarginContainer = get_child(1) as MarginContainer
+	var padding := 12 if _compact_layout else 24
+	for side in ["left", "right", "top", "bottom"]:
+		margin.add_theme_constant_override("margin_" + side, padding)
+	var top_target: Container = top_compact if _compact_layout else top_desktop
+	for control in [header, points_label, back_button]:
+		if control.get_parent() != top_target:
+			control.reparent(top_target, false)
+	top_desktop.visible = not _compact_layout
+	top_compact.visible = _compact_layout
+	header.add_theme_font_size_override("font_size", 22 if _compact_layout else 27)
+	points_label.add_theme_font_size_override("font_size", 15 if _compact_layout else 18)
+	back_button.custom_minimum_size = Vector2(0, 48) if _compact_layout else Vector2(180, 52)
+	subtitle.text = "5 CAMINHOS • 51 NÓS • REGRAS PROVISÓRIAS" if _compact_layout else "5 CAMINHOS • 51 NÓS • DESBLOQUEIO SEQUENCIAL • EFEITOS DE ATRIBUTO PENDENTES DE BALANCEAMENTO"
+	detail_column.add_theme_constant_override("separation", 8 if _compact_layout else 18)
+	var panel_target: Container = mobile_tabs if _compact_layout else content_desktop
+	for panel in [path_panel, node_scroll, detail_panel]:
+		if panel.get_parent() != panel_target:
+			panel.reparent(panel_target, false)
+		if not _compact_layout:
+			panel.visible = true
+	content_desktop.visible = not _compact_layout
+	mobile_tabs.visible = _compact_layout
+	path_panel.custom_minimum_size = Vector2.ZERO if _compact_layout else Vector2(202, 0)
+	detail_panel.custom_minimum_size = Vector2.ZERO if _compact_layout else Vector2(320, 0)
+	if _compact_layout:
+		mobile_tabs.current_tab = clampi(mobile_tabs.current_tab, 0, 2)
 
 func _choose_path(new_path_id: String) -> void:
 	path_id = new_path_id
@@ -123,6 +197,8 @@ func _choose_path(new_path_id: String) -> void:
 				selected_skill = str(ids[0])
 			break
 	_refresh()
+	if _compact_layout:
+		mobile_tabs.current_tab = 1
 
 func _refresh() -> void:
 	if not rules.is_valid():
@@ -134,6 +210,8 @@ func _refresh() -> void:
 		var id := str(item.get("id", ""))
 		var btn := Button.new()
 		btn.text = str(item.get("display_name", id)).to_upper()
+		btn.clip_text = true
+		btn.tooltip_text = btn.text
 		btn.custom_minimum_size = Vector2(0, 56)
 		VisualTheme.apply_action_button(btn, Color(str(item.get("color", "#c9971c"))))
 		btn.modulate = Color.WHITE if id == path_id else Color(0.80, 0.80, 0.80)
@@ -151,6 +229,8 @@ func _refresh() -> void:
 			label += "  ★"
 		var btn := Button.new()
 		btn.text = label
+		btn.clip_text = true
+		btn.tooltip_text = label
 		btn.alignment = HORIZONTAL_ALIGNMENT_LEFT
 		btn.custom_minimum_size = Vector2(0, 54)
 		VisualTheme.apply_action_button(btn, Color(str(node["color"])))
@@ -165,6 +245,8 @@ func _refresh() -> void:
 func _select_skill(id: String) -> void:
 	selected_skill = id
 	_refresh()
+	if _compact_layout:
+		mobile_tabs.current_tab = 2
 
 func _show_selected() -> void:
 	var node: Dictionary = rules.get_node(selected_skill)
@@ -200,7 +282,10 @@ func _back_to_hub() -> void:
 	if _transitioning:
 		return
 	_transitioning = true
-	SaveManager.save_game(1)
+	if not SaveManager.save_game(1):
+		_transitioning = false
+		status_label.text = "Falha ao salvar. Permanecendo na árvore de habilidades."
+		return
 	var err := get_tree().change_scene_to_file(HUB_SCENE)
 	if err != OK:
 		_transitioning = false
