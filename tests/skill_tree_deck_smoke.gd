@@ -81,6 +81,35 @@ func _run() -> void:
 			var instance := packed.instantiate()
 			root.add_child(instance)
 			await process_frame
+			if scene_path.ends_with("SkillTreeScreen.tscn"):
+				var ui: Control = instance as Control
+				var tabs: TabContainer = ui.get("mobile_tabs") as TabContainer
+				var desktop: HBoxContainer = ui.get("content_desktop") as HBoxContainer
+				var top_mobile: VBoxContainer = ui.get("top_compact") as VBoxContainer
+				var paths: PanelContainer = ui.get("path_panel") as PanelContainer
+				var nodes: ScrollContainer = ui.get("node_scroll") as ScrollContainer
+				var detail: PanelContainer = ui.get("detail_panel") as PanelContainer
+				var back: Button = ui.get("back_button") as Button
+				var unlock: Button = ui.get("unlock_btn") as Button
+				_check(tabs != null and desktop != null and paths != null and nodes != null and detail != null, "skill tree responsive controls exist")
+				for viewport in [Vector2(360, 800), Vector2(640, 360), Vector2(854, 480)]:
+					ui.call("_apply_responsive_layout_for_size", viewport)
+					_check(tabs.visible and not desktop.visible and top_mobile.visible, "skill tree mobile layout at %s" % viewport)
+					_check(paths.get_parent() == tabs and nodes.get_parent() == tabs and detail.get_parent() == tabs, "same three panels move to mobile tabs at %s" % viewport)
+					_check(tabs.get_tab_count() == 3 and tabs.get_tab_title(0) == "CAMINHOS" and tabs.get_tab_title(2) == "DETALHES", "mobile path, skill and detail tabs at %s" % viewport)
+					_check(paths.custom_minimum_size.x == 0.0 and detail.custom_minimum_size.x == 0.0, "fixed desktop widths removed at %s" % viewport)
+					_check(back.custom_minimum_size.y >= 48.0 and unlock.custom_minimum_size.y >= 48.0, "touch targets remain reachable at %s" % viewport)
+					_check(nodes.horizontal_scroll_mode == ScrollContainer.SCROLL_MODE_DISABLED, "node list scrolls vertically at %s" % viewport)
+				var first_path: Dictionary = rules.list_paths()[0]
+				ui.call("_choose_path", str(first_path["id"]))
+				_check(tabs.current_tab == 1, "choosing a path opens skill nodes on mobile")
+				var first_nodes: Array = rules.list_nodes(str(first_path["id"]))
+				ui.call("_select_skill", str(first_nodes[0]["id"]))
+				_check(tabs.current_tab == 2, "selecting a skill opens details and unlock action on mobile")
+				ui.call("_apply_responsive_layout_for_size", Vector2(1280, 720))
+				_check(desktop.visible and not tabs.visible and not top_mobile.visible, "desktop layout restored")
+				_check(paths.get_parent() == desktop and nodes.get_parent() == desktop and detail.get_parent() == desktop, "same panels return to desktop without duplicates")
+				_check(paths.custom_minimum_size.x == 202.0 and detail.custom_minimum_size.x == 320.0, "desktop panel widths restored")
 			if scene_path.ends_with("TerreiroDaLuta.tscn"):
 				_check(instance.has_node("Panel/ProgressionLinks/SkillsBtn"), "hub exposes skill tree")
 				_check(instance.has_node("Panel/ProgressionLinks/MapBtn"), "hub exposes world atlas")
