@@ -151,6 +151,40 @@ func _run() -> void:
 	_check(selected.size() == before_invalid, "unavailable sixth defense shortcut is ignored")
 	hud.call("close_defense_window")
 
+	# At the reported deadline the HUD must not allow a stale touch or
+	# keyboard input. The arena independently validates the same deadline.
+	var before_expiry := selected.size()
+	hud.call("open_defense_window", [{"id": "expired_at_open", "name": "Frame"}], 0.0)
+	_check(first.disabled and bool(hud.get("_defense_choice_submitted")), "zero-duration reaction is locked immediately")
+	_check(str(hud.get_node("Panel/Layout/Header/Clash").text) == "JANELA ENCERRADA", "expired reaction has explicit feedback")
+	first.pressed.emit()
+	var expired_key := InputEventAction.new()
+	expired_key.action = "deck_card_1"
+	expired_key.pressed = true
+	hud.call("_unhandled_input", expired_key)
+	_check(selected.size() == before_expiry, "expired-at-open touch and keyboard cannot submit a defense")
+	hud.call("close_defense_window")
+
+	hud.call("open_defense_window", [{"id": "expired_on_tick", "name": "Base"}], 0.4)
+	_check(not first.disabled, "fresh reaction opens a valid touch target")
+	hud.call("set_defense_window_remaining", 0.0)
+	_check(first.disabled and bool(hud.get("_defense_choice_submitted")), "countdown expiration locks defense controls")
+	_check(str(hud.get_node("Panel/Layout/Header/Clash").text) == "JANELA ENCERRADA", "countdown expiration is announced")
+	hud.call("set_defense_window_remaining", 0.2)
+	_check(first.disabled, "late positive countdown update cannot reopen expired window")
+	first.pressed.emit()
+	hud.call("_unhandled_input", expired_key)
+	_check(selected.size() == before_expiry, "expired countdown rejects both input paths")
+	hud.call("close_defense_window")
+
+	hud.call("open_defense_window", [{"id": "fresh_after_timeout", "name": "Frame"}], 0.5)
+	_check(not first.disabled and not bool(hud.get("_defense_choice_submitted")), "new AI attack resets expired HUD state")
+	first.pressed.emit()
+	_check(selected.size() == before_expiry + 1 and selected[-1] == "fresh_after_timeout", "new reaction accepts exactly one defense")
+	hud.call("set_defense_window_remaining", 0.0)
+	_check(str(hud.get_node("Panel/Layout/Header/Clash").text) == "DEFESA ENVIADA", "timeout update does not erase submitted feedback")
+	hud.call("close_defense_window")
+
 	# The arena is the final consumer of the shared defense signal. A stale or
 	# synthetic SignalBus event must not commit a choice absent from this attack.
 	# Instantiate without adding to the tree: no combat start, save or scene swap.
