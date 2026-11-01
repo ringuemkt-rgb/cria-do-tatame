@@ -79,8 +79,24 @@ func _run() -> void:
 	_assert(str(score_state.get("pos", "")) == "mount_high", "mount transition should move to mount_high")
 	_assert(int(score_state.get("p1", {}).get("score", -1)) == 0, "points must not be awarded before stabilization")
 	_assert(not score_state.get("pending_score", {}).is_empty(), "mount should create pending score event")
+	var pending_mount: Dictionary = score_state.duplicate(true)
 	score_state = reducer.reduce(score_state, {"kind":"stabilize", "player":1, "seconds":3.0})
 	_assert(int(score_state.get("p1", {}).get("score", -1)) == 4, "IBJJF mount must score 4 after stabilization")
+
+	# Regression: no stale points after a position change or control reversal.
+	var displaced_mount: Dictionary = pending_mount.duplicate(true)
+	displaced_mount["pos"] = "side_control"
+	displaced_mount = reducer.reduce(displaced_mount, {"kind":"stabilize", "player":1, "seconds":3.0})
+	_assert(int(displaced_mount.get("p1", {}).get("score", -1)) == 0, "lost mount position must not score")
+	_assert(displaced_mount.get("pending_score", {}).is_empty(), "lost position must clear pending score")
+	var reversed_mount: Dictionary = pending_mount.duplicate(true)
+	reversed_mount["top"] = 2
+	reversed_mount = reducer.reduce(reversed_mount, {"kind":"stabilize", "player":1, "seconds":3.0})
+	_assert(int(reversed_mount.get("p1", {}).get("score", -1)) == 0, "lost top control must not score")
+	_assert(reversed_mount.get("pending_score", {}).is_empty(), "lost control must clear pending score")
+	var invalid_player: Dictionary = reducer.reduce(pending_mount, {"kind":"stabilize", "player":0, "seconds":3.0})
+	_assert(int(invalid_player.get("p1", {}).get("score", -1)) == 0, "invalid scorer must not score")
+	_assert(not invalid_player.get("pending_score", {}).is_empty(), "invalid scorer must not consume pending event")
 
 	var adcc_state := reducer.new_state("adcc", false, 99)
 	adcc_state["pos"] = "side_control"
