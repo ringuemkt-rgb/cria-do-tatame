@@ -201,6 +201,9 @@ func _apply_responsive_layout_for_size(viewport_size: Vector2) -> void:
 	detail_panel.custom_minimum_size = Vector2.ZERO if _compact_layout else Vector2(320, 0)
 	if _compact_layout:
 		mobile_tabs.current_tab = clampi(mobile_tabs.current_tab, 0, 2)
+	# Button captions must also adapt after Android orientation changes.
+	if rules != null and rules.is_valid() and selected_skill != "":
+		_show_selected()
 
 func _choose_path(new_path_id: String) -> void:
 	path_id = new_path_id
