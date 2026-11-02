@@ -93,6 +93,15 @@ func _run() -> void:
 				var detail: PanelContainer = ui.get("detail_panel") as PanelContainer
 				var back: Button = ui.get("back_button") as Button
 				var unlock: Button = ui.get("unlock_btn") as Button
+				var deck_link: Button = ui.get("deck_button") as Button
+				_check(deck_link != null and ResourceLoader.exists("res://scenes/ui/DeckBuilder.tscn"), "skill tree exposes a real deck scene link")
+				if deck_link != null:
+					_check(deck_link.pressed.is_connected(Callable(ui, "_open_deck")), "deck button is connected to save-safe navigation")
+					_check(deck_link.get_parent() is HBoxContainer and deck_link.get_parent() == unlock.get_parent(), "deck and unlock actions share a compact row")
+					ui.set("_transitioning", true)
+					deck_link.pressed.emit()
+					_check(ui.is_inside_tree() and bool(ui.get("_transitioning")), "deck navigation ignores duplicate requests while transitioning")
+					ui.set("_transitioning", false)
 				_check(tabs != null and desktop != null and paths != null and nodes != null and detail != null, "skill tree responsive controls exist")
 				for viewport in [Vector2(360, 800), Vector2(640, 360), Vector2(854, 480)]:
 					ui.call("_apply_responsive_layout_for_size", viewport)
@@ -101,6 +110,8 @@ func _run() -> void:
 					_check(tabs.get_tab_count() == 3 and tabs.get_tab_title(0) == "CAMINHOS" and tabs.get_tab_title(2) == "DETALHES", "mobile path, skill and detail tabs at %s" % viewport)
 					_check(paths.custom_minimum_size.x == 0.0 and detail.custom_minimum_size.x == 0.0, "fixed desktop widths removed at %s" % viewport)
 					_check(back.custom_minimum_size.y >= 48.0 and unlock.custom_minimum_size.y >= 48.0, "touch targets remain reachable at %s" % viewport)
+					if deck_link != null:
+						_check(deck_link.custom_minimum_size.x >= 112.0 and deck_link.custom_minimum_size.y >= 60.0, "deck navigation retains its touch target at %s" % viewport)
 					_check(nodes.horizontal_scroll_mode == ScrollContainer.SCROLL_MODE_DISABLED and path_scroll.horizontal_scroll_mode == ScrollContainer.SCROLL_MODE_DISABLED, "paths and node list scroll vertically at %s" % viewport)
 					_check(path_scroll.get_parent() == paths and path_scroll.get_child_count() == 1, "five paths stay in one scroll container at %s" % viewport)
 					_check(detail_column.get_theme_constant("separation") == 8, "compact details preserve unlock button space at %s" % viewport)
@@ -110,11 +121,13 @@ func _run() -> void:
 				var first_nodes: Array = rules.list_nodes(str(first_path["id"]))
 				ui.call("_select_skill", str(first_nodes[0]["id"]))
 				_check(tabs.current_tab == 2, "selecting a skill opens details and unlock action on mobile")
+				_check(unlock.text in ["LIBERADA", "DESBLOQUEAR", "BLOQUEADA"], "compact skill unlock caption fits next to deck link")
 				ui.call("_apply_responsive_layout_for_size", Vector2(1280, 720))
 				_check(desktop.visible and not tabs.visible and not top_mobile.visible, "desktop layout restored")
 				_check(paths.get_parent() == desktop and nodes.get_parent() == desktop and detail.get_parent() == desktop, "same panels return to desktop without duplicates")
 				_check(paths.custom_minimum_size.x == 202.0 and detail.custom_minimum_size.x == 320.0, "desktop panel widths restored")
 				_check(detail_column.get_theme_constant("separation") == 18, "desktop details spacing restored")
+				_check(unlock.text in ["JÁ DESBLOQUEADA", "DESBLOQUEAR • 1 PONTO", "INDISPONÍVEL"], "desktop unlock caption restores full wording")
 			if scene_path.ends_with("TerreiroDaLuta.tscn"):
 				_check(instance.has_node("Panel/ProgressionLinks/SkillsBtn"), "hub exposes skill tree")
 				_check(instance.has_node("Panel/ProgressionLinks/MapBtn"), "hub exposes world atlas")
