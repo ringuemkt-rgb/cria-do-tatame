@@ -3,6 +3,7 @@ extends Control
 const RulesScript = preload("res://src/progression/SkillTreeRulesV1.gd")
 const VisualTheme = preload("res://src/ui/CriaVisualTheme.gd")
 const HUB_SCENE := "res://scenes/hubs/TerreiroDaLuta.tscn"
+const DECK_SCENE := "res://scenes/ui/DeckBuilder.tscn"
 
 var rules
 var path_id := "pressure"
@@ -14,6 +15,7 @@ var paths_box: VBoxContainer
 var nodes_box: VBoxContainer
 var details: Label
 var unlock_btn: Button
+var deck_button: Button
 var _transitioning := false
 var _compact_layout := false
 var top_desktop: HBoxContainer
@@ -139,12 +141,25 @@ func _build_ui() -> void:
 	details.add_theme_color_override("font_color", VisualTheme.OFF_WHITE)
 	details.add_theme_font_size_override("font_size", 16)
 	detail_scroll.add_child(details)
+	# One action row fits compact portrait tabs without hiding the unlock button.
+	var detail_actions := HBoxContainer.new()
+	detail_actions.add_theme_constant_override("separation", 8)
+	detail_column.add_child(detail_actions)
 	unlock_btn = Button.new()
 	unlock_btn.text = "DESBLOQUEAR"
 	unlock_btn.custom_minimum_size = Vector2(0, 60)
+	unlock_btn.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	unlock_btn.clip_text = true
 	VisualTheme.apply_primary_button(unlock_btn)
 	unlock_btn.pressed.connect(_purchase_selected)
-	detail_column.add_child(unlock_btn)
+	detail_actions.add_child(unlock_btn)
+	deck_button = Button.new()
+	deck_button.text = "ABRIR DECK"
+	deck_button.custom_minimum_size = Vector2(112, 60)
+	deck_button.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	VisualTheme.apply_action_button(deck_button, VisualTheme.RIVER)
+	deck_button.pressed.connect(_open_deck)
+	detail_actions.add_child(deck_button)
 	status_label = Label.new()
 	status_label.text = "Escolha um caminho. O progresso é salvo com o personagem."
 	status_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
@@ -186,6 +201,9 @@ func _apply_responsive_layout_for_size(viewport_size: Vector2) -> void:
 	detail_panel.custom_minimum_size = Vector2.ZERO if _compact_layout else Vector2(320, 0)
 	if _compact_layout:
 		mobile_tabs.current_tab = clampi(mobile_tabs.current_tab, 0, 2)
+	# Button captions must also adapt after Android orientation changes.
+	if rules != null and rules.is_valid() and selected_skill != "":
+		_show_selected()
 
 func _choose_path(new_path_id: String) -> void:
 	path_id = new_path_id
@@ -267,7 +285,10 @@ func _show_selected() -> void:
 		state, requirement_text, int(rules.policy.get("cost_per_node", 1)), effect
 	]
 	unlock_btn.disabled = not bool(result.get("ok", false))
-	unlock_btn.text = "JÁ DESBLOQUEADA" if owned else ("DESBLOQUEAR • 1 PONTO" if bool(result.get("ok", false)) else "INDISPONÍVEL")
+	if _compact_layout:
+		unlock_btn.text = "LIBERADA" if owned else ("DESBLOQUEAR" if bool(result.get("ok", false)) else "BLOQUEADA")
+	else:
+		unlock_btn.text = "JÁ DESBLOQUEADA" if owned else ("DESBLOQUEAR • 1 PONTO" if bool(result.get("ok", false)) else "INDISPONÍVEL")
 
 func _purchase_selected() -> void:
 	var result: Dictionary = rules.purchase(selected_skill, WorldState, DeckManager)
@@ -279,6 +300,14 @@ func _purchase_selected() -> void:
 	_refresh()
 
 func _back_to_hub() -> void:
+	_navigate_to(HUB_SCENE, "Não foi possível voltar ao Terreiro.")
+
+func _open_deck() -> void:
+	_navigate_to(DECK_SCENE, "Não foi possível abrir o editor de cartas.")
+
+# The tree and the deck share WorldState/DeckManager, but a failed save must
+# never silently discard a purchased skill or its unlocked technique reward.
+func _navigate_to(destination: String, failure_message: String) -> void:
 	if _transitioning:
 		return
 	_transitioning = true
@@ -286,10 +315,10 @@ func _back_to_hub() -> void:
 		_transitioning = false
 		status_label.text = "Falha ao salvar. Permanecendo na árvore de habilidades."
 		return
-	var err := get_tree().change_scene_to_file(HUB_SCENE)
+	var err := get_tree().change_scene_to_file(destination)
 	if err != OK:
 		_transitioning = false
-		status_label.text = "Não foi possível voltar ao Terreiro."
+		status_label.text = failure_message
 
 func _clear(container: Node) -> void:
 	for child in container.get_children():
