@@ -104,7 +104,7 @@ func _run() -> void:
 					ui.set("_transitioning", false)
 					var world_before_missing: Dictionary = world.call("to_dict")
 					var deck_before_missing: Dictionary = deck.call("to_dict")
-					ui.call("_navigate_to", "res://scenes/ui/NOT_A_REAL_SCENE.tscn", "Destino indisponível.")
+					ui.call("_navigate_to", "res://scenes/ui/" + "NOT_A_REAL_SCENE.tscn", "Destino indisponível.")
 					_check(ui.is_inside_tree() and not bool(ui.get("_transitioning")), "missing destination keeps skill tree interactive")
 					_check(str(ui.get("status_label").text) == "Destino indisponível.", "missing destination reports explicit error")
 					_check(world.call("to_dict") == world_before_missing and deck.call("to_dict") == deck_before_missing, "missing destination leaves skill and deck state unchanged")
