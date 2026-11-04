@@ -312,7 +312,9 @@ func _navigate_to(destination: String, failure_message: String) -> void:
 		return
 	_transitioning = true
 	# Reject missing destinations before touching the save slot.
-	if not ResourceLoader.exists(destination, "PackedScene"):
+	# A path can exist yet fail to load as a usable scene; do not save first.
+	var destination_scene: Resource = ResourceLoader.load(destination, "PackedScene") if ResourceLoader.exists(destination, "PackedScene") else null
+	if not (destination_scene is PackedScene):
 		_transitioning = false
 		status_label.text = failure_message
 		return
