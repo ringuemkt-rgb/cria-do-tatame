@@ -102,6 +102,18 @@ func _run() -> void:
 					deck_link.pressed.emit()
 					_check(ui.is_inside_tree() and bool(ui.get("_transitioning")), "deck navigation ignores duplicate requests while transitioning")
 					ui.set("_transitioning", false)
+					var world_before_missing: Dictionary = world.call("to_dict")
+					var deck_before_missing: Dictionary = deck.call("to_dict")
+					ui.call("_navigate_to", "res://scenes/ui/" + "NOT_A_REAL_SCENE.tscn", "Destino indisponível.")
+					_check(ui.is_inside_tree() and not bool(ui.get("_transitioning")), "missing destination keeps skill tree interactive")
+					_check(str(ui.get("status_label").text) == "Destino indisponível.", "missing destination reports explicit error")
+					_check(world.call("to_dict") == world_before_missing and deck.call("to_dict") == deck_before_missing, "missing destination leaves skill and deck state unchanged")
+					# An existing script is not a navigable PackedScene.
+					ui.call("_navigate_to", "res://scenes/ui/SkillTreeScreen.gd", "Recurso não é cena.")
+					_check(ui.is_inside_tree() and not bool(ui.get("_transitioning")), "non-scene destination releases navigation lock")
+					_check(str(ui.get("status_label").text) == "Recurso não é cena.", "non-scene destination reports error")
+					_check(world.call("to_dict") == world_before_missing and deck.call("to_dict") == deck_before_missing, "non-scene destination preserves progression and deck")
+					_check(ResourceLoader.load("res://scenes/ui/DeckBuilder.tscn", "PackedScene") is PackedScene, "real deck destination loads as PackedScene")
 				_check(tabs != null and desktop != null and paths != null and nodes != null and detail != null, "skill tree responsive controls exist")
 				for viewport in [Vector2(360, 800), Vector2(640, 360), Vector2(854, 480)]:
 					ui.call("_apply_responsive_layout_for_size", viewport)

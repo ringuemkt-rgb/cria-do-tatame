@@ -311,6 +311,13 @@ func _navigate_to(destination: String, failure_message: String) -> void:
 	if _transitioning:
 		return
 	_transitioning = true
+	# Reject missing destinations before touching the save slot.
+	# A path can exist yet fail to load as a usable scene; do not save first.
+	var destination_scene: Resource = ResourceLoader.load(destination, "PackedScene") if ResourceLoader.exists(destination, "PackedScene") else null
+	if not (destination_scene is PackedScene):
+		_transitioning = false
+		status_label.text = failure_message
+		return
 	if not SaveManager.save_game(1):
 		_transitioning = false
 		status_label.text = "Falha ao salvar. Permanecendo na árvore de habilidades."
