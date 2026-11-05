@@ -322,7 +322,9 @@ func _navigate_to(destination: String, failure_message: String) -> void:
 		_transitioning = false
 		status_label.text = "Falha ao salvar. Permanecendo na árvore de habilidades."
 		return
-	var err := get_tree().change_scene_to_file(destination)
+	# Reuse the exact validated scene instead of loading the path a second time.
+	# This closes the preflight-to-transition gap for invalidated resources.
+	var err := get_tree().change_scene_to_packed(destination_scene as PackedScene)
 	if err != OK:
 		_transitioning = false
 		status_label.text = failure_message
