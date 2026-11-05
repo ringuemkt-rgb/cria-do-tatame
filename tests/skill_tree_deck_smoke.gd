@@ -114,6 +114,10 @@ func _run() -> void:
 					_check(str(ui.get("status_label").text) == "Recurso não é cena.", "non-scene destination reports error")
 					_check(world.call("to_dict") == world_before_missing and deck.call("to_dict") == deck_before_missing, "non-scene destination preserves progression and deck")
 					_check(ResourceLoader.load("res://scenes/ui/DeckBuilder.tscn", "PackedScene") is PackedScene, "real deck destination loads as PackedScene")
+					# Regression: navigation must consume the validated resource, not re-open the path.
+					var tree_source := FileAccess.get_file_as_string("res://scenes/ui/SkillTreeScreen.gd")
+					_check(tree_source.contains("change_scene_to_packed(destination_scene as PackedScene)"), "navigation uses the preflighted PackedScene")
+					_check(not tree_source.contains("change_scene_to_file(destination)"), "navigation never loads the destination path twice")
 				_check(tabs != null and desktop != null and paths != null and nodes != null and detail != null, "skill tree responsive controls exist")
 				for viewport in [Vector2(360, 800), Vector2(640, 360), Vector2(854, 480)]:
 					ui.call("_apply_responsive_layout_for_size", viewport)
