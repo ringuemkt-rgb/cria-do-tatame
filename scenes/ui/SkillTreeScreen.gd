@@ -291,6 +291,9 @@ func _show_selected() -> void:
 		unlock_btn.text = "JÁ DESBLOQUEADA" if owned else ("DESBLOQUEAR • 1 PONTO" if bool(result.get("ok", false)) else "INDISPONÍVEL")
 
 func _purchase_selected() -> void:
+	# A queued touch event must not spend points while a scene transition is underway.
+	if _transitioning or rules == null or not rules.is_valid():
+		return
 	var result: Dictionary = rules.purchase(selected_skill, WorldState, DeckManager)
 	if bool(result.get("ok", false)):
 		var saved := SaveManager.save_game(1)
