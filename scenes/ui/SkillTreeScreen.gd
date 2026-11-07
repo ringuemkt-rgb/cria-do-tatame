@@ -206,6 +206,9 @@ func _apply_responsive_layout_for_size(viewport_size: Vector2) -> void:
 		_show_selected()
 
 func _choose_path(new_path_id: String) -> void:
+	# Ignore queued touch callbacks while navigation owns the screen.
+	if _transitioning or rules == null or not rules.is_valid():
+		return
 	path_id = new_path_id
 	selected_skill = ""
 	for raw in rules.list_paths():
@@ -261,6 +264,8 @@ func _refresh() -> void:
 	_show_selected()
 
 func _select_skill(id: String) -> void:
+	if _transitioning or rules == null or not rules.is_valid():
+		return
 	selected_skill = id
 	_refresh()
 	if _compact_layout:
