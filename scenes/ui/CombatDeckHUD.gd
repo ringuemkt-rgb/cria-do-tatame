@@ -168,10 +168,28 @@ func _on_v2_hand_changed(hand: Array) -> void:
 			continue
 		var technique_id := str(v2_hand[index])
 		var info: Dictionary = DataRegistry.get_technique(technique_id)
-		button.text = str(info.get("nome", info.get("name", technique_id))).replace("_", " ")
+		button.text = _format_v2_card_label(technique_id, info)
+		button.tooltip_text = button.text.replace("\n", " • ")
 		button.set_meta("card_id", technique_id)
 		button.disabled = not _actions_enabled or not CombatManager.is_running or not available_ids.has(technique_id)
 		button.modulate = Color.WHITE
+
+# Display the authoritative technique cost without changing affordability or rules.
+# Keep labels short enough for six mobile touch targets; detailed text is in tooltip.
+func _format_v2_card_label(technique_id: String, info: Dictionary) -> String:
+	var title := str(info.get("nome", info.get("name", technique_id))).replace("_", " ")
+	var cost: Dictionary = info.get("cost", info.get("custo", {}))
+	var gas_cost := int(cost.get("gas", info.get("gas_cost", 0)))
+	var focus_cost := int(cost.get("focus", cost.get("foco", info.get("focus_cost", 0))))
+	var moral_cost := int(cost.get("moral", info.get("moral_cost", 0)))
+	var parts: Array[String] = []
+	if gas_cost > 0:
+		parts.append("G%d" % gas_cost)
+	if focus_cost > 0:
+		parts.append("F%d" % focus_cost)
+	if moral_cost > 0:
+		parts.append("M%d" % moral_cost)
+	return title if parts.is_empty() else title + "\n" + " ".join(parts)
 
 func open_defense_window(options: Array, seconds: float) -> void:
 	_defense_choice_submitted = false
