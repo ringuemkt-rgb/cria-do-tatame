@@ -71,6 +71,14 @@ func _run() -> void:
 	hud.call("set_actions_enabled", true)
 	hud.call("_on_hand_changed", [legacy_card], "")
 	_check(not legacy_button.disabled, "legacy hand is restored when the turn unlocks")
+	# V2 card labels expose canonical costs without changing the authoritative
+	# CombatManager affordability gate or the selected technique ID.
+	var cost_label: String = str(hud.call("_format_v2_card_label", "tech_qa", {
+		"nome": "Passagem de guarda", "cost": {"gas": 12, "focus": 3, "moral": 1}
+	}))
+	_check(cost_label == "Passagem de guarda\\nG12 F3 M1", "V2 card displays gas, focus and moral costs")
+	_check(str(hud.call("_format_v2_card_label", "tech_qa", {"name": "Raspagem", "custo": {"gas": 5, "foco": 2}})) == "Raspagem\\nG5 F2", "legacy cost aliases are shown without changing technique IDs")
+	_check(str(hud.call("_format_v2_card_label", "tech_qa", {"name": "Movimento"})) == "Movimento", "zero-cost card does not display invented costs")
 	hud.call("_on_v2_hand_changed", ["v2_technique_qa"])
 	_check(str(legacy_button.get_meta("card_id", "")) == "v2_technique_qa", "V2 technique binds to HUD")
 	hud.call("_on_hand_changed", [legacy_card], "")
