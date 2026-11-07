@@ -189,7 +189,7 @@ func _format_v2_card_label(technique_id: String, info: Dictionary) -> String:
 		parts.append("F%d" % focus_cost)
 	if moral_cost > 0:
 		parts.append("M%d" % moral_cost)
-	return title if parts.is_empty() else title + "\\n" + " ".join(parts)
+	return title if parts.is_empty() else title + "\n" + " ".join(parts)
 
 func open_defense_window(options: Array, seconds: float) -> void:
 	_defense_choice_submitted = false
