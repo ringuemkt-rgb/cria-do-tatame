@@ -182,9 +182,9 @@ func _format_v2_card_label(technique_id: String, info: Dictionary) -> String:
 	# Rendering must never crash the combat HUD; CombatManager still owns affordability.
 	var raw_cost: Variant = info.get("cost", info.get("custo", {}))
 	var cost: Dictionary = raw_cost if typeof(raw_cost) == TYPE_DICTIONARY else {}
-	var gas_cost := int(cost.get("gas", info.get("gas_cost", 0)))
-	var focus_cost := int(cost.get("focus", cost.get("foco", info.get("focus_cost", 0))))
-	var moral_cost := int(cost.get("moral", info.get("moral_cost", 0)))
+	var gas_cost := _safe_display_cost(cost.get("gas", info.get("gas_cost", 0)))
+	var focus_cost := _safe_display_cost(cost.get("focus", cost.get("foco", info.get("focus_cost", 0))))
+	var moral_cost := _safe_display_cost(cost.get("moral", info.get("moral_cost", 0)))
 	var parts: Array[String] = []
 	if gas_cost > 0:
 		parts.append("G%d" % gas_cost)
@@ -193,6 +193,18 @@ func _format_v2_card_label(technique_id: String, info: Dictionary) -> String:
 	if moral_cost > 0:
 		parts.append("M%d" % moral_cost)
 	return title if parts.is_empty() else title + "\n" + " ".join(parts)
+
+
+# Untrusted content must not render a negative, NaN, infinite or textual cost.
+# Affordability remains exclusively in CombatManager; this is display-only.
+func _safe_display_cost(value: Variant) -> int:
+	if typeof(value) == TYPE_INT:
+		return maxi(0, int(value))
+	if typeof(value) == TYPE_FLOAT:
+		var number: float = float(value)
+		if is_finite(number) and number >= 0.0 and number <= 2147483647.0:
+			return int(number)
+	return 0
 
 func open_defense_window(options: Array, seconds: float) -> void:
 	_defense_choice_submitted = false
