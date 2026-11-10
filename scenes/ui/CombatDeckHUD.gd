@@ -82,13 +82,15 @@ func _on_hand_changed(hand: Array, selected_card_id: String) -> void:
 			continue
 		var card: Dictionary = hand[index]
 		var card_id := str(card.get("id", ""))
-		var cost: Dictionary = card.get("activation_cost", {})
-		var level := int(card.get("level", 1))
+		var raw_cost: Variant = card.get("activation_cost", {})
+		var cost: Dictionary = raw_cost if typeof(raw_cost) == TYPE_DICTIONARY else {}
+		var raw_level: Variant = card.get("level", 1)
+		var level := clampi(int(raw_level), 0, 5) if typeof(raw_level) == TYPE_INT else 1
 		button.text = "%s\n%s  F%d G%d" % [
 			str(card.get("name", "Técnica")),
 			"◆".repeat(level),
-			int(cost.get("focus", 0)),
-			int(cost.get("gas", 0))
+			_safe_display_cost(cost.get("focus", 0)),
+			_safe_display_cost(cost.get("gas", 0))
 		]
 		button.set_meta("card_id", card_id)
 		button.disabled = not _actions_enabled or not _is_compatible(card)
