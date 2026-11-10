@@ -65,6 +65,14 @@ func _run() -> void:
 	var legacy_button := hud.get_node("Panel/Layout/Cards/Card1") as Button
 	hud.call("_on_hand_changed", [legacy_card], "")
 	_check(not legacy_button.disabled, "legacy card is usable on an unlocked turn")
+	# Legacy cards may also carry malformed imported cost/level payloads.
+	var malformed_legacy: Dictionary = {"id": "legacy_malformed", "name": "Carta legado", "activation_cost": null, "level": "unknown"}
+	hud.call("_on_hand_changed", [malformed_legacy], "")
+	_check(str(legacy_button.text) == "Carta legado\n◆  F0 G0", "null legacy cost and textual level render without conversion error")
+	var mixed_legacy: Dictionary = {"id": "legacy_mixed", "name": "Carta mista", "activation_cost": {"focus": "bad", "gas": -7}, "level": 999}
+	hud.call("_on_hand_changed", [mixed_legacy], "")
+	_check(str(legacy_button.text) == "Carta mista\n◆◆◆◆◆  F0 G0", "legacy invalid costs are zeroed and stars bounded")
+	hud.call("_on_hand_changed", [legacy_card], "")
 	hud.call("set_actions_enabled", false)
 	hud.call("_on_hand_changed", [legacy_card], "")
 	_check(legacy_button.disabled, "legacy hand refresh cannot visually unlock the AI turn")
