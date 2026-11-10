@@ -1,0 +1,62 @@
+{
+  "shipping": false,
+  "qa_status": "pending",
+  "technique_id": "baiana",
+  "fps": 12,
+  "pivot": [
+    64,
+    96
+  ],
+  "frame_count": 13,
+  "commit_frame": 8,
+  "attacker_anchor": [
+    64,
+    96
+  ],
+  "defender_anchor": [
+    64,
+    96
+  ],
+  "phases": [
+    {
+      "name": "anticipation",
+      "start_frame": 0,
+      "end_frame_inclusive": 1,
+      "frame_count": 2
+    },
+    {
+      "name": "entry",
+      "start_frame": 2,
+      "end_frame_inclusive": 3,
+      "frame_count": 2
+    },
+    {
+      "name": "establish",
+      "start_frame": 4,
+      "end_frame_inclusive": 5,
+      "frame_count": 2
+    },
+    {
+      "name": "stabilize",
+      "start_frame": 6,
+      "end_frame_inclusive": 8,
+      "frame_count": 3
+    },
+    {
+      "name": "response",
+      "start_frame": 9,
+      "end_frame_inclusive": 10,
+      "frame_count": 2
+    },
+    {
+      "name": "recovery",
+      "start_frame": 11,
+      "end_frame_inclusive": 12,
+      "frame_count": 2
+    }
+  ],
+  "contacts": {
+    "status": "UNKNOWN",
+    "events": []
+  }
+}

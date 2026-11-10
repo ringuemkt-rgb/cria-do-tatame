@@ -1,0 +1,16 @@
+{
+  "shipping": false,
+  "qa_status": "pending",
+  "pivot": [
+    64,
+    96
+  ],
+  "canvas": [
+    128,
+    128
+  ],
+  "gameplay_authority": false,
+  "attacker": [],
+  "defender": [],
+  "review_required": true
+}

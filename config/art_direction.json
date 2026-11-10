@@ -1,0 +1,66 @@
+{
+  "version": "1.0.0",
+  "status": "candidate_authoring_lock",
+  "shipping": false,
+  "qa_status": "pending",
+  "authority": [
+    "data/production/supreme_build_contract_v01.json",
+    ".agents/skills/cria-art-direction/SKILL.md",
+    "data/visual/sprite_forge_contract_v1.json"
+  ],
+  "style": "HD pixel art 2.5D regional premium",
+  "canvas": [
+    128,
+    128
+  ],
+  "pivot": [
+    64,
+    96
+  ],
+  "fps": 12,
+  "grid": "true_square_pixels",
+  "resample": "nearest",
+  "outline_px": [
+    1,
+    2
+  ],
+  "cel_shading_tones": [
+    2,
+    3
+  ],
+  "alpha": "binary",
+  "no_blur": true,
+  "no_smooth_gradients": true,
+  "no_photorealism": true,
+  "no_3d_render": true,
+  "no_baked_hud": true,
+  "base_palette": [
+    "#0B0B0D",
+    "#C9971C",
+    "#EDE6D6",
+    "#1E3A5F",
+    "#2D5016",
+    "#B85C38",
+    "#D4A574",
+    "#8B0000",
+    "#4B0082"
+  ],
+  "factions": {
+    "ALE": "#FF9408",
+    "LEM": "#4A6741",
+    "NTM": "#3FE3F5"
+  },
+  "combat_view": "side",
+  "world_idle_view": "three_quarter_allowed",
+  "hero_proportions": "athletic_silverback_ruan_identity_locked",
+  "outfits": {
+    "gi": [
+      "#EDE6D6",
+      "#1E3A5F"
+    ],
+    "nogi": "black_rashguard+fictional_faction_color+shorts",
+    "mixed_gi_nogi_frame": false
+  },
+  "independent_attacker_defender": true,
+  "required_pair_sync": "sync_map.json"
+}

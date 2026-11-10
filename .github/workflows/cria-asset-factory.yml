@@ -1,0 +1,33 @@
+name: CRIA Asset Factory — transition candidate checks
+
+on:
+  pull_request:
+    paths:
+      - 'tools/cria-asset-factory/**'
+      - 'data/transitions/**'
+      - 'config/art_direction.json'
+      - 'data/techniques.json'
+      - '.github/workflows/cria-asset-factory.yml'
+  push:
+    paths:
+      - 'tools/cria-asset-factory/**'
+      - 'data/transitions/**'
+      - 'config/art_direction.json'
+      - '.github/workflows/cria-asset-factory.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate-transitions:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Candidate-only transition/style/anti-duplication gate
+        run: python tools/cria-asset-factory/scripts/quality_gate.py
+      - name: Regression smoke
+        run: python -m unittest discover -s tools/cria-asset-factory/tests -p 'test_*.py' -v
