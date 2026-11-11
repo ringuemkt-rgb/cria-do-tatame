@@ -1,0 +1,8 @@
+# CRIA DO TATAME Codex local MCP. Requires trusted project and local install.
+# python tools/codex-godot-mcp/install.py --install
+[mcp_servers.cria_godot]
+command = "python"
+args = ["tools/codex-godot-mcp/launch_server.py"]
+cwd = "."
+startup_timeout_sec = 30
+tool_timeout_sec = 180
