@@ -14,9 +14,11 @@ import json
 import shutil
 import subprocess
 import sys
+import tempfile
 from pathlib import Path
 
 PACKAGE = "com.criadotatame.pressao"
+ROOT = Path(__file__).resolve().parents[2]
 STEPS = (
     ("01_exhibition_selection", "Abra a tela Exibição Livre mostrando o elenco."),
     ("02_leoa_vs_jacare_standing", "Inicie Leoa x Jacaré e mostre os lutadores em pé."),
@@ -51,7 +53,9 @@ def main() -> int:
     if args.apk is not None and not args.apk.is_file():
         parser.error("APK does not exist")
     stamp = dt.datetime.now(dt.timezone.utc).strftime("%Y%m%dT%H%M%SZ")
-    dest = (args.out or Path("/tmp") / ("cria-universal-exhibition-" + stamp)).expanduser().resolve()
+    dest = (args.out or Path(tempfile.gettempdir()) / ("cria-universal-exhibition-" + stamp)).expanduser().resolve()
+    if dest.is_relative_to(ROOT):
+        parser.error("QA evidence must be stored outside the official source repository")
     if dest.exists():
         parser.error("output folder must not exist; refusing overwrite")
     try:
