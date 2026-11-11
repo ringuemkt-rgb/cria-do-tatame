@@ -14,6 +14,7 @@ on:
       - 'scenes/result/ResultScreen.gd'
       - 'tests/universal_exhibition_smoke.gd'
       - 'tests/universal_exhibition_scene_smoke.gd'
+      - 'tests/universal_exhibition_matrix_smoke.gd'
       - 'tests/test_universal_combat_contract_v1.py'
       - 'tools/ci/validate_universal_combat_v1.py'
       - '.github/workflows/universal-exhibition-combat-v1.yml'
@@ -69,6 +70,13 @@ jobs:
           timeout 150 ./godot --headless --path . --script res://tests/universal_exhibition_smoke.gd 2>&1 | tee reports/universal_combat/universal_smoke.log
           grep -q '\[UniversalExhibition\] PASS' reports/universal_combat/universal_smoke.log
           ! grep -Eq 'SCRIPT ERROR|Parse Error|Invalid call|^ERROR:' reports/universal_combat/universal_smoke.log
+      - name: Resolve every ordered roster pairing through CombatManager
+        shell: bash
+        run: |
+          set -o pipefail
+          timeout 150 ./godot --headless --path . --script res://tests/universal_exhibition_matrix_smoke.gd 2>&1 | tee reports/universal_combat/roster_matrix.log
+          grep -q '\[UniversalMatrix\] PASS directed_pairs=272' reports/universal_combat/roster_matrix.log
+          ! grep -Eq 'SCRIPT ERROR|Parse Error|Invalid call|^ERROR:' reports/universal_combat/roster_matrix.log
       - name: Selection UI and actual arena instantiation
         shell: bash
         run: |
