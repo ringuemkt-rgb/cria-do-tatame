@@ -133,6 +133,16 @@ func _score_technique(technique: Dictionary, actor_state: String, player_resourc
 	var family := str(technique.get("family", technique.get("familia", "")))
 	if profile.get("preferred_families", []).has(family):
 		score += 9.0
+	var ai_tuning: Dictionary = profile.get("tuning", {})
+	var aggression := clampf(float(ai_tuning.get("aggression", 0.5)), 0.0, 1.0)
+	var patience := clampf(float(ai_tuning.get("patience", 0.5)), 0.0, 1.0)
+	var counter_bias := clampf(float(ai_tuning.get("counter_bias", 0.5)), 0.0, 1.0)
+	if family in ["queda", "finalizacao", "dominante", "raspagem"]:
+		score += aggression * 11.0
+	elif family in ["defesa_queda", "escape"]:
+		score += counter_bias * 13.0
+	elif family in ["controle", "pressao", "pegada"]:
+		score += patience * 9.0
 	var slice_preferred: Array = _preferred_ids_for_state(actor_state)
 	if slice_preferred.has(technique_id):
 		score += 22.0

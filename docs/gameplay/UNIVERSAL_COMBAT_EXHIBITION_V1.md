@@ -55,3 +55,13 @@ O smoke testa 272 pares dirigidos como METADADOS, vários confrontos não-Ruan c
 Teste em ARM64 real: instale APK debug, abra PreFightHub -> Exibição Livre, selecione Leoa contra Jacaré e Miyao contra Viera, inverta os papéis, confira todos os controles touch e visuais, execute técnicas e verifique retorno à seleção. Registre FPS, tempo de frame, memória, temperatura, colisões, UI em 360x800 / 390x844 / 412x915 quando disponível, prints dos seis estágios, vídeo e eventuais travamentos. Verifique pelo antes/depois que Save, Cria Live, reputação, XP, dinheiro, facções e semana não foram alterados.
 
 O ledger production/evidence/android_physical_device_v1.json continua PENDING até um aparelho real, APK hash, commit SHA, identificação do aparelho, capturas e revisão humana serem fornecidos. Um Godot smoke em CI ou export de APK não serve como teste visual físico.
+
+## Diversidade técnica e coleta de evidência Android
+
+O repertório de cada arquétipo usa um núcleo de defesa/posicionamento de prévia e técnicas individuais extraídas do perfil de estilo; não há desbloqueio automático de movimentos por GI/NO-GI. A IA agora pondera agressividade para quedas/finalizações, paciência para controle e contra-ataque para defesas, sempre filtrada pelo catálogo de técnicas legal do runtime.
+
+Ferramenta opcional de coleta física, SEM status PASS automático:
+
+    python tools/qa/capture_universal_exhibition_android.py --serial SEU_SERIAL --apk /caminho/CriaDoTatame-debug.apk --out /tmp/cria-qa-real
+
+O script utiliza adb e guia uma captura humana de seis imagens e métricas gfxinfo; as imagens e o JSON PENDING ficam apenas no diretório local fornecido. Não envia dados, não edita o ledger canônico e não garante resultado de QA. O avaliador deve comprovar touch, performance, reset, integridade de campanha e sincronização real antes de alterar o ledger.

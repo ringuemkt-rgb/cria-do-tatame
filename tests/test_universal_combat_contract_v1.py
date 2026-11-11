@@ -28,6 +28,15 @@ class UniversalCombatContractTests(unittest.TestCase):
         self.assertIn("leoa", ids)
         self.assertIn("miyao", ids)
 
+    def test_repertoires_are_individual_and_owner_safe(self):
+        profiles = json.loads((ROOT / "data/combat/fighter_profiles_universal_v1.json").read_text(encoding="utf-8"))["profiles"]
+        distinct = {tuple(p["technique_repertoire"]) for p in profiles.values()}
+        self.assertGreaterEqual(len(distinct), 6)
+        self.assertIn("silverback_grip", profiles["ruan_macacao"]["technique_repertoire"])
+        for ident, item in profiles.items():
+            if ident != "ruan_macacao":
+                self.assertNotIn("silverback_grip", item["technique_repertoire"])
+
     def test_bjj_semantic_deltas_remain_explicit(self):
         bridge = json.loads((ROOT / "data/combat/technique_identity_bridge_universal_v1.json").read_text(encoding="utf-8"))
         master = json.loads((ROOT / "data/techniques.json").read_text(encoding="utf-8"))

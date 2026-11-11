@@ -49,14 +49,9 @@
         "encerramento_tecnico",
         "saida_montada",
         "saida_cem_quilos",
-        "pressao_cabeca",
         "quebra_base",
-        "raspagem_tesoura",
-        "triangulo",
-        "mata_leao",
+        "pressao_cabeca",
         "cem_quilos",
-        "arm_drag",
-        "raspagem_borboleta",
         "silverback_grip"
       ],
       "attributes": {
@@ -127,14 +122,11 @@
         "encerramento_tecnico",
         "saida_montada",
         "saida_cem_quilos",
-        "pressao_cabeca",
         "quebra_base",
-        "raspagem_tesoura",
-        "triangulo",
-        "mata_leao",
+        "pressao_cabeca",
         "cem_quilos",
         "arm_drag",
-        "raspagem_borboleta"
+        "raspagem_tesoura"
       ],
       "attributes": {
         "health": 90,
@@ -204,14 +196,9 @@
         "encerramento_tecnico",
         "saida_montada",
         "saida_cem_quilos",
-        "pressao_cabeca",
         "quebra_base",
-        "raspagem_tesoura",
-        "triangulo",
-        "mata_leao",
-        "cem_quilos",
-        "arm_drag",
-        "raspagem_borboleta"
+        "pressao_cabeca",
+        "cem_quilos"
       ],
       "attributes": {
         "health": 100,
@@ -281,14 +268,9 @@
         "encerramento_tecnico",
         "saida_montada",
         "saida_cem_quilos",
-        "pressao_cabeca",
         "quebra_base",
-        "raspagem_tesoura",
-        "triangulo",
-        "mata_leao",
-        "cem_quilos",
-        "arm_drag",
-        "raspagem_borboleta"
+        "pressao_cabeca",
+        "cem_quilos"
       ],
       "attributes": {
         "health": 100,
@@ -358,14 +340,9 @@
         "encerramento_tecnico",
         "saida_montada",
         "saida_cem_quilos",
-        "pressao_cabeca",
         "quebra_base",
-        "raspagem_tesoura",
-        "triangulo",
-        "mata_leao",
-        "cem_quilos",
-        "arm_drag",
-        "raspagem_borboleta"
+        "pressao_cabeca",
+        "cem_quilos"
       ],
       "attributes": {
         "health": 100,
@@ -434,14 +411,10 @@
         "encerramento_tecnico",
         "saida_montada",
         "saida_cem_quilos",
-        "pressao_cabeca",
         "quebra_base",
-        "raspagem_tesoura",
-        "triangulo",
-        "mata_leao",
+        "pressao_cabeca",
         "cem_quilos",
-        "arm_drag",
-        "raspagem_borboleta"
+        "mata_leao"
       ],
       "attributes": {
         "health": 100,
@@ -511,14 +484,10 @@
         "encerramento_tecnico",
         "saida_montada",
         "saida_cem_quilos",
-        "pressao_cabeca",
         "quebra_base",
-        "raspagem_tesoura",
-        "triangulo",
-        "mata_leao",
+        "pressao_cabeca",
         "cem_quilos",
-        "arm_drag",
-        "raspagem_borboleta"
+        "arm_drag"
       ],
       "attributes": {
         "health": 100,
@@ -587,14 +556,12 @@
         "encerramento_tecnico",
         "saida_montada",
         "saida_cem_quilos",
-        "pressao_cabeca",
         "quebra_base",
-        "raspagem_tesoura",
-        "triangulo",
-        "mata_leao",
+        "pressao_cabeca",
         "cem_quilos",
-        "arm_drag",
-        "raspagem_borboleta"
+        "raspagem_tesoura",
+        "raspagem_borboleta",
+        "triangulo"
       ],
       "attributes": {
         "health": 100,
@@ -664,14 +631,10 @@
         "encerramento_tecnico",
         "saida_montada",
         "saida_cem_quilos",
-        "pressao_cabeca",
         "quebra_base",
-        "raspagem_tesoura",
-        "triangulo",
-        "mata_leao",
+        "pressao_cabeca",
         "cem_quilos",
-        "arm_drag",
-        "raspagem_borboleta"
+        "arm_drag"
       ],
       "attributes": {
         "health": 100,
@@ -741,14 +704,9 @@
         "encerramento_tecnico",
         "saida_montada",
         "saida_cem_quilos",
-        "pressao_cabeca",
         "quebra_base",
-        "raspagem_tesoura",
-        "triangulo",
-        "mata_leao",
-        "cem_quilos",
-        "arm_drag",
-        "raspagem_borboleta"
+        "pressao_cabeca",
+        "cem_quilos"
       ],
       "attributes": {
         "health": 100,
@@ -818,14 +776,9 @@
         "encerramento_tecnico",
         "saida_montada",
         "saida_cem_quilos",
-        "pressao_cabeca",
         "quebra_base",
-        "raspagem_tesoura",
-        "triangulo",
-        "mata_leao",
-        "cem_quilos",
-        "arm_drag",
-        "raspagem_borboleta"
+        "pressao_cabeca",
+        "cem_quilos"
       ],
       "attributes": {
         "health": 100,
@@ -895,14 +848,9 @@
         "encerramento_tecnico",
         "saida_montada",
         "saida_cem_quilos",
-        "pressao_cabeca",
         "quebra_base",
-        "raspagem_tesoura",
-        "triangulo",
-        "mata_leao",
-        "cem_quilos",
-        "arm_drag",
-        "raspagem_borboleta"
+        "pressao_cabeca",
+        "cem_quilos"
       ],
       "attributes": {
         "health": 100,
@@ -972,14 +920,10 @@
         "encerramento_tecnico",
         "saida_montada",
         "saida_cem_quilos",
-        "pressao_cabeca",
         "quebra_base",
-        "raspagem_tesoura",
-        "triangulo",
-        "mata_leao",
+        "pressao_cabeca",
         "cem_quilos",
-        "arm_drag",
-        "raspagem_borboleta"
+        "raspagem_tesoura"
       ],
       "attributes": {
         "health": 100,
@@ -1048,14 +992,12 @@
         "encerramento_tecnico",
         "saida_montada",
         "saida_cem_quilos",
-        "pressao_cabeca",
         "quebra_base",
-        "raspagem_tesoura",
-        "triangulo",
-        "mata_leao",
+        "pressao_cabeca",
         "cem_quilos",
-        "arm_drag",
-        "raspagem_borboleta"
+        "raspagem_borboleta",
+        "triangulo",
+        "raspagem_tesoura"
       ],
       "attributes": {
         "health": 100,
@@ -1125,14 +1067,9 @@
         "encerramento_tecnico",
         "saida_montada",
         "saida_cem_quilos",
-        "pressao_cabeca",
         "quebra_base",
-        "raspagem_tesoura",
-        "triangulo",
-        "mata_leao",
-        "cem_quilos",
-        "arm_drag",
-        "raspagem_borboleta"
+        "pressao_cabeca",
+        "cem_quilos"
       ],
       "attributes": {
         "health": 100,
@@ -1201,14 +1138,12 @@
         "encerramento_tecnico",
         "saida_montada",
         "saida_cem_quilos",
-        "pressao_cabeca",
         "quebra_base",
-        "raspagem_tesoura",
-        "triangulo",
-        "mata_leao",
+        "pressao_cabeca",
         "cem_quilos",
-        "arm_drag",
-        "raspagem_borboleta"
+        "raspagem_borboleta",
+        "triangulo",
+        "raspagem_tesoura"
       ],
       "attributes": {
         "health": 100,
@@ -1278,14 +1213,11 @@
         "encerramento_tecnico",
         "saida_montada",
         "saida_cem_quilos",
-        "pressao_cabeca",
         "quebra_base",
-        "raspagem_tesoura",
-        "triangulo",
-        "mata_leao",
+        "pressao_cabeca",
         "cem_quilos",
-        "arm_drag",
-        "raspagem_borboleta"
+        "mata_leao",
+        "triangulo"
       ],
       "attributes": {
         "health": 100,
