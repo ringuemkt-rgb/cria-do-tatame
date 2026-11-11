@@ -1,0 +1,248 @@
+{
+  "schema": "cria.universal_combat_technique_bridge.v1",
+  "version": "1.0.0",
+  "status": "SHADOW_NON_AUTHORITATIVE",
+  "authoritative_legacy": "data/techniques.json",
+  "shadow_authority": "data/combat/combat_manager_bjj_shadow_map_v1.json",
+  "candidate_full_graph": "data/bjj/bjj_knowledge_graph_v1.json",
+  "full_graph_present": false,
+  "policy": {
+    "unmapped_fail_closed": true,
+    "semantic_delta_blocks_promotion": true,
+    "animation_uses_legacy_id_until_approved": true
+  },
+  "techniques": {
+    "grip_de_ferro": {
+      "legacy_id": "grip_de_ferro",
+      "bjj_kg_id": null,
+      "confidence": "UNMAPPED",
+      "known_semantic_delta": null,
+      "legacy_from": "PLAYER_STANDING_NEUTRAL",
+      "legacy_to": "PLAYER_TOP_CLINCH",
+      "graph_mapping_reviewed": false,
+      "shipping": false,
+      "visual_motion_id": "grip_de_ferro"
+    },
+    "pressao_cabeca": {
+      "legacy_id": "pressao_cabeca",
+      "bjj_kg_id": null,
+      "confidence": "UNMAPPED",
+      "known_semantic_delta": null,
+      "legacy_from": "PLAYER_TOP_CLINCH",
+      "legacy_to": "PLAYER_TOP_CLINCH",
+      "graph_mapping_reviewed": false,
+      "shipping": false,
+      "visual_motion_id": "pressao_cabeca"
+    },
+    "corte_joelho": {
+      "legacy_id": "corte_joelho",
+      "bjj_kg_id": null,
+      "confidence": "UNMAPPED",
+      "known_semantic_delta": null,
+      "legacy_from": "PLAYER_TOP_GUARD",
+      "legacy_to": "PLAYER_TOP_SIDE",
+      "graph_mapping_reviewed": false,
+      "shipping": false,
+      "visual_motion_id": "corte_joelho"
+    },
+    "crossface": {
+      "legacy_id": "crossface",
+      "bjj_kg_id": null,
+      "confidence": "UNMAPPED",
+      "known_semantic_delta": null,
+      "legacy_from": "PLAYER_TOP_SIDE",
+      "legacy_to": "PLAYER_TOP_SIDE",
+      "graph_mapping_reviewed": false,
+      "shipping": false,
+      "visual_motion_id": "crossface"
+    },
+    "quebra_base": {
+      "legacy_id": "quebra_base",
+      "bjj_kg_id": null,
+      "confidence": "UNMAPPED",
+      "known_semantic_delta": null,
+      "legacy_from": "PLAYER_TOP_CLINCH",
+      "legacy_to": "PLAYER_TOP_CLINCH",
+      "graph_mapping_reviewed": false,
+      "shipping": false,
+      "visual_motion_id": "quebra_base"
+    },
+    "montada_pesada": {
+      "legacy_id": "montada_pesada",
+      "bjj_kg_id": null,
+      "confidence": "UNMAPPED",
+      "known_semantic_delta": null,
+      "legacy_from": "PLAYER_TOP_SIDE",
+      "legacy_to": "PLAYER_TOP_MOUNT",
+      "graph_mapping_reviewed": false,
+      "shipping": false,
+      "visual_motion_id": "montada_pesada"
+    },
+    "encerramento_tecnico": {
+      "legacy_id": "encerramento_tecnico",
+      "bjj_kg_id": null,
+      "confidence": "UNMAPPED",
+      "known_semantic_delta": null,
+      "legacy_from": "PLAYER_SUBMISSION_ATTACK",
+      "legacy_to": "RESET",
+      "graph_mapping_reviewed": false,
+      "shipping": false,
+      "visual_motion_id": "encerramento_tecnico"
+    },
+    "silverback_grip": {
+      "legacy_id": "silverback_grip",
+      "bjj_kg_id": null,
+      "confidence": "UNMAPPED",
+      "known_semantic_delta": null,
+      "legacy_from": "PLAYER_TOP_CLINCH",
+      "legacy_to": "PLAYER_TOP_SIDE",
+      "graph_mapping_reviewed": false,
+      "shipping": false,
+      "visual_motion_id": "silverback_grip"
+    },
+    "baiana": {
+      "legacy_id": "baiana",
+      "bjj_kg_id": "t001",
+      "confidence": "HIGH",
+      "known_semantic_delta": "Legacy destination collapses guard topology; canonical slice establishes top half guard after the takedown.",
+      "legacy_from": "PLAYER_STANDING_NEUTRAL",
+      "legacy_to": "PLAYER_TOP_GUARD",
+      "graph_mapping_reviewed": false,
+      "shipping": false,
+      "visual_motion_id": "baiana"
+    },
+    "sprawl": {
+      "legacy_id": "sprawl",
+      "bjj_kg_id": "slice_sprawl",
+      "confidence": "MEDIUM",
+      "known_semantic_delta": "Canonical counter includes successful front-headlock establishment; legacy Sprawl returns neutral and loses the control outcome.",
+      "legacy_from": "PLAYER_STANDING_NEUTRAL",
+      "legacy_to": "PLAYER_STANDING_NEUTRAL",
+      "graph_mapping_reviewed": false,
+      "shipping": false,
+      "visual_motion_id": "sprawl"
+    },
+    "puxada_guarda": {
+      "legacy_id": "puxada_guarda",
+      "bjj_kg_id": "t005",
+      "confidence": "HIGH",
+      "known_semantic_delta": "Legacy bottom-guard state is broader than the canonical closed-guard result.",
+      "legacy_from": "PLAYER_STANDING_NEUTRAL",
+      "legacy_to": "PLAYER_BOTTOM_GUARD",
+      "graph_mapping_reviewed": false,
+      "shipping": false,
+      "visual_motion_id": "puxada_guarda"
+    },
+    "raspagem_tesoura": {
+      "legacy_id": "raspagem_tesoura",
+      "bjj_kg_id": null,
+      "confidence": "UNMAPPED",
+      "known_semantic_delta": null,
+      "legacy_from": "PLAYER_BOTTOM_GUARD",
+      "legacy_to": "PLAYER_TOP_GUARD",
+      "graph_mapping_reviewed": false,
+      "shipping": false,
+      "visual_motion_id": "raspagem_tesoura"
+    },
+    "raspagem_borboleta": {
+      "legacy_id": "raspagem_borboleta",
+      "bjj_kg_id": null,
+      "confidence": "UNMAPPED",
+      "known_semantic_delta": null,
+      "legacy_from": "PLAYER_BOTTOM_GUARD",
+      "legacy_to": "PLAYER_TOP_GUARD",
+      "graph_mapping_reviewed": false,
+      "shipping": false,
+      "visual_motion_id": "raspagem_borboleta"
+    },
+    "torreando": {
+      "legacy_id": "torreando",
+      "bjj_kg_id": null,
+      "confidence": "UNMAPPED",
+      "known_semantic_delta": null,
+      "legacy_from": "PLAYER_TOP_GUARD",
+      "legacy_to": "PLAYER_TOP_SIDE",
+      "graph_mapping_reviewed": false,
+      "shipping": false,
+      "visual_motion_id": "torreando"
+    },
+    "arm_drag": {
+      "legacy_id": "arm_drag",
+      "bjj_kg_id": null,
+      "confidence": "UNMAPPED",
+      "known_semantic_delta": null,
+      "legacy_from": "PLAYER_TOP_CLINCH",
+      "legacy_to": "PLAYER_BACK_ATTACK",
+      "graph_mapping_reviewed": false,
+      "shipping": false,
+      "visual_motion_id": "arm_drag"
+    },
+    "mata_leao": {
+      "legacy_id": "mata_leao",
+      "bjj_kg_id": null,
+      "confidence": "UNMAPPED",
+      "known_semantic_delta": null,
+      "legacy_from": "PLAYER_BACK_ATTACK",
+      "legacy_to": "PLAYER_SUBMISSION_ATTACK",
+      "graph_mapping_reviewed": false,
+      "shipping": false,
+      "visual_motion_id": "mata_leao"
+    },
+    "chave_braco": {
+      "legacy_id": "chave_braco",
+      "bjj_kg_id": null,
+      "confidence": "UNMAPPED",
+      "known_semantic_delta": null,
+      "legacy_from": "PLAYER_TOP_MOUNT",
+      "legacy_to": "PLAYER_SUBMISSION_ATTACK",
+      "graph_mapping_reviewed": false,
+      "shipping": false,
+      "visual_motion_id": "chave_braco"
+    },
+    "triangulo": {
+      "legacy_id": "triangulo",
+      "bjj_kg_id": null,
+      "confidence": "UNMAPPED",
+      "known_semantic_delta": null,
+      "legacy_from": "PLAYER_BOTTOM_GUARD",
+      "legacy_to": "PLAYER_SUBMISSION_ATTACK",
+      "graph_mapping_reviewed": false,
+      "shipping": false,
+      "visual_motion_id": "triangulo"
+    },
+    "saida_montada": {
+      "legacy_id": "saida_montada",
+      "bjj_kg_id": null,
+      "confidence": "UNMAPPED",
+      "known_semantic_delta": null,
+      "legacy_from": "PLAYER_BOTTOM_MOUNT",
+      "legacy_to": "PLAYER_BOTTOM_GUARD",
+      "graph_mapping_reviewed": false,
+      "shipping": false,
+      "visual_motion_id": "saida_montada"
+    },
+    "saida_cem_quilos": {
+      "legacy_id": "saida_cem_quilos",
+      "bjj_kg_id": null,
+      "confidence": "UNMAPPED",
+      "known_semantic_delta": null,
+      "legacy_from": "PLAYER_BOTTOM_SIDE",
+      "legacy_to": "PLAYER_BOTTOM_GUARD",
+      "graph_mapping_reviewed": false,
+      "shipping": false,
+      "visual_motion_id": "saida_cem_quilos"
+    },
+    "cem_quilos": {
+      "legacy_id": "cem_quilos",
+      "bjj_kg_id": null,
+      "confidence": "UNMAPPED",
+      "known_semantic_delta": null,
+      "legacy_from": "PLAYER_TOP_SIDE",
+      "legacy_to": "PLAYER_TOP_SIDE",
+      "graph_mapping_reviewed": false,
+      "shipping": false,
+      "visual_motion_id": "cem_quilos"
+    }
+  },
+  "shipping": false
+}
