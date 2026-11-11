@@ -209,11 +209,13 @@ func _safe_display_cost(value: Variant) -> int:
 	return 0
 
 func open_defense_window(options: Array, seconds: float) -> void:
+	# Invalid/nonfinite deadlines are expired, never an unlimited reaction.
+	var valid_seconds := is_finite(seconds) and seconds > 0.0
 	_defense_choice_submitted = false
 	defense_mode = true
 	defense_options = options.duplicate(true)
 	$Panel/Layout/Header/Title.text = "REACAO • DEFENDA AGORA"
-	$Panel/Layout/Header/Clash.text = "JANELA %.1fs" % maxf(0.0, seconds)
+	$Panel/Layout/Header/Clash.text = "JANELA %.1fs" % seconds if valid_seconds else "JANELA ENCERRADA"
 	for index in range(card_buttons.size()):
 		var button: Button = card_buttons[index]
 		if index >= defense_options.size():
@@ -230,13 +232,13 @@ func open_defense_window(options: Array, seconds: float) -> void:
 		button.modulate = Color.WHITE
 	# The arena owns the deadline. The HUD must not advertise a selectable
 	# defense when its reported window has already expired.
-	if seconds <= 0.0:
+	if not valid_seconds:
 		_expire_defense_window()
 
 func set_defense_window_remaining(seconds: float) -> void:
 	if not defense_mode or _defense_choice_submitted:
 		return
-	if seconds <= 0.0:
+	if not is_finite(seconds) or seconds <= 0.0:
 		_expire_defense_window()
 	else:
 		$Panel/Layout/Header/Clash.text = "JANELA %.1fs" % seconds
