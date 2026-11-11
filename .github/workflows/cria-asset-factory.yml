@@ -37,7 +37,7 @@ jobs:
       - name: Candidate-only transition/style/anti-duplication gate
         run: python tools/cria-asset-factory/scripts/quality_gate.py
       - name: Python unit tests including security/revision integration guards
-        run: python -m unittest discover -s tools/cria-asset-factory/tests -p 'test_*.py' -v
+        run: tools/cria-asset-factory/.venv/bin/python -m unittest discover -s tools/cria-asset-factory/tests -p 'test_*.py' -v
       - name: Compile scripts
         run: python -m compileall -q tools/cria-asset-factory/scripts
       - name: Generate canonical Baiana job (JSON only)

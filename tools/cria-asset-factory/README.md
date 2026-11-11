@@ -20,11 +20,25 @@ python tools/cria-asset-factory/scripts/quality_gate.py
 
 O instalador atua **somente** sobre o ambiente virtual `tools/cria-asset-factory/.venv`. FFmpeg e Pixelorama são dependências externas opcionais, e GPU/Qwen/ComfyUI não são iniciados nem baixados automaticamente. Os adaptadores registrados estão em `config/integrations.json`; veja `docs/INSTALL_OPEN_SOURCE.md`.
 
+## Todo o elenco é suportado para authoring (não somente Ruan × Davi)
+
+Os personagens são lidos dinamicamente do cadastro `data/combat/roster_v3.json`; nenhuma lista congelada de lutadores fica nos scripts. A meta do jogo prevê 18, mas o cadastro corrente contém 17 e a ferramenta **não inventa** o ausente. Um combate entre quaisquer dois personagens canônicos é planejável; isso **não significa** que a IA, as técnicas, as animações ou a cena já estejam prontas para todos.
+
+```sh
+python tools/cria-asset-factory/scripts/plan_combat_matchups.py \
+  --all --out /tmp/cria-all-roster-matchups.json
+python tools/cria-asset-factory/scripts/plan_combat_matchups.py \
+  --fighter leoa --opponent jacare_do_mangue \
+  --technique baiana --out /tmp/cria-leoa-jacare.json
+```
+
+O plano enumera duplas e funções atacante/defensor, mas separa o material reutilizável por técnica da identidade de cada lutador; evita gerar uma animação para cada par. A elegibilidade individual segue **UNVERIFIED**, e a transição só será final quando o grafo BJJ, os perfis técnicos e o contato forem auditados. Veja `docs/UNIVERSAL_COMBAT_AUTHORING.md`.
+
 ## Preparar trabalho de geração sem renderizar
 
 ```sh
 python tools/cria-asset-factory/scripts/prepare_candidate_job.py \
-  --id baiana --character ruan_macacao --outfit gi_white \
+  --id baiana --character leoa --opponent jacare_do_mangue --outfit gi_white \
   --phase anticipation --out /tmp/cria-baiana-job.json
 ```
 

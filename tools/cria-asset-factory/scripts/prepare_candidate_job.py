@@ -10,6 +10,11 @@ import argparse
 import json
 from pathlib import Path
 
+try:
+    from .fighter_roster import load_fighters, validate_pair
+except ImportError:
+    from fighter_roster import load_fighters, validate_pair
+
 ROOT = Path(__file__).resolve().parents[3]
 KINDS = {
     "character_combat_pose_concept",
@@ -19,7 +24,6 @@ KINDS = {
     "icon_concept",
 }
 PHASES = ("anticipation", "entry", "establish", "stabilize", "response", "recovery")
-CHARACTERS = ("ruan_macacao", "davi_relampago")
 OUTFITS = ("gi_white", "gi_blue", "nogi")
 
 
@@ -31,7 +35,8 @@ def load_json(path: Path) -> dict:
 
 
 def make_job(tech_id: str, character_id: str, outfit: str, phase: str, kind: str,
-             reference: Path | None = None, repo_root: Path = ROOT) -> dict:
+             reference: Path | None = None, repo_root: Path = ROOT,
+             opponent_id: str | None = None) -> dict:
     catalog = load_json(repo_root / "data/techniques.json")["techniques"]
     transitions = load_json(repo_root / "data/transitions/index.json")
     if transitions.get("shipping") is not False:
@@ -46,8 +51,17 @@ def make_job(tech_id: str, character_id: str, outfit: str, phase: str, kind: str
     if (transition.get("entry_state") != tech["entry_state"]
             or transition.get("exit_state") != tech["exit_state"]):
         raise ValueError("canonical transition state conflict")
-    if character_id not in CHARACTERS or outfit not in OUTFITS or phase not in PHASES or kind not in KINDS:
-        raise ValueError("unsupported character/outfit/phase/kind")
+    fighters = load_fighters(repo_root)
+    if character_id not in fighters:
+        raise ValueError("character ID not found in canonical roster")
+    if opponent_id is not None:
+        validate_pair(character_id, opponent_id, repo_root)
+    if outfit not in OUTFITS or phase not in PHASES or kind not in KINDS:
+        raise ValueError("unsupported outfit/phase/kind")
+    if outfit == "nogi" and transition.get("nogi") is not True:
+        raise ValueError("NO-GI authoring not flagged for this technique")
+    if outfit != "nogi" and transition.get("gi") is not True:
+        raise ValueError("GI authoring not flagged for this technique")
     profile = load_json(repo_root / "data/ai/qwen_pixel_art_profile_v1.json")
     art = load_json(repo_root / "config/art_direction.json")
     if profile.get("shipping") is not False or art.get("shipping") is not False:
@@ -58,7 +72,8 @@ def make_job(tech_id: str, character_id: str, outfit: str, phase: str, kind: str
     # These are design references only. Character anatomy and source rights still require QA.
     text = (
         profile["prompt_contract"]["prefix"]
-        + f" Fighter {character_id}; technique {tech_id}; side-view grappling; "
+        + f" Fighter {character_id} ({fighters[character_id]['display_name']}); technique {tech_id}; side-view grappling; "
+        + (f"visual opponent {opponent_id} ({fighters[opponent_id]['display_name']}); " if opponent_id else "")
         + f"phase {phase}; {variant}; source states {tech['entry_state']} -> {tech['exit_state']}; "
         + "pixel grid, precise 5-finger hands, grounded contact, original fictional insignia, "
         + "no logos, no baked text, no hallucinated hidden grips; "
@@ -68,7 +83,11 @@ def make_job(tech_id: str, character_id: str, outfit: str, phase: str, kind: str
     return {
         "schema": "cria.asset_factory.generation_job.v1",
         "kind": kind, "technique_id": tech_id,
-        "character_id": character_id, "outfit": outfit, "phase": phase,
+        "character_id": character_id, "opponent_id": opponent_id,
+        "character_name": fighters[character_id]["display_name"],
+        "outfit": outfit, "phase": phase,
+        "fighter_technique_eligibility": "UNVERIFIED",
+        "match_playable": False,
         "entry_state": tech["entry_state"], "exit_state": tech["exit_state"],
         "model_id": profile["base_model"]["id"],
         "model_revision": profile["base_model"]["revision"],
@@ -104,7 +123,8 @@ def save_job(output: Path, job: dict, repo_root: Path = ROOT) -> None:
 def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("--id", required=True)
-    ap.add_argument("--character", choices=CHARACTERS, default="ruan_macacao")
+    ap.add_argument("--character", required=True, help="Canonical roster fighter ID")
+    ap.add_argument("--opponent", help="Optional distinct canonical opponent; concept only")
     ap.add_argument("--outfit", choices=OUTFITS, default="gi_white")
     ap.add_argument("--phase", choices=PHASES, default="anticipation")
     ap.add_argument("--kind", choices=sorted(KINDS), default="character_combat_pose_concept")
@@ -113,7 +133,7 @@ def main() -> int:
     args = ap.parse_args()
     try:
         job = make_job(args.id, args.character, args.outfit, args.phase,
-                       args.kind, args.reference)
+                       args.kind, args.reference, opponent_id=args.opponent)
         save_job(args.out, job)
         print(f"Candidate job written (no inference, shipping=false): {args.out}")
         return 0

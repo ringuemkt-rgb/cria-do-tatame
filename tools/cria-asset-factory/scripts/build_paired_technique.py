@@ -6,11 +6,13 @@ import json
 from pathlib import Path
 try:
     from .build_spritesheet import build
-    from .common import CHARACTERS, FACTIONS, candidate, json_write, output_dir, pngs
+    from .common import FACTIONS, candidate, json_write, output_dir, pngs
+    from .fighter_roster import validate_pair
     from .generate_sync_map import make_sync, parse_counts
 except ImportError:
     from build_spritesheet import build
-    from common import CHARACTERS, FACTIONS, candidate, json_write, output_dir, pngs
+    from common import FACTIONS, candidate, json_write, output_dir, pngs
+    from fighter_roster import validate_pair
     from generate_sync_map import make_sync, parse_counts
 
 ROOT = Path(__file__).resolve().parents[3]
@@ -24,12 +26,24 @@ def run(tech_id: str, attacker_id: str, defender_id: str,
         encoding="utf-8"))["techniques"]}
     if tech_id not in ids:
         raise ValueError("technique ID absent from canonical gameplay catalogue")
-    if attacker_id not in CHARACTERS or defender_id not in CHARACTERS or attacker_id == defender_id:
-        raise ValueError("canonical, distinct attacker/defender IDs required")
+    attacker_profile, defender_profile = validate_pair(attacker_id, defender_id, ROOT)
+    # Only a transition already registered for candidate authoring may be drawn.
+    transition_path = ROOT / "data/transitions" / f"{tech_id}.json"
+    if not transition_path.is_file():
+        raise ValueError("technique is not in candidate authoring transitions")
+    transition = json.loads(transition_path.read_text(encoding="utf-8"))
+    if transition.get("shipping") is not False or transition.get("qa_status") != "pending":
+        raise ValueError("technique transition must remain a pending candidate")
     if outfit not in ("gi_white", "gi_blue", "nogi"):
         raise ValueError("unsupported outfit")
-    if outfit == "nogi" and faction not in FACTIONS:
-        raise ValueError("NO-GI requires known faction")
+    if outfit == "nogi" and transition.get("nogi") is not True:
+        raise ValueError("technique is not flagged for NO-GI candidate authoring")
+    if outfit != "nogi" and transition.get("gi") is not True:
+        raise ValueError("technique is not flagged for GI candidate authoring")
+    if faction is not None and faction not in FACTIONS:
+        raise ValueError("unknown palette faction")
+    # Fighter-specific skill, event eligibility and legality remain UNVERIFIED.
+    # Never use this output as proof that a matchup is currently playable.
     count_a, count_b = len(pngs(attacker)), len(pngs(defender))
     if count_a != count_b or count_a != sum(counts):
         raise ValueError(f"mismatched actor phase counts: {count_a}/{count_b}/{sum(counts)}")
@@ -45,7 +59,11 @@ def run(tech_id: str, attacker_id: str, defender_id: str,
         status="PENDING_HUMAN_ANNOTATION", gameplay_authority=False))
     meta = candidate("paired_technique", id=tech_id, attacker_id=attacker_id,
                      defender_id=defender_id, outfit=outfit, faction=faction,
-                     origin=origin, license_id=license_id, frame_count=count_a, fps=12)
+                     origin=origin, license_id=license_id, frame_count=count_a, fps=12,
+                     attacker_name=attacker_profile["display_name"],
+                     defender_name=defender_profile["display_name"],
+                     fighter_technique_eligibility="UNVERIFIED",
+                     fight_runtime_ready=False)
     json_write(out / "metadata.json", meta)
     (out / "contact_notes.md").write_text(
         "# Human review pending\n\nContact/occlusion: UNKNOWN.\n"
@@ -59,8 +77,8 @@ def run(tech_id: str, attacker_id: str, defender_id: str,
 def main() -> None:
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("--id", required=True)
-    ap.add_argument("--attacker-id", default="ruan_macacao", choices=sorted(CHARACTERS))
-    ap.add_argument("--defender-id", default="davi_relampago", choices=sorted(CHARACTERS))
+    ap.add_argument("--attacker-id", required=True, help="Any canonical roster fighter ID")
+    ap.add_argument("--defender-id", required=True, help="Any OTHER canonical roster fighter ID")
     ap.add_argument("--attacker", type=Path, required=True)
     ap.add_argument("--defender", type=Path, required=True)
     ap.add_argument("--out", type=Path, required=True)

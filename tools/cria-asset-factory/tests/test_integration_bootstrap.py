@@ -3,10 +3,14 @@ from __future__ import annotations
 import importlib.util
 import json
 import tempfile
+import sys
 import unittest
 from pathlib import Path
 
 FACTORY = Path(__file__).resolve().parents[1]
+# Standalone scripts intentionally support imports from their script directory.
+if str(FACTORY / "scripts") not in sys.path:
+    sys.path.insert(0, str(FACTORY / "scripts"))
 
 
 def load(name: str):

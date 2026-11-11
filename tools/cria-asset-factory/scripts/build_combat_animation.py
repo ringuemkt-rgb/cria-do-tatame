@@ -5,26 +5,31 @@ import argparse
 from pathlib import Path
 try:
     from .build_spritesheet import build
-    from .common import ANIMATIONS, CHARACTERS, FACTIONS, candidate, json_write
+    from .common import ANIMATIONS, FACTIONS, candidate, json_write
+    from .fighter_roster import fighter_or_fail
 except ImportError:
     from build_spritesheet import build
-    from common import ANIMATIONS, CHARACTERS, FACTIONS, candidate, json_write
+    from common import ANIMATIONS, FACTIONS, candidate, json_write
+    from fighter_roster import fighter_or_fail
 
 
 def run(character: str, animation: str, source: Path, out: Path,
         outfit: str, faction: str | None, origin: str = "UNKNOWN",
         license_id: str = "UNKNOWN", mocap: Path | None = None) -> dict:
-    if character not in CHARACTERS or animation not in ANIMATIONS:
-        raise ValueError("canonical character/animation required")
+    profile = fighter_or_fail(character)
+    if animation not in ANIMATIONS:
+        raise ValueError("unsupported animation type")
     if outfit not in ("gi_white", "gi_blue", "nogi"):
         raise ValueError("outfit must be gi_white/gi_blue/nogi")
-    if outfit == "nogi" and faction not in FACTIONS:
-        raise ValueError("NO-GI requires canonical faction")
+    if faction is not None and faction not in FACTIONS:
+        raise ValueError("unknown palette faction")
+    # Faction membership and GI/NO-GI technical eligibility require separate review.
     if mocap is not None and not mocap.is_file():
         raise FileNotFoundError(mocap)
     meta = build(source, out, kind="combat_animation", faction=faction,
                  origin=origin, license_id=license_id)
-    meta.update(character_id=character, animation=animation, outfit=outfit,
+    meta.update(character_id=character, character_name=profile["display_name"],
+                combat_eligibility="UNVERIFIED", animation=animation, outfit=outfit,
                 view="three_quarter" if animation == "world_idle" else "side",
                 mocap_reference=str(mocap) if mocap else None)
     json_write(out / "metadata.json", meta)
@@ -37,7 +42,7 @@ def run(character: str, animation: str, source: Path, out: Path,
 
 def main() -> None:
     ap = argparse.ArgumentParser(description=__doc__)
-    ap.add_argument("--character", choices=sorted(CHARACTERS), required=True)
+    ap.add_argument("--character", required=True, help="Any canonical roster fighter ID")
     ap.add_argument("--animation", choices=sorted(ANIMATIONS), required=True)
     ap.add_argument("--input", type=Path, required=True)
     ap.add_argument("--out", type=Path, required=True)

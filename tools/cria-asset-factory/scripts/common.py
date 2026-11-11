@@ -17,8 +17,6 @@ BASE_PALETTE = (
 )
 FACTIONS = {"ALE": "#FF9408", "LEM": "#4A6741", "NTM": "#3FE3F5"}
 PHASES = ("anticipation", "entry", "establish", "stabilize", "response", "recovery")
-CHARACTERS = {"ruan_macacao", "davi_relampago", "mestre_dende", "cassio_molho",
-              "jacare_mangue", "oni_da_lapa", "delegado_montenegro"}
 ANIMATIONS = {"idle_combat", "walk", "dash", "guard", "hit_light", "hit_medium",
               "hit_heavy", "clinch", "ground_top", "ground_bottom", "victory",
               "defeat", "world_idle"}
