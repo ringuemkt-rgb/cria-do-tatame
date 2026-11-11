@@ -54,6 +54,12 @@ func _run() -> void:
 		_check(str(arena.davi_placeholder.fighter_id) == "jacare_do_mangue", "opponent visual is selected Jacare")
 		_check(arena.get_node("Panel/Title").text.contains("LEOA") or arena.get_node("Panel/Title").text.contains("LEOA".capitalize()), "title reflects selected pair")
 		_check(arena.get_node("Panel/Title").text.contains("JACARÉ"), "title reflects opponent identity")
+		var hud = arena.get_node("CombatHUD")
+		_check(hud.get_node("TopBar/PlayerName").text.contains("LEOA"), "combat HUD names selected player")
+		_check(hud.get_node("TopBar/OpponentName").text.contains("JACARÉ"), "combat HUD names selected opponent")
+		hud._on_resources_changed("leoa", {"health": 100, "gas": 23, "guard": 100, "focus": 60, "moral": 55})
+		var selected_gas: ProgressBar = hud.get_node("TopBar/PlayerPanel/PlayerGas")
+		_check(is_equal_approx(selected_gas.value, 23.0), "player resource bar follows selected fighter ID")
 		cm.is_running = false
 		arena.queue_free()
 	menu.queue_free()

@@ -30,6 +30,10 @@ func _ready() -> void:
 		SignalBus.resources_changed.connect(_on_resources_changed)
 	if not SignalBus.combat_state_changed.is_connected(_on_combat_state_changed):
 		SignalBus.combat_state_changed.connect(_on_combat_state_changed)
+	if not SignalBus.combat_started.is_connected(_on_combat_started):
+		SignalBus.combat_started.connect(_on_combat_started)
+	if CombatManager.is_running:
+		_on_combat_started(CombatManager.arena_id, CombatManager.player_id, CombatManager.opponent_id)
 
 func _style_premium_hud() -> void:
 	if not has_node("TopBar"):
@@ -136,8 +140,21 @@ func show_message(msg: String, duration: float = 2.0) -> void:
 	await get_tree().create_timer(duration).timeout
 	label.text = ""
 
+func _on_combat_started(_arena_id: String, player_id: String, opponent_id: String) -> void:
+	if not CombatManager.is_exhibition:
+		return
+	var profiles = preload("res://src/combat/FighterCombatProfileRegistryV1.gd").new()
+	if not profiles.ready():
+		return
+	var player_info: Dictionary = profiles.profile(player_id)
+	var opponent_info: Dictionary = profiles.profile(opponent_id)
+	if has_node("TopBar/PlayerName"):
+		$TopBar/PlayerName.text = str(player_info.get("display_name", player_id)).to_upper()
+	if has_node("TopBar/OpponentName"):
+		$TopBar/OpponentName.text = str(opponent_info.get("display_name", opponent_id)).to_upper()
+
 func _on_resources_changed(fighter_id, resources: Dictionary) -> void:
-	if str(fighter_id) == "ruan_macacao":
+	if str(fighter_id) == str(CombatManager.player_id):
 		update_player_resources(resources)
 	else:
 		update_opponent_resources(resources)

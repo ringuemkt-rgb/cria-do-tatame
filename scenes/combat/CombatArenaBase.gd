@@ -177,7 +177,7 @@ func _ensure_ai_hint() -> void:
 	if has_node("Panel") and not has_node("Panel/AIHint"):
 		var label := Label.new()
 		label.name = "AIHint"
-		label.text = "Davi esta lendo seu ritmo. Varie as entradas."
+		label.text = "%s esta lendo seu ritmo. Varie as entradas." % davi_placeholder.display_name
 		get_node("Panel").add_child(label)
 
 func _set_ai_hint(text: String) -> void:
@@ -301,7 +301,7 @@ func _run_davi_turn() -> void:
 		result = CombatManager.apply_opponent_action(technique_id)
 
 	if bool(result.get("denied", false)):
-		_set_ai_hint("Ruan leu a entrada e respondeu com %s." % str(defense_context.get("name", defense_id)).replace("_", " "))
+		_set_ai_hint("%s leu a entrada e respondeu com %s." % [ruan_placeholder.display_name, str(defense_context.get("name", defense_id)).replace("_", " ")])
 	elif defense_context.get("timed_out", false):
 		_set_ai_hint("Janela fechou. %s completou a acao." % davi_placeholder.display_name)
 	gamefeel.call("apply_for_technique", technique_id, bool(result.get("success", false)))
@@ -411,13 +411,13 @@ func _on_technique_resolved(result) -> void:
 		var technique: Dictionary = DataRegistry.get_technique(technique_id)
 		var name_text: String = str(technique.get("nome", technique.get("name", technique_id)))
 		var message: String = str(result.get("message", "sucesso" if result.get("success", false) else "defendido"))
-		var actor_id := str(result.get("actor_id", "ruan_macacao"))
+		var actor_id := str(result.get("actor_id", CombatManager.player_id))
 		var actor_name: String = str(ruan_placeholder.display_name) if actor_id == CombatManager.player_id else str(davi_placeholder.display_name)
 		$Panel/Message.text = "%s • %s: %s" % [actor_name, name_text, _humanize_message(message)]
 	if SignalBus.has_signal("technique_executed"):
-		SignalBus.technique_executed.emit(StringName(result.get("actor_id", "ruan_macacao")), StringName(result.get("technique_id", "unknown")))
+		SignalBus.technique_executed.emit(StringName(result.get("actor_id", CombatManager.player_id)), StringName(result.get("technique_id", "unknown")))
 	if SignalBus.has_signal("tecnica_executada"):
-		SignalBus.tecnica_executada.emit(StringName(result.get("actor_id", "ruan_macacao")), StringName(result.get("technique_id", "unknown")), bool(result.get("success", false)))
+		SignalBus.tecnica_executada.emit(StringName(result.get("actor_id", CombatManager.player_id)), StringName(result.get("technique_id", "unknown")), bool(result.get("success", false)))
 
 func _humanize_message(message: String) -> String:
 	match message:
