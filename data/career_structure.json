@@ -1,5 +1,5 @@
 {
-  "version": "0.2.0",
+  "version": "0.3.0",
   "title": "Cria do Tatame - Pressao",
   "protagonist": "ruan_macacao",
   "career_goal": "Da força bruta ao legado: tornar-se referencia do Baixo Sul sem perder a honra.",
@@ -54,11 +54,8 @@
     }
   ],
   "endings": [
-    {"id": "honra", "name": "Final da Honra", "requirements": {"honra_min": 80, "sombra_max": 35}},
-    {"id": "hype", "name": "Final do Hype", "requirements": {"hype_min": 85, "honra_min": 40}},
-    {"id": "sombra", "name": "Final da Sombra", "requirements": {"sombra_min": 80}},
-    {"id": "dupla_face", "name": "Final Dupla Face", "requirements": {"hype_min": 60, "sombra_min": 60, "honra_min": 50}},
-    {"id": "raiz_eterna", "name": "Final Raiz Eterna", "requirements": {"honra_min": 85, "legado_min": 85, "moral_min": 75}}
+    {"id": "honra_alta", "name": "Final da Honra Alta", "requirements": {"honra_min": 70}},
+    {"id": "honra_baixa", "name": "Final da Honra Baixa", "requirements": {"honra_max": 69}}
   ],
   "weekly_loop": {
     "monday": ["treino_base", "dialogo_dende"],
@@ -76,6 +73,6 @@
     "Cria Live reage a cada escolha importante",
     "sponsors oferecem bonus com tradeoffs morais",
     "mapa mostra proximo objetivo sempre visivel",
-    "finais dependem da reputacao acumulada"
+    "finais dependem apenas da honra acumulada"
   ]
 }
