@@ -207,6 +207,26 @@ func _run() -> void:
 	_check(str(hud.get_node("Panel/Layout/Header/Clash").text) == "DEFESA ENVIADA", "timeout update does not erase submitted feedback")
 	hud.call("close_defense_window")
 
+	# Nonfinite timer values must fail closed rather than leaving an infinite
+	# reaction open or rendering NaN/Inf on the HUD.
+	for bad_seconds in [NAN, INF, -INF]:
+		var before_bad := selected.size()
+		hud.call("open_defense_window", [{"id": "invalid_timer", "name": "Frame"}], bad_seconds)
+		_check(first.disabled and bool(hud.get("_defense_choice_submitted")), "nonfinite opening deadline disables touch: %s" % bad_seconds)
+		_check(str(hud.get_node("Panel/Layout/Header/Clash").text) == "JANELA ENCERRADA", "nonfinite opening deadline displays expiry")
+		first.pressed.emit()
+		hud.call("_unhandled_input", expired_key)
+		_check(selected.size() == before_bad, "nonfinite opening deadline rejects touch and keyboard")
+		hud.call("close_defense_window")
+		hud.call("open_defense_window", [{"id": "invalid_tick", "name": "Base"}], 1.0)
+		_check(not first.disabled, "valid reaction opens before invalid countdown")
+		hud.call("set_defense_window_remaining", bad_seconds)
+		_check(first.disabled and bool(hud.get("_defense_choice_submitted")), "nonfinite countdown expires active reaction")
+		first.pressed.emit()
+		hud.call("_unhandled_input", expired_key)
+		_check(selected.size() == before_bad, "nonfinite countdown rejects touch and keyboard")
+		hud.call("close_defense_window")
+
 	# The arena is the final consumer of the shared defense signal. A stale or
 	# synthetic SignalBus event must not commit a choice absent from this attack.
 	# Instantiate without adding to the tree: no combat start, save or scene swap.
