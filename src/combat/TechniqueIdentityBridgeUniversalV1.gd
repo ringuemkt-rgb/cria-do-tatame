@@ -53,7 +53,7 @@ func resolve(technique_id: String, legacy_from: String = "") -> Dictionary:
 		return {"ok": false, "reason": "legacy_state_mismatch", "legacy_id": technique_id}
 	var candidate_id := str(row.get("bjj_kg_id", ""))
 	var confidence := str(row.get("confidence", "UNMAPPED"))
-	var semantic_delta := row.get("known_semantic_delta", null)
+	var semantic_delta = row.get("known_semantic_delta", null)
 	return {
 		"ok": true,
 		"legacy_id": technique_id,

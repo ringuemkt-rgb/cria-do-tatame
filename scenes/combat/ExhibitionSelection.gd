@@ -91,7 +91,7 @@ func _create_interface() -> void:
 func _populate_fighters() -> void:
 	player_select.clear()
 	opponent_select.clear()
-	var names := profiles.fighter_ids()
+	var names: Array[String] = profiles.fighter_ids()
 	for id in names:
 		var entry: Dictionary = profiles.profile(id)
 		var label := str(entry.get("display_name", id))

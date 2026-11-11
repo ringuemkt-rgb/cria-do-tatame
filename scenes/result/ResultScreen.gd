@@ -21,8 +21,11 @@ func _connect_buttons() -> void:
 		if not cria_button.pressed.is_connected(_on_cria_live_pressed):
 			cria_button.pressed.connect(_on_cria_live_pressed)
 
+func _result_data() -> Dictionary:
+	return CombatManager.last_result if bool(CombatManager.is_exhibition) else WorldState.last_combat_result
+
 func _update_result() -> void:
-	var data: Dictionary = WorldState.last_combat_result
+	var data: Dictionary = _result_data()
 	var winner := str(data.get("winner", ""))
 	var draw := bool(data.get("draw", false)) or winner == ""
 	var exhibition := bool(data.get("exhibition", false))
@@ -61,7 +64,7 @@ func _humanize_method(method: String) -> String:
 	return method.replace("_", " ").capitalize()
 
 func _commit_post_combat_progression() -> void:
-	if bool(WorldState.last_combat_result.get("exhibition", false)):
+	if bool(_result_data().get("exhibition", false)):
 		return
 	if _progression_committed:
 		return

@@ -50,9 +50,9 @@ jobs:
         run: |
           set -euxo pipefail
           curl --fail -L --retry 3 -o godot.zip \
-            https://github.com/godotengine/godot/releases/download/\${{ matrix.engine }}-stable/Godot_v\${{ matrix.engine }}-stable_linux.x86_64.zip
+            https://github.com/godotengine/godot/releases/download/${{ matrix.engine }}-stable/Godot_v${{ matrix.engine }}-stable_linux.x86_64.zip
           unzip -q godot.zip
-          mv Godot_v\${{ matrix.engine }}-stable_linux.x86_64 godot
+          mv Godot_v${{ matrix.engine }}-stable_linux.x86_64 godot
           chmod +x godot
       - name: Import and parse all resources
         shell: bash
@@ -86,6 +86,6 @@ jobs:
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: Cria-Universal-Combat-\${{ matrix.engine }}-logs
+          name: Cria-Universal-Combat-${{ matrix.engine }}-logs
           path: reports/universal_combat/
           if-no-files-found: warn

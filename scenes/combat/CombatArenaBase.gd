@@ -412,7 +412,7 @@ func _on_technique_resolved(result) -> void:
 		var name_text: String = str(technique.get("nome", technique.get("name", technique_id)))
 		var message: String = str(result.get("message", "sucesso" if result.get("success", false) else "defendido"))
 		var actor_id := str(result.get("actor_id", "ruan_macacao"))
-		var actor_name := ruan_placeholder.display_name if actor_id == CombatManager.player_id else davi_placeholder.display_name
+		var actor_name: String = str(ruan_placeholder.display_name) if actor_id == CombatManager.player_id else str(davi_placeholder.display_name)
 		$Panel/Message.text = "%s • %s: %s" % [actor_name, name_text, _humanize_message(message)]
 	if SignalBus.has_signal("technique_executed"):
 		SignalBus.technique_executed.emit(StringName(result.get("actor_id", "ruan_macacao")), StringName(result.get("technique_id", "unknown")))
