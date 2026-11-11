@@ -1,5 +1,5 @@
 {
-  "version": "0.4.0",
+  "version": "0.5.0",
   "language": "pt-BR",
   "active_faction_ids": ["ALE", "LEM", "NTM"],
   "design_note": "As facções são 100% ficcionais. Crime e corrupção aparecem como consequência narrativa, nunca como tutorial operacional ou glorificação.",
@@ -73,7 +73,7 @@
       "tagline": "O Olho Tudo Vê, o Tatame Tudo Sabe",
       "colors": ["roxo", "vermelho", "dourado"],
       "symbol": "olho_ficcional_e_mao_abstrata",
-      "territories": ["colonia_nishimura", "ferro_velho_da_lapa", "beco_do_engenho"],
+      "territories": ["colonia_nishiuchi", "ferro_velho_da_lapa", "beco_do_engenho"],
       "description": "Informação, observação de luta, arquivos, rumores e poder oculto.",
       "system_role": "inteligencia_e_previsao"
     },
