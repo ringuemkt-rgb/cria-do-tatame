@@ -96,6 +96,14 @@ func _run() -> void:
 	# A deck update must not replace reaction buttons before the window closes.
 	hud.call("_on_hand_changed", [], "")
 	_check(str(first.get_meta("card_id", "")) == "defesa_frame_qa", "defense survives ordinary hand refresh")
+	# A queued touch event after scene hide must not submit a defense.
+	hud.hide()
+	var before_hidden_touch := selected.size()
+	first.pressed.emit()
+	hud.call("_on_card_pressed", 0)
+	_check(selected.size() == before_hidden_touch, "hidden HUD rejects queued touch and direct button callbacks")
+	hud.show()
+	_check(not first.disabled, "showing HUD preserves valid reaction choice")
 	first.pressed.emit()
 	_check(selected.size() == 1 and selected[0] == "defesa_frame_qa", "first press emits one defense")
 	_check(first.disabled and third.disabled, "all defense buttons lock after selection")
