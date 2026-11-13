@@ -95,6 +95,10 @@ func _on_hand_changed(hand: Array, selected_card_id: String) -> void:
 		button.modulate = Color("ffd45a") if card_id == selected_card_id else Color.WHITE
 
 func _on_card_pressed(index: int) -> void:
+	# Queued Button.pressed events can arrive after the HUD was hidden.
+	# Apply the same visibility gate as keyboard shortcuts.
+	if not is_visible_in_tree():
+		return
 	if index < 0 or index >= card_buttons.size():
 		return
 	# The player turn remains locked while Davi acts. Defense taps are
