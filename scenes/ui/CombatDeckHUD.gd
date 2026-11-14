@@ -188,7 +188,9 @@ func open_defense_window(options: Array, seconds: float) -> void:
 			continue
 		# Treat malformed reaction payloads as unavailable, never as actions.
 		var option: Dictionary = defense_options[index] if typeof(defense_options[index]) == TYPE_DICTIONARY else {}
-		var defense_id := str(option.get("id", ""))
+		var raw_id: Variant = option.get("id", "")
+		# IDs are opaque strings; never turn null, numbers or containers into actions.
+		var defense_id: String = raw_id.strip_edges() if typeof(raw_id) == TYPE_STRING else ""
 		button.text = "DEFESA\n%s" % str(option.get("name", defense_id)).replace("_", " ")
 		button.set_meta("card_id", defense_id)
 		button.disabled = defense_id == ""
