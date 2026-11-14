@@ -1,0 +1,107 @@
+name: CRIA Universal Exhibition Combat V1
+
+on:
+  pull_request:
+    paths:
+      - 'data/combat/fighter_profiles_universal_v1.json'
+      - 'data/combat/technique_identity_bridge_universal_v1.json'
+      - 'src/combat/FighterCombatProfileRegistryV1.gd'
+      - 'src/combat/TechniqueIdentityBridgeUniversalV1.gd'
+      - 'src/combat/DaviAIController.gd'
+      - 'src/animation/CombatPairTimelineV1.gd'
+      - 'src/autoloads/**'
+      - 'scenes/combat/**'
+      - 'scenes/result/ResultScreen.gd'
+      - 'tests/universal_exhibition_smoke.gd'
+      - 'tests/universal_exhibition_scene_smoke.gd'
+      - 'tests/universal_exhibition_matrix_smoke.gd'
+      - 'tests/test_universal_combat_contract_v1.py'
+      - 'tools/ci/validate_universal_combat_v1.py'
+      - '.github/workflows/universal-exhibition-combat-v1.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  static-canon:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Validate all fighters, stats, technique owners and BJJ bridge
+        run: python tools/ci/validate_universal_combat_v1.py
+      - name: Verify candidate-only source contracts
+        run: python -m unittest discover -s tests -p 'test_universal_combat_contract_v1.py' -v
+
+  godot-multifighter:
+    needs: static-canon
+    runs-on: ubuntu-latest
+    timeout-minutes: 22
+    strategy:
+      fail-fast: false
+      matrix:
+        engine: ['4.2.2', '4.3']
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install pinned Godot
+        shell: bash
+        run: |
+          set -euxo pipefail
+          curl --fail -L --retry 3 -o godot.zip \
+            https://github.com/godotengine/godot/releases/download/${{ matrix.engine }}-stable/Godot_v${{ matrix.engine }}-stable_linux.x86_64.zip
+          unzip -q godot.zip
+          mv Godot_v${{ matrix.engine }}-stable_linux.x86_64 godot
+          chmod +x godot
+      - name: Import and parse all resources
+        shell: bash
+        run: |
+          set -o pipefail
+          mkdir -p reports/universal_combat
+          timeout 180 ./godot --headless --editor --path . --import 2>&1 | tee reports/universal_combat/import.log
+          ! grep -Eq 'SCRIPT ERROR|Parse Error|Failed loading resource|Cannot get class' reports/universal_combat/import.log
+      - name: Execute all-roster, AI, shadow bridge, deterministic and campaign-isolation smoke
+        shell: bash
+        run: |
+          set -o pipefail
+          timeout 150 ./godot --headless --path . --script res://tests/universal_exhibition_smoke.gd 2>&1 | tee reports/universal_combat/universal_smoke.log
+          grep -q '\[UniversalExhibition\] PASS' reports/universal_combat/universal_smoke.log
+          ! grep -Eq 'SCRIPT ERROR|Parse Error|Invalid call|^ERROR:' reports/universal_combat/universal_smoke.log
+      - name: Resolve every ordered roster pairing through CombatManager
+        shell: bash
+        run: |
+          set -o pipefail
+          timeout 150 ./godot --headless --path . --script res://tests/universal_exhibition_matrix_smoke.gd 2>&1 | tee reports/universal_combat/roster_matrix.log
+          grep -q '\[UniversalMatrix\] PASS directed_pairs=272' reports/universal_combat/roster_matrix.log
+          ! grep -Eq 'SCRIPT ERROR|Parse Error|Invalid call|^ERROR:' reports/universal_combat/roster_matrix.log
+      - name: Selection UI and actual arena instantiation
+        shell: bash
+        run: |
+          set -o pipefail
+          timeout 120 ./godot --headless --path . --script res://tests/universal_exhibition_scene_smoke.gd 2>&1 | tee reports/universal_combat/exhibition_ui.log
+          grep -q '\[UniversalExhibitionScene\] PASS' reports/universal_combat/exhibition_ui.log
+          ! grep -Eq 'SCRIPT ERROR|Parse Error|Invalid call|^ERROR:' reports/universal_combat/exhibition_ui.log
+      - name: Legacy paired motion regression
+        shell: bash
+        run: |
+          set -o pipefail
+          timeout 150 ./godot --headless --path . --script res://tests/combat_paired_motion_smoke.gd 2>&1 | tee reports/universal_combat/legacy_motion.log
+          grep -q '\[CombatPairedMotion\] PASS' reports/universal_combat/legacy_motion.log
+          ! grep -Eq 'SCRIPT ERROR|Parse Error|Invalid call|^ERROR:' reports/universal_combat/legacy_motion.log
+      - name: Existing combat deterministic safety regression
+        shell: bash
+        run: |
+          set -o pipefail
+          timeout 180 ./godot --headless --path . --script res://tests/combat_action_safety_smoke.gd 2>&1 | tee reports/universal_combat/action_safety.log
+          grep -q '\[CombatActionSafety\] PASS' reports/universal_combat/action_safety.log
+          ! grep -Eq 'SCRIPT ERROR|Parse Error|Invalid call|^ERROR:' reports/universal_combat/action_safety.log
+      - name: Upload logs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: Cria-Universal-Combat-${{ matrix.engine }}-logs
+          path: reports/universal_combat/
+          if-no-files-found: warn

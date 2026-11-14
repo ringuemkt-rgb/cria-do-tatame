@@ -2,6 +2,7 @@ extends Control
 
 const HUB_SCENE := "res://scenes/hubs/TerreiroDaLuta.tscn"
 const CRIA_LIVE_SCENE := "res://scenes/ui/CriaLiveUI.tscn"
+const EXHIBITION_SCENE := "res://scenes/combat/ExhibitionSelection.tscn"
 
 var _leaving := false
 var _progression_committed := false
@@ -20,11 +21,15 @@ func _connect_buttons() -> void:
 		if not cria_button.pressed.is_connected(_on_cria_live_pressed):
 			cria_button.pressed.connect(_on_cria_live_pressed)
 
+func _result_data() -> Dictionary:
+	return CombatManager.last_result if bool(CombatManager.is_exhibition) else WorldState.last_combat_result
+
 func _update_result() -> void:
-	var data: Dictionary = WorldState.last_combat_result
+	var data: Dictionary = _result_data()
 	var winner := str(data.get("winner", ""))
 	var draw := bool(data.get("draw", false)) or winner == ""
-	var won := not draw and winner == WorldState.player_id
+	var exhibition := bool(data.get("exhibition", false))
+	var won := not draw and winner == (CombatManager.player_id if exhibition else WorldState.player_id)
 	var title := "EMPATE" if draw else ("VITORIA" if won else "DERROTA")
 	var method := _humanize_method(str(data.get("method", "pontos")))
 	if has_node("Panel/Result"):
@@ -33,14 +38,16 @@ func _update_result() -> void:
 		var final_state := str(data.get("final_state", "RESET")).replace("_", " ")
 		$Panel/Details.text = "O combate terminou por %s. Estado final: %s." % [method.to_lower(), final_state]
 	if has_node("Panel/Reward"):
-		if draw:
+		if exhibition:
+			$Panel/Reward.text = "EXIBIÇÃO • Sem XP, dinheiro, progressão ou alteração do save"
+		elif draw:
 			$Panel/Reward.text = "Empate • sem alteracao de vitorias/derrotas"
 		elif won:
 			$Panel/Reward.text = "+ R$ 200 • Honra +5 • Hype +3 • Vitorias: %d" % WorldState.fights_won
 		else:
 			$Panel/Reward.text = "Honra -3 • Hype -2 • Derrotas: %d" % WorldState.fights_lost
 	if has_node("Panel/CriaLive"):
-		$Panel/CriaLive.disabled = data.is_empty()
+		$Panel/CriaLive.disabled = data.is_empty() or exhibition
 
 func _humanize_method(method: String) -> String:
 	match method:
@@ -57,6 +64,8 @@ func _humanize_method(method: String) -> String:
 	return method.replace("_", " ").capitalize()
 
 func _commit_post_combat_progression() -> void:
+	if bool(_result_data().get("exhibition", false)):
+		return
 	if _progression_committed:
 		return
 	_progression_committed = true
@@ -65,6 +74,8 @@ func _commit_post_combat_progression() -> void:
 		push_warning("[ResultScreen] O dia avancou, mas o save pos-combate falhou.")
 
 func _on_cria_live_pressed() -> void:
+	if bool(WorldState.last_combat_result.get("exhibition", false)):
+		return
 	if _leaving:
 		return
 	_leaving = true
@@ -80,6 +91,12 @@ func _on_back_pressed() -> void:
 	if _leaving:
 		return
 	_leaving = true
+	if bool(WorldState.last_combat_result.get("exhibition", false)):
+		var exhibition_error := get_tree().change_scene_to_file(EXHIBITION_SCENE)
+		if exhibition_error != OK:
+			_leaving = false
+			push_error("[ResultScreen] Falha ao retornar à seleção: %s" % error_string(exhibition_error))
+		return
 	_commit_post_combat_progression()
 	var error := get_tree().change_scene_to_file(HUB_SCENE)
 	if error != OK:

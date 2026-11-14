@@ -2,6 +2,7 @@ extends Control
 
 const COMBAT_SCENE := "res://scenes/combat/CombatArenaBase.tscn"
 const TERREIRO_SCENE := "res://scenes/hubs/TerreiroDaLuta.tscn"
+const EXHIBITION_SCENE := "res://scenes/combat/ExhibitionSelection.tscn"
 
 @export var opponent_id := "davi_relampago"
 @export var arena_id := "arena_do_dique"
@@ -12,6 +13,7 @@ var _current_plan: Dictionary = {}
 func _ready() -> void:
 	$Root/Footer/Confirm.pressed.connect(_on_confirm)
 	$Root/Footer/Back.pressed.connect(_on_back)
+	$Root/Footer/Exhibition.pressed.connect(_on_exhibition)
 	$Root/TinkerPanel/Body/ListenPlan.pressed.connect(_on_listen_plan)
 	$Root/GameRow/Gameplan/Body/SavePreset.pressed.connect(_on_save_preset)
 	$Root/GameRow/Gameplan/Body/LoadPreset.pressed.connect(_on_load_preset)
@@ -152,3 +154,9 @@ func _on_back() -> void:
 
 func _set_status(message: String) -> void:
 	$Root/Footer/Status.text = message
+
+func _on_exhibition() -> void:
+	CombatManager.clear_combat_v2_plan()
+	var result: Error = get_tree().change_scene_to_file(EXHIBITION_SCENE)
+	if result != OK:
+		_set_status("Falha ao abrir seleção: " + error_string(result))

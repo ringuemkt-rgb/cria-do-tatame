@@ -11,8 +11,11 @@ signal paired_motion_finished(technique_id: String, actor_id: String)
 const CONTRACT_PATH := "res://data/animation/combat_pair_preview_v1.json"
 const PHASES := ["anticipation", "entry", "establish", "stabilize", "response", "recovery"]
 const POSES := ["idle", "stance", "guard", "grip", "shot", "sprawl", "top", "bottom", "pass", "mount", "submission", "defense", "impact", "victory"]
+## Legacy internal ruan/davi scene-side labels mean player/opponent for ANY pair.
 var ruan: Node2D
 var davi: Node2D
+var player_fighter_id := "ruan_macacao"
+var opponent_fighter_id := "davi_relampago"
 var config: Dictionary = {}
 var busy := false
 var last_sequence: Array[Dictionary] = []
@@ -33,10 +36,12 @@ func _ready() -> void:
 func configure_views(player_view: Node2D, opponent_view: Node2D) -> bool:
 	ruan = player_view
 	davi = opponent_view
+	player_fighter_id = str(player_view.get("fighter_id")) if is_instance_valid(player_view) else ""
+	opponent_fighter_id = str(opponent_view.get("fighter_id")) if is_instance_valid(opponent_view) else ""
 	return is_ready()
 
 func is_ready() -> bool:
-	return not config.is_empty() and is_instance_valid(ruan) and is_instance_valid(davi)
+	return not config.is_empty() and is_instance_valid(ruan) and is_instance_valid(davi) and player_fighter_id != "" and opponent_fighter_id != "" and player_fighter_id != opponent_fighter_id
 
 func is_busy() -> bool:
 	return busy
@@ -119,8 +124,8 @@ func _apply_poses(roles: Dictionary) -> void:
 func plan_for(technique_id: String, actor_id: String, accepted: bool, success: bool, from_state: String, to_state: String) -> Dictionary:
 	if not is_ready() or not accepted:
 		return {}
-	var is_player := actor_id == "ruan_macacao"
-	if not is_player and actor_id != "davi_relampago":
+	var is_player := actor_id == player_fighter_id
+	if not is_player and actor_id != opponent_fighter_id:
 		return {}
 	var profiles: Dictionary = config["profiles"]
 	var chosen := str(config.get("technique_profiles", {}).get(technique_id, config.get("fallback_profile", "grip")))
@@ -173,6 +178,8 @@ func plan_for(technique_id: String, actor_id: String, accepted: bool, success: b
 	return {
 		"technique_id": technique_id, "actor_id": actor_id, "profile": chosen,
 		"accepted": true, "success": success, "authoritative": false,
+		"player_fighter_id": player_fighter_id, "opponent_fighter_id": opponent_fighter_id,
+		"retarget_status": "PROCEDURAL_PREVIEW_NOT_BIOMECHANICALLY_APPROVED",
 		"shipping": false, "phases": steps
 	}
 

@@ -203,6 +203,8 @@ func _on_day_advanced(_day_name, _week_number) -> void:
 	_sync_legacy_relations()
 
 func _on_combat_finished(result) -> void:
+	if typeof(result) == TYPE_DICTIONARY and bool(result.get("exhibition", false)):
+		return
 	if typeof(result) != TYPE_DICTIONARY:
 		return
 	var opponent_id := str(result.get("opponent_id", result.get("rival_id", "")))
