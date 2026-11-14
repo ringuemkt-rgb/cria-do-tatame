@@ -8,10 +8,12 @@ on:
       - 'src/autoloads/DeckManager.gd'
       - 'scenes/ui/SkillTreeScreen.*'
       - 'scenes/ui/DeckBuilder.gd'
+      - 'scenes/ui/DeckBuilder.tscn'
       - 'scenes/ui/DeckSlot.gd'
       - 'scenes/hubs/TerreiroDaLuta.*'
       - 'data/progression/skill_tree_playable_slice_v1.json'
       - 'tests/skill_tree_deck_smoke.gd'
+      - 'tests/deck_builder_mobile_touch_smoke.gd'
       - '.github/workflows/skill-tree-deck-v1.yml'
   workflow_dispatch:
 
@@ -22,14 +24,19 @@ jobs:
   gameplay:
     runs-on: ubuntu-latest
     timeout-minutes: 20
+    strategy:
+      fail-fast: false
+      matrix:
+        godot: ['4.2.2', '4.3']
     steps:
       - uses: actions/checkout@v4
-      - name: Install Godot 4.2.2
+      - name: Install Godot ${{ matrix.godot }}
         run: |
           set -euo pipefail
-          curl --retry 3 -L --fail -o godot.zip https://github.com/godotengine/godot/releases/download/4.2.2-stable/Godot_v4.2.2-stable_linux.x86_64.zip
+          version="${{ matrix.godot }}"
+          curl --retry 3 -L --fail -o godot.zip "https://github.com/godotengine/godot/releases/download/${version}-stable/Godot_v${version}-stable_linux.x86_64.zip"
           unzip -q godot.zip
-          mv Godot_v4.2.2-stable_linux.x86_64 godot
+          mv "Godot_v${version}-stable_linux.x86_64" godot
           chmod +x godot
       - name: Import and parse
         run: |
@@ -42,6 +49,12 @@ jobs:
           ./godot --headless --path . --script res://tests/skill_tree_deck_smoke.gd 2>&1 | tee skill_deck_smoke.log
           grep -q '\[SkillDeckSmoke\].*failures=0' skill_deck_smoke.log
           if grep -E 'SCRIPT ERROR|Parse Error|ERROR:' skill_deck_smoke.log; then exit 1; fi
+      - name: Mobile deck touch layout regression
+        run: |
+          set -euo pipefail
+          ./godot --headless --path . --script res://tests/deck_builder_mobile_touch_smoke.gd 2>&1 | tee deck_mobile_touch_smoke.log
+          grep -q '\[DeckMobileTouch\].*failures=0' deck_mobile_touch_smoke.log
+          if grep -E 'SCRIPT ERROR|Parse Error|ERROR:' deck_mobile_touch_smoke.log; then exit 1; fi
       - name: Main runtime regression
         run: |
           set -euo pipefail
@@ -52,9 +65,10 @@ jobs:
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: skill-tree-deck-v1-logs
+          name: skill-tree-deck-v1-logs-${{ matrix.godot }}
           path: |
             godot_import.log
             skill_deck_smoke.log
+            deck_mobile_touch_smoke.log
             runtime_smoke.log
           if-no-files-found: warn
