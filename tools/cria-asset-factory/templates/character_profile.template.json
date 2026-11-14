@@ -1,0 +1,20 @@
+{
+  "shipping": false,
+  "qa_status": "pending",
+  "character_id": "ruan_macacao",
+  "identity_lock": "silverback_golden_patch",
+  "hero_proportions": true,
+  "gi": [
+    "#EDE6D6",
+    "#1E3A5F"
+  ],
+  "nogi": "black_rashguard_with_faction_color_and_shorts",
+  "outline_px": [
+    1,
+    2
+  ],
+  "pivot": [
+    64,
+    96
+  ]
+}

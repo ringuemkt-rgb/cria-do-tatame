@@ -1,0 +1,13 @@
+{
+  "shipping": false,
+  "qa_status": "pending",
+  "origin": "UNKNOWN",
+  "license_id": "UNKNOWN",
+  "human_approved": false,
+  "commercial_use_cleared": false,
+  "asset_sha256": null,
+  "pivot": [
+    64,
+    96
+  ]
+}

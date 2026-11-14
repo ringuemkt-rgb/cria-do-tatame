@@ -1,0 +1,50 @@
+{
+  "version": "1.0.0",
+  "source_of_truth": "data/techniques.json",
+  "authority": "candidate_overlay_only",
+  "shipping": false,
+  "qa_status": "pending",
+  "count": 10,
+  "techniques": [
+    {
+      "id": "baiana",
+      "path": "baiana.json"
+    },
+    {
+      "id": "sprawl",
+      "path": "sprawl.json"
+    },
+    {
+      "id": "corte_joelho",
+      "path": "corte_joelho.json"
+    },
+    {
+      "id": "raspagem_tesoura",
+      "path": "raspagem_tesoura.json"
+    },
+    {
+      "id": "raspagem_borboleta",
+      "path": "raspagem_borboleta.json"
+    },
+    {
+      "id": "mata_leao",
+      "path": "mata_leao.json"
+    },
+    {
+      "id": "triangulo",
+      "path": "triangulo.json"
+    },
+    {
+      "id": "chave_braco",
+      "path": "chave_braco.json"
+    },
+    {
+      "id": "puxada_guarda",
+      "path": "puxada_guarda.json"
+    },
+    {
+      "id": "torreando",
+      "path": "torreando.json"
+    }
+  ]
+}

@@ -1,0 +1,48 @@
+name: CRIA Asset Factory — transition candidate checks
+
+on:
+  pull_request:
+    paths:
+      - 'tools/cria-asset-factory/**'
+      - 'data/transitions/**'
+      - 'config/art_direction.json'
+      - 'data/techniques.json'
+      - 'data/ai/qwen_pixel_art_profile_v1.json'
+      - '.github/workflows/cria-asset-factory.yml'
+  push:
+    paths:
+      - 'tools/cria-asset-factory/**'
+      - 'data/transitions/**'
+      - 'config/art_direction.json'
+      - 'data/ai/qwen_pixel_art_profile_v1.json'
+      - '.github/workflows/cria-asset-factory.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate-transitions:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Inspect safe offline integrations
+        run: python tools/cria-asset-factory/scripts/bootstrap.py --check
+      - name: Install core in isolated .venv (CPU only, no model downloads)
+        run: python tools/cria-asset-factory/scripts/bootstrap.py --install-core
+      - name: Candidate-only transition/style/anti-duplication gate
+        run: python tools/cria-asset-factory/scripts/quality_gate.py
+      - name: Python unit tests including security/revision integration guards
+        run: tools/cria-asset-factory/.venv/bin/python -m unittest discover -s tools/cria-asset-factory/tests -p 'test_*.py' -v
+      - name: Compile scripts
+        run: python -m compileall -q tools/cria-asset-factory/scripts
+      - name: Generate canonical Baiana job (JSON only)
+        run: |
+          python tools/cria-asset-factory/scripts/prepare_candidate_job.py \
+            --id baiana --character ruan_macacao --outfit gi_white \
+            --phase anticipation --out "${RUNNER_TEMP}/cria-baiana-job.json"
+          python -c 'import json,os,pathlib; p=pathlib.Path(os.environ["RUNNER_TEMP"])/"cria-baiana-job.json"; d=json.loads(p.read_text()); assert d["shipping"] is False and d["qa_status"] == "pending" and d["output_status"] == "NOT_GENERATED"'
