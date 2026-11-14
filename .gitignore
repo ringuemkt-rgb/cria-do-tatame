@@ -34,3 +34,7 @@ reports/build/
 reports/runtime_audit/
 *.translation
 .android/
+
+# Local-only Codex/Godot MCP external executable and editor addon
+tools/codex-godot-mcp/.local/
+addons/open_godot_mcp/

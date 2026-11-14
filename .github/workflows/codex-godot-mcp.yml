@@ -1,0 +1,37 @@
+name: Codex Godot MCP local integration — static guard
+
+on:
+  pull_request:
+    paths:
+      - '.codex/**'
+      - 'tools/codex-godot-mcp/**'
+      - 'tests/test_codex_godot_mcp.py'
+      - '.github/workflows/codex-godot-mcp.yml'
+      - '.gitignore'
+  push:
+    paths:
+      - '.codex/**'
+      - 'tools/codex-godot-mcp/**'
+      - 'tests/test_codex_godot_mcp.py'
+      - '.github/workflows/codex-godot-mcp.yml'
+      - '.gitignore'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  static-contract:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Compile launcher and installer
+        run: python -m py_compile tools/codex-godot-mcp/install.py tools/codex-godot-mcp/launch_server.py
+      - name: Run static safety tests (no GPU, no Godot addon installation)
+        run: python -m unittest discover -s tests -p 'test_codex_godot_mcp.py' -v
+      - name: Read-only environment diagnostic
+        run: python tools/codex-godot-mcp/install.py --check
