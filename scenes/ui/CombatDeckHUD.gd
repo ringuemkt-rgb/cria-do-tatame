@@ -169,7 +169,7 @@ func _on_v2_hand_changed(hand: Array) -> void:
 		# A malformed hand entry must never become a selectable technique ID.
 		# Preserve slot indices: shifting entries would desynchronize touch/keys.
 		var raw_id: Variant = v2_hand[index]
-		var technique_id := raw_id.strip_edges() if typeof(raw_id) == TYPE_STRING else ""
+		var technique_id: String = (raw_id as String).strip_edges() if typeof(raw_id) == TYPE_STRING else ""
 		if technique_id == "":
 			button.text = "—"
 			button.disabled = true
