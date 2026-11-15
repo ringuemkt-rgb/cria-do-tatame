@@ -76,6 +76,13 @@ func _run() -> void:
 	hud.call("_on_hand_changed", [legacy_card], "")
 	_check(str(legacy_button.get_meta("card_id", "")) == "v2_technique_qa", "late legacy hand cannot replace V2 technique")
 	_check(hud.get("v2_hand") == ["v2_technique_qa"], "V2 hand remains authoritative")
+	# Malformed V2 hand entries remain disabled in their original slots.
+	hud.call("_on_v2_hand_changed", [null, 17, "   ", ["fake"], "v2_technique_qa"])
+	for slot in range(1, 5):
+		var invalid_button := hud.get_node("Panel/Layout/Cards/Card%d" % slot) as Button
+		_check(invalid_button.disabled and str(invalid_button.get_meta("card_id", "")) == "", "malformed V2 hand slot %d fails closed" % slot)
+	var fifth := hud.get_node("Panel/Layout/Cards/Card5") as Button
+	_check(str(fifth.get_meta("card_id", "")) == "v2_technique_qa", "valid fifth V2 technique retains original slot")
 
 	hud.call("set_actions_enabled", false)
 	hud.call("open_defense_window", [
