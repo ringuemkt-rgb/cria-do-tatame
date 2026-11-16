@@ -80,10 +80,13 @@ func _on_hand_changed(hand: Array, selected_card_id: String) -> void:
 			button.disabled = true
 			button.set_meta("card_id", "")
 			continue
-		var card: Dictionary = hand[index]
-		var card_id := str(card.get("id", ""))
-		var cost: Dictionary = card.get("activation_cost", {})
-		var level := int(card.get("level", 1))
+		var card: Dictionary = hand[index] if typeof(hand[index]) == TYPE_DICTIONARY else {}
+		var raw_id: Variant = card.get("id", "")
+		var card_id: String = raw_id.strip_edges() if typeof(raw_id) == TYPE_STRING else ""
+		var raw_cost: Variant = card.get("activation_cost", {})
+		var cost: Dictionary = raw_cost if typeof(raw_cost) == TYPE_DICTIONARY else {}
+		var raw_level: Variant = card.get("level", 1)
+		var level: int = clampi(int(raw_level), 0, 5) if typeof(raw_level) == TYPE_INT else 1
 		button.text = "%s\n%s  F%d G%d" % [
 			str(card.get("name", "Técnica")),
 			"◆".repeat(level),
@@ -91,7 +94,7 @@ func _on_hand_changed(hand: Array, selected_card_id: String) -> void:
 			int(cost.get("gas", 0))
 		]
 		button.set_meta("card_id", card_id)
-		button.disabled = not _actions_enabled or not _is_compatible(card)
+		button.disabled = card_id.is_empty() or not _actions_enabled or not _is_compatible(card)
 		button.modulate = Color("ffd45a") if card_id == selected_card_id else Color.WHITE
 
 func _on_card_pressed(index: int) -> void:
