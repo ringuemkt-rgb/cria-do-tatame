@@ -43,6 +43,20 @@ func _run() -> void:
 	_check(emitted[0] == 0, "same hub emits no travel completion")
 	_check(not bool(world_map.call("travel_to", "salvador").get("ok", false)), "Salvador remains non-playable")
 	_check(not bool(world_map.call("travel_to", "itacare").get("ok", false)), "Itacare remains non-playable")
+	# A legacy save may retain Salvador in historical visits, but cannot
+	# make it the current playable hub or an unlocked destination.
+	world_map.call("load_from_dict", {
+		"current_hub": "salvador",
+		"visited_hubs": ["salvador", "itubera"],
+		"unlocked_hubs": ["salvador", "itubera"],
+		"travel_log": [{"hub": "salvador", "week": 1, "day": "segunda", "cost": 0}]
+	})
+	_check(str(world_map.get("current_hub")) == "itubera", "legacy Salvador current hub recovers to Itubera")
+	_check(str(world.get("current_hub")) == "itubera", "WorldState follows recovered Itubera hub")
+	_check(world_map.get("visited_hubs").has("salvador"), "legacy Salvador visit history remains readable")
+	_check(not world_map.get("unlocked_hubs").has("salvador"), "legacy Salvador unlock is removed")
+	_check(world_map.get("travel_log").size() == 1, "historical travel log is retained")
+	_check(not bool(world_map.call("travel_to", "salvador").get("ok", false)), "legacy history never authorizes Salvador travel")
 	if bus.has_signal("world_travel_completed"):
 		bus.disconnect("world_travel_completed", listener)
 	world.call("load_from_dict", original_world)
