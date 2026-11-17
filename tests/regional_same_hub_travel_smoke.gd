@@ -57,6 +57,14 @@ func _run() -> void:
 	_check(not world_map.get("unlocked_hubs").has("salvador"), "legacy Salvador unlock is removed")
 	_check(world_map.get("travel_log").size() == 1, "historical travel log is retained")
 	_check(not bool(world_map.call("travel_to", "salvador").get("ok", false)), "legacy history never authorizes Salvador travel")
+	# Resetting the map for a new campaign must synchronize both autoloads.
+	world.set("current_hub", "salvador")
+	world_map.call("reset")
+	_check(str(world_map.get("current_hub")) == "itubera", "reset restores regional hub to Itubera")
+	_check(str(world.get("current_hub")) == "itubera", "reset synchronizes WorldState to Itubera")
+	_check(world_map.get("visited_hubs") == ["itubera"], "reset clears legacy visit history")
+	_check(world_map.get("travel_log").is_empty(), "reset clears previous campaign travel log")
+	_check(not world_map.get("unlocked_hubs").has("salvador"), "reset never unlocks external Salvador")
 	if bus.has_signal("world_travel_completed"):
 		bus.disconnect("world_travel_completed", listener)
 	world.call("load_from_dict", original_world)
