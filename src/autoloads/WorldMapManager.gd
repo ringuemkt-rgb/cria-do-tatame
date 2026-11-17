@@ -14,6 +14,8 @@ func reset() -> void:
 	visited_hubs = ["itubera"]
 	travel_log = []
 	unlocked_hubs = PLAYABLE_HUB_IDS.duplicate()
+	# A new campaign must not inherit the previous save's hub in WorldState.
+	WorldState.current_hub = current_hub
 
 func get_hub_data(hub_id: String) -> Dictionary:
 	return DataRegistry.hubs_dense.get("hubs", {}).get(hub_id, {})
