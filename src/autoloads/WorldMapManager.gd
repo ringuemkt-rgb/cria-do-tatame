@@ -29,7 +29,12 @@ func travel_to(hub_id: String) -> Dictionary:
 	if hub_id == current_hub:
 		return {"ok": true, "message": "Voce ja esta neste destino.", "hub": get_hub_data(hub_id), "already_here": true}
 	var hub := get_hub_data(hub_id)
-	var cost := int(hub.get("travel_cost", 0))
+	# A malformed or negative cost must never credit money to the player.
+	# Reject it before mutating the campaign, calendar or save.
+	var raw_cost: Variant = hub.get("travel_cost", 0)
+	if typeof(raw_cost) != TYPE_INT or raw_cost < 0:
+		return {"ok": false, "message": "Custo de viagem invalido."}
+	var cost: int = raw_cost
 	if WorldState.money < cost:
 		return {"ok": false, "message": "Dinheiro insuficiente para viajar."}
 	WorldState.money -= cost
