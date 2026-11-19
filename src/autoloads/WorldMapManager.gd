@@ -21,6 +21,31 @@ func get_hub_data(hub_id: String) -> Dictionary:
 func can_travel_to(hub_id: String) -> bool:
 	return PLAYABLE_HUB_IDS.has(hub_id) and unlocked_hubs.has(hub_id) and not get_hub_data(hub_id).is_empty()
 
+# Read-only preflight for atlas/destination UI. No coordinates or routes are
+# inferred; values come exclusively from the canonical hubs_dense contract.
+func preview_travel_to(hub_id: String) -> Dictionary:
+	if not can_travel_to(hub_id):
+		return {"ok": false, "reason": "unavailable", "message": "Destino indisponivel."}
+	var hub: Dictionary = get_hub_data(hub_id)
+	if hub_id == current_hub:
+		return {"ok": true, "already_here": true, "hub_id": hub_id, "name": str(hub.get("name", hub_id)), "cost": 0, "hours": 0, "advances_day": false, "affordable": true}
+	var cost_value: Variant = hub.get("travel_cost", null)
+	var hours_value: Variant = hub.get("travel_hours", null)
+	if typeof(cost_value) != TYPE_INT or cost_value < 0 or typeof(hours_value) != TYPE_INT or hours_value < 0:
+		return {"ok": false, "reason": "invalid_travel_data", "message": "Dados de viagem invalidos."}
+	var threshold_value: Variant = DataRegistry.hubs_dense.get("travel_rules", {}).get("day_advance_threshold_hours", 8)
+	var threshold: int = threshold_value if typeof(threshold_value) == TYPE_INT and threshold_value >= 0 else 8
+	return {
+		"ok": true,
+		"already_here": false,
+		"hub_id": hub_id,
+		"name": str(hub.get("name", hub_id)),
+		"cost": cost_value,
+		"hours": hours_value,
+		"advances_day": hours_value >= threshold,
+		"affordable": WorldState.money >= cost_value
+	}
+
 func travel_to(hub_id: String) -> Dictionary:
 	if not can_travel_to(hub_id):
 		return {"ok": false, "message": "Destino indisponivel."}
