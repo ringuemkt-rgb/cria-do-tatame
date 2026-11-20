@@ -4,6 +4,9 @@ const HUB_SCENE := "res://scenes/hubs/TerreiroDaLuta.tscn"
 
 # Lock before the world mutation: repeated Android taps must not charge twice.
 var _travel_pending := false
+var _confirmation_open := false
+var _selected_destination := ""
+var _travel_dialog: ConfirmationDialog
 
 @onready var life_layer: Control = $WorldMapLifeLayer
 @onready var status_label: Label = $HUD/LeftPanel/Status
@@ -26,6 +29,11 @@ func _ready() -> void:
 	$HUD/RightPanel/Back.pressed.connect(func(): get_tree().change_scene_to_file(HUB_SCENE))
 	life_layer.page_changed.connect(_on_page_changed)
 	life_layer.node_focused.connect(_on_node_focused)
+	_travel_dialog = ConfirmationDialog.new()
+	_travel_dialog.title = "Confirmar viagem regional"
+	_travel_dialog.confirmed.connect(_confirm_travel)
+	_travel_dialog.canceled.connect(_cancel_travel)
+	add_child(_travel_dialog)
 	_update_status()
 
 func _connect(path: String, hub_id: String) -> void:
@@ -33,19 +41,55 @@ func _connect(path: String, hub_id: String) -> void:
 		get_node(path).pressed.connect(_on_travel_pressed.bind(hub_id))
 
 func _on_travel_pressed(hub_id: String) -> void:
-	if _travel_pending:
+	if _travel_pending or _confirmation_open:
 		return
 	if hub_id not in ["itubera", "zambiapunga", "camamu_manguezal"]:
 		message_label.text = "Fora do circuito regional jogável nesta etapa."
 		return
-	# Validate the destination scene before WorldMapManager debits currency,
-	# advances time, writes a save or broadcasts the travel event.
-	if WorldMapManager.can_travel_to(hub_id):
-		var hub: Dictionary = WorldMapManager.get_hub_data(hub_id)
-		var entry_scene := str(hub.get("entry_scene", HUB_SCENE))
-		if entry_scene == "" or not ResourceLoader.exists(entry_scene):
-			message_label.text = "Cena regional indisponível. Nenhum valor debitado."
-			return
+	var preview: Dictionary = WorldMapManager.preview_travel_to(hub_id)
+	if not bool(preview.get("ok", false)):
+		message_label.text = str(preview.get("message", "Destino indisponível."))
+		return
+	if bool(preview.get("already_here", false)):
+		message_label.text = "Você já está neste destino."
+		return
+	if not bool(preview.get("affordable", false)):
+		message_label.text = "Saldo insuficiente para esta viagem."
+		return
+	var hub: Dictionary = WorldMapManager.get_hub_data(hub_id)
+	var entry_scene := str(hub.get("entry_scene", HUB_SCENE))
+	if entry_scene == "" or not ResourceLoader.exists(entry_scene):
+		message_label.text = "Cena regional indisponível. Nenhum valor debitado."
+		return
+	_selected_destination = hub_id
+	_confirmation_open = true
+	_travel_dialog.dialog_text = "%s\\nCusto: R$ %d • Duração: %d h%s\\nConfirmar deslocamento?" % [
+		str(preview.get("name", hub_id)), int(preview.get("cost", 0)),
+		int(preview.get("hours", 0)),
+		" • avança o dia" if bool(preview.get("advances_day", false)) else ""
+	]
+	_travel_dialog.popup_centered()
+
+func _cancel_travel() -> void:
+	_confirmation_open = false
+	_selected_destination = ""
+
+func _confirm_travel() -> void:
+	if not _confirmation_open or _travel_pending:
+		return
+	var hub_id := _selected_destination
+	_cancel_travel()
+	# Recheck the live cost, funds, and destination scene after confirmation:
+	# preview is informational and does not reserve a transaction.
+	var preview: Dictionary = WorldMapManager.preview_travel_to(hub_id)
+	if not bool(preview.get("ok", false)) or bool(preview.get("already_here", false)) or not bool(preview.get("affordable", false)):
+		message_label.text = "Viagem indisponível ou saldo alterado. Nenhum valor debitado."
+		return
+	var hub: Dictionary = WorldMapManager.get_hub_data(hub_id)
+	var entry_scene := str(hub.get("entry_scene", HUB_SCENE))
+	if entry_scene == "" or not ResourceLoader.exists(entry_scene):
+		message_label.text = "Cena regional indisponível. Nenhum valor debitado."
+		return
 	_travel_pending = true
 	_set_travel_controls_enabled(false)
 	var result: Dictionary = _perform_travel(hub_id)
@@ -61,8 +105,6 @@ func _on_travel_pressed(hub_id: String) -> void:
 	var destination := str(result.get("hub", {}).get("entry_scene", HUB_SCENE))
 	var error: Error = get_tree().change_scene_to_file(destination)
 	if error != OK:
-		# Travel has already been committed and saved. Keep controls locked
-		# instead of charging the player a second time on another tap.
 		message_label.text = "Viagem registrada, mas o destino não abriu. Reabra o jogo para recuperar o save."
 		push_error("[WorldMapScreen] Falha ao abrir destino: %s" % error_string(error))
 
