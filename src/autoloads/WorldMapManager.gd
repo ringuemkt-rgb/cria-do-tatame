@@ -77,7 +77,11 @@ func load_from_dict(data: Dictionary) -> void:
 	unlocked_hubs = ["itubera"]
 	if typeof(previously_unlocked) == TYPE_ARRAY:
 		for hub_id_value in previously_unlocked:
-			var id := str(hub_id_value)
+			# Legacy save payloads must not coerce numbers, arrays or dictionaries
+			# into destination IDs. Only canonical string IDs may unlock travel.
+			if typeof(hub_id_value) != TYPE_STRING:
+				continue
+			var id: String = hub_id_value
 			if PLAYABLE_HUB_IDS.has(id) and not unlocked_hubs.has(id):
 				unlocked_hubs.append(id)
 	WorldState.current_hub = current_hub
