@@ -60,7 +60,8 @@ func get_available_locations() -> Array:
 	return get_hub_data(current_hub).get("locations", [])
 
 func to_dict() -> Dictionary:
-	return {"current_hub": current_hub, "visited_hubs": visited_hubs, "travel_log": travel_log, "unlocked_hubs": unlocked_hubs}
+	# Save payloads must be snapshots, never mutable aliases of live arrays.
+	return {"current_hub": current_hub, "visited_hubs": visited_hubs.duplicate(true), "travel_log": travel_log.duplicate(true), "unlocked_hubs": unlocked_hubs.duplicate(true)}
 
 func load_from_dict(data: Dictionary) -> void:
 	var saved_hub := str(data.get("current_hub", "itubera"))
