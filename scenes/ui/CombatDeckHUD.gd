@@ -193,10 +193,26 @@ func open_defense_window(options: Array, seconds: float) -> void:
 		button.set_meta("card_id", defense_id)
 		button.disabled = defense_id == ""
 		button.modulate = Color.WHITE
+	# The arena owns the deadline. The HUD must not advertise a selectable
+	# defense when its reported window has already expired.
+	if seconds <= 0.0:
+		_expire_defense_window()
 
 func set_defense_window_remaining(seconds: float) -> void:
-	if defense_mode and not _defense_choice_submitted:
-		$Panel/Layout/Header/Clash.text = "JANELA %.1fs" % maxf(0.0, seconds)
+	if not defense_mode or _defense_choice_submitted:
+		return
+	if seconds <= 0.0:
+		_expire_defense_window()
+	else:
+		$Panel/Layout/Header/Clash.text = "JANELA %.1fs" % seconds
+
+func _expire_defense_window() -> void:
+	if not defense_mode or _defense_choice_submitted:
+		return
+	_defense_choice_submitted = true
+	for button in card_buttons:
+		button.disabled = true
+	$Panel/Layout/Header/Clash.text = "JANELA ENCERRADA"
 
 func close_defense_window() -> void:
 	if not defense_mode:
