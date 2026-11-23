@@ -1,0 +1,263 @@
+{
+  "schema_version": "1.0.0",
+  "contract_id": "cria_vehicle_world_travel_v1",
+  "status": "candidate_integration_contract",
+  "shipping": false,
+  "base_branch": "integrate/p0-world-progression-20260912",
+  "authorities": {
+    "travel": "WorldMapManager",
+    "money_energy_reputation": "WorldState",
+    "world_events_weather": "WorldDirectorManager",
+    "progression_ledger": "ProgressionOS",
+    "save": "SaveManager",
+    "audio": "AudioManager",
+    "combat": "CombatManager"
+  },
+  "principles": [
+    "Godot_only_runtime",
+    "offline_deterministic_critical_gameplay",
+    "no_second_world_manager",
+    "travel_is_two_phase_plan_then_commit",
+    "vehicle_gameplay_must_feed_world_state_and_progression",
+    "first_route_clear_is_playable_when_supported",
+    "repeat_routes_may_unlock_skip_after_mastery",
+    "failure_returns_to_origin_without_campaign_game_over",
+    "visual_speed_does_not_reward_reckless_real_world_driving",
+    "vulnerable_road_users_are_never_score_targets_or_collision_rewards"
+  ],
+  "travel_state_version": 1,
+  "vehicle_state_owner": "WorldMapManager.world_travel_state",
+  "vehicles": {
+    "kombi_terreiro": {
+      "role": "team_default",
+      "route_classes": ["terrestrial_primary", "terrestrial_secondary"],
+      "playable_mode": "rota_101",
+      "crew_capacity": 5,
+      "cargo_capacity": 100,
+      "fuel_capacity": 100,
+      "condition_capacity": 100,
+      "default_state": {
+        "fuel": 75,
+        "condition": 100,
+        "hard_damage": 0,
+        "route_knowledge": {},
+        "upgrades": []
+      },
+      "strengths": ["team_travel", "cargo", "story_dialogue", "stable_arrival"],
+      "tradeoffs": ["fuel", "maintenance", "large_vehicle_handling"]
+    },
+    "moto_emprestada": {
+      "role": "solo_fast_access",
+      "route_classes": ["terrestrial_secondary", "trail_motorized", "secret_access"],
+      "playable_mode": "moto_route",
+      "crew_capacity": 1,
+      "cargo_capacity": 15,
+      "fuel_capacity": 45,
+      "condition_capacity": 100,
+      "strengths": ["fast", "cheap_fuel", "narrow_access"],
+      "tradeoffs": ["weather_risk", "low_cargo", "no_team_dialogue"]
+    },
+    "onibus_regional": {
+      "role": "safe_fallback",
+      "route_classes": ["terrestrial_primary"],
+      "playable_mode": "resolved_travel",
+      "strengths": ["no_vehicle_damage", "low_attention"],
+      "tradeoffs": ["ticket_cost", "fixed_time", "no_route_collectibles"]
+    },
+    "barco_ferry": {
+      "role": "maritime_required",
+      "route_classes": ["maritime"],
+      "playable_mode": "route_of_tides_future_or_resolved_travel",
+      "strengths": ["maritime_access", "crew_travel"],
+      "tradeoffs": ["tide_gate", "weather_gate", "schedule"]
+    },
+    "a_pe": {
+      "role": "local_exploration",
+      "route_classes": ["local", "trail"],
+      "playable_mode": "hub_or_trail_scene",
+      "strengths": ["free", "collectibles", "npc_contact"],
+      "tradeoffs": ["energy_cost", "slow"]
+    }
+  },
+  "travel_pipeline": [
+    "select_destination",
+    "resolve_route",
+    "read_world_context",
+    "choose_method",
+    "prepare_loadout_and_crew",
+    "create_travel_plan",
+    "play_or_resolve_route",
+    "produce_travel_outcome",
+    "commit_world_changes",
+    "record_progression_event",
+    "save",
+    "enter_destination"
+  ],
+  "travel_plan": {
+    "required_fields": [
+      "plan_id",
+      "origin_node",
+      "destination_node",
+      "route_id",
+      "route_type",
+      "vehicle_id",
+      "world_context_snapshot",
+      "base_time_minutes",
+      "base_money_cost",
+      "base_fuel_cost",
+      "gates",
+      "mode"
+    ],
+    "immutable_after_start": true
+  },
+  "world_context_reads": {
+    "weather": "WorldDirectorManager",
+    "time_and_day": "WorldState",
+    "mission_flags": "MissionManager_and_WorldState.story_flags",
+    "faction_pressure": "FactionDirectorManager",
+    "tide": "world_map_route_data_or_world_event_snapshot",
+    "route_unlock": "WorldMapManager",
+    "money_energy": "WorldState"
+  },
+  "rota_101": {
+    "purpose": "playable_terrestrial_world_travel",
+    "camera": "pseudo_3d_pixel_perspective",
+    "player_vehicle": "kombi_terreiro",
+    "core_inputs_desktop": ["steer_left", "steer_right", "accelerate", "brake", "horn", "pause"],
+    "core_inputs_mobile": ["left_steer_zone", "right_throttle_brake_zone", "horn_context", "pause"],
+    "accessibility": ["auto_accelerate", "lane_assist", "reduced_camera_shake", "high_contrast_hazards", "large_touch_targets"],
+    "safe_speed_design": {
+      "paved_nominal_kmh": [70, 110],
+      "vicinal_nominal_kmh": [30, 70],
+      "urban_nominal_kmh": [20, 50],
+      "note": "sense_of_speed_comes_from_perspective_scroll_not_extreme_real_world_speed"
+    },
+    "performance_dimensions": [
+      "arrival_time",
+      "clean_driving",
+      "vehicle_damage",
+      "fuel_efficiency",
+      "cargo_integrity",
+      "route_discoveries",
+      "team_arrival_condition"
+    ],
+    "not_scored": ["hitting_pedestrians", "hitting_cyclists", "reckless_speed_for_its_own_sake"],
+    "route_events": [
+      "slow_cacao_truck",
+      "regional_bus",
+      "motorcycle_overtake",
+      "road_hole",
+      "fallen_branch",
+      "heavy_rain",
+      "fog",
+      "roadworks",
+      "fictional_LEI_checkpoint",
+      "faction_blockade_story_only",
+      "safe_pull_off_point_of_interest",
+      "fuel_stop",
+      "narrative_junction"
+    ],
+    "failure_model": {
+      "soft_failure": ["late_arrival", "high_fuel_use", "low_arrival_condition"],
+      "hard_failure": ["vehicle_breakdown", "mission_specific_interception"],
+      "campaign_game_over": false,
+      "return_to_origin": true
+    }
+  },
+  "route_mastery": {
+    "source": "ProgressionOS_exploration_domain",
+    "levels": [
+      {"id": "unknown", "condition": "never_completed"},
+      {"id": "known", "condition": "first_successful_arrival"},
+      {"id": "familiar", "condition": "clean_completions>=2"},
+      {"id": "mastered", "condition": "clean_completions>=4_and_route_discoveries_complete"}
+    ],
+    "unlocks": {
+      "known": ["route_best_time", "basic_route_intel"],
+      "familiar": ["optional_resolved_travel", "reduced_navigation_uncertainty"],
+      "mastered": ["fast_travel_when_story_allows", "best_fuel_estimate", "all_known_safe_stops"]
+    }
+  },
+  "arrival_outcome": {
+    "fields": [
+      "success",
+      "elapsed_minutes",
+      "money_delta",
+      "fuel_delta",
+      "vehicle_condition_delta",
+      "hard_damage_delta",
+      "energy_delta",
+      "arrival_condition",
+      "discoveries",
+      "story_flags",
+      "route_mastery_delta"
+    ],
+    "arrival_condition_values": ["fresh", "steady", "tired", "shaken"],
+    "next_activity_effect": "small_temporary_modifier_consumed_by_next_training_or_combat_only",
+    "must_not_override_combat_rules": true
+  },
+  "kombi_upgrades": {
+    "philosophy": "reliability_and_identity_not_weaponization",
+    "allowed": ["tires", "suspension", "fuel_tank", "headlights", "cargo_rack", "repair_kit", "seat_comfort", "radio_cosmetic"],
+    "forbidden": ["weapons", "combat_damage_bonus", "pay_to_win_power"]
+  },
+  "map_integration": {
+    "node_focus_opens": "travel_detail_panel",
+    "panel_fields": ["destination", "route_type", "method_options", "time", "money", "fuel", "weather", "tide", "risk", "crew", "mastery"],
+    "legacy_four_hub_buttons": "remove_after_data_driven_node_travel_is_verified",
+    "local_nodes": "walk_or_local_scene",
+    "intercity_terrestrial": "rota_101_when_flagged",
+    "maritime": "tide_aware_ferry_or_future_route_of_tides",
+    "secret": "requires_story_or_discovery_gate"
+  },
+  "semantic_map_bridge": {
+    "target_snapshot": "user_approved_world_map_v4_2026_09_12",
+    "do_not_assume_counts": true,
+    "required_normalization": {
+      "pag": "pagina",
+      "de": "from",
+      "para": "to",
+      "route_type_ponte": "terrestre_with_bridge_subtype",
+      "route_type_conexao": "connection"
+    },
+    "layout_separation": "semantic_map_has_no_visual_positions; positions_belong_in_world_map_layout_v2",
+    "known_conflict": "maritime_route_must_not_launch_rota_101_terrestrial_mode",
+    "institution_rule": "LEI_is_institutional_controller_not_fourth_active_cultural_faction"
+  },
+  "progression_events": [
+    "travel_started",
+    "travel_completed",
+    "travel_clean",
+    "travel_breakdown",
+    "route_discovered",
+    "route_mastery_changed",
+    "travel_poi_discovered"
+  ],
+  "save_contract": {
+    "additive_world_map_state": true,
+    "world_travel_state_has_own_version": true,
+    "global_save_bump_required_only_if_migration_cannot_be_local": true,
+    "fields": ["vehicle_states", "route_mastery", "route_records", "pending_travel_plan", "arrival_condition"]
+  },
+  "release_gates": [
+    "data_contract_valid",
+    "route_selection_smoke",
+    "plan_is_non_mutating",
+    "commit_is_idempotent",
+    "save_load_round_trip",
+    "progression_event_dedup",
+    "world_map_node_to_route_integration",
+    "mobile_touch_qa",
+    "android_physical_45fps_or_better",
+    "no_combat_authority_regression",
+    "no_real_brand_or_real_police_logo_in_shipping_art"
+  ],
+  "out_of_scope_v1": [
+    "fully_open_world_driving",
+    "multiplayer",
+    "vehicle_combat",
+    "remote_ai_required_for_travel",
+    "physics_simulator",
+    "maritime_action_minigame"
+  ]
+}
