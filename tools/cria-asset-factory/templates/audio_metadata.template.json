@@ -1,0 +1,11 @@
+{
+  "shipping": false,
+  "qa_status": "pending",
+  "kind": "audio_pack",
+  "id": "tatame_impacts",
+  "master": "master.wav",
+  "runtime": "runtime.ogg",
+  "license_id": "UNKNOWN",
+  "rights_reviewed": false,
+  "loudness_reviewed": false
+}

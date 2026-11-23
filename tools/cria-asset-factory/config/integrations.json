@@ -1,0 +1,119 @@
+{
+  "schema": "cria.asset_factory.integrations.v1",
+  "status": "CANDIDATE_AUTHORING_ONLY",
+  "shipping": false,
+  "qa_status": "pending",
+  "runtime_authority": false,
+  "package_policy": "external_optional_no_gpu_download_no_paid_job",
+  "source_authorities": [
+    "AGENTS.md",
+    "docs/DECISIONS.md",
+    "data/ai/qwen_pixel_art_profile_v1.json",
+    "data/ai/model_registry_v02.json",
+    "data/production/external_tool_registry_v1.json",
+    "data/techniques.json",
+    ".agents/skills/cria-art-direction/SKILL.md",
+    ".agents/skills/cria-sprite-forge/SKILL.md"
+  ],
+  "canonical_output": {
+    "sprite_frame": [
+      128,
+      128
+    ],
+    "pivot": [
+      64,
+      96
+    ],
+    "fps": 12,
+    "matched_actors": true,
+    "shipping": false
+  },
+  "backends": [
+    {
+      "id": "core_python",
+      "type": "local",
+      "capability": "quality_gate_and_asset_authoring",
+      "required": true,
+      "install": "python_venv_core",
+      "status": "CONFIGURED",
+      "charge_policy": "no_paid_service"
+    },
+    {
+      "id": "ffmpeg",
+      "type": "executable",
+      "binary": "ffmpeg",
+      "capability": "decode_and_transcode_user_supplied_media",
+      "required": false,
+      "install": "manual_system_package",
+      "status": "OPTIONAL"
+    },
+    {
+      "id": "pixelorama",
+      "type": "executable",
+      "binary": "pixelorama",
+      "capability": "human_pixel_cleanup_and_sprite_export",
+      "required": false,
+      "install": "manual_desktop",
+      "upstream": "https://github.com/Orama-Interactive/Pixelorama",
+      "license": "MIT",
+      "status": "OPTIONAL"
+    },
+    {
+      "id": "comfyui",
+      "type": "local_api",
+      "binary": null,
+      "endpoint": "http://127.0.0.1:8188",
+      "capability": "image_candidate_inference_from_existing_workflow",
+      "required": false,
+      "install": "external_python_venv_GPU",
+      "upstream": "https://github.com/Comfy-Org/ComfyUI",
+      "license": "GPL-3.0",
+      "status": "OPTIONAL_NOT_INSTALLED"
+    },
+    {
+      "id": "qwen_pixel_art",
+      "type": "model",
+      "profile": "data/ai/qwen_pixel_art_profile_v1.json",
+      "base": "Qwen/Qwen-Image-2512",
+      "adapter": "prithivMLmods/Qwen-Image-2512-Pixel-Art-LoRA",
+      "capability": "concept_candidates_only",
+      "required": false,
+      "install": "GPU_session_only_pinned_revision_no_automatic_download",
+      "status": "REGISTERED_NOT_DOWNLOADED"
+    },
+    {
+      "id": "motion_factory",
+      "type": "existing_authoring_adapter",
+      "path": "tools/motion_factory/run_mixamo_llm_mocap.py",
+      "capability": "human_motion_reference_if_rights_cleared",
+      "required": false,
+      "install": "existing_adapter_no_new_checkouts",
+      "status": "REUSE_EXISTING"
+    },
+    {
+      "id": "mmpose",
+      "type": "external_optional",
+      "capability": "landmark_estimation",
+      "required": false,
+      "install": "manual_separate_torch_CUDA_environment",
+      "status": "DEFERRED_COMPATIBILITY_REVIEW"
+    },
+    {
+      "id": "sam2",
+      "type": "external_optional",
+      "capability": "licensed_video_segmentation",
+      "required": false,
+      "install": "manual_separate_torch_CUDA_environment",
+      "status": "DEFERRED_GPU_REVIEW"
+    },
+    {
+      "id": "audio",
+      "type": "existing_authoring_script",
+      "path": "tools/cria-asset-factory/scripts/build_audio_pack.py",
+      "capability": "transcode_authorized_input_only",
+      "required": false,
+      "install": "ffmpeg_required",
+      "status": "AVAILABLE_WITH_INPUT"
+    }
+  ]
+}

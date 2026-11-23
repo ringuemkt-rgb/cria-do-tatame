@@ -1,0 +1,19 @@
+[build-system]
+requires = ["setuptools>=65"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "cria-asset-factory"
+version = "0.2.0"
+description = "Offline candidate-only asset tools for Cria do Tatame; not a Godot runtime"
+requires-python = ">=3.10"
+dependencies = ["Pillow>=10,<13"]
+
+[project.optional-dependencies]
+dev = ["pytest>=8,<10"]
+
+[tool.setuptools]
+packages = ["scripts"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

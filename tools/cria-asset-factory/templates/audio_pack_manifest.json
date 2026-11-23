@@ -1,0 +1,38 @@
+{
+  "shipping": false,
+  "qa_status": "pending",
+  "packs": [
+    {
+      "id": "ui_core",
+      "source": "ui_core.wav"
+    },
+    {
+      "id": "cloth_and_grip",
+      "source": "cloth_and_grip.wav"
+    },
+    {
+      "id": "tatame_impacts",
+      "source": "tatame_impacts.wav"
+    },
+    {
+      "id": "crowd_official",
+      "source": "crowd_official.wav"
+    },
+    {
+      "id": "music_official_fight",
+      "source": "music_official_fight.wav"
+    },
+    {
+      "id": "referee_cues",
+      "source": "referee_cues.wav"
+    },
+    {
+      "id": "baixo_sul_ambience",
+      "source": "baixo_sul_ambience.wav"
+    },
+    {
+      "id": "menu_music",
+      "source": "menu_music.wav"
+    }
+  ]
+}

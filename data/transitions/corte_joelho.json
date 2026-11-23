@@ -1,0 +1,50 @@
+{
+  "id": "corte_joelho",
+  "family": "passagem",
+  "entry_state": "PLAYER_TOP_GUARD",
+  "exit_state": "PLAYER_TOP_SIDE",
+  "gi": true,
+  "nogi": true,
+  "base_chance": 0.65,
+  "cost": {
+    "gas": 8,
+    "focus": 3
+  },
+  "advantage_gain": 0,
+  "advantage_required": 0,
+  "advantage_modifier": 0,
+  "is_fake": false,
+  "fake_punish": 0,
+  "is_ground_strike": false,
+  "stamina_drain_opponent": {
+    "gas": 0,
+    "focus": 0
+  },
+  "denial_reward": {
+    "advantage_gain": 0.1,
+    "stamina_regen": 2
+  },
+  "defense_response": "raspagem_tesoura",
+  "defense_window": 0.25,
+  "commit_frame": 10,
+  "stabilization_seconds": 3,
+  "score_event": "guard_pass",
+  "legal_ibjjf": true,
+  "legal_adcc": true,
+  "phases": [
+    "anticipation",
+    "entry",
+    "establish",
+    "stabilize",
+    "response",
+    "recovery"
+  ],
+  "anatomy": {
+    "attacker_contact": [],
+    "defender_contact": [],
+    "primary_joint": null,
+    "control_points": []
+  },
+  "shipping": false,
+  "qa_status": "pending"
+}

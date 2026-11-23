@@ -1,0 +1,20 @@
+{
+  "schema": "cria.asset_factory.candidate.v1",
+  "kind": "paired_technique",
+  "id": "baiana",
+  "shipping": false,
+  "qa_status": "pending",
+  "fps": 12,
+  "pivot": [
+    64,
+    96
+  ],
+  "frame_size": [
+    128,
+    128
+  ],
+  "attacker_id": "ruan_macacao",
+  "defender_id": "davi_relampago",
+  "human_approved": false,
+  "scene_verified": false
+}

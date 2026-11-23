@@ -1,0 +1,50 @@
+{
+  "id": "baiana",
+  "family": "queda",
+  "entry_state": "PLAYER_STANDING_NEUTRAL",
+  "exit_state": "PLAYER_TOP_GUARD",
+  "gi": true,
+  "nogi": true,
+  "base_chance": 0.6,
+  "cost": {
+    "gas": 10,
+    "focus": 4
+  },
+  "advantage_gain": 0,
+  "advantage_required": 0,
+  "advantage_modifier": 0,
+  "is_fake": false,
+  "fake_punish": 0,
+  "is_ground_strike": false,
+  "stamina_drain_opponent": {
+    "gas": 0,
+    "focus": 0
+  },
+  "denial_reward": {
+    "advantage_gain": 0.1,
+    "stamina_regen": 2
+  },
+  "defense_response": "sprawl",
+  "defense_window": 0.24,
+  "commit_frame": 8,
+  "stabilization_seconds": 3,
+  "score_event": "takedown_clean",
+  "legal_ibjjf": true,
+  "legal_adcc": true,
+  "phases": [
+    "anticipation",
+    "entry",
+    "establish",
+    "stabilize",
+    "response",
+    "recovery"
+  ],
+  "anatomy": {
+    "attacker_contact": [],
+    "defender_contact": [],
+    "primary_joint": null,
+    "control_points": []
+  },
+  "shipping": false,
+  "qa_status": "pending"
+}

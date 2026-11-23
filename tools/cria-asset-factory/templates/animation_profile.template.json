@@ -1,0 +1,18 @@
+{
+  "shipping": false,
+  "qa_status": "pending",
+  "character_id": "ruan_macacao",
+  "animation": "idle_combat",
+  "view": "side",
+  "outfit": "gi_white",
+  "fps": 12,
+  "pivot": [
+    64,
+    96
+  ],
+  "frame_size": [
+    128,
+    128
+  ],
+  "manual_contact_review": true
+}
