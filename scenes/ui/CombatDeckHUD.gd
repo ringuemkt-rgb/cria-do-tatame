@@ -118,6 +118,10 @@ func _on_card_pressed(index: int) -> void:
 		DeckManager.select_card(card_id)
 
 func _unhandled_input(event: InputEvent) -> void:
+	# A hidden HUD must not consume shortcuts or dispatch combat actions.
+	# Keyboard echo must not repeat a technique/defense while a key is held.
+	if not is_visible_in_tree() or (event is InputEventKey and event.is_echo()):
+		return
 	# One input path for all six visible V2 slots, including timed defenses.
 	# Touch remains bound to each Button.pressed; invalid/locked slots still
 	# pass through _on_card_pressed and cannot bypass its guards.

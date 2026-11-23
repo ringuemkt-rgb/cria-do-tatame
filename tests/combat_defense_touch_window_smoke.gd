@@ -117,6 +117,20 @@ func _run() -> void:
 	_check(selected.size() == 2 and selected[1] == "defesa_esquiva_qa", "new window emits exactly one new defense")
 	hud.call("close_defense_window")
 
+	# A hidden combat HUD must not consume a queued shortcut or emit a defense.
+	hud.call("open_defense_window", [{"id": "hidden_guard_qa", "name": "Frame"}], 1.0)
+	var hidden_shortcut := InputEventAction.new()
+	hidden_shortcut.action = "deck_card_1"
+	hidden_shortcut.pressed = true
+	var before_hidden := selected.size()
+	hud.visible = false
+	hud.call("_unhandled_input", hidden_shortcut)
+	_check(selected.size() == before_hidden, "hidden HUD ignores queued keyboard defense")
+	hud.visible = true
+	hud.call("_unhandled_input", hidden_shortcut)
+	_check(selected.size() == before_hidden + 1 and selected[-1] == "hidden_guard_qa", "visible HUD accepts the same valid shortcut")
+	hud.call("close_defense_window")
+
 	# The V2 hand exposes six buttons; keyboard actions 4-6 must be bound
 	# and use the same guarded path as native touch, including defense locks.
 	for slot in range(4, 7):
