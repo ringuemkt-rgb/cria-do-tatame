@@ -92,6 +92,27 @@ func _run() -> void:
 	_check(second.disabled, "empty defense ID is disabled")
 	_check(not third.disabled, "second valid defense available before selection")
 	_check(fourth.disabled, "malformed defense option fails closed")
+	# Malformed IDs must not be stringified into synthetic actions.
+	hud.call("open_defense_window", [
+		{"id": null, "name": "Null"},
+		{"id": 42, "name": "Number"},
+		{"id": ["forged"], "name": "Array"},
+		{"id": "   ", "name": "Whitespace"},
+		{"id": "defesa_frame_qa", "name": "Frame"}
+	], 1.15)
+	for invalid_slot in range(1, 5):
+		var invalid_button := hud.get_node("Panel/Layout/Cards/Card%d" % invalid_slot) as Button
+		_check(invalid_button.disabled and str(invalid_button.get_meta("card_id", "")) == "", "invalid defense ID slot %d fails closed" % invalid_slot)
+		invalid_button.pressed.emit()
+	_check(selected.is_empty(), "invalid IDs never dispatch defense")
+	_check(not (hud.get_node("Panel/Layout/Cards/Card5") as Button).disabled, "valid defense survives malformed neighbors")
+	# Restore the normal window to continue the existing double-tap assertions.
+	hud.call("open_defense_window", [
+		{"id": "defesa_frame_qa", "name": "Frame"},
+		{"id": "", "name": "Invalid"},
+		{"id": "defesa_base_qa", "name": "Base"},
+		"malformed_option"
+	], 1.15)
 	_check(str(first.get_meta("card_id", "")) == "defesa_frame_qa", "defense ID bound to button")
 	# A deck update must not replace reaction buttons before the window closes.
 	hud.call("_on_hand_changed", [], "")
