@@ -59,6 +59,15 @@ func _run() -> void:
 	hud.call("_apply_responsive_layout_for_size", Vector2(1280, 720))
 	_check(grid.columns == 6 and is_equal_approx(panel.anchor_left, 0.49), "desktop HUD restores original placement")
 
+	# Malformed legacy hand entries must not become actionable card IDs.
+	var malformed_legacy: Array = [null, 42, {"id": ["fake"], "activation_cost": []}, {"id": "   ", "level": 999}, {"id": "legacy_valid", "level": 2}]
+	hud.call("_on_hand_changed", malformed_legacy, "")
+	for malformed_slot in range(1, 5):
+		var malformed_button := hud.get_node("Panel/Layout/Cards/Card%d" % malformed_slot) as Button
+		_check(malformed_button.disabled and str(malformed_button.get_meta("card_id", "")) == "", "malformed legacy slot %d fails closed" % malformed_slot)
+	var valid_legacy := hud.get_node("Panel/Layout/Cards/Card5") as Button
+	_check(not valid_legacy.disabled and str(valid_legacy.get_meta("card_id", "")) == "legacy_valid", "valid legacy slot remains selectable")
+
 	# A legacy deck refresh must respect a locked turn and must not replace
 	# the V2 technique hand once combat switches modes.
 	var legacy_card: Dictionary = {"id": "legacy_card_qa", "name": "Legacy QA", "activation_cost": {}, "level": 1}
