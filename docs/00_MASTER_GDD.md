@@ -18,7 +18,7 @@ O jogador acompanha **Ruan “Macacão” Silva**, jovem de Ituberá marcado por
 O combate não pode ser beat’em up genérico com kimono. Ele deve traduzir base, pegada, pressão, passagem, raspagem, controle, montada, costas e finalização.
 
 ### Pilar 2 — Baixo Sul como mundo vivo
-Ituberá, Nilo Peçanha, Valença, Gandu, Pratigi, Camamu, Manguezal, Salvador e Colônia Nishimura devem funcionar como regiões com identidade, risco, trilha, NPCs, facções e arenas.
+Ituberá, Nilo Peçanha, Valença, Gandu, Pratigi, Camamu, Manguezal, Salvador e Colônia Nishiuchi devem funcionar como regiões com identidade, risco, trilha, NPCs, facções e arenas.
 
 ### Pilar 3 — Reputação pesa mais que XP
 O jogador progride em nível e faixa, mas também constrói Honra, Hype, Sombra, Legado, aliados e inimigos.
@@ -67,7 +67,7 @@ Cria Live explode. Cássio Molho oferece atalhos. Tinker Bell revela que sabe ma
 Fadiga, lesão, crise pública, rivalidade e ameaça ao Terreiro. O jogador decide se reage com técnica ou violência.
 
 ### Ato 5 — O Legado
-Ruan enfrenta as consequências de sua reputação. Finais: Honra, Hype, Sombra, Dupla Face e Raiz Eterna.
+Ruan enfrenta as consequências de sua reputação. Finais: Honra Alta ou Honra Baixa, definidos apenas pela honra acumulada.
 
 ---
 

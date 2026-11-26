@@ -24,6 +24,10 @@ func can_travel_to(hub_id: String) -> bool:
 func travel_to(hub_id: String) -> Dictionary:
 	if not can_travel_to(hub_id):
 		return {"ok": false, "message": "Destino indisponivel."}
+	# Re-selecting the current hub is navigation, not a paid journey.
+	# Never debit money, advance the calendar, emit travel, or write a save.
+	if hub_id == current_hub:
+		return {"ok": true, "message": "Voce ja esta neste destino.", "hub": get_hub_data(hub_id), "already_here": true}
 	var hub := get_hub_data(hub_id)
 	var cost := int(hub.get("travel_cost", 0))
 	if WorldState.money < cost:

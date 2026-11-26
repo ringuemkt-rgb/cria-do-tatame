@@ -1,5 +1,5 @@
 {
-  "version": "0.1.0",
+  "version": "0.2.0",
   "language": "pt-BR",
   "design_note": "Missoes cinematograficas ficcionais. O foco e dilema moral, nao procedimento criminal.",
   "missions": [
@@ -48,7 +48,7 @@
       "faction": "la_ele_mil_vezes",
       "title": "O Olho que Tudo Ve",
       "act": 4,
-      "location": "colonia_nishimura",
+      "location": "colonia_nishiuchi",
       "tone": "madrugada, silencio, tatame impecavel, informacao como faca fria",
       "objective": "Decidir se Ruan aceita vantagem de leitura sobre rivais.",
       "beats": [

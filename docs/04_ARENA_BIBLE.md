@@ -39,7 +39,7 @@ Cada arena deve ter identidade visual, trilha, mecânica e consequência narrati
 - Função: água, escorregamento e visual de impacto.
 - Modificadores: tração instável.
 
-### Colônia Nishimura
+### Colônia Nishiuchi
 - Função: disciplina e foco.
 - Visual: templo, silêncio, água, madeira e símbolo ancestral.
 
