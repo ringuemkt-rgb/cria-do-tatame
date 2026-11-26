@@ -59,6 +59,18 @@ func _run() -> void:
 	hud.call("_apply_responsive_layout_for_size", Vector2(1280, 720))
 	_check(grid.columns == 6 and is_equal_approx(panel.anchor_left, 0.49), "desktop HUD restores original placement")
 
+	var malformed_legacy: Array = [null, 42, {"id": ["fake"]}, {"id": "   "}, {"id": "valid_legacy", "level": 999, "activation_cost": {"gas": INF, "focus": "bad"}}]
+	hud.call("_on_hand_changed", malformed_legacy, "")
+	for slot in range(1, 5):
+		var invalid := hud.get_node("Panel/Layout/Cards/Card%d" % slot) as Button
+		_check(invalid.disabled and str(invalid.get_meta("card_id", "")) == "", "invalid legacy slot is empty")
+	var valid_fifth := hud.get_node("Panel/Layout/Cards/Card5") as Button
+	_check(not valid_fifth.disabled and str(valid_fifth.get_meta("card_id", "")) == "valid_legacy", "legacy fifth slot stays usable")
+	_check(valid_fifth.text.count("◆") == 5, "legacy level label capped")
+	_check(valid_fifth.text.ends_with("F0 G0"), "invalid display costs do not crash")
+	_check(str(hud.call("_format_v2_card_label", "qa", {"nome": "Passagem", "cost": {"gas": 12, "focus": 3, "moral": 1}})) == "Passagem\nG12 F3 M1", "V2 resource costs visible")
+	_check(str(hud.call("_format_v2_card_label", "qa", {"name": "Raspagem", "custo": {"gas": INF, "foco": 2}})) == "Raspagem\nF2", "nonfinite display cost ignored")
+
 	# A legacy deck refresh must respect a locked turn and must not replace
 	# the V2 technique hand once combat switches modes.
 	var legacy_card: Dictionary = {"id": "legacy_card_qa", "name": "Legacy QA", "activation_cost": {}, "level": 1}
@@ -76,6 +88,12 @@ func _run() -> void:
 	hud.call("_on_hand_changed", [legacy_card], "")
 	_check(str(legacy_button.get_meta("card_id", "")) == "v2_technique_qa", "late legacy hand cannot replace V2 technique")
 	_check(hud.get("v2_hand") == ["v2_technique_qa"], "V2 hand remains authoritative")
+
+	hud.call("_on_v2_hand_changed", [null, 42, ["fake"], "   ", "v2_technique_qa"])
+	for slot in range(1, 5):
+		var invalid := hud.get_node("Panel/Layout/Cards/Card%d" % slot) as Button
+		_check(invalid.disabled and str(invalid.get_meta("card_id", "")) == "", "invalid V2 slot is empty")
+	_check(str(valid_fifth.get_meta("card_id", "")) == "v2_technique_qa", "valid V2 fifth slot preserved")
 
 	hud.call("set_actions_enabled", false)
 	hud.call("open_defense_window", [
@@ -149,6 +167,40 @@ func _run() -> void:
 	missing_shortcut.pressed = true
 	hud.call("_unhandled_input", missing_shortcut)
 	_check(selected.size() == before_invalid, "unavailable sixth defense shortcut is ignored")
+	hud.call("close_defense_window")
+
+	# Expiry, hidden HUD and malformed IDs must use the same touch/key guard.
+	var guard_key := InputEventAction.new()
+	guard_key.action = "deck_card_1"
+	guard_key.pressed = true
+	var before_guard := selected.size()
+	for seconds in [0.0, NAN, INF, -INF]:
+		hud.call("open_defense_window", [{"id": "guard", "name": "Frame"}], seconds)
+		_check(first.disabled, "invalid deadline disables reaction")
+		first.pressed.emit()
+		hud.call("_unhandled_input", guard_key)
+		_check(selected.size() == before_guard, "expired reaction cannot emit")
+		hud.call("close_defense_window")
+	hud.call("open_defense_window", [{"id": "guard", "name": "Frame"}], 1.0)
+	hud.hide()
+	first.pressed.emit()
+	hud.call("_unhandled_input", guard_key)
+	_check(selected.size() == before_guard, "hidden HUD rejects touch and shortcuts")
+	hud.show()
+	hud.call("set_defense_window_remaining", 0.0)
+	hud.call("set_defense_window_remaining", 1.0)
+	_check(first.disabled, "expired reaction cannot be rearmed by stale countdown")
+	first.pressed.emit()
+	_check(selected.size() == before_guard, "expired touch stays locked")
+	hud.call("close_defense_window")
+	hud.call("open_defense_window", [{"id": null}, {"id": 42}, {"id": "   "}, {"id": ["fake"]}, {"id": "valid_reaction"}], 1.0)
+	for slot in range(1, 5):
+		var invalid := hud.get_node("Panel/Layout/Cards/Card%d" % slot) as Button
+		_check(invalid.disabled and str(invalid.get_meta("card_id", "")) == "", "malformed reaction slot disabled")
+		invalid.pressed.emit()
+	_check(selected.size() == before_guard, "malformed defenses never emit")
+	valid_fifth.pressed.emit()
+	_check(selected.size() == before_guard + 1 and selected[-1] == "valid_reaction", "fresh reaction fifth slot accepts one touch")
 	hud.call("close_defense_window")
 
 	# The arena is the final consumer of the shared defense signal. A stale or
