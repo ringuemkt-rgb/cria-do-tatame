@@ -9,6 +9,7 @@ var last_action: String = ""
 var last_chosen_technique: String = ""
 var profile: Dictionary = {}
 var slice_policy: Dictionary = {}
+const UniversalProfilesScript = preload("res://src/combat/FighterCombatProfileRegistryV1.gd")
 var rng := RandomNumberGenerator.new()
 
 func _ready() -> void:
@@ -17,7 +18,7 @@ func _ready() -> void:
 func _registry() -> Node:
 	return get_node_or_null("/root/DataRegistry")
 
-func setup(p_rival_id: String = "davi_relampago", p_difficulty: String = "normal") -> void:
+func setup(p_rival_id: String = "davi_relampago", p_difficulty: String = "normal", match_seed: int = 0) -> void:
 	rival_id = p_rival_id
 	difficulty = p_difficulty
 	var registry: Node = _registry()
@@ -27,12 +28,30 @@ func setup(p_rival_id: String = "davi_relampago", p_difficulty: String = "normal
 	else:
 		var profiles: Dictionary = registry.get("rival_ai_profiles")
 		profile = profiles.get("profiles", {}).get(rival_id, {})
-	rng.seed = hash("%s|%s" % [rival_id, difficulty])
+	# Davi retains his approved campaign behaviour. Other fighters consume
+	# candidate tactical identity without inventing new move IDs or managers.
+	if rival_id != "davi_relampago":
+		var universal = UniversalProfilesScript.new()
+		var candidate: Dictionary = universal.profile(rival_id)
+		if not candidate.is_empty():
+			var tuning: Dictionary = candidate.get("tactical_ai", {})
+			profile = {
+				"display_name": candidate.get("display_name", rival_id),
+				"style": candidate.get("style", ""),
+				"preferred_actions": candidate.get("preferred_actions", []).duplicate(),
+				"preferred_states": candidate.get("preferred_states", []).duplicate(),
+				"preferred_families": candidate.get("preferred_families", []).duplicate(),
+				"anti_patterns": [],
+				"tuning": tuning.duplicate(true)
+			}
+	rng.seed = hash("%s|%s|%d" % [rival_id, difficulty, match_seed])
 	_load_slice_policy()
 	reset()
 
 func _load_slice_policy() -> void:
 	slice_policy = {}
+	if rival_id != "davi_relampago":
+		return
 	var path := "res://data/ai/davi_policy_slice_v1.json"
 	if not FileAccess.file_exists(path):
 		return
@@ -111,6 +130,19 @@ func _score_technique(technique: Dictionary, actor_state: String, player_resourc
 	var preferred_actions: Array = profile.get("preferred_actions", [])
 	if preferred_actions.has(technique_id):
 		score += 18.0
+	var family := str(technique.get("family", technique.get("familia", "")))
+	if profile.get("preferred_families", []).has(family):
+		score += 9.0
+	var ai_tuning: Dictionary = profile.get("tuning", {})
+	var aggression := clampf(float(ai_tuning.get("aggression", 0.5)), 0.0, 1.0)
+	var patience := clampf(float(ai_tuning.get("patience", 0.5)), 0.0, 1.0)
+	var counter_bias := clampf(float(ai_tuning.get("counter_bias", 0.5)), 0.0, 1.0)
+	if family in ["queda", "finalizacao", "dominante", "raspagem"]:
+		score += aggression * 11.0
+	elif family in ["defesa_queda", "escape"]:
+		score += counter_bias * 13.0
+	elif family in ["controle", "pressao", "pegada"]:
+		score += patience * 9.0
 	var slice_preferred: Array = _preferred_ids_for_state(actor_state)
 	if slice_preferred.has(technique_id):
 		score += 22.0
@@ -173,12 +205,12 @@ func _risk_penalty(technique: Dictionary) -> float:
 
 func pressure_message() -> String:
 	if last_action != "" and int(seen_player_actions.get(last_action, 0)) >= 3:
-		return "Davi leu a repeticao. Muda o ritmo."
+		return "%s leu a repeticao. Muda o ritmo." % str(profile.get("display_name", rival_id))
 	for family_value in seen_player_families.keys():
 		var family: String = str(family_value)
 		if int(seen_player_families.get(family, 0)) >= 3:
-			return "Davi percebeu seu padrao de %s." % family.replace("_", " ")
-	return "Davi Relampago esta estudando seu jogo."
+			return "%s percebeu seu padrao de %s." % [str(profile.get("display_name", rival_id)), family.replace("_", " ")]
+	return "%s esta estudando seu jogo." % str(profile.get("display_name", rival_id))
 
 func chosen_action_label() -> String:
 	if last_chosen_technique == "":

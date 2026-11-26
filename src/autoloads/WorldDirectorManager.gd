@@ -84,6 +84,8 @@ func _on_day_advanced(_day_name, _week_number) -> void:
 	_run_world_tick("day_advanced")
 
 func _on_combat_finished(result) -> void:
+	if typeof(result) == TYPE_DICTIONARY and bool(result.get("exhibition", false)):
+		return
 	if typeof(result) == TYPE_DICTIONARY:
 		var memory: Array = state.get("director_memory", [])
 		memory.append({

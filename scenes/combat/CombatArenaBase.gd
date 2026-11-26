@@ -7,6 +7,7 @@ const GameFeelManagerScript = preload("res://src/gamefeel/GameFeelManager.gd")
 const DaviAIControllerScript = preload("res://src/combat/DaviAIController.gd")
 const VisualTheme = preload("res://src/ui/CriaVisualTheme.gd")
 const ArenaBackdropScript = preload("res://src/visual/ArenaBackdrop.gd")
+const FighterProfilesScript = preload("res://src/combat/FighterCombatProfileRegistryV1.gd")
 
 var gamefeel: Node
 var davi_ai: Node
@@ -50,14 +51,18 @@ var estados_ptbr: Dictionary = {
 }
 
 func _ready() -> void:
-	_build_arena_visuals()
+	var preflight: Dictionary = CombatManager.get_pre_fight_plan_v2()
+	var exhibition: Dictionary = CombatManager.get_pending_exhibition_match()
+	var fight_arena := str(exhibition.get("arena_id", preflight.get("arena_id", "terreiro_da_luta")))
+	var fight_player := str(exhibition.get("player_id", "ruan_macacao"))
+	var fight_opponent := str(exhibition.get("opponent_id", preflight.get("opponent_id", "davi_relampago")))
+	_build_arena_visuals(fight_arena)
 	_style_combat_panel()
 	gamefeel = GameFeelManagerScript.new()
 	add_child(gamefeel)
 	davi_ai = DaviAIControllerScript.new()
 	add_child(davi_ai)
-	davi_ai.call("setup", "davi_relampago", "normal")
-	_build_placeholder_fighters()
+	_build_placeholder_fighters(fight_player, fight_opponent)
 	pair_timeline = PairTimelineScript.new()
 	pair_timeline.name = "CombatPairTimeline"
 	add_child(pair_timeline)
@@ -65,11 +70,8 @@ func _ready() -> void:
 		push_warning("[CombatArenaBase] Paired motion preview unavailable; gameplay unaffected.")
 	_connect_buttons()
 	_connect_runtime_signals()
-	var preflight: Dictionary = CombatManager.get_pre_fight_plan_v2()
-	var fight_arena := str(preflight.get("arena_id", "terreiro_da_luta"))
-	var fight_opponent := str(preflight.get("opponent_id", "davi_relampago"))
-	davi_ai.call("setup", fight_opponent, "normal")
-	var start_result: Dictionary = CombatManager.start_combat(fight_arena, "ruan_macacao", fight_opponent)
+	davi_ai.call("setup", fight_opponent, "normal", _stable_match_seed(fight_player, fight_opponent, fight_arena))
+	var start_result: Dictionary = CombatManager.start_combat(fight_arena, fight_player, fight_opponent)
 	if not bool(start_result.get("ok", false)):
 		push_error("[CombatArenaBase] Falha ao iniciar combate: %s" % str(start_result))
 	elif pair_timeline.is_ready():
@@ -80,10 +82,10 @@ func _ready() -> void:
 	_refresh_action_buttons()
 	AudioManager.play_music_cue("terreiro")
 
-func _build_arena_visuals() -> void:
+func _build_arena_visuals(selected_arena: String) -> void:
 	var backdrop := ArenaBackdropScript.new()
 	backdrop.name = "ArenaBackdrop"
-	backdrop.arena_id = "arena_do_dique"
+	backdrop.arena_id = selected_arena
 	backdrop.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	add_child(backdrop)
 	move_child(backdrop, 0)
@@ -129,27 +131,53 @@ func _connect_runtime_signals() -> void:
 	if not SignalBus.combat_corner_suggestion.is_connected(_on_corner_suggestion):
 		SignalBus.combat_corner_suggestion.connect(_on_corner_suggestion)
 
-func _build_placeholder_fighters() -> void:
+func _build_placeholder_fighters(selected_player: String, selected_opponent: String) -> void:
+	var profiles = FighterProfilesScript.new()
+	var player_profile: Dictionary = profiles.profile(selected_player)
+	var rival_profile: Dictionary = profiles.profile(selected_opponent)
 	ruan_placeholder = FighterPlaceholderScript.new()
-	ruan_placeholder.fighter_id = "ruan_macacao"
-	ruan_placeholder.display_name = "Ruan Macacao"
+	ruan_placeholder.fighter_id = selected_player
+	ruan_placeholder.display_name = str(player_profile.get("display_name", selected_player))
 	ruan_placeholder.position = Vector2(430, 385)
+	if selected_player != "ruan_macacao":
+		ruan_placeholder.primary_color = Color(str(player_profile.get("visuals", {}).get("primary_color", "#EDE6D6")))
+		ruan_placeholder.accent_color = Color(str(player_profile.get("visuals", {}).get("accent_color", "#C9971C")))
+		var preview_scale := clampf(float(player_profile.get("visuals", {}).get("scale_candidate", 1.0)), 0.9, 1.1)
+		ruan_placeholder.scale = Vector2(preview_scale, preview_scale)
 	add_child(ruan_placeholder)
 	davi_placeholder = FighterPlaceholderScript.new()
-	davi_placeholder.fighter_id = "davi_relampago"
-	davi_placeholder.display_name = "Davi Relampago"
-	davi_placeholder.primary_color = Color("174f9b")
-	davi_placeholder.accent_color = Color(0.55, 0.75, 1.0)
-	davi_placeholder.skin_color = Color("986640")
+	davi_placeholder.fighter_id = selected_opponent
+	davi_placeholder.display_name = str(rival_profile.get("display_name", selected_opponent))
 	davi_placeholder.position = Vector2(850, 385)
-	davi_placeholder.scale = Vector2(-1, 1)
+	if selected_opponent == "davi_relampago":
+		davi_placeholder.primary_color = Color("174f9b")
+		davi_placeholder.accent_color = Color(0.55, 0.75, 1.0)
+		davi_placeholder.skin_color = Color("986640")
+	else:
+		davi_placeholder.primary_color = Color(str(rival_profile.get("visuals", {}).get("primary_color", "#174f9b")))
+		davi_placeholder.accent_color = Color(str(rival_profile.get("visuals", {}).get("accent_color", "#C9971C")))
+	var opponent_scale := clampf(float(rival_profile.get("visuals", {}).get("scale_candidate", 1.0)), 0.9, 1.1)
+	davi_placeholder.scale = Vector2(-opponent_scale, opponent_scale)
 	add_child(davi_placeholder)
+	if has_node("Panel/Title"):
+		$Panel/Title.text = "%s vs %s%s" % [
+			ruan_placeholder.display_name.to_upper(),
+			davi_placeholder.display_name.to_upper(),
+			" • EXIBIÇÃO (PRÉVIA)" if not CombatManager.get_pending_exhibition_match().is_empty() else ""
+		]
+
+func _stable_match_seed(selected_player: String, selected_opponent: String, selected_arena: String) -> int:
+	var text := "%s|%s|%s" % [selected_player, selected_opponent, selected_arena]
+	var checksum := 2166136261
+	for byte in text.to_utf8_buffer():
+		checksum = int((checksum ^ int(byte)) * 16777619) & 0x7fffffff
+	return maxi(1, checksum)
 
 func _ensure_ai_hint() -> void:
 	if has_node("Panel") and not has_node("Panel/AIHint"):
 		var label := Label.new()
 		label.name = "AIHint"
-		label.text = "Davi esta lendo seu ritmo. Varie as entradas."
+		label.text = "%s esta lendo seu ritmo. Varie as entradas." % davi_placeholder.display_name
 		get_node("Panel").add_child(label)
 
 func _set_ai_hint(text: String) -> void:
@@ -240,17 +268,17 @@ func _execute_player_action(action_id: String) -> void:
 		_refresh_v2_panel()
 
 func _run_davi_turn() -> void:
-	_set_ai_hint("%s Davi esta escolhendo a resposta..." % str(davi_ai.call("pressure_message")))
+	_set_ai_hint("%s %s esta escolhendo a resposta..." % [str(davi_ai.call("pressure_message")), davi_placeholder.display_name])
 	await get_tree().create_timer(ai_turn_delay).timeout
 	if not is_inside_tree() or not CombatManager.is_running:
 		return
 	var technique: Dictionary = davi_ai.call("choose_technique", CombatManager)
 	if technique.is_empty():
-		_set_ai_hint("Davi nao encontrou uma acao segura e preservou a base.")
+		_set_ai_hint("%s nao encontrou uma acao segura e preservou a base." % davi_placeholder.display_name)
 		return
 	var technique_id := str(technique.get("id", ""))
 	var technique_name := str(technique.get("nome", technique.get("name", technique_id)))
-	_set_ai_hint("%s Davi comprometeu: %s." % [str(davi_ai.call("pressure_message")), technique_name])
+	_set_ai_hint("%s %s comprometeu: %s." % [str(davi_ai.call("pressure_message")), davi_placeholder.display_name, technique_name])
 	var visual_state_before := CombatManager.get_current_state_name()
 	AudioManager.play_sfx(technique_id)
 
@@ -273,9 +301,9 @@ func _run_davi_turn() -> void:
 		result = CombatManager.apply_opponent_action(technique_id)
 
 	if bool(result.get("denied", false)):
-		_set_ai_hint("Ruan leu a entrada e respondeu com %s." % str(defense_context.get("name", defense_id)).replace("_", " "))
+		_set_ai_hint("%s leu a entrada e respondeu com %s." % [ruan_placeholder.display_name, str(defense_context.get("name", defense_id)).replace("_", " ")])
 	elif defense_context.get("timed_out", false):
-		_set_ai_hint("Janela fechou. Davi completou a acao.")
+		_set_ai_hint("Janela fechou. %s completou a acao." % davi_placeholder.display_name)
 	gamefeel.call("apply_for_technique", technique_id, bool(result.get("success", false)))
 	if pair_timeline != null and pair_timeline.is_ready():
 		await pair_timeline.play_resolution(technique_id, CombatManager.opponent_id, result, visual_state_before, CombatManager.get_current_state_name())
@@ -383,13 +411,13 @@ func _on_technique_resolved(result) -> void:
 		var technique: Dictionary = DataRegistry.get_technique(technique_id)
 		var name_text: String = str(technique.get("nome", technique.get("name", technique_id)))
 		var message: String = str(result.get("message", "sucesso" if result.get("success", false) else "defendido"))
-		var actor_id := str(result.get("actor_id", "ruan_macacao"))
-		var actor_name := "Ruan" if actor_id == CombatManager.player_id else "Davi"
+		var actor_id := str(result.get("actor_id", CombatManager.player_id))
+		var actor_name: String = str(ruan_placeholder.display_name) if actor_id == CombatManager.player_id else str(davi_placeholder.display_name)
 		$Panel/Message.text = "%s • %s: %s" % [actor_name, name_text, _humanize_message(message)]
 	if SignalBus.has_signal("technique_executed"):
-		SignalBus.technique_executed.emit(StringName(result.get("actor_id", "ruan_macacao")), StringName(result.get("technique_id", "unknown")))
+		SignalBus.technique_executed.emit(StringName(result.get("actor_id", CombatManager.player_id)), StringName(result.get("technique_id", "unknown")))
 	if SignalBus.has_signal("tecnica_executada"):
-		SignalBus.tecnica_executada.emit(StringName(result.get("actor_id", "ruan_macacao")), StringName(result.get("technique_id", "unknown")), bool(result.get("success", false)))
+		SignalBus.tecnica_executada.emit(StringName(result.get("actor_id", CombatManager.player_id)), StringName(result.get("technique_id", "unknown")), bool(result.get("success", false)))
 
 func _humanize_message(message: String) -> String:
 	match message:
@@ -413,11 +441,12 @@ func _on_combat_finished(result) -> void:
 	_set_actions_enabled(false)
 	_pending_finish = result.duplicate(true)
 	WorldState.last_combat_result = result
-	if CombatManager.player_id == "ruan_macacao" and CombatManager.opponent_id == "davi_relampago":
+	if not CombatManager.is_exhibition and CombatManager.player_id == "ruan_macacao" and CombatManager.opponent_id == "davi_relampago":
 		GameFlowManager.complete_step("primeira_luta_davi")
 		GameFlowManager.mark_flag("first_davi_combat_post_pending", true)
-	SaveManager.save_game(1)
-	var music_cue := "terreiro" if bool(result.get("draw", false)) else ("vitoria" if result.get("winner", "") == "ruan_macacao" else "derrota")
+	if not CombatManager.is_exhibition:
+		SaveManager.save_game(1)
+	var music_cue := "terreiro" if bool(result.get("draw", false)) else ("vitoria" if result.get("winner", "") == CombatManager.player_id else "derrota")
 	AudioManager.play_music_cue(music_cue)
 	# A submission outcome is authoritative immediately, but the visual
 	# closure finishes before the result scene replaces the combat scene.

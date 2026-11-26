@@ -107,6 +107,8 @@ func _text_for_context(context: String, data: Dictionary) -> String:
 			return str(data.get("text", "Movimento registrado no Cria Live."))
 
 func _on_combat_finished(result: Dictionary) -> void:
+	if bool(result.get("exhibition", false)):
+		return
 	var fingerprint := _combat_fingerprint(result)
 	if fingerprint == _last_combat_fingerprint:
 		return

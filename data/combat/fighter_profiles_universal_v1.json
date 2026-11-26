@@ -1,0 +1,1258 @@
+{
+  "schema": "cria.universal_combat_profiles.v1",
+  "version": "1.0.0",
+  "status": "EXHIBITION_PREVIEW_UNCALIBRATED",
+  "canonical_roster": "data/combat/roster_v3.json",
+  "rules_authority": "data/combat/bjj_rulesets_verified_v1.json",
+  "catalogue_authority": "data/techniques.json",
+  "numeric_authority": "data/characters.json",
+  "policy": {
+    "campaign_unchanged": true,
+    "exhibition_no_progression": true,
+    "model_not_in_runtime": true,
+    "any_unapproved_profile_cannot_ship": true,
+    "technique_owner_enforced_by_combat_manager": true
+  },
+  "profiles": {
+    "ruan_macacao": {
+      "id": "ruan_macacao",
+      "display_name": "Ruan Macacão Silva",
+      "role": "protagonist",
+      "signature_trigger": "silverback_grip",
+      "style": "pressao_progressiva",
+      "preferred_families": [
+        "pegada",
+        "passagem",
+        "controle"
+      ],
+      "preferred_actions": [
+        "grip_de_ferro",
+        "pressao_cabeca",
+        "corte_joelho",
+        "montada_pesada",
+        "silverback_grip"
+      ],
+      "preferred_states": [
+        "PLAYER_TOP_CLINCH",
+        "PLAYER_TOP_SIDE"
+      ],
+      "technique_repertoire": [
+        "grip_de_ferro",
+        "baiana",
+        "sprawl",
+        "puxada_guarda",
+        "corte_joelho",
+        "torreando",
+        "crossface",
+        "montada_pesada",
+        "chave_braco",
+        "encerramento_tecnico",
+        "saida_montada",
+        "saida_cem_quilos",
+        "quebra_base",
+        "pressao_cabeca",
+        "cem_quilos",
+        "silverback_grip"
+      ],
+      "attributes": {
+        "health": 100,
+        "gas": 70,
+        "focus": 60,
+        "grip": 95,
+        "guard": 100,
+        "control": 75,
+        "moral": 50,
+        "speed": 45,
+        "technique": 55,
+        "pressure": 90,
+        "defense": 60
+      },
+      "attributes_source": "data/characters.json",
+      "attributes_approved": false,
+      "tuning_status": "UNCALIBRATED_CANDIDATE",
+      "tactical_ai": {
+        "aggression": 0.72,
+        "patience": 0.64,
+        "risk": 0.42,
+        "counter_bias": 0.45,
+        "anti_repeat": true,
+        "seed_policy": "DETERMINISTIC_PER_FIGHT"
+      },
+      "visuals": {
+        "primary_color": "#C9971C",
+        "accent_color": "#EDE6D6",
+        "scale_candidate": 0.92,
+        "biomechanics_reviewed": false
+      },
+      "gameplay_eligibility": "EXHIBITION_PREVIEW_ONLY",
+      "human_approved": false,
+      "shipping": false
+    },
+    "davi_relampago": {
+      "id": "davi_relampago",
+      "display_name": "Davi Relâmpago",
+      "role": "rival",
+      "signature_trigger": "counter_whiff",
+      "style": "contra_ataque_movel",
+      "preferred_families": [
+        "defesa_queda",
+        "preparacao",
+        "passagem"
+      ],
+      "preferred_actions": [
+        "sprawl",
+        "arm_drag",
+        "torreando",
+        "raspagem_tesoura"
+      ],
+      "preferred_states": [
+        "PLAYER_STANDING_NEUTRAL",
+        "PLAYER_BOTTOM_GUARD"
+      ],
+      "technique_repertoire": [
+        "grip_de_ferro",
+        "baiana",
+        "sprawl",
+        "puxada_guarda",
+        "corte_joelho",
+        "torreando",
+        "crossface",
+        "montada_pesada",
+        "chave_braco",
+        "encerramento_tecnico",
+        "saida_montada",
+        "saida_cem_quilos",
+        "quebra_base",
+        "pressao_cabeca",
+        "cem_quilos",
+        "arm_drag",
+        "raspagem_tesoura"
+      ],
+      "attributes": {
+        "health": 90,
+        "gas": 85,
+        "focus": 55,
+        "grip": 55,
+        "guard": 100,
+        "control": 45,
+        "moral": 45,
+        "speed": 90,
+        "technique": 60,
+        "pressure": 40,
+        "defense": 65
+      },
+      "attributes_source": "data/characters.json",
+      "attributes_approved": false,
+      "tuning_status": "UNCALIBRATED_CANDIDATE",
+      "tactical_ai": {
+        "aggression": 0.56,
+        "patience": 0.73,
+        "risk": 0.38,
+        "counter_bias": 0.91,
+        "anti_repeat": true,
+        "seed_policy": "DETERMINISTIC_PER_FIGHT"
+      },
+      "visuals": {
+        "primary_color": "#B85C38",
+        "accent_color": "#EDE6D6",
+        "scale_candidate": 0.96,
+        "biomechanics_reviewed": false
+      },
+      "gameplay_eligibility": "EXHIBITION_PREVIEW_ONLY",
+      "human_approved": false,
+      "shipping": false
+    },
+    "jacare_do_mangue": {
+      "id": "jacare_do_mangue",
+      "display_name": "Jacaré",
+      "role": "opponent",
+      "signature_trigger": "heavy_top",
+      "style": "pressao_top_game",
+      "preferred_families": [
+        "queda",
+        "passagem",
+        "controle"
+      ],
+      "preferred_actions": [
+        "baiana",
+        "corte_joelho",
+        "crossface",
+        "montada_pesada"
+      ],
+      "preferred_states": [
+        "PLAYER_TOP_GUARD",
+        "PLAYER_TOP_SIDE"
+      ],
+      "technique_repertoire": [
+        "grip_de_ferro",
+        "baiana",
+        "sprawl",
+        "puxada_guarda",
+        "corte_joelho",
+        "torreando",
+        "crossface",
+        "montada_pesada",
+        "chave_braco",
+        "encerramento_tecnico",
+        "saida_montada",
+        "saida_cem_quilos",
+        "quebra_base",
+        "pressao_cabeca",
+        "cem_quilos"
+      ],
+      "attributes": {
+        "health": 100,
+        "gas": 72,
+        "focus": 60,
+        "grip": 83,
+        "guard": 100,
+        "control": 86,
+        "moral": 55,
+        "speed": 55,
+        "technique": 48,
+        "pressure": 86,
+        "defense": 61
+      },
+      "attributes_source": "UNCALIBRATED_EXHIBITION_HEURISTIC",
+      "attributes_approved": false,
+      "tuning_status": "UNCALIBRATED_CANDIDATE",
+      "tactical_ai": {
+        "aggression": 0.77,
+        "patience": 0.62,
+        "risk": 0.45,
+        "counter_bias": 0.36,
+        "anti_repeat": true,
+        "seed_policy": "DETERMINISTIC_PER_FIGHT"
+      },
+      "visuals": {
+        "primary_color": "#4A6741",
+        "accent_color": "#EDE6D6",
+        "scale_candidate": 1,
+        "biomechanics_reviewed": false
+      },
+      "gameplay_eligibility": "EXHIBITION_PREVIEW_ONLY",
+      "human_approved": false,
+      "shipping": false
+    },
+    "oni_da_lapa": {
+      "id": "oni_da_lapa",
+      "display_name": "Oni da Lapa",
+      "role": "opponent",
+      "signature_trigger": "rush",
+      "style": "entrada_explosiva",
+      "preferred_families": [
+        "queda",
+        "desequilibrio",
+        "pegada"
+      ],
+      "preferred_actions": [
+        "grip_de_ferro",
+        "baiana",
+        "quebra_base",
+        "corte_joelho"
+      ],
+      "preferred_states": [
+        "PLAYER_STANDING_NEUTRAL",
+        "PLAYER_TOP_CLINCH"
+      ],
+      "technique_repertoire": [
+        "grip_de_ferro",
+        "baiana",
+        "sprawl",
+        "puxada_guarda",
+        "corte_joelho",
+        "torreando",
+        "crossface",
+        "montada_pesada",
+        "chave_braco",
+        "encerramento_tecnico",
+        "saida_montada",
+        "saida_cem_quilos",
+        "quebra_base",
+        "pressao_cabeca",
+        "cem_quilos"
+      ],
+      "attributes": {
+        "health": 100,
+        "gas": 72,
+        "focus": 60,
+        "grip": 74,
+        "guard": 100,
+        "control": 68,
+        "moral": 55,
+        "speed": 84,
+        "technique": 52,
+        "pressure": 68,
+        "defense": 52
+      },
+      "attributes_source": "UNCALIBRATED_EXHIBITION_HEURISTIC",
+      "attributes_approved": false,
+      "tuning_status": "UNCALIBRATED_CANDIDATE",
+      "tactical_ai": {
+        "aggression": 0.92,
+        "patience": 0.28,
+        "risk": 0.73,
+        "counter_bias": 0.25,
+        "anti_repeat": true,
+        "seed_policy": "DETERMINISTIC_PER_FIGHT"
+      },
+      "visuals": {
+        "primary_color": "#1E3A5F",
+        "accent_color": "#EDE6D6",
+        "scale_candidate": 1.04,
+        "biomechanics_reviewed": false
+      },
+      "gameplay_eligibility": "EXHIBITION_PREVIEW_ONLY",
+      "human_approved": false,
+      "shipping": false
+    },
+    "oni_do_sul": {
+      "id": "oni_do_sul",
+      "display_name": "Oni do Sul",
+      "role": "opponent",
+      "signature_trigger": "drain",
+      "style": "desgaste_isometrico",
+      "preferred_families": [
+        "pressao",
+        "controle",
+        "dominante"
+      ],
+      "preferred_actions": [
+        "pressao_cabeca",
+        "crossface",
+        "cem_quilos",
+        "montada_pesada"
+      ],
+      "preferred_states": [
+        "PLAYER_TOP_CLINCH",
+        "PLAYER_TOP_SIDE"
+      ],
+      "technique_repertoire": [
+        "grip_de_ferro",
+        "baiana",
+        "sprawl",
+        "puxada_guarda",
+        "corte_joelho",
+        "torreando",
+        "crossface",
+        "montada_pesada",
+        "chave_braco",
+        "encerramento_tecnico",
+        "saida_montada",
+        "saida_cem_quilos",
+        "quebra_base",
+        "pressao_cabeca",
+        "cem_quilos"
+      ],
+      "attributes": {
+        "health": 100,
+        "gas": 72,
+        "focus": 60,
+        "grip": 81,
+        "guard": 100,
+        "control": 78,
+        "moral": 55,
+        "speed": 43,
+        "technique": 80,
+        "pressure": 78,
+        "defense": 80
+      },
+      "attributes_source": "UNCALIBRATED_EXHIBITION_HEURISTIC",
+      "attributes_approved": false,
+      "tuning_status": "UNCALIBRATED_CANDIDATE",
+      "tactical_ai": {
+        "aggression": 0.64,
+        "patience": 0.84,
+        "risk": 0.35,
+        "counter_bias": 0.57,
+        "anti_repeat": true,
+        "seed_policy": "DETERMINISTIC_PER_FIGHT"
+      },
+      "visuals": {
+        "primary_color": "#D4A574",
+        "accent_color": "#EDE6D6",
+        "scale_candidate": 1.08,
+        "biomechanics_reviewed": false
+      },
+      "gameplay_eligibility": "EXHIBITION_PREVIEW_ONLY",
+      "human_approved": false,
+      "shipping": false
+    },
+    "mateus_predador": {
+      "id": "mateus_predador",
+      "display_name": "Mateus Predador",
+      "role": "opponent",
+      "signature_trigger": "fero",
+      "style": "finalizacao_agressiva",
+      "preferred_families": [
+        "finalizacao",
+        "queda"
+      ],
+      "preferred_actions": [
+        "baiana",
+        "chave_braco",
+        "mata_leao",
+        "encerramento_tecnico"
+      ],
+      "preferred_states": [
+        "PLAYER_TOP_MOUNT",
+        "PLAYER_BACK_ATTACK"
+      ],
+      "technique_repertoire": [
+        "grip_de_ferro",
+        "baiana",
+        "sprawl",
+        "puxada_guarda",
+        "corte_joelho",
+        "torreando",
+        "crossface",
+        "montada_pesada",
+        "chave_braco",
+        "encerramento_tecnico",
+        "saida_montada",
+        "saida_cem_quilos",
+        "quebra_base",
+        "pressao_cabeca",
+        "cem_quilos",
+        "mata_leao"
+      ],
+      "attributes": {
+        "health": 100,
+        "gas": 72,
+        "focus": 60,
+        "grip": 76,
+        "guard": 100,
+        "control": 72,
+        "moral": 55,
+        "speed": 68,
+        "technique": 62,
+        "pressure": 72,
+        "defense": 58
+      },
+      "attributes_source": "UNCALIBRATED_EXHIBITION_HEURISTIC",
+      "attributes_approved": false,
+      "tuning_status": "UNCALIBRATED_CANDIDATE",
+      "tactical_ai": {
+        "aggression": 0.89,
+        "patience": 0.38,
+        "risk": 0.8,
+        "counter_bias": 0.4,
+        "anti_repeat": true,
+        "seed_policy": "DETERMINISTIC_PER_FIGHT"
+      },
+      "visuals": {
+        "primary_color": "#3FE3F5",
+        "accent_color": "#EDE6D6",
+        "scale_candidate": 0.92,
+        "biomechanics_reviewed": false
+      },
+      "gameplay_eligibility": "EXHIBITION_PREVIEW_ONLY",
+      "human_approved": false,
+      "shipping": false
+    },
+    "verao_velho": {
+      "id": "verao_velho",
+      "display_name": "Verão Velho",
+      "role": "opponent",
+      "signature_trigger": "read",
+      "style": "leitura_e_paciencia",
+      "preferred_families": [
+        "defesa_queda",
+        "escape",
+        "preparacao"
+      ],
+      "preferred_actions": [
+        "sprawl",
+        "arm_drag",
+        "torreando",
+        "saida_cem_quilos"
+      ],
+      "preferred_states": [
+        "PLAYER_STANDING_NEUTRAL",
+        "PLAYER_BOTTOM_SIDE"
+      ],
+      "technique_repertoire": [
+        "grip_de_ferro",
+        "baiana",
+        "sprawl",
+        "puxada_guarda",
+        "corte_joelho",
+        "torreando",
+        "crossface",
+        "montada_pesada",
+        "chave_braco",
+        "encerramento_tecnico",
+        "saida_montada",
+        "saida_cem_quilos",
+        "quebra_base",
+        "pressao_cabeca",
+        "cem_quilos",
+        "arm_drag"
+      ],
+      "attributes": {
+        "health": 100,
+        "gas": 72,
+        "focus": 60,
+        "grip": 60,
+        "guard": 100,
+        "control": 50,
+        "moral": 55,
+        "speed": 57,
+        "technique": 90,
+        "pressure": 50,
+        "defense": 89
+      },
+      "attributes_source": "UNCALIBRATED_EXHIBITION_HEURISTIC",
+      "attributes_approved": false,
+      "tuning_status": "UNCALIBRATED_CANDIDATE",
+      "tactical_ai": {
+        "aggression": 0.36,
+        "patience": 0.93,
+        "risk": 0.21,
+        "counter_bias": 0.88,
+        "anti_repeat": true,
+        "seed_policy": "DETERMINISTIC_PER_FIGHT"
+      },
+      "visuals": {
+        "primary_color": "#FF9408",
+        "accent_color": "#EDE6D6",
+        "scale_candidate": 0.96,
+        "biomechanics_reviewed": false
+      },
+      "gameplay_eligibility": "EXHIBITION_PREVIEW_ONLY",
+      "human_approved": false,
+      "shipping": false
+    },
+    "leoa": {
+      "id": "leoa",
+      "display_name": "Leoa",
+      "role": "rival_ally",
+      "signature_trigger": "rhythm",
+      "style": "ritmo_e_angulo",
+      "preferred_families": [
+        "raspagem",
+        "puxada_guarda",
+        "finalizacao"
+      ],
+      "preferred_actions": [
+        "puxada_guarda",
+        "raspagem_tesoura",
+        "raspagem_borboleta",
+        "triangulo"
+      ],
+      "preferred_states": [
+        "PLAYER_BOTTOM_GUARD"
+      ],
+      "technique_repertoire": [
+        "grip_de_ferro",
+        "baiana",
+        "sprawl",
+        "puxada_guarda",
+        "corte_joelho",
+        "torreando",
+        "crossface",
+        "montada_pesada",
+        "chave_braco",
+        "encerramento_tecnico",
+        "saida_montada",
+        "saida_cem_quilos",
+        "quebra_base",
+        "pressao_cabeca",
+        "cem_quilos",
+        "raspagem_tesoura",
+        "raspagem_borboleta",
+        "triangulo"
+      ],
+      "attributes": {
+        "health": 100,
+        "gas": 72,
+        "focus": 60,
+        "grip": 57,
+        "guard": 100,
+        "control": 60,
+        "moral": 55,
+        "speed": 86,
+        "technique": 78,
+        "pressure": 60,
+        "defense": 80
+      },
+      "attributes_source": "UNCALIBRATED_EXHIBITION_HEURISTIC",
+      "attributes_approved": false,
+      "tuning_status": "UNCALIBRATED_CANDIDATE",
+      "tactical_ai": {
+        "aggression": 0.59,
+        "patience": 0.63,
+        "risk": 0.47,
+        "counter_bias": 0.77,
+        "anti_repeat": true,
+        "seed_policy": "DETERMINISTIC_PER_FIGHT"
+      },
+      "visuals": {
+        "primary_color": "#8B0000",
+        "accent_color": "#EDE6D6",
+        "scale_candidate": 1,
+        "biomechanics_reviewed": false
+      },
+      "gameplay_eligibility": "EXHIBITION_PREVIEW_ONLY",
+      "human_approved": false,
+      "shipping": false
+    },
+    "byaku": {
+      "id": "byaku",
+      "display_name": "Byaku",
+      "role": "opponent_ally_master",
+      "signature_trigger": "punish",
+      "style": "punicao_de_erro",
+      "preferred_families": [
+        "defesa_queda",
+        "preparacao",
+        "finalizacao"
+      ],
+      "preferred_actions": [
+        "sprawl",
+        "arm_drag",
+        "chave_braco",
+        "torreando"
+      ],
+      "preferred_states": [
+        "PLAYER_STANDING_NEUTRAL",
+        "PLAYER_TOP_MOUNT"
+      ],
+      "technique_repertoire": [
+        "grip_de_ferro",
+        "baiana",
+        "sprawl",
+        "puxada_guarda",
+        "corte_joelho",
+        "torreando",
+        "crossface",
+        "montada_pesada",
+        "chave_braco",
+        "encerramento_tecnico",
+        "saida_montada",
+        "saida_cem_quilos",
+        "quebra_base",
+        "pressao_cabeca",
+        "cem_quilos",
+        "arm_drag"
+      ],
+      "attributes": {
+        "health": 100,
+        "gas": 72,
+        "focus": 60,
+        "grip": 62,
+        "guard": 100,
+        "control": 60,
+        "moral": 55,
+        "speed": 71,
+        "technique": 88,
+        "pressure": 60,
+        "defense": 86
+      },
+      "attributes_source": "UNCALIBRATED_EXHIBITION_HEURISTIC",
+      "attributes_approved": false,
+      "tuning_status": "UNCALIBRATED_CANDIDATE",
+      "tactical_ai": {
+        "aggression": 0.61,
+        "patience": 0.79,
+        "risk": 0.4,
+        "counter_bias": 0.91,
+        "anti_repeat": true,
+        "seed_policy": "DETERMINISTIC_PER_FIGHT"
+      },
+      "visuals": {
+        "primary_color": "#4B0082",
+        "accent_color": "#EDE6D6",
+        "scale_candidate": 1.04,
+        "biomechanics_reviewed": false
+      },
+      "gameplay_eligibility": "EXHIBITION_PREVIEW_ONLY",
+      "human_approved": false,
+      "shipping": false
+    },
+    "kenzo_kuroi": {
+      "id": "kenzo_kuroi",
+      "display_name": "Kenzo Kuroi",
+      "role": "opponent",
+      "signature_trigger": "zanshin",
+      "style": "controle_e_precisao",
+      "preferred_families": [
+        "controle",
+        "passagem",
+        "pegada"
+      ],
+      "preferred_actions": [
+        "grip_de_ferro",
+        "torreando",
+        "crossface",
+        "chave_braco"
+      ],
+      "preferred_states": [
+        "PLAYER_TOP_SIDE",
+        "PLAYER_TOP_GUARD"
+      ],
+      "technique_repertoire": [
+        "grip_de_ferro",
+        "baiana",
+        "sprawl",
+        "puxada_guarda",
+        "corte_joelho",
+        "torreando",
+        "crossface",
+        "montada_pesada",
+        "chave_braco",
+        "encerramento_tecnico",
+        "saida_montada",
+        "saida_cem_quilos",
+        "quebra_base",
+        "pressao_cabeca",
+        "cem_quilos"
+      ],
+      "attributes": {
+        "health": 100,
+        "gas": 72,
+        "focus": 60,
+        "grip": 67,
+        "guard": 100,
+        "control": 72,
+        "moral": 55,
+        "speed": 69,
+        "technique": 88,
+        "pressure": 72,
+        "defense": 79
+      },
+      "attributes_source": "UNCALIBRATED_EXHIBITION_HEURISTIC",
+      "attributes_approved": false,
+      "tuning_status": "UNCALIBRATED_CANDIDATE",
+      "tactical_ai": {
+        "aggression": 0.53,
+        "patience": 0.86,
+        "risk": 0.27,
+        "counter_bias": 0.74,
+        "anti_repeat": true,
+        "seed_policy": "DETERMINISTIC_PER_FIGHT"
+      },
+      "visuals": {
+        "primary_color": "#C9971C",
+        "accent_color": "#EDE6D6",
+        "scale_candidate": 1.08,
+        "biomechanics_reviewed": false
+      },
+      "gameplay_eligibility": "EXHIBITION_PREVIEW_ONLY",
+      "human_approved": false,
+      "shipping": false
+    },
+    "ubira": {
+      "id": "ubira",
+      "display_name": "Ubirá",
+      "role": "opponent_ally",
+      "signature_trigger": "takedown",
+      "style": "especialista_quedas",
+      "preferred_families": [
+        "queda",
+        "pegada",
+        "desequilibrio"
+      ],
+      "preferred_actions": [
+        "baiana",
+        "grip_de_ferro",
+        "quebra_base",
+        "corte_joelho"
+      ],
+      "preferred_states": [
+        "PLAYER_STANDING_NEUTRAL",
+        "PLAYER_TOP_CLINCH"
+      ],
+      "technique_repertoire": [
+        "grip_de_ferro",
+        "baiana",
+        "sprawl",
+        "puxada_guarda",
+        "corte_joelho",
+        "torreando",
+        "crossface",
+        "montada_pesada",
+        "chave_braco",
+        "encerramento_tecnico",
+        "saida_montada",
+        "saida_cem_quilos",
+        "quebra_base",
+        "pressao_cabeca",
+        "cem_quilos"
+      ],
+      "attributes": {
+        "health": 100,
+        "gas": 72,
+        "focus": 60,
+        "grip": 79,
+        "guard": 100,
+        "control": 70,
+        "moral": 55,
+        "speed": 72,
+        "technique": 61,
+        "pressure": 70,
+        "defense": 68
+      },
+      "attributes_source": "UNCALIBRATED_EXHIBITION_HEURISTIC",
+      "attributes_approved": false,
+      "tuning_status": "UNCALIBRATED_CANDIDATE",
+      "tactical_ai": {
+        "aggression": 0.78,
+        "patience": 0.59,
+        "risk": 0.49,
+        "counter_bias": 0.44,
+        "anti_repeat": true,
+        "seed_policy": "DETERMINISTIC_PER_FIGHT"
+      },
+      "visuals": {
+        "primary_color": "#B85C38",
+        "accent_color": "#EDE6D6",
+        "scale_candidate": 0.92,
+        "biomechanics_reviewed": false
+      },
+      "gameplay_eligibility": "EXHIBITION_PREVIEW_ONLY",
+      "human_approved": false,
+      "shipping": false
+    },
+    "cassio_molho": {
+      "id": "cassio_molho",
+      "display_name": "Cássio Molho",
+      "role": "shadow_rival",
+      "signature_trigger": "dirty",
+      "style": "pressao_psicologica",
+      "preferred_families": [
+        "pegada",
+        "pressao",
+        "controle"
+      ],
+      "preferred_actions": [
+        "grip_de_ferro",
+        "pressao_cabeca",
+        "crossface",
+        "quebra_base"
+      ],
+      "preferred_states": [
+        "PLAYER_TOP_CLINCH",
+        "PLAYER_TOP_SIDE"
+      ],
+      "technique_repertoire": [
+        "grip_de_ferro",
+        "baiana",
+        "sprawl",
+        "puxada_guarda",
+        "corte_joelho",
+        "torreando",
+        "crossface",
+        "montada_pesada",
+        "chave_braco",
+        "encerramento_tecnico",
+        "saida_montada",
+        "saida_cem_quilos",
+        "quebra_base",
+        "pressao_cabeca",
+        "cem_quilos"
+      ],
+      "attributes": {
+        "health": 100,
+        "gas": 72,
+        "focus": 60,
+        "grip": 72,
+        "guard": 100,
+        "control": 75,
+        "moral": 55,
+        "speed": 61,
+        "technique": 57,
+        "pressure": 75,
+        "defense": 54
+      },
+      "attributes_source": "UNCALIBRATED_EXHIBITION_HEURISTIC",
+      "attributes_approved": false,
+      "tuning_status": "UNCALIBRATED_CANDIDATE",
+      "tactical_ai": {
+        "aggression": 0.81,
+        "patience": 0.37,
+        "risk": 0.67,
+        "counter_bias": 0.39,
+        "anti_repeat": true,
+        "seed_policy": "DETERMINISTIC_PER_FIGHT"
+      },
+      "visuals": {
+        "primary_color": "#4A6741",
+        "accent_color": "#EDE6D6",
+        "scale_candidate": 0.96,
+        "biomechanics_reviewed": false
+      },
+      "gameplay_eligibility": "EXHIBITION_PREVIEW_ONLY",
+      "human_approved": false,
+      "shipping": false
+    },
+    "montenegro": {
+      "id": "montenegro",
+      "display_name": "Montenegro",
+      "role": "opponent",
+      "signature_trigger": "backup",
+      "style": "defesa_resiliente",
+      "preferred_families": [
+        "escape",
+        "defesa_queda",
+        "raspagem"
+      ],
+      "preferred_actions": [
+        "sprawl",
+        "saida_montada",
+        "saida_cem_quilos",
+        "raspagem_tesoura"
+      ],
+      "preferred_states": [
+        "PLAYER_BOTTOM_SIDE",
+        "PLAYER_BOTTOM_MOUNT"
+      ],
+      "technique_repertoire": [
+        "grip_de_ferro",
+        "baiana",
+        "sprawl",
+        "puxada_guarda",
+        "corte_joelho",
+        "torreando",
+        "crossface",
+        "montada_pesada",
+        "chave_braco",
+        "encerramento_tecnico",
+        "saida_montada",
+        "saida_cem_quilos",
+        "quebra_base",
+        "pressao_cabeca",
+        "cem_quilos",
+        "raspagem_tesoura"
+      ],
+      "attributes": {
+        "health": 100,
+        "gas": 72,
+        "focus": 60,
+        "grip": 60,
+        "guard": 100,
+        "control": 62,
+        "moral": 55,
+        "speed": 63,
+        "technique": 88,
+        "pressure": 62,
+        "defense": 91
+      },
+      "attributes_source": "UNCALIBRATED_EXHIBITION_HEURISTIC",
+      "attributes_approved": false,
+      "tuning_status": "UNCALIBRATED_CANDIDATE",
+      "tactical_ai": {
+        "aggression": 0.44,
+        "patience": 0.89,
+        "risk": 0.22,
+        "counter_bias": 0.78,
+        "anti_repeat": true,
+        "seed_policy": "DETERMINISTIC_PER_FIGHT"
+      },
+      "visuals": {
+        "primary_color": "#1E3A5F",
+        "accent_color": "#EDE6D6",
+        "scale_candidate": 1,
+        "biomechanics_reviewed": false
+      },
+      "gameplay_eligibility": "EXHIBITION_PREVIEW_ONLY",
+      "human_approved": false,
+      "shipping": false
+    },
+    "ruan_do_avesso": {
+      "id": "ruan_do_avesso",
+      "display_name": "Ruan do Avesso",
+      "role": "mirror",
+      "signature_trigger": "feed",
+      "style": "guarda_reativa",
+      "preferred_families": [
+        "puxada_guarda",
+        "raspagem",
+        "finalizacao"
+      ],
+      "preferred_actions": [
+        "puxada_guarda",
+        "raspagem_borboleta",
+        "triangulo",
+        "raspagem_tesoura"
+      ],
+      "preferred_states": [
+        "PLAYER_BOTTOM_GUARD"
+      ],
+      "technique_repertoire": [
+        "grip_de_ferro",
+        "baiana",
+        "sprawl",
+        "puxada_guarda",
+        "corte_joelho",
+        "torreando",
+        "crossface",
+        "montada_pesada",
+        "chave_braco",
+        "encerramento_tecnico",
+        "saida_montada",
+        "saida_cem_quilos",
+        "quebra_base",
+        "pressao_cabeca",
+        "cem_quilos",
+        "raspagem_borboleta",
+        "triangulo",
+        "raspagem_tesoura"
+      ],
+      "attributes": {
+        "health": 100,
+        "gas": 72,
+        "focus": 60,
+        "grip": 55,
+        "guard": 100,
+        "control": 57,
+        "moral": 55,
+        "speed": 85,
+        "technique": 77,
+        "pressure": 57,
+        "defense": 83
+      },
+      "attributes_source": "UNCALIBRATED_EXHIBITION_HEURISTIC",
+      "attributes_approved": false,
+      "tuning_status": "UNCALIBRATED_CANDIDATE",
+      "tactical_ai": {
+        "aggression": 0.53,
+        "patience": 0.7,
+        "risk": 0.56,
+        "counter_bias": 0.83,
+        "anti_repeat": true,
+        "seed_policy": "DETERMINISTIC_PER_FIGHT"
+      },
+      "visuals": {
+        "primary_color": "#D4A574",
+        "accent_color": "#EDE6D6",
+        "scale_candidate": 1.04,
+        "biomechanics_reviewed": false
+      },
+      "gameplay_eligibility": "EXHIBITION_PREVIEW_ONLY",
+      "human_approved": false,
+      "shipping": false
+    },
+    "viera": {
+      "id": "viera",
+      "display_name": "Viera",
+      "role": "nogi_master_archetype",
+      "signature_trigger": "pressure",
+      "style": "pressao_constante",
+      "preferred_families": [
+        "passagem",
+        "controle",
+        "dominante"
+      ],
+      "preferred_actions": [
+        "crossface",
+        "corte_joelho",
+        "montada_pesada",
+        "cem_quilos"
+      ],
+      "preferred_states": [
+        "PLAYER_TOP_SIDE",
+        "PLAYER_TOP_MOUNT"
+      ],
+      "technique_repertoire": [
+        "grip_de_ferro",
+        "baiana",
+        "sprawl",
+        "puxada_guarda",
+        "corte_joelho",
+        "torreando",
+        "crossface",
+        "montada_pesada",
+        "chave_braco",
+        "encerramento_tecnico",
+        "saida_montada",
+        "saida_cem_quilos",
+        "quebra_base",
+        "pressao_cabeca",
+        "cem_quilos"
+      ],
+      "attributes": {
+        "health": 100,
+        "gas": 72,
+        "focus": 60,
+        "grip": 87,
+        "guard": 100,
+        "control": 86,
+        "moral": 55,
+        "speed": 53,
+        "technique": 62,
+        "pressure": 86,
+        "defense": 64
+      },
+      "attributes_source": "UNCALIBRATED_EXHIBITION_HEURISTIC",
+      "attributes_approved": false,
+      "tuning_status": "UNCALIBRATED_CANDIDATE",
+      "tactical_ai": {
+        "aggression": 0.83,
+        "patience": 0.63,
+        "risk": 0.38,
+        "counter_bias": 0.47,
+        "anti_repeat": true,
+        "seed_policy": "DETERMINISTIC_PER_FIGHT"
+      },
+      "visuals": {
+        "primary_color": "#3FE3F5",
+        "accent_color": "#EDE6D6",
+        "scale_candidate": 1.08,
+        "biomechanics_reviewed": false
+      },
+      "gameplay_eligibility": "EXHIBITION_PREVIEW_ONLY",
+      "human_approved": false,
+      "shipping": false
+    },
+    "miyao": {
+      "id": "miyao",
+      "display_name": "Miyao",
+      "role": "nogi_master_archetype",
+      "signature_trigger": "berimbolo",
+      "style": "mobilidade_guarda_invertida",
+      "preferred_families": [
+        "raspagem",
+        "puxada_guarda",
+        "finalizacao"
+      ],
+      "preferred_actions": [
+        "puxada_guarda",
+        "raspagem_borboleta",
+        "triangulo",
+        "raspagem_tesoura"
+      ],
+      "preferred_states": [
+        "PLAYER_BOTTOM_GUARD"
+      ],
+      "technique_repertoire": [
+        "grip_de_ferro",
+        "baiana",
+        "sprawl",
+        "puxada_guarda",
+        "corte_joelho",
+        "torreando",
+        "crossface",
+        "montada_pesada",
+        "chave_braco",
+        "encerramento_tecnico",
+        "saida_montada",
+        "saida_cem_quilos",
+        "quebra_base",
+        "pressao_cabeca",
+        "cem_quilos",
+        "raspagem_borboleta",
+        "triangulo",
+        "raspagem_tesoura"
+      ],
+      "attributes": {
+        "health": 100,
+        "gas": 72,
+        "focus": 60,
+        "grip": 52,
+        "guard": 100,
+        "control": 58,
+        "moral": 55,
+        "speed": 90,
+        "technique": 79,
+        "pressure": 58,
+        "defense": 76
+      },
+      "attributes_source": "UNCALIBRATED_EXHIBITION_HEURISTIC",
+      "attributes_approved": false,
+      "tuning_status": "UNCALIBRATED_CANDIDATE",
+      "tactical_ai": {
+        "aggression": 0.57,
+        "patience": 0.62,
+        "risk": 0.54,
+        "counter_bias": 0.76,
+        "anti_repeat": true,
+        "seed_policy": "DETERMINISTIC_PER_FIGHT"
+      },
+      "visuals": {
+        "primary_color": "#FF9408",
+        "accent_color": "#EDE6D6",
+        "scale_candidate": 0.92,
+        "biomechanics_reviewed": false
+      },
+      "gameplay_eligibility": "EXHIBITION_PREVIEW_ONLY",
+      "human_approved": false,
+      "shipping": false
+    },
+    "galvao": {
+      "id": "galvao",
+      "display_name": "Galvão",
+      "role": "nogi_master_archetype",
+      "signature_trigger": "finish",
+      "style": "busca_finalizacao",
+      "preferred_families": [
+        "finalizacao",
+        "preparacao"
+      ],
+      "preferred_actions": [
+        "chave_braco",
+        "mata_leao",
+        "triangulo",
+        "encerramento_tecnico"
+      ],
+      "preferred_states": [
+        "PLAYER_TOP_MOUNT",
+        "PLAYER_BACK_ATTACK",
+        "PLAYER_BOTTOM_GUARD"
+      ],
+      "technique_repertoire": [
+        "grip_de_ferro",
+        "baiana",
+        "sprawl",
+        "puxada_guarda",
+        "corte_joelho",
+        "torreando",
+        "crossface",
+        "montada_pesada",
+        "chave_braco",
+        "encerramento_tecnico",
+        "saida_montada",
+        "saida_cem_quilos",
+        "quebra_base",
+        "pressao_cabeca",
+        "cem_quilos",
+        "mata_leao",
+        "triangulo"
+      ],
+      "attributes": {
+        "health": 100,
+        "gas": 72,
+        "focus": 60,
+        "grip": 72,
+        "guard": 100,
+        "control": 82,
+        "moral": 55,
+        "speed": 69,
+        "technique": 72,
+        "pressure": 82,
+        "defense": 66
+      },
+      "attributes_source": "UNCALIBRATED_EXHIBITION_HEURISTIC",
+      "attributes_approved": false,
+      "tuning_status": "UNCALIBRATED_CANDIDATE",
+      "tactical_ai": {
+        "aggression": 0.84,
+        "patience": 0.49,
+        "risk": 0.64,
+        "counter_bias": 0.53,
+        "anti_repeat": true,
+        "seed_policy": "DETERMINISTIC_PER_FIGHT"
+      },
+      "visuals": {
+        "primary_color": "#8B0000",
+        "accent_color": "#EDE6D6",
+        "scale_candidate": 0.96,
+        "biomechanics_reviewed": false
+      },
+      "gameplay_eligibility": "EXHIBITION_PREVIEW_ONLY",
+      "human_approved": false,
+      "shipping": false
+    }
+  },
+  "shipping": false
+}

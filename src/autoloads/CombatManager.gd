@@ -10,6 +10,7 @@ const TechniqueClashResolverScript = preload("res://src/combat/TechniqueClashRes
 const FrameDataSystemScript = preload("res://src/combat/FrameDataSystem.gd")
 const CombatCoreV2CoordinatorScript = preload("res://src/combat/CombatCoreV2Coordinator.gd")
 const ScoringSystemScript = preload("res://src/combat/ScoringSystem.gd")
+const UniversalFighterProfilesScript = preload("res://src/combat/FighterCombatProfileRegistryV1.gd")
 
 const STATE_MIRROR := {
 	"PLAYER_STANDING_NEUTRAL": "PLAYER_STANDING_NEUTRAL",
@@ -33,6 +34,9 @@ var arena_id: String = ""
 var player_id: String = DEFAULT_PLAYER_ID
 var opponent_id: String = DEFAULT_OPPONENT_ID
 var fighters: Dictionary = {}
+var pending_exhibition: Dictionary = {}
+var is_exhibition: bool = false
+var exhibition_profiles
 var is_running: bool = false
 var last_result: Dictionary = {}
 var state_machine: Node
@@ -71,6 +75,28 @@ func _ensure_runtime_components() -> void:
 		add_child(scoring_system)
 	_ensure_combat_core_v2()
 
+## Exhibition mode never advances career/save, and is opt-in.
+func prepare_exhibition_match(selected_player: String, selected_opponent: String, selected_arena: String = "arena_do_dique") -> Dictionary:
+	if is_running:
+		return {"ok": false, "error": "combat_already_running"}
+	if exhibition_profiles == null:
+		exhibition_profiles = UniversalFighterProfilesScript.new()
+	var result: Dictionary = exhibition_profiles.prepare_exhibition(selected_player, selected_opponent, selected_arena)
+	if not bool(result.get("ok", false)):
+		return result
+	if not DataRegistry.arenas.has(selected_arena):
+		return {"ok": false, "error": "arena_not_in_catalog"}
+	clear_combat_v2_plan()
+	pending_exhibition = result.duplicate(true)
+	return result
+
+func get_pending_exhibition_match() -> Dictionary:
+	return pending_exhibition.duplicate(true)
+
+func cancel_exhibition_match() -> void:
+	if not is_running:
+		pending_exhibition.clear()
+
 func start_combat(new_arena_id: String, new_player_id: String, new_opponent_id: String) -> Dictionary:
 	_ensure_runtime_components()
 	if is_running:
@@ -79,10 +105,19 @@ func start_combat(new_arena_id: String, new_player_id: String, new_opponent_id: 
 	var requested_opponent := new_opponent_id if new_opponent_id != "" else DEFAULT_OPPONENT_ID
 	if requested_player == requested_opponent:
 		return {"ok": false, "error": "same_fighter"}
+	var exhibition_requested := not pending_exhibition.is_empty()
+	if exhibition_requested:
+		if str(pending_exhibition.get("player_id", "")) != requested_player or str(pending_exhibition.get("opponent_id", "")) != requested_opponent or str(pending_exhibition.get("arena_id", "")) != new_arena_id:
+			return {"ok": false, "error": "exhibition_match_mismatch"}
 	if _combat_v2_active():
 		var plan: Dictionary = combat_core_v2.current_plan
 		if str(plan.get("opponent_id", "")) != requested_opponent or str(plan.get("arena_id", "")) != new_arena_id:
 			return {"ok": false, "error": "pre_fight_plan_mismatch"}
+	if exhibition_requested and (exhibition_profiles == null or not exhibition_profiles.ready()):
+		return {"ok": false, "error": "exhibition_profiles_not_ready"}
+	is_exhibition = exhibition_requested
+	if exhibition_requested:
+		pending_exhibition.clear()
 	arena_id = new_arena_id if new_arena_id != "" else "terreiro_da_luta"
 	player_id = new_player_id if new_player_id != "" else DEFAULT_PLAYER_ID
 	opponent_id = new_opponent_id if new_opponent_id != "" else DEFAULT_OPPONENT_ID
@@ -111,7 +146,7 @@ func start_combat(new_arena_id: String, new_player_id: String, new_opponent_id: 
 			opening_hand = opening_rescue.get("hand", opening_hand).duplicate()
 		SignalBus.combat_v2_hand_changed.emit(opening_hand)
 	else:
-		if has_node("/root/DeckManager"):
+		if not is_exhibition and has_node("/root/DeckManager"):
 			DeckManager.start_combat_hand()
 	SignalBus.combat_started.emit(arena_id, player_id, opponent_id)
 	if SignalBus.has_signal("combate_iniciado"):
@@ -132,6 +167,8 @@ func iniciar_combate(id_jogador: String, id_oponente: String, arena: String) -> 
 func _create_runtime_stats(character_id: String) -> Dictionary:
 	var base: Dictionary = DataRegistry.characters.get(character_id, {})
 	var stats: Dictionary = base.get("stats", {})
+	if is_exhibition and stats.is_empty() and exhibition_profiles != null:
+		stats = exhibition_profiles.candidate_stats(character_id)
 	return {
 		"health": float(stats.get("health", stats.get("hp", 100))),
 		"gas": float(stats.get("gas", 70)),
@@ -234,6 +271,8 @@ func get_available_techniques(actor_id: String = "") -> Array:
 		if seen_ids.has(technique_id):
 			continue
 		seen_ids[technique_id] = true
+		if is_exhibition and (exhibition_profiles == null or not exhibition_profiles.action_allowed(resolved_actor, technique_id)):
+			continue
 		var entry_state: String = str(technique.get("entry_state", technique.get("estado_entrada", "")))
 		if entry_state != "" and entry_state != actor_state:
 			continue
@@ -260,7 +299,7 @@ func get_available_techniques(actor_id: String = "") -> Array:
 			item["deck_card_id"] = "" if contextual_action else technique_id
 			if not v2_available:
 				continue
-		elif resolved_actor == player_id and has_node("/root/DeckManager"):
+		elif resolved_actor == player_id and not is_exhibition and has_node("/root/DeckManager"):
 			var card: Dictionary = DeckManager.get_attack_card(str(technique.get("id", "")), actor, actor_state)
 			item["deck_card_available"] = not card.is_empty()
 			item["deck_card_level"] = int(card.get("level", 0))
@@ -351,6 +390,8 @@ func execute_technique(actor_id: String, defender_id: String, technique: Diction
 		return {"success": false, "error": "fighter_not_found", "technique_id": technique.get("id", "unknown")}
 	if actor_id == defender_id:
 		return {"success": false, "accepted": false, "error": "same_fighter"}
+	if is_exhibition and (exhibition_profiles == null or not exhibition_profiles.action_allowed(actor_id, str(technique.get("id", "")))):
+		return {"success": false, "accepted": false, "error": "fighter_repertoire_restricted"}
 	var owner := str(technique.get("dono", technique.get("owner", "qualquer")))
 	if owner != "" and owner != "qualquer" and owner != actor_id:
 		return {"success": false, "accepted": false, "error": "technique_owner_mismatch"}
@@ -382,7 +423,7 @@ func execute_technique(actor_id: String, defender_id: String, technique: Diction
 	if actor_id == player_id and _combat_v2_active() and combat_core_v2.card_available(technique_id):
 		var next_hand: Array = combat_core_v2.consume_card(technique_id)
 		SignalBus.combat_v2_hand_changed.emit(next_hand)
-	elif has_node("/root/DeckManager") and actor_id == player_id:
+	elif not is_exhibition and has_node("/root/DeckManager") and actor_id == player_id:
 		DeckManager.consume_used_card(str(card_context.get("attack_card", {}).get("id", "")), bool(resolver_result.get("success", false)))
 
 	var defense_commit: Dictionary = {}
@@ -538,7 +579,7 @@ func _commit_defense_response(defender_id: String, defense_input: String, attack
 	if defender_id == player_id and _combat_v2_active() and combat_core_v2.card_available(defense_input):
 		var next_hand: Array = combat_core_v2.consume_card(defense_input)
 		SignalBus.combat_v2_hand_changed.emit(next_hand)
-	elif defender_id == player_id and has_node("/root/DeckManager"):
+	elif defender_id == player_id and not is_exhibition and has_node("/root/DeckManager"):
 		DeckManager.consume_used_card(defense_input, denied_attack)
 
 	var defender_state_to := str(runtime_response.get("exit_state", runtime_response.get("estado_saida", get_actor_state_name(defender_id))))
@@ -583,7 +624,7 @@ func _build_card_context(
 		context["chance_modifier"] = 0.0
 		context["frame_data"] = {}
 		return context
-	if not has_node("/root/DeckManager"):
+	if is_exhibition or not has_node("/root/DeckManager"):
 		return context
 	var technique_id := str(technique.get("id", ""))
 	var family := str(technique.get("family", technique.get("familia", "geral")))
@@ -699,9 +740,11 @@ func finish_combat(result: Dictionary) -> void:
 	is_running = false
 	phase = CombatPhase.RESET
 	last_result = combat_core_v2.finish_result(result) if _combat_v2_active() else result.duplicate(true)
+	last_result["exhibition"] = is_exhibition
 	last_result["fighters"] = fighters.duplicate(true)
 	last_result["final_state"] = get_current_state_name()
-	_apply_post_combat_effects(last_result)
+	if not is_exhibition:
+		_apply_post_combat_effects(last_result)
 	state_machine.call("reset")
 	SignalBus.combat_finished.emit(last_result)
 	SignalBus.combat_ended.emit(last_result)

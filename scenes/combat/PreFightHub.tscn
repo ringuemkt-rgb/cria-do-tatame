@@ -146,3 +146,8 @@ text = "VOLTAR"
 custom_minimum_size = Vector2(220, 52)
 layout_mode = 2
 text = "CONFIRMAR DECK"
+
+[node name="Exhibition" type="Button" parent="Root/Footer"]
+custom_minimum_size = Vector2(190, 52)
+layout_mode = 2
+text = "EXIBIÇÃO LIVRE"

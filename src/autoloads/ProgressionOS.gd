@@ -444,6 +444,8 @@ func _on_training_completed(training_type, activity_id, result) -> void:
 		)
 
 func _on_technique_resolved(result) -> void:
+	if has_node("/root/CombatManager") and bool(CombatManager.is_exhibition):
+		return
 	if typeof(result) != TYPE_DICTIONARY:
 		return
 	var actor_id: String = str(result.get("actor_id", ""))
@@ -470,6 +472,8 @@ func _on_technique_resolved(result) -> void:
 	)
 
 func _on_combat_finished(result) -> void:
+	if typeof(result) == TYPE_DICTIONARY and bool(result.get("exhibition", false)):
+		return
 	if typeof(result) != TYPE_DICTIONARY or not has_node("/root/WorldState"):
 		return
 	var won: bool = str(result.get("winner", "")) == str(WorldState.player_id)

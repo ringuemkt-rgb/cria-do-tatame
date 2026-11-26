@@ -59,6 +59,27 @@ func _run() -> void:
 		var motion: Dictionary = pair.plan_for(str(technique_id), "ruan_macacao", true, true, "PLAYER_STANDING_NEUTRAL", "PLAYER_TOP_GUARD")
 		_check(motion.get("phases", []).size() == 6, "six phases for " + str(technique_id))
 		_check(not bool(motion.get("authoritative", true)), "motion cannot own combat authority " + str(technique_id))
+	# Visual endpoints must reflect the resolved position, not just the word TOP.
+	var clinch: Dictionary = pair.plan_for("grip_de_ferro", "ruan_macacao", true, true, "PLAYER_STANDING_NEUTRAL", "PLAYER_TOP_CLINCH")
+	var clinch_steps: Array = clinch.get("phases", [])
+	_check(clinch_steps.size() == 6, "grip has six shared phases")
+	if clinch_steps.size() == 6:
+		_check(clinch_steps[-1]["ruan_pose"] == "grip" and clinch_steps[-1]["davi_pose"] == "defense", "standing clinch never ends with grounded fighters")
+	var bottom_clinch: Dictionary = pair._final_poses("PLAYER_BOTTOM_CLINCH")
+	_check(bottom_clinch["ruan"] == "defense" and bottom_clinch["davi"] == "grip", "opponent-controlled clinch mirrors standing roles")
+	var rig = ruan.get_node_or_null("ProceduralRigPreview")
+	if rig != null:
+		var top: Dictionary = rig._points_for_pose("top")
+		var passing: Dictionary = rig._points_for_pose("pass")
+		var mounted: Dictionary = rig._points_for_pose("mount")
+		_check(top["head"] != passing["head"] and top["head"] != mounted["head"], "pass and mount have distinct head posture")
+		_check(passing["lf"] != mounted["lf"], "pass and mount have distinct base silhouettes")
+		for pose in ["top", "pass", "mount"]:
+			var points: Dictionary = rig._points_for_pose(pose)
+			_check(points["lf"].y == 72.0 and points["rf"].y == 72.0, "ground preview retains mat baseline: " + pose)
+		rig.set_visual_pose("mount")
+		_check(rig._points_for_pose("top") == top, "pose lookup independent of current animation")
+		rig.set_visual_pose("stance")
 	var rejected := pair.plan_for("baiana", "ruan_macacao", false, false, "PLAYER_STANDING_NEUTRAL", "PLAYER_TOP_GUARD")
 	_check(rejected.is_empty(), "rejected attempts never start motion")
 	var unknown := pair.plan_for("baiana", "unknown_character", true, true, "PLAYER_STANDING_NEUTRAL", "PLAYER_TOP_GUARD")
