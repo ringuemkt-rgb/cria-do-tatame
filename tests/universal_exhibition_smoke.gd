@@ -123,6 +123,27 @@ func _run() -> void:
 	_check(f.get("phases", []).size() == 6 and g.get("phases", []).size() == 6, "both acting directions have six shared phases")
 	_check(not bool(f.get("authoritative", true)) and not bool(f.get("shipping", true)), "paired preview never decides combat")
 	_check(paired.plan_for("baiana", "davi_relampago", true, true, "PLAYER_STANDING_NEUTRAL", "PLAYER_TOP_GUARD").is_empty(), "outside actor rejected")
+	# Exercise the shared renderer's role mapping for every ordered roster pair.
+	# These are visual plans, not claims of legal moves or final sprite quality.
+	var visual_pairs := 0
+	for player_id in fighter_ids:
+		for opponent_id in fighter_ids:
+			if player_id == opponent_id:
+				continue
+			first.fighter_id = player_id
+			second.fighter_id = opponent_id
+			_check(paired.configure_views(first, second), "visual binding " + player_id + " v " + opponent_id)
+			var player_plan: Dictionary = paired.plan_for("grip_de_ferro", player_id, true, true, "PLAYER_STANDING_NEUTRAL", "PLAYER_TOP_CLINCH")
+			var opponent_plan: Dictionary = paired.plan_for("grip_de_ferro", opponent_id, true, true, "PLAYER_STANDING_NEUTRAL", "PLAYER_BOTTOM_CLINCH")
+			var player_steps: Array = player_plan.get("phases", [])
+			var opponent_steps: Array = opponent_plan.get("phases", [])
+			_check(player_steps.size() == 6 and opponent_steps.size() == 6, "six shared phases for both actors")
+			if player_steps.size() == 6 and opponent_steps.size() == 6:
+				_check(player_steps[-1]["ruan_pose"] == "grip" and player_steps[-1]["davi_pose"] == "defense", "player controlled standing clinch")
+				_check(opponent_steps[-1]["ruan_pose"] == "defense" and opponent_steps[-1]["davi_pose"] == "grip", "opponent controlled standing clinch")
+			_check(not bool(player_plan.get("shipping", true)) and not bool(opponent_plan.get("authoritative", true)), "preview cannot promote itself or decide rules")
+			visual_pairs += 1
+	_check(visual_pairs == fighter_ids.size() * (fighter_ids.size() - 1), "all directed roster pairs have shared visual planning coverage")
 	paired.queue_free()
 	first.queue_free()
 	second.queue_free()
