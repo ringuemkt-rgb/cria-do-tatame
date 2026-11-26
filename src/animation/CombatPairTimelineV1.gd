@@ -92,6 +92,9 @@ func _positions_for_state(state: String) -> Dictionary:
 
 func _final_poses(state: String) -> Dictionary:
 	var result := {"ruan": "stance", "davi": "guard"}
+	# A clinch is a standing contact, not a ground top/bottom position.
+	if state.contains("CLINCH"):
+		return {"ruan": "grip" if state.contains("PLAYER_TOP_") else "defense", "davi": "defense" if state.contains("PLAYER_TOP_") else "grip"}
 	if state.contains("PLAYER_TOP_") or state == "PLAYER_BACK_ATTACK" or state == "PLAYER_SUBMISSION_ATTACK":
 		result = {"ruan": "top", "davi": "bottom"}
 	elif state.contains("PLAYER_BOTTOM_") or state == "PLAYER_BACK_DEFENSE" or state == "PLAYER_SUBMISSION_DEFENSE":
