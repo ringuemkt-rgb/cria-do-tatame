@@ -65,3 +65,12 @@ Ferramenta opcional de coleta física, SEM status PASS automático:
     python tools/qa/capture_universal_exhibition_android.py --serial SEU_SERIAL --apk /caminho/CriaDoTatame-debug.apk --out /tmp/cria-qa-real
 
 O script utiliza adb e guia uma captura humana de seis imagens e métricas gfxinfo; as imagens e o JSON PENDING ficam apenas no diretório local fornecido. Não envia dados, não edita o ledger canônico e não garante resultado de QA. O avaliador deve comprovar touch, performance, reset, integridade de campanha e sincronização real antes de alterar o ledger.
+
+
+## Lote de legibilidade gráfica — 2026-11-26
+
+O relógio pareado mantém o clinch em pé, distinguindo controlador e defensor independentemente dos IDs dos lutadores. O rig procedural diferencia passagem, controle superior e montada, preservando a linha de contato com o tatame. A consulta de pontos de uma pose depende da pose solicitada, não da animação anterior.
+
+As regressões existentes cobrem os seis estágios do clinch, as duas direções de controle, a diferença de silhuetas e os 272 pares direcionados do elenco no planejamento visual. São testes de prévia gráfica; não demonstram contato biomecânico final ou legalidade de uma técnica a partir da animação. O CombatManager continua autoridade de gameplay. Nenhum asset foi promovido. As fichas conceituais produzidas na conversa permanecem referências candidatas, externas aos binários de runtime até intake, rights, identity lock e QA Sprite Forge.
+
+Executar `tests/combat_paired_motion_smoke.gd` e `tests/universal_exhibition_smoke.gd` via workflow existente, em Godot 4.2.2/4.3, além do quality gate. Não declarar o novo head validado antes de conclusão da CI; teste físico Android, revisão humana e reconciliação com main seguem obrigatórios. Rollback: reverter os commits do lote; sem mudança de save.
