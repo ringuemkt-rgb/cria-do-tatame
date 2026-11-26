@@ -86,7 +86,7 @@ func _points_for_pose(target_pose: String) -> Dictionary:
 			p["lf"] = Vector2(-78, 72)
 			p["rf"] = Vector2(-43, 72)
 		"top", "pass", "mount":
-			p["head"] = Vector2(15, 5 if pose_id == "top" else -8)
+			p["head"] = Vector2(15, 5 if target_pose == "top" else -8)
 			p["ls"] = Vector2(-4, 15)
 			p["rs"] = Vector2(29, 11)
 			p["le"] = Vector2(18, 37)
@@ -98,6 +98,22 @@ func _points_for_pose(target_pose: String) -> Dictionary:
 			p["rk"] = Vector2(14, 56)
 			p["lf"] = Vector2(-39, 72)
 			p["rf"] = Vector2(19, 72)
+			# Illustrative, distinct silhouettes: low forward pass vs stable mount.
+			# This rig is a non-authoritative preview, not an approved BJJ clip.
+			if target_pose == "pass":
+				p["head"] = Vector2(29, 13)
+				p["hip"] = Vector2(-15, 43)
+				p["lk"] = Vector2(-36, 53)
+				p["lf"] = Vector2(-58, 72)
+			elif target_pose == "mount":
+				p["head"] = Vector2(2, -16)
+				p["ls"] = Vector2(-15, 6)
+				p["rs"] = Vector2(17, 6)
+				p["hip"] = Vector2(0, 42)
+				p["lk"] = Vector2(-33, 59)
+				p["rk"] = Vector2(33, 59)
+				p["lf"] = Vector2(-40, 72)
+				p["rf"] = Vector2(40, 72)
 		"bottom", "impact":
 			p["head"] = Vector2(-44, 48)
 			p["ls"] = Vector2(-26, 46)
